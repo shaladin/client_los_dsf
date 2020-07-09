@@ -8,6 +8,7 @@ import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -83,7 +84,7 @@ export class FormAddDynamicComponent implements OnInit {
         VendorCode: code,
         RowVersion: ""
       };
-      this.http.post<VendorBankAccObj>(AdInsConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
         (response) => {
           // console.log("response bank");
           // console.log(response);
@@ -109,7 +110,7 @@ export class FormAddDynamicComponent implements OnInit {
         VendorEmpNo: code,
         VendorCode: this.FormObj.value.arr[idx].SupplCode,
       };
-      this.http.post<VendorBankAccObj>(AdInsConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
         (response) => {
           // console.log("response bank");
           // console.log(response);
@@ -177,7 +178,7 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   DeleteFromDatabase(AppCommissionHId) {
-    var url = AdInsConstant.DeleteAppCommissionData;
+    var url = URLConstant.DeleteAppCommissionData;
     var obj = {
       AppCommissionHId: AppCommissionHId,
       RowVersion: ""
@@ -276,7 +277,7 @@ export class FormAddDynamicComponent implements OnInit {
         Content: this.FormInputObj["content"],
       };
       console.log(obj);
-      this.http.post<ResponseTaxDetailObj>(AdInsConstant.GetAppCommissionTax, obj).subscribe(
+      this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
           // console.log("response Tax");
           // console.log(this.FormInputObj["content"]);
@@ -293,7 +294,7 @@ export class FormAddDynamicComponent implements OnInit {
               var totalDisburseAmount = 0;
               var totalPenaltyAmt = 0;
               for (var j = 0; j < data.ReturnObject.length; j++) {
-                if (data.ReturnObject[j] == null || data.ReturnObject[j] == undefined){
+                if (data.ReturnObject[j] == null || data.ReturnObject[j] == undefined) {
                   this.FormInputObj["isCalculated"] = false;
                   return this.toastr.errorMessage("System Error - " + this.FormObj.value.arr[len - 1 - i].ContentNameValue + " don't have TaxpayerNo ");
                 }
@@ -520,7 +521,7 @@ export class FormAddDynamicComponent implements OnInit {
 
     var TotalCommisionAmount: number = 0;
     // patch value from existing commD
-    for(var i=0;i<this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls.length;i++){
+    for (var i = 0; i < this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls.length; i++) {
       // console.log(this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i]);
       var objFound = objExist.AppCommissionD.find(x => x.MrCommissionSourceCode == this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].value.AllocationFrom);
 

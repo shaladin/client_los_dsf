@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -18,7 +19,7 @@ export class AssetDataPagingComponent implements OnInit {
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IdCust: any;
-  appAssetObj : any;
+  appAssetObj: any;
   listAppAssetObj: any;
   appCollateralObj: any;
   listAppCollateralObj: any;
@@ -30,130 +31,126 @@ export class AssetDataPagingComponent implements OnInit {
   AppCollateralId: number;
   editAsset: string;
   editColl: string;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetAppAssetListByAppId;
-    this.getListAppCollateral = AdInsConstant.GetListAppCollateralByAppId;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+    this.getListAppAssetData = URLConstant.GetAppAssetListByAppId;
+    this.getListAppCollateral = URLConstant.GetListAppCollateralByAppId;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
-         this.IdCust = params["IdCust"];
-       }
-     });
-  }
-  
-addAsset() {
-  this.outputValue.emit({ mode: 'addAsset' });
-}
-
-addColl() {
-  this.outputValue.emit({ mode: 'addColl' });
-}
-
-Cancel(){
-  this.outputCancel.emit();
-}
-
-event(ev){
-  console.log("test");
-  console.log(ev);
-  if(ev.Key == "edit")
-  {
-    this.AppAssetId = ev.RowObj.AppAssetId;
-    this.editAsset = ev.RowObj.editAsset;
-    this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
-    console.log("CHECK EVENT");
+        this.IdCust = params["IdCust"];
+      }
+    });
   }
 
-  if(ev.Key == "delete")
-  {
-    if (confirm("Are you sure to delete this record?")) {
-      var appAssetObj = new AppAssetObj();
-      appAssetObj.AppAssetId = ev.RowObj.AppAssetId;
-      appAssetObj.AppId = ev.RowObj.AppId;
-      this.http.post(AdInsConstant.DeleteAppAsset, appAssetObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.listAppAssetObj = response["ReturnAsset"];
+  addAsset() {
+    this.outputValue.emit({ mode: 'addAsset' });
+  }
 
-          var DetailForGridAsset ={
-            Data: response["ReturnAsset"],
-            Count: "0"
+  addColl() {
+    this.outputValue.emit({ mode: 'addColl' });
+  }
+
+  Cancel() {
+    this.outputCancel.emit();
+  }
+
+  event(ev) {
+    console.log("test");
+    console.log(ev);
+    if (ev.Key == "edit") {
+      this.AppAssetId = ev.RowObj.AppAssetId;
+      this.editAsset = ev.RowObj.editAsset;
+      this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
+      console.log("CHECK EVENT");
+    }
+
+    if (ev.Key == "delete") {
+      if (confirm("Are you sure to delete this record?")) {
+        var appAssetObj = new AppAssetObj();
+        appAssetObj.AppAssetId = ev.RowObj.AppAssetId;
+        appAssetObj.AppId = ev.RowObj.AppId;
+        this.http.post(URLConstant.DeleteAppAsset, appAssetObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.listAppAssetObj = response["ReturnAsset"];
+
+            var DetailForGridAsset = {
+              Data: response["ReturnAsset"],
+              Count: "0"
+            }
+
+            this.gridAssetDataObj.resultData = DetailForGridAsset;
+            this.listAppCollateralObj = response["ReturnCollateral"];
+
+            var DetailForGridCollateral = {
+              Data: response["ReturnCollateral"],
+              Count: "0"
+            }
+
+            this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+          },
+          (error) => {
+            console.log(error);
           }
-
-          this.gridAssetDataObj.resultData = DetailForGridAsset;
-          this.listAppCollateralObj = response["ReturnCollateral"];
-
-          var DetailForGridCollateral ={
-            Data: response["ReturnCollateral"],
-            Count: "0"
-          }
-
-          this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
     }
   }
-}
 
-eventColl(ev){
-  if(ev.Key == "edit")
-  {
-    this.AppCollateralId = ev.RowObj.AppCollateralId;
-    this.editColl = ev.RowObj.editColl;
-    this.AppAssetId = ev.RowObj.AppAssetId;
-    this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
-    console.log("CHECK EVENT");
-  }
+  eventColl(ev) {
+    if (ev.Key == "edit") {
+      this.AppCollateralId = ev.RowObj.AppCollateralId;
+      this.editColl = ev.RowObj.editColl;
+      this.AppAssetId = ev.RowObj.AppAssetId;
+      this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
+      console.log("CHECK EVENT");
+    }
 
-  if(ev.Key == "delete")
-  {
-    if (confirm("Are you sure to delete this record?")) {
-      var collateralObj = new AppCollateralObj();
-      collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
-      collateralObj.AppId = this.AppId;
-      console.log(collateralObj.AppCollateralId)
-      this.http.post(AdInsConstant.DeleteAppCollateral, collateralObj).subscribe(
-        (response) => {
-          console.log(response);
-          this.toastr.successMessage(response["message"]);
-          this.listAppCollateralObj = response["ReturnObject"];
+    if (ev.Key == "delete") {
+      if (confirm("Are you sure to delete this record?")) {
+        var collateralObj = new AppCollateralObj();
+        collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
+        collateralObj.AppId = this.AppId;
+        console.log(collateralObj.AppCollateralId)
+        this.http.post(URLConstant.DeleteAppCollateral, collateralObj).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.successMessage(response["message"]);
+            this.listAppCollateralObj = response["ReturnObject"];
 
-          var DetailForGridCollateral ={
-            Data: response["ReturnObject"],
-            Count: "0"
+            var DetailForGridCollateral = {
+              Data: response["ReturnObject"],
+              Count: "0"
+            }
+
+            this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+          },
+          (error) => {
+            console.log(error);
           }
-
-          this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
     }
   }
-}
 
   ngOnInit() {
     console.log("AppId: " + this.AppId);
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
-    this.gridAssetDataObj.deleteUrl = AdInsConstant.DeleteAppAsset;
-    
+    this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;
+
     this.appAssetObj = new AppAssetObj();
     // this.appAssetObj.AppAssetId = "-";
     this.appAssetObj.AppId = this.AppId;
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
-          console.log("Response Asset : " + JSON.stringify(response));
-          this.listAppAssetObj = response["ReturnObject"];
+        console.log("Response Asset : " + JSON.stringify(response));
+        this.listAppAssetObj = response["ReturnObject"];
 
-          var DetailForGridAsset ={
-            Data: response["ReturnObject"],
-            Count: "0"
-          }
+        var DetailForGridAsset = {
+          Data: response["ReturnObject"],
+          Count: "0"
+        }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
       },
@@ -164,19 +161,19 @@ eventColl(ev){
 
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
-    this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
-    
+    this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;
+
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
-          console.log("Collateral : " + JSON.stringify(response));
-          this.listAppCollateralObj = response["ReturnObject"];
+        console.log("Collateral : " + JSON.stringify(response));
+        this.listAppCollateralObj = response["ReturnObject"];
 
-          var DetailForGridCollateral = {
-            Data: response["ReturnObject"],
-            Count: "0"
-          }
+        var DetailForGridCollateral = {
+          Data: response["ReturnObject"],
+          Count: "0"
+        }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       },
@@ -186,21 +183,21 @@ eventColl(ev){
     );
   }
 
-  getGridCollateral(){
+  getGridCollateral() {
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
-    this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
-    
+    this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;
+
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
-          this.listAppCollateralObj = response["ReturnObject"];
+        this.listAppCollateralObj = response["ReturnObject"];
 
-          var DetailForGridCollateral = {
-            Data: response["ReturnObject"],
-            Count: "0"
-          }
+        var DetailForGridCollateral = {
+          Data: response["ReturnObject"],
+          Count: "0"
+        }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       },
@@ -214,15 +211,13 @@ eventColl(ev){
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
-  next(){
-    if(this.gridAppCollateralObj.resultData.Data.length < 1)
-    {
+  next() {
+    if (this.gridAppCollateralObj.resultData.Data.length < 1) {
       this.toastr.warningMessage("Asset minimum is 1");
       return;
     }
-    else
-    {
-      this.outputValue.emit({mode: 'submit'});
+    else {
+      this.outputValue.emit({ mode: 'submit' });
     }
   }
 

@@ -10,8 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-copy-cancelled-application',
-  templateUrl: './copy-cancelled-application.component.html',
-  styleUrls: ['./copy-cancelled-application.component.scss']
+  templateUrl: './copy-cancelled-application.component.html'
 })
 export class CopyCancelledApplicationComponent implements OnInit {
   @ViewChild(UcpagingComponent) paging: UcpagingComponent;
@@ -23,13 +22,13 @@ export class CopyCancelledApplicationComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCancelledApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCancelledApp.json";
   }
 
   getEvent(ev) {
     if(ev.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
           this.link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'];
           window.open(this.link, '_blank');

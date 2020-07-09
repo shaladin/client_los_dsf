@@ -39,20 +39,20 @@ export class CreditReviewMainComponent implements OnInit {
   // });
 
   constructor(
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
+    private route: ActivatedRoute,
+    private http: HttpClient,
     private fb: FormBuilder,
-    private router: Router) { 
-      this.route.queryParams.subscribe(params => {
-        if (params["AppId"] != null) {
-          this.appId = params["AppId"];
-        }
-        if (params["WfTaskListId"] != null) {
-          this.wfTaskListId = params["WfTaskListId"];
-        }
-      });
-    }
-  
+    private router: Router) {
+    this.route.queryParams.subscribe(params => {
+      if (params["AppId"] != null) {
+        this.appId = params["AppId"];
+      }
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
+    });
+  }
+
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -110,12 +110,12 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetExistingCreditReviewData();
   }
 
-  async GetAppNo(){
+  async GetAppNo() {
     var obj = { AppId: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         console.log(response);
-        if(response != undefined)
+        if (response != undefined)
           this.GetCreditScoring(response["AppNo"]);
       },
       (error) => {
@@ -124,17 +124,17 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  GetCreditScoring(appNo: string){
+  GetCreditScoring(appNo: string) {
     var obj = { ScoringResultH: { TrxSourceNo: appNo } };
-    this.http.post(AdInsConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
+    this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         console.log(response);
-        if(response["ScoringResultHObj"]!=null){
+        if (response["ScoringResultHObj"] != null) {
           var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
           this.FormObj.patchValue({
             CreditScoring: ScoringResult.ScoringValue
           });
-        }else{
+        } else {
           this.FormObj.patchValue({
             CreditScoring: "-"
           });
@@ -146,13 +146,13 @@ export class CreditReviewMainComponent implements OnInit {
     );
   }
 
-  async GetAppCustData(){
+  async GetAppCustData() {
     var obj = {
       AppId: this.appId,
       RowVersion: ""
     };
 
-    await this.http.post(AdInsConstant.GetAppCustByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.CustTypeCode = response["MrCustTypeCode"];
@@ -165,7 +165,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async BindCreditAnalysisItemFormObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdRvwAnalysisItem };
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         console.log(response);
         var temp = response[CommonConstant.ReturnObj];
@@ -187,7 +187,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async BindAppvAmt() {
     var Obj = { AppId: this.appId };
-    await this.http.post(AdInsConstant.GetAppFinDataByAppId, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
         console.log(response);
         this.FormObj.patchValue({
@@ -203,12 +203,12 @@ export class CreditReviewMainComponent implements OnInit {
 
   async GetExistingCreditReviewData() {
     var Obj = { appCrdRvwHObj: { AppId: this.appId } };
-    await this.http.post(AdInsConstant.GetAppCrdRvwById, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
-        if(this.ResponseExistCreditReview.appCrdRvwDObjs!=null){
-          for(var i=0;i<this.ResponseExistCreditReview.appCrdRvwDObjs.length;i++){
+        if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
+          for (var i = 0; i < this.ResponseExistCreditReview.appCrdRvwDObjs.length; i++) {
             var idx = this.Arr.value.indexOf(this.Arr.value.find(x => x.QuestionCode == this.ResponseExistCreditReview.appCrdRvwDObjs[i].MrAnalysisItemCode));
             this.Arr.controls[idx].patchValue({
               Answer: this.ResponseExistCreditReview.appCrdRvwDObjs[i].AnalysisResult
@@ -224,7 +224,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async BindDDLRecommendation() {
     var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
-    await this.http.post(AdInsConstant.GetListActiveRefReason, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DDLRecommendation = response[CommonConstant.ReturnObj];
@@ -237,8 +237,8 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLReasonReturn() {
-    var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview  };
-    await this.http.post(AdInsConstant.GetListActiveRefReason, obj).toPromise().then(
+    var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DDLReasonReturn = response[CommonConstant.ReturnObj];
@@ -319,9 +319,9 @@ export class CreditReviewMainComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData
     }
     console.log(apiObj);
-    this.http.post(AdInsConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
+    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
-        console.log(response);    
+        console.log(response);
         this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode, } });
       },
       (error) => {
@@ -329,15 +329,15 @@ export class CreditReviewMainComponent implements OnInit {
       }
     );
   }
-  
-  BindAppCrdRvwDObj(objArr){
+
+  BindAppCrdRvwDObj(objArr) {
     var AppCrdRvwDObjs = new Array();
     // console.log(objArr);
     for (var i = 0; i < objArr.length; i++) {
       var temp = new AppCrdRvwDObj();
       temp.MrAnalysisItemCode = objArr[i].QuestionCode;
       temp.AnalysisResult = objArr[i].Answer;
-      if(this.ResponseExistCreditReview.appCrdRvwDObjs != null){
+      if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
         var idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
         temp.AppCrdRvwDId = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].AppCrdRvwDId;
         temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
@@ -351,7 +351,7 @@ export class CreditReviewMainComponent implements OnInit {
     console.log(this.ManualDeviationData);
   }
 
-  BindManualDeviationData(ev){
+  BindManualDeviationData(ev) {
     // console.log(ev);
     this.ManualDeviationData = ev;
     this.isExistedManualDeviationData = true;
@@ -384,9 +384,8 @@ export class CreditReviewMainComponent implements OnInit {
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-    
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
       });
   }
 }

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-purchase-order',
@@ -54,7 +55,7 @@ export class PurchaseOrderComponent implements OnInit {
       AgrmntId: this.AgrmntId
     }
     this.claimTask();
-    this.http.post(AdInsConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response["ReturnObject"];
       },
@@ -92,7 +93,7 @@ export class PurchaseOrderComponent implements OnInit {
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
 
 
-      this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
+      this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response["ReturnObject"];
           this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
@@ -109,7 +110,7 @@ export class PurchaseOrderComponent implements OnInit {
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }

@@ -69,10 +69,10 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
 
   initUrl() {
     this.getAppUrl = URLConstant.GetAppById;
-    this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.getListVerfResulHtUrl = AdInsConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
-    this.getVerfResulHtUrl = AdInsConstant.GetVerfResultHById;
-    this.getVerfResultDUrl = AdInsConstant.GetListVerfResultDInQuestionGrp;
+    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
+    this.getListVerfResulHtUrl = URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
+    this.getVerfResulHtUrl = URLConstant.GetVerfResultHById;
+    this.getVerfResultDUrl = URLConstant.GetListVerfResultDInQuestionGrp;
   }
 
   async ngOnInit(): Promise<void> {

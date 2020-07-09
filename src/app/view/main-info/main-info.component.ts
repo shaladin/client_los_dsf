@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-main-info',
@@ -41,13 +42,13 @@ export class MainInfoComponent implements OnInit {
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustById, mouCustObj).pipe(
+    this.http.post(URLConstant.GetMouCustById, mouCustObj).pipe(
       map((response) => {
         return response;
       }),
       mergeMap((response) => {
         var custObj = { CustNo: response['CustNo'] };
-        let getCustData = this.http.post(AdInsConstant.GetCustByCustNo, custObj);
+        let getCustData = this.http.post(URLConstant.GetCustByCustNo, custObj);
         var tempResponse = [response];
         return forkJoin([tempResponse, getCustData]);
       })

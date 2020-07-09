@@ -4,7 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-summary-fl4w',
@@ -24,7 +24,6 @@ export class ViewSummaryFl4wComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
   }
 
-
   ngOnInit() {
     console.log('summary')
     this.agrmntObj.AgrmntId = this.AgrmntId;
@@ -33,7 +32,7 @@ export class ViewSummaryFl4wComponent implements OnInit {
   }
 
   GetAgrmntSummary() {
-    this.http.post(AdInsConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.SummaryObj = response;
@@ -43,5 +42,4 @@ export class ViewSummaryFl4wComponent implements OnInit {
       }
     );
   }
-
 }

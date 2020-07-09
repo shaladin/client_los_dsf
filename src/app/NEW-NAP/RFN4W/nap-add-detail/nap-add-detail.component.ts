@@ -95,7 +95,7 @@ export class NapAddDetailComponent implements OnInit {
         AppId: this.appId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -112,7 +112,7 @@ export class NapAddDetailComponent implements OnInit {
 
   CheckMultiAsset() {
     var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];
         if (this.ListAsset != undefined && this.ListAsset != null) {
@@ -201,7 +201,7 @@ export class NapAddDetailComponent implements OnInit {
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, obj).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
           console.log(response);
         },
@@ -217,7 +217,7 @@ export class NapAddDetailComponent implements OnInit {
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext["UserName"];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
       (response) => {
 
       });

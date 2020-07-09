@@ -36,7 +36,7 @@ export class ViewPhoneVerifComponent implements OnInit {
 
   initUrl() {
     this.getAppUrl = URLConstant.GetAppById;
-    this.getPhoneVerifSubjUrl = AdInsConstant.GetAppPhoneVerifSubjectListByAppId;
+    this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
   }
 
   async ngOnInit(): Promise<void> {

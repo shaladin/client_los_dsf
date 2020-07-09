@@ -40,12 +40,12 @@ export class ViewAssetDataComponent implements OnInit {
 
   initUrl() {
     this.getAppUrl = URLConstant.GetAppById;
-    this.getAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
+    this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAppId;
   }
 
   initSingleAssetUrl(){
     this.getAppUrl = URLConstant.GetAppById;
-    this.getAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppAssetId;
+    this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAppAssetId;
   }
 
   async ngOnInit(): Promise<void> {

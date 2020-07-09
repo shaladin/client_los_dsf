@@ -110,7 +110,7 @@ export class NapAddComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -118,7 +118,7 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -169,7 +169,7 @@ export class NapAddComponent implements OnInit {
     var obj = {
       RowVersion: ""
     };
-    var url = environment.FoundationR3Url + AdInsConstant.GetListKvpActiveRefOffice;
+    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
@@ -253,7 +253,7 @@ export class NapAddComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     console.log(ev);
-    var url = AdInsConstant.GetListProdOfferingDByProdOfferingCode;
+    var url = URLConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
     };

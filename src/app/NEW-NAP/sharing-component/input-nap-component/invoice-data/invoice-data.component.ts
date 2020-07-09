@@ -88,7 +88,7 @@ export class InvoiceDataComponent implements OnInit {
     var obj = {
       AppFctrId: this.AppFactoringObj.AppFctrId,
     }
-    this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
+    this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
         this.dataobj = response['ReturnObject'];
         if (this.AppFactoringObj.PaidBy == "CUST_FCTR" && this.dataobj.AppInvoiceFctrList.length >= 1) {
@@ -136,7 +136,7 @@ export class InvoiceDataComponent implements OnInit {
     this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
     this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
 
-    this.httpClient.post(AdInsConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
+    this.httpClient.post(URLConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.GetListAppInvoiceFctr();
@@ -155,7 +155,7 @@ export class InvoiceDataComponent implements OnInit {
       this.invoiceObj = new AppInvoiceFctrObj();
       this.invoiceObj.AppInvoiceFctrId = AppInvoiceFctrId;
 
-      this.httpClient.post(AdInsConstant.DeleteAppInvoiceFctr, this.invoiceObj).subscribe(
+      this.httpClient.post(URLConstant.DeleteAppInvoiceFctr, this.invoiceObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();

@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe, formatDate } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "agrmnt-view-delivery-order",
@@ -38,7 +39,7 @@ export class ViewDeliveryOrderComponent implements OnInit {
   }
 
   GetDeliveryOrderData() {
-    this.http.post(AdInsConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.DeliverOrderData = response;

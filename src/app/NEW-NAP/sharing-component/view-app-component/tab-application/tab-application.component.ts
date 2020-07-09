@@ -8,8 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-application',
-  templateUrl: './tab-application.component.html',
-  styleUrls: ['./tab-application.component.scss']
+  templateUrl: './tab-application.component.html'
 })
 export class TabApplicationComponent implements OnInit {
   @Input() appId;

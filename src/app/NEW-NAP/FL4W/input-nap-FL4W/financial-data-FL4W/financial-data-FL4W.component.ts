@@ -7,8 +7,8 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -117,7 +117,7 @@ export class FinancialDataFL4WComponent implements OnInit {
 
   LoadAppFinData() {
     console.log("Load App Fin Data Started...");
-    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
@@ -184,7 +184,7 @@ export class FinancialDataFL4WComponent implements OnInit {
       console.log("GROSSSS");
       console.log(this.FinDataForm.value);
 
-      this.http.post(AdInsConstant.SaveAppFinData, this.FinDataForm.value).subscribe(
+      this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.value).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);
@@ -194,7 +194,7 @@ export class FinancialDataFL4WComponent implements OnInit {
     }
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -234,12 +234,12 @@ export class FinancialDataFL4WComponent implements OnInit {
     return valid;
   }
 
-  setValidator(mrInstSchemeCode){
-    if(mrInstSchemeCode == CommonConstant.InstSchmBalloon){
+  setValidator(mrInstSchemeCode) {
+    if (mrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
       this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
     }
-    if(mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownLeasing){
+    if (mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownLeasing) {
       this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
       this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
       this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);

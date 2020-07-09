@@ -9,11 +9,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
-  templateUrl: './mou-cust-listed-cust-fctr.component.html',
-  styleUrls: ['./mou-cust-listed-cust-fctr.component.scss']
+  templateUrl: './mou-cust-listed-cust-fctr.component.html'
 })
 export class MouCustListedCustFctrComponent implements OnInit {
   @Input() MouCustId: number;
@@ -38,7 +38,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     });
     var mouListedFctr = new MouCustListedCustFctrObj();
     mouListedFctr.MouCustId = this.MouCustId;
-    this.httpClient.post(AdInsConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
+    this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
       (response) => {
         this.listedCusts = response["mouCustListedCustFctrObjs"];
       },
@@ -48,7 +48,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     );
   }
 
-  openModalAddCustFctr(){
+  openModalAddCustFctr() {
     const modalListedFctr = this.modalService.open(MouCustListedCustFctrDetailComponent);
     modalListedFctr.componentInstance.MouCustId = this.MouCustId;
     modalListedFctr.result.then(
@@ -56,7 +56,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
         this.spinner.show();
         var mouListedFctr = new MouCustListedCustFctrObj();
         mouListedFctr.MouCustId = this.MouCustId;
-        this.httpClient.post(AdInsConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
+        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
           (response) => {
             this.listedCusts = response["mouCustListedCustFctrObjs"];
           },
@@ -68,16 +68,16 @@ export class MouCustListedCustFctrComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
-      if(error != 0){
+      if (error != 0) {
         console.log(error);
       }
     });
   }
-  
+
   openView(custNo) {
     var link: string;
     var custObj = { CustNo: custNo };
-    this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+    this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
         // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
         // window.open(link, '_blank');
@@ -89,22 +89,21 @@ export class MouCustListedCustFctrComponent implements OnInit {
     );
   }
 
-  deleteCustFctr(custFctrId, idx){
-    if(this.MouCustIsListedForm.controls["IsListedCust"].value == true){
-      if(confirm('Are you sure to delete this record?')){
-          var mouListedFctr = new MouCustListedCustFctrObj();
-          mouListedFctr.MouListedCustFctrId = custFctrId;
-          this.httpClient.post(AdInsConstant.DeleteMouCustListedCustFctr, mouListedFctr).subscribe(
-            (response: any) => {
-              this.listedCusts.splice(idx, 1);
-              this.toastr.successMessage(response["Message"]);
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        }
+  deleteCustFctr(custFctrId, idx) {
+    if (this.MouCustIsListedForm.controls["IsListedCust"].value == true) {
+      if (confirm('Are you sure to delete this record?')) {
+        var mouListedFctr = new MouCustListedCustFctrObj();
+        mouListedFctr.MouListedCustFctrId = custFctrId;
+        this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, mouListedFctr).subscribe(
+          (response: any) => {
+            this.listedCusts.splice(idx, 1);
+            this.toastr.successMessage(response["Message"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
-
 }

@@ -92,7 +92,7 @@ export class ReferantorDataComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
@@ -249,7 +249,7 @@ export class ReferantorDataComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = URLConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""

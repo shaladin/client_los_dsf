@@ -13,6 +13,7 @@ import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AppCrdInvstgHObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgHObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -83,7 +84,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
 
     reqAppCrdInvstg.WfTaskListId = this.wfTaskListId;
     var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
+    this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);       
@@ -135,14 +136,14 @@ export class CreditInvestigationDetailComponent implements OnInit {
 
     var reqObj = { AppId: this.appId };
 
-    await this.http.post<AppCrdInvstgHObj>(AdInsConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
+    await this.http.post<AppCrdInvstgHObj>(URLConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
       (response) => {
         this.appCrdInvstgHObj = response;
       }
     );
     if(this.appCrdInvstgHObj.AppId == 0){
       var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
-      await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+      await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
         (response) => {
           this.analysisItemObj = response["ReturnObject"];
         }
@@ -156,7 +157,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
     
       });

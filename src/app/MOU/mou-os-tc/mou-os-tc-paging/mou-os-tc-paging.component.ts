@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-os-tc-paging',
@@ -15,9 +16,9 @@ export class MouOsTcPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  user:any;
+  user: any;
 
-  constructor(private router: Router,private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -26,15 +27,14 @@ export class MouOsTcPagingComponent implements OnInit {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
-    else
-    {
+    else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-      console.log(AdInsConstant.GetPagingObjectBySQL);
+      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+      console.log(URLConstant.GetPagingObjectBySQL);
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
-  
+
       this.inputPagingObj.ddlEnvironments = [
         {
           name: "MOU.MR_MOU_TYPE_CODE",
@@ -44,20 +44,20 @@ export class MouOsTcPagingComponent implements OnInit {
     }
   }
 
-  getEvent(event){
-    if(event.Key == "customer"){
-        var link : string;
-        var custObj = { CustNo: event.RowObj.CustNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
-          response => {
-            // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            // window.open(link, '_blank');
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+  getEvent(event) {
+    if (event.Key == "customer") {
+      var link: string;
+      var custObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
+          // window.open(link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }

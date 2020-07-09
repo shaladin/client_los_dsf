@@ -10,6 +10,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-personal-contact-information-FL4W',
@@ -282,9 +283,9 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   initUrl(){
-    this.getCustContactPersonPersonalUrl = AdInsConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = AdInsConstant.GetRefProfessionByCode;
+    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
   }
 
   bindCopyFrom(){

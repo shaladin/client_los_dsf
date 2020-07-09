@@ -14,9 +14,9 @@ export class ViewDeviationComponent implements OnInit {
   inputPagingObj: any;
   deviationResultList: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   @Input() AppId: number;
- 
-  constructor(private http: HttpClient){
- 
+
+  constructor(private http: HttpClient) {
+
   }
 
   ngOnInit() {
@@ -26,33 +26,28 @@ export class ViewDeviationComponent implements OnInit {
   GetListDeviationResult() {
     var obj = {
       AppId: this.AppId,
-      AppNo : ""
+      AppNo: ""
     }
     var getAppUrl = URLConstant.GetAppById;
     this.http.post<AppObj>(getAppUrl, obj).subscribe(
       (response) => {
-        
         obj.AppNo = response.AppNo;
+        var getListDeviationUrl = URLConstant.GetListDeviationResultByAppNo;
+        this.http.post<Array<DeviationResultObj>>(getListDeviationUrl, obj).subscribe(
+          (response) => {
+            console.log("response");
+            console.log(response);
+            this.deviationResultList = response;
 
-        var getListDeviationUrl = AdInsConstant.GetListDeviationResultByAppNo;
-    this.http.post<Array<DeviationResultObj>>(getListDeviationUrl, obj).subscribe(
-      (response) => {
-        console.log("response");
-        console.log(response);
-        this.deviationResultList = response;
-        
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       },
       (error) => {
         console.log(error);
       }
     );
-      },
-      (error) => {
-        console.log(error);
-      }
-      
-    );
-    
   }
-
 }

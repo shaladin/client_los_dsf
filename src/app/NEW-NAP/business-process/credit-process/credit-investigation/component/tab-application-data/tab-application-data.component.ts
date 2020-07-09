@@ -110,7 +110,7 @@ export class TabApplicationDataComponent implements OnInit {
       },
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetListAppGuarantorDetail, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListAppGuarantorDetail, obj).toPromise().then(
       (response) => {
         console.log(response);
         for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
@@ -147,7 +147,7 @@ export class TabApplicationDataComponent implements OnInit {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppReferantorForAppsData, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ReferantorData.ReferantorName = response["ReferantorName"];
@@ -210,7 +210,7 @@ export class TabApplicationDataComponent implements OnInit {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DealerData = {
@@ -242,7 +242,7 @@ export class TabApplicationDataComponent implements OnInit {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         var temp = response[CommonConstant.ReturnObj];
@@ -271,7 +271,7 @@ export class TabApplicationDataComponent implements OnInit {
       AppId: this.AppId
     }
 
-    this.http.post(AdInsConstant.GetListTCbyAppId, AppObj).toPromise().then(
+    this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {

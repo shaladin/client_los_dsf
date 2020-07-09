@@ -203,18 +203,15 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   initUrl() {
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAssetTypeUrl = AdInsConstant.GetAssetTypeKeyValueCode
-    this.GetAppCollateralUrl = AdInsConstant.GetAppCollateralByAppCollateralId;
-    this.GetAppCollateralRegistUrl = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getAppUrl = URLConstant.GetAppById;
-
-    this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;
-    this.AddEditAllCollateralDataUrl = AdInsConstant.AddEditAllCollateralDataByAppCollateraId;
-
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
-
-    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
+    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
+    this.getAssetTypeUrl = URLConstant.GetAssetTypeKeyValueCode;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.GetAppCollateralUrl = URLConstant.GetAppCollateralByAppCollateralId;
+    this.getAssetMasterTypeUrl = URLConstant.GetAssetMasterTypeByFullAssetCode;
+    this.AddEditAllCollateralDataUrl = URLConstant.AddEditAllCollateralDataByAppCollateraId;
+    this.GetAppCollateralRegistUrl = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
   }
 
   SaveForm() {

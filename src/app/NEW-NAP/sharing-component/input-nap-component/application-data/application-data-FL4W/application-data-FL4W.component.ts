@@ -131,7 +131,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     var AppObj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.GetAppCustByAppId, AppObj).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => { 
        this.CustNo = response["CustNo"];
        console.log("asd")
@@ -142,7 +142,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.mouCustObj.StartDt = user.BusinessDt;
         this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
 
-        this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
             this.resMouCustObj = response["ReturnObject"];
             
@@ -168,7 +168,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         // console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
@@ -188,7 +188,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         // console.log(response);   
         this.NapAppModelForm.patchValue({
@@ -341,7 +341,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetListActiveRefPayFreq, obj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
         console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
         var objTemp = response["ReturnObject"];
@@ -362,7 +362,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
       (response) => {
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems[code] = objTemp;
@@ -391,7 +391,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";

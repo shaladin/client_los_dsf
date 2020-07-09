@@ -18,7 +18,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class CustConfirmationDetailComponent implements OnInit {
 
-  viewObj: string; 
+  viewObj: string;
   arrValue = [];
   AgrmntId: number;
   AppId: number;
@@ -30,7 +30,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
   BizTemplateCode: string;
-  link : any;
+  link: any;
   constructor(private route: ActivatedRoute, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -61,7 +61,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   GetVerfResult(IsAdded: boolean = false) {
-    this.http.post(AdInsConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).subscribe(
+    this.http.post(URLConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).subscribe(
       (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
@@ -101,7 +101,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.verfResultObj.LobCode = this.appObj.LobCode;
         this.verfResultObj.LobName = this.appObj.LobCode;
         this.verfResultObj.Notes = "-";
-        this.http.post(AdInsConstant.AddVerfResultAndVerfResultH, this.verfResultObj).subscribe(
+        this.http.post(URLConstant.AddVerfResultAndVerfResultH, this.verfResultObj).subscribe(
           (response) => {
             this.GetVerfResult(true);
           },
@@ -128,7 +128,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         RequestCustCnfrmObj: this.CustCnfrmObj,
         wfTaskListId: this.TaskListId
       };
-      this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
+      this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
@@ -143,10 +143,10 @@ export class CustConfirmationDetailComponent implements OnInit {
         RequestCustCnfrmObj: this.CustCnfrmObj,
         wfTaskListId: this.TaskListId
       };
-      this.http.post(AdInsConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
+      this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         (response) => {
-        this.toastr.successMessage("Success !");
-        this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          this.toastr.successMessage("Success !");
+          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
           // this.toastr.successMessage(response["message"]);
           // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         },
@@ -164,16 +164,16 @@ export class CustConfirmationDetailComponent implements OnInit {
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
 
-  GetCallBack(event){
+  GetCallBack(event) {
     console.log("aaa");
-    if(event.Key == "customer"){
+    if (event.Key == "customer") {
       var custObj = { CustNo: event.ViewObj.CustNo };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
           window.open(this.link, '_blank');
@@ -182,7 +182,6 @@ export class CustConfirmationDetailComponent implements OnInit {
           console.log(error);
         }
       );
+    }
   }
-  }
-  
 }

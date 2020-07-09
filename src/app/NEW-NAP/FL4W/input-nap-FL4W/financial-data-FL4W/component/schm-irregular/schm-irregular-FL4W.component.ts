@@ -53,7 +53,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -61,7 +61,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
@@ -113,7 +113,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     }
     this.calcIrregularObj = this.ParentForm.value;
     this.calcIrregularObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
 

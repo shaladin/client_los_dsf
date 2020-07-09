@@ -70,10 +70,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   initUrl() {
-    this.getListAppCollateralUrl = AdInsConstant.GetListAppCollateralByAppId;
+    this.getListAppCollateralUrl = URLConstant.GetListAppCollateralByAppId;
     this.getAppUrl = URLConstant.GetAppById;
-    this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = AdInsConstant.EditReturnHandlingD;
+    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
+    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -155,7 +155,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         ReturnHandlingHId: this.returnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingAddColtr
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         },
@@ -190,7 +190,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   Delete(AppCollateralId) {
     if (confirm('Are you sure to delete this data?')) {
       this.appCollObj.AppCollateralId = AppCollateralId;
-      this.http.post(AdInsConstant.DeleteAppCollateral, this.appCollObj).subscribe(
+      this.http.post(URLConstant.DeleteAppCollateral, this.appCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -206,23 +206,20 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   AddEdit(AppCollateralId) {
     if (this.isReturnHandling == false) {
-
     }
     if (this.isReturnHandling == true) {
       this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail?AppId=" + this.appId + "&AppCollateralId=" + AppCollateralId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
     }
-
   }
 
-  ClaimTask(){
+  ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
       });
   }
 }

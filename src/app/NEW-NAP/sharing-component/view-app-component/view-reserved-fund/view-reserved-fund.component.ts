@@ -39,7 +39,7 @@ export class ViewReservedFundComponent implements OnInit {
 
   initUrl() {
     this.getAppUrl = URLConstant.GetAppById;
-    this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
+    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
   }
 
   ngOnInit() {

@@ -162,7 +162,7 @@ export class LoanObjectComponent implements OnInit {
       RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
-    await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptSupplSchm = response;
       }
@@ -172,13 +172,13 @@ export class LoanObjectComponent implements OnInit {
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.loanObjectInputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    this.supplierInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.supplierInputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.addCritInput = new Array();
     

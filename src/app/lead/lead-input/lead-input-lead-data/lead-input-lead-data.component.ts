@@ -13,8 +13,8 @@ import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -102,15 +102,15 @@ export class LeadInputLeadDataComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.addEditLeadData = AdInsConstant.AddEditLeadData;
-    this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
-    this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
-    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
-    this.editLead = AdInsConstant.EditLead;
-    this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditLeadData = URLConstant.AddEditLeadData;
+    this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
+    this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
+    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
+    this.editLead = URLConstant.EditLead;
+    this.submitWorkflowLeadInput = URLConstant.SubmitWorkflowLeadInput;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -138,7 +138,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
 
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
-    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -297,11 +297,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                 (response: any) => {
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
@@ -414,11 +414,11 @@ export class LeadInputLeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                   (response: any) => {
 
                     var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                       (response: any) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
@@ -466,7 +466,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                   (response: any) => {
                     if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
@@ -765,7 +765,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           //this.setLeadAsset();
           this.setLeadApp();
-          this.http.post(AdInsConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
+          this.http.post(URLConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
@@ -816,7 +816,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         //this.setLeadAsset();
         this.setLeadApp();
-        this.http.post(AdInsConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
+        this.http.post(URLConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
@@ -902,7 +902,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           //this.setLeadAsset();
           this.setLeadApp();
           this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-          this.http.post(AdInsConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+          this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
@@ -955,7 +955,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         //this.setLeadAsset();
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-        this.http.post(AdInsConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+        this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {

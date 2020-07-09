@@ -80,7 +80,7 @@ export class AgreementViewContainerComponent implements OnInit {
     var agrmntObj = {
       AgrmntId: this.AgrmntId,
     };
-    this.http.post(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         var bizTemplateCode = response["BizTemplateCode"];
 

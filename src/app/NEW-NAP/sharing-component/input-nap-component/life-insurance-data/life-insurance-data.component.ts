@@ -63,7 +63,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsObj.AppId = this.AppId;
     console.log(this.LifeInsObj);
 
-    this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.LifeInsForm.controls["IsChecked"].disable();
@@ -73,7 +73,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
+    this.http.post(URLConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
       (response) => {
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
@@ -110,7 +110,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLifeInsPayMethod,
       RowVersion: ""
     }
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, paidMethodObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, paidMethodObj).toPromise().then(
       (response) => {
         this.MrLifeInsPaidMethodCode = response["ReturnObject"];
         //this.LifeInsForm.patchValue({
@@ -131,7 +131,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       } 
     );
     console.log(this.LifeInscoBranchNameObj);
-    await this.http.post<Array<object>>(AdInsConstant.GetListVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
+    await this.http.post<Array<object>>(URLConstant.GetListVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
       (response) => {
         this.LifeInscoBranchName = response;
       }
@@ -143,7 +143,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     var lifeInsObj = new LifeInsObj();
     lifeInsObj.AppId = this.AppId;
     lifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-    this.http.post(AdInsConstant.InitAppLifeInsH, lifeInsObj).subscribe(
+    this.http.post(URLConstant.InitAppLifeInsH, lifeInsObj).subscribe(
       (response) => {
         this.ListObj = new Array<LifeInsDObj>();
         this.ListObj = response["ListAppLifeInsD"];
@@ -225,7 +225,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       AppId: this.AppId,
       VendorCode: ev.target.value
     }
-    await this.http.post(AdInsConstant.GetRuleAdmFee, object).toPromise().then(
+    await this.http.post(URLConstant.GetRuleAdmFee, object).toPromise().then(
       response => {
         console.log(response);
 
@@ -282,7 +282,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     if (this.IsChecked) {
       if (this.checkSubject() == false) return;
       this.LifeInsObj.AppId = this.AppId;
-      this.http.post(AdInsConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
+      this.http.post(URLConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           // this.wizard.goToNextStep()
@@ -294,7 +294,7 @@ export class LifeInsuranceDataComponent implements OnInit {
       );
     } else {
       this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-      this.http.post(AdInsConstant.DeleteAppLifeIns, this.LifeInsObj).subscribe(
+      this.http.post(URLConstant.DeleteAppLifeIns, this.LifeInsObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           // this.wizard.goToNextStep()
@@ -326,7 +326,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         SeqNo: LifeInsD.SeqNo
       }
       console.log("Object Checked : " + JSON.stringify(object));
-      this.http.post(AdInsConstant.GetRuleRate, object).toPromise().then(
+      this.http.post(URLConstant.GetRuleRate, object).toPromise().then(
         response => {
           console.log(response);
           console.log(response["DiscRate"]);

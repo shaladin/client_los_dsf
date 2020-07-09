@@ -5,11 +5,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetDataDetailComponent } from 'app/NEW-NAP/sharing-component/view-app-component/app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { AppInsuranceDetailComponent } from 'app/NEW-NAP/sharing-component/view-app-component/app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { AppAssetDataDetailFl4wComponent } from '../app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-insurance-fl4w',
-  templateUrl: './app-insurance-fl4w.component.html',
-  styleUrls: ['./app-insurance-fl4w.component.scss']
+  templateUrl: './app-insurance-fl4w.component.html'
 })
 export class AppInsuranceFl4wComponent implements OnInit {
   @Input() AgrmntId: number;
@@ -30,7 +30,7 @@ export class AppInsuranceFl4wComponent implements OnInit {
 
   ngOnInit() {
     console.log('insurance')
-    this.httpClient.post(AdInsConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.AgrmntId }).subscribe(
+    this.httpClient.post(URLConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.AgrmntId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;

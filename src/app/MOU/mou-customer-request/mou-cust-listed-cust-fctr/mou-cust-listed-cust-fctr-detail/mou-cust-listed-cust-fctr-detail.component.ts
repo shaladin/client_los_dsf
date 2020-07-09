@@ -5,12 +5,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr-detail',
-  templateUrl: './mou-cust-listed-cust-fctr-detail.component.html',
-  styleUrls: ['./mou-cust-listed-cust-fctr-detail.component.scss']
+  templateUrl: './mou-cust-listed-cust-fctr-detail.component.html'
 })
 export class MouCustListedCustFctrDetailComponent implements OnInit {
   @Input() MouCustId: number;
@@ -62,7 +61,7 @@ export class MouCustListedCustFctrDetailComponent implements OnInit {
 
   Save(enjiForm){
     var formData = this.MouListedCustFctrForm.value;
-    this.httpClient.post(AdInsConstant.AddMouCustListedCustFctr, formData).subscribe(
+    this.httpClient.post(URLConstant.AddMouCustListedCustFctr, formData).subscribe(
       (response) => {
         this.activeModal.close(response);
       },

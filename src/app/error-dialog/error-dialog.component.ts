@@ -5,7 +5,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 @Component({
   selector: 'app-root',
   templateUrl: './error-dialog.component.html',
-  styleUrls: ['./error-dialog.component.scss'],
   providers: [NGXToastrService]
 })
 export class ErrorDialogComponent implements OnInit, AfterViewInit {

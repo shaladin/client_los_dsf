@@ -2,13 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { environment } from 'environments/environment';
 import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -38,7 +36,7 @@ export class SingleInstFctrComponent implements OnInit {
   }
 
   LoadDDLInterestType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "INTEREST_INPUT_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "INTEREST_INPUT_TYPE" }).subscribe(
       (response) => {
         this.InterestTypeOptions = response["ReturnObject"];
         if (this.InterestTypeOptions != undefined && this.InterestTypeOptions != null) {
@@ -71,7 +69,7 @@ export class SingleInstFctrComponent implements OnInit {
     }
     else {
       this.calcSingleInstObj = this.ParentForm.value;
-      this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({

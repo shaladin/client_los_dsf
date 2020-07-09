@@ -107,7 +107,7 @@ export class AppAddFreeComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    } else if (this.user.MrOfficeTypeCode == CommonConstant.CenterGroup) {
+    } else if (this.user.MrOfficeTypeCode == CommonConstant.CG) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -124,7 +124,7 @@ export class AppAddFreeComponent implements OnInit {
   MakeLookUpObj(){
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -132,7 +132,7 @@ export class AppAddFreeComponent implements OnInit {
     
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -155,7 +155,7 @@ export class AppAddFreeComponent implements OnInit {
     var obj = {
       RowVersion: ""
     };
-    var url = environment.FoundationR3Url + AdInsConstant.GetListKvpActiveRefOffice;
+    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
@@ -250,7 +250,7 @@ export class AppAddFreeComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     console.log(ev);
-    var url = environment.FoundationR3Url + AdInsConstant.GetListProdOfferingDByProdOfferingCode;
+    var url = environment.FoundationR3Url + URLConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
     };

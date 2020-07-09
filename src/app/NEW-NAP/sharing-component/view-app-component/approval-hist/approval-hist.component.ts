@@ -36,7 +36,7 @@ export class ApprovalHistComponent implements OnInit {
       (response) => {
         this.AppNo = response["AppNo"];
         console.log(this.AppNo);
-        this.http.post(AdInsConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
+        this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
           (response) => {
             console.log(response);
             this.result = response;

@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -41,7 +42,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
     this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.leadObj = new LeadObj;
     this.leadObj.LeadId = this.LeadId;
-    this.http.post(AdInsConstant.GetLeadByLeadId, this.leadObj).subscribe(
+    this.http.post(URLConstant.GetLeadByLeadId, this.leadObj).subscribe(
       (response) => { 
         this.LeadStep = response["LeadStep"];
         console.log(this.LeadStep);
@@ -84,7 +85,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
     console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }

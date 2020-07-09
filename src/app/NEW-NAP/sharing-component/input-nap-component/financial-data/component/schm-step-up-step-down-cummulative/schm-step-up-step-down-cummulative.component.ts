@@ -55,7 +55,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -63,7 +63,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
@@ -136,7 +136,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
 
-    this.http.post(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+    this.http.post(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response["InstallmentTable"];
         this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
@@ -182,7 +182,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     this.calcStepUpStepDownObj["IsRecalculate"] = true;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
 
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({

@@ -19,10 +19,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
-    this.getRefMasterListKeyValueActiveByCodeUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefMasterListKeyValueActiveByCodeUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getListKvpActiveRefAppSrcUrl = URLConstant.GetListKvpActiveRefAppSrc;
-    this.getListActiveRefPayFreqUrl = AdInsConstant.GetListActiveRefPayFreq;
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
+    this.getListActiveRefPayFreqUrl = URLConstant.GetListActiveRefPayFreq;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
     })
@@ -139,7 +139,7 @@ export class AppComponent implements OnInit {
 
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";

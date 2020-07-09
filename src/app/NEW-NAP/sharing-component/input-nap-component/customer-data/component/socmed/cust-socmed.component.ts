@@ -4,6 +4,7 @@ import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroup
 import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-socmed',
@@ -94,7 +95,7 @@ export class CustSocmedComponent implements OnInit {
 
   bindSocmedTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "SOCMED_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.SocmedObj = response["ReturnObject"];
         if(this.SocmedObj.length > 0){

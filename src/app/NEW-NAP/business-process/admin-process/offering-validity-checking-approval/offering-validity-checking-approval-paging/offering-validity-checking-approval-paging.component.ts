@@ -12,6 +12,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-paging',
@@ -46,7 +47,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.addCritInput = new Array();
     arrCrit.push(critInputOnlyOffering);
@@ -92,7 +93,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       }else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
-        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+        this.httpClient.post(URLConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }
@@ -104,7 +105,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
+        this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }

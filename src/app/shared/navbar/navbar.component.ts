@@ -15,7 +15,6 @@ import { URLConstant } from '../constant/URLConstant';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss'],
     providers: [RolePickService, NGXToastrService]
 })
 
@@ -124,7 +123,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     }
 
     ClickNotification(item) {
-        this.http.post(AdInsConstant.UpdateReadNotification, { NotificationDId: item.NotificationDId }).subscribe(
+        this.http.post(URLConstant.UpdateReadNotification, { NotificationDId: item.NotificationDId }).subscribe(
             (response) => {
             },
             (error) => {

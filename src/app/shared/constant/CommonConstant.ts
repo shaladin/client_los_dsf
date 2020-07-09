@@ -24,7 +24,7 @@ export class CommonConstant {
 
     //OFFICE TYPE
     public static HeadOffice = "HO";
-    public static CollectionGroup = "CG"
+    public static CG = "CG"
     public static CenterGroup = "Center Group"
 
     //MOU STAT

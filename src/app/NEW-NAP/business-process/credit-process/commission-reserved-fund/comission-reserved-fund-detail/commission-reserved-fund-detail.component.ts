@@ -94,7 +94,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     var obj = {
       AppId: this.ReturnHandlingHObj.AppId
     };
-    this.http.post<AppFinDataObj>(AdInsConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
@@ -152,7 +152,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditComRsvFnd
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           console.log(response);
           this.returnHandlingDObj = response;
@@ -223,7 +223,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   async ClaimTask(WfTaskListId) {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   SubmitReturnHandling() {
@@ -237,7 +237,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
           var lobCode = localStorage.getItem("BizTemplateCode");

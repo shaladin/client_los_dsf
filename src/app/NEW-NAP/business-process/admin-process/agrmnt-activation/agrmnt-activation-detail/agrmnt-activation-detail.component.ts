@@ -7,11 +7,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
   templateUrl: './agrmnt-activation-detail.component.html',
-  styleUrls: ['./agrmnt-activation-detail.component.scss'],
   providers: [AdminProcessService, NGXToastrService]
 })
 export class AgrmntActivationDetailComponent implements OnInit {
@@ -82,7 +82,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   async ClaimTask(WfTaskListId) {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   addToTemp() {

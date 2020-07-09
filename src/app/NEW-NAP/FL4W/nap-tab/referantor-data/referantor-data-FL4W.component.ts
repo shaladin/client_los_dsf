@@ -46,7 +46,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   async ngOnInit() {
     this.appReferantorObj = new NapAppReferantorModel();
     this.ExistedData = false;
-    
+
     await this.GetAppData();
     this.GetInputLookupObj();
     this.getAppReferantorData();
@@ -65,7 +65,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     );
   }
 
-  GetInputLookupObj(){
+  GetInputLookupObj() {
     this.arrAddCrit = new Array();
 
     var addCrit = new CriteriaObj();
@@ -82,7 +82,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     // addCrit1.listValue = [1];
     // this.arrAddCrit.push(addCrit1);
 
-    var addCrit3 = new CriteriaObj(); 
+    var addCrit3 = new CriteriaObj();
     addCrit3.DataType = "text";
     addCrit3.propName = "ro.OFFICE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
@@ -92,7 +92,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
@@ -101,7 +101,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.inputLookupObj.isRequired = false;
     this.NapAppReferantorForm.controls.AccountBank.disable();
   }
-  
+
   getAppReferantorData() {
     // data dummy test
     // var tempId = 11;
@@ -116,10 +116,10 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
         console.log(response);
-        if(response["AppReferantorId"]!=0){
+        if (response["AppReferantorId"] != 0) {
           this.ReferantorOn = true;
           this.ExistedData = true;
-          this.appReferantorObj = response;    
+          this.appReferantorObj = response;
           this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
           this.inputLookupObj.jsonSelect = response;
           this.NapAppReferantorForm.controls.AccountBank.enable();
@@ -164,15 +164,15 @@ export class ReferantorDataFL4WComponent implements OnInit {
         this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Save Edit Data');
-          this.outputTab.emit();
+        this.outputTab.emit();
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
         url = URLConstant.DeleteAppReferantor;
-        this.SaveData(url);    
+        this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Remove Data');
-          this.outputTab.emit();
+        this.outputTab.emit();
       }
     } else {
       if (this.ReferantorOn) {
@@ -186,12 +186,12 @@ export class ReferantorDataFL4WComponent implements OnInit {
         this.outputTab.emit();
       } else {
         // this.wizard.goToNextStep();
-          this.outputTab.emit();
+        this.outputTab.emit();
       }
     }
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -206,7 +206,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     } else {
       this.inputLookupObj.isRequired = true;
       this.inputLookupObj.isReady = true;
-      this.NapAppReferantorForm.controls.AccountBank.enable();      
+      this.NapAppReferantorForm.controls.AccountBank.enable();
       this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
       this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
     }
@@ -239,17 +239,17 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.NapAppReferantorForm.patchValue({
       AccountBank: ""
     });
-    
+
     // this.NpwpOn = ev.IsNPWPExist;
     this.NpwpOn = true;
-    
+
     // console.log("NPWP ON?");
     // console.log(this.NpwpOn);
     this.getDDLBank(ev.ReferantorCode);
   }
 
   getDDLBank(VendorCode) {
-    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = URLConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""

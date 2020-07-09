@@ -89,12 +89,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   initUrl() {
-    this.getPhoneVerifSubjUrl = AdInsConstant.GetAppPhoneVerifSubjectListByAppId;
+    this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
     this.getAppUrl = URLConstant.GetAppById;
-    this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.addVerfResultUrl = AdInsConstant.AddVerfResult;
-    this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = AdInsConstant.EditReturnHandlingD;
+    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
+    this.addVerfResultUrl = URLConstant.AddVerfResult;
+    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
+    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -121,7 +121,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")
     if (this.isReturnHandling == false) {
       this.setReturnHandlingH();
-      this.http.post(AdInsConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
+      this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
         (response) => {
 
           this.toastr.successMessage(response["message"]);
@@ -204,7 +204,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         ReturnHandlingHId: this.returnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingAddPhnVerf
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         },
@@ -302,7 +302,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       pUserID: currentUserContext["UserName"],
       isLoading: false
     };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }

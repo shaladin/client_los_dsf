@@ -8,6 +8,7 @@ import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-guarantor-paging-FL4W',
@@ -38,11 +39,11 @@ export class GuarantorPagingFL4WComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
-    this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
+    this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
 
     var guarantorObj = new GuarantorObj();
     guarantorObj.AppId = this.AppId;
-    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
+    this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {
@@ -103,7 +104,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
         var guarantorObj = new GuarantorObj();
         guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
         guarantorObj.AppGuarantorObj.AppId = this.AppId;
-        this.http.post(AdInsConstant.DeleteAppGuarantor, guarantorObj).subscribe(
+        this.http.post(URLConstant.DeleteAppGuarantor, guarantorObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.inputGridObj.resultData = {
@@ -125,7 +126,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
   loadGuarantorListData(appId: number) {
     var guarantorObj = new AppGuarantorObj();
     guarantorObj.AppId = appId;
-    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
+    this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

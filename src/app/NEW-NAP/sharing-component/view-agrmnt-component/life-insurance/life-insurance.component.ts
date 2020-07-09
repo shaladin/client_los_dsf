@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'agrmnt-life-insurance',
@@ -27,7 +26,7 @@ export class AgrmntLifeInsuranceComponent implements OnInit {
 
   }
   GetAgrmntLifeInsData() {
-    this.http.post(AdInsConstant.GetAgrmntLifeInsDataByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntLifeInsDataByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.AgrmntLifeInsObj = response;

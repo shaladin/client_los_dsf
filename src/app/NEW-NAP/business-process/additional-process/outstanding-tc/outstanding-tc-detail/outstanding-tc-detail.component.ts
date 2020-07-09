@@ -6,13 +6,12 @@ import { FormBuilder } from '@angular/forms';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
   templateUrl: './outstanding-tc-detail.component.html',
-  styleUrls: ['./outstanding-tc-detail.component.scss'],
   providers: [NGXToastrService]
 })
 export class OutstandingTcDetailComponent implements OnInit {
@@ -21,22 +20,22 @@ export class OutstandingTcDetailComponent implements OnInit {
   listAppTCObj: any;
   appTC: any;
   outstandingTcObj: any;
-  BizTemplateCode : any;
+  BizTemplateCode: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.BizTemplateCode = params["BizTemplateCode"];
     });
-   }
+  }
 
-   OustandingTCForm = this.fb.group({});
+  OustandingTCForm = this.fb.group({});
 
   ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewOutstandingTC.json";
   }
 
-  SaveForm(){
+  SaveForm() {
     this.outstandingTcObj = new OutstandingTcObj();
 
     this.listAppTCObj = new ListAppTCObj();
@@ -60,7 +59,7 @@ export class OutstandingTcDetailComponent implements OnInit {
 
     this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    this.http.post(AdInsConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
+    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AddProcess/OutstandingTC/Paging"]);
@@ -71,14 +70,14 @@ export class OutstandingTcDetailComponent implements OnInit {
     );
   }
 
-  Back(){
+  Back() {
     this.router.navigate(['/Nap/AddProcess/OutstandingTC/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
   }
 
-  GetCallBack(ev: any){
+  GetCallBack(ev: any) {
     console.log(ev);
-    if(ev.Key == "ViewApp"){
+    if (ev.Key == "ViewApp") {
       AdInsHelper.OpenAppViewByAppId(ev.ViewObj.AppId);
     }
-    }
+  }
 }

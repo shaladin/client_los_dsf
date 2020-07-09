@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/ResultSubsidySchmMaxRuleObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-subsidy-add-edit-FL4W',
@@ -63,7 +64,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     GetAppSubsidy(){
-      this.http.post<AppSubsidyObj>(AdInsConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
+      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
         (response) => {
           var subdObj = response;
 
@@ -95,7 +96,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
 
     LoadSubsidyMaxRule()
     {
-      this.http.post(AdInsConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
+      this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
         (response) => {
           this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
           console.log(this.subsidyMaxRuleObj);
@@ -126,7 +127,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       subdObj.AppFees = this.listAppFeeObj;
 
       if(this.mode == "add"){
-        this.http.post(AdInsConstant.AddAppSubsidy, subdObj ).subscribe(
+        this.http.post(URLConstant.AddAppSubsidy, subdObj ).subscribe(
           (response) => {
             console.log(response);
             var x = response["ReturnObject"];
@@ -138,7 +139,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       if(this.mode == "edit"){
         subdObj.AppSubsidyId = this.AppSubsidyId;
         
-        this.http.post(AdInsConstant.EditAppSubsidy, subdObj ).subscribe(
+        this.http.post(URLConstant.EditAppSubsidy, subdObj ).subscribe(
           (response) => {
             console.log(response);
             var x = response["ReturnObject"];
@@ -150,7 +151,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
   
     LoadDDLFromTypeCode() {
-      this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
+      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
         (response) => {
           this.FromTypeCodeOptions = response["ReturnObject"];
         }
@@ -158,7 +159,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     LoadDDLFromValue(fromTypeCode: string) {
-      this.http.post(AdInsConstant.GetListSubsidyFromValue, { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
+      this.http.post(URLConstant.GetListSubsidyFromValue, { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
         (response) => {
           this.FromValueOptions = response["ReturnObject"];
         }
@@ -166,7 +167,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
     
     LoadDDLSubsidyAlloc(fromTypeCode: string) {
-      this.http.post(AdInsConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode }).subscribe(
+      this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode }).subscribe(
         (response) => {
           this.AllocCodeOptions = response["ReturnObject"];
         }
@@ -174,7 +175,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-      this.http.post(AdInsConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
+      this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
         (response) => {
           this.SourceCodeOptions = response["ReturnObject"];
         }
@@ -182,7 +183,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
   
     LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) {
-      this.http.post(AdInsConstant.GetListSubsidyValueType, 
+      this.http.post(URLConstant.GetListSubsidyValueType, 
                       { SubsidyFromType: fromTypeCode, 
                         SubsidyAllocCode: allocCode,
                         SubsidySourceCode: sourceCode

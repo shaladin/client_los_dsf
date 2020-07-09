@@ -6,6 +6,7 @@ import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -38,7 +39,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.AgrmntId = params["AgrmntId"];
       }
       if (params["AppId"] != null) {
-        this.AppId = params["AppId"]; 
+        this.AppId = params["AppId"];
       }
       if (params["AppAssetId"] != null) {
         this.AppAssetId = params["AppAssetId"];
@@ -62,9 +63,9 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
     let poUrl = "";
     if (this.lobCode == CommonConstant.CF4W) {
-      poUrl = AdInsConstant.GetAllAssetDataForPOByAsset;
+      poUrl = URLConstant.GetAllAssetDataForPOByAsset;
     } else if (this.lobCode == CommonConstant.FL4W) {
-      poUrl = AdInsConstant.GetAllAssetDataForPOMultiAsset;
+      poUrl = URLConstant.GetAllAssetDataForPOMultiAsset;
     }
 
     var appAssetObj = {
@@ -113,7 +114,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     var listPurchaseOrderD = new Array();
     this.purchaseOrderDObj = new PurchaseOrderDObj();
 
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTotalAssetPrice ;
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTotalAssetPrice;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 
@@ -170,7 +171,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
-    this.http.post(AdInsConstant.SubmitPurchaseOrder, POObj).subscribe(
+    this.http.post(URLConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/PO"], { queryParams: { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId } });

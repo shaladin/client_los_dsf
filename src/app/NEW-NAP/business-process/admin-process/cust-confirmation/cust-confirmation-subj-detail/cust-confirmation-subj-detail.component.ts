@@ -45,8 +45,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   TaskListId: number;
   BizTemplateCode: string;
   SubjectResponse: RefMasterObj = new RefMasterObj();
-  cust : any;
-  custUrl : any;
+  cust: any;
+  custUrl: any;
   appUrl: string;
   agrmntUrl: string;
   leadUrl: string;
@@ -81,11 +81,11 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     console.log("aaaa");
     this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
     this.agrmntUrl = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
- 
+
     console.log(this.appUrl);
     this.GetData();
 
-    this.http.post<RefMasterObj>(AdInsConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
+    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
       (response) => {
         this.SubjectResponse = response;
       },
@@ -94,7 +94,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
       (response) => {
         this.RefStatusList = response["ReturnObject"];
         this.CustConfirm.patchValue({
@@ -106,7 +106,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.PhnList = response;
         this.CustConfirm.patchValue({
@@ -118,7 +118,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
+    this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
       (response) => {
         this.verfQuestionAnswerObj = response["ReturnObject"];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
@@ -133,19 +133,19 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
   GetData() {
 
-    this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
+    this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
         this.agrmntObj = response;
         this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
           (response) => {
-            this.appObj = response; 
+            this.appObj = response;
           },
           (error) => {
             console.log(error);
           });
-          
+
         if (this.agrmntObj.LeadId != null) {
-          this.http.post<LeadObj>(AdInsConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
+          this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
             (response) => {
               console.log("retard");
               console.log(response);
@@ -159,7 +159,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
 
-    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).subscribe(
+    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).subscribe(
       (response) => {
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;
@@ -180,7 +180,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       VerfResultId: id,
       MrVerfSubjectRelationCode: code
     };
-    this.http.post(AdInsConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
+    this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
       (response) => {
         this.VerfResultHList = response["responseVerfResultHCustomObjs"];
       },
@@ -296,7 +296,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       VerfResultDListObj: VerfResultDList
     }
 
-    this.http.post(AdInsConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
+    this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (activeButton == "save") {
@@ -335,7 +335,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       this.CustConfirm.patchValue({
         MrVerfResultHStatCode: this.RefStatusList[0].Key
       });
-
     }
   }
 }

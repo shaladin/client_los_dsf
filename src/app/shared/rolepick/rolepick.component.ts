@@ -34,7 +34,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
   chooseRole(item) {
     console.log(item);
-    var url = environment.FoundationR3Url + AdInsConstant.GetAllActiveRefFormByRefRoleId;
+    var url = environment.FoundationR3Url + URLConstant.GetAllActiveRefFormByRefRoleId;
     var roleUrl = environment.FoundationR3Url + URLConstant.LoginByRole;
     var roleObject = {
       UserName: this.data.user,

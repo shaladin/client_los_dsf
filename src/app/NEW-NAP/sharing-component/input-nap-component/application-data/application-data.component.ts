@@ -123,7 +123,7 @@ export class ApplicationDataComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
@@ -143,7 +143,7 @@ export class ApplicationDataComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         // console.log(response);   
         this.NapAppModelForm.patchValue({
@@ -276,7 +276,7 @@ export class ApplicationDataComponent implements OnInit {
 
   DictRefPayFreq: any = {};
   getPayFregData() {
-    var url = AdInsConstant.GetListActiveRefPayFreq;
+    var url = URLConstant.GetListActiveRefPayFreq;
     var obj = { RowVersion: "" };
 
     this.http.post(url, obj).subscribe(
@@ -303,7 +303,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getRefMasterTypeCode(code) {
-    var url = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    var url = URLConstant.GetRefMasterListKeyValueActiveByCode;
     var obj = {
       RefMasterTypeCode: code,
       RowVersion: ""
@@ -334,7 +334,7 @@ export class ApplicationDataComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";

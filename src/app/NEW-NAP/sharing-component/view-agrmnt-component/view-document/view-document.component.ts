@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "agrmnt-view-document",
@@ -40,7 +41,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   GetAgrmntSigner() {
-    this.http.post(AdInsConstant.GetAgrmntSignerByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.AgrmntSignerObj = response;
@@ -49,7 +50,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   GetAgrmntDoc() {
-    this.http.post(AdInsConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.AgrmntDocObj = response;

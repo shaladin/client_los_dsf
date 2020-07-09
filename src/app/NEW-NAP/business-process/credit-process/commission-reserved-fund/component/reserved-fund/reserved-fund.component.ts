@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -66,11 +67,11 @@ export class ReservedFundComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppFeeUrl = AdInsConstant.GetListAppFeeByAppId;
-    this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
-    this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
-    this.getAppRsvFundRuleUrl = AdInsConstant.CreateRsvFundRule;
-    // this.getMaxAllocAmtRsvFundUrl = AdInsConstant.CreateMaxAllocAmtRsvFund;
+    this.getAppFeeUrl = URLConstant.GetListAppFeeByAppId;
+    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
+    this.addEditRsvFundUrl = URLConstant.AddEditAppReservedFund;
+    this.getAppRsvFundRuleUrl = URLConstant.CreateRsvFundRule;
+    // this.getMaxAllocAmtRsvFundUrl = URLConstant.CreateMaxAllocAmtRsvFund;
   }
 
   ngOnInit() {
@@ -143,7 +144,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFinData(appObj) {
-    this.http.post(AdInsConstant.GetIncomeInfoRsvFund, appObj).subscribe(
+    this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
       (response) => {
         console.log(response);
         this.uppingRate = response["DiffRateAmt"];
@@ -173,7 +174,7 @@ export class ReservedFundComponent implements OnInit {
 
 
   GetAppCust(appObj) {
-    this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, appObj).subscribe(
       (response) => {
         if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.allAppReservedFundObj.IsPersonal = false
@@ -248,7 +249,7 @@ export class ReservedFundComponent implements OnInit {
     };
 
     this.calculatedRemainingAmt();
-    this.http.post(AdInsConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
+    this.http.post(URLConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
       (response) => {
         this.calcGrossYieldObj = response;
         this.grossYield = this.calcGrossYieldObj.GrossYieldPrcnt;

@@ -97,7 +97,7 @@ export class LoginPageComponent implements OnInit {
                     user: username,
                     pwd: password
                 };
-                this.http.post(AdInsConstant.GetRefUserByUsername, requestObj).subscribe(
+                this.http.post(URLConstant.GetRefUserByUsername, requestObj).subscribe(
                 (response) => {
                    this.result = response;
                    if(this.result.IsNeedUpdatePassword){

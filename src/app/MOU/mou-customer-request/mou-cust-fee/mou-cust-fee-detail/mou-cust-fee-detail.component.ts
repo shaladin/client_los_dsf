@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cust-fee-detail',
@@ -36,8 +37,8 @@ export class MouCustFeeDetailComponent implements OnInit {
   ) {
     var rmFeeType = new RefMasterObj();
     rmFeeType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFeeType;
-    let getRefFee = this.httpClient.post(AdInsConstant.GetRefFeeList, null);
-    let getFeeType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
+    let getRefFee = this.httpClient.post(URLConstant.GetRefFeeList, null);
+    let getFeeType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
     forkJoin([getRefFee, getFeeType]).subscribe(
       (response) => {
         this.refFeeList = response[0]["ReturnObject"];
@@ -111,7 +112,7 @@ export class MouCustFeeDetailComponent implements OnInit {
       return;
     }
 
-    this.httpClient.post(AdInsConstant.AddMouCustFee, formData).subscribe(
+    this.httpClient.post(URLConstant.AddMouCustFee, formData).subscribe(
       (response) => {
         this.activeModal.close(response);
       },

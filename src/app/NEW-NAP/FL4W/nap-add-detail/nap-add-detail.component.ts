@@ -178,7 +178,7 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -281,7 +281,7 @@ export class NapAddDetailComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-      // this.ucMainInfo.OnInit();
+    // this.ucMainInfo.OnInit();
   }
 
   Submit() {
@@ -299,7 +299,7 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
         ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-        this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
@@ -320,13 +320,13 @@ export class NapAddDetailComponent implements OnInit {
     wfClaimObj.Username = currentUserContext["UserName"];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
       (response) => {
       });
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
   }
 
   CheckCustType(ev: string) {
