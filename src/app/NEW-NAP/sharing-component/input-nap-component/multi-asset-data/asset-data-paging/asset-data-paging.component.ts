@@ -8,6 +8,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -211,9 +212,10 @@ export class AssetDataPagingComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
-  next() {
-    if (this.gridAppCollateralObj.resultData.Data.length < 1) {
-      this.toastr.warningMessage("Asset minimum is 1");
+  next(){
+    if(this.gridAppCollateralObj.resultData.Data.length < 1)
+    {
+      this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
     }
     else {

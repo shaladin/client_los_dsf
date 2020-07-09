@@ -18,6 +18,7 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-commission',
@@ -713,15 +714,15 @@ export class CommissionComponent implements OnInit {
     // console.log(this.FormInputObjReferantor["isDataInputed"]);
     // console.log(this.isCalcTotal);
     if ((!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) || !this.isCalcTotal) {
-      this.toastr.warningMessage("Must Calculate First");
+      this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
       return;
     }
     if (this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount) {
-      this.toastr.warningMessage("Total Commision Amount cannot more than Max Allocated Amount");
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
       return;
     }
     if (0 > this.viewIncomeInfoObj.RemainingAllocatedAmount) {
-      this.toastr.warningMessage("Total Commision Amount cannot more than Remaining Allocated Amount");
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
       return;
     }
     this.listAppCommissionHObj = new Array();

@@ -13,6 +13,7 @@ import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpSte
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative',
@@ -128,7 +129,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
       return;
     }    
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
-      this.toastr.warningMessage("Cummulative Tenor must be higher than 0.");
+      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
       return;
     }
 
@@ -175,7 +176,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
       return;
     }    
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
-      this.toastr.warningMessage("Cummulative Tenor must be higher than 0.");
+      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
       return;
     }
     this.calcStepUpStepDownObj = this.ParentForm.value;
@@ -230,7 +231,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     if (gracePeriodType != "") {
       if (gracePeriod == 0) {
         valid = false;
-        this.toastr.warningMessage("Grace Period must be set");
+        this.toastr.warningMessage(ExceptionConstant.GRACE_PERIOD_MUST_SET);
       }
     }
 
@@ -248,13 +249,13 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
 
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.warningMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.warningMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }

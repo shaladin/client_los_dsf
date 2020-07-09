@@ -8,6 +8,7 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-reguler-fix-fctr',
@@ -54,7 +55,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
 
   CalcBaseOnRate() {
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.warningMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
       return;
     }
     this.calcRegFixObj = this.ParentForm.value;
@@ -89,7 +90,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   CalcBaseOnInst() {
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.warningMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
       return;
     }
     for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
@@ -98,11 +99,11 @@ export class SchmRegulerFixFctrComponent implements OnInit {
       }
     }
     if (this.IsAppFeePrcntValid == false) {
-      this.toastr.warningMessage("App Fee Prcnt must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.APP_FEE_PRCNT_MUST_GREATER + '0.');
       return;
     }
     if (this.ParentForm.value.EffectiveRatePrcnt < 0) {
-      this.toastr.warningMessage("Effective Rate must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.EFFECTIVE_RATE_MUST_GREATER + '0.');
       return;
     }
     this.calcRegFixObj = this.ParentForm.value;

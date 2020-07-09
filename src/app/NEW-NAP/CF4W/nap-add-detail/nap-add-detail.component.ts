@@ -306,7 +306,7 @@ export class NapAddDetailComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.warningMessage(ExceptionConstant.DataErrorMessageTcData);
+        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();

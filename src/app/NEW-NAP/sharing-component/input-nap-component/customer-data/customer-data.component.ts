@@ -171,7 +171,7 @@ export class CustomerDataComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.warningMessage("Total Share (%) must be 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }      
       this.custDataCompanyObj = new CustDataCompanyObj();
@@ -250,7 +250,7 @@ export class CustomerDataComponent implements OnInit {
         this.isExpiredBirthDt = true;
 
     }else if(type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
-      this.toastr.warningMessage("Customer age must be at least 17 year old");
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }

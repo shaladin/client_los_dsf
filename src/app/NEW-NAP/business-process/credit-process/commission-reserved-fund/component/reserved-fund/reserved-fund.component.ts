@@ -11,8 +11,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-
-
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: "reserved-fund",
@@ -90,19 +89,19 @@ export class ReservedFundComponent implements OnInit {
 
   SaveForm() {
     if (this.isCalculated == false) {
-      this.toastr.warningMessage("Please Calculate First");
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_FIRST);
     }
     else {
       this.calculating()
       if (this.totalRsvFundAmtWhenSave != this.totalRsvFundAmt)
       {
-        this.toastr.warningMessage("Please Calculate Again");
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       }
       else if (this.remainingAllocatedAmt < 0) {
-        this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
       }
       else if (this.maxAllocAmt < this.totalRsvFundAmt) {
-        this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Max Allocated Amount");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
       }
       else {
         var lobCode = localStorage.getItem("BizTemplateCode");

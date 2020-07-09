@@ -22,6 +22,7 @@ import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDa
 import { CustPersonalFinancialDataFL4WComponent } from './component/personal-financial-data/cust-personal-financial-data-FL4W.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -178,7 +179,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.warningMessage("Total Share (%) must be 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
@@ -510,7 +511,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
       var index = selectedSocmedCode.indexOf(tempKey);
       if (index > -1) {
-        this.toastr.warningMessage("Social Media cannot be duplicate!");
+        this.toastr.warningMessage(ExceptionConstant.DUPLICATE_SOCIAL_MEDIA);
         this.isSocmedValid = false;
         return;
       }

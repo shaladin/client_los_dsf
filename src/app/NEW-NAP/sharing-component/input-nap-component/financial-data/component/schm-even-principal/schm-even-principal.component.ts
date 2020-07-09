@@ -13,6 +13,7 @@ import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpSte
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-even-principal',
@@ -156,7 +157,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
     if (gracePeriodType != "") {
       if (gracePeriod == 0) {
         valid = false;
-        this.toastr.warningMessage("Grace Period must be set");
+        this.toastr.warningMessage(ExceptionConstant.GRACE_PERIOD_MUST_SET);
       }
     }
 
@@ -174,13 +175,13 @@ export class SchmEvenPrincipalComponent implements OnInit {
 
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.warningMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.warningMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }

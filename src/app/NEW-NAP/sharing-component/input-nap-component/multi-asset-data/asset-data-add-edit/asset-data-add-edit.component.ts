@@ -29,6 +29,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -214,7 +215,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.DPAmount = this.AssetDataForm.controls["DownPayment"].value;
 
     if (this.DPAmount > this.AssetPrice) {
-      this.toastr.warningMessage("Down Payment Must Be Lower Than Asset Price!");
+      this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price!");
       return;
     }
   }
@@ -993,7 +994,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
 
       if (this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt) {
-        this.toastr.warningMessage("Down Payment Must Be Lower Than Asset Price!");
+        this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price!");
         return false;
       }
 
@@ -1026,7 +1027,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
 
       if (this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt) {
-        this.toastr.warningMessage("Down Payment Must Be Lower Than Asset Price!");
+        this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price!");
         return false;
       }
 

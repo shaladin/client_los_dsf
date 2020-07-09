@@ -9,6 +9,7 @@ import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -392,7 +393,7 @@ export class FormAddDynamicComponent implements OnInit {
         ContentName: "",
         ContentNameValue: ""
       });
-      return this.toastr.warningMessage("There no rule setting for " + code);
+      return this.toastr.warningMessage(ExceptionConstant.NO_RULE_SETTING + code);
     }
 
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
@@ -442,7 +443,7 @@ export class FormAddDynamicComponent implements OnInit {
     }
     var temp = this.GetTempRuleObj(code, idxTemp);
     if (temp == undefined || temp == null)
-      return this.toastr.warningMessage("There no rule setting for " + code);
+      return this.toastr.warningMessage(ExceptionConstant.NO_RULE_SETTING + code);
 
     this.FormObj.controls.arr["controls"][idx].patchValue({
       ContentName: this.DDLContentName[indexFormObj].Key,

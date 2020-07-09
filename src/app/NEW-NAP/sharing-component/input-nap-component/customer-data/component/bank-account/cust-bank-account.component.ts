@@ -10,6 +10,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-bank-account',
@@ -81,7 +82,7 @@ export class CustBankAccountComponent implements OnInit {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
 
         if (check != undefined) {
-          this.toastr.warningMessage("Other bank account is already default");
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }
@@ -93,7 +94,7 @@ export class CustBankAccountComponent implements OnInit {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
 
         if (check != undefined) {
-          this.toastr.warningMessage("Other bank account is already default");
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }

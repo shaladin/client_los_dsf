@@ -26,6 +26,8 @@ import { CalcInsAddCvgObj } from 'app/shared/model/CalcInsAddCvgObj.Model';
 import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-insurance-multi-asset-data',
@@ -299,19 +301,19 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       var insCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
 
       if (this.isGenerate == false) {
-        this.toastr.warningMessage("Please click Generate Insurance.");
+        this.toastr.warningMessage(ExceptionConstant.CLICK_GENERATE_INSURANCE);
         return;
       }
       if (this.isCalculate == false) {
-        this.toastr.warningMessage("Please click Calculate Insurance.");
+        this.toastr.warningMessage(ExceptionConstant.CLICK_CALCULATE_INSURANCE);
         return;
       }
       if (custDiscAmt > totalPremiToCust) {
-        this.toastr.warningMessage("Discount Amount can't be higher than Total Premi to Customer.");
+        this.toastr.warningMessage(ExceptionConstant.DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer.");
         return;
       }
       if (insCpltzAmt > totalPremiToCust - custDiscAmt) {
-        this.toastr.warningMessage("Capitalize Amount can't be higher than Total Premi to Customer after Discount.");
+        this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +"Total Premi to Customer after Discount.");
         return;
       }
     }
@@ -322,12 +324,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
 
       if (endDt < businessDt) {
-        this.toastr.warningMessage("End Date can't be lower than Business Date.");
+        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Business Date.");
         return;
       }
 
       if (endDt < startDt) {
-        this.toastr.warningMessage("End Date can't be lower than Start Date.");
+        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Start Date.");
         return;
       }
     }
@@ -688,31 +690,31 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   async GenerateInsurance(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
     if (appInsMainCvgObj == undefined) {
       if (this.InsuranceDataForm.controls.InscoBranchCode.value == "") {
-        this.toastr.warningMessage("Please choose Insco Branch.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_INSCO_BRANCH);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "") {
-        this.toastr.warningMessage("Please choose Paid By.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_PAID_BY);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetRegion.value == "") {
-        this.toastr.warningMessage("Please choose Region.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_REGION);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetCoverPeriod.value == "") {
-        this.toastr.warningMessage("Please choose Cover Period.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_COVER_PERIOD);
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value == "") {
-        this.toastr.warningMessage("Please input Insurance Length.");
+        this.toastr.warningMessage(ExceptionConstant.INPUT_INSURANCE_LENGTH);
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value < this.minInsLength) {
-        this.toastr.warningMessage("Insurance Length must be higher than " + (this.minInsLength - 1).toString());
+        this.toastr.warningMessage(ExceptionConstant.INSURANCE_LENGTH_MUST_HIGHER_THAN + (this.minInsLength - 1).toString());
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value > this.maxInsLength) {
-        this.toastr.warningMessage("Insurance Length must be lower than " + (this.maxInsLength + 1).toString());
+        this.toastr.warningMessage(ExceptionConstant.INSURANCE_LENGTH_MUST_LOWER_THAN+ (this.maxInsLength + 1).toString());
         return;
       }
       // this.InsuranceDataForm.controls.InscoBranchCode.markAsTouched();
@@ -739,7 +741,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         console.log(response);
         this.ruleObj = response["Result"];
         if (this.ruleObj.InsAssetCategory == "") {
-          this.toastr.warningMessage("Please setting rule first.");
+          this.toastr.warningMessage(ExceptionConstant.SETTING_RULE_FIRST);
           return;
         }
         this.InsuranceDataForm.patchValue({

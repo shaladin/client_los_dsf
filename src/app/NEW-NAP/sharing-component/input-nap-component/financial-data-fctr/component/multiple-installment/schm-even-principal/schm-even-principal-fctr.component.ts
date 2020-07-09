@@ -9,6 +9,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { environment } from 'environments/environment';
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-even-principal-fctr',
@@ -57,7 +58,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
     this.IsAppFeePrcntValid = true;
 
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.warningMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
       return;
     }
     for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
@@ -66,11 +67,11 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
       }
     }
     if (this.IsAppFeePrcntValid == false) {
-      this.toastr.warningMessage("App Fee Prcnt must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.APP_FEE_PRCNT_MUST_GREATER + '0.');
       return;
     }
     if (this.ParentForm.value.EffectiveRatePrcnt < 0) {
-      this.toastr.warningMessage("Effective Rate must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.EFFECTIVE_RATE_MUST_GREATER + '0.');
       return;
     }
 

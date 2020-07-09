@@ -11,6 +11,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { formatDate } from '@angular/common';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -119,7 +120,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
 
     if(birthDt > businessDt){
-      this.toastr.warningMessage("Birth Date can not be more than " + businessDtStr);
+      this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + businessDtStr);
       return;
     }
 

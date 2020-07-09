@@ -10,7 +10,8 @@ import { environment } from 'environments/environment';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+ 
 @Component({
   selector: 'app-cust-bank-account-FL4W',
   templateUrl: './cust-bank-account-FL4W.component.html',
@@ -79,9 +80,9 @@ export class CustBankAccountFL4WComponent implements OnInit {
     if (this.mode == "add") {
       if (this.CustBankAccountForm.controls.IsDefault.value == true) {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
-
-        if (check != undefined) {
-          this.toastr.warningMessage("Other bank account is already default");
+  
+        if(check != undefined){
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }
@@ -91,9 +92,9 @@ export class CustBankAccountFL4WComponent implements OnInit {
     if (this.mode == "edit") {
       if (this.CustBankAccountForm.controls.IsDefault.value == true && this.listBankAcc[this.currentEditedIndex].IsDefault == false) {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
-
-        if (check != undefined) {
-          this.toastr.warningMessage("Other bank account is already default");
+  
+        if(check != undefined){
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }
