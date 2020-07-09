@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 
@@ -32,7 +33,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
 
   verfResObj = {
     TrxRefNo: "",
-    MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
+    MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
   };
 
   verfResHObj = {

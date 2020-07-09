@@ -189,12 +189,12 @@ export class ViewApplicationDataMultiComponent implements OnInit {
             Address: "",
             MobilePhone: ""
           };
-          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == AdInsConstant.GuarantorTypeCodeCompany){
+          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodeCompany){
             temp.IdNo = tempResponse.appGuarantorObj.TaxIdNo;
             temp.Address = tempResponse.appGuarantorCompanyObj.Addr;
             temp.MobilePhone = tempResponse.appGuarantorCompanyObj.MobilePhnNo1 + " / " + tempResponse.appGuarantorCompanyObj.MobilePhnNo2;
           }
-          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == AdInsConstant.GuarantorTypeCodePersonal){
+          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodePersonal){
             temp.IdNo = tempResponse.appGuarantorPersonalObj.IdNo;
             temp.Address = tempResponse.appGuarantorPersonalObj.Addr;
             temp.MobilePhone = tempResponse.appGuarantorPersonalObj.MobilePhnNo;

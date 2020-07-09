@@ -7,6 +7,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -84,7 +85,7 @@ export class CreditApprovalDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
-    if(event.result.toLowerCase() == AdInsConstant.ApvResultReturn.toLowerCase()){
+    if(event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()){
       var returnHandlingHObj = new ReturnHandlingHObj();
       var user = JSON.parse(localStorage.getItem("UserAccess"));
 

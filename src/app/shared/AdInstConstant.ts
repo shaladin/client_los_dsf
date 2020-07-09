@@ -1,28 +1,8 @@
 import { environment } from "environments/environment";
 
 export class AdInsConstant {
-  //Application Item
-  public static USER_ACCESS = "UserAccess";
-  public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
-  public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
-  public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
-  public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
-
   public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
-
-  public static TrxTypeCodePhn = "PHN";
-  public static VerfTrxTypeCodePhn = "PHN_VERIF";
-  public static VerfResultStatCodeNew = "NEW";
-  public static RtnHandlingReturnStatDone = "DONE";
-  public static CrdInvstgStatDone = "DONE";
-  public static CrdRvwStatDone = "DONE";
-  public static ASSET_TYPE_CAR = "CAR";
-  public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
-  public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
-  public static AppStatCancel = "CANCEL";
-  //APV RESULT
-  public static ApvResultReturn = "Return";
 
   //WORKFLOW (LEWAT FOUNDATION)
   public static ResumeWorkflow = environment.FoundationR3Url + "/Workflow/ResumeWorkflow"
@@ -30,7 +10,6 @@ export class AdInsConstant {
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
   public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";
-
 
   // APP Application
   public static AddApp = environment.losUrl + "/Application/AddApp";
@@ -440,7 +419,7 @@ export class AdInsConstant {
   public static DeleteWorkingHourSchmH = "/WorkHour/DeleteWorkingHourSchmH";
 
   //QUEUE
-  public static AddQueue = "http://R3App-Server/FOUNDATION/RabbitMq/AddQueue";
+  public static AddQueue = environment.FoundationR3Url + "/FOUNDATION/RabbitMq/AddQueue";
 
   //REF MODULE
   public static GetListRefModuleKeyValue = "/RefModule/GetListRefModuleKeyValue";
@@ -507,8 +486,6 @@ export class AdInsConstant {
   public static EditAppGuarantorCompany = environment.losUrl + "/AppGuarantor/EditAppGuarantorCompany"
   public static DeleteAppGuarantor = environment.losUrl + "/AppGuarantor/DeleteAppGuarantor"
   public static GetListAppGuarantorCompanyByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyByAppId"
-  public static GuarantorTypeCodePersonal = "PERSONAL";
-  public static GuarantorTypeCodeCompany = "COMPANY";
   public static GetListAppGuarantorPersonalByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorPersonalByAppId"
   public static GetListAppGuarantorPersonalForView = environment.losUrl + "/AppGuarantor/GetListAppGuarantorPersonalForView"
   public static GetListAppGuarantorCompanyForView = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyForView"
@@ -727,7 +704,6 @@ export class AdInsConstant {
 
   public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
 
-
   //CUST DATA COMPANY
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
@@ -830,9 +806,6 @@ export class AdInsConstant {
   //REF TC
   public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
   public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
-
-  //PURCHASE ORDER
-
 
   //APP INSURANCE
   public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";

@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-application-agreement-cancellation-paging',
@@ -21,7 +22,7 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
     var critInputAppStatNotCancel = new CriteriaObj();
     critInputAppStatNotCancel.propName = "ap.APP_STAT";
     critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
-    critInputAppStatNotCancel.value = AdInsConstant.AppStatCancel;
+    critInputAppStatNotCancel.value = CommonConstant.AppStatCancel;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApplicationAgreementCancellation.json";

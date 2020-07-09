@@ -296,7 +296,7 @@ export class CreditReviewMainComponent implements OnInit {
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
-    tempAppCrdRvwObj.CrdRvwStat = AdInsConstant.CrdRvwStatDone;
+    tempAppCrdRvwObj.CrdRvwStat = CommonConstant.CrdRvwStatDone;
     tempAppCrdRvwObj.ReturnNotes = "";
     if (this.ResponseExistCreditReview != null) {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;

@@ -11,6 +11,8 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { event } from 'jquery';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-credit-approval-paging',
@@ -22,7 +24,7 @@ export class CreditApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
   token: any = localStorage.getItem("Token");
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(AdInsConstant.USER_ACCESS));
+  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
   
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -77,14 +79,14 @@ export class CreditApprovalPagingComponent implements OnInit {
     }
     else if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
         this.router.navigate(["/Nap/CreditProcess/CreditApproval/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode } });
       }
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_HOLD);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
         this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
@@ -96,7 +98,7 @@ export class CreditApprovalPagingComponent implements OnInit {
     }
     else if (ev.Key == "TakeBack") {
       if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
         this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
@@ -107,7 +109,7 @@ export class CreditApprovalPagingComponent implements OnInit {
       }
     }
     else {
-      this.toastr.errorMessage(String.Format(AdInsConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
+      this.toastr.errorMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
 }

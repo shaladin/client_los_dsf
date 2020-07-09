@@ -54,7 +54,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   verfResObj =
     {
       TrxRefNo: "",
-      MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
+      MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
     };
   phoneVerifObj: any;
   AppObj: any;
@@ -165,7 +165,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.ReturnHandlingHData.AppId = this.appId;
     this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
     this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
-    this.ReturnHandlingHData.ReturnFromTrxType = AdInsConstant.TrxTypeCodePhn;
+    this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.TrxTypeCodePhn;
     this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
     this.ReturnHandlingHData.IsReturn = (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false;
   }
@@ -253,8 +253,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
       this.addVerifResultObj.VerfDt = businessDt;
       this.addVerifResultObj.EmpNo = "-";
-      this.addVerifResultObj.MrVerfResultStatCode = AdInsConstant.VerfResultStatCodeNew;
-      this.addVerifResultObj.MrVerfTrxTypeCode = AdInsConstant.VerfTrxTypeCodePhn;
+      this.addVerifResultObj.MrVerfResultStatCode = CommonConstant.VerfResultStatCodeNew;
+      this.addVerifResultObj.MrVerfTrxTypeCode = CommonConstant.VerfTrxTypeCodePhn;
       this.addVerifResultObj.LobCode = this.AppObj.LobCode;
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";

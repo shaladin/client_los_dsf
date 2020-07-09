@@ -82,7 +82,7 @@ export class DoAssetDetailComponent implements OnInit {
         var appAsset = response["AppAssetObj"];
         var appCollateral = response["AppCollateralDoc"];
         appAsset.TempRegisLettDt = datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
-        if(appAsset.SerialNo1Label == AdInsConstant.LICENSE_PLATE_NO){
+        if(appAsset.SerialNo1Label == CommonConstant.LICENSE_PLATE_NO){
           this.DOAssetDetail.patchValue({
             LicensePlateNo: appAsset.SerialNo1
           });
@@ -91,7 +91,7 @@ export class DoAssetDetailComponent implements OnInit {
           }
           this.licensePlateAttr = "SerialNo1";
         }
-        else if(appAsset.SerialNo2Label == AdInsConstant.LICENSE_PLATE_NO){
+        else if(appAsset.SerialNo2Label == CommonConstant.LICENSE_PLATE_NO){
           this.DOAssetDetail.patchValue({
             LicensePlateNo: appAsset.SerialNo2
           });
@@ -100,7 +100,7 @@ export class DoAssetDetailComponent implements OnInit {
           }
           this.licensePlateAttr = "SerialNo2";
         }
-        else if(appAsset.SerialNo3Label == AdInsConstant.LICENSE_PLATE_NO){
+        else if(appAsset.SerialNo3Label == CommonConstant.LICENSE_PLATE_NO){
           this.DOAssetDetail.patchValue({
             LicensePlateNo: appAsset.SerialNo3
           });
@@ -109,7 +109,7 @@ export class DoAssetDetailComponent implements OnInit {
           }
           this.licensePlateAttr = "SerialNo3";
         }
-        else if(appAsset.SerialNo4Label == AdInsConstant.LICENSE_PLATE_NO){
+        else if(appAsset.SerialNo4Label == CommonConstant.LICENSE_PLATE_NO){
           this.DOAssetDetail.patchValue({
             LicensePlateNo: appAsset.SerialNo4
           });
@@ -118,7 +118,7 @@ export class DoAssetDetailComponent implements OnInit {
           }
           this.licensePlateAttr = "SerialNo4";
         }
-        else if(appAsset.SerialNo5Label == AdInsConstant.LICENSE_PLATE_NO){
+        else if(appAsset.SerialNo5Label == CommonConstant.LICENSE_PLATE_NO){
           this.DOAssetDetail.patchValue({
             LicensePlateNo: appAsset.SerialNo5
           });

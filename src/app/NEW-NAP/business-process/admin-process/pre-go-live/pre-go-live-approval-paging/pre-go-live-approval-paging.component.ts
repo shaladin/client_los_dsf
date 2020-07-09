@@ -9,18 +9,19 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 @Component({
   selector: 'app-pre-go-live-approval-paging',
-  templateUrl: './pre-go-live-approval-paging.component.html',
-  styleUrls: ['./pre-go-live-approval-paging.component.scss']
+  templateUrl: './pre-go-live-approval-paging.component.html'
 })
 export class PreGoLiveApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   token: any = localStorage.getItem("Token");
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(AdInsConstant.USER_ACCESS));
+  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
 
   constructor(private route: ActivatedRoute,
@@ -76,14 +77,14 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
     var ApvReqObj = new ApprovalObj();
     if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
         this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Detail"], { queryParams: { "AgrmntId": ev.RowObj.AgrmntId, "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId } });
       }
     }    
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_HOLD);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       }else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
         this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
@@ -95,7 +96,7 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
     }
     else if (ev.Key == "TakeBack") {
       if (String.Format("{0:L}", ev.RowObj.MainUserId) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
         this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
@@ -106,7 +107,7 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
       }
     }
     else {
-      this.toastr.errorMessage(String.Format(AdInsConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
+      this.toastr.errorMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
 
