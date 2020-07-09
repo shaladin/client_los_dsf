@@ -138,7 +138,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.mouCustObj = new MouCustObj();
         this.mouCustObj.CustNo = this.CustNo;
         this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = "GENERAL";
+        this.mouCustObj.MrMouTypeCode = AdInsConstant.GENERAL;
 
         this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
@@ -203,7 +203,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
   isFixedRate: boolean = false;
   ChangeInterestType() {
-    if (this.NapAppModelForm.value.InterestType == "FIXED") {
+    if (this.NapAppModelForm.value.InterestType == AdInsConstant.InterestTypeFixed) {
       this.isFixedRate = true;
       this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
     }
@@ -311,7 +311,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       }
     );
     
-    if(this.NapAppModelForm.controls.PayFreqCode.value == "MONTHLY")
+    if(this.NapAppModelForm.controls.PayFreqCode.value == AdInsConstant.PAY_FREQ_MONTHLY)
     {
       var total = this.NapAppModelForm.controls.Tenor.value
       this.PatchNumOfInstallment(total)
@@ -441,7 +441,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   PayFreqTimeOfYear: number = 1;
   ChangeNumOfInstallmentTenor(){
     var temp = this.NapAppModelForm.controls.Tenor.value;
-    if(this.NapAppModelForm.controls.PayFreqCode.value == "MONTHLY")
+    if(this.NapAppModelForm.controls.PayFreqCode.value == AdInsConstant.PAY_FREQ_MONTHLY)
     {
       this.PatchNumOfInstallment(temp)
     }

@@ -95,8 +95,8 @@ export class CustConfirmationDetailComponent implements OnInit {
 
         this.verfResultObj.TrxRefNo = this.AgrmntNo;
         this.verfResultObj.EmpNo = "-";
-        this.verfResultObj.MrVerfResultStatCode = "NEW";
-        this.verfResultObj.MrVerfTrxTypeCode = "CUST_CNFRM";
+        this.verfResultObj.MrVerfResultStatCode = AdInsConstant.VerificationNew;
+        this.verfResultObj.MrVerfTrxTypeCode = AdInsConstant.VerfTrxTypeCodeCustConfirm;
         this.verfResultObj.LobCode = this.appObj.LobCode;
         this.verfResultObj.LobName = this.appObj.LobCode;
         this.verfResultObj.Notes = "-";
@@ -118,7 +118,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   SaveForm() {
     if (this.CustCnfrmObj.IsSkip == false) {
       for (var i = 0; i < this.VerfResultList.length; i++) {
-        if (this.VerfResultList[i].MrVerfResultHStatCode == "FAIL" || this.VerfResultList[i].MrVerfResultHStatCode == "NEW") {
+        if (this.VerfResultList[i].MrVerfResultHStatCode == AdInsConstant.VerificationFail || this.VerfResultList[i].MrVerfResultHStatCode == AdInsConstant.VerificationNew) {
           this.toastr.warningMessage("Result can't be New or Failed");
           return;
         }

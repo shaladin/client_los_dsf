@@ -140,7 +140,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
       }
     );
     if(this.appCrdInvstgHObj.AppId == 0){
-      var refMasterObj = { RefMasterTypeCode: "CRD_INVSTG_ANALYSIS_ITEM"};
+      var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
       await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
         (response) => {
           this.analysisItemObj = response["ReturnObject"];

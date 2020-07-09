@@ -84,7 +84,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   }
 
   bindSourceOfIncomeObj(){
-    this.refMasterObj.RefMasterTypeCode = "SOURCE_INCOME";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeSourceIncome;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.SourceOfIncomeObj = response["ReturnObject"];

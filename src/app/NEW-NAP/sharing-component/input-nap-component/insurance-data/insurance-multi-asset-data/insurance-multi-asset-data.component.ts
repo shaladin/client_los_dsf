@@ -621,7 +621,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.subsidyRuleObj = response["ResultSubsidy"];
         console.log(this.subsidyRuleObj);
         var custDiscAmt = 0;
-        if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "CO") {
+        if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == AdInsConstant.InsPaidByAtCost) {
           custDiscAmt = this.calcInsObj.TotalMainPremiAmt + this.calcInsObj.TotalAdditionalPremiAmt + this.calcInsObj.TotalFeeAmt;
           this.InsuranceDataForm.patchValue({
             InsCpltzAmt: 0
@@ -1388,7 +1388,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   bindInsuredByObj() {
-    var refMasterObj = { RefMasterTypeCode: "INSURED_BY" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeInsuredBy };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.insuredByObj = response["ReturnObject"];
@@ -1397,7 +1397,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   bindPaidByObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_PAID_BY" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeInsPaidBy };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.paidByObj = response["ReturnObject"];
@@ -1406,7 +1406,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async bindInsMainCvgTypeObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_MAIN_CVG_TYPE" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeInsMainCvgType };
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insMainCvgTypeObj = response["ReturnObject"];
@@ -1415,7 +1415,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async bindInsAddCvgTypeObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_ADD_CVG_TYPE" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeInsAddCvgType };
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insAddCvgTypeObj = response["ReturnObject"];
@@ -1434,7 +1434,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   bindInsAssetCoverPeriodObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_COVER_PERIOD" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeInsCoverPeriod };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.insAssetCoverPeriodObj = response["ReturnObject"];
@@ -1443,7 +1443,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   bindInsAssetRegionObj() {
-    var refMasterObj = { RefMasterTypeCode: "ASSET_INS_REGION" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeAssetInsRegion };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.insAssetRegionObj = response["ReturnObject"];
@@ -1461,7 +1461,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   bindPayPeriodToInscoObj() {
-    var refMasterObj = { RefMasterTypeCode: "PAY_PERIOD_TO_INSCO" };
+    var refMasterObj = { RefMasterTypeCode: AdInsConstant.RefMasterTypeCodePayPeriodToInsco };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.payPeriodToInscoObj = response["ReturnObject"];

@@ -476,7 +476,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = "ASSET_USAGE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetUsage;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.AssetUsageObj = response["ReturnObject"];
@@ -509,7 +509,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindAsseConditionObj() {
-    this.refMasterObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.AssetConditionObj = response["ReturnObject"];
@@ -524,7 +524,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
@@ -539,7 +539,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   bindUserOwnerRelationshipObj() {
 
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.UserRelationObj = response["ReturnObject"];
@@ -618,7 +618,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     }
 
     if (this.AssetTypeObj.SerialNo2Label != "" && this.AssetTypeObj.SerialNo2Label != null) {
-      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == AdInsConstant.AssetConditionUsed) {
         this.CollateralDataForm.controls.SerialNo2.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo2.updateValueAndValidity();
       }
@@ -632,7 +632,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo3Label != "" && this.AssetTypeObj.SerialNo3Label != null) {
-      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == AdInsConstant.AssetConditionUsed) {
         this.CollateralDataForm.controls.SerialNo3.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
       }
@@ -646,7 +646,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo4Label != "" && this.AssetTypeObj.SerialNo4Label != null) {
-      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == AdInsConstant.AssetConditionUsed) {
         this.CollateralDataForm.controls.SerialNo4.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo4.updateValueAndValidity();
       }
@@ -660,7 +660,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo4.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo5Label != "" && this.AssetTypeObj.SerialNo5Label != null) {
-      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == AdInsConstant.AssetConditionUsed) {
         this.CollateralDataForm.controls.SerialNo5.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo5.updateValueAndValidity();
       }
@@ -673,7 +673,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls.SerialNo5.clearValidators;
       this.CollateralDataForm.controls.SerialNo5.updateValueAndValidity();
     }
-    if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+    if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == AdInsConstant.AssetConditionUsed) {
       this.CollateralDataForm.controls.AssetTaxDt.setValidators([Validators.required]);
       this.CollateralDataForm.controls.AssetTaxDt.updateValueAndValidity();
     }
@@ -809,14 +809,13 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       (response) => {
         this.AppCustObj = response;
         console.log(response);
-        this.CollateralDataForm.patchValue({
-
+        this.CollateralDataForm.patchValue({ 
           UserName: this.AppCustObj.CustName,
-          MrUserRelationshipCode: "SELF",
+          MrUserRelationshipCode: AdInsConstant.SelfCustomer,
           OwnerName: this.AppCustObj.CustName,
           MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
           OwnerIdNo: this.AppCustObj.IdNo,
-          MrOwnerRelationshipCode: "SELF"
+          MrOwnerRelationshipCode: AdInsConstant.SelfCustomer
         });
       }
     );

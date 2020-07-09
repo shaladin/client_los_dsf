@@ -135,23 +135,23 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     }
 
     var refCustRelObj = {
-      RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCustPersonalRelationship,
       RowVersion: ""
     }
     var idTypeObj = {
-      RefMasterTypeCode: "ID_TYPE",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeIdType,
       RowVersion: ""
     }
     var genderObj = {
-      RefMasterTypeCode: "GENDER",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeGender,
       RowVersion: ""
     }
     var maritalObj = {
-      RefMasterTypeCode: "MARITAL_STAT",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeMaritalStat,
       RowVersion: ""
     }
     var religionObj = {
-      RefMasterTypeCode: "RELIGION",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeReligion,
       RowVersion: ""
     }
     this.http.post(AdInsConstant.GetListActiveRefMaster, idTypeObj).subscribe(
@@ -195,7 +195,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
-    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
+    var obj = { RefMasterTypeCodes: [AdInsConstant.RefMasterTypeCodeNationality]};
     this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
@@ -273,7 +273,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = response;
-        if (this.resultData.appGuarantorPersonalObj.MrNationalityCode == "LOCAL") {
+        if (this.resultData.appGuarantorPersonalObj.MrNationalityCode == AdInsConstant.NationalityLocal) {
           this.isLocal = true;
           this.selectedNationalityCountryName = response["CountryName"];
 
@@ -290,7 +290,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   }
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev) {
-    if (this.PersonalForm.controls.MrNationalityCode.value == "LOCAL") {
+    if (this.PersonalForm.controls.MrNationalityCode.value == AdInsConstant.NationalityLocal) {
       console.log(this.MrNationalityCode);
       var idx = ev.target.selectedIndex - 1;
       this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
@@ -355,7 +355,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
               BirthPlace: this.resultData.BirthPlace,
               BirthDt: formatDate(this.resultData.BirthDt, 'yyyy-MM-dd', 'en-US')
             });
-            if (this.resultData.MrNationalityCode == "LOCAL") {
+            if (this.resultData.MrNationalityCode == AdInsConstant.NationalityLocal) {
               this.isLocal = true;
               var idx = 1;
               this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
@@ -371,7 +371,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             }
 
           });
-        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: AdInsConstant.AddrTypeLegal
+         }).subscribe(
           (response) => {
             console.log(response);
             this.resultData = response;
@@ -449,7 +450,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.guarantorPersonalObj.AppGuarantorObj.CustNo = this.tempCustNo;
     }
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "PERSONAL";
+    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = AdInsConstant.CustTypePersonal;
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
     this.guarantorPersonalObj.AppGuarantorObj.MrCustRelationshipCode = this.PersonalForm.controls.MrCustRelationshipCode.value;
     this.guarantorPersonalObj.AppGuarantorObj.RowVersion = "";
@@ -473,7 +474,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
     this.guarantorPersonalObj.AppGuarantorPersonalObj.MrNationalityCode = this.PersonalForm.controls.MrNationalityCode.value;
-    if (this.PersonalForm.controls.MrNationalityCode.value == "LOCAL") {
+    if (this.PersonalForm.controls.MrNationalityCode.value == AdInsConstant.NationalityLocal) {
       this.guarantorPersonalObj.AppGuarantorPersonalObj.CountryCode = this.selectedNationalityCountryCode;
     } else {
       this.guarantorPersonalObj.AppGuarantorPersonalObj.CountryCode = this.countryCode;

@@ -450,7 +450,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindCustTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustType;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response["ReturnObject"];
@@ -465,7 +465,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeGender;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response["ReturnObject"];
@@ -477,7 +477,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
@@ -489,7 +489,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeJobPosition;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
@@ -502,7 +502,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindCompanyTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCompanyType;
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];

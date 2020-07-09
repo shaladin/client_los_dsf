@@ -93,7 +93,7 @@ export class TabApplicationDataComponent implements OnInit {
     await this.GetDealerData();
     await this.GetCommData();
     await this.GetAppTc();
-    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy=="CO"){
+    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == AdInsConstant.InsuredByCompany){
       this.InsuranceTitle ="Asset Insurance";
     }else{
       this.InsuranceTitle ="Asset Insurance & Life Insurance"

@@ -87,7 +87,7 @@ export class VerfQuestionComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+          if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -97,7 +97,7 @@ export class VerfQuestionComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+          } else if (QuestionList[j].VerfAnswerTypeCode == AdInsConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             this.ListVerfAnswer[i].push("");
           } else {

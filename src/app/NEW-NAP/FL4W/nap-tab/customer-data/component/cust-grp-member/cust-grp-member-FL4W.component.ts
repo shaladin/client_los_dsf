@@ -221,7 +221,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   
 
   async bindCustRelationshipPersonalObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CustRelationshipPersonalObj = response["ReturnObject"];
@@ -233,7 +233,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   }
 
   async bindCustRelationshipCompanyObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_COMPANY_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustCompanyRelationship;
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CustRelationshipCompanyObj = response["ReturnObject"];

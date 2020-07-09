@@ -238,7 +238,7 @@ export class CollateralAddEditComponent implements OnInit {
         (response) => {
             this.listCollateralData = response["ReturnObject"];
             for (let index = 0; index < this.listCollateralData.length; index++) {
-              if (this.listCollateralData[index].CollateralStat == 'EXISTING')
+              if (this.listCollateralData[index].CollateralStat == AdInsConstant.AssetStatExisting)
                 listCollateralNo.push(this.listCollateralData[index].CollateralNo);
             }
       
@@ -386,7 +386,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
       (response) => {
           this.returnAppCollateralObj = response;
-          if(this.returnAppCollateralObj.CollateralStat == "NEW"){
+          if(this.returnAppCollateralObj.CollateralStat == AdInsConstant.AssetStatNew){
             this.AddCollForm.patchValue({
               Collateral: "New"
             });
@@ -490,27 +490,27 @@ export class CollateralAddEditComponent implements OnInit {
             };
             for (const item of response["AppCollateralAttrObjs"]) {
               switch (item["CollateralAttrCode"]) {
-                case "ASSET_REGION":
+                case AdInsConstant.AppCollateralAttrAssetRegion:
                   colObj.AssetRegion = item["AttrValue"];
                   break;
 
-                case "COLOR":
+                case AdInsConstant.AppCollateralAttrColor:
                   colObj.Color = item["AttrValue"];
                   break;
 
-                case "CATEGORY":
+                case AdInsConstant.AppCollateralAttrCategory:
                   colObj.Category = item["AttrValue"];
                   break;
 
-                case "TRANSMITION":
+                case AdInsConstant.AppCollateralAttrTransmition:
                   colObj.Transmition = item["AttrValue"];
                   break;
 
-                case "TAX_CITY_ISSUER":
+                case AdInsConstant.AppCollateralAttrTaxCityIssuer:
                   colObj.TaxCityIssuer = item["AttrValue"];
                   break;
 
-                case "BPKB_ISSUE_DATE":
+                case AdInsConstant.AppCollateralAttrBpkbIssueDate:
                   colObj.BpkpIssueDate = item["AttrValue"];
                   break;
               
@@ -563,7 +563,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
     
     this.idTypeCode = new RefMasterObj();
-    this.idTypeCode.RefMasterTypeCode = "ID_TYPE";
+    this.idTypeCode.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
     (response) => {
         this.tempIdType = response['ReturnObject'];
@@ -571,7 +571,7 @@ export class CollateralAddEditComponent implements OnInit {
     });
 
     this.ownerRelationshipObj = new RefMasterObj();
-    this.ownerRelationshipObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.ownerRelationshipObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getListActiveRefMasterUrl, this.ownerRelationshipObj).subscribe(
       (response) => {
         this.returnOwnerRelationshipObj = response["ReturnObject"];
@@ -580,7 +580,7 @@ export class CollateralAddEditComponent implements OnInit {
     );
 
     this.assetRegionObj = new RefMasterObj();
-    this.assetRegionObj.RefMasterTypeCode = "ASSET_INS_REGION";
+    this.assetRegionObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeAssetInsRegion;
     this.http.post(this.getListActiveRefMasterUrl, this.assetRegionObj).subscribe(
       (response) => {
         this.returnAssetRegionObj = response["ReturnObject"];
@@ -668,9 +668,9 @@ export class CollateralAddEditComponent implements OnInit {
     
     this.appCollateralDataObj.AppCollateralObj.CollateralNotes = this.AddCollForm.controls["Notes"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTypeCode = this.AddCollForm.controls["AssetTypeCode"].value;
-    this.appCollateralDataObj.AppCollateralObj.CollateralStat = collateralStat == "New" ? "NEW" : "EXISTING";
-    this.appCollateralDataObj.AppCollateralObj.MrCollateralConditionCode = "USED";
-    this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
+    this.appCollateralDataObj.AppCollateralObj.CollateralStat = collateralStat == "New" ? AdInsConstant.AssetStatNew : AdInsConstant.AssetStatExisting;
+    this.appCollateralDataObj.AppCollateralObj.MrCollateralConditionCode = AdInsConstant.AssetConditionUsed;
+    this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = AdInsConstant.AssetUsageNonComm;
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
     this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
     // console.log("SetCollateralInfo : " + JSON.stringify(this.appCollateralDataObj.AppCollateralObj));
@@ -695,32 +695,32 @@ export class CollateralAddEditComponent implements OnInit {
   
   setCollateralAttribute(){
     this.assetRegionAttrObj = new AppCollateralAttrObj();
-    this.assetRegionAttrObj.CollateralAttrCode = "ASSET_REGION";
+    this.assetRegionAttrObj.CollateralAttrCode = AdInsConstant.AppCollateralAttrAssetRegion;
     this.assetRegionAttrObj.CollateralAttrName  = "Asset Region";
     this.assetRegionAttrObj.AttrValue = this.AddCollForm.controls["AssetRegion"].value;
 
     this.colorAttrObj = new AppCollateralAttrObj();
-    this.colorAttrObj.CollateralAttrCode = "COLOR";
+    this.colorAttrObj.CollateralAttrCode = AdInsConstant.AppCollateralAttrColor;
     this.colorAttrObj.CollateralAttrName = "Color";
     this.colorAttrObj.AttrValue = this.AddCollForm.controls["Color"].value;
 
     this.categoryAttrObj = new AppCollateralAttrObj();
-    this.categoryAttrObj.CollateralAttrCode = "CATEGORY";
+    this.categoryAttrObj.CollateralAttrCode = AdInsConstant.AppCollateralAttrCategory;
     this.categoryAttrObj.CollateralAttrName = "Category";
     this.categoryAttrObj.AttrValue = this.AddCollForm.controls["Category"].value;
 
     this.transmitionAttrObj = new AppCollateralAttrObj();
-    this.transmitionAttrObj.CollateralAttrCode = "TRANSMITION";
+    this.transmitionAttrObj.CollateralAttrCode = AdInsConstant.AppCollateralAttrTransmition;
     this.transmitionAttrObj.CollateralAttrName = "Transmition";
     this.transmitionAttrObj.AttrValue = this.AddCollForm.controls["Transmition"].value;
 
     this.bpkbCityIssuerAttrObj = new AppCollateralAttrObj();
-    this.bpkbCityIssuerAttrObj.CollateralAttrCode = "TAX_CITY_ISSUER";
+    this.bpkbCityIssuerAttrObj.CollateralAttrCode = AdInsConstant.AppCollateralAttrTaxCityIssuer;
     this.bpkbCityIssuerAttrObj.CollateralAttrName = "Tax City Issuer";
     this.bpkbCityIssuerAttrObj.AttrValue = this.AddCollForm.controls["TaxCityIssuer"].value;
 
     this.bpkbIssueDateAttrObj = new AppCollateralAttrObj();
-    this.bpkbIssueDateAttrObj.CollateralAttrCode = "BPKB_ISSUE_DATE";
+    this.bpkbIssueDateAttrObj.CollateralAttrCode = AdInsConstant.AppCollateralAttrBpkbIssueDate;
     this.bpkbIssueDateAttrObj.CollateralAttrName = "BPKB Issue Date";
     this.bpkbIssueDateAttrObj.AttrValue = this.AddCollForm.controls["BpkpIssueDate"].value;
 

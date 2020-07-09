@@ -145,7 +145,7 @@ export class FraudDetectionVerifComponent implements OnInit {
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
         var requestDupCheck;
-        if (this.appCustObj.MrCustTypeCode == "PERSONAL") {
+        if (this.appCustObj.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
           var requestDupCheckPersonal = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -225,9 +225,9 @@ export class FraudDetectionVerifComponent implements OnInit {
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if(idxSelected > -1){
           this.listCustDuplicate[idxSelected].IsSelected = true;
-          this.custStat = "NEW";
+          this.custStat = AdInsConstant.CustStatNew;
         }else{
-          this.custStat = "EXISTING";
+          this.custStat = AdInsConstant.CustStatExisting;
         }
       },
       error => {

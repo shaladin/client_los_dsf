@@ -63,7 +63,7 @@ export class TabDeviationComponent implements OnInit {
         this.DDLApproveAtData = response["ApproveAt"];
         for(var i=0;i<temp.length;i++){
           var tempObj;
-          if(temp[i].MrDeviationType == "AUTOMATIC_DEV"){
+          if(temp[i].MrDeviationType == AdInsConstant.DeviationTypeAutomaticDev){
             tempObj={
               SeqNo: temp[i].SeqNo,
               DeviationType: temp[i].MrDeviationTypeDesc,
@@ -73,7 +73,7 @@ export class TabDeviationComponent implements OnInit {
               Notes: temp[i].Notes
             };
             this.AutoDeviationData.push(tempObj);
-          }else if(temp[i].MrDeviationType == "MANUAL_DEV"){
+          }else if(temp[i].MrDeviationType == AdInsConstant.DeviationTypeManualDev){
             this.BindManualDeviationData(temp[i]);
           }
         }

@@ -91,7 +91,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
 
     var refMasterTypeObj = {
-      RefMasterTypeCode: "CUST_RELATIONSHIP",
+      RefMasterTypeCode: AdInsConstant.RefMasterTypeCodeCustRelationship,
     }
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
       (response) => {

@@ -183,7 +183,7 @@ export class FinancialDataFL4WComponent implements OnInit {
       console.log("GROSSSS");
       console.log(this.FinDataForm.value);
 
-      this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      this.http.post(AdInsConstant.SaveAppFinData, this.FinDataForm.value).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);

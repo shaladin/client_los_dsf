@@ -117,7 +117,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.mrSrvySourceCode = "MOU";
         this.getFraudDukcapil();
 
-        if (this.mrCustTypeCode == "PERSONAL") {
+        if (this.mrCustTypeCode == AdInsConstant.CustTypePersonal) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -130,7 +130,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
             "RowVersion": this.RowVersion
           };
-        } else if (this.mrCustTypeCode == "COMPANY") {
+        } else if (this.mrCustTypeCode == AdInsConstant.CustTypeCompany) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -185,9 +185,9 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
       response => {
         this.listCustDuplicate = response["ReturnObject"];
         if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
-          this.custStat = "EXISTING"
+          this.custStat = AdInsConstant.CustStatExisting
         } else {
-          this.custStat = "NEW"
+          this.custStat = AdInsConstant.CustStatNew
         }
       },
       error => {

@@ -59,7 +59,7 @@ export class GuarantorFL4WComponent implements OnInit {
   }
 
   bindCustTypeObj(MrCustTypeCode? : string) {
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
+    this.refMasterObj.RefMasterTypeCode = AdInsConstant.RefMasterTypeCodeCustType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         console.log("Response");

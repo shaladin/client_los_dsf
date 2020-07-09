@@ -68,7 +68,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
 
     this.context = JSON.parse(localStorage.getItem("UserAccess"));
     var rmRelation = new RefMasterObj();
-    rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
+    rmRelation.RefMasterTypeCode = this.CustType == AdInsConstant.CustTypePersonal ? AdInsConstant.RefMasterTypeCodeCustPersonalRelationship : AdInsConstant.RefMasterTypeCodeCustCompanyRelationship;
     if(this.Mode == "add"){
       this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
         (response) => {
