@@ -20,6 +20,7 @@ export class CommonConstant {
     //OFFICE TYPE
     public static HeadOffice = "HO";
     public static CollectionGroup = "CG"
+    public static CenterGroup = "Center Group"
 
     //MOU STAT
     public static MouStatCancel = "CAN";
@@ -300,4 +301,10 @@ export class CommonConstant {
     
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";
+
+
+    //RATE TYPE
+    public static RateTypeFlat = "FLT";
+    public static RateTypeEffective = "EFCTV";
+    
 }

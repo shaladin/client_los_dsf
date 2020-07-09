@@ -571,10 +571,10 @@ export class AppComponent implements OnInit {
     this.EffectiveRateType = event; 
     console.log(this.EffectiveRateType);
 
-    if(this.EffectiveRateType == "FLT"){
+    if(this.EffectiveRateType == CommonConstant.RateTypeFlat){
       this.appForm.controls.EffectiveRatePrcnt.disable();
       this.appForm.controls.FlatRatePrcnt.enable(); 
-    }else if(this.EffectiveRateType == "EFCTV"){
+    }else if(this.EffectiveRateType == CommonConstant.RateTypeEffective){
       this.appForm.controls.EffectiveRatePrcnt.enable();
       this.appForm.controls.FlatRatePrcnt.disable(); 
     }

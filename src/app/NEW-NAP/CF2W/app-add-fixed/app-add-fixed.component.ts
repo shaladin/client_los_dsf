@@ -13,6 +13,7 @@ import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Mode
 import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
 import { AppFixedFeeObj } from 'app/shared/model/AppFixedFeeObj.Model';
 import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -274,16 +275,16 @@ export class AppAddFixedComponent implements OnInit {
   setAppAsset()
   {
     this.allAppDataObj.AppAssetObj.FullAssetName = this.assetName;
-    this.allAppDataObj.AppAssetObj.MrAssetConditionCode = "NEW";
-    this.allAppDataObj.AppAssetObj.MrAssetUsageCode = "NON_COMM";
+    this.allAppDataObj.AppAssetObj.MrAssetConditionCode = CommonConstant.AssetConditionNew;
+    this.allAppDataObj.AppAssetObj.MrAssetUsageCode = CommonConstant.AssetUsageNonComm;
     this.allAppDataObj.AppAssetObj.SupplName = this.supplierName;
     this.allAppDataObj.AppAssetObj.SupplCode = this.supplierCode;
 
     this.allAppDataObj.AppAssetObj.AssetSeqNo = 1;
     this.allAppDataObj.AppAssetObj.FullAssetCode = this.assetCode;
     
-    this.allAppDataObj.AppAssetObj.AssetStat = "NEW";
-    this.allAppDataObj.AppCollateralObj.CollateralStat = "NEW";
+    this.allAppDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
+    this.allAppDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
     
     this.allAppDataObj.AppAssetObj.AssetTypeCode = this.assetTypeCode;
     this.allAppDataObj.AppAssetObj.AssetCategoryCode = this.assetCategoryCode;
@@ -293,8 +294,8 @@ export class AppAddFixedComponent implements OnInit {
     this.allAppDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAppDataObj.AppCollateralObj.FullAssetCode = this.assetCode;
     this.allAppDataObj.AppCollateralObj.FullAssetName = this.assetName;
-    this.allAppDataObj.AppCollateralObj.MrCollateralConditionCode = "NEW";
-    this.allAppDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
+    this.allAppDataObj.AppCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionNew;
+    this.allAppDataObj.AppCollateralObj.MrCollateralUsageCode = CommonConstant.AssetUsageNonComm;
     
     this.allAppDataObj.AppCollateralObj.AssetTypeCode = this.assetTypeCode;
     this.allAppDataObj.AppCollateralObj.AssetCategoryCode = this.assetCategoryCode;
@@ -537,13 +538,13 @@ export class AppAddFixedComponent implements OnInit {
         // console.log(response);
         var temp = response["ReturnObject"];
         for(var i=0;i<temp.length;i++){
-          if(temp[i].RefProdCompntCode == "LOB"){
+          if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob){
             tempLobCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "CURR"){
+          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr){
             tempCurrCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "PAYFREQ"){
+          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq){
             tempPayFreqCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == "PROD_TYPE"){
+          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType){
             tempRefProdTypeCode = temp[i].CompntValue;
           }else{
             console.log("Not");
