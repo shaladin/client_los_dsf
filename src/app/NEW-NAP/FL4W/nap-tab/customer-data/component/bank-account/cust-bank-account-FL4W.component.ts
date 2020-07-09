@@ -9,6 +9,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
  
 @Component({
   selector: 'app-cust-bank-account-FL4W',
@@ -80,7 +81,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
   
         if(check != undefined){
-          this.toastr.warningMessage("Other bank account is already default");
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }
@@ -92,7 +93,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
   
         if(check != undefined){
-          this.toastr.warningMessage("Other bank account is already default");
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }

@@ -11,6 +11,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -304,7 +305,7 @@ export class NapAddDetailComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.warningMessage("Please Save TC Data First!");
+        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();

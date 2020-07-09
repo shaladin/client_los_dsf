@@ -13,6 +13,7 @@ import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpSte
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative-FL4W',
@@ -128,7 +129,7 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
       return;
     }    
     if(this.ParentForm.controls.CummulativeTenor.value <= 0){
-      this.toastr.warningMessage("Cummulative Tenor must be higher than 0.");
+      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
       return;
     }
 

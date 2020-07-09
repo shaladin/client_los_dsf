@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateDoMultiAssetComponent } from '../create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -291,13 +292,13 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       );
     }
     else {
-      this.toastr.warningMessage("At Least 1 Delivery Order Needed To Save");
+      this.toastr.warningMessage(ExceptionConstant.ONE_DELIVERY_ORDER_NEEDED_TO_SAVE);
     }
   }
 
   DOSubmitHandler() {
     if (!this.isFinal) {
-      this.toastr.warningMessage("All Asset Must Be Processed to Submit");
+      this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
       var valid: boolean = true;
@@ -327,7 +328,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         );
       }
       else {
-        this.toastr.warningMessage("Please Complete Serial No. 1 and Serial No. 2 on all asset first.");
+        this.toastr.warningMessage(ExceptionConstant.COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET);
       }
     }
   }

@@ -11,6 +11,7 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-shareholder-FL4W',
@@ -108,14 +109,14 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.setAppCustCompanyMgmntShrholder();
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
-        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
-        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
