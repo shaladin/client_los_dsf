@@ -8,6 +8,7 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -52,7 +53,7 @@ export class SingleInstFctrComponent implements OnInit {
   Calculate() {
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.errorMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage("Insert Estimation Effective Date");
       return;
     }
     for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
@@ -61,11 +62,11 @@ export class SingleInstFctrComponent implements OnInit {
       }
     }
     if (this.IsAppFeePrcntValid == false) {
-      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      this.toastr.warningMessage("App Fee Prcnt must be greater than 0");
       return;
     }
     if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
-      this.toastr.errorMessage("Effective Rate must be greater than 0");
+      this.toastr.warningMessage("Effective Rate must be greater than 0");
       return;
     }
     else {
@@ -123,12 +124,12 @@ export class SingleInstFctrComponent implements OnInit {
   EstEffDtFocusOut(event) {
     var topBased = this.ParentForm.get("TopBased").value;
     var maturityDate: Date;
-    if (topBased == AdInsConstant.TopCalcBasedInvcDt) {
+    if (topBased == CommonConstant.TopCalcBasedInvcDt) {
       maturityDate = new Date(this.ParentForm.get("InvcDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }
 
-    if (topBased == AdInsConstant.TopCalcBasedEffDt) {
+    if (topBased == CommonConstant.TopCalcBasedEffDt) {
       maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }

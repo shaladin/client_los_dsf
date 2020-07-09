@@ -14,7 +14,7 @@
     "querystring": {
         "select": " SELECT A.CUST_NAME AS CustName, A.CUST_ID AS CustId, A.CUST_NO AS CustNo",
         "from": "FROM CUST A WITH(NOLOCK)",
-        "where": "WHERE MR_CUST_TYPE_CODE='PERSONAL'"
+        "where": "WHERE MR_CUST_TYPE_CODE= N'PERSONAL'"
     },
     "headerList": [
         {

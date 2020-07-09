@@ -16,6 +16,7 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -130,7 +131,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.custNo = returnMouCust["CustNo"];
       });
 
-    var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.OwnerRelationshipObj = response["ReturnObject"];
@@ -142,14 +143,14 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       }
     );
-    var refMasterObj = { RefMasterTypeCode: "ASSET_CONDITION" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition };
 
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.AssetConditionList = response["ReturnObject"];
         this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][0]['Key'] });
 
-        if (response['ReturnObject'][0]['Key'] == "USED") {
+        if (response['ReturnObject'][0]['Key'] == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -174,7 +175,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.updateUcLookup(this.CollTypeList[0].Value, true);
       })
 
-    var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType };
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.IdTypeList = response['ReturnObject'];
@@ -298,7 +299,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   radioChange(event) {
-    if (event.target.value == "USED") {
+    if (event.target.value == CommonConstant.AssetConditionUsed) {
       this.isUsed = true;
     } else {
       this.isUsed = false;
@@ -440,7 +441,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
-        if (this.collateralObj.MrCollateralConditionCode == "USED") {
+        if (this.collateralObj.MrCollateralConditionCode == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -606,7 +607,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage('Please add at least one data');
+      this.toastr.warningMessage('Please add at least one data');
       return;
     }
     this.mouCustCollateralObj.ListCollateralId = this.listSelectedId;

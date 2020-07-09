@@ -9,6 +9,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -96,7 +97,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     var reqObj = new ReturnHandlingDObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     reqObj.MrReturnTaskCode = this.ReturnHandlingForm.controls.MrReturnTaskCode.value;
-    reqObj.ReturnStat = AdInsConstant.ReturnStatNew;
+    reqObj.ReturnStat = CommonConstant.ReturnStatNew;
     reqObj.ReturnHandlingNotes = this.ReturnHandlingForm.controls.ReturnHandlingNotes.value;
 
     this.http.post(AdInsConstant.AddReturnHandlingD, reqObj).subscribe(
@@ -116,7 +117,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
       reqObj.ReturnHandlingHId = this.returnHandlingHId;
-      reqObj.ReturnStat = AdInsConstant.ReturnStatRequest;
+      reqObj.ReturnStat = CommonConstant.ReturnStatRequest;
       reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
       reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
@@ -169,7 +170,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.lobCode};
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReturnTask, ReserveField1: this.lobCode};
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response["ReturnObject"];

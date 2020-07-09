@@ -10,11 +10,11 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-application-data-refinancing',
-  templateUrl: './application-data-refinancing.component.html',
-  styleUrls: ['./application-data-refinancing.component.scss']
+  templateUrl: './application-data-refinancing.component.html'
 })
 export class ApplicationDataRefinancingComponent implements OnInit {
 
@@ -111,13 +111,13 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.applicationDDLitems = [];
     // data dummy test
     // data real
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInstSchm);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
@@ -216,7 +216,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   getInterestTypeCode(){
     var obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInterestType,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestType,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
@@ -337,8 +337,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
-        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
-        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
+        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
+        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
       },
       (error) => {
         console.log(error);

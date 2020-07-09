@@ -32,7 +32,7 @@ import { UcgridviewModule } from "@adins/ucgridview";
     CreditProcessSharingModule,
     ViewSharingComponentModule,
     ViewAgrmntComponentModule,
-    UcgridviewModule
+    UcgridviewModule,
   ],
   declarations: [
     AgreementViewContainerComponent,

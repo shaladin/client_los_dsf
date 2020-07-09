@@ -9,11 +9,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-loan-object',
-  templateUrl: './loan-object.component.html',
-  styleUrls: ['./loan-object.component.scss']
+  templateUrl: './loan-object.component.html'
 })
 export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
@@ -138,7 +138,7 @@ export class LoanObjectComponent implements OnInit {
     var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
 
     if (SelfFinancingAmt > BudgetPlanAmt) {
-      this.toastr.errorMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
+      this.toastr.warningMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
       return;
     }
 
@@ -158,7 +158,7 @@ export class LoanObjectComponent implements OnInit {
 
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefProdCompntSupplSchm,
+      RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
     await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(

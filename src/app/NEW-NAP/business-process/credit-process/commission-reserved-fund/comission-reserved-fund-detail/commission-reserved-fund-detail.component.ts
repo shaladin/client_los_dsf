@@ -13,6 +13,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -148,7 +149,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditComRsvFnd
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditComRsvFnd
       }
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {

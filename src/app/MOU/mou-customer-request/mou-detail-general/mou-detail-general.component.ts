@@ -11,6 +11,7 @@ import { MouCustAssetComponent } from './mou-cust-asset/mou-cust-asset.component
 import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
 import { MouCustAssetListObj } from 'app/shared/model/MouCustAssetListObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-detail-general',
@@ -68,19 +69,19 @@ export class MouDetailGeneralComponent implements OnInit {
     this.isDPInvalid = false;
     this.isTenorInvalid = false;
     var refMasterCurrency = new RefMasterObj();
-    refMasterCurrency.RefMasterTypeCode = "CURRENCY";
+    refMasterCurrency.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCurrency;
     let reqCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
     var refMasterIntrstType = new RefMasterObj();
-    refMasterIntrstType.RefMasterTypeCode = "INTRSTTYPE";
+    refMasterIntrstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestType;
     let reqIntrstType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterIntrstType);
     var refMasterInstSchm = new RefMasterObj();
-    refMasterInstSchm.RefMasterTypeCode = "INST_SCHM";
+    refMasterInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
     let reqInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterInstSchm);
     // var refMasterPayFreq = new RefMasterObj();
     // refMasterPayFreq.RefMasterTypeCode = "PAY_FREQ";
     let reqPayFreq = this.httpClient.post(AdInsConstant.GetListActiveRefPayFreq, null);
     var refMasterFirstInst = new RefMasterObj();
-    refMasterFirstInst.RefMasterTypeCode = "FIRST_INST_TYPE";
+    refMasterFirstInst.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     let reqFirstInst = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterFirstInst);
     var mouCustClause = new MouCustClauseObj();
     mouCustClause.MouCustId = this.MouCustId;

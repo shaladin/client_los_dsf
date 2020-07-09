@@ -10,6 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-shareholder',
@@ -115,14 +116,14 @@ export class CustShareholderComponent implements OnInit {
     if(this.setAppCustCompanyMgmntShrholder() == false) return;
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
         return;
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage("Total Share Percentage cannot be more than 100.");
         return;
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
@@ -196,7 +197,7 @@ export class CustShareholderComponent implements OnInit {
     this.mode = "edit";
     this.currentEditedIndex = i;
 
-    if(this.listShareholder[i].MrCustTypeCode == AdInsConstant.CustTypePersonal){
+    if(this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePersonal){
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrGenderCode: this.listShareholder[i].MrGenderCode,
@@ -229,7 +230,7 @@ export class CustShareholderComponent implements OnInit {
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
-    if(this.listShareholder[i].MrCustTypeCode == AdInsConstant.CustTypeCompany){
+    if(this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypeCompany){
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
@@ -299,10 +300,10 @@ export class CustShareholderComponent implements OnInit {
     var custObj = {CustId: event.CustId};
     var url;
 
-    if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+    if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
       url = AdInsConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
-    if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+    if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
       url = AdInsConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
@@ -310,7 +311,7 @@ export class CustShareholderComponent implements OnInit {
       (response) => {
         console.log(response);
 
-        if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+        if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
           if(response["CustObj"] != undefined){
             this.CustShareholderForm.patchValue({
               MrCustTypeCode: response["CustObj"].MrCustTypeCode,
@@ -350,7 +351,7 @@ export class CustShareholderComponent implements OnInit {
 
         }
 
-        if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+        if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
           if(response["CustObj"] != undefined){
             this.CustShareholderForm.patchValue({
               MrCustTypeCode: response["CustObj"].MrCustTypeCode,
@@ -382,7 +383,7 @@ export class CustShareholderComponent implements OnInit {
 
   setAppCustCompanyMgmntShrholder(){
     var flag:boolean = true;
-    if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypePersonal){
+    if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MrGenderCode = this.CustShareholderForm.controls.MrGenderCode.value;
@@ -399,12 +400,12 @@ export class CustShareholderComponent implements OnInit {
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
       if(d1<d2){
-        this.toastr.errorMessage("Id Expired Date can not be less than Business Date");
+        this.toastr.warningMessage("Id Expired Date can not be less than Business Date");
         flag = false;
       }
       if(d3>d4){
-        // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-        this.toastr.errorMessage("Customer age must be at least 17 year old");
+        // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
+        this.toastr.warningMessage("Customer age must be at least 17 year old");
         flag = false;
       }
       this.appCustCompanyMgmntShrholderObj.MobilePhnNo = this.CustShareholderForm.controls.MobilePhnNo.value;
@@ -415,7 +416,7 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
     }
 
-    if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypeCompany){
+    if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypeCompany){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustShareholderForm.controls.lookupCustomerShareholder.value.value;
@@ -450,14 +451,14 @@ export class CustShareholderComponent implements OnInit {
   }
 
   setValidator(custType){
-    if(custType == AdInsConstant.CustTypePersonal){
+    if(custType == CommonConstant.CustTypePersonal){
       this.CustShareholderForm.controls.BirthDt.setValidators(Validators.required);
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.clearValidators();
       this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
     }
 
-    if(custType == AdInsConstant.CustTypeCompany){
+    if(custType == CommonConstant.CustTypeCompany){
       this.CustShareholderForm.controls.BirthDt.clearValidators();
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.setValidators(Validators.required);

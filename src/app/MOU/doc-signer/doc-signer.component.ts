@@ -8,6 +8,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-doc-signer',
@@ -24,7 +25,7 @@ export class DocSignerComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -48,14 +49,14 @@ export class DocSignerComponent implements OnInit {
       addCritMouStat.DataType = 'text';
       addCritMouStat.propName = 'MOU.MOU_STAT';
       addCritMouStat.restriction = AdInsConstant.RestrictionEq;
-      addCritMouStat.value = 'DSG';
+      addCritMouStat.value = CommonConstant.MouDocSigner;
       this.arrCrit.push(addCritMouStat);
   
       const addCritOfficeCode = new CriteriaObj();
       addCritOfficeCode.DataType = 'text';
       addCritOfficeCode.propName = 'WTL.OFFICE_CODE';
       addCritOfficeCode.restriction = AdInsConstant.RestrictionEq;
-      addCritOfficeCode.value = 'HO';
+      addCritOfficeCode.value = CommonConstant.HeadOffice;
       this.arrCrit.push(addCritOfficeCode);
   
       this.inputPagingObj.addCritInput = this.arrCrit;

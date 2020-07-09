@@ -72,7 +72,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == AdInsConstant.GENERAL) {
       this.stepperGeneral = new Stepper(document.querySelector('#stepperGeneral'), {
         linear: false,
         animation: true
@@ -80,7 +80,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       this.stepperGeneral.to(this.currentStepIndex);
       console.log(this.stepperGeneral);
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == AdInsConstant.FACTORING) {
       this.stepperFactoring = new Stepper(document.querySelector('#stepperFactoring'), {
         linear: false,
         animation: true
@@ -115,10 +115,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   designatedStepHandler(idx) {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == AdInsConstant.GENERAL) {
       this.stepperGeneral.to(idx);
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == AdInsConstant.FACTORING) {
       this.stepperFactoring.to(idx);
     }
     this.currentStepIndex = idx;
@@ -138,20 +138,20 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   backFromMouTc() {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == AdInsConstant.GENERAL) {
       this.stepHandlerGeneral({ StatusCode: "-1" });
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == AdInsConstant.FACTORING) {
       this.stepHandlerFactoring({ StatusCode: "-1" });
     }
   }
 
   mouDocumentBack() {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == AdInsConstant.GENERAL) {
       this.stepperGeneral.previous();
       this.currentStepIndex--;
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == AdInsConstant.FACTORING) {
       this.stepperFactoring.previous();
       this.currentStepIndex--;
     }
@@ -194,7 +194,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       );
     }
     else {
-      this.toastr.errorMessage("Please follow the steps first");
+      this.toastr.warningMessage("Please follow the steps first");
     }
   }
 

@@ -217,7 +217,7 @@ eventColl(ev){
   next(){
     if(this.gridAppCollateralObj.resultData.Data.length < 1)
     {
-      this.toastr.errorMessage("Asset minimum is 1");
+      this.toastr.warningMessage("Asset minimum is 1");
       return;
     }
     else

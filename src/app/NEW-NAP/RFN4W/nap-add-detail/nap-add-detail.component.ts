@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper'
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -88,10 +89,10 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   MakeViewReturnInfoObj() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.mode == CommonConstant.ModeResultHandling) {
       var obj = {
         AppId: this.appId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
       this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
@@ -191,7 +192,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.mode == CommonConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
         ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,

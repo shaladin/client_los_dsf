@@ -9,6 +9,7 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-personal-contact-information-FL4W',
@@ -299,7 +300,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response["ReturnObject"];
@@ -312,7 +313,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
@@ -324,7 +325,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindCustRelationshipObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_RELATIONSHIP";  
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustRelationship;  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response["ReturnObject"];

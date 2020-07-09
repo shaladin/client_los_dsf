@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -40,7 +41,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
 
     var refReasonObj = {
-      RefReasonTypeCode: "APP_AGR_CNCL"
+      RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
     this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {

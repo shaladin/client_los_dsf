@@ -16,6 +16,7 @@ import { AppDataObj } from 'app/shared/model/AppDataObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 import { AppCollateralAttrObj } from '../../../../shared/model/AppCollateralAttrObj.Model';
 import { AdInsErrorMessage } from 'app/shared/AdInsErrorMessage';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -243,20 +244,6 @@ export class AssetDataComponent implements OnInit {
 
   copyFromAppCustAddrForOwner: any;
   copyFromAppCustAddrForLocation: any;
-  copyAddrObj: any = [
-    {
-      Key: "LEGAL",
-      Value: "Legal"
-    },
-    {
-      Key: "RESIDENCE",
-      Value: "Residence"
-    },
-    {
-      Key: "MAILING",
-      Value: "Mailing"
-    }
-  ];
 
   dpTypeValue: any = [
     {
@@ -304,7 +291,7 @@ export class AssetDataComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
 
-    if (this.CustType == AdInsConstant.CustTypeCompany) {
+    if (this.CustType == CommonConstant.CustTypeCompany) {
       await this.GetAppCustCoy();
     }
     await this.GetListAddr();
@@ -343,28 +330,28 @@ export class AssetDataComponent implements OnInit {
     if (this.CheckValidationObj != null) {
       if (this.CheckValidationObj.MinManufYear != 0) {
         if (this.CheckValidationObj.MinManufYear > this.AssetDataForm.controls.ManufacturingYear.value) {
-          this.toastr.errorMessage("Manufacturing Year must be more than " + this.CheckValidationObj.MinManufYear);
+          this.toastr.warningMessage("Manufacturing Year must be more than " + this.CheckValidationObj.MinManufYear);
           this.isValidOk = false;
         }
         if (this.CheckValidationObj.GrossDPPrctg != 0) {
           if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
             if (this.CheckValidationObj.GrossDPPrctg > this.AssetDataForm.controls.DownPaymentAmt.value && this.CheckValidationObj.DPGrossBehaviour == 'MIN') {
-              this.toastr.errorMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
             if (this.CheckValidationObj.GrossDPPrctg < this.AssetDataForm.controls.DownPaymentAmt.value && this.CheckValidationObj.DPGrossBehaviour == 'MAX') {
-              this.toastr.errorMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
           }
           if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
             var tempPrcnt = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
             if (this.CheckValidationObj.GrossDPPrctg > tempPrcnt && this.CheckValidationObj.DPGrossBehaviour == 'MIN') {
-              this.toastr.errorMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be more than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
             if (this.CheckValidationObj.GrossDPPrctg < tempPrcnt && this.CheckValidationObj.DPGrossBehaviour == 'MAX') {
-              this.toastr.errorMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
+              this.toastr.warningMessage("DP must be less than " + this.CheckValidationObj.GrossDPPrctg + "% from Asset Price");
               this.isValidOk = false;
             }
           }
@@ -373,22 +360,22 @@ export class AssetDataComponent implements OnInit {
     }
     if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
       if (this.AssetDataForm.controls.DownPaymentAmt.value < 0) {
-        this.toastr.errorMessage("DP must be more than 0");
+        this.toastr.warningMessage("DP must be more than 0");
         this.isValidOk = false;
       }
       if (this.AssetDataForm.controls.DownPaymentAmt.value > this.AssetDataForm.controls.AssetPriceAmt.value) {
-        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.toastr.warningMessage("DP must be less than Asset Price");
         this.isValidOk = false;
       }
     }
     if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
       var tempAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentAmt.value / 100;
       if (tempAmt < 0) {
-        this.toastr.errorMessage("DP must be more than 0");
+        this.toastr.warningMessage("DP must be more than 0");
         this.isValidOk = false;
       }
       if (tempAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
-        this.toastr.errorMessage("DP must be less than Asset Price");
+        this.toastr.warningMessage("DP must be less than Asset Price");
         this.isValidOk = false;
       }
     }
@@ -418,6 +405,7 @@ export class AssetDataComponent implements OnInit {
 
   async CheckValidation() {
     var CheckValidObj = {
+      AppId: this.AppId,
       SupplCode: this.AssetDataForm.controls.SupplCode.value,
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
@@ -439,6 +427,7 @@ export class AssetDataComponent implements OnInit {
   }
   SetDpValue() {
     var CheckValidObj = {
+      AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
       ManufacturingYear: this.AssetDataForm.controls.ManufacturingYear.value,
       Tenor: this.AppObj.Tenor,
@@ -472,6 +461,7 @@ export class AssetDataComponent implements OnInit {
 
   SetMinManuYear() {
     var CheckValidObj = {
+      AppId: this.AppId,
       SupplCode: this.AssetDataForm.controls.SupplCode.value,
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
     }
@@ -761,13 +751,13 @@ export class AssetDataComponent implements OnInit {
         OwnerCity: this.AddrLegalObj[0].City,
         OwnerZipcode: this.AddrLegalObj[0].Zipcode
       });
-      if (this.CustType == AdInsConstant.CustTypePersonal) {
+      if (this.CustType == CommonConstant.CustTypePersonal) {
         this.AssetDataForm.patchValue({
           MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
           OwnerIdNo: this.AppCustObj.IdNo,
         });
       }
-      if (this.CustType == AdInsConstant.CustTypeCompany) {
+      if (this.CustType == CommonConstant.CustTypeCompany) {
         this.AssetDataForm.patchValue({
           MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
           OwnerIdNo: this.AppCustCoyObj.RegistrationNo,
@@ -1119,7 +1109,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   bindUserOwnerRelationshipObj() {
-    if (this.CustType == AdInsConstant.CustTypePersonal) {
+    if (this.CustType == CommonConstant.CustTypePersonal) {
       this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
     }
     else {
@@ -1155,7 +1145,7 @@ export class AssetDataComponent implements OnInit {
   GetProdOfferingAssetCond() {
     var obj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefProdCompAssetCond,
+      RefProdCompntCode: CommonConstant.RefProdCompAssetCond,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion
     };
     this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
@@ -1470,7 +1460,7 @@ export class AssetDataComponent implements OnInit {
 
   addAccessories() {
     if(this.AssetDataForm.get("AssetTypeCode").value == ""){
-      return this.toastr.errorMessage("Please Choose Asset First");      
+      return this.toastr.warningMessage("Please Choose Asset First");      
     }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
@@ -1643,7 +1633,7 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         this.AppCustAddrObj = response["ReturnObject"];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
-          emp => emp.MrCustAddrTypeCode === AdInsConstant.AddrTypeLegal);
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
       }
     );
   }
@@ -1725,7 +1715,7 @@ export class AssetDataComponent implements OnInit {
         this.AppCustObj = response;
         console.log(response);
         this.CustType = this.AppCustObj.MrCustTypeCode;
-        if (this.CustType == AdInsConstant.CustTypePersonal) {
+        if (this.CustType == CommonConstant.CustTypePersonal) {
           this.AssetDataForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
           this.AssetDataForm.controls.MrIdTypeCode.updateValueAndValidity();
         }
@@ -1736,7 +1726,7 @@ export class AssetDataComponent implements OnInit {
   async GetRefProdCompt() {
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefProdCompntAssetType,
+      RefProdCompntCode: CommonConstant.RefProdCompntAssetType,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
     await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
@@ -1749,7 +1739,7 @@ export class AssetDataComponent implements OnInit {
 
     appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefProdCompntSupplSchm,
+      RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
     await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
@@ -1760,7 +1750,7 @@ export class AssetDataComponent implements OnInit {
 
     appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefProdCompntAssetSchm,
+      RefProdCompntCode: CommonConstant.RefProdCompntAssetSchm,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
     await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(

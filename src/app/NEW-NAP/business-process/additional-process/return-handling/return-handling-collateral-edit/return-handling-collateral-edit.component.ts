@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 
@@ -154,7 +155,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     if (this.returnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingAddColtr
+        MrReturnTaskCode: CommonConstant.ReturnHandlingAddColtr
       }
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {

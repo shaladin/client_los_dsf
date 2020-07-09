@@ -19,6 +19,7 @@ import { LeadCustPersonalJobDataObj } from 'app/shared/model/LeadCustPersonalJob
 import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
  
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -197,7 +198,7 @@ export class LeadInputCustDataComponent implements OnInit {
     
               this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
               this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-              this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = "LEGAL";
+              this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
               this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
                 (response) => {
                     this.resLeadCustAddrLegalObj = response;
@@ -227,7 +228,7 @@ export class LeadInputCustDataComponent implements OnInit {
       
                 this.reqLeadCustAddrResObj = new LeadCustAddrObj();
                 this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-                this.reqLeadCustAddrResObj.MrCustAddrTypeCode = "RESIDENCE";
+                this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
                 this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
                   (response) => {
                       this.resLeadCustAddrResObj = response;
@@ -314,7 +315,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.isRequired = true;
 
     this.genderType = new RefMasterObj();
-    this.genderType.RefMasterTypeCode = "GENDER";
+    this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
       (response) => {
         this.tempGender = response["ReturnObject"];
@@ -323,7 +324,7 @@ export class LeadInputCustDataComponent implements OnInit {
     );
 
     this.idTypeCode = new RefMasterObj();
-    this.idTypeCode.RefMasterTypeCode = "ID_TYPE";
+    this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
     (response) => {
         this.tempIdType = response['ReturnObject'];
@@ -331,7 +332,7 @@ export class LeadInputCustDataComponent implements OnInit {
     });
 
     this.maritalStatCode = new RefMasterObj();
-    this.maritalStatCode.RefMasterTypeCode = "MARITAL_STAT";
+    this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
     this.http.post(this.getListActiveRefMasterUrl, this.maritalStatCode).subscribe(
       (response) => {
           this.tempMrMaritalStatCode = response["ReturnObject"];
@@ -349,8 +350,8 @@ export class LeadInputCustDataComponent implements OnInit {
     );
 
     this.custModel = new RefMasterObj();
-    this.custModel.RefMasterTypeCode = "CUST_MODEL";
-    this.custModel.ReserveField1 = "PERSONAL";
+    this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
+    this.custModel.ReserveField1 = CommonConstant.CustTypePersonal;
     this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
       (response) => {
           this.listCustModel = response['ReturnObject'];
@@ -423,7 +424,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
         this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
         this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-        this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = "LEGAL";
+        this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
         this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
           (response) => {
               this.resLeadCustAddrLegalObj = response;
@@ -452,7 +453,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
           this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.reqLeadCustAddrResObj.MrCustAddrTypeCode = "RESIDENCE";
+          this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
           this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
             (response) => {
                 this.resLeadCustAddrResObj = response;
@@ -575,7 +576,7 @@ export class LeadInputCustDataComponent implements OnInit {
   
               this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
               this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-              this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = "LEGAL";
+              this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
               this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
                 (response) => {
                     this.resLeadCustAddrLegalObj = response;
@@ -606,7 +607,7 @@ export class LeadInputCustDataComponent implements OnInit {
   
                 this.reqLeadCustAddrResObj = new LeadCustAddrObj();
                 this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-                this.reqLeadCustAddrResObj.MrCustAddrTypeCode = "RESIDENCE";
+                this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
                 this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
                   (response) => {
                       this.resLeadCustAddrResObj = response;
@@ -720,7 +721,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
   setLegalAddr(){
     //this.legalAddressObj = new LeadCustAddrObj();
-    this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = "LEGAL"
+    this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal
     this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode4 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode4.value;
@@ -741,7 +742,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
   setResidenceAddr(){
     //this.residenceAddressObj = new LeadCustAddrObj();
-    this.leadInputObj.LeadCustResidenceAddrObj.MrCustAddrTypeCode = "RESIDENCE"
+    this.leadInputObj.LeadCustResidenceAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence
     this.leadInputObj.LeadCustResidenceAddrObj.Addr = this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustResidenceAddrObj.AreaCode3 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode3.value;
     this.leadInputObj.LeadCustResidenceAddrObj.AreaCode4 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode4.value;
@@ -761,7 +762,7 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   setLeadCust(){
-    this.leadInputObj.LeadCustObj.MrCustTypeCode = "PERSONAL";
+    this.leadInputObj.LeadCustObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
     this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
     this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;

@@ -148,13 +148,13 @@ export class CustLegalDocComponent implements OnInit {
     console.log(d2);
     console.log(d3);
     if (d1 > d3 && d1 != d3) {
-      this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
+      this.toastr.warningMessage("Expired Date can not be less than " + this.MaxDate);
       flag = false;
     }
     d1.setDate(d1.getDate()+1);
     console.log(d1);
     if (d1 < d2 && d1 != d2) {
-      this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
+      this.toastr.warningMessage("Issued Date can not be more than " + this.MaxDate);
       flag = false;
     }    
     return flag;
@@ -164,7 +164,7 @@ export class CustLegalDocComponent implements OnInit {
     if(this.listLegalDoc.length > 0){
       var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
       if(duplicateIndex != currentEditedIndex && duplicateIndex != -1){
-        this.toastr.errorMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
+        this.toastr.warningMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
         return false;  
       }
     }

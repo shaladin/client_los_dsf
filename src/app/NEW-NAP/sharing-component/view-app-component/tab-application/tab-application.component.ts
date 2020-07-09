@@ -3,6 +3,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-tab-application',
@@ -36,7 +37,7 @@ export class TabApplicationComponent implements OnInit {
     await this.http.post(AdInsConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.ListCrossAppData = response[AdInsConstant.ReturnObj];
+        this.ListCrossAppData = response[CommonConstant.ReturnObj];
 
       }
     );

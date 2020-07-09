@@ -11,6 +11,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -214,7 +215,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     var AppObj = { AppId: this.AppId };
     this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
@@ -253,7 +254,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypeCompany;
+    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
     this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];

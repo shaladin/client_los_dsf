@@ -21,6 +21,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -471,13 +472,13 @@ export class CollateralDetailComponent implements OnInit {
           this.inputFieldLegalObj.inputLookupObj.nameSelect = this.AppCustAddrObj.Zipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj.Zipcode };
 
-          if (this.AppCustObj.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+          if (this.AppCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             this.AddCollForm.patchValue({
               MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
               OwnerIdNo: this.AppCustObj.IdNo,
             });
           }
-          if (this.AppCustObj.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+          if (this.AppCustObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
             this.AddCollForm.patchValue({
               MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
               OwnerIdNo: this.AppCustCompanyObj.RegistrationNo,

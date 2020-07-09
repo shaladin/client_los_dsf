@@ -70,7 +70,7 @@ export class SchmBalloonComponent implements OnInit {
       return;
     }
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
-      this.toastr.errorMessage("Balloon Amount must be higher than 0.");
+      this.toastr.warningMessage("Balloon Amount must be higher than 0.");
       return;
     }
     this.calcBalloonObj = this.ParentForm.value;
@@ -114,7 +114,7 @@ export class SchmBalloonComponent implements OnInit {
       return;
     }    
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
-      this.toastr.errorMessage("Balloon Amount must be higher than 0.");
+      this.toastr.warningMessage("Balloon Amount must be higher than 0.");
       return;
     }
     
@@ -212,7 +212,7 @@ export class SchmBalloonComponent implements OnInit {
     for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
       if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
           && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }

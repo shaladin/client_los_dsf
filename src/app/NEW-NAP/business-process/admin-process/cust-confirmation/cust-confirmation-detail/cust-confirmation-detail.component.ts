@@ -9,15 +9,15 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
-  templateUrl: './cust-confirmation-detail.component.html',
-  styleUrls: ['./cust-confirmation-detail.component.scss']
+  templateUrl: './cust-confirmation-detail.component.html'
 })
 export class CustConfirmationDetailComponent implements OnInit {
 
-  viewObj: string;
+  viewObj: string; 
   arrValue = [];
   AgrmntId: number;
   AppId: number;
@@ -95,8 +95,8 @@ export class CustConfirmationDetailComponent implements OnInit {
 
         this.verfResultObj.TrxRefNo = this.AgrmntNo;
         this.verfResultObj.EmpNo = "-";
-        this.verfResultObj.MrVerfResultStatCode = "NEW";
-        this.verfResultObj.MrVerfTrxTypeCode = "CUST_CNFRM";
+        this.verfResultObj.MrVerfResultStatCode = CommonConstant.VerificationNew;
+        this.verfResultObj.MrVerfTrxTypeCode = CommonConstant.VerfTrxTypeCodeCustConfirm;
         this.verfResultObj.LobCode = this.appObj.LobCode;
         this.verfResultObj.LobName = this.appObj.LobCode;
         this.verfResultObj.Notes = "-";
@@ -118,8 +118,8 @@ export class CustConfirmationDetailComponent implements OnInit {
   SaveForm() {
     if (this.CustCnfrmObj.IsSkip == false) {
       for (var i = 0; i < this.VerfResultList.length; i++) {
-        if (this.VerfResultList[i].MrVerfResultHStatCode == "FAIL" || this.VerfResultList[i].MrVerfResultHStatCode == "NEW") {
-          this.toastr.errorMessage("Result can't be New or Failed");
+        if (this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationFail || this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationNew) {
+          this.toastr.warningMessage("Result can't be New or Failed");
           return;
         }
       }

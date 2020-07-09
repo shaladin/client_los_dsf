@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCompanyLegalDocObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -192,7 +193,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustryType.json";
