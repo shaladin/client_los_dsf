@@ -805,7 +805,7 @@ export class AssetDataComponent implements OnInit {
         console.log("RESPOOOON");
         this.appAssetObj = response;
         console.log(this.appAssetObj);
-        if (this.appAssetObj != "") {
+        if (this.appAssetObj.ResponseAppAssetObj != null) {
 
           console.log("AAAA");
           this.AssetDataForm.patchValue({
