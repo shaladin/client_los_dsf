@@ -17,7 +17,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class CustConfirmationDetailComponent implements OnInit {
 
-  viewObj: string;
+  viewObj: string; 
   arrValue = [];
   AgrmntId: number;
   AppId: number;
