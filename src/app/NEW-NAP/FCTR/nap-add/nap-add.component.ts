@@ -155,7 +155,7 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    if (this.user.MrOfficeTypeCode != "CG") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.CollectionGroup) {
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
         OriOfficeName: this.user.OfficeName,
@@ -265,18 +265,18 @@ export class NapAddComponent implements OnInit {
         // console.log(response);
         var temp = response["ReturnObject"];
         for (var i = 0; i < temp.length; i++) {
-          if (temp[i].RefProdCompntCode == "LOB") {
+          if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == "CURR") {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             var listPayFreqCode = temp[i].CompntValue.split(";");
             if(listPayFreqCode.length == 1){
               tempPayFreqCode = temp[i].CompntValue;
             }else{
               tempPayFreqCode = null;
             }
-          } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
             console.log("Not");
