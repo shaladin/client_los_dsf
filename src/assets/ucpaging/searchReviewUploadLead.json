@@ -116,7 +116,7 @@
     {
       "type": "label",
       "position": "center",
-      "label": "CANCEL"
+      "label": "REJECT"
     }
   ],
   "bodyList": [
