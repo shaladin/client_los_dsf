@@ -548,6 +548,7 @@ export class AdInsConstant {
 
   public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
   public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
+  public static GetMouCustScoreByMouCustId = environment.losUrl + "/MouCustScoring/GetMouCustScoreByMouCustId";
 
   // MOU CUST FCTR
   public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";

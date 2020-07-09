@@ -33,6 +33,7 @@ export class MouReviewGeneralComponent implements OnInit {
   viewObj: string;
   mouCustObject: MouCustObj = new MouCustObj();
   listReason: any;
+  ScoreResult: number;
 
   MouReviewDataForm = this.fb.group({
     ListApprover: [''],
@@ -106,6 +107,12 @@ export class MouReviewGeneralComponent implements OnInit {
         this.MouReviewDataForm.patchValue({
           Reason: this.listReason[0].Key
         });
+      }
+    );
+
+    this.http.post(AdInsConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+      (response) => {
+        this.ScoreResult = response["ScoreResult"];
       }
     );
   }
