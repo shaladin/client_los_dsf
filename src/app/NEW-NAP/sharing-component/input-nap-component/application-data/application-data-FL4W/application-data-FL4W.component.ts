@@ -139,7 +139,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.mouCustObj = new MouCustObj();
         this.mouCustObj.CustNo = this.CustNo;
         this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = AdInsConstant.GENERAL;
+        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
 
         this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
@@ -421,7 +421,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     addCrit3.DataType = "text";
     addCrit3.propName = "rbt.JOB_TITLE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [AdInsConstant.SALES_JOB_CODE];
+    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
     this.arrAddCrit.push(addCrit3);
 
     var addCrit4 = new CriteriaObj();

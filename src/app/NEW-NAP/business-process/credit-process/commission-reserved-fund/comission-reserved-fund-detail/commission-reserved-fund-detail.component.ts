@@ -44,7 +44,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
-    this.route.queryParams.subscribe(params => {      
+    this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.ReturnHandlingHObj.AppId = params["AppId"];
       }
@@ -97,18 +97,18 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
-        this.TotalHalfListResultRefundIncomeInfo=Math.floor(this.ListResultRefundIncomeInfo.length / 2);
+        this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
         console.log(this.ListResultRefundIncomeInfo);
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
-        this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
-        this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
-        this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt,
-        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
-        this.viewIncomeInfoObj.RemainingAllocatedAmount = response.MaxAllocatedRefundAmt - response.ExpenseAmount - response.ReservedFundAllocatedAmt,
-        this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
+          this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
+          this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
+          this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt,
+          this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
+          this.viewIncomeInfoObj.RemainingAllocatedAmount = response.MaxAllocatedRefundAmt - response.ExpenseAmount - response.ReservedFundAllocatedAmt,
+          this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
         this.viewIncomeInfoObj.ExpenseAmount = response.ExpenseAmount;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
-        this.tempTotalExpenseAmt =this.viewIncomeInfoObj.ExpenseAmount;
+        this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
       },
       (error) => {
         console.log(error);
@@ -117,21 +117,21 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   NapObj: AppObj = new AppObj();
-  GetAndUpdateAppStep(){
-    this.NapObj.AppId=this.ReturnHandlingHObj.AppId;
+  GetAndUpdateAppStep() {
+    this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
     this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         console.log(response);
         if (response) {
           this.NapObj = response;
-          if(this.NapObj.AppCurrStep!=AdInsConstant.AppStepComm && this.NapObj.AppCurrStep!=AdInsConstant.AppStepRSVFund){
-            this.NapObj.AppCurrStep = AdInsConstant.AppStepComm;
+          if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
+            this.NapObj.AppCurrStep = CommonConstant.AppStepComm;
             this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-              (response) =>{
-                console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
-                this.ChangeTab(AdInsConstant.AppStepComm);
+              (response) => {
+                console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
+                this.ChangeTab(CommonConstant.AppStepComm);
               },
-              (error)=>{
+              (error) => {
                 console.error("Error when updating AppStep");
                 console.error(error);
               }
@@ -154,7 +154,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           console.log(response);
-          this.returnHandlingDObj = response;          
+          this.returnHandlingDObj = response;
           this.HandlingForm.patchValue({
             ReturnHandlingExecNotes: this.returnHandlingDObj.ReturnHandlingExecNotes
           });
@@ -173,18 +173,18 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   ChangeTab(AppStep) {
     switch (AppStep) {
-      case AdInsConstant.AppStepComm:
+      case CommonConstant.AppStepComm:
         this.StepIndex = 1;
         break;
-      case AdInsConstant.AppStepRSVFund:
+      case CommonConstant.AppStepRSVFund:
         this.StepIndex = 2;
         break;
 
       default:
         break;
     }
-    
-    if (AppStep == AdInsConstant.AppStepRSVFund)
+
+    if (AppStep == CommonConstant.AppStepRSVFund)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
@@ -193,15 +193,15 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) =>{
+      (response) => {
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
-        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
+        console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
         this.ChangeTab(Step);
         this.stepper.next();
-        
+
       },
-      (error)=>{
+      (error) => {
         console.error("Error when updating AppStep");
         console.error(error);
       }
@@ -274,7 +274,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     // console.log(this.viewIncomeInfoObj);
   }
 
-  CekRemaining(){
+  CekRemaining() {
     this.viewIncomeInfoObj.ExpenseAmount = this.tempTotalExpenseAmt;
     this.viewIncomeInfoObj.ReservedFundAllocatedAmount = this.tempTotalRsvFundAmt;
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;

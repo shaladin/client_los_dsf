@@ -115,7 +115,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
+    this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } });
   }
 
   ChangeStepper() {
@@ -232,7 +232,7 @@ export class NapAddDetailComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -244,37 +244,37 @@ export class NapAddDetailComponent implements OnInit {
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
     switch (AppStep) {
-      case AdInsConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
-      case AdInsConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepGuar];
+      case CommonConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
         break;
-      case AdInsConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepRef];
+      case CommonConstant.AppStepRef:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
         break;
-      case AdInsConstant.AppStepApp:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
+      case CommonConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepAsset:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+      case CommonConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case AdInsConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+      case CommonConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
-      case AdInsConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
+      case CommonConstant.AppStepLIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
         break;
-      case AdInsConstant.AppStepFin:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFin];
+      case CommonConstant.AppStepFin:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
-      case AdInsConstant.AppStepTC:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
+      case CommonConstant.AppStepTC:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
       default:
         break;
     }
-    if (AppStep == AdInsConstant.AppStepTC)
+    if (AppStep == CommonConstant.AppStepTC)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
@@ -301,7 +301,7 @@ export class NapAddDetailComponent implements OnInit {
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } })
           },
           (error) => {
             console.log(error);
@@ -330,6 +330,6 @@ export class NapAddDetailComponent implements OnInit {
   CheckCustType(ev: string) {
     this.custType = ev;
     this.ChangeStepper();
-    this.NextStep(AdInsConstant.AppStepGuar);
+    this.NextStep(CommonConstant.AppStepGuar);
   }
 }

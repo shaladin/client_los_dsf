@@ -19,6 +19,7 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -570,7 +571,7 @@ copyToLocationAddr() {
     } else {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
-      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
     }
   }
 

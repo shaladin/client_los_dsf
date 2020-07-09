@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-os-tc-detail',
@@ -59,10 +60,10 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   saveMouTc() {
-    if (this.mouType == AdInsConstant.GENERAL) {
+    if (this.mouType == CommonConstant.GENERAL) {
       this.mouTcGeneral.Save();
     }
-    else if (this.mouType == AdInsConstant.FACTORING) {
+    else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
     }
   }

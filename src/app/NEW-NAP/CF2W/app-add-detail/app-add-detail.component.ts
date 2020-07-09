@@ -144,32 +144,32 @@ export class AppAddDetailComponent implements OnInit {
   ChangeTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
-      case AdInsConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
-      case AdInsConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepGuar];
+      case CommonConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
         break;
-      case AdInsConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepRef];
+      case CommonConstant.AppStepRef:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
         break;
-      case AdInsConstant.AppStepApp:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
+      case CommonConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepAsset:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+      case CommonConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case AdInsConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+      case CommonConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
-      case AdInsConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
+      case CommonConstant.AppStepLIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
         break;
-      case AdInsConstant.AppStepFin:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFin];
+      case CommonConstant.AppStepFin:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
-      case AdInsConstant.AppStepTC:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
+      case CommonConstant.AppStepTC:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
 
       default:

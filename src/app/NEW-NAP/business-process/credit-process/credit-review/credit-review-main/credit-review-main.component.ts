@@ -268,20 +268,20 @@ export class CreditReviewMainComponent implements OnInit {
   EnterTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
-      case AdInsConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
-      case AdInsConstant.AppStepApp:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
+      case CommonConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepFraud:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFraud];
+      case CommonConstant.AppStepFraud:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFraud];
         break;
-      case AdInsConstant.AppStepDev:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepDev];
+      case CommonConstant.AppStepDev:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepDev];
         break;
-      case AdInsConstant.AppStepApv:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApv];
+      case CommonConstant.AppStepApv:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApv];
         break;
 
       default:

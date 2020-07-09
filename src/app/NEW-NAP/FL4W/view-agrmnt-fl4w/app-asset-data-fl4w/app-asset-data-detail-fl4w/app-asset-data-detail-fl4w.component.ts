@@ -6,6 +6,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { forkJoin } from 'rxjs';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-asset-data-detail-fl4w',
@@ -44,13 +45,13 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
         // console.log(this.appCollateralRegistration)
 
         for (const item of this.appAssetSupplEmp.ReturnObject) {
-          if(item.MrSupplEmpPositionCode == AdInsConstant.SALES_JOB_CODE){
+          if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
           }
-          else if(item.MrSupplEmpPositionCode == AdInsConstant.BRANCH_MANAGER_JOB_CODE){
+          else if(item.MrSupplEmpPositionCode == CommonConstant.BRANCH_MANAGER_JOB_CODE){
             this.branchManagerName = item.SupplEmpName;
           }
-          else if(item.MrSupplEmpPositionCode == AdInsConstant.ADMIN_HEAD_JOB_CODE){
+          else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
           }
         }

@@ -91,7 +91,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     await this.getAppAsset();
     this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
     this.isDataAlreadyLoaded = true;
-    this.bizTemplateCode = AdInsConstant.FL4W;
+    this.bizTemplateCode = CommonConstant.FL4W;
   }
 
   async ClaimTask() {

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-doc-signer-paging',
@@ -53,10 +54,10 @@ export class DocSignerPagingComponent implements OnInit {
     }else if(ev.Key == "agrmnt"){
       var bizTemplateCode = ev.RowObj.BizTemplateCode;
 
-      if(bizTemplateCode == AdInsConstant.CF4W || bizTemplateCode == AdInsConstant.CFRFN4W || bizTemplateCode == AdInsConstant.FACTORING){
+      if(bizTemplateCode == CommonConstant.CF4W || bizTemplateCode == CommonConstant.CFRFN4W || bizTemplateCode == CommonConstant.FACTORING){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
       }
-      else if(bizTemplateCode == AdInsConstant.FL4W){
+      else if(bizTemplateCode == CommonConstant.FL4W){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
       }
     }

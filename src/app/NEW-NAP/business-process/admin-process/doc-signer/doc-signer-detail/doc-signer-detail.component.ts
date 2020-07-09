@@ -221,7 +221,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
 
-    if(this.BizTemplateCode == AdInsConstant.CFRFN4W || this.BizTemplateCode == AdInsConstant.FCTR){
+    if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.FCTR){
       this.inputLookupBranchEmpObj.isRequired = false;
       this.isHidden = true;
     }
@@ -328,10 +328,10 @@ export class DocSignerDetailComponent implements OnInit {
     {
       var bizTemplateCode = localStorage.getItem("BizTemplateCode")
 
-      if(bizTemplateCode == AdInsConstant.CF4W|| bizTemplateCode == AdInsConstant.CFRFN4W || bizTemplateCode == AdInsConstant.FACTORING){
+      if(bizTemplateCode == CommonConstant.CF4W|| bizTemplateCode == CommonConstant.CFRFN4W || bizTemplateCode == CommonConstant.FACTORING){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
-      else if(bizTemplateCode == AdInsConstant.FL4W){
+      else if(bizTemplateCode == CommonConstant.FL4W){
         window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
       }
     }

@@ -256,8 +256,8 @@ export class AppAddFixedComponent implements OnInit {
     this.allAppDataObj.AppObj.ProdOfferingName = this.NapAppForm.controls["ProdOfferingName"].value;
     this.allAppDataObj.AppObj.ProdOfferingVersion = this.NapAppForm.controls["ProdOfferingVersion"].value;
     this.allAppDataObj.AppObj.AppCreatedDt = this.user.BusinessDt;
-    this.allAppDataObj.AppObj.AppStat = AdInsConstant.AppStepNew;
-    this.allAppDataObj.AppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    this.allAppDataObj.AppObj.AppStat = CommonConstant.AppStepNew;
+    this.allAppDataObj.AppObj.AppCurrStep = CommonConstant.AppStepNew;
     this.allAppDataObj.AppObj.CurrCode = this.NapAppForm.controls["CurrCode"].value;
     this.allAppDataObj.AppObj.LobCode = this.NapAppForm.controls["LobCode"].value;
     this.allAppDataObj.AppObj.RefProdTypeCode = this.NapAppForm.controls["RefProdTypeCode"].value;

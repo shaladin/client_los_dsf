@@ -73,7 +73,7 @@ export class NapAddComponent implements OnInit {
     RsvField3: [''],
     RsvField4: [''],
     RsvField5: [''],
-    BizTemplateCode: [AdInsConstant.FL4W]
+    BizTemplateCode: [CommonConstant.FL4W]
   });
 
   constructor(private fb: FormBuilder, private router: Router,
@@ -137,7 +137,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.FL4W;
+    critObj.value = CommonConstant.FL4W;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
@@ -153,7 +153,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.FL4W;
+    addCritBizTempalte.value = CommonConstant.FL4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
@@ -208,9 +208,9 @@ export class NapAddComponent implements OnInit {
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BizTemplateCode = AdInsConstant.FL4W;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
+    napAppObj.BizTemplateCode = CommonConstant.FL4W;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
@@ -319,7 +319,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.FL4W;
+    critObj.value = CommonConstant.FL4W;
     arrCopyLookupCrit.push(critObj);
 
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
@@ -337,7 +337,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.FL4W;
+    addCritBizTempalte.value = CommonConstant.FL4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;

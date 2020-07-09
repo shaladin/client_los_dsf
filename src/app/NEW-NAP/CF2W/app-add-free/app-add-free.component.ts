@@ -196,8 +196,8 @@ export class AppAddFreeComponent implements OnInit {
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
 
     napAppObj = this.CheckValue(napAppObj);
     if (this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
