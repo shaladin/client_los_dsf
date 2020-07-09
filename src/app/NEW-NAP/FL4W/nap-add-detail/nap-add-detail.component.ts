@@ -11,6 +11,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -88,7 +89,7 @@ export class NapAddDetailComponent implements OnInit {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
     } else {
-      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           console.log(response);
           if (response) {
@@ -210,7 +211,7 @@ export class NapAddDetailComponent implements OnInit {
 
   UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
@@ -228,7 +229,7 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AllCollateralDataObj } from '../../../../../shared/model/AllCollateralDataObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
@@ -206,7 +207,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.getAssetTypeUrl = AdInsConstant.GetAssetTypeKeyValueCode
     this.GetAppCollateralUrl = AdInsConstant.GetAppCollateralByAppCollateralId;
     this.GetAppCollateralRegistUrl = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
-    this.getAppUrl = AdInsConstant.GetAppById;
+    this.getAppUrl = URLConstant.GetAppById;
 
     this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;
     this.AddEditAllCollateralDataUrl = AdInsConstant.AddEditAllCollateralDataByAppCollateraId;
@@ -588,7 +589,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     var assetTypeObj = {
       AssetTypeCode: Code
     };
-    await this.http.post(AdInsConstant.GetAssetTypeByCode, assetTypeObj).toPromise().then(
+    await this.http.post(URLConstant.GetAssetTypeByCode, assetTypeObj).toPromise().then(
       (response) => {
         this.AssetTypeObj = response;
       }

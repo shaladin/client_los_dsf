@@ -17,6 +17,7 @@ import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissio
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-commission',
@@ -168,7 +169,7 @@ export class CommissionComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     };
-    await this.http.post<AppObj>(AdInsConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         // console.log(response);
         this.ResultAppData = response;
@@ -418,7 +419,7 @@ export class CommissionComponent implements OnInit {
         AppId: this.AppId,
         RowVersion: ""
       };
-      this.http.post<NapAppReferantorModel>(AdInsConstant.GetAppReferantorByAppId, obj).subscribe(
+      this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).subscribe(
         (response) => {
           // console.log(response);
           this.ResultAppReferantor = response;

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-agreement-view-container',
@@ -64,7 +65,7 @@ export class AgreementViewContainerComponent implements OnInit {
 
   async GetAppAndAppCustDetailByAgrmntId() {
     var obj = { agrmntId: this.AgrmntId };
-    await this.http.post(AdInsConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ResponseAppDetailData = response;

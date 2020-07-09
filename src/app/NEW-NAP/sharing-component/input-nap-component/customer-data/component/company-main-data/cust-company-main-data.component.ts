@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -218,7 +219,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     var AppObj = { AppId: this.AppId };
-    this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
       (response) => {
         this.AppObj = response;
         

@@ -11,6 +11,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -111,7 +112,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async GetAppNo(){
     var obj = { AppId: this.appId };
-    await this.http.post<NapAppModel>(AdInsConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         console.log(response);
         if(response != undefined)

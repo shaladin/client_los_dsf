@@ -19,6 +19,7 @@ import { environment } from 'environments/environment';
 import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { formatDate } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-collateral-add-edit-single',
@@ -323,7 +324,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
       })
 
     var assetObj = {};
-    this.http.post(AdInsConstant.GetListKeyValueByCode, assetObj).subscribe(
+    this.http.post(URLConstant.GetListKeyValueByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({

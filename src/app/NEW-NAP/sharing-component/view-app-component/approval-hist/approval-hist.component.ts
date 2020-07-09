@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-approval-hist',
@@ -32,7 +32,7 @@ export class ApprovalHistComponent implements OnInit {
 
   ngOnInit() {
 
-    this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.AppNo = response["AppNo"];
         console.log(this.AppNo);

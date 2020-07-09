@@ -28,6 +28,7 @@ import { map, mergeMap, first } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -179,13 +180,13 @@ export class AssetDataAddEditComponent implements OnInit {
     this.addEditAllAssetDataUrl = AdInsConstant.AddEditAllAssetData;
     this.getRefCoy = AdInsConstant.GetRefCoy;
     this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
-    this.getAppAssetByAppAssetId = AdInsConstant.GetAppAssetByAppAssetId;
+    this.getAppAssetByAppAssetId = URLConstant.GetAppAssetByAppAssetId;
     this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
     this.getAppCollateralByAppId = AdInsConstant.GetAppCollateralByAppId;
     this.getAppCollateralRegistByAppCollateralId = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getListAppAssetSupplEmpByAppAssetId = AdInsConstant.GetListAppAssetSupplEmpByAppAssetId;
     this.getVendorForLookup = AdInsConstant.GetVendorForLookup;
-    this.getAppAssetSupplEmpByAppAssetIdAndCode = AdInsConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
+    this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {
@@ -702,7 +703,7 @@ copyToLocationAddr() {
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
-    this.http.post(AdInsConstant.GetAppById, {AppId: this.AppId}).pipe(
+    this.http.post(URLConstant.GetAppById, {AppId: this.AppId}).pipe(
       map((response: AppObj) => {
         this.appData = response;
         return response;

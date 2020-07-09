@@ -8,6 +8,7 @@ import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -64,7 +65,7 @@ export class NapAddDetailComponent implements OnInit {
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
@@ -163,7 +164,7 @@ export class NapAddDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
         this.ChangeTab(Step);
@@ -177,7 +178,7 @@ export class NapAddDetailComponent implements OnInit {
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
         this.router.navigate(["/Nap/Factoring/Paging"])

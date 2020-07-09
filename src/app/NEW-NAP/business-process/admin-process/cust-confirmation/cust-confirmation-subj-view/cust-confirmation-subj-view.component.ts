@@ -9,6 +9,7 @@ import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -72,7 +73,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         var appObj = {
           AppId: this.AgrmntObj.AppId
         };
-        this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
+        this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
           (response) => {
             this.AppObj = response;
           },

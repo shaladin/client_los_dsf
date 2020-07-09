@@ -14,6 +14,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -135,7 +136,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post<AgrmntObj>(AdInsConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
         this.agrmntObj = response;
-        this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
+        this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
           (response) => {
             this.appObj = response; 
           },

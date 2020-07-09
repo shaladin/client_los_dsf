@@ -14,6 +14,7 @@ import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
 import { AppFixedFeeObj } from 'app/shared/model/AppFixedFeeObj.Model';
 import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -383,7 +384,7 @@ export class AppAddFixedComponent implements OnInit {
     dtFixedNAPObj.BrandCode = this.BrandCode;
     dtFixedNAPObj.ModelCode = this.ModelCode;
     dtFixedNAPObj.TypeCode = this.TypeCode;
-    this.http.post(AdInsConstant.DataTableNAP, dtFixedNAPObj).subscribe(
+    this.http.post(URLConstant.DataTableNAP, dtFixedNAPObj).subscribe(
       (response) => {
         this.returnDtFixedNAPObj = response;
         this.toastr.successMessage(response["message"]);
@@ -413,7 +414,7 @@ export class AppAddFixedComponent implements OnInit {
     feeAndInsFixedNAP.OfficeCode = this.user.MrOfficeTypeCode;
     feeAndInsFixedNAP.InsPackage = item.InsPackage;
     feeAndInsFixedNAP.Tenor = parseInt(item.Tenor, 10);
-    this.http.post(AdInsConstant.DataTableFeeAndInsNAP, feeAndInsFixedNAP).subscribe(
+    this.http.post(URLConstant.DataTableFeeAndInsNAP, feeAndInsFixedNAP).subscribe(
       (response) => {
         this.returnFeeAndInsFixedNAP = response["ReturnObject"];
         // console.log("vvv");
@@ -472,13 +473,11 @@ export class AppAddFixedComponent implements OnInit {
         this.allAppDataObj.AppFixedObj.LifeInscoBranchCode = item.LifeInsco;
         this.allAppDataObj.AppFixedObj.LifeInsPaymentMethod = item.LifeInsPaymentMethod;
 
-        console.log("asd")
         console.log(this.allAppDataObj)
     
-        this.http.post(AdInsConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
+        this.http.post(URLConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
           (response) => {
             this.returnAllAppDataObj = response;
-            console.log("test")
             console.log(this.returnAllAppDataObj)
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "AppId": response["AppId"], "LobCode":this.LobCode } });

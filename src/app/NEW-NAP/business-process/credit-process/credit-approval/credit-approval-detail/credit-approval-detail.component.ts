@@ -8,6 +8,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -72,7 +73,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   getApp(){
     var appObj = new AppObj();
     appObj.AppId = this.appId
-    this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.AppObj = response;
       },

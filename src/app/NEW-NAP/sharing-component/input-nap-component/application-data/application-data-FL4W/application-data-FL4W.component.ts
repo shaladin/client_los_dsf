@@ -11,6 +11,7 @@ import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -220,7 +221,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListAppCross, obj).subscribe(
+    this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
         this.resultCrossApp = response["ReturnObject"];
         for(var i = 0; i<this.resultCrossApp.length; i++){
@@ -243,7 +244,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
         console.log("testdata")
@@ -324,7 +325,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
       (response) => {
         console.log("GetListKvpActiveRefAppSrc Response : " + JSON.stringify(response));
         this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
@@ -582,7 +583,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     console.log("appcross")
     console.log(obj)
 
-    this.http.post(AdInsConstant.EditAppAddAppCross, obj).subscribe(
+    this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
         console.log("response App Refinancing : " + JSON.stringify(response));
         this.outputTab.emit();
@@ -643,7 +644,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       if (this.resultCrossApp[idx].AppCrossId != null){
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
-        this.http.post(AdInsConstant.DeleteAppCross, obj).subscribe(
+        this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
           (response) =>{
           },
           (error) => {

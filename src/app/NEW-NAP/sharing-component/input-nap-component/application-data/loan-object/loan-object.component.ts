@@ -10,6 +10,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-loan-object',
@@ -74,7 +75,7 @@ export class LoanObjectComponent implements OnInit {
       AppLoanPurposeId: this.AppLoanPurposeId
     };
 
-    await this.http.post(AdInsConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
+    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -149,7 +150,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
@@ -236,7 +237,7 @@ export class LoanObjectComponent implements OnInit {
     if (this.mode == "edit") {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
-      this.http.post(AdInsConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+      this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.modal.close();
           this.toastr.successMessage(response["message"]);
@@ -248,7 +249,7 @@ export class LoanObjectComponent implements OnInit {
         });
     }
     else {
-      this.http.post(AdInsConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+      this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.modal.close();
           this.toastr.successMessage(response["message"]);
@@ -267,7 +268,7 @@ export class LoanObjectComponent implements OnInit {
         AppLoanPurposeId: AppLoanPurposeId
       };
 
-      this.http.post(AdInsConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
+      this.http.post(URLConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
         this.toastr.successMessage(response["Message"]);
         this.loadDataTable();
       },
@@ -281,7 +282,7 @@ export class LoanObjectComponent implements OnInit {
     var obj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
       (response) => {
         this.resultData = response["listResponseAppLoanPurpose"];
       },

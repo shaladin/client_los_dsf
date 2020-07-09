@@ -9,6 +9,7 @@ import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { environment } from 'environments/environment';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
     selector: 'app-login-page',
@@ -55,7 +56,7 @@ export class LoginPageComponent implements OnInit {
         if(this.token!=null)
         {
             localStorage.setItem("Token",this.token);
-            this.http.post(AdInsConstant.LoginWithToken, {ModuleCode:environment.Module}).subscribe(
+            this.http.post(URLConstant.LoginWithToken, {ModuleCode:environment.Module}).subscribe(
                 (response) => {
                     console.log(response);
                     AdInsHelper.CreateUserAccess(response);
@@ -82,7 +83,7 @@ export class LoginPageComponent implements OnInit {
         event.preventDefault();
         const username = this.userInputRef.nativeElement.value;
         const password = this.userPassRef.nativeElement.value;
-        this.apiUrl = this.FoundationR3Url + AdInsConstant.Login;
+        this.apiUrl = this.FoundationR3Url + URLConstant.Login;
         var requestObj = { "Username": username, "Password": password };
         localStorage.setItem("Username",username);
         console.log("Login Page Comp");

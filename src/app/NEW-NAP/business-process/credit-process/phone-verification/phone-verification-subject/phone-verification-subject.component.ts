@@ -12,6 +12,7 @@ import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/R
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -89,7 +90,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   initUrl() {
     this.getPhoneVerifSubjUrl = AdInsConstant.GetAppPhoneVerifSubjectListByAppId;
-    this.getAppUrl = AdInsConstant.GetAppById;
+    this.getAppUrl = URLConstant.GetAppById;
     this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
     this.addVerfResultUrl = AdInsConstant.AddVerfResult;
     this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
@@ -175,7 +176,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
     var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
+    this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { BizTemplateCode: lobCode } })

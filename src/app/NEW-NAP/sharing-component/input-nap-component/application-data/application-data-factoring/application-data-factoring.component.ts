@@ -11,6 +11,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -227,7 +228,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetListKvpActiveRefAppSrc, null).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.allAppSource = response['ReturnObject'];
         if (this.mode != 'edit') {

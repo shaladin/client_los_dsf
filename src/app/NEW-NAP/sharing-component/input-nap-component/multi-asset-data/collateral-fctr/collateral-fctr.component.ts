@@ -17,6 +17,7 @@ import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocOb
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { formatDate } from '@angular/common';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-collateral-fctr',
@@ -204,7 +205,7 @@ export class CollateralFctrComponent implements OnInit {
       })
 
     var assetObj = {};
-    this.http.post(AdInsConstant.GetListKeyValueByCode, assetObj).subscribe(
+    this.http.post(URLConstant.GetListKeyValueByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         if (this.type != "Edit") {

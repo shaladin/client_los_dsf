@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "view-asset-data",
@@ -38,12 +39,12 @@ export class ViewAssetDataComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppUrl = AdInsConstant.GetAppById;
+    this.getAppUrl = URLConstant.GetAppById;
     this.getAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
   }
 
   initSingleAssetUrl(){
-    this.getAppUrl = AdInsConstant.GetAppById;
+    this.getAppUrl = URLConstant.GetAppById;
     this.getAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppAssetId;
   }
 

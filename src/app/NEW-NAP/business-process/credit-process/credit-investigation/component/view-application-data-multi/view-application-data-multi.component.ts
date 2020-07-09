@@ -8,6 +8,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-application-data-multi',
@@ -231,7 +232,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppDetailForAppTabById, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
       (response) => {
         console.log(response);
 

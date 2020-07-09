@@ -9,6 +9,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-invoice-data',
@@ -54,7 +55,7 @@ export class InvoiceDataComponent implements OnInit {
     var obj = {
       AppId: this.AppId,
     }
-    this.httpClient.post<AppFctrObj>(AdInsConstant.GetAppFctrByAppId, obj).subscribe(
+    this.httpClient.post<AppFctrObj>(URLConstant.GetAppFctrByAppId, obj).subscribe(
       (response) => {
         this.AppFactoringObj = response;
         if (!this.AppFactoringObj.IsCustListed) {

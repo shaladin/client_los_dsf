@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
@@ -189,7 +190,7 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    this.http.post(AdInsConstant.AddAppFromLead, napAppObj).subscribe(
+    this.http.post(URLConstant.AddAppFromLead, napAppObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);

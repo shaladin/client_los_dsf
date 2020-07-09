@@ -7,6 +7,7 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-asset-data-detail',
@@ -29,9 +30,9 @@ export class AppAssetDataDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let getAppAsset = this.httpClient.post(AdInsConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
+    let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(AdInsConstant.GetListAppAssetSupplEmpByAppAssetId, { AppAssetId: this.AppAssetId });
-    let getAppCollReg = this.httpClient.post(AdInsConstant.GetAppCollateralRegistrationByAppId, { AppId: this.AppId });
+    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppId, { AppId: this.AppId });
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];

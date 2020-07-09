@@ -22,6 +22,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -143,7 +144,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   initDropdownList() {
-    this.http.post(AdInsConstant.GetListKeyValueByCode, {}).subscribe(
+    this.http.post(URLConstant.GetListKeyValueByCode, {}).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         if (this.mode != "edit") {
@@ -216,7 +217,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   getAppData() {
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.getProdOffering(response.ProdOfferingCode, response.ProdOfferingVersion);
       });

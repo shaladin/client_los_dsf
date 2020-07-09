@@ -10,6 +10,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
     this.getRefMasterListKeyValueActiveByCodeUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getListKvpActiveRefAppSrcUrl = AdInsConstant.GetListKvpActiveRefAppSrc;
+    this.getListKvpActiveRefAppSrcUrl = URLConstant.GetListKvpActiveRefAppSrc;
     this.getListActiveRefPayFreqUrl = AdInsConstant.GetListActiveRefPayFreq;
     this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
     this.route.queryParams.subscribe(params => {

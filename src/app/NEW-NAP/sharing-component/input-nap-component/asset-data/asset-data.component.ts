@@ -17,6 +17,7 @@ import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccesso
 import { AppCollateralAttrObj } from '../../../../shared/model/AppCollateralAttrObj.Model';
 import { AdInsErrorMessage } from 'app/shared/AdInsErrorMessage';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -310,7 +311,7 @@ export class AssetDataComponent implements OnInit {
   initUrl() {
     this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.GetAllAssetDataUrl = AdInsConstant.GetAllAssetDataByAppId;
-    this.getAppUrl = AdInsConstant.GetAppById;
+    this.getAppUrl = URLConstant.GetAppById;
     this.getVendorUrl = AdInsConstant.GetVendorByVendorCode;
     this.getVendorEmpUrl = AdInsConstant.GetListVendorEmpByVendorIdAndPositionCodes;
     this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;

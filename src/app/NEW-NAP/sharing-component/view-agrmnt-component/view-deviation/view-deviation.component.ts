@@ -3,6 +3,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-deviation',
@@ -27,7 +28,7 @@ export class ViewDeviationComponent implements OnInit {
       AppId: this.AppId,
       AppNo : ""
     }
-    var getAppUrl = AdInsConstant.GetAppById;
+    var getAppUrl = URLConstant.GetAppById;
     this.http.post<AppObj>(getAppUrl, obj).subscribe(
       (response) => {
         

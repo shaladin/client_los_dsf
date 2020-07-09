@@ -8,6 +8,7 @@ import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -124,7 +125,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     RowVersion: ""
   }
   async initBranchName() {
-    await this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
       } 

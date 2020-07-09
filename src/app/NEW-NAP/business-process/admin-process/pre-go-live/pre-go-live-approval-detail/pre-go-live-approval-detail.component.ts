@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -157,7 +158,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           AppId: this.result.AppId,
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetAppById, Obj4).subscribe(
+        this.http.post(URLConstant.GetAppById, Obj4).subscribe(
           (response) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;

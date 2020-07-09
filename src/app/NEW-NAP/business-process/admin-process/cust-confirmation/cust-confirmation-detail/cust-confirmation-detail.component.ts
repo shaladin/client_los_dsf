@@ -10,6 +10,7 @@ import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -88,7 +89,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     var AppObj = {
       AppId: this.AppId
     }
-    this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
       (response) => {
         console.log(response);
         this.appObj = response;
