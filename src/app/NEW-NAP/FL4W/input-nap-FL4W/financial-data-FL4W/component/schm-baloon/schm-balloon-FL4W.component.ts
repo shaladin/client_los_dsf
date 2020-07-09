@@ -60,7 +60,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
     }
     this.calcBalloonObj = this.ParentForm.value;
     this.calcBalloonObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -105,7 +105,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
     
     this.calcBalloonObj = this.ParentForm.value;
     this.calcBalloonObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentBalloon", this.calcBalloonObj).subscribe(
+    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({

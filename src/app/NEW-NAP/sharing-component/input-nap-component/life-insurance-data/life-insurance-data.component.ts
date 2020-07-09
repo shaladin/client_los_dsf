@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
 import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -63,7 +64,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
     this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
-        if (response.MrCustTypeCode == "COMPANY") {
+        if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.LifeInsForm.controls["IsChecked"].disable();
         }
       },
@@ -105,7 +106,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   async initPaidMethod() {
     var paidMethodObj = {
-      RefMasterTypeCode: "LIFE_INS_PAY_METHOD",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLifeInsPayMethod,
       RowVersion: ""
     }
     await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, paidMethodObj).toPromise().then(
@@ -118,7 +119,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     );
   }
   LifeInscoBranchNameObj = {
-    MrVendorCategory: "LIFE_INSCO_BRANCH",
+    MrVendorCategory: CommonConstant.RefMasterTypeCodeLifeInscoBranch,
     OfficeCode: "",
     RowVersion: ""
   }
@@ -350,14 +351,15 @@ export class LifeInsuranceDataComponent implements OnInit {
   }
 
   PremiMethodChanged(event) {
-    if (event.target.value == "PAID_IN_ADV") {
+    if (event.target.value == CommonConstant.LifeInsPayMethodFullPaidInAdvance
+      ) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 0
 
       });
       this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
-    else if (event.target.value == "CPTLZ") {
+    else if (event.target.value == CommonConstant.LifeInsPayMethodFullCapitalized) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 100
 
@@ -370,14 +372,14 @@ export class LifeInsuranceDataComponent implements OnInit {
   }
 
   PremiMethodForm() {
-    if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "PAID_IN_ADV") {
+    if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == CommonConstant.LifeInsPayMethodFullPaidInAdvance) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 0
 
       });
       this.LifeInsForm.controls["PaidInAdvPrcnt"].disable();
     }
-    else if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == "CPTLZ") {
+    else if (this.LifeInsForm.controls["MrLifeInsPaidMethodCode"].value == CommonConstant.LifeInsPayMethodFullCapitalized) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 100
 

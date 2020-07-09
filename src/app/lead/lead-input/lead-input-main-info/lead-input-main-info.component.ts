@@ -15,6 +15,7 @@ import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -232,7 +233,7 @@ export class LeadInputMainInfoComponent implements OnInit {
       });
 
     this.leadSource = new RefMasterObj();
-    this.leadSource.RefMasterTypeCode = "LEAD_SOURCE";
+    this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
     this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
       (response) => {
         this.listLeadSource = response['ReturnObject'];
@@ -285,8 +286,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
 
           this.cmoObj = new RefEmpForLookupObj();
-          this.cmoObj.Username = this.returnLead.CmoUsername;
-          console.log("awdawd");
+          this.cmoObj.Username = this.returnLead.CmoUsername; 
           this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
             (response) => {
                 this.returnCmoObj = response;
@@ -385,7 +385,7 @@ GetOfficeDDL(){
       //   OfficeName: response['ReturnObject'][0]['Value']
       // });
 
-      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == "HO") {
+      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
         this.MainInfoForm.patchValue({
           CrtOfficeCode: this.user.OfficeCode,
           OfficeCode : this.listRefOffice[0].Key,
@@ -418,8 +418,8 @@ GetOfficeDDL(){
     this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
     this.leadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
-    this.leadObj.LeadStat = "NEW";
-    this.leadObj.LeadStep = "NEW";
+    this.leadObj.LeadStat = CommonConstant.LeadStatNew;
+    this.leadObj.LeadStep = CommonConstant.LeadStatNew;
     this.leadObj.AgencyCode = this.tempAgencyCode;
     this.leadObj.CmoUsername = this.tempCmoUsername;
     this.leadObj.SurveyorUsername = this.tempSurveyorUsername;

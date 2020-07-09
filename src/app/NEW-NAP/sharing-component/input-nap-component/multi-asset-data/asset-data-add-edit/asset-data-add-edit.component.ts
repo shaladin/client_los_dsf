@@ -27,6 +27,7 @@ import { DatePipe } from '@angular/common';
 import { map, mergeMap, first } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { forkJoin } from 'rxjs';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -337,7 +338,7 @@ copyToLocationAddr() {
 
   assetConditionHandler(){
     var value = this.AssetDataForm.controls["MrAssetConditionCode"].value;
-    if(value == "USED")
+    if(value == CommonConstant.AssetConditionUsed)
     {
       this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
       this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
@@ -453,7 +454,7 @@ copyToLocationAddr() {
         var assetValidationRule = response;
         console.log("AssetValidationRule: " + JSON.stringify(response));
         this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
-        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'PRCNT') {
+        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypePrcnt) {
           if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
             this.AssetDataForm.patchValue({
               DownPayment: assetValidationRule["GrossDPPrctg"]
@@ -767,7 +768,7 @@ copyToLocationAddr() {
     );
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response["ReturnObject"];
@@ -776,7 +777,7 @@ copyToLocationAddr() {
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response["ReturnObject"];
@@ -785,7 +786,7 @@ copyToLocationAddr() {
     );
 
     this.userRelationshipObj = new RefMasterObj();
-    this.userRelationshipObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getListActiveRefMasterUrl, this.userRelationshipObj).subscribe(
       (response) => {
         this.returnUserRelationshipObj = response["ReturnObject"];
@@ -794,7 +795,7 @@ copyToLocationAddr() {
     );
 
     this.assetUsageObj = new RefMasterObj();
-    this.assetUsageObj.RefMasterTypeCode = "ASSET_USAGE";
+    this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
       (response) => {
         this.returnAssetUsageObj = response["ReturnObject"];
@@ -884,7 +885,7 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls["SupplCode"].value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
 
-    if(this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == "AMT"){
+    if(this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt){
       this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
     }
     else{
@@ -898,12 +899,12 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     
     if (this.AppAssetId == 0) {
-      this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
-      this.allAssetDataObj.AppCollateralObj.CollateralStat = "NEW";
+      this.allAssetDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
+      this.allAssetDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
     }
     else {
-      this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
-      this.allAssetDataObj.AppCollateralObj.CollateralStat = "NEW";
+      this.allAssetDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
+      this.allAssetDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
     }
 
     this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;

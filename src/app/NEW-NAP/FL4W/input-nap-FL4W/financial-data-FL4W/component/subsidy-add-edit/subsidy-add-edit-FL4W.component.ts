@@ -158,7 +158,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     LoadDDLFromValue(fromTypeCode: string) {
-      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
+      this.http.post(AdInsConstant.GetListSubsidyFromValue, { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
         (response) => {
           this.FromValueOptions = response["ReturnObject"];
         }
@@ -166,7 +166,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
     
     LoadDDLSubsidyAlloc(fromTypeCode: string) {
-      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation", { SubsidyFromType: fromTypeCode }).subscribe(
+      this.http.post(AdInsConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode }).subscribe(
         (response) => {
           this.AllocCodeOptions = response["ReturnObject"];
         }
@@ -174,7 +174,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidySource", { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
+      this.http.post(AdInsConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
         (response) => {
           this.SourceCodeOptions = response["ReturnObject"];
         }
@@ -182,7 +182,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
   
     LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) {
-      this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyValueType", 
+      this.http.post(AdInsConstant.GetListSubsidyValueType, 
                       { SubsidyFromType: fromTypeCode, 
                         SubsidyAllocCode: allocCode,
                         SubsidySourceCode: sourceCode

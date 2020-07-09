@@ -9,6 +9,7 @@ import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.mo
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 
@@ -174,7 +175,7 @@ export class ReservedFundComponent implements OnInit {
   GetAppCust(appObj) {
     this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
       (response) => {
-        if (response.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+        if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.allAppReservedFundObj.IsPersonal = false
         }
       }

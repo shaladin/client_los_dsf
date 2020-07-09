@@ -10,6 +10,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -31,7 +32,7 @@ export class NapAddDetailComponent implements OnInit {
   ListAsset: any;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
-  custType: string = AdInsConstant.CustTypeCompany;
+  custType: string = CommonConstant.CustTypeCompany;
   token: any = localStorage.getItem("Token");
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
@@ -110,14 +111,14 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
-  stepperMode: string = AdInsConstant.CustTypeCompany;
+  stepperMode: string = CommonConstant.CustTypeCompany;
   ChangeStepper() {
-    if (this.custType == AdInsConstant.CustTypePersonal) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
         linear: false,
         animation: true
       });
-      this.stepperMode = AdInsConstant.CustTypePersonal;
+      this.stepperMode = CommonConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
@@ -133,12 +134,12 @@ export class NapAddDetailComponent implements OnInit {
         "TC": 9,
       };
       // console.log(this.stepperPersonal);  
-    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
         linear: false,
         animation: true
       });
-      this.stepperMode = AdInsConstant.CustTypeCompany;
+      this.stepperMode = CommonConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
@@ -158,9 +159,9 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ChooseStep(idxStep: number) {
-    if (this.custType == AdInsConstant.CustTypePersonal) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.to(idxStep);
-    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.to(idxStep);
     }
   }
@@ -169,7 +170,7 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
       this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
@@ -257,9 +258,9 @@ export class NapAddDetailComponent implements OnInit {
     }
 
     this.ChangeTab(Step);
-    if (this.custType == AdInsConstant.CustTypePersonal) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
-    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
     this.ucViewMainProd.initiateForm();

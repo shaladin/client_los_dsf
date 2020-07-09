@@ -9,6 +9,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-application-data',
@@ -102,15 +103,15 @@ export class ApplicationDataComponent implements OnInit {
     this.applicationDDLitems = [];
     // data dummy test
     // data real
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
-    // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
-    // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInstSchm);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
+    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
+    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     // this.getPayFregData();
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     this.getAppSrcData();
     this.GetCrossInfoData();
   }
@@ -137,7 +138,7 @@ export class ApplicationDataComponent implements OnInit {
   getInterestTypeCode(){
     var obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInterestType,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestType,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
@@ -245,9 +246,9 @@ export class ApplicationDataComponent implements OnInit {
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
-        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
-        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
-        this.getDDLFromProdOffering(AdInsConstant.RefProdCompFirstInstType);
+        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
+        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
+        this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
         this.getPayFregData();
       },
       (error) => {
@@ -389,8 +390,8 @@ export class ApplicationDataComponent implements OnInit {
     var idx = ev.target.selectedIndex - 1;
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
-      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
+      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[CommonConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[CommonConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }

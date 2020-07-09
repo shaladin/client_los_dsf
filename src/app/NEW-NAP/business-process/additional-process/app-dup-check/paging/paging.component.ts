@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -76,16 +77,16 @@ export class PagingComponent implements OnInit {
     
     //   });
     
-    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypePersonal && event.RowObj.IsExistingCust == false){
+    if(event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false){
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
-    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypePersonal && event.RowObj.IsExistingCust == true){
+    if(event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true){
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
-    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypeCompany && event.RowObj.IsExistingCust == false){
+    if(event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false){
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
-    if(event.RowObj.CustTypeCode == AdInsConstant.CustTypeCompany && event.RowObj.IsExistingCust == true){
+    if(event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true){
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
   }

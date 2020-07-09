@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -62,7 +63,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     let poUrl = "";
     if (this.lobCode == "CF4W") {
       poUrl = AdInsConstant.GetAllAssetDataForPOByAsset;
-    } else if (this.lobCode == "FL4W") {
+    } else if (this.lobCode == AdInsConstant.FL4W) {
       poUrl = AdInsConstant.GetAllAssetDataForPOMultiAsset;
     }
 
@@ -112,28 +113,28 @@ export class PurchaseOrderDetailComponent implements OnInit {
     var listPurchaseOrderD = new Array();
     this.purchaseOrderDObj = new PurchaseOrderDObj();
 
-    this.purchaseOrderDObj.MrPoItemCode = "TOTAL_ASSET_PRICE";
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTotalAssetPrice ;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = "DP_NETT";
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeDpNett;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt ? this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt : 0;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = "TDP_AT_COY";
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTdpAtCoy;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TdpPaidCoyAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = "INST_AMT";
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInstAmt;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].InstAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = "INS_NOT_CPTLZ";
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInsNotCptlz;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalInsCustAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
     this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = "LFI_NOT_CPTLZ";
+    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeLfiNotCptlz;
     this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalLifeInsCustAmt;
     listPurchaseOrderD.push(this.purchaseOrderDObj);
 

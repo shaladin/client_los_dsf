@@ -18,6 +18,7 @@ import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Mo
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -145,7 +146,7 @@ export class FraudDetectionVerifComponent implements OnInit {
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
         var requestDupCheck;
-        if (this.appCustObj.MrCustTypeCode == "PERSONAL") {
+        if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
           var requestDupCheckPersonal = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -225,9 +226,9 @@ export class FraudDetectionVerifComponent implements OnInit {
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if(idxSelected > -1){
           this.listCustDuplicate[idxSelected].IsSelected = true;
-          this.custStat = "NEW";
+          this.custStat = CommonConstant.CustStatNew;
         }else{
-          this.custStat = "EXISTING";
+          this.custStat = CommonConstant.CustStatExisting;
         }
       },
       error => {

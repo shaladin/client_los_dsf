@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DatePipe } from '@angular/common';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-do-asset-detail',
@@ -145,7 +146,7 @@ export class DoAssetDetailComponent implements OnInit {
         var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
         for (const item of appCollateral) {
           var isMandatory = false;
-          if(item.MrCollateralConditionCode == "NEW"){
+          if(item.MrCollateralConditionCode == CommonConstant.AssetConditionNew){
             console.log("New Collateral");
             if(item.IsMandatoryNew == true){
               isMandatory = true;

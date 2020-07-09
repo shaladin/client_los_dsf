@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Model';
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -84,8 +85,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   SaveLeadConfirmCancel() {
     if(this.responseObj.length > 0){
       var leadObj : LeadConfirmCancelObj = new LeadConfirmCancelObj();
-      leadObj.LeadStat = "CAN";
-      leadObj.LeadStep = "CAN";
+      leadObj.LeadStat = CommonConstant.LeadStatCancel;
+      leadObj.LeadStep = CommonConstant.LeadStepCancel;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-verf-question[ParentForm][VerfSchemeCode]',
@@ -87,7 +88,7 @@ export class VerfQuestionComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+          if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -97,7 +98,7 @@ export class VerfQuestionComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+          } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             this.ListVerfAnswer[i].push("");
           } else {

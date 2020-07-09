@@ -11,6 +11,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { environment } from 'environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-fraud-verification-multi-asset',
@@ -117,7 +118,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.mrSrvySourceCode = "MOU";
         this.getFraudDukcapil();
 
-        if (this.mrCustTypeCode == "PERSONAL") {
+        if (this.mrCustTypeCode == CommonConstant.CustTypePersonal) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -130,7 +131,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
             "RowVersion": this.RowVersion
           };
-        } else if (this.mrCustTypeCode == "COMPANY") {
+        } else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -185,9 +186,9 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
       response => {
         this.listCustDuplicate = response["ReturnObject"];
         if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
-          this.custStat = "EXISTING"
+          this.custStat = CommonConstant.CustStatExisting
         } else {
-          this.custStat = "NEW"
+          this.custStat = CommonConstant.CustStatNew
         }
       },
       error => {

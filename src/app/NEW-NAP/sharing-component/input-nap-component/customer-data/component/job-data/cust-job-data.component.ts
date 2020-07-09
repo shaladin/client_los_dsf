@@ -11,6 +11,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDa
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-job-data',
@@ -306,7 +307,7 @@ export class CustJobDataComponent implements OnInit {
   }
 
  bindCustModelObj(){
-    this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypePersonal;
+    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
      this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];

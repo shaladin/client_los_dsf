@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-tab-application-data',
@@ -93,7 +94,7 @@ export class TabApplicationDataComponent implements OnInit {
     await this.GetDealerData();
     await this.GetCommData();
     await this.GetAppTc();
-    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy=="CO"){
+    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == CommonConstant.InsuredByCompany){
       this.InsuranceTitle ="Asset Insurance";
     }else{
       this.InsuranceTitle ="Asset Insurance & Life Insurance"
@@ -111,8 +112,8 @@ export class TabApplicationDataComponent implements OnInit {
     await this.http.post(AdInsConstant.GetListAppGuarantorDetail, obj).toPromise().then(
       (response) => {
         console.log(response);
-        for(var i=0;i<response[AdInsConstant.ReturnObj].length;i++){
-          var tempResponse = response[AdInsConstant.ReturnObj][i];
+        for(var i=0;i<response[CommonConstant.ReturnObj].length;i++){
+          var tempResponse = response[CommonConstant.ReturnObj][i];
           var temp = {
             GuarantorName: tempResponse.appGuarantorObj.GuarantorName,
             GuarantorType: tempResponse.appGuarantorObj.GuarantorTypeCodeDesc,
@@ -243,7 +244,7 @@ export class TabApplicationDataComponent implements OnInit {
     await this.http.post(AdInsConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
-        var temp = response[AdInsConstant.ReturnObj];
+        var temp = response[CommonConstant.ReturnObj];
         for(var i=0;i<temp.length;i++){
           var tempObj = {
             Subject: temp[i].MrCommissionRecipientTypeCodeDesc,

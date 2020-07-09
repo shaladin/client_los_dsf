@@ -11,6 +11,7 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -91,7 +92,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
 
     var refMasterTypeObj = {
-      RefMasterTypeCode: "CUST_RELATIONSHIP",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustRelationship,
     }
     this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
       (response) => {

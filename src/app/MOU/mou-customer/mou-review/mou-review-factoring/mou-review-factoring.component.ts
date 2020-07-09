@@ -31,20 +31,7 @@ export class MouReviewFactoringComponent implements OnInit {
   link : any; 
   resultData : any;
   viewObj : string;
-  listReason: Array<any> = [
-    {
-      Key: "OTHR_RSN",
-      Value: "Reason 1"
-    },
-    {
-      Key: "REASON2",
-      Value: "Reason 3"
-    },
-    {
-      Key: "REASON2",
-      Value: "Reason 3"
-    },
-  ];
+  listReason: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -72,8 +59,7 @@ export class MouReviewFactoringComponent implements OnInit {
         this.listApprover = response;
 
         this.MouReviewDataForm.patchValue({
-          ListApprover: this.listApprover[0].Key,
-          Reason: this.listReason[0].Key
+          ListApprover: this.listApprover[0].Key
         })
       })
 

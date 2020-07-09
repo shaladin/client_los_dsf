@@ -10,6 +10,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-personal-main-data',
@@ -264,7 +265,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.InputLookupCountryObj = new InputLookupObj();
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
@@ -286,7 +287,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   clearExpDt(){
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeEKTP){
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP){
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
@@ -301,7 +302,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
     console.log(idExpiredDate);
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == AdInsConstant.MrIdTypeCodeSIM) {
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeSIM) {
       idExpiredDate.setValidators([Validators.required]);
     }else{
       idExpiredDate.clearValidators();      

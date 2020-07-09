@@ -7,6 +7,7 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class SearchCrossAppComponent implements OnInit {
     addCrit.DataType = "string";
     addCrit.propName = "ag.AGRMNT_STAT";
     addCrit.restriction = AdInsConstant.RestrictionNotIn;
-    addCrit.listValue = [AdInsConstant.AgrmntStatCancel, AdInsConstant.AgrmntStatReject, AdInsConstant.AgrmntStatPaid, AdInsConstant.AgrmntStatExpired];
+    addCrit.listValue = [CommonConstant.AgrmntStatCancel, CommonConstant.AgrmntStatReject, CommonConstant.AgrmntStatPaid, CommonConstant.AgrmntStatExpired];
     this.arrAddCrit.push(addCrit);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/CrossAppTempPaging.json";

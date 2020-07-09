@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -25,7 +26,7 @@ export class MouCustomerRequestComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }

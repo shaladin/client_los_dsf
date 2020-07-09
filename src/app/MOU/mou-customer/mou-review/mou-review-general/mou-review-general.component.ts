@@ -31,20 +31,7 @@ export class MouReviewGeneralComponent implements OnInit {
   resultData: any;
   viewObj: string;
   mouCustObject: MouCustObj = new MouCustObj();
-  listReason: any = [
-    {
-      Key: "OTHR_RSN",
-      Value: "Reason 1"
-    },
-    {
-      Key: "REASON2",
-      Value: "Reason 3"
-    },
-    {
-      Key: "REASON2",
-      Value: "Reason 3"
-    },
-  ];
+  listReason: any;
 
   MouReviewDataForm = this.fb.group({
     ListApprover: [''],
@@ -81,7 +68,6 @@ export class MouReviewGeneralComponent implements OnInit {
 
         this.MouReviewDataForm.patchValue({
           ListApprover: this.listApprover[0].Key,
-          // Reason: this.listReason[0].Key
         })
       })
 
