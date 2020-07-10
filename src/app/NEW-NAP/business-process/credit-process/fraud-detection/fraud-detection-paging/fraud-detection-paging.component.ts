@@ -65,14 +65,17 @@ export class FraudDetectionPagingComponent implements OnInit {
             var fraudDetectionErrorMessage = response["FraudDetectionErrorMessage"];
             if(dupCheckErrorMessage != null){
               this.toastr.warningMessage(dupCheckErrorMessage);
+              return false;
             }
 
             if(surveyErrorMessage != null){
               this.toastr.warningMessage(surveyErrorMessage);
+              return false;
             }
 
             if(fraudDetectionErrorMessage != null){
               this.toastr.warningMessage(fraudDetectionErrorMessage);
+              return false;
             }
 
             if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
@@ -87,10 +90,43 @@ export class FraudDetectionPagingComponent implements OnInit {
           }
         );
       }else{
-        if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-        this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
-      else
-        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+        var appObj = {AppId: event.RowObj.AppId};
+        this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
+          (response) => {
+            console.log("Response Fraud Error : " + JSON.stringify(response));
+            var dupCheckErrorMessage = response["DupCheckErrorMessage"];
+            var surveyErrorMessage = response["SurveyErrorMessage"];
+            var fraudDetectionErrorMessage = response["FraudDetectionErrorMessage"];
+            if(dupCheckErrorMessage != null){
+              this.toastr.warningMessage(dupCheckErrorMessage);
+              return false;
+            }
+
+            if(surveyErrorMessage != null){
+              this.toastr.warningMessage(surveyErrorMessage);
+              return false;
+            }
+
+            if(fraudDetectionErrorMessage != null){
+              this.toastr.warningMessage(fraudDetectionErrorMessage);
+              return false;
+            }
+
+            if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
+              if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
+                this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
+              else
+                this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      //   if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
+      //   this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
+      // else
+      //   this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
       }     
     }
 
