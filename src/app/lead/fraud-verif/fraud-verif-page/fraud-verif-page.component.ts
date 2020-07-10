@@ -74,7 +74,7 @@ export class FraudVerifPageComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewLeadHeaderMainInfo = URLConstant.ViewHeaderLeadMainInfo;
+    this.viewLeadHeaderMainInfo = './assets/ucviewgeneric/viewLeadHeader.json';
     this.leadCustObj.LeadId = this.LeadId;
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
       (response) => {
@@ -93,8 +93,8 @@ export class FraudVerifPageComponent implements OnInit {
               (response) => {
                 this.DuplicateStatus = response["Status"];
                 if (this.DuplicateStatus != null && this.DuplicateStatus != undefined) {
-                  this.ResultDuplicate = response["ReturnObject"]["CustDuplicate"];
-                  this.ResultDuplicateNegative = response["ReturnObject"]["NegativeCustDuplicate"];
+                  this.ResultDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
+                  this.ResultDuplicateNegative = response[CommonConstant.ReturnObj]["NegativeCustDuplicate"];
                 }
               });
           });
@@ -117,12 +117,12 @@ export class FraudVerifPageComponent implements OnInit {
 
             this.http.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
               (response) => {
-                this.ResultDuplicateDoubleFinancing = response["ReturnObject"];
+                this.ResultDuplicateDoubleFinancing = response[CommonConstant.ReturnObj];
               })
 
             this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
               (response) => {
-                this.ResultDuplicateAssetNegative = response["ReturnObject"];
+                this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
                 console.log(response);
               });
           });
@@ -156,10 +156,10 @@ export class FraudVerifPageComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
