@@ -7,13 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
-import { LeadCancelConfirmComponent } from '../lead-cancel-confirm/lead-cancel-confirm.component';
-import { stringify } from 'querystring';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { String, StringBuilder } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -40,7 +39,7 @@ export class LeadCancelComponent implements OnInit {
   arrAddCrit = new Array<CriteriaObj>();
   checkboxAll: boolean = false;
   confirmUrl = "/Lead/ConfirmCancel";
-  allowedStat = ['INP','NEW'];
+  allowedStat = ['INP', 'NEW'];
   leadUrl: string;
   tempLeadCancelObj: LeadCancelObj;
   constructor(
@@ -79,17 +78,17 @@ export class LeadCancelComponent implements OnInit {
     this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
 
-    var addCrit : CriteriaObj = new CriteriaObj();
+    var addCrit: CriteriaObj = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "L.LEAD_STAT";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = this.allowedStat;
     this.arrAddCrit.push(addCrit);
     this.inputObj.addCritInput.push(addCrit);
-    var GetListLeadVerfUrl : string = URLConstant.GetListLeadVerf;
+    var GetListLeadVerfUrl: string = URLConstant.GetListLeadVerf;
     var obj = {};
-    var arr : Array<number> = [0];
-    var temp : Array<any>;
+    var arr: Array<number> = [0];
+    var temp: Array<any>;
     this.http.post(GetListLeadVerfUrl, obj).subscribe(
       response => {
         temp = response['ReturnObject'];
@@ -126,7 +125,7 @@ export class LeadCancelComponent implements OnInit {
       if (index > -1) { this.listSelectedId.splice(index, 1); }
     }
   }
-  searchPagination(event: number) : void{
+  searchPagination(event: number): void {
     this.pageNow = event;
     let order = null;
     if (this.orderByKey != null) {
@@ -137,7 +136,7 @@ export class LeadCancelComponent implements OnInit {
     }
     this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
   }
-  getResult(event) : void{
+  getResult(event): void {
     console.log(this.resultData);
     this.resultData = event.response.Data;
     this.totalData = event.response.Count;
@@ -145,7 +144,7 @@ export class LeadCancelComponent implements OnInit {
     this.ucgridFooter.totalData = this.totalData;
     this.ucgridFooter.resultData = this.resultData;
   }
-  onSelect(event) : void{
+  onSelect(event): void {
     this.pageNow = event.pageNow;
     this.pageSize = event.pageSize;
     this.searchPagination(this.pageNow);
@@ -156,7 +155,7 @@ export class LeadCancelComponent implements OnInit {
     this.adInsService.scrollIfFormHasErrors(form);
   }
 
-  SaveLeadCancel(leadVerfForm: any) { 
+  SaveLeadCancel(leadVerfForm: any) {
     this.tempLeadCancelObj = new LeadCancelObj();
     for (let index = 0; index < this.tempData.length; index++) {
       this.tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
@@ -164,16 +163,16 @@ export class LeadCancelComponent implements OnInit {
         this.tempLeadCancelObj.listWfTaskListId.push(this.tempData[index].WfTaskListId)
     }
     if (this.tempLeadCancelObj.LeadIds.length == 0) {
-      this.toastr.typeErrorCustom('Please Add At Least One Data');
+      this.toastr.typeErrorCustom(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
-    else if(this.tempLeadCancelObj.LeadIds.length > 50){
-      this.toastr.typeErrorCustom('Maximum 50 Data');
+    else if (this.tempLeadCancelObj.LeadIds.length > 50) {
+      this.toastr.typeErrorCustom(String.Format(ExceptionConstant.MAX_DATA, 50));
       return;
     }
-    var params : string = this.tempLeadCancelObj.LeadIds.join(',')
-    var taskListId : string = this.tempLeadCancelObj.listWfTaskListId.join(',')
-    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params, "WfTaskListIds":taskListId } });
+    var params: string = this.tempLeadCancelObj.LeadIds.join(',')
+    var taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
+    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params, "WfTaskListIds": taskListId } });
   }
 
   addToTemp() {
@@ -185,13 +184,13 @@ export class LeadCancelComponent implements OnInit {
         this.tempData.push(object);
       }
       this.arrAddCrit = new Array();
-      var addCrit : CriteriaObj = new CriteriaObj();
+      var addCrit: CriteriaObj = new CriteriaObj();
       addCrit.DataType = "numeric";
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.tempListId;
 
-      var allowedCrit : CriteriaObj = new CriteriaObj();
+      var allowedCrit: CriteriaObj = new CriteriaObj();
       allowedCrit.DataType = "text";
       allowedCrit.propName = "L.LEAD_STAT";
       allowedCrit.restriction = AdInsConstant.RestrictionIn;
@@ -209,9 +208,9 @@ export class LeadCancelComponent implements OnInit {
       this.inputObj.addCritInput = this.arrAddCrit;
       this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
       this.listSelectedId = [];
-    } 
+    }
     else {
-      this.toastr.typeErrorCustom('Please select at least one Available Lead');
+      this.toastr.typeErrorCustom(ExceptionConstant.SELECT_ONE_DATA_ON_LEAD);
     }
   }
 
@@ -234,20 +233,20 @@ export class LeadCancelComponent implements OnInit {
   }
 
   deleteFromTemp(LeadId: any) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.arrAddCrit = new Array();
       var index = this.tempListId.indexOf(LeadId);
       if (index > -1) {
         this.tempListId.splice(index, 1);
-        this.tempData.splice(index, 1); 
+        this.tempData.splice(index, 1);
       }
-      var addCrit : CriteriaObj = new CriteriaObj();
+      var addCrit: CriteriaObj = new CriteriaObj();
       addCrit.DataType = "numeric";
       addCrit.propName = "L.LEAD_ID";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.tempListId;
 
-      var allowedCrit : CriteriaObj = new CriteriaObj();
+      var allowedCrit: CriteriaObj = new CriteriaObj();
       allowedCrit.DataType = "text";
       allowedCrit.propName = "L.LEAD_STAT";
       allowedCrit.restriction = AdInsConstant.RestrictionIn;
