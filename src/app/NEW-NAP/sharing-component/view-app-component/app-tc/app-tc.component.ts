@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-tc',
@@ -23,7 +24,7 @@ export class AppTcComponent implements OnInit {
       AppId: this.AppId
     }
 
-    this.http.post(AdInsConstant.GetListTCbyAppId, AppObj).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, AppObj).subscribe(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-customer-inquiry',
@@ -47,7 +48,7 @@ export class MouCustomerInquiryComponent implements OnInit {
     if(event.Key == "customer"){
         var link : string;
         var custObj = { CustNo: event.RowObj.CustNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
             // window.open(link, '_blank');

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from '../../../shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-view',
@@ -54,7 +55,7 @@ export class ApplicationViewComponent implements OnInit {
     var appObj = {
       AppId: this.AppId,
     };
-    this.http.post(AdInsConstant.GetAppById, appObj).subscribe(
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         var bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];

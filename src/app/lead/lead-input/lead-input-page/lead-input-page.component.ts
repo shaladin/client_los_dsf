@@ -7,6 +7,7 @@ import { CustPersonalObj } from 'app/shared/model/CustPersonalObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -121,7 +122,7 @@ export class LeadInputPageComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
     }	

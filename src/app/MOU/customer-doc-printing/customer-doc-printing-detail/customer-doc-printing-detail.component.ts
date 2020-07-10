@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-customer-doc-printing-detail',
@@ -13,12 +14,12 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class CustomerDocPrintingDetailComponent implements OnInit {
   viewObj: string;
   MouCustId: number;
-  GetListMouCustDocPrintForViewByMouCustIdUrl: string = AdInsConstant.GetListMouCustDocPrintForViewByMouCustId;
+  GetListMouCustDocPrintForViewByMouCustIdUrl: string = URLConstant.GetListMouCustDocPrintForViewByMouCustId;
   responseObj: Array<any> = new Array<any>();
-  EditMouCustDocPrintSequenceNoUrl: string =  AdInsConstant.EditMouCustDocPrintSequenceNo;
-  link : any;
-  mouCustObj : any;
-  resultData : any;
+  EditMouCustDocPrintSequenceNoUrl: string = URLConstant.EditMouCustDocPrintSequenceNo;
+  link: any;
+  mouCustObj: any;
+  resultData: any;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -35,11 +36,11 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
-        this.resultData = response; 
-      } 
-    ); 
+        this.resultData = response;
+      }
+    );
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouObj).subscribe(
       response => {
@@ -51,17 +52,17 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     );
   }
 
-  searchRowVersion(MouCustDocPrintId){
-    for(var i=0;i< this.responseObj.length;i++){
-      if(this.responseObj[i]["MouCustDocPrintId"] == MouCustDocPrintId){
+  searchRowVersion(MouCustDocPrintId) {
+    for (var i = 0; i < this.responseObj.length; i++) {
+      if (this.responseObj[i]["MouCustDocPrintId"] == MouCustDocPrintId) {
         return this.responseObj[i]["RowVersion"];
       }
     }
     return null;
   }
 
-  print(MouCustDocPrintId){
-    var mouObj = { "MouCustDocPrintId": MouCustDocPrintId, "RowVersion" : this.searchRowVersion(MouCustDocPrintId) };
+  print(MouCustDocPrintId) {
+    var mouObj = { "MouCustDocPrintId": MouCustDocPrintId, "RowVersion": this.searchRowVersion(MouCustDocPrintId) };
     this.http.post(this.EditMouCustDocPrintSequenceNoUrl, mouObj).subscribe(
       response => {
         var message = response['Message'];
@@ -80,11 +81,10 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
       }
     );
   }
-  GetCallBack(event)
-  {
-    if(event.Key == "customer"){
+  GetCallBack(event) {
+    if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
           // window.open(this.link, '_blank');
@@ -95,7 +95,5 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         }
       );
     }
-    
   }
 }
- 

@@ -6,7 +6,7 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
-
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-app-cust-data-personal',
@@ -36,7 +36,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
 
-  async ngOnInit() : Promise<void>{
+  async ngOnInit(): Promise<void> {
     await this.getCustData();
     this.arrValue.push(this.appId);
     this.viewMainDataObj = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
@@ -49,9 +49,9 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
     this.isDataAlreadyLoaded = true;
   }
 
-  async getCustData(){
-    var reqObj = {AppId: this.appId}
-    await this.http.post(AdInsConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
+  async getCustData() {
+    var reqObj = { AppId: this.appId }
+    await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.custModelCode = response["CustModelCode"];
@@ -60,7 +60,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
-        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
+        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null ? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
       },
       (error) => {
         console.log(error);

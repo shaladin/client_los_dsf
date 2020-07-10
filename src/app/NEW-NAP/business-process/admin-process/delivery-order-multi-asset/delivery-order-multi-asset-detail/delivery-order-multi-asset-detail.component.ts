@@ -10,6 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateDoMultiAssetComponent } from '../create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -68,9 +70,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.claimTask();
     }
     var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
-    let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-    let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-    let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+    let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, doRequest);
+    let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+    let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
     forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
       (response) => {
         // console.log("DO List: " + JSON.stringify(response[1]));
@@ -114,7 +116,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
-    this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
@@ -132,9 +134,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       (response) => {
         this.spinner.show();
         var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
-        let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-        let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-        let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+        let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, doRequest);
+        let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+        let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
         forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
           (response) => {
             this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
@@ -211,15 +213,15 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     if (confirmation == true) {
       this.spinner.show();
       var requestObj = { DeliveryOrderHId: deliveryOrderHId }
-      this.httpClient.post(AdInsConstant.DeleteDeliveryOrderMultiAsset, requestObj).pipe(
+      this.httpClient.post(URLConstant.DeleteDeliveryOrderMultiAsset, requestObj).pipe(
         map((response) => {
           return response;
         }),
         mergeMap((response) => {
           var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
-          let getDOAssetList = this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest);
-          let getDOList = this.httpClient.post(AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
-          let checkAllDO = this.httpClient.post(AdInsConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
+          let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, doRequest);
+          let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+          let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
           var tempResponse = [response];
           return forkJoin([getDOAssetList, getDOList, tempResponse, checkAllDO]);
         })
@@ -280,7 +282,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     if (this.doList.length > 0) {
       // var tcFormData = this.AppTcForm.value.TCList;
       var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList] };
-      this.httpClient.post(AdInsConstant.EditAppTc, tcFormData).subscribe(
+      this.httpClient.post(URLConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
@@ -291,13 +293,13 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       );
     }
     else {
-      this.toastr.warningMessage("At Least 1 Delivery Order Needed To Save");
+      this.toastr.warningMessage(ExceptionConstant.ONE_DELIVERY_ORDER_NEEDED_TO_SAVE);
     }
   }
 
   DOSubmitHandler() {
     if (!this.isFinal) {
-      this.toastr.warningMessage("All Asset Must Be Processed to Submit");
+      this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
       var valid: boolean = true;
@@ -314,8 +316,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       if (valid) {
         // var tcFormData = this.AppTcForm.value.TCList;
         var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList] };
-        let editTc = this.httpClient.post(AdInsConstant.EditAppTc, tcFormData);
-        let submitDO = this.httpClient.post(AdInsConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+        let editTc = this.httpClient.post(URLConstant.EditAppTc, tcFormData);
+        let submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
         forkJoin([editTc, submitDO]).subscribe(
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
@@ -327,7 +329,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         );
       }
       else {
-        this.toastr.warningMessage("Please Complete Serial No. 1 and Serial No. 2 on all asset first.");
+        this.toastr.warningMessage(ExceptionConstant.COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET);
       }
     }
   }

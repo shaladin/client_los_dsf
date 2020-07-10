@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -37,13 +38,12 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.viewObj = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
 
     var refReasonObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
-    this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {
         this.itemReasonCode = response["ReturnObject"];
         this.MainInfoForm.patchValue({
@@ -51,8 +51,8 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
         });
       }
     );
-
   }
+
   SaveForm() {
     this.AppAgrmntCancelObj = new AppAgrmntCancelObj();
     this.AppAgrmntCancelObj = this.MainInfoForm.value;
@@ -61,7 +61,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.AppAgrmntCancelObj.CancelByRefNo = "null";
     this.AppAgrmntCancelObj.RowVersion = "";
 
-    this.http.post(AdInsConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
+    this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
       this.router.navigateByUrl("/Nap/AdminProcess/AgreementCancellation/Paging");
     },

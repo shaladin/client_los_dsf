@@ -5,12 +5,13 @@ import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
-
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { formatDate } from '@angular/common';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -119,7 +120,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
 
     if(birthDt > businessDt){
-      this.toastr.warningMessage("Birth Date can not be more than " + businessDtStr);
+      this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + businessDtStr);
       return;
     }
 
@@ -323,9 +324,9 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   initUrl(){
-    this.getCustContactPersonPersonalUrl = AdInsConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = AdInsConstant.GetRefProfessionByCode;
+    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
   }
 
   bindCopyFrom(){

@@ -9,6 +9,8 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-financial-data-fctr',
@@ -124,7 +126,7 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         console.log(response);
         this.appFinDataObj = response;
@@ -134,7 +136,7 @@ export class FinancialDataFctrComponent implements OnInit {
         }
 
         this.FinDataForm.patchValue({
-          TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt-this.appFinDataObj.TotalRetentionAmt,
+          TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt - this.appFinDataObj.TotalRetentionAmt,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
@@ -193,12 +195,12 @@ export class FinancialDataFctrComponent implements OnInit {
       var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
   
       if (NeedReCalculate) {
-        this.toastr.warningMessage("Please Calculate Again");
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
         return;
       }
       if (isValidGrossYield && isValidGracePeriod) {
   
-        this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
+        this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["Message"]);
@@ -217,7 +219,7 @@ export class FinancialDataFctrComponent implements OnInit {
     if (gracePeriodType != "") {
       if (gracePeriod == 0) {
         valid = false;
-        this.toastr.warningMessage("Grace Period must be set");
+        this.toastr.warningMessage(ExceptionConstant.GRACE_PERIOD_MUST_SET);
       }
     }
 
@@ -232,13 +234,13 @@ export class FinancialDataFctrComponent implements OnInit {
 
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.warningMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.warningMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN+ StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }

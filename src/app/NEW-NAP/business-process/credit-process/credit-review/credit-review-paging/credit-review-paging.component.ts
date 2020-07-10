@@ -5,6 +5,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-credit-review-paging',
@@ -14,8 +15,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class CreditReviewPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array(); 
-  token : any = localStorage.getItem("Token");
+  arrCrit: Array<any> = new Array();
+  token: any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -24,11 +25,11 @@ export class CreditReviewPagingComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
-    this.inputPagingObj._url="./assets/ucpaging/searchCreditReview.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCreditReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -38,21 +39,19 @@ export class CreditReviewPagingComponent implements OnInit {
       }
     ];
 
-    
-
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "RVW_"+this.BizTemplateCode;
+    critObj.value = "RVW_" + this.BizTemplateCode;
     arrCrit.push(critObj);
-    
+
     this.inputPagingObj.addCritInput = arrCrit;
   }
-  GetCallBack(ev: any){
+  GetCallBack(ev: any) {
     console.log(ev);
-    if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token);
     }
   }
 

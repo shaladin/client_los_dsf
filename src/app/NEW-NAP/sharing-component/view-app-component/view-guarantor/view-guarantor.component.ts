@@ -7,6 +7,7 @@ import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.Model';
 import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 @Component({
   selector: 'app-guarantor',
   templateUrl: './view-guarantor.component.html',
@@ -40,7 +41,7 @@ export class GuarantorComponent implements OnInit {
     //     console.log(error);
     //   }
     // );    
-    this.http.post(AdInsConstant.GetListAppGuarantorPersonalForView, {AppId:this.AppId}).subscribe(
+    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, {AppId:this.AppId}).subscribe(
       (response) => {
         console.log(response);
         this.listAppGuarantorPersonal = response["ReturnObject"];
@@ -50,7 +51,7 @@ export class GuarantorComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetListAppGuarantorCompanyForView, {AppId:this.AppId}).subscribe(
+    this.http.post(URLConstant.GetListAppGuarantorCompanyForView, {AppId:this.AppId}).subscribe(
       (response) => {
         console.log(response);
         this.listAppGuarantorCompany = response["ReturnObject"];

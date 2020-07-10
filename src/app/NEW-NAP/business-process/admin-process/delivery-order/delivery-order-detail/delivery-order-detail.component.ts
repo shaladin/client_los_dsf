@@ -12,6 +12,7 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -45,7 +46,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
   businessDt: Date = new Date();
 
-  PurchaseOrderDt : Date = new Date();
+  PurchaseOrderDt: Date = new Date();
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -85,7 +86,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
       AgrmntId: this.AgrmntId
     }
 
-    this.http.post(AdInsConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
+    this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
       (response) => {
         this.PurchaseOrderDt = new Date(response["PurchaseOrderDt"]);
       }
@@ -94,7 +95,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     var refMasterTypeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustRelationship,
     }
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
       (response) => {
         this.itemType = response["ReturnObject"];
         this.DeliveryOrderForm.patchValue({
@@ -103,10 +104,9 @@ export class DeliveryOrderDetailComponent implements OnInit {
       }
     );
 
-
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
 
-    this.http.post(AdInsConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
+    this.http.post(URLConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
         console.log(response);
         this.appAssetObj = response;
@@ -126,7 +126,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
         var assetDocListobj = {
           AssetTypeCode: this.appAssetObj.AssetTypeCode
         }
-        this.http.post(AdInsConstant.GetRefAssetDocList, assetDocListobj).subscribe(
+        this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
           (response) => {
             if (response["ReturnObject"].length > 0) {
               for (var i = 0; i < response["ReturnObject"].length; i++) {
@@ -228,8 +228,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
       var prmsDt = new Date(this.appTC.PromisedDt);
       var prmsDtForm = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
       if (this.appTC.IsChecked == false) {
-        if(prmsDtForm != null){
-          if(prmsDt < businessDt){
+        if (prmsDtForm != null) {
+          if (prmsDt < businessDt) {
             this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
             return;
           }
@@ -244,7 +244,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     this.deliveryOrderObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    this.http.post(AdInsConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
+    this.http.post(URLConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdminProcess/DeliveryOrder/Paging"]);
@@ -261,7 +261,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }

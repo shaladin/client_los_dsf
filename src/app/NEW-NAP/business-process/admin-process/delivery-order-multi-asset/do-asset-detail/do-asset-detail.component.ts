@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-do-asset-detail',
@@ -77,7 +78,7 @@ export class DoAssetDetailComponent implements OnInit {
   ngOnInit() {
     var datePipe = new DatePipe("en-US");
     var reqAppAsset = { AppAssetId: this.AppAssetId, AppId: this.AppId};
-    this.httpClient.post(AdInsConstant.GetAppAssetForDOMultiAsset, reqAppAsset).subscribe(
+    this.httpClient.post(URLConstant.GetAppAssetForDOMultiAsset, reqAppAsset).subscribe(
       (response) => {
         var appAsset = response["AppAssetObj"];
         var appCollateral = response["AppCollateralDoc"];
@@ -228,7 +229,7 @@ export class DoAssetDetailComponent implements OnInit {
     }
     var appCollateralDocData = [...formData.DOAssetDocList];
     var requestData = { "AppAssetObj": appAssetData, "AppCollateralDocObj": appCollateralDocData};
-    this.httpClient.post(AdInsConstant.EditAppAssetDOMultiAsset, requestData).subscribe(
+    this.httpClient.post(URLConstant.EditAppAssetDOMultiAsset, requestData).subscribe(
       (response) => {
         this.activeModalAsset.close(response);
       },

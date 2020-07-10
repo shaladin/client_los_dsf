@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
 import { NullTemplateVisitor } from '@angular/compiler';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 // State constant declaration
 const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
@@ -167,7 +168,7 @@ export class TypeaheadComponent {
     critObj.value = "%" + term + "%";
     arrCrit.push(critObj);
     request.criteria = arrCrit;
-    var Url = this.settingUrl + AdInsConstant.GetBankPaging;
+    var Url = this.settingUrl + URLConstant.GetBankPaging;
     return this.http.post(Url, request).pipe(
         map(response => {
           var num = 0;

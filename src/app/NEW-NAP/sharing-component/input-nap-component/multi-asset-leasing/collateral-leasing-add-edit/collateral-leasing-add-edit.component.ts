@@ -23,6 +23,7 @@ import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { AssetCategoryObj } from 'app/shared/model/AssetCategoryObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-collateral-leasing-add-edit',
@@ -149,17 +150,17 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   });
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListVendorEmp = AdInsConstant.GetListVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrByAppCustAddrId = AdInsConstant.GetAppCustAddrByAppCustAddrId;
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
-    this.addEditAllCollateralData = AdInsConstant.AddEditAllCollateralData;
-    this.getListAssetTypeByCode = AdInsConstant.GetListAssetTypeByCode;
-    this.getAssetCategoryById = AdInsConstant.GetAssetCategoryById;
-    this.getAppCollateralByAppCollateralId = AdInsConstant.GetAppCollateralByAppCollateralId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getAppCollateralRegistByAppCollateralId = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
+    this.getListAppAssetData = URLConstant.GetListAppAssetData;
+    this.getListVendorEmp = URLConstant.GetListVendorEmpByVendorIdAndPosition;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.addEditAllCollateralData = URLConstant.AddEditAllCollateralData;
+    this.getListAssetTypeByCode = URLConstant.GetListAssetTypeByCode;
+    this.getAssetCategoryById = URLConstant.GetAssetCategoryById;
+    this.getAppCollateralByAppCollateralId = URLConstant.GetAppCollateralByAppCollateralId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppCollateralId"] != null) {
@@ -221,11 +222,11 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.inputObj = new InputSearchObj();
     this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
     this.inputObj.enviromentUrl = environment.FoundationR3Url; 
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
 
     this.pageNow = 1;
     this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + AdInsConstant.GetPagingObjectBySQL;
+    this.apiUrl = environment.FoundationR3Url + URLConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
     
   }
@@ -722,7 +723,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
       return;
     }
 
-    this.http.post(AdInsConstant.AddExistingAppCollateralData, this.appCollateralObj).subscribe(
+    this.http.post(URLConstant.AddExistingAppCollateralData, this.appCollateralObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
         //this.router.navigate(["/Nap/AssetData/Paging"]);
@@ -741,7 +742,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   // delete(MouCustCollId) {
   //   var custCollObj = { MouCustCollateralId: MouCustCollId };
-  //   this.http.post(AdInsConstant.DeleteMouCustCollateral, custCollObj).subscribe(
+  //   this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
   //     (response) => {
   //       console.log(response);
   //       this.toastr.successMessage(response["message"]);

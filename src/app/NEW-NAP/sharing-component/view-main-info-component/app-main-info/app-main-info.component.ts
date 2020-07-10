@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-main-info',
@@ -20,7 +21,7 @@ export class AppMainInfoComponent implements OnInit {
     private router: Router ) { }
 
   ngOnInit() {
-    this.http.post(AdInsConstant.GetAppById, {AppId : this.arrValue[0]}).subscribe(
+    this.http.post(URLConstant.GetAppById, {AppId : this.arrValue[0]}).subscribe(
       (response) => {
         console.log(response);
         this.AppObj = response;

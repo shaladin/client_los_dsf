@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-commission-agrmnt',
@@ -45,7 +45,7 @@ export class ViewCommissionComponent implements OnInit {
   async GetCommissionData() {
     var obj: object = { AgrmntId: this.agrmntId };
 
-    var url: string = AdInsConstant.GetListAgrmntCommissionWithDetailByAgrmntId;
+    var url: string = URLConstant.GetListAgrmntCommissionWithDetailByAgrmntId;
 
     await this.http.post(url, obj).toPromise().then(
       (response) => {

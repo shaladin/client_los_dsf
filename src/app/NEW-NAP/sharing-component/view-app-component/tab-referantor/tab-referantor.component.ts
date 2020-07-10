@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-referantor',
@@ -38,7 +39,7 @@ export class TabReferantorComponent implements OnInit {
       RowVersion: ""
     }
 
-    await this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppReferantorByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         if(response["AppReferantorId"] != 0){

@@ -4,13 +4,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { DatePipe } from '@angular/common';
 import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -72,10 +70,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   initUrl() {
-    this.getListAppCollateralUrl = AdInsConstant.GetListAppCollateralByAppId;
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = AdInsConstant.EditReturnHandlingD;
+    this.getListAppCollateralUrl = URLConstant.GetListAppCollateralByAppId;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
+    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -118,7 +116,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
     var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
+    this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
@@ -157,7 +155,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         ReturnHandlingHId: this.returnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingAddColtr
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         },
@@ -192,7 +190,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   Delete(AppCollateralId) {
     if (confirm('Are you sure to delete this data?')) {
       this.appCollObj.AppCollateralId = AppCollateralId;
-      this.http.post(AdInsConstant.DeleteAppCollateral, this.appCollObj).subscribe(
+      this.http.post(URLConstant.DeleteAppCollateral, this.appCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -208,23 +206,20 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   AddEdit(AppCollateralId) {
     if (this.isReturnHandling == false) {
-
     }
     if (this.isReturnHandling == true) {
       this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail?AppId=" + this.appId + "&AppCollateralId=" + AppCollateralId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
     }
-
   }
 
-  ClaimTask(){
+  ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
       });
   }
 }

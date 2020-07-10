@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-multi-collateral-paging',
-  templateUrl: './multi-collateral-paging.component.html',
-  styleUrls: ['./multi-collateral-paging.component.scss']
+  templateUrl: './multi-collateral-paging.component.html'
 })
 export class MultiCollateralPagingComponent implements OnInit {
   @Input() AppId: number;
@@ -26,7 +26,7 @@ export class MultiCollateralPagingComponent implements OnInit {
     var AppCollObj = {
       AppId: this.AppId,
     }
-    this.http.post<Array<AppCollateralObj>>(AdInsConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
+    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
       (response) => {
         this.ListAppCollObj = response["ReturnObject"];
         this.list.emit(this.ListAppCollObj);
@@ -43,7 +43,7 @@ export class MultiCollateralPagingComponent implements OnInit {
 
   deleteData(AppCollateralId: number){
     if (confirm('Are you sure to delete this record?')) {
-    this.http.post(AdInsConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
+    this.http.post(URLConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.GetListAppCollateralByAppId();

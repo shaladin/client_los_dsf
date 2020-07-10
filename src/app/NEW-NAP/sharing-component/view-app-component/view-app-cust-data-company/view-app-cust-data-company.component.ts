@@ -7,6 +7,7 @@ import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
 
   async getCustData(){
     var reqObj = {AppId: this.appId}
-    await this.http.post(AdInsConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.appCustAddrForViewObjs = response["AppCustAddrObjs"];

@@ -12,6 +12,8 @@ import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-guarantor-personal-FL4W',
   templateUrl: './guarantor-personal-FL4W.component.html',
@@ -77,7 +79,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorPersonalObj = new GuarantorPersonalObj();
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      await this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
+      await this.http.post(URLConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
         (response) => {
 
           this.resultData = response;
@@ -155,7 +157,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListActiveRefMaster, idTypeObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
       (response) => {
         this.MrIdTypeCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -166,7 +168,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         this.clearExpDt();
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -176,7 +178,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, genderObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, genderObj).subscribe(
       (response) => {
         this.MrGenderCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -186,7 +188,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, maritalObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, maritalObj).subscribe(
       (response) => {
         this.MrMaritalStatCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -197,7 +199,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       }
     );
     var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality]};
-    this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
+    this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.MrNationalityCode = response["ReturnObject"];
@@ -210,7 +212,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, religionObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, religionObj).subscribe(
       (response) => {
         this.MrReligionCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -269,7 +271,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(AdInsConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
+    this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
       (response) => {
         console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
@@ -331,7 +333,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         this.clearExpDt();
         this.resultData = response;
@@ -344,7 +346,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             TaxIdNo: this.resultData.TaxIdNo
           }
         );
-        this.http.post(AdInsConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
+        this.http.post(URLConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
           (response) => {
             this.resultData = response;
             this.PersonalForm.patchValue({
@@ -363,7 +365,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
               this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
             } else {
               this.isLocal = false;
-              this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+              this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["CountryName"];
                   this.countryCode = response["CountryCode"];
@@ -372,7 +374,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             }
 
           });
-        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
          }).subscribe(
           (response) => {
             console.log(response);
@@ -469,7 +471,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
       // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-      this.toastr.warningMessage("Customer age must be at least 17 year old");
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       
       flag = false;
     }
@@ -503,7 +505,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.guarantorPersonalObj.RowVersion = this.resultData.RowVersion;
       this.guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorPersonalObj.AppGuarantorPersonalObj.AppGuarantorPersonalId = this.AppGuarantorPersonalId;
-      this.http.post(AdInsConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
+      this.http.post(URLConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
@@ -513,7 +515,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(AdInsConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
+      this.http.post(URLConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

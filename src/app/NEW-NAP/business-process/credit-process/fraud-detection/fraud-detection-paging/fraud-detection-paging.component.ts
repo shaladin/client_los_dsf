@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-fraud-detection-paging',
@@ -32,7 +33,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchFraudDetection.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchFraudDetection.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -58,7 +59,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     else {
       if(event.RowObj.ActCode == "FCR_" + this.BizTemplateCode){
         var appObj = {AppId: event.RowObj.AppId};
-        this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
+        this.http.post(URLConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
             var dupCheckErrorMessage = response["DupCheckErrorMessage"];
             var surveyErrorMessage = response["SurveyErrorMessage"];

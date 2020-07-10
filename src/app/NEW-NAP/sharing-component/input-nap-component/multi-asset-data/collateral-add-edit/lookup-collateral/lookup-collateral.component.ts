@@ -4,6 +4,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lookup-collateral',
@@ -22,7 +23,7 @@ export class LookupCollateralComponent implements OnInit {
     this.inputObj = new UcPagingObj();
     this.inputObj._url="./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     var criteriaList = new Array<CriteriaObj>();
     var criteriaObj = new CriteriaObj();

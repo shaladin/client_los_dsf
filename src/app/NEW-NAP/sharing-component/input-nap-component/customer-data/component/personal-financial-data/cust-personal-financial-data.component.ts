@@ -4,6 +4,7 @@ import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroup
 import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-personal-financial-data',
@@ -83,9 +84,8 @@ export class CustPersonalFinancialDataComponent implements OnInit {
     }
   }
   
-
   initUrl(){
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   bindSourceOfIncomeObj(){

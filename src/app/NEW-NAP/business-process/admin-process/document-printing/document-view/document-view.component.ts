@@ -10,11 +10,11 @@ import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
 import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
 import { RdlcReportObj } from 'app/shared/model/Report/RdlcReportObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-document-view',
   templateUrl: './document-view.component.html',
-  styleUrls: ['./document-view.component.scss'],
   providers: [NGXToastrService]
 })
 export class DocumentViewComponent implements OnInit {
@@ -66,7 +66,7 @@ export class DocumentViewComponent implements OnInit {
 
     this.pageNow = 1;
     this.pageSize = 10;
-    this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
+    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
   }
   searchPagination(event: number) {
     this.pageNow = event;
@@ -97,7 +97,7 @@ export class DocumentViewComponent implements OnInit {
     var obj = {
       AgrmntId: this.AgrmntId,
     }
-    this.http.post(AdInsConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
+    this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
         this.AgrmntDocObj = response;
       },
@@ -113,7 +113,7 @@ export class DocumentViewComponent implements OnInit {
     this.agrmntDocPrintObj.RowVersion = "";
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    this.addUrl = AdInsConstant.AddAgrmntDocPrint;
+    this.addUrl = URLConstant.AddAgrmntDocPrint;
     this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(
       (response) => {
         this.GetListAgrmntDocByAgrmntId();
@@ -133,7 +133,7 @@ export class DocumentViewComponent implements OnInit {
     this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
     // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
 
-    this.http.post(AdInsConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
+    this.http.post(URLConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
       (response) => {
         let linkSource: string = 'data:application/pdf;base64,' + response["ReturnObject"];
         let fileName: string = item.AgrmntDocName + ".pdf";
@@ -156,8 +156,8 @@ export class DocumentViewComponent implements OnInit {
   }
 
   GetCallBack(ev: any) {
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
     }
   }
 }

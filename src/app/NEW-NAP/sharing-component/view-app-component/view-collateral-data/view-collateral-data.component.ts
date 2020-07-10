@@ -5,6 +5,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-collateral-data',
@@ -35,18 +36,18 @@ export class ViewCollateralDataComponent implements OnInit {
     if(this.AppCollateralId!=0){
       this.arrValue.push(this.AppCollateralId);
       this.IsReady = true;
-      this.http.post<Array<AppCollateralDocObj>>(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, {AppCollateralId: this.AppCollateralId}).subscribe(
+      this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, {AppCollateralId: this.AppCollateralId}).subscribe(
         (response) => {
           this.AppCollateralDocs = response["AppCollateralDocs"];
         }
       );
     }else{
-      this.http.post<AppCollateralObj>(AdInsConstant.GetAppCollateralByAppId, {AppId: this.AppId}).subscribe(
+      this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAppId, {AppId: this.AppId}).subscribe(
         (response) => {
           this.AppCollateralObj = response;        
           this.arrValue.push(this.AppCollateralObj.AppCollateralId);
           this.IsReady = true;
-          this.http.post<Array<AppCollateralDocObj>>(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
+          this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
             (response) => {
               this.AppCollateralDocs = response["AppCollateralDocs"];
     

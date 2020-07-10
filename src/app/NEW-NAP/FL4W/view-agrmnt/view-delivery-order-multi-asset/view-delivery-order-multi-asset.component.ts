@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 @Component({
   selector: 'app-view-delivery-order-multi-asset',
-  templateUrl: './view-delivery-order-multi-asset.component.html',
-  styleUrls: ['./view-delivery-order-multi-asset.component.scss']
+  templateUrl: './view-delivery-order-multi-asset.component.html'
 })
 export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   @Input() AgrmntId: number;
@@ -22,17 +22,17 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
     });
   }
 
-  async ngOnInit(){
-    this.GetListDeliveryOrderHByAppIdAgrmntId = AdInsConstant.GetListDeliveryOrderHByAppIdAgrmntId;
+  async ngOnInit() {
+    this.GetListDeliveryOrderHByAppIdAgrmntId = URLConstant.GetListDeliveryOrderHByAppIdAgrmntId;
     var doObj = new DeliveryOrderHObj();
     doObj.AgrmntId = this.AgrmntId;
     doObj.AppId = this.AppId;
     this.http.post(this.GetListDeliveryOrderHByAppIdAgrmntId, doObj).subscribe(
-      (response) => { 
-       this.doList = response["DeliveryOrderHObjs"];
+      (response) => {
+        this.doList = response["DeliveryOrderHObjs"];
       });
-      (error) =>{
-        console.log('error');
-      }
-  } 
+    (error) => {
+      console.log('error');
+    }
+  }
 }

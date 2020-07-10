@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-lead-data',
@@ -15,8 +16,8 @@ export class ViewLeadDataComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
-    this.GetLeadAssetByLeadIdUrl = AdInsConstant.GetLeadAssetByLeadId;
-    this.GetLeadByLeadIdUrl = AdInsConstant.GetLeadByLeadId;
+    this.GetLeadAssetByLeadIdUrl = URLConstant.GetLeadAssetByLeadId;
+    this.GetLeadByLeadIdUrl = URLConstant.GetLeadByLeadId;
   }
   LeadId: string;
   viewLeadAppData : string;
