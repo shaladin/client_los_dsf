@@ -743,7 +743,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        if (response != "") {
+        if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
