@@ -166,8 +166,8 @@ export class LeadInputCustDataComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.reqLeadCustObj = new LeadCustObj();
     this.reqLeadCustObj.LeadId = this.LeadId;
@@ -186,13 +186,11 @@ export class LeadInputCustDataComponent implements OnInit {
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
             (response) => {
-              this.resLeadCustSocmedObj = response["ReturnObject"];
-              console.log("aaa")
-              console.log(this.resLeadCustSocmedObj)
+              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
-                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
-                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
-                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
+                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
+                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
+                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
               });
             });
 
@@ -318,7 +316,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
       (response) => {
-        this.tempGender = response["ReturnObject"];
+        this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
       }
     );
@@ -327,23 +325,23 @@ export class LeadInputCustDataComponent implements OnInit {
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
       (response) => {
-        this.tempIdType = response['ReturnObject'];
-        this.CustomerDataForm.patchValue({ MrIdTypeCode: response['ReturnObject'][0]['Key'] });
+        this.tempIdType = response[CommonConstant.ReturnObj];
+        this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
     this.http.post(this.getListActiveRefMasterUrl, this.maritalStatCode).subscribe(
       (response) => {
-        this.tempMrMaritalStatCode = response["ReturnObject"];
-        this.CustomerDataForm.patchValue({ MrMaritalStatCode: response['ReturnObject'][0]['Key'] });
+        this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
+        this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
         // if (this.tempCustPersonalObj.MrMaritalStatCode != null) {
         //   this.CustomerDataForm.patchValue({
         //     MrMaritalStatCode: this.tempCustPersonalObj.MrMaritalStatCode
         //   });
         // } else {
         //   this.CustomerDataForm.patchValue({
-        //     MrMaritalStatCode: response['ReturnObject'][0]['Key']
+        //     MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key']
         //   });
         // }
       }
@@ -354,9 +352,9 @@ export class LeadInputCustDataComponent implements OnInit {
     this.custModel.ReserveField1 = CommonConstant.CustTypePersonal;
     this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
       (response) => {
-        this.listCustModel = response['ReturnObject'];
-        this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
-        this.CustModelKey = response['ReturnObject'][0]['Key'];
+        this.listCustModel = response[CommonConstant.ReturnObj];
+        this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
+        this.CustModelKey = response[CommonConstant.ReturnObj][0]['Key'];
         var arrAddCrit = new Array();
         var addCrit = new CriteriaObj();
         addCrit.DataType = "text";
@@ -414,7 +412,7 @@ export class LeadInputCustDataComponent implements OnInit {
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
             (response) => {
-              this.resLeadCustSocmedObj = response["ReturnObject"];
+              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
                 Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
                 Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
@@ -563,7 +561,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
             this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
               (response) => {
-                this.resLeadCustSocmedObj = response["ReturnObject"];
+                this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
                 console.log("aaa")
                 console.log(this.resLeadCustSocmedObj)
                 this.CustomerDataForm.patchValue({
@@ -784,17 +782,17 @@ export class LeadInputCustDataComponent implements OnInit {
 
   setLeadCustSocmed() {
     this.leadCustFacebookObj = new LeadCustSocmedObj();
-    this.leadCustFacebookObj.MrSocmedCode = "FB";
+    this.leadCustFacebookObj.MrSocmedCode = CommonConstant.FACEBOOK;
     this.leadCustFacebookObj.MrSocmedName = "Facebook";
     this.leadCustFacebookObj.SocmedId = this.CustomerDataForm.controls["Facebook"].value;
 
     this.leadCustInstagramObj = new LeadCustSocmedObj();
-    this.leadCustInstagramObj.MrSocmedCode = "IG";
+    this.leadCustInstagramObj.MrSocmedCode = CommonConstant.INSTAGRAM;
     this.leadCustInstagramObj.MrSocmedName = "Instagram";
     this.leadCustInstagramObj.SocmedId = this.CustomerDataForm.controls["Instagram"].value;
 
     this.leadCustTwitterObj = new LeadCustSocmedObj();
-    this.leadCustTwitterObj.MrSocmedCode = "TW";
+    this.leadCustTwitterObj.MrSocmedCode = CommonConstant.TWITTER;
     this.leadCustTwitterObj.MrSocmedName = "Twitter";
     this.leadCustTwitterObj.SocmedId = this.CustomerDataForm.controls["Twitter"].value;
 
@@ -899,8 +897,8 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

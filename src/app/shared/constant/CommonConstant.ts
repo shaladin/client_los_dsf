@@ -14,6 +14,7 @@ export class CommonConstant {
     public static ROLE_CODE = "RoleCode";
     public static CURRENT_USER_CONTEXT = "currentUserContext"
     public static PAGE_ACCESS = "pageAccess";
+    public static BUSINESS_DT = "BusinessDt";
 
     // Module
     public static LOAN_ORIGINATION = "LOS";
@@ -63,6 +64,11 @@ export class CommonConstant {
     //ASSET CONDITION 
     public static AssetConditionUsed = "USED";
     public static AssetConditionNew = "NEW";
+
+    // SOCIAL MEDIA
+    public static FACEBOOK = "FB";
+    public static TWITTER = "TW"
+    public static INSTAGRAM = "IG"
 
     //App Step
     public static AppStepNew = "NEW";
