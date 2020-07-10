@@ -367,6 +367,10 @@ export class CommonConstant {
     public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
     public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
     public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
+    public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
+    
+    public static RefMasterReservedField2NonFee = "NON_FEE";
+    public static RefMasterReservedField2Fee = "FEE";
 
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";

@@ -6,6 +6,8 @@ import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -67,6 +69,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
       poUrl = AdInsConstant.GetAllAssetDataForPOMultiAsset;
     }
 
+    this.GetFromRefMaster();
     var appAssetObj = {
       AppId: this.AppId,
       AgrmntId: this.AgrmntId,
@@ -106,70 +109,117 @@ export class PurchaseOrderDetailComponent implements OnInit {
     );
   }
 
+  ListPORefMasterObj: Array<RefMasterObj>;
+  GetFromRefMaster() {
+    this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, { refMasterTypeCodes: [CommonConstant.RefMasterTypeCodePoItemCode] }).subscribe(
+      (response) => {
+        // console.log(response);
+        this.ListPORefMasterObj = response["ReturnObject"];
+        // console.log(this.ListPORefMasterObj);
+
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  GeneratePONonFee() {
+    // console.log(this.AssetObj["AgrmntFinDataObj"]);
+    for (var i = 0; i < this.ListPORefMasterObj.length; i++) {
+      if (this.ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2NonFee) {
+        // console.log(this.ListPORefMasterObj[i]);
+        // console.log(this.AssetObj["AgrmntFinDataObj"][this.ListPORefMasterObj[i].ReserveField3]);
+        var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+        tempPurchaseOrderDObj.MrPoItemCode = this.ListPORefMasterObj[i].MasterCode;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][this.ListPORefMasterObj[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListPORefMasterObj[i].ReserveField3] : 0;
+        this.listPurchaseOrderD.push(tempPurchaseOrderDObj);
+      }
+    }
+  }
+
+  GeneratePOFee() {
+    for (var i = 0; i < this.ListPORefMasterObj.length; i++) {
+      if (this.ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2Fee) {
+        // console.log(this.ListPORefMasterObj[i]);
+        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == this.ListPORefMasterObj[i].ReserveField3);
+        // console.log(tempAgrmntFeeObj);
+        var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+        tempPurchaseOrderDObj.MrPoItemCode = this.ListPORefMasterObj[i].MasterCode;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+        this.listPurchaseOrderD.push(tempPurchaseOrderDObj);
+      }
+    }
+  }
+  
+  listPurchaseOrderD:Array<PurchaseOrderDObj>;
   SaveForm() {
     this.purchaseOrderHObj.MouNo = this.MouNo;
     this.purchaseOrderHObj.Notes = this.Notes;
 
-    var listPurchaseOrderD = new Array();
+    this.listPurchaseOrderD = new Array();
     this.purchaseOrderDObj = new PurchaseOrderDObj();
 
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTotalAssetPrice ;
-    this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt;
-    listPurchaseOrderD.push(this.purchaseOrderDObj);
+    this.GeneratePONonFee();
+    this.GeneratePOFee();
+    // this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTotalAssetPrice ;
+    // this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalAssetPriceAmt;
+    // this.listPurchaseOrderD.push(this.purchaseOrderDObj);
 
-    this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeDpNett;
-    this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt ? this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt : 0;
-    listPurchaseOrderD.push(this.purchaseOrderDObj);
-    this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTdpAtCoy;
-    this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TdpPaidCoyAmt;
-    listPurchaseOrderD.push(this.purchaseOrderDObj);
-    this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInstAmt;
-    this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].InstAmt;
-    listPurchaseOrderD.push(this.purchaseOrderDObj);
-    this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInsNotCptlz;
-    this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalInsCustAmt;
-    listPurchaseOrderD.push(this.purchaseOrderDObj);
-    this.purchaseOrderDObj = new PurchaseOrderDObj();
-    this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeLfiNotCptlz;
-    this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalLifeInsCustAmt;
-    listPurchaseOrderD.push(this.purchaseOrderDObj);
+    // this.purchaseOrderDObj = new PurchaseOrderDObj();
+    // this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeDpNett;
+    // this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt ? this.AssetObj["AgrmntFinDataObj"].TotalDownPaymentNettAmt : 0;
+    // this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    // this.purchaseOrderDObj = new PurchaseOrderDObj();
+    // this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeTdpAtCoy;
+    // this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].TdpPaidCoyAmt;
+    // this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    // this.purchaseOrderDObj = new PurchaseOrderDObj();
+    // this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInstAmt;
+    // this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"].InstAmt;
+    // this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    // this.purchaseOrderDObj = new PurchaseOrderDObj();
+    // this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeInsNotCptlz;
+    // this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalInsCustAmt;
+    // this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    // this.purchaseOrderDObj = new PurchaseOrderDObj();
+    // this.purchaseOrderDObj.MrPoItemCode = CommonConstant.PoItemCodeLfiNotCptlz;
+    // this.purchaseOrderDObj.PurchaseOrderAmt = this.TotalLifeInsCustAmt;
+    // this.listPurchaseOrderD.push(this.purchaseOrderDObj);
 
 
     //TEMUAN STEVEN INI FEE GK BOLEH GINI, KLO GAK NNTI GBS DINAMIS JUGA NIH NTAR
-    if (this.AssetObj["AgrmntFeeListObj"].length != 0) {
-      for (let i = 0; i < this.AssetObj["AgrmntFeeListObj"].length; i++) {
-        this.purchaseOrderDObj = new PurchaseOrderDObj();
-        if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADM") {
-          this.purchaseOrderDObj.MrPoItemCode = "ADMIN_FEE_NOT_CPTLZ";
-          this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
-          listPurchaseOrderD.push(this.purchaseOrderDObj);
-        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "PROVISION") {
-          this.purchaseOrderDObj.MrPoItemCode = "PRVSN_FEE_NOT_CPTLZ";
-          this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
-          listPurchaseOrderD.push(this.purchaseOrderDObj);
-        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "NOTARY") {
-          this.purchaseOrderDObj.MrPoItemCode = "NTRY_FEE_NOT_CPTLZ";
-          this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
-          listPurchaseOrderD.push(this.purchaseOrderDObj);
-        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "FIDUCIA") {
-          this.purchaseOrderDObj.MrPoItemCode = "FDCIA_FEE_NOT_CPTLZ";
-          this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
-          listPurchaseOrderD.push(this.purchaseOrderDObj);
-        } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADDADMIN") {
-          this.purchaseOrderDObj.MrPoItemCode = "ADD_ADMIN_FEE_NOT_CPTLZ";
-          this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
-          listPurchaseOrderD.push(this.purchaseOrderDObj);
-        }
-      }
-    }
+    // if (this.AssetObj["AgrmntFeeListObj"].length != 0) {
+    //   for (let i = 0; i < this.AssetObj["AgrmntFeeListObj"].length; i++) {
+    //     this.purchaseOrderDObj = new PurchaseOrderDObj();
+    //     if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADM") {
+    //       this.purchaseOrderDObj.MrPoItemCode = "ADMIN_FEE_NOT_CPTLZ";
+    //       this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
+    //       this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    //     } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "PROVISION") {
+    //       this.purchaseOrderDObj.MrPoItemCode = "PRVSN_FEE_NOT_CPTLZ";
+    //       this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
+    //       this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    //     } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "NOTARY") {
+    //       this.purchaseOrderDObj.MrPoItemCode = "NTRY_FEE_NOT_CPTLZ";
+    //       this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
+    //       this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    //     } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "FIDUCIA") {
+    //       this.purchaseOrderDObj.MrPoItemCode = "FDCIA_FEE_NOT_CPTLZ";
+    //       this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
+    //       this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    //     } else if (this.AssetObj["AgrmntFeeListObj"][i].MrFeeTypeCode == "ADDADMIN") {
+    //       this.purchaseOrderDObj.MrPoItemCode = "ADD_ADMIN_FEE_NOT_CPTLZ";
+    //       this.purchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFeeListObj"][i].AppFeeAmt;
+    //       this.listPurchaseOrderD.push(this.purchaseOrderDObj);
+    //     }
+    //   }
+    // }
     var POObj = {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
-      requestPurchaseOrderDObjs: listPurchaseOrderD
+      requestPurchaseOrderDObjs: this.listPurchaseOrderD
     }
+    // console.log(POObj);
     this.http.post(AdInsConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
