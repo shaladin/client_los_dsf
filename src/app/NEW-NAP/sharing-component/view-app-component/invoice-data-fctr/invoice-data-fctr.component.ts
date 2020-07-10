@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-invoice-data-fctr',
@@ -21,7 +22,7 @@ export class InvoiceDataFctrComponent implements OnInit {
     var AppObj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.AddAppCrdInvstg, AppObj).subscribe(
+    this.http.post(URLConstant.AddAppCrdInvstg, AppObj).subscribe(
       (response) => {
         var DetailDataForGrid ={
           Data: response["AppInvoiceFctrObjs"],

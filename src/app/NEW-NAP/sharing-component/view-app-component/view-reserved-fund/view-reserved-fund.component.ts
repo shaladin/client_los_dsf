@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "view-reserved-fund",
@@ -37,8 +38,8 @@ export class ViewReservedFundComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
   }
 
   ngOnInit() {

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DatePipe } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-tc',
@@ -20,7 +21,7 @@ export class MouViewTcComponent implements OnInit {
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetCustMouTcByCustMouId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetCustMouTcByCustMouId, mouCustObj).subscribe(
       (response) => {
         this.listTCData = response['ReturnObject'];
       })

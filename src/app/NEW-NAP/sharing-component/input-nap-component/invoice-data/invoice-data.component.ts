@@ -9,6 +9,8 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-invoice-data',
@@ -54,7 +56,7 @@ export class InvoiceDataComponent implements OnInit {
     var obj = {
       AppId: this.AppId,
     }
-    this.httpClient.post<AppFctrObj>(AdInsConstant.GetAppFctrByAppId, obj).subscribe(
+    this.httpClient.post<AppFctrObj>(URLConstant.GetAppFctrByAppId, obj).subscribe(
       (response) => {
         this.AppFactoringObj = response;
         if (!this.AppFactoringObj.IsCustListed) {
@@ -87,7 +89,7 @@ export class InvoiceDataComponent implements OnInit {
     var obj = {
       AppFctrId: this.AppFactoringObj.AppFctrId,
     }
-    this.httpClient.post(AdInsConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
+    this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
         this.dataobj = response['ReturnObject'];
         if (this.AppFactoringObj.PaidBy == "CUST_FCTR" && this.dataobj.AppInvoiceFctrList.length >= 1) {
@@ -118,10 +120,10 @@ export class InvoiceDataComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     if(this.InvoiceForm.controls.InvoiceAmt.value == 0){
-      this.toastr.warningMessage("Invoice Amount cannot be zero (0).");
+      this.toastr.warningMessage(ExceptionConstant.INVOICE_AMOUNT_CANNOT_ZERO);
     }
     else if(this.InvoiceForm.controls.InvoiceAmt.value < 0){
-      this.toastr.warningMessage("Invoice Amount cannot be less than zero (0).");
+      this.toastr.warningMessage(ExceptionConstant.INVOICE_AMOUNT_CANNOT_LESS_THAN +"zero (0).");
     }
     else{
     this.invoiceObj = new AppInvoiceFctrObj();
@@ -135,7 +137,7 @@ export class InvoiceDataComponent implements OnInit {
     this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
     this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
 
-    this.httpClient.post(AdInsConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
+    this.httpClient.post(URLConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.GetListAppInvoiceFctr();
@@ -154,7 +156,7 @@ export class InvoiceDataComponent implements OnInit {
       this.invoiceObj = new AppInvoiceFctrObj();
       this.invoiceObj.AppInvoiceFctrId = AppInvoiceFctrId;
 
-      this.httpClient.post(AdInsConstant.DeleteAppInvoiceFctr, this.invoiceObj).subscribe(
+      this.httpClient.post(URLConstant.DeleteAppInvoiceFctr, this.invoiceObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();
@@ -168,7 +170,7 @@ export class InvoiceDataComponent implements OnInit {
   SaveContinue(){
     if(this.dataobj["TotalInvoiceAmt"] <= 0)
     {
-      this.toastr.warningMessage("Please Input At Least 1 invoice");
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_INVOICE);
     }
     else
     {

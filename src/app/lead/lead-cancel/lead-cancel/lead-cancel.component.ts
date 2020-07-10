@@ -13,6 +13,7 @@ import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
 import { LeadCancelConfirmComponent } from '../lead-cancel-confirm/lead-cancel-confirm.component';
 import { stringify } from 'querystring';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -53,7 +54,7 @@ export class LeadCancelComponent implements OnInit {
     this.inputObj = new InputSearchObj();
     this.inputObj._url = './assets/search/searchLeadCancel.json';
     this.inputObj.enviromentUrl = environment.losUrl;
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
     this.pageNow = 1;
     this.pageSize = 10;
@@ -75,7 +76,7 @@ export class LeadCancelComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-    this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
+    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
 
     var addCrit : CriteriaObj = new CriteriaObj();
@@ -85,7 +86,7 @@ export class LeadCancelComponent implements OnInit {
     addCrit.listValue = this.allowedStat;
     this.arrAddCrit.push(addCrit);
     this.inputObj.addCritInput.push(addCrit);
-    var GetListLeadVerfUrl : string = AdInsConstant.GetListLeadVerf;
+    var GetListLeadVerfUrl : string = URLConstant.GetListLeadVerf;
     var obj = {};
     var arr : Array<number> = [0];
     var temp : Array<any>;

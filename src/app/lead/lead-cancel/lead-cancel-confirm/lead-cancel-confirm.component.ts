@@ -8,6 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -15,16 +16,16 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   providers: [NGXToastrService]
 })
 export class LeadCancelConfirmComponent implements OnInit {
-  GetListLeadForLeadCancelByListLeadId = AdInsConstant.GetListLeadForLeadCancelByListLeadId;
+  GetListLeadForLeadCancelByListLeadId = URLConstant.GetListLeadForLeadCancelByListLeadId;
   responseObj = new Array();
   LeadConfirmCancelForm = this.fb.group({
     CancelReason: ['', Validators.required],
     Notes: ['']
   });
-  GetListKeyValueActiveByCode = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+  GetListKeyValueActiveByCode = URLConstant.GetRefMasterListKeyValueActiveByCode;
   ItemCancelReason: any;
   deletedArr = new Array();
-  EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
+  EditListLeadForCancelByListLeadId = URLConstant.EditListLeadForCancelByListLeadId;
   tempWfTaskListArr = new Array();
   leadUrl: string;
   tempLeadIds : string;

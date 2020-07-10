@@ -9,6 +9,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-os-tc-detail',
@@ -38,7 +39,7 @@ export class MouOsTcDetailComponent implements OnInit {
   ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
     this.mouCustObject.MouCustId = this.MouCustId;
-    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+    this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
       }
@@ -70,7 +71,7 @@ export class MouOsTcDetailComponent implements OnInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
           // window.open(this.link, '_blank');

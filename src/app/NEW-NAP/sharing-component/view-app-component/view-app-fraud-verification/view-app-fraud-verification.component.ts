@@ -6,6 +6,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-app-fraud-verification',
@@ -34,21 +35,21 @@ export class ViewAppFraudVerificationComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.AppId);
     this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-    this.httpClient.post(AdInsConstant.GetAppById, { AppId: this.AppId }).pipe(
+    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).pipe(
       map((response) => {
         this.appData = response;
         return response;
       }),
       mergeMap((response) => {
-        return this.httpClient.post(AdInsConstant.GetSrvyOrderBySrvyOrderNo, { SrvyOrderNo: response["SrvyOrderNo"] });
+        return this.httpClient.post(URLConstant.GetSrvyOrderBySrvyOrderNo, { SrvyOrderNo: response["SrvyOrderNo"] });
       }),
       mergeMap((response) => {
         this.srvyOrderData = response;
-        let getAppCust = this.httpClient.post(AdInsConstant.GetAppCustByAppId, { AppId: this.AppId });
-        let getDupCust = this.httpClient.post(AdInsConstant.GetAppDupCheckCustByAppId, { AppId: this.AppId });
-        let getNegCust = this.httpClient.post(AdInsConstant.GetListAppNegativeCheckCustByAppId, { AppId: this.AppId });
-        let getAppAsset = this.httpClient.post(AdInsConstant.GetAppAssetListByAppId, { AppId: this.AppId });
-        let getFraudVerf = this.httpClient.post(AdInsConstant.GetAppFraudVerificationByAppId, { AppId: this.AppId });
+        let getAppCust = this.httpClient.post(URLConstant.GetAppCustByAppId, { AppId: this.AppId });
+        let getDupCust = this.httpClient.post(URLConstant.GetAppDupCheckCustByAppId, { AppId: this.AppId });
+        let getNegCust = this.httpClient.post(URLConstant.GetListAppNegativeCheckCustByAppId, { AppId: this.AppId });
+        let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetListByAppId, { AppId: this.AppId });
+        let getFraudVerf = this.httpClient.post(URLConstant.GetAppFraudVerificationByAppId, { AppId: this.AppId });
         return forkJoin([getAppCust, getDupCust, getNegCust, getAppAsset, getFraudVerf]);
       }),
       mergeMap((response) => {
@@ -70,7 +71,7 @@ export class ViewAppFraudVerificationComponent implements OnInit {
           negAssetList.push(negAssetObj); 
         } 
         reqNegAsset.RequestObj = negAssetList;  
-        return this.httpClient.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, reqNegAsset);
+        return this.httpClient.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, reqNegAsset);
       })
     ).subscribe(
       (response) => {

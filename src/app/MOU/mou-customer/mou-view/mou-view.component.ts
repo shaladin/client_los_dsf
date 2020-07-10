@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view',
@@ -24,7 +25,7 @@ export class MouViewComponent implements OnInit {
   IsReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
-    this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
+    this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
         this.MouCustId = params["MouCustId"];
@@ -56,7 +57,7 @@ export class MouViewComponent implements OnInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           // var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
           // window.open(link, '_blank');

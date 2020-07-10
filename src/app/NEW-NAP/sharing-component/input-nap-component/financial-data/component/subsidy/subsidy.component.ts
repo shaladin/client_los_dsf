@@ -2,12 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SubsidyAddEditComponent } from '../subsidy-add-edit/subsidy-add-edit.component';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-subsidy',
@@ -73,7 +72,7 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(AdInsConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
       }
@@ -82,7 +81,7 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyDataWithoutRule()
   {
-    this.http.post(AdInsConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
       }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-agrmnt',
@@ -31,7 +32,7 @@ export class ViewAgrmntComponent implements OnInit {
     var AgrmntObj = {
       AgrmntId: this.AgrmntId
     }
-    this.http.post(AdInsConstant.GetAgrmntByAgrmntId, AgrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, AgrmntObj).subscribe(
       (response) => {
         this.AppId = response["AppId"];
         console.log(this.AppId);
@@ -39,7 +40,7 @@ export class ViewAgrmntComponent implements OnInit {
         var AppObj = {
           AppId: this.AppId
         }
-        this.http.post(AdInsConstant.GetAppCustByAppId, AppObj).subscribe(
+        this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
           (response) => {
             this.MrCustTypeCode = response["MrCustTypeCode"];
             console.log(this.MrCustTypeCode);

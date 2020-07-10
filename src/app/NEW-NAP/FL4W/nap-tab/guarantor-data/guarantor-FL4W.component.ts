@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-guarantor-FL4W',
@@ -37,7 +38,7 @@ export class GuarantorFL4WComponent implements OnInit {
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+  getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
 
   CustDataForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]

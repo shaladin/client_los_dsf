@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-term-conditions',
@@ -41,7 +41,7 @@ export class TermConditionsComponent implements OnInit {
     var appTcObj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
         this.AppTcList = response["AppTcs"];
         if (this.AppTcList != null && this.AppTcList["length"] != 0) {
@@ -82,7 +82,7 @@ export class TermConditionsComponent implements OnInit {
           this.ReconstructForm();
           this.OutputMode.emit("edit");
         } else {
-          this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
+          this.http.post(URLConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
             (response) => {
               this.AppTcList = response["AppTcs"];
               for (let i = 0; i < this.AppTcList["length"]; i++) {

@@ -25,7 +25,9 @@ import { CalcInsMainCvgObj } from 'app/shared/model/CalcInsMainCvgObj.Model';
 import { CalcInsAddCvgObj } from 'app/shared/model/CalcInsAddCvgObj.Model';
 import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-insurance-multi-asset-data',
@@ -184,7 +186,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     });
 
     this.appAssetObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response["ReturnObject"];
 
@@ -199,7 +201,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
+    this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response["ReturnObject"];
 
@@ -274,7 +276,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SubmitForm() {
-    this.http.post(AdInsConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
+    this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         var isValid = true;
         var validateObj = response["ReturnObject"];
@@ -299,19 +301,19 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       var insCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
 
       if (this.isGenerate == false) {
-        this.toastr.warningMessage("Please click Generate Insurance.");
+        this.toastr.warningMessage(ExceptionConstant.CLICK_GENERATE_INSURANCE);
         return;
       }
       if (this.isCalculate == false) {
-        this.toastr.warningMessage("Please click Calculate Insurance.");
+        this.toastr.warningMessage(ExceptionConstant.CLICK_CALCULATE_INSURANCE);
         return;
       }
       if (custDiscAmt > totalPremiToCust) {
-        this.toastr.warningMessage("Discount Amount can't be higher than Total Premi to Customer.");
+        this.toastr.warningMessage(ExceptionConstant.DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer.");
         return;
       }
       if (insCpltzAmt > totalPremiToCust - custDiscAmt) {
-        this.toastr.warningMessage("Capitalize Amount can't be higher than Total Premi to Customer after Discount.");
+        this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +"Total Premi to Customer after Discount.");
         return;
       }
     }
@@ -322,17 +324,17 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
 
       if (endDt < businessDt) {
-        this.toastr.warningMessage("End Date can't be lower than Business Date.");
+        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Business Date.");
         return;
       }
 
       if (endDt < startDt) {
-        this.toastr.warningMessage("End Date can't be lower than Start Date.");
+        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Start Date.");
         return;
       }
     }
     this.setSaveObj(insuredBy);
-    this.http.post(AdInsConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
+    this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["Message"]);
@@ -615,7 +617,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.AppAssetId = this.AppAssetId;
     reqObj.AppCollateralId = this.AppCollateralId;
 
-    await this.http.post(AdInsConstant.CalculateInsurance, reqObj).toPromise().then(
+    await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.calcInsObj = response["Result"];
@@ -688,31 +690,31 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   async GenerateInsurance(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
     if (appInsMainCvgObj == undefined) {
       if (this.InsuranceDataForm.controls.InscoBranchCode.value == "") {
-        this.toastr.warningMessage("Please choose Insco Branch.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_INSCO_BRANCH);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "") {
-        this.toastr.warningMessage("Please choose Paid By.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_PAID_BY);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetRegion.value == "") {
-        this.toastr.warningMessage("Please choose Region.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_REGION);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetCoverPeriod.value == "") {
-        this.toastr.warningMessage("Please choose Cover Period.");
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_COVER_PERIOD);
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value == "") {
-        this.toastr.warningMessage("Please input Insurance Length.");
+        this.toastr.warningMessage(ExceptionConstant.INPUT_INSURANCE_LENGTH);
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value < this.minInsLength) {
-        this.toastr.warningMessage("Insurance Length must be higher than " + (this.minInsLength - 1).toString());
+        this.toastr.warningMessage(ExceptionConstant.INSURANCE_LENGTH_MUST_HIGHER_THAN + (this.minInsLength - 1).toString());
         return;
       }
       if (this.InsuranceDataForm.controls.InsLength.value > this.maxInsLength) {
-        this.toastr.warningMessage("Insurance Length must be lower than " + (this.maxInsLength + 1).toString());
+        this.toastr.warningMessage(ExceptionConstant.INSURANCE_LENGTH_MUST_LOWER_THAN+ (this.maxInsLength + 1).toString());
         return;
       }
       // this.InsuranceDataForm.controls.InscoBranchCode.markAsTouched();
@@ -734,12 +736,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
     reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
 
-    await this.http.post(AdInsConstant.ExecuteInsRateRule, reqObj).toPromise().then(
+    await this.http.post(URLConstant.ExecuteInsRateRule, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.ruleObj = response["Result"];
         if (this.ruleObj.InsAssetCategory == "") {
-          this.toastr.warningMessage("Please setting rule first.");
+          this.toastr.warningMessage(ExceptionConstant.SETTING_RULE_FIRST);
           return;
         }
         this.InsuranceDataForm.patchValue({
@@ -1262,7 +1264,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   async getInsuranceData() {
     var reqObj = { AppId: this.appId, AppAssetId: this.AppAssetId, AppCollateralId: this.AppCollateralId }
-    await this.http.post(AdInsConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
+    await this.http.post(URLConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.appObj = response["AppObj"];
@@ -1390,7 +1392,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindInsuredByObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsuredBy };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.insuredByObj = response["ReturnObject"];
       }
@@ -1399,7 +1401,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindPaidByObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsPaidBy };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.paidByObj = response["ReturnObject"];
       }
@@ -1408,7 +1410,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   async bindInsMainCvgTypeObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsMainCvgType };
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insMainCvgTypeObj = response["ReturnObject"];
       }
@@ -1417,7 +1419,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   async bindInsAddCvgTypeObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsAddCvgType };
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insAddCvgTypeObj = response["ReturnObject"];
       }
@@ -1436,7 +1438,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindInsAssetCoverPeriodObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.insAssetCoverPeriodObj = response["ReturnObject"];
       }
@@ -1445,7 +1447,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindInsAssetRegionObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetInsRegion };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.insAssetRegionObj = response["ReturnObject"];
       }
@@ -1454,7 +1456,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindInscoBranchObj() {
     var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
-    this.http.post(AdInsConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
+    this.http.post(URLConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
       (response) => {
         this.inscoBranchObj = response["ReturnObject"];
       }
@@ -1463,7 +1465,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindPayPeriodToInscoObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePayPeriodToInsco };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.payPeriodToInscoObj = response["ReturnObject"];
       }

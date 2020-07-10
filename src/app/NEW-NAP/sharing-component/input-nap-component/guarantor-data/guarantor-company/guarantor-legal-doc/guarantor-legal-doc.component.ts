@@ -5,7 +5,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-guarantor-legal-doc',
@@ -15,7 +17,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 })
 export class GuarantorLegalDocComponent implements OnInit {
 
-  
+
   @Input() listLegalDoc: Array<AppGuarantorCompanyLegalDocObj> = new Array<AppGuarantorCompanyLegalDocObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
@@ -31,7 +33,7 @@ export class GuarantorLegalDocComponent implements OnInit {
   defaultLegalDocType: any;
   selectedLegalDocName: any;
   defaultLegalDocName: any;
-  modal : any;
+  modal: any;
 
 
   LegalDocForm = this.fb.group({
@@ -43,14 +45,14 @@ export class GuarantorLegalDocComponent implements OnInit {
     DocNotes: ['', Validators.maxLength(1000)],
     ReleaseLocation: ['', Validators.maxLength(200)]
   });
-  
+
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private toastr: NGXToastrService,
     private http: HttpClient,
     private modalService: NgbModal,) {
 
-     }
+  }
   UserAccess: any;
   MaxDate: Date;
 
@@ -61,17 +63,17 @@ export class GuarantorLegalDocComponent implements OnInit {
     console.log(this.listLegalDoc);
   }
 
-  SaveForm(){
+  SaveForm() {
     this.appGuarantorCompanyLegalDocObj = new AppGuarantorCompanyLegalDocObj();
-    if(this.listLegalDoc == undefined){
+    if (this.listLegalDoc == undefined) {
       this.listLegalDoc = new Array<AppGuarantorCompanyLegalDocObj>();
     }
-    if(this.setAppCustCompanyLegalDoc()==false) return;
+    if (this.setAppCustCompanyLegalDoc() == false) return;
     console.log(this.appGuarantorCompanyLegalDocObj);
-    if(this.mode == "Add"){
+    if (this.mode == "Add") {
       this.listLegalDoc.push(this.appGuarantorCompanyLegalDocObj);
     }
-    if(this.mode == "Edit"){
+    if (this.mode == "Edit") {
       this.listLegalDoc[this.currentEditedIndex] = this.appGuarantorCompanyLegalDocObj;
     }
     this.callbackSubmit.emit(this.listLegalDoc);
@@ -79,13 +81,13 @@ export class GuarantorLegalDocComponent implements OnInit {
     this.clearForm();
   }
 
-  add(content){
+  add(content) {
     this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
-  edit(i, content){
+  edit(i, content) {
     this.clearForm();
     this.mode = "Edit";
     this.currentEditedIndex = i;
@@ -102,14 +104,14 @@ export class GuarantorLegalDocComponent implements OnInit {
     this.open(content);
   }
 
-  delete(i){
+  delete(i) {
     if (confirm("Are you sure to delete this record?")) {
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
   }
 
-  clearForm(){
+  clearForm() {
     this.LegalDocForm = this.fb.group({
       MrLegalDocTypeCode: [this.defaultLegalDocType, [Validators.required, Validators.maxLength(50)]],
       DocNo: ['', [Validators.required, Validators.maxLength(50)]],
@@ -122,10 +124,10 @@ export class GuarantorLegalDocComponent implements OnInit {
     this.selectedLegalDocName = this.defaultLegalDocName;
   }
 
-  setAppCustCompanyLegalDoc(){
-    var flag:boolean = true;
+  setAppCustCompanyLegalDoc() {
+    var flag: boolean = true;
     this.appGuarantorCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
-    this.appGuarantorCompanyLegalDocObj.DocDt =  this.LegalDocForm.controls.DocDt.value;
+    this.appGuarantorCompanyLegalDocObj.DocDt = this.LegalDocForm.controls.DocDt.value;
     this.appGuarantorCompanyLegalDocObj.DocNo = this.LegalDocForm.controls.DocNo.value;
     this.appGuarantorCompanyLegalDocObj.DocExpiredDt = this.LegalDocForm.controls.DocExpiredDt.value;
     this.appGuarantorCompanyLegalDocObj.ReleaseBy = this.LegalDocForm.controls.ReleaseBy.value;
@@ -133,7 +135,7 @@ export class GuarantorLegalDocComponent implements OnInit {
     this.appGuarantorCompanyLegalDocObj.ReleaseLocation = this.LegalDocForm.controls.ReleaseLocation.value;
     this.appGuarantorCompanyLegalDocObj.LegalDocName = this.selectedLegalDocName;
     var currentEditedIndex = -1;
-    if(this.mode == "Edit"){
+    if (this.mode == "Edit") {
       currentEditedIndex = this.currentEditedIndex;
     }
     flag = this.cekDuplicateDocType(currentEditedIndex);
@@ -144,49 +146,49 @@ export class GuarantorLegalDocComponent implements OnInit {
     console.log(d2);
     console.log(d3);
     if (d1 > d3 && d1 != d3) {
-      this.toastr.warningMessage("Expired Date can not be less than " + this.MaxDate);
+      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN+ this.MaxDate);
       flag = false;
     }
-    d1.setDate(d1.getDate()+1);
+    d1.setDate(d1.getDate() + 1);
     console.log(d1);
     if (d1 < d2 && d1 != d2) {
-      this.toastr.warningMessage("Issued Date can not be more than " + this.MaxDate);
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxDate);
       flag = false;
-    }    
+    }
     return flag;
   }
 
-  cekDuplicateDocType(currentEditedIndex){
-    if(this.listLegalDoc.length > 0){
+  cekDuplicateDocType(currentEditedIndex) {
+    if (this.listLegalDoc.length > 0) {
       var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appGuarantorCompanyLegalDocObj.MrLegalDocTypeCode);
-      if(duplicateIndex != currentEditedIndex && duplicateIndex != -1){
-        this.toastr.warningMessage("Legal Document Type " + this.appGuarantorCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
-        return false;  
+      if (duplicateIndex != currentEditedIndex && duplicateIndex != -1) {
+        this.toastr.warningMessage("Legal Document Type " + this.appGuarantorCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");
+        return false;
       }
     }
     return true;
   }
-  bindLegalDocTypeObj(){
+  bindLegalDocTypeObj() {
     this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.LegalDocTypeObj = response["ReturnObject"];
-        if(this.LegalDocTypeObj.length > 0){
-            this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
-            this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
+        if (this.LegalDocTypeObj.length > 0) {
+          this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
+          this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
         }
       }
     );
   }
 
-  changeLegalDocType(ev){
+  changeLegalDocType(ev) {
     console.log(ev);
     var idx = ev.target.selectedIndex;
-    this.selectedLegalDocName=this.LegalDocTypeObj[idx].Value;
+    this.selectedLegalDocName = this.LegalDocTypeObj[idx].Value;
   }
 
   open(content) {
-    this.modal=this.modalService.open(content);
+    this.modal = this.modalService.open(content);
     this.modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -204,9 +206,7 @@ export class GuarantorLegalDocComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modal.close();
   }
-
 }

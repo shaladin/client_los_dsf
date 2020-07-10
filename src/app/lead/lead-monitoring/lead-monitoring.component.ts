@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-monitoring',
@@ -18,13 +19,13 @@ export class LeadMonitoringComponent implements OnInit {
       subsectionId: 'UcUploadFile', // Ga perlu diubah
       formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
       UploadTypeCode: 'UPL_LEAD', // UploadTypeCode berdasarkan keperluan
-      ErrorDownloadUrl: AdInsConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
-      TemplateUrl: AdInsConstant.DownloadTemplate, // URL untuk Download Template File
+      ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
+      TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
       TemplateName: 'Upload_Lead_Template', // Nama Excel Template File
       FileErrorName: "Upload_Lead_ErrorDownload", // Nama Excel Download Error File
       // SheetName: 'TemplateGan',
       environmentUrl: environment.losUrl,
-      apiQryPaging: AdInsConstant.GetPagingObjectBySQL,
+      apiQryPaging: URLConstant.GetPagingObjectBySQL,
       pagingJson: "./assets/ucpaging/searchLeadMonitoring.json",
       ddlEnvironments: [
         {
@@ -36,7 +37,7 @@ export class LeadMonitoringComponent implements OnInit {
           environment: environment.FoundationR3Url
         }
       ],
-      url: AdInsConstant.UploadFile
+      url: URLConstant.UploadFile
     }
   }
 

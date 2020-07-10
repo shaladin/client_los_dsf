@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-purchase-order-view',
@@ -40,7 +40,7 @@ export class PurchaseOrderViewComponent implements OnInit {
     this.ARFinancialInfo = "./assets/ucviewgeneric/viewARFinancialInfo.json";
     this.viewEnvironment = environment.losUrl;
 
-    this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, { PurchaseOrderHId: this.PurchaseOrderHId, AgrmntId: this.AgrmntId }).subscribe(
+    this.http.post(URLConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, { PurchaseOrderHId: this.PurchaseOrderHId, AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
         this.ResponsePurchaseOrderHData = response["ResponsePurchaseOrderHObj"];
         this.MrFirstInstTypeCode = response["MrFirstInstTypeCode"];

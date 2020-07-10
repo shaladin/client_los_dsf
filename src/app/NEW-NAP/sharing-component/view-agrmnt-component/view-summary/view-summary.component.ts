@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class ViewAgrmntSummaryComponent implements OnInit {
   }
 
   GetAgrmntSummary() {
-    this.http.post(AdInsConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
         this.SummaryObj = response;

@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -40,19 +41,19 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   PurposeOfFinancing: any;
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
-  LeadNo : string;
-  MouNo : string;
+  LeadNo: string;
+  MouNo: string;
   AppTcList: any = [];
   identifier: string = "TCList";
   IsApvReady: boolean = false;
 
-  count1 : number = 0;
-  RfaLogObj :{
+  count1: number = 0;
+  RfaLogObj: {
     RfaNo: any
   }
-  ListRfaLogObj : any = new Array(this.RfaLogObj); 
-  inputObj2 : any
-  listPreGoLiveAppvrObj : any = new Array(this.inputObj2);
+  ListRfaLogObj: any = new Array(this.RfaLogObj);
+  inputObj2: any
+  listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
 
   MainInfoForm = this.fb.group({
 
@@ -80,26 +81,26 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = obj.taskId
-  
+
       this.HoldTask(ApvHoldObj);
     });
   }
 
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
-    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo : this.TrxNo, ApvCategory : CommonConstant.ApvCategoryPreGoLive} ).subscribe(
+    this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.TrxNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
         this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
-        for(let i =0;i<this.ListRfaLogObj.length;i++){
-            this.listPreGoLiveAppvrObj[i] = {
-              approvalBaseUrl: environment.ApprovalR3Url,
-              type: 'task',
-              refId: this.ListRfaLogObj[i]["RfaNo"],
-              apvStat: this.ListRfaLogObj[i]["ApvStat"],
-            }
-          } 
-          this.IsApvReady = true;
+        for (let i = 0; i < this.ListRfaLogObj.length; i++) {
+          this.listPreGoLiveAppvrObj[i] = {
+            approvalBaseUrl: environment.ApprovalR3Url,
+            type: 'task',
+            refId: this.ListRfaLogObj[i]["RfaNo"],
+            apvStat: this.ListRfaLogObj[i]["ApvStat"],
+          }
+        }
+        this.IsApvReady = true;
       },
       (error) => {
         console.log(error);
@@ -111,9 +112,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       RowVersion: ""
     }
 
-    
 
-    this.http.post(AdInsConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
+
+    this.http.post(URLConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
       (response) => {
         this.result = response;
         this.AgrmntNo = this.result.AgrmntNo;
@@ -130,7 +131,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing,
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
@@ -145,7 +146,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing,
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(
           (response) => {
             this.result3 = response;
             this.PurposeOfFinancing = this.result3.CompntValueDesc;
@@ -157,13 +158,13 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           AppId: this.result.AppId,
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetAppById, Obj4).subscribe(
+        this.http.post(URLConstant.GetAppById, Obj4).subscribe(
           (response) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;
 
-            if(this.result4.LeadId != null || this.result4.LeadId != undefined){
-              this.http.post(AdInsConstant.GetLeadByLeadId, {LeadId : this.result4.LeadId}).subscribe(
+            if (this.result4.LeadId != null || this.result4.LeadId != undefined) {
+              this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.result4.LeadId }).subscribe(
                 (response) => {
                   this.LeadNo = response["LeadNo"];
                   this.LeadId = response["LeadId"];
@@ -171,7 +172,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
               );
             }
 
-            this.http.post(AdInsConstant.GetMouCustByAppId, Obj4).subscribe(
+            this.http.post(URLConstant.GetMouCustByAppId, Obj4).subscribe(
               (response) => {
                 this.MouNo = response["MouCustNo"];
                 this.MouCustId = response["MouCustId"];
@@ -183,13 +184,13 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
         );
 
-       
+
 
         var Obj5 = {
           AgrmntId: this.result.AgrmntId,
           RowVersion: ""
         }
-        this.http.post(AdInsConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
+        this.http.post(URLConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result5 = response;
             this.DeliveryDt = formatDate(this.result5.DeliveryDt, 'yyyy-MM-dd', 'en-US');
@@ -197,7 +198,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           }
         );
 
-        this.http.post(AdInsConstant.GetAgrmntFinDataByAgrmntId, Obj5).subscribe(
+        this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, Obj5).subscribe(
           (response) => {
             this.result6 = response;
             this.InstAmt = this.result6.InstAmt;
@@ -212,7 +213,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     var appTcObj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.GetListTCbyAppId, appTcObj).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
       (response) => {
         this.AppTcList = response["AppTcs"];
         if (this.AppTcList != null && this.AppTcList["length"] != 0) {
@@ -232,10 +233,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
               RowVersion: this.AppTcList[i].RowVersion
             }) as FormGroup;
 
-              TCDetail.controls.IsChecked.disable();
-              TCDetail.controls.ExpiredDt.disable();
-              TCDetail.controls.PromisedDt.disable();
-              TCDetail.controls.Notes.disable();
+            TCDetail.controls.IsChecked.disable();
+            TCDetail.controls.ExpiredDt.disable();
+            TCDetail.controls.PromisedDt.disable();
+            TCDetail.controls.Notes.disable();
             listTC.push(TCDetail);
           }
         }
@@ -245,14 +246,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       }
     );
 
-    
+
   }
-  HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{
+  HoldTask(obj) {
+    this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
       },
-      (error)=>{
-          this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+      (error) => {
+        this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
       }
     )
   }
@@ -274,23 +275,23 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.updateValueAndValidity();
   }
   //nanti bakalan ke View, sementara kek gini dlu
-  ToApp(){
+  ToApp() {
 
     window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId, "_blank");
   }
-  ToAgrmnt(){
+  ToAgrmnt() {
     window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
   }
-  ToLead(){
+  ToLead() {
     window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.LeadId, "_blank");
   }
-  ToMou(){
+  ToMou() {
     window.open(environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId, "_blank");
 
   }
-  ToCust(){
+  ToCust() {
     var custObj = { CustNo: this.CustNo };
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
         var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"] + "&Token=" + this.token;
         window.open(link, '_blank');
@@ -301,8 +302,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     );
   }
 
-  ToProdOffering(){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion, this.token ); 
+  ToProdOffering() {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(this.ProdOfferingCode, this.ProdOfferingVersion, this.token);
   }
 
   onAvailableNextTask() {
@@ -313,15 +314,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
   }
 
-  onCancelClick()
-  {
+  onCancelClick() {
     this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
   }
-  
-  openView(custNo){
+
+  openView(custNo) {
     var link: string;
     var custObj = { CustNo: custNo };
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       },

@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-delivery-order-asset-detail',
-  templateUrl: './view-delivery-order-asset-detail.component.html',
-  styleUrls: ['./view-delivery-order-asset-detail.component.scss']
+  templateUrl: './view-delivery-order-asset-detail.component.html'
 })
 export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
   GetAllAssetDataByAppAssetId: string;
@@ -21,8 +21,8 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
   }
 
   async ngOnInit(){
-    this.GetAllAssetDataByAppAssetId = AdInsConstant.GetAllAssetDataByAppAssetId;
-    this.GetListAppCollateralForDOView = AdInsConstant.GetListAppCollateralForDOView;
+    this.GetAllAssetDataByAppAssetId = URLConstant.GetAllAssetDataByAppAssetId;
+    this.GetListAppCollateralForDOView = URLConstant.GetListAppCollateralForDOView;
     var assetObj = { "AppAssetId" : this.AppAssetId};
 
     this.http.post(this.GetAllAssetDataByAppAssetId, assetObj).subscribe(

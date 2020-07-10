@@ -17,6 +17,8 @@ import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissio
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-commission',
@@ -100,7 +102,7 @@ export class CommissionComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: "",
     };
-    this.http.post(AdInsConstant.GetAppCommissionDataForEditByAppId, objApi).subscribe(
+    this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).subscribe(
       (response) => {
         console.log("response edit comm");
         console.log(response);
@@ -168,7 +170,7 @@ export class CommissionComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     };
-    await this.http.post<AppObj>(AdInsConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         // console.log(response);
         this.ResultAppData = response;
@@ -196,19 +198,19 @@ export class CommissionComponent implements OnInit {
       UppingProvisionFee: this.UppingProvisionFee,
       appObj: app
     };
-    this.http.post<AppFinDataObj>(AdInsConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
-        this.TotalHalfListResultRefundIncomeInfo=Math.floor(this.ListResultRefundIncomeInfo.length / 2);
+        this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
         console.log(this.ListResultRefundIncomeInfo);
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
-        this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
-        this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
-        this.viewIncomeInfoObj.MaxAllocatedAmount = this.maxAllocAmt,
-        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = this.totalRsvFundAmt,
-        this.viewIncomeInfoObj.RemainingAllocatedAmount = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt,
-        this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
+          this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
+          this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
+          this.viewIncomeInfoObj.MaxAllocatedAmount = this.maxAllocAmt,
+          this.viewIncomeInfoObj.ReservedFundAllocatedAmount = this.totalRsvFundAmt,
+          this.viewIncomeInfoObj.RemainingAllocatedAmount = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt,
+          this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
         this.viewIncomeInfoObj.ExpenseAmount = this.totalExpenseAmt;
         this.GetRuleDataForForm();
         // this.GetAppFeeData();
@@ -229,7 +231,7 @@ export class CommissionComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     };
-    this.http.post(AdInsConstant.GetListAppFeeByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetListAppFeeByAppId, obj).subscribe(
       (response) => {
         console.log("response app fee data");
         console.log(response);
@@ -265,7 +267,7 @@ export class CommissionComponent implements OnInit {
 
   // GetRuleSetName() {
   //   if (this.isFinishGetAppReferantorData && this.isFinishGetAppFeeData && this.isFinishGetAppData) {
-  //     var url = AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
+  //     var url = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode;
   //     var obj = {
   //       ProdOfferingCode: this.ResultAppData.ProdOfferingCode,
   //       RefProdCompntCode: "COMMISSION_SCHM",
@@ -287,7 +289,7 @@ export class CommissionComponent implements OnInit {
 
   GetRuleDataForForm() {
     var obj = { AppId: this.AppId };
-    this.http.post(AdInsConstant.GetAppCommissionRule, obj).subscribe(
+    this.http.post(URLConstant.GetAppCommissionRule, obj).subscribe(
       (response) => {
         console.log("Cek Rule");
         console.log(response);
@@ -297,13 +299,13 @@ export class CommissionComponent implements OnInit {
           for (var i = 0; i < response["length"]; i++) {
             var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
             // console.log(temp);
-            if(this.ContentObjSupplier.length > 0){
+            if (this.ContentObjSupplier.length > 0) {
               this.SaveRuleData(temp["ResultSupplier"], CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
               this.SaveRuleData(temp["ResultSupplierEmp"], CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
             }
           }
           if (response[0][CommonConstant.ReturnObj].RuleDataObjects["ResultReferantor"] != null)
-            this.SaveRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects["ResultReferantor"], CommonConstant.ContentReferantor, "");  
+            this.SaveRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects["ResultReferantor"], CommonConstant.ContentReferantor, "");
         }
         this.GetInfoCommission();
 
@@ -386,7 +388,7 @@ export class CommissionComponent implements OnInit {
         RowVersion: ""
       };
       // console.log("response list appAsset & appAssetSupplEmp");
-      this.http.post<AppAssetDetailObj>(AdInsConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).subscribe(
+      this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).subscribe(
         (response) => {
           // console.log(response);
           if (response.ListAppAssetObj.length != 0) {
@@ -418,7 +420,7 @@ export class CommissionComponent implements OnInit {
         AppId: this.AppId,
         RowVersion: ""
       };
-      this.http.post<NapAppReferantorModel>(AdInsConstant.GetAppReferantorByAppId, obj).subscribe(
+      this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).subscribe(
         (response) => {
           // console.log(response);
           this.ResultAppReferantor = response;
@@ -438,7 +440,7 @@ export class CommissionComponent implements OnInit {
   GetDDLContent(ReturnObject, content: string) {
     // console.log(ReturnObject);
     if (content == CommonConstant.ContentReferantor) {
-      if(ReturnObject.AppId==null) return;
+      if (ReturnObject.AppId == null) return;
       var KVPObj;
       KVPObj = {
         Key: ReturnObject.ReferantorCode,
@@ -538,8 +540,8 @@ export class CommissionComponent implements OnInit {
         this.CalculateEachData(this.FormGetObj[CommonConstant.ContentReferantor]);
         this.isCalcReferantor = true;
       }
-      
-      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
+
+      if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {
         this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
       }
     }
@@ -552,7 +554,7 @@ export class CommissionComponent implements OnInit {
       TotalExpenseAmt: expenseAmt
     };
     console.log(obj);
-    this.http.post(AdInsConstant.CalCulateGrossYield, obj).subscribe(
+    this.http.post(URLConstant.CalCulateGrossYield, obj).subscribe(
       (response) => {
         console.log(response);
         this.Summary.GrossYield = response["GrossYield"];
@@ -580,23 +582,23 @@ export class CommissionComponent implements OnInit {
     if (this.FormGetObj[CommonConstant.ContentSupplier] != undefined && this.FormGetObj[CommonConstant.ContentSupplier].value.arr.length != 0) {
       this.isCalcSuppl = false;
       this.FormAdd1.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
-    }else{
+    } else {
       this.FormInputObjSupplier["isCalculated"] = true;
     }
     if (this.FormGetObj[CommonConstant.ContentSupplierEmp] != undefined && this.FormGetObj[CommonConstant.ContentSupplierEmp].value.arr.length != 0) {
       this.isCalcSupplEmp = false;
       this.FormAdd2.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
-    }else{
+    } else {
       this.FormInputObjSupplierEmpl["isCalculated"] = true;
     }
     if (this.FormGetObj[CommonConstant.ContentReferantor] != undefined && this.FormGetObj[CommonConstant.ContentReferantor].value.arr.length != 0) {
       this.isCalcReferantor = false;
       this.FormAdd3.CalculateTax(this.ResultAppData.CurrCode, this.ResultAppData.AppNo, this.ResultAppData.OriOfficeCode, this.AppId);
-    }else{
+    } else {
       this.FormInputObjReferantor["isCalculated"] = true;
-    }   
+    }
 
-    if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {  
+    if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {
       this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
     }
   }
@@ -624,7 +626,7 @@ export class CommissionComponent implements OnInit {
     // console.log(tempTotalExpenseAmount);
     // console.log(this.viewIncomeInfoObj);
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
-      
+
   }
 
   listAppCommissionHObj;
@@ -687,7 +689,7 @@ export class CommissionComponent implements OnInit {
       if (tempObj.AppCommissionDId != 0) {
         tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
         tempAppCommissionDObj.AppCommissionDId = tempObj.AppCommissionDId;
-      }else{
+      } else {
         tempAppCommissionDObj.AppCommissionDId = 0;
       }
       tempAppCommissionDObj.MrCommissionSourceCode = tempObj.AllocationFrom;
@@ -712,15 +714,15 @@ export class CommissionComponent implements OnInit {
     // console.log(this.FormInputObjReferantor["isDataInputed"]);
     // console.log(this.isCalcTotal);
     if ((!this.FormInputObjSupplier["isCalculated"] && this.FormInputObjSupplier["isDataInputed"]) || (!this.FormInputObjSupplierEmpl["isCalculated"] && this.FormInputObjSupplierEmpl["isDataInputed"]) || (!this.FormInputObjReferantor["isCalculated"] && this.FormInputObjReferantor["isDataInputed"]) || !this.isCalcTotal) {
-      this.toastr.warningMessage("Must Calculate First");
+      this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
       return;
     }
     if (this.Summary.TotalCommisionAmount > this.viewIncomeInfoObj.MaxAllocatedAmount) {
-      this.toastr.warningMessage("Total Commision Amount cannot more than Max Allocated Amount");
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
       return;
     }
     if (0 > this.viewIncomeInfoObj.RemainingAllocatedAmount) {
-      this.toastr.warningMessage("Total Commision Amount cannot more than Remaining Allocated Amount");
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
       return;
     }
     this.listAppCommissionHObj = new Array();
@@ -743,7 +745,7 @@ export class CommissionComponent implements OnInit {
         RowVersion: ""
       };
       console.log(obj);
-      this.http.post(AdInsConstant.AddOrEditAppCommissionData, obj).subscribe(
+      this.http.post(URLConstant.AddOrEditAppCommissionData, obj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
@@ -754,8 +756,8 @@ export class CommissionComponent implements OnInit {
       );
     }
   }
-  
-  Cancel(){
+
+  Cancel() {
     this.outputCancel.emit();
   }
 }

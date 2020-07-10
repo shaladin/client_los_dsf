@@ -20,6 +20,7 @@ import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { formatDate } from '@angular/common';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-customer-data',
@@ -105,17 +106,17 @@ export class CustomerDataComponent implements OnInit {
   });
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) { 
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefMasterWithReserveField = AdInsConstant.GetListActiveRefMasterWithReserveFieldAll;
-    this.addEditLeadCustPersonal = AdInsConstant.AddEditLeadCustPersonal;
-    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
-    this.getLeadCustByLeadId = AdInsConstant.GetLeadCustByLeadId;
-    this.getLeadCustAddr = AdInsConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
-    this.getLeadCustPersonal = AdInsConstant.GetLeadCustPersonalByLeadCustId;
-    this.getLeadCustPersonalFinData = AdInsConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId;
-    this.getLeadCustPersonalJobData = AdInsConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
-    this.getRefProfessionByCode = AdInsConstant.GetRefProfessionByCode;
-    this.getListLeadCustSocmed = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefMasterWithReserveField = URLConstant.GetListActiveRefMasterWithReserveFieldAll;
+    this.addEditLeadCustPersonal = URLConstant.AddEditLeadCustPersonal;
+    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
+    this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
+    this.getLeadCustAddr = URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
+    this.getLeadCustPersonal = URLConstant.GetLeadCustPersonalByLeadCustId;
+    this.getLeadCustPersonalFinData = URLConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId;
+    this.getLeadCustPersonalJobData = URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
+    this.getRefProfessionByCode = URLConstant.GetRefProfessionByCode;
+    this.getListLeadCustSocmed = URLConstant.GetListLeadCustSocmedByLeadCustId;
     this.route.queryParams.subscribe(params => {
         if (params["LeadId"] != null) {
           this.LeadId = params["LeadId"];

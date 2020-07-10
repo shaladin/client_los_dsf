@@ -14,6 +14,8 @@ import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -76,7 +78,7 @@ export class GuarantorPersonalComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorPersonalObj = new GuarantorPersonalObj();
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      await this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
+      await this.http.post(URLConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
         (response) => {
           console.log("response: ");
           console.log(response);
@@ -134,7 +136,7 @@ export class GuarantorPersonalComponent implements OnInit {
       RefMasterTypeCode: "RELIGION",
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListActiveRefMaster, idTypeObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
       (response) => {
         this.MrIdTypeCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -146,7 +148,7 @@ export class GuarantorPersonalComponent implements OnInit {
         this.clearExpDt();
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -156,7 +158,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, genderObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, genderObj).subscribe(
       (response) => {
         this.MrGenderCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -166,7 +168,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, maritalObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, maritalObj).subscribe(
       (response) => {
         this.MrMaritalStatCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -177,7 +179,7 @@ export class GuarantorPersonalComponent implements OnInit {
       }
     );
     var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
-    this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
+    this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.MrNationalityCode = response["ReturnObject"];
@@ -190,7 +192,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, religionObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, religionObj).subscribe(
       (response) => {
         this.MrReligionCode = response["ReturnObject"];
         if (this.mode != "edit") {
@@ -229,7 +231,7 @@ export class GuarantorPersonalComponent implements OnInit {
   async setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    await this.http.post(AdInsConstant.GetRefCountryByCountryCode, this.countryObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).toPromise().then(
       (response) => {
         console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
@@ -301,7 +303,7 @@ export class GuarantorPersonalComponent implements OnInit {
     console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.PersonalForm.patchValue(
@@ -315,7 +317,7 @@ export class GuarantorPersonalComponent implements OnInit {
         );
         this.clearExpDt();
       });
-    this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+    this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
       (response) => {
         console.log(response);
         this.resultData = response;
@@ -337,7 +339,7 @@ export class GuarantorPersonalComponent implements OnInit {
         this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
         this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
       });
-    this.http.post(AdInsConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.PersonalForm.patchValue({
@@ -356,7 +358,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
           this.inputLookupObj1.nameSelect = this.MrNationalityCode[idx].ReserveField2;
         }
-        this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+        this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
           (response) => {
             this.inputLookupObj1.nameSelect = response["CountryName"];
           }
@@ -415,7 +417,7 @@ export class GuarantorPersonalComponent implements OnInit {
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
       // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
-      this.toastr.warningMessage("Guarantor age must be at least 17 year old");
+      this.toastr.warningMessage(ExceptionConstant.GUARANTOR_AGE_MUST_17_YEARS_OLD);
       flag = false;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
@@ -426,7 +428,7 @@ export class GuarantorPersonalComponent implements OnInit {
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
       if (businessDt > a) {
-        this.toastr.warningMessage("Id Expired Date can not be more than business date");
+        this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN);
         flag = false;
       }
     }
@@ -460,7 +462,7 @@ export class GuarantorPersonalComponent implements OnInit {
       this.guarantorPersonalObj.RowVersion = this.resultData.RowVersion;
       this.guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorPersonalObj.AppGuarantorPersonalObj.AppGuarantorPersonalId = this.AppGuarantorPersonalId;
-      this.http.post(AdInsConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
+      this.http.post(URLConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
@@ -470,7 +472,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(AdInsConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
+      this.http.post(URLConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

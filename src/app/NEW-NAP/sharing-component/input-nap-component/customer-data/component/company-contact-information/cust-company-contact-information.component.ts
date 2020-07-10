@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-company-contact-information',
@@ -128,7 +129,7 @@ export class CustCompanyContactInformationComponent implements OnInit {
 
   bindJobPositionObj(){
     this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
         if(this.JobPositionObj.length > 0){

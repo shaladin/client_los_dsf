@@ -2,9 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-commission',
@@ -44,7 +43,7 @@ export class TabCommissionComponent implements OnInit {
 
   async GetCommissionData() {
     var obj: object = { AppId: this.appId };
-    var url: string = AdInsConstant.GetAppCommissionDataDetailByAppId;
+    var url: string = URLConstant.GetAppCommissionDataDetailByAppId;
 
     await this.http.post(url, obj).toPromise().then(
       (response) => {

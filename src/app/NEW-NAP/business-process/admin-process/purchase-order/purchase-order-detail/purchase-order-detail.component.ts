@@ -40,7 +40,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.AgrmntId = params["AgrmntId"];
       }
       if (params["AppId"] != null) {
-        this.AppId = params["AppId"]; 
+        this.AppId = params["AppId"];
       }
       if (params["AppAssetId"] != null) {
         this.AppAssetId = params["AppAssetId"];
@@ -64,9 +64,9 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
     let poUrl = "";
     if (this.lobCode == CommonConstant.CF4W) {
-      poUrl = AdInsConstant.GetAllAssetDataForPOByAsset;
+      poUrl = URLConstant.GetAllAssetDataForPOByAsset;
     } else if (this.lobCode == CommonConstant.FL4W) {
-      poUrl = AdInsConstant.GetAllAssetDataForPOMultiAsset;
+      poUrl = URLConstant.GetAllAssetDataForPOMultiAsset;
     }
 
     this.GetFromRefMaster();
@@ -219,8 +219,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: this.listPurchaseOrderD
     }
-    // console.log(POObj);
-    this.http.post(AdInsConstant.SubmitPurchaseOrder, POObj).subscribe(
+    this.http.post(URLConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/PO"], { queryParams: { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId } });

@@ -6,11 +6,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-paging',
-  templateUrl: './agrmnt-activation-paging.component.html',
-  styleUrls: ['./agrmnt-activation-paging.component.scss']
+  templateUrl: './agrmnt-activation-paging.component.html'
 })
 export class AgrmntActivationPagingComponent implements OnInit {
   inputPagingObj: any;
@@ -30,7 +30,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
     this.inputPagingObj = new UcpagingModule();
     this.inputPagingObj._url = "./assets/ucpaging/searchAgrmntActivation.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAgrmntActivation.json";
 
     this.inputPagingObj.ddlEnvironments = [

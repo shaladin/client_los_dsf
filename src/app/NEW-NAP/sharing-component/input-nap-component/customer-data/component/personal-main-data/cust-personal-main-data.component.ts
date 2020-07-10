@@ -11,6 +11,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-personal-main-data',
@@ -111,7 +112,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.isReadonly = true;
 
     var custObj = {CustId: event.CustId};
-    this.http.post(AdInsConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
       (response) => {
         console.log(response);
         this.CopyCustomer(response);
@@ -253,8 +254,8 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   initUrl(){
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getCountryUrl = AdInsConstant.GetRefCountryByCountryCode;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getCountryUrl = URLConstant.GetRefCountryByCountryCode;
   }
 
   initLookup(){
@@ -357,7 +358,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   async bindNationalityObj(){
     // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
     var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
-    await this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.NationalityObj = response["ReturnObject"];

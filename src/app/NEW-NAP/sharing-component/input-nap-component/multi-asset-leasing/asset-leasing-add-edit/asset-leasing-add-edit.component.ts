@@ -3,14 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
@@ -20,6 +18,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -151,21 +150,21 @@ export class AssetLeasingAddEditComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListVendorEmp = AdInsConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
-    this.getAppCustAddrByAppCustAddrId = AdInsConstant.GetAppCustAddrByAppCustAddrId;
-    this.addEditAllAssetDataUrl = AdInsConstant.AddEditAllAssetData;
-    this.getRefCoy = AdInsConstant.GetRefCoy;
-    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
-    this.getAppAssetByAppAssetId = AdInsConstant.GetAppAssetByAppAssetId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getAppCollateralByAppId = AdInsConstant.GetAppCollateralByAppId;
-    this.getAppCollateralRegistByAppCollateralId = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
-    this.getListAppAssetSupplEmpByAppAssetId = AdInsConstant.GetListAppAssetSupplEmpByAppAssetId;
-    this.getVendorForLookup = AdInsConstant.GetVendorForLookup;
-    this.getAppAssetSupplEmpByAppAssetIdAndCode = AdInsConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
+    this.getListAppAssetData = URLConstant.GetListAppAssetData;
+    this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
+    this.addEditAllAssetDataUrl = URLConstant.AddEditAllAssetData;
+    this.getRefCoy = URLConstant.GetRefCoy;
+    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
+    this.getAppAssetByAppAssetId = URLConstant.GetAppAssetByAppAssetId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
+    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
+    this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
+    this.getVendorForLookup = URLConstant.GetVendorForLookup;
+    this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {

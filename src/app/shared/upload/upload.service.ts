@@ -3,6 +3,7 @@ import { environment } from "environments/environment";
 import { AdInsConstant } from "../AdInstConstant";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { URLConstant } from "../constant/URLConstant";
 
 // GetListUploadTypeKeyValue
 
@@ -27,13 +28,13 @@ export class UploadService {
     foundationUrl: string = environment.FoundationR3Url;
 
     constructor(private http: HttpClient) {
-        this.GetUploadTypeByUploadTypeId = this.foundationUrl + AdInsConstant.GetUploadTypeByUploadTypeId;
-        this.GetUploadSettingHIdByUploadTypeId = this.foundationUrl + AdInsConstant.GetUploadSettingHIdByUploadTypeId;
-        this.GetListUploadSettingDIdByUploadSettingHId = this.foundationUrl + AdInsConstant.GetListUploadSettingDIdByUploadSettingHId;
-        this.GetListUploadSettingDIdByUploadTypeId = this.foundationUrl + AdInsConstant.GetListUploadSettingDIdByUploadTypeId;
-        this.AssignRoleToUploadSetting = this.foundationUrl + AdInsConstant.AssignRoleToUploadSetting;
-        this.GetListRefRoleByUploadTypeId = this.foundationUrl + AdInsConstant.GetListRefRoleByUploadTypeId
-        this.GetListUploadSettingDByUploadSettingHId = this.foundationUrl + AdInsConstant.GetListUploadSettingDByUploadSettingHId;
+        this.GetUploadTypeByUploadTypeId = this.foundationUrl + URLConstant.GetUploadTypeByUploadTypeId;
+        this.GetUploadSettingHIdByUploadTypeId = this.foundationUrl + URLConstant.GetUploadSettingHIdByUploadTypeId;
+        this.GetListUploadSettingDIdByUploadSettingHId = this.foundationUrl + URLConstant.GetListUploadSettingDIdByUploadSettingHId;
+        this.GetListUploadSettingDIdByUploadTypeId = this.foundationUrl + URLConstant.GetListUploadSettingDIdByUploadTypeId;
+        this.AssignRoleToUploadSetting = this.foundationUrl + URLConstant.AssignRoleToUploadSetting;
+        this.GetListRefRoleByUploadTypeId = this.foundationUrl + URLConstant.GetListRefRoleByUploadTypeId
+        this.GetListUploadSettingDByUploadSettingHId = this.foundationUrl + URLConstant.GetListUploadSettingDByUploadSettingHId;
     }
 
     getUploadTypeByUploadTypeId(uploadSettingObject: any): Observable<Object> {

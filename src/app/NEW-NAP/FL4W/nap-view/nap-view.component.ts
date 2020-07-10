@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from '../../../shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-view',
@@ -49,7 +50,7 @@ export class NapViewComponent implements OnInit {
     var appObj = {
       AppId: this.AppId,
     };
-    this.http.post(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       (response) => {
         this.AppCustObj = response;
         console.log(response);

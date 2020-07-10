@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-personal-financial-data-FL4W',
@@ -81,7 +82,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   }
   
   initUrl(){
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   bindSourceOfIncomeObj(){

@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustRvwHObj } from 'app/shared/model/MouCustRvwHObj.Model';
 import { MouCustRvwDObj } from 'app/shared/model/MouCustRvwDObj.Model';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-approval-history',
@@ -23,8 +24,8 @@ export class MouViewApprovalHistoryComponent implements OnInit {
   result: any;
   IsApvReady: boolean = false;
   constructor(private http: HttpClient, private router: Router) {
-    this.GetMouCustRvwHByMouCustIdUrl = AdInsConstant.GetMouCustRvwHByMouCustId;
-    this.GetListMouCustRvwDUrl = AdInsConstant.GetListMouCustRvwD;
+    this.GetMouCustRvwHByMouCustIdUrl = URLConstant.GetMouCustRvwHByMouCustId;
+    this.GetListMouCustRvwDUrl = URLConstant.GetListMouCustRvwD;
   }
 
   RfaLogObj: {
@@ -36,12 +37,12 @@ export class MouViewApprovalHistoryComponent implements OnInit {
   count1: number = 0;
 
   ngOnInit() {
-    this.http.post(AdInsConstant.GetMouCustById, { MouCustID: this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { MouCustID: this.MouCustId }).subscribe(
       (response) => {
         this.MouCustNo = response["MouCustNo"];
         this.MrMouTypeCode = response["MrMouTypeCode"];
         console.log(response);
-        this.http.post(AdInsConstant.GetRfaLogByTrxNo, { TrxNo: this.MouCustNo }).subscribe(
+        this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.MouCustNo }).subscribe(
           (response) => {
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];

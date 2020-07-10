@@ -6,6 +6,7 @@ import { NotificationObj } from 'app/shared/model/NotificationObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-notification',
@@ -22,7 +23,7 @@ export class NotificationComponent implements OnInit {
   payload: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { 
-    this.apiUrl = this.foundationUrl + AdInsConstant.NotificationPost;
+    this.apiUrl = this.foundationUrl + URLConstant.NotificationPost;
     
   }
 

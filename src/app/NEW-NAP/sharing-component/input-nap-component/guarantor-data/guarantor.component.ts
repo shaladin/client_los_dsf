@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-guarantor',
@@ -35,7 +36,7 @@ export class GuarantorComponent implements OnInit {
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+  getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
 
   CustDataForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]

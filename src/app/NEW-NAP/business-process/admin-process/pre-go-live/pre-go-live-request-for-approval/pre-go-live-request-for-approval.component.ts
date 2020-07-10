@@ -8,10 +8,10 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
-  templateUrl: './pre-go-live-request-for-approval.component.html',
-  styleUrls: ['./pre-go-live-request-for-approval.component.scss']
+  templateUrl: './pre-go-live-request-for-approval.component.html'
 })
 export class PreGoLiveRequestForApprovalComponent implements OnInit {
   viewObj: string;
@@ -44,7 +44,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       SchmCode: "PRE_GLV_APV_CF",
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListApprovedByForPreGoLive, schmCodeObj).subscribe(
+    this.http.post(URLConstant.GetListApprovedByForPreGoLive, schmCodeObj).subscribe(
       (response) => {
         this.itemApprovedBy = response["ReturnObject"];
         this.MainInfoForm.patchValue({
@@ -57,8 +57,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token ); 
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
     }
     if (ev.Key == "customer") {
       var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId;
@@ -70,7 +70,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     var refReasonObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodePreGlvApv
     }
-    this.http.post(AdInsConstant.GetListActiveRefReason, refReasonObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {
         this.itemReason = response["ReturnObject"];
         this.MainInfoForm.patchValue({
@@ -88,7 +88,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.TaskListId = this.TaskListId;
     this.RFAPreGoLive.RowVersion = "";
 
-    this.http.post(AdInsConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
+    this.http.post(URLConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
       this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
     },
       (error) => {
@@ -96,8 +96,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       });
   }
 
-  Cancel()
-  {
+  Cancel() {
     this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Detail?AgrmntId=' + this.AgrmntId + '&AppId=' + this.AppId + '&TaskListId=' + this.TaskListId + '&AgrmntNo=' + this.AgrmntNo);
   }
 

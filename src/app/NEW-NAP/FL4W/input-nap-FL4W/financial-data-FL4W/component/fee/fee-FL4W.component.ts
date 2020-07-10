@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-fee-FL4W',
@@ -39,7 +39,7 @@ export class FeeFL4WComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
-    await this.http.post(AdInsConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response["ReturnObject"];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
@@ -246,7 +246,7 @@ export class FeeFL4WComponent implements OnInit {
     calcObj.Fee = this.ParentForm.get(this.identifier).value;
 
 
-    this.http.post(AdInsConstant.CalculateProvisionFee, calcObj).subscribe(
+    this.http.post(URLConstant.CalculateProvisionFee, calcObj).subscribe(
       (response) => {
         response["ProvisionFeePercentage"];
         var fb_provision = this.GetProvisionFormGroup();
