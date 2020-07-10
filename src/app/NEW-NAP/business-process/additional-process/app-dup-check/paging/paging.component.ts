@@ -7,6 +7,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -28,15 +29,14 @@ export class PagingComponent implements OnInit {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-      
     });
   }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchAppDupCheck.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchAppDupCheck.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -66,7 +66,7 @@ export class PagingComponent implements OnInit {
     // this.inputPagingObj.addCritInput.push(addCrit);
   }
 
-  NextScreen(event){
+  NextScreen(event) {
     // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // var wfClaimObj = new ClaimWorkflowObj();
     // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
@@ -74,21 +74,20 @@ export class PagingComponent implements OnInit {
 
     // this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
     //   (response) => {
-    
+
     //   });
-    
-    if(event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false){
+
+    if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
-    if(event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true){
+    if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
-    if(event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false){
+    if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
-    if(event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true){
+    if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
   }
-
 }

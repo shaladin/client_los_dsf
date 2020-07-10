@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { AdInsHelper } from '../AdInsHelper';
+import { URLConstant } from '../constant/URLConstant';
 
 @Injectable()
 export class RolePickService {
@@ -18,7 +19,7 @@ export class RolePickService {
     openDialog(data, type = ""): void {
         console.log("Get User Title Role");
         if (type == "modal") {
-            var loginByRole = environment.FoundationR3Url+AdInsConstant.LoginByToken;
+            var loginByRole = environment.FoundationR3Url + URLConstant.LoginByToken;
             var roleObject2 = {
                 RequestDateTime: localStorage.getItem("BusinessDateRaw"),
                 Ip: "",
@@ -54,7 +55,7 @@ export class RolePickService {
         } else {
             if (data.response.length == 1 && type == "") {
                 var item = data.response[0];
-                var url = environment.FoundationR3Url + AdInsConstant.LoginByRole;
+                var url = environment.FoundationR3Url + URLConstant.LoginByRole;
                 var roleObject = {
                     UserName: data.user,
                     Password: data.pwd,

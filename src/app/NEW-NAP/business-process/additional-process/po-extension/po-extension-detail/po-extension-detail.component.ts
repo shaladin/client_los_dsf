@@ -3,18 +3,17 @@ import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-po-extension-detail',
-  templateUrl: './po-extension-detail.component.html',
-  styleUrls: ['./po-extension-detail.component.scss']
+  templateUrl: './po-extension-detail.component.html'
 })
 export class PoExtensionDetailComponent implements OnInit {
   AppId: number;
   PurchaseOrderHId: number;
   viewObj: string;
-  BizTemplateCode : any;
+  BizTemplateCode: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -32,13 +31,13 @@ export class PoExtensionDetailComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewPOExtensionInfo.json";
   }
 
-  SaveForm(){
-    var obj={
+  SaveForm() {
+    var obj = {
       AppId: this.AppId,
       PurchaseOrderHId: this.PurchaseOrderHId,
       PurchaseOrderExpiredDt: this.POExtForm.controls.PurchaseOrderExpiredDt.value
     }
-    this.http.post(AdInsConstant.SubmitNewExpDate, obj).subscribe(
+    this.http.post(URLConstant.SubmitNewExpDate, obj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AddProcess/POExtension/Paging"]);
@@ -49,7 +48,7 @@ export class PoExtensionDetailComponent implements OnInit {
     );
   }
 
-  Back(){
+  Back() {
     this.router.navigate(['/Nap/AddProcess/POExtension/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
   }
 }

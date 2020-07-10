@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from '../AdInsHelper';
+import { URLConstant } from '../constant/URLConstant';
 
 @Component({
   selector: 'app-rolepick',
@@ -33,8 +34,8 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
   chooseRole(item) {
     console.log(item);
-    var url = environment.FoundationR3Url + AdInsConstant.GetAllActiveRefFormByRefRoleId;
-    var roleUrl = environment.FoundationR3Url + AdInsConstant.LoginByRole;
+    var url = environment.FoundationR3Url + URLConstant.GetAllActiveRefFormByRefRoleId;
+    var roleUrl = environment.FoundationR3Url + URLConstant.LoginByRole;
     var roleObject = {
       UserName: this.data.user,
       Password: this.data.pwd,
@@ -42,14 +43,13 @@ export class RolepickComponent implements OnInit, AfterViewInit {
       RoleCode: item.RoleCode,
       JobTitleCode: item.JobTitleCode,
       RequestDateTime: item.BusinessDt,
-      ModuleCode:environment.Module,
+      ModuleCode: environment.Module,
       Ip: "",
       RowVersion: ""
 
     };
-    if(this.data.pwd==null)
-    {
-      var updateRoleUrl = environment.FoundationR3Url+AdInsConstant.UpdateToken;
+    if (this.data.pwd == null) {
+      var updateRoleUrl = environment.FoundationR3Url + URLConstant.UpdateToken;
       this.http.post(updateRoleUrl, roleObject).subscribe(
         (response) => {
           localStorage.setItem("Token", response["Token"]);
@@ -74,7 +74,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
       );
 
     }
-    else{
+    else {
       this.http.post(roleUrl, roleObject).subscribe(
         (response) => {
           localStorage.setItem("Token", response["Token"]);
@@ -98,7 +98,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
         }
       );
     }
-    
+
     // this.http.post(url, roleObject).subscribe(
     //   (response) => {
     //     localStorage.setItem("Menu", JSON.stringify(response["ReturnObject"]));

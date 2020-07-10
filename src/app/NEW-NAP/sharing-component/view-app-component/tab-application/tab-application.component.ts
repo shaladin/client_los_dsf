@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-application',
-  templateUrl: './tab-application.component.html',
-  styleUrls: ['./tab-application.component.scss']
+  templateUrl: './tab-application.component.html'
 })
 export class TabApplicationComponent implements OnInit {
   @Input() appId;
@@ -34,7 +34,7 @@ export class TabApplicationComponent implements OnInit {
   async GetCrossAppData(){
     var obj={ AppId: this.appId };
     
-    await this.http.post(AdInsConstant.GetListAppCross, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ListCrossAppData = response[CommonConstant.ReturnObj];
@@ -47,7 +47,7 @@ export class TabApplicationComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
 
-    this.http.post(AdInsConstant.GetListAppLoanPurposeByAppId, {AppId: this.appId}).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, {AppId: this.appId}).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

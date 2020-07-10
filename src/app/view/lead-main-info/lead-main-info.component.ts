@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DatePipe } from '@angular/common';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-main-info',
@@ -29,7 +30,7 @@ export class LeadMainInfoComponent implements OnInit {
   ngOnInit() {
     var leadObj = { LeadId: this.LeadId }
     console.log(leadObj);
-    this.http.post(AdInsConstant.GetLeadByLeadId, leadObj).subscribe(
+    this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
       (response) => {
         this.LeadNo = response['LeadNo'];
         this.CrtOfficeName = response['CrtOfficeName'];

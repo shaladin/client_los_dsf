@@ -11,6 +11,7 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -302,10 +303,10 @@ export class CustShareholderComponent implements OnInit {
     var url;
 
     if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
-      url = AdInsConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
+      url = URLConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
     if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
-      url = AdInsConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
+      url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
     this.http.post(url, custObj).subscribe(
@@ -438,7 +439,7 @@ export class CustShareholderComponent implements OnInit {
 
   setIndustryTypeName(industryTypeCode){
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -496,7 +497,7 @@ export class CustShareholderComponent implements OnInit {
 
   bindCustTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response["ReturnObject"];
         if(this.CustTypeObj.length > 0){
@@ -510,7 +511,7 @@ export class CustShareholderComponent implements OnInit {
 
   bindGenderObj(){
     this.refMasterObj.RefMasterTypeCode = "GENDER";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response["ReturnObject"];
         if(this.GenderObj.length > 0){
@@ -522,7 +523,7 @@ export class CustShareholderComponent implements OnInit {
 
   bindIdTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
         if(this.IdTypeObj.length > 0){
@@ -534,7 +535,7 @@ export class CustShareholderComponent implements OnInit {
 
   bindJobPositionObj(){
     this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
         if(this.JobPositionObj.length > 0){
@@ -547,7 +548,7 @@ export class CustShareholderComponent implements OnInit {
 
   bindCompanyTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];
         if(this.CompanyTypeObj.length > 0){
@@ -588,7 +589,4 @@ export class CustShareholderComponent implements OnInit {
       });
     }
   }
-
-
-
 }

@@ -9,6 +9,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { environment } from 'environments/environment';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -37,7 +38,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
         if(this.result.BizTemplateCode == "CFRFN4W"){
@@ -51,7 +52,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -59,7 +60,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
@@ -73,7 +74,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
 
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -113,7 +114,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
     }
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({

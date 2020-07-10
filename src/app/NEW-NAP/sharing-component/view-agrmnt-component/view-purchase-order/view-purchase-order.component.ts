@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-purchase-order',
@@ -31,7 +32,7 @@ export class ViewPurchaseOrderComponent implements OnInit {
   ResponsePurchaseOrderHData;
   async BindPOData(){
     var obj = { AgrmntId: this.agrmntId };
-    await this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];

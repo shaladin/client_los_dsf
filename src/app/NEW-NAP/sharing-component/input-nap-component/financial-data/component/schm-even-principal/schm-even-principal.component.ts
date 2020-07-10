@@ -12,6 +12,7 @@ import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -40,10 +41,10 @@ export class SchmEvenPrincipalComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if (this.result.BizTemplateCode == "CFRFN4W") {
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -54,7 +55,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -62,7 +63,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
@@ -94,13 +95,13 @@ export class SchmEvenPrincipalComponent implements OnInit {
 
 
   CalculateInstallment() {
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
-    }    
+    }
     this.calcEvenPrincipleObj = this.ParentForm.value;
 
 
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -121,7 +122,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
 
           TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
           LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-          
+
           DownPaymentGrossAmt: response.DownPaymentGrossAmt,
           DownPaymentNettAmt: response.DownPaymentNettAmt
 
@@ -208,12 +209,12 @@ export class SchmEvenPrincipalComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }
@@ -224,6 +225,4 @@ export class SchmEvenPrincipalComponent implements OnInit {
     console.log(this.ParentForm)
     console.log(this.ParentForm.value);
   }
-
-
 }

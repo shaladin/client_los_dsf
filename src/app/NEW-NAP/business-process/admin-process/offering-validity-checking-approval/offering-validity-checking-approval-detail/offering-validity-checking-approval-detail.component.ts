@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
-  templateUrl: './offering-validity-checking-approval-detail.component.html',
-  styleUrls: ['./offering-validity-checking-approval-detail.component.scss']
+  templateUrl: './offering-validity-checking-approval-detail.component.html'
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewObj: string;
@@ -40,7 +40,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
 
   HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+    this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{
       },
       (error)=>{

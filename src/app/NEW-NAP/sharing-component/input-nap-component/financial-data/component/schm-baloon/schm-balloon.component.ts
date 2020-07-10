@@ -8,6 +8,7 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { environment } from 'environments/environment';
 import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -37,7 +38,7 @@ export class SchmBalloonComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
 
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
         if(this.result.BizTemplateCode == "CFRFN4W"){
@@ -51,7 +52,7 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -59,7 +60,7 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }

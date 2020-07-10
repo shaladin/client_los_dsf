@@ -8,6 +8,7 @@ import { forkJoin } from 'rxjs';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-detail-factoring',
@@ -65,31 +66,31 @@ export class MouDetailFactoringComponent implements OnInit {
   ngOnInit() {
     var rmRecourseType = new RefMasterObj();
     rmRecourseType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRecourseType;
-    let getRecourseType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
+    let getRecourseType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
     var rmWop = new RefMasterObj();
     rmWop.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
-    let getWop = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmWop);
+    let getWop = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmWop);
     var rmPaidBy = new RefMasterObj();
     rmPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodePaidBy;
-    let getPaidBy = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmPaidBy);
+    let getPaidBy = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmPaidBy);
     var rmInstType = new RefMasterObj();
     rmInstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstType;
-    let getInstType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstType);
+    let getInstType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstType);
     var rmSingleInstCalcMethod = new RefMasterObj();
     rmSingleInstCalcMethod.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSingleInstCalcMethod;
-    let getSingleInstCalcMethod = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
+    let getSingleInstCalcMethod = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
     // var rmPayFreq = new RefMasterObj();
     // rmPayFreq.RefMasterTypeCode = "PAY_FREQ";
-    let getPayFreq = this.httpClient.post(AdInsConstant.GetListActiveRefPayFreq, null);
+    let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
-    let getInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
+    let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
     var refMasterCurrency = new RefMasterObj();
     refMasterCurrency.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCurrency;
-    let getCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
+    let getCurrency = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
     var mouCustFctr = new MouCustFctrObj();
     mouCustFctr.MouCustId = this.MouCustId;
-    let getMouFctr = this.httpClient.post(AdInsConstant.GetMouCustFctrByMouCustId, mouCustFctr);
+    let getMouFctr = this.httpClient.post(URLConstant.GetMouCustFctrByMouCustId, mouCustFctr);
     forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouFctr]).subscribe(
       (response) => {
         this.recourseTypeList = response[0];
@@ -187,10 +188,10 @@ export class MouDetailFactoringComponent implements OnInit {
     }
 
     if(this.mode == "add"){
-      url = AdInsConstant.AddMouCustFctr;
+      url = URLConstant.AddMouCustFctr;
     }
     else{
-      url = AdInsConstant.EditMouCustFctr;
+      url = URLConstant.EditMouCustFctr;
     }
 
     this.httpClient.post(url, formData).subscribe(

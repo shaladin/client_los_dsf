@@ -5,15 +5,15 @@ import { HttpClient } from '@angular/common/http';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute } from '@angular/router'; 
+import { ActivatedRoute } from '@angular/router';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';  
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model'; 
-import { formatDate } from '@angular/common'; 
+import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
+import { formatDate } from '@angular/common';
 import { CustPersonalMainDataFL4WComponent } from './component/personal-main-data/cust-personal-main-data-FL4W.component';
 import { CustPersonalContactInformationFL4WComponent } from './component/personal-contact-information/cust-personal-contact-information-FL4W.component';
 import { CustGrpMemberFL4WComponent } from './component/cust-grp-member/cust-grp-member-FL4W.component';
@@ -21,6 +21,7 @@ import { CustJobDataFL4WComponent } from './component/job-data/cust-job-data-FL4
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { CustPersonalFinancialDataFL4WComponent } from './component/personal-financial-data/cust-personal-financial-data-FL4W.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -51,7 +52,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  cancel:boolean = true;
+  cancel: boolean = true;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -133,11 +134,11 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
-    
+
 
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -146,7 +147,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
 
-      if(!this.isSocmedValid){
+      if (!this.isSocmedValid) {
         return;
       }
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
@@ -183,7 +184,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
-      this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -235,7 +236,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
 
-      if(this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "EKTP"){
+      if (this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "EKTP") {
         this.custDataPersonalObj.AppCustObj.IdExpiredDt = null;
       }
       if (this.custDataPersonalObj.AppCustObj.CustNo != "" && this.custDataPersonalObj.AppCustObj.CustNo != undefined) {
@@ -514,7 +515,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         this.isSocmedValid = false;
         return;
       }
-      else{
+      else {
         selectedSocmedCode.push(tempKey);
       }
 
@@ -997,13 +998,13 @@ export class CustomerDataFL4WComponent implements OnInit {
         IsJoinIncome: event["CustPersonalFinDataObj"].IsJoinIncome,
         SpouseMonthlyIncomeAmt: event["CustPersonalFinDataObj"].SpouseMonthlyIncomeAmt
       });
-      if(event["CustPersonalFinDataObj"].IsJoinIncome == true){
+      if (event["CustPersonalFinDataObj"].IsJoinIncome == true) {
         this.custPersonalFinDataComponent.totalMonthlyIncome = event["CustPersonalFinDataObj"].MonthlyIncomeAmt + event["CustPersonalFinDataObj"].SpouseMonthlyIncomeAmt;
       }
-      else{
+      else {
         this.custPersonalFinDataComponent.totalMonthlyIncome = event["CustPersonalFinDataObj"].MonthlyIncomeAmt;
       }
-      
+
       this.custPersonalFinDataComponent.totalMonthlyExpense = event["CustPersonalFinDataObj"].MonthlyExpenseAmt + event["CustPersonalFinDataObj"].MonthlyInstallmentAmt;
       this.custPersonalFinDataComponent.nettMonthlyIncome = this.custPersonalFinDataComponent.totalMonthlyIncome - this.custPersonalFinDataComponent.totalMonthlyExpense;
     }
@@ -1165,9 +1166,9 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   initUrl() {
-    this.addEditCustDataPersonalUrl = AdInsConstant.AddEditCustDataPersonal;
-    this.getCustDataUrl = AdInsConstant.GetCustDataByAppId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
+    this.getCustDataUrl = URLConstant.GetCustDataByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   bindCustTypeObj() {
@@ -1182,7 +1183,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     );
   }
 
-  EmitToMainComp(){
+  EmitToMainComp() {
     console.log(this.MrCustTypeCode);
     this.outputTab.emit(this.MrCustTypeCode);
   }

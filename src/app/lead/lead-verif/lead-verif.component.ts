@@ -7,10 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-verif',
@@ -37,7 +37,7 @@ export class LeadVerifComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   checkboxAll: boolean = false;
   viewObj: string;
-  AddRangeLeadVerfUrl = AdInsConstant.AddRangeLeadVerf;
+  AddRangeLeadVerfUrl = URLConstant.AddRangeLeadVerf;
   verifyStatus: string;
   leadUrl: string;
   constructor(
@@ -54,9 +54,9 @@ export class LeadVerifComponent implements OnInit {
     this.pageNow = 1;
     this.pageSize = 10;
     this.inputObj.enviromentUrl = environment.losUrl;
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
-    this.apiUrl = environment.losUrl + AdInsConstant.GetPagingObjectBySQL;
+    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
 
     this.inputObj.ddlEnvironments = [
       {

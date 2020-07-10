@@ -7,6 +7,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-list-company',
@@ -19,11 +20,11 @@ export class ListCompanyComponent implements OnInit {
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
-  GetCustomerDuplicateCheckUrl = AdInsConstant.GetCustomerAndNegativeCustDuplicateCheck;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  GetAppCustDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppCustDuplicateCheck;
-  GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  AddAppDupCheckCustUrl = this.LOSUrl + AdInsConstant.AddAppDupCheckCust;
+  GetCustomerDuplicateCheckUrl = URLConstant.GetCustomerAndNegativeCustDuplicateCheck;
+  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
+  GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
+  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
+  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   AppCustObj: AppCustObj; 
   AppCustCompanyObj: AppCustCompanyObj;
   AppCustAddrObj: AppCustAddrObj;
@@ -144,7 +145,7 @@ export class ListCompanyComponent implements OnInit {
   SelectCust(item) {
     var AppDupCheckObj = {"AppId": this.AppId, 
     "CustNo":item.CustNo};
-    this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
@@ -156,7 +157,7 @@ export class ListCompanyComponent implements OnInit {
   NewCustomer(){
     var AppDupCheckObj = {"AppId": this.AppId, 
     "CustNo": this.AppCustObj.CustNo, RowVersion: ""};
-    this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
@@ -171,7 +172,7 @@ export class ListCompanyComponent implements OnInit {
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext["UserName"];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
     
       });

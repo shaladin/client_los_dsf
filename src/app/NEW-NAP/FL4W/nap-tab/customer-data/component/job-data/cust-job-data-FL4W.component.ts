@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-job-data-FL4W',
@@ -138,7 +139,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   setProfessionName(professionCode){
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(AdInsConstant.GetRefProfessionByCode, this.professionObj).subscribe(
+    this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
@@ -152,7 +153,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   setIndustryTypeName(industryTypeCode){
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -251,7 +252,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   bindJobPositionObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
         console.log("job position");
@@ -266,7 +267,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   bindCompanyScaleObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCoyScale;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyScaleObj = response["ReturnObject"];
         if(this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")){
@@ -280,7 +281,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   bindJobStatObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobStat;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobStatObj = response["ReturnObject"];
         if(this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")){
@@ -294,7 +295,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   bindInvestmentTypeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInvestmentType;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.InvestmentTypeObj = response["ReturnObject"];
         if(this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")){
@@ -308,7 +309,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
  bindCustModelObj(){
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
-     this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+     this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];
         if(this.CustModelObj.length > 0 && this.custModelCode == undefined){

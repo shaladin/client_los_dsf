@@ -8,6 +8,7 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -38,7 +39,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -46,7 +47,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
@@ -77,24 +78,19 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
     this.calcEvenPrincipleObj = this.ParentForm.value;
 
     console.log(this.calcEvenPrincipleObj);
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentEvenPrincipalFctr, this.calcEvenPrincipleObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipalFctr, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
           TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
           TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
           EffectiveRatePrcnt: response.EffectiveRatePrcnt,
           FlatRatePrcnt: response.FlatRatePrcnt,
           InstAmt: response.InstAmt,
-
           GrossYieldPrcnt: response.GrossYieldPrcnt,
-
           TotalInterestAmt: response.TotalInterestAmt,
           TotalAR: response.TotalARAmt,
-
           NtfAmt: response.NtfAmt,
-
         })
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);

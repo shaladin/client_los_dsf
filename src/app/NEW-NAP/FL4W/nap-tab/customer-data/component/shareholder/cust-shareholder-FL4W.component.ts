@@ -11,6 +11,7 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -291,10 +292,10 @@ export class CustShareholderFL4WComponent implements OnInit {
     var url;
 
     if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
-      url = AdInsConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
+      url = URLConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
     if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
-      url = AdInsConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
+      url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
     this.http.post(url, custObj).subscribe(
@@ -411,7 +412,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   setIndustryTypeName(industryTypeCode){
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -453,7 +454,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   bindCustTypeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response["ReturnObject"];
         console.log("bind cust type");
@@ -468,7 +469,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   bindGenderObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response["ReturnObject"];
         if(this.GenderObj.length > 0){
@@ -480,7 +481,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   bindIdTypeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response["ReturnObject"];
         if(this.IdTypeObj.length > 0){
@@ -492,7 +493,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   bindJobPositionObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response["ReturnObject"];
         if(this.JobPositionObj.length > 0){
@@ -505,7 +506,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   bindCompanyTypeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];
         if(this.CompanyTypeObj.length > 0){

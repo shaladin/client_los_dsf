@@ -24,7 +24,7 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { exception } from 'core-js/fn/log';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-customer-data',
@@ -177,7 +177,7 @@ export class CustomerDataComponent implements OnInit {
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
       if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -1191,9 +1191,9 @@ export class CustomerDataComponent implements OnInit {
   }
 
   initUrl() {
-    this.addEditCustDataPersonalUrl = AdInsConstant.AddEditCustDataPersonal;
-    this.getCustDataUrl = AdInsConstant.GetCustDataByAppId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
+    this.getCustDataUrl = URLConstant.GetCustDataByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   // bindCopyFrom(){

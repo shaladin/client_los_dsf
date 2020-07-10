@@ -2,23 +2,23 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { Observable } from "rxjs";
+import { URLConstant } from "app/shared/constant/URLConstant";
 
 @Injectable({
     providedIn: 'root'
 })
-export class AdminProcessService
-{
+export class AdminProcessService {
     constructor(private http: HttpClient) { }
 
-    GetListAppAssetAgrmntActivation(Obj : any): Observable<Object> {
-        return this.http.post(AdInsConstant.GetAppAssetByAppIdAndCriteria, Obj);
+    GetListAppAssetAgrmntActivation(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.GetAppAssetByAppIdAndCriteria, Obj);
     }
 
-    GetAppFinDataAndFeeByAppIdAndListAppAssetId(Obj : any) : Observable<Object>{
-        return this.http.post(AdInsConstant.GetAppFinDataAndFeeByAppIdAndListAppAssetId,Obj);
+    GetAppFinDataAndFeeByAppIdAndListAppAssetId(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.GetAppFinDataAndFeeByAppIdAndListAppAssetId, Obj);
     }
 
-    SubmitAgrmntActivationByHuman(Obj: any) : Observable<Object>{
-        return this.http.post(AdInsConstant.SubmitAgrmntActivationByHuman, Obj);
+    SubmitAgrmntActivationByHuman(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.SubmitAgrmntActivationByHuman, Obj);
     }
 }

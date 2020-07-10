@@ -7,6 +7,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-grp-member-FL4W',
@@ -193,7 +194,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   async setCustNameAndCustRelationship(i, custNo){
     this.custObj.CustNo = custNo;
-    await this.http.post(AdInsConstant.GetCustByCustNo, this.custObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, this.custObj).toPromise().then(
       (response) => {
         console.log(response);
         this.custMasterObj = response;
@@ -223,7 +224,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   async bindCustRelationshipPersonalObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CustRelationshipPersonalObj = response["ReturnObject"];
         if(this.CustRelationshipPersonalObj.length > 0){
@@ -235,7 +236,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   async bindCustRelationshipCompanyObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CustRelationshipCompanyObj = response["ReturnObject"];
         if(this.CustRelationshipCompanyObj.length > 0){

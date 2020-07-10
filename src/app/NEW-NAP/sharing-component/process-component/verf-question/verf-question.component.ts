@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-verf-question',
-  templateUrl: './verf-question.component.html',
-  styleUrls: ['./verf-question.component.scss']
+  templateUrl: './verf-question.component.html'
 })
 export class VerfQuestionComponent implements OnInit {
 
@@ -32,7 +32,7 @@ export class VerfQuestionComponent implements OnInit {
 
 
   InitFormVerfQuestion() {
-    this.http.post(AdInsConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: "CF4W_PHONEVERIF" }).subscribe(
+    this.http.post(URLConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: "CF4W_PHONEVERIF" }).subscribe(
       (response) => {
         this.VerfQuestionAnswerCustomObj = response["ReturnObject"];
         this.GenerateFormVerfQuestion();

@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-deviation',
@@ -56,7 +57,7 @@ export class TabDeviationComponent implements OnInit {
       RowVersion: ""
     };
 
-    await this.http.post(AdInsConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         var temp = response["deviationResultObjs"];

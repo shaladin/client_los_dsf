@@ -10,6 +10,7 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -66,7 +67,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   idSource: number;
   verfSchemeHId: number;
   AppNoUrl = environment.losR3Web + '/Nap/View/AppView?AppId=';
-   CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
+  CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
   appObj = {
     AppId: 0,
   };
@@ -102,7 +103,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHObj: any;
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
-  verfResultDListObjs: Array<VerfResultDObj>; 
+  verfResultDListObjs: Array<VerfResultDObj>;
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;
@@ -128,16 +129,16 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.getListVerfResulHtUrl = AdInsConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
-    this.getVerfResulHtUrl = AdInsConstant.GetVerfResultHById;
-    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefStatusUrl = AdInsConstant.GetListActiveRefStatusByStatusGrpCode;
-    this.getPhnNumberUrl = AdInsConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
-    this.getQuestionUrl = AdInsConstant.GetVerfQuestionListByAppIdAndSubjectForPhoneVerif;
-    this.saveVerfResultHDetailUrl = AdInsConstant.AddVerfResultHeaderAndVerfResultDetail;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
+    this.getListVerfResulHtUrl = URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
+    this.getVerfResulHtUrl = URLConstant.GetVerfResultHById;
+    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefStatusUrl = URLConstant.GetListActiveRefStatusByStatusGrpCode;
+    this.getPhnNumberUrl = URLConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
+    this.getQuestionUrl = URLConstant.GetVerfQuestionListByAppIdAndSubjectForPhoneVerif;
+    this.saveVerfResultHDetailUrl = URLConstant.AddVerfResultHeaderAndVerfResultDetail;
   }
 
   async ngOnInit(): Promise<void> {
@@ -272,11 +273,9 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetCust() {
-
     var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(AdInsConstant.GetCustByCustNo, custObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, custObj).toPromise().then(
       (response) => {
-
         this.custId = response["CustId"];
       })
   };
@@ -289,7 +288,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
         if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
           this.verfSchemeHId = this.QuestionObj.VerfSchemeHId
           this.GenerateFormVerfQuestion();
-
         }
         else {
           this.isQuestionLoaded = false;

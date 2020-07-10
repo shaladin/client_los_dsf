@@ -8,6 +8,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-referantor-data',
@@ -55,7 +56,7 @@ export class ReferantorDataComponent implements OnInit {
   OfficeCode: String;
   async GetAppData() {
     var obj = { AppId: this.appId };
-    await this.http.post<AppObj>(AdInsConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.OfficeCode = response.OriOfficeCode;
@@ -71,7 +72,7 @@ export class ReferantorDataComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "v.MR_VENDOR_CATEGORY_CODE ";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [AdInsConstant.VendorCategoryAgencyCompany, AdInsConstant.VendorCategoryAgencyPersonal];
+    addCrit.listValue = [URLConstant.VendorCategoryAgencyCompany, URLConstant.VendorCategoryAgencyPersonal];
     this.arrAddCrit.push(addCrit);
 
     // var addCrit1 = new CriteriaObj(); 
@@ -91,7 +92,7 @@ export class ReferantorDataComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
@@ -112,7 +113,7 @@ export class ReferantorDataComponent implements OnInit {
       RowVersion: "",
     }
 
-    this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         if(response["AppReferantorId"]!=0){
@@ -159,7 +160,7 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save Existed Data");
-        url = AdInsConstant.EditAppReferantor;
+        url = URLConstant.EditAppReferantor;
         this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Save Edit Data');
@@ -167,7 +168,7 @@ export class ReferantorDataComponent implements OnInit {
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
-        url = AdInsConstant.DeleteAppReferantor;
+        url = URLConstant.DeleteAppReferantor;
         this.SaveData(url);    
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Remove Data');
@@ -177,7 +178,7 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save New Data");
-        url = AdInsConstant.AddAppReferantor;
+        url = URLConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
@@ -248,7 +249,7 @@ export class ReferantorDataComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = URLConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""

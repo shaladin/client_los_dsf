@@ -1,15 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ViewAppCollateralSingleComponent } from '../view-app-collateral-single/view-app-collateral-single.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-app-collateral-multi',
-  templateUrl: './view-app-collateral-multi.component.html',
-  styleUrls: ['./view-app-collateral-multi.component.scss']
+  templateUrl: './view-app-collateral-multi.component.html'
 })
 export class ViewAppCollateralMultiComponent implements OnInit {
   @Input() agrmntId: number = 0;
@@ -20,7 +16,7 @@ export class ViewAppCollateralMultiComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.post<Array<AppCollateralObj>>(AdInsConstant.GetListAppCollateralByAgrmntId, {AgrmntId: this.agrmntId}).subscribe(
+    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, {AgrmntId: this.agrmntId}).subscribe(
       (response) => {
         this.AppCollateralObj = response["ReturnObject"];
       });

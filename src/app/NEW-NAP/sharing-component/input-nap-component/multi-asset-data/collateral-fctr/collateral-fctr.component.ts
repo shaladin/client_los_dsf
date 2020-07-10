@@ -17,6 +17,7 @@ import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocOb
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { formatDate } from '@angular/common';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-collateral-fctr',
@@ -126,7 +127,7 @@ export class CollateralFctrComponent implements OnInit {
 
     this.items = this.AddCollForm.get('items') as FormArray;
 
-    this.http.post(AdInsConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
+    this.http.post(URLConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
         this.appAssetObj = response;
         this.AppAssetId = this.appAssetObj.AppAssetId;
@@ -143,7 +144,7 @@ export class CollateralFctrComponent implements OnInit {
           AssetTypeCode: this.AddCollForm.controls.AssetTypeCode.value
         }
 
-        this.http.post(AdInsConstant.GetRefAssetDocList, assetDocListobj).subscribe(
+        this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
           (response) => {
             if (response["ReturnObject"].length > 0) {
               for (var i = 0; i < response["ReturnObject"].length; i++) {
@@ -169,7 +170,7 @@ export class CollateralFctrComponent implements OnInit {
 
   bindAppData() {
     var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.OwnerRelationshipObj = response["ReturnObject"];
         if (this.type != "Edit") {
@@ -185,7 +186,7 @@ export class CollateralFctrComponent implements OnInit {
     );
 
     var attrobj = {};
-    this.http.post(AdInsConstant.GetListRefAppAttrCollateral, attrobj).subscribe(
+    this.http.post(URLConstant.GetListRefAppAttrCollateral, attrobj).subscribe(
       (response) => {
         this.listRefAppAttr = response['ReturnObject'];
         for (let i = 0; i < this.listRefAppAttr["length"]; i++) {
@@ -198,13 +199,13 @@ export class CollateralFctrComponent implements OnInit {
     )
 
     var appIdObj = { AppId: this.AppId }
-    this.http.post(AdInsConstant.GetAppCollateralByAppCollateralId, appIdObj).subscribe(
+    this.http.post(URLConstant.GetAppCollateralByAppCollateralId, appIdObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
 
     var assetObj = {};
-    this.http.post(AdInsConstant.GetListKeyValueByCode, assetObj).subscribe(
+    this.http.post(URLConstant.GetListKeyValueByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         if (this.type != "Edit") {
@@ -216,7 +217,7 @@ export class CollateralFctrComponent implements OnInit {
       })
 
     var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.IdTypeList = response['ReturnObject'];
         if (this.type != "Edit") {
@@ -227,7 +228,7 @@ export class CollateralFctrComponent implements OnInit {
       })
 
     var refMasterObj = { RefMasterTypeCode: 'ASSET_CONDITION' };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.ConditionCodeList = response['ReturnObject'];
         if (this.type != "Edit") {
@@ -239,7 +240,7 @@ export class CollateralFctrComponent implements OnInit {
 
 
     var refMasterObj = { RefMasterTypeCode: 'ASSET_USAGE' };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.UsageCodeList = response['ReturnObject'];
         if (this.type != "Edit") {
@@ -330,7 +331,7 @@ export class CollateralFctrComponent implements OnInit {
   getLookupAppCollateralResponse(event) {
     var AppCollateralIdObj = { AppCollateralId: event.AppCollateralId }
     var AppCollateralObj: any;
-    this.http.post(AdInsConstant.GetAppCollateralByAppCollateralId, AppCollateralIdObj).subscribe(
+    this.http.post(URLConstant.GetAppCollateralByAppCollateralId, AppCollateralIdObj).subscribe(
       (response) => {
         AppCollateralObj = response;
 
@@ -360,7 +361,7 @@ export class CollateralFctrComponent implements OnInit {
         this.inputLookupObj.nameSelect = AppCollateralObj.FullAssetName
       });
     var AppCollateralRegistration: any;
-    this.http.post(AdInsConstant.GetAppCollateralRegistrationByAppCollateralId, AppCollateralIdObj).subscribe(
+    this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, AppCollateralIdObj).subscribe(
       (response) => {
 
         AppCollateralRegistration = response;
@@ -386,7 +387,7 @@ export class CollateralFctrComponent implements OnInit {
         this.inputFieldLocationObj.inputLookupObj.nameSelect = AppCollateralRegistration.LocationZipcode;
         this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: AppCollateralRegistration.LocationZipcode };
 
-        this.http.post(AdInsConstant.GetListAppCollateralDocsByAppCollateralId, AppCollateralIdObj).subscribe(
+        this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, AppCollateralIdObj).subscribe(
           (response) => {
             this.AppCollateralDocs = response["AppCollateralDocs"];
             if (this.AppCollateralDocs["length"] > 0) {
@@ -451,7 +452,7 @@ export class CollateralFctrComponent implements OnInit {
 
     if (this.type == 'Add') {
       console.log(this.appCollateralDataObj)
-      this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+      this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
     
           this.HiddenState = "true";
@@ -467,7 +468,7 @@ export class CollateralFctrComponent implements OnInit {
       );
     }
     else {
-      this.http.post(AdInsConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+      this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
     
           this.HiddenState = "true";
@@ -583,7 +584,7 @@ export class CollateralFctrComponent implements OnInit {
     var collObj = {
       AppCollateralId: AppCollateralId
     }
-    await this.http.post(AdInsConstant.GetAppCollateralAndRegistrationByAppCollateralId, collObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, collObj).toPromise().then(
       (response) => {
         this.collateralObj = response['AppCollateral'];
         this.collateralRegistrationObj = response['AppCollateralRegistration'];
@@ -649,7 +650,7 @@ export class CollateralFctrComponent implements OnInit {
 
   delete(AppCustCollId) {
     var appCollObj = { AppCollateralId: AppCustCollId };
-    this.http.post(AdInsConstant.DeleteAppCollateral, appCollObj).subscribe(
+    this.http.post(URLConstant.DeleteAppCollateral, appCollObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);

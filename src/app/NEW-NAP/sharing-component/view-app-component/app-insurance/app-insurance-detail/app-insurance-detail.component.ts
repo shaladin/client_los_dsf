@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
 import { RequestInsuranceDataObj } from 'app/shared/model/RequestInsuranceDataObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-insurance-detail',
@@ -32,7 +33,7 @@ export class AppInsuranceDetailComponent implements OnInit {
     // this.appInsObj.AppInsObjId = this.AppInsObjId
     this.reqInsuranceDataObj = new RequestInsuranceDataObj();
     this.reqInsuranceDataObj.AppInsObjObj.AppInsObjId = this.AppInsObjId;
-    this.httpClient.post(AdInsConstant.GetAppInsObjViewDetail, this.reqInsuranceDataObj).subscribe(
+    this.httpClient.post(URLConstant.GetAppInsObjViewDetail, this.reqInsuranceDataObj).subscribe(
       (response: any) => {
         this.appInsObj = response.appInsObj;
         this.appInsCvgs = response.appInsCvgs;

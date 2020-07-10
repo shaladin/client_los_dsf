@@ -16,8 +16,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
-
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-fraud-detection-result',
@@ -33,13 +32,13 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   viewDukcapilMainDataObj: string;
   losUrl = environment.losUrl;
   foundationUrl = environment.FoundationR3Url;
-  getAppById = AdInsConstant.GetAppById;
-  getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = AdInsConstant.GetCustomerDuplicateCheck;
-  getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
-  getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
-  getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
+  getAppById = URLConstant.GetAppById;
+  getCustDataByAppId = URLConstant.GetCustDataByAppId;
+  getAppDupCheckCustByAppId = URLConstant.GetCustomerDuplicateCheck;
+  getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
+  getNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
+  getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
+  getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
   viewFraudVerifResultObj: any;
 
   arrValue = [];
@@ -221,7 +220,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     appCollateralObj.AppId = this.appId;
     var listAppCollateral = new Array<AppCollateralObj>();
-    await this.http.post(AdInsConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
+    await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {
         listAppCollateral = response["ReturnObject"];
         
@@ -242,7 +241,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
         negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
       }
-      await this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
+      await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
         response => {
           this.listNegativeAppCollateral = response["ReturnObject"];
         });

@@ -7,6 +7,7 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -173,7 +174,7 @@ export class CustLegalDocComponent implements OnInit {
   }
   bindLegalDocTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.LegalDocTypeObj = response["ReturnObject"];
         if(this.LegalDocTypeObj.length > 0){

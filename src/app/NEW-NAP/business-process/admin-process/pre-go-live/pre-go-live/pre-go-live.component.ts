@@ -14,6 +14,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -76,10 +77,10 @@ export class PreGoLiveComponent implements OnInit {
 
   ngOnInit() {
     console.log('Shinano');
-    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
+    this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
-        this.lengthListRfaLogObj = this.ListRfaLogObj.length-1;
+        this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
             approvalBaseUrl: environment.ApprovalR3Url,
@@ -102,7 +103,7 @@ export class PreGoLiveComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     var agrmntObj = new AgrmntObj();
     agrmntObj.AgrmntId = this.AgrmntId;
-    this.http.post(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         this.result = response;
         this.MainInfoForm.patchValue({
@@ -119,17 +120,17 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
     }
   }
 
   ReceiveIsChecked(ev) {
     console.log("for debug");
     if (this.ListRfaLogObj.length != 0) {
-      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal"){
-      this.IsCheckedAll = false;
-      return;
+      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal") {
+        this.IsCheckedAll = false;
+        return;
       }
     }
     if (this.hasApproveFinal) {
@@ -142,7 +143,7 @@ export class PreGoLiveComponent implements OnInit {
 
   RFA() {
     console.log("asdasd");
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));   
+    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
     this.ListAppTCObj = new ListAppTCObj();
     this.ListAppTCObj["ListAppTcObj"] = new Array();
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
@@ -173,16 +174,16 @@ export class PreGoLiveComponent implements OnInit {
       }
       this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
     }
-      this.http.post(AdInsConstant.EditAppTc, this.ListAppTCObj).subscribe(
-        (response) => {
-          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
-            this.toastr.successMessage(response['message']);
-          
-        },
-        (error) => {
-          console.log(error);
-        });
-    
+    this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
+      (response) => {
+        this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+        this.toastr.successMessage(response['message']);
+
+      },
+      (error) => {
+        console.log(error);
+      });
+
   }
 
   SaveForm(flag = true) {
@@ -237,11 +238,11 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
 
-    this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
+    this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-          this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
-          this.toastr.successMessage(response['message']);
-        
+        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
+        this.toastr.successMessage(response['message']);
+
       },
       (error) => {
         console.log(error);
@@ -254,11 +255,8 @@ export class PreGoLiveComponent implements OnInit {
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
-
-
-
 }

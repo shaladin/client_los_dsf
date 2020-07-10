@@ -7,6 +7,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -36,7 +37,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
       (response) => {
         this.RateTypeOptions = response["ReturnObject"];
       }
@@ -44,7 +45,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response["ReturnObject"];
       }
@@ -61,7 +62,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
     }
     this.calcBalloonObj = this.ParentForm.value;
     this.calcBalloonObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -106,7 +107,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
     
     this.calcBalloonObj = this.ParentForm.value;
     this.calcBalloonObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({

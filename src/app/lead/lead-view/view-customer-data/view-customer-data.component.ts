@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-customer-data',
@@ -15,8 +16,8 @@ export class ViewCustomerDataComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
-    this.GetLeadCustByLeadIdUrl = AdInsConstant.GetLeadCustByLeadId;
-    this.GetListLeadCustSocmedByLeadCustIdUrl = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
+    this.GetLeadCustByLeadIdUrl = URLConstant.GetLeadCustByLeadId;
+    this.GetListLeadCustSocmedByLeadCustIdUrl = URLConstant.GetListLeadCustSocmedByLeadCustId;
   }
   viewLeadCustomerPersonalMaindata: string;
   LeadId: string;

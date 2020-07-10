@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { UcpagingComponent } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,11 +10,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -53,9 +51,9 @@ export class DocSignerDetailComponent implements OnInit {
   employeeLookUpObj1: InputLookupObj;
   employeeLookUpObj2: InputLookupObj;
   pageType: string;
-  page:number;
-  custId : number;
-  custUrl : string;
+  page: number;
+  custId: number;
+  custUrl: string;
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],
@@ -77,15 +75,15 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: any;
-  viewObj : string;
-  link : any; 
-  resultData : any;
+  viewObj: string;
+  link: any;
+  resultData: any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-    this.getMouCustById = AdInsConstant.GetMouCustById;
-    this.addMouCustSigner = AdInsConstant.AddMouCustSigner;
-    this.getMouCustSignerByMouCustId = AdInsConstant.GetMouCustSignerByMouCustId;
-    this.getCustByCustNo = AdInsConstant.GetCustByCustNo;
-    this.getCustCompanyByCustId = AdInsConstant.GetCustCompanyByCustId;
+    this.getMouCustById = URLConstant.GetMouCustById;
+    this.addMouCustSigner = URLConstant.AddMouCustSigner;
+    this.getMouCustSignerByMouCustId = URLConstant.GetMouCustSignerByMouCustId;
+    this.getCustByCustNo = URLConstant.GetCustByCustNo;
+    this.getCustCompanyByCustId = URLConstant.GetCustCompanyByCustId;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null) this.MouCustId = params["MouCustId"];
       if (params["WfTaskListId"] != null) this.WfTaskListId = params["WfTaskListId"];
@@ -152,13 +150,13 @@ export class DocSignerDetailComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
-  ngOnInit() { 
+  ngOnInit() {
     this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
-    console.log('docsigner')    
+    console.log('docsigner')
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -242,7 +240,7 @@ export class DocSignerDetailComponent implements OnInit {
         addCustomerCrit.value = this.custNo;
         this.customerLookUpObj1.addCritInput = [];
         this.customerLookUpObj1.addCritInput.push(addCustomerCrit);
-      });      
+      });
   }
 
   setMouCustSigner() {
@@ -278,11 +276,10 @@ export class DocSignerDetailComponent implements OnInit {
       }
     );
   }
-  GetCallBack(event)
-  {  
-    if(event.Key == "customer"){
+  GetCallBack(event) {
+    if (event.Key == "customer") {
       var custObj = { CustNo: this.returnMouCust['CustNo'] };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
           // window.open(this.link, '_blank');
@@ -292,6 +289,6 @@ export class DocSignerDetailComponent implements OnInit {
           console.log(error);
         }
       );
-    } 
+    }
   }
 }

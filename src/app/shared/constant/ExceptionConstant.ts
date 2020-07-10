@@ -65,5 +65,4 @@ export class ExceptionConstant {
     public static MIN_1_ASSET = "Asset minimum is 1";
     public static ONE_DELIVERY_ORDER_NEEDED_TO_SAVE ="At Least 1 Delivery Order Needed To Save";
     public static COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET = "Please Complete Serial No. 1 and Serial No. 2 on all asset first.";
-
 }

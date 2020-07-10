@@ -9,6 +9,7 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -125,7 +126,7 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         console.log(response);
         this.appFinDataObj = response;
@@ -135,7 +136,7 @@ export class FinancialDataFctrComponent implements OnInit {
         }
 
         this.FinDataForm.patchValue({
-          TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt-this.appFinDataObj.TotalRetentionAmt,
+          TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt - this.appFinDataObj.TotalRetentionAmt,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
@@ -199,7 +200,7 @@ export class FinancialDataFctrComponent implements OnInit {
       }
       if (isValidGrossYield && isValidGracePeriod) {
   
-        this.http.post(AdInsConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
+        this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["Message"]);

@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -46,7 +47,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -79,7 +80,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       TaskListId: this.taskListId,
       UploadMonitoringNo: this.UploadNo
     };
-    this.http.post(AdInsConstant.UploadReview, uploadObj).subscribe(
+    this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(["/Lead/ReviewMonitoring/Paging"]);
@@ -93,7 +94,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.taskListId, pUserID: currentUserContext["UserName"] };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {}
     );
   }

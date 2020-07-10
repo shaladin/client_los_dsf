@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { formatDate } from '@angular/common';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tc-data',
@@ -226,7 +226,7 @@ export class TcDataComponent implements OnInit {
     }
     this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
     if (this.mode == "edit") {
-      this.http.post(AdInsConstant.EditAppTc, this.ReqTCObj).subscribe(
+      this.http.post(URLConstant.EditAppTc, this.ReqTCObj).subscribe(
         (response) => {
           console.log(response);
           // this.toastr.successMessage(response["message"]);
@@ -237,7 +237,7 @@ export class TcDataComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(AdInsConstant.AddAppTc, this.ReqTCObj).subscribe(
+      this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
         (response) => {
           console.log(response);
           // this.toastr.successMessage(response["message"]);

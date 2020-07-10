@@ -10,6 +10,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app',
@@ -18,10 +19,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
-    this.getRefMasterListKeyValueActiveByCodeUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getListKvpActiveRefAppSrcUrl = AdInsConstant.GetListKvpActiveRefAppSrc;
-    this.getListActiveRefPayFreqUrl = AdInsConstant.GetListActiveRefPayFreq;
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
+    this.getRefMasterListKeyValueActiveByCodeUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getListKvpActiveRefAppSrcUrl = URLConstant.GetListKvpActiveRefAppSrc;
+    this.getListActiveRefPayFreqUrl = URLConstant.GetListActiveRefPayFreq;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
     })
@@ -138,7 +139,7 @@ export class AppComponent implements OnInit {
 
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -571,10 +572,10 @@ export class AppComponent implements OnInit {
     this.EffectiveRateType = event; 
     console.log(this.EffectiveRateType);
 
-    if(this.EffectiveRateType == "FLT"){
+    if(this.EffectiveRateType == CommonConstant.RateTypeFlat){
       this.appForm.controls.EffectiveRatePrcnt.disable();
       this.appForm.controls.FlatRatePrcnt.enable(); 
-    }else if(this.EffectiveRateType == "EFCTV"){
+    }else if(this.EffectiveRateType == CommonConstant.RateTypeEffective){
       this.appForm.controls.EffectiveRatePrcnt.enable();
       this.appForm.controls.FlatRatePrcnt.disable(); 
     }
