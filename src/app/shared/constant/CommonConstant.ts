@@ -1,8 +1,28 @@
 
 export class CommonConstant {
 
+    // ADD EDIT DELETE UPDATE
+    public static ADD = 'Add';
+    public static EDIT = 'Edit';
+    public static DELETE = 'Delete';
+    public static UPDATE = 'Update';
+
     //Application Item
     public static USER_ACCESS = "UserAccess";
+    public static USER_NAME = "UserName";
+    public static OFFICE_CODE = "OfficeCode";
+    public static ROLE_CODE = "RoleCode";
+    public static CURRENT_USER_CONTEXT = "currentUserContext"
+    public static PAGE_ACCESS = "pageAccess";
+    public static BUSINESS_DT = "BusinessDt";
+
+    // Module
+    public static LOAN_ORIGINATION = "LOS";
+    public static FOUNDATION = "FOUNDATION";
+
+    // COMPONENTS
+    public static LINE = 'Line';
+    public static LINE_AREA_DASHBOARD = 'lineAreaDashboard';
 
     //Apv Category
     public static ApvCategoryCreditApproval = "CRD_APV"
@@ -44,6 +64,11 @@ export class CommonConstant {
     //ASSET CONDITION 
     public static AssetConditionUsed = "USED";
     public static AssetConditionNew = "NEW";
+
+    // SOCIAL MEDIA
+    public static FACEBOOK = "FB";
+    public static TWITTER = "TW"
+    public static INSTAGRAM = "IG"
 
     //App Step
     public static AppStepNew = "NEW";

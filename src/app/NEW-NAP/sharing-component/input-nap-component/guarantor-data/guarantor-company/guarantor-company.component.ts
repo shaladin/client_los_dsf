@@ -91,32 +91,32 @@ export class GuarantorCompanyComponent implements OnInit {
         (response) => {
           console.log(response);
           this.resultData = response;
-          this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
-          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
-          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
-          this.inputLookupObj1.jsonSelect = { IndustryTypeName: this.resultData.appGuarantorCompanyObj.IndustryTypeCode };
+          this.AppGuarantorCompanyId = this.resultData.AppGuarantorCompanyObj.AppGuarantorCompanyId;
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.AppGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.AppGuarantorObj.GuarantorName;
+          this.inputLookupObj1.jsonSelect = { IndustryTypeName: this.resultData.AppGuarantorCompanyObj.IndustryTypeCode };
           this.CompanyForm.patchValue({
-            MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
-            TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
-            MrCompanyTypeCode: this.resultData.appGuarantorCompanyObj.MrCompanyTypeCode,
-            ContactName: this.resultData.appGuarantorCompanyObj.ContactName,
-            MrJobPositionCode: this.resultData.appGuarantorCompanyObj.MrJobPositionCode,
-            MobilePhnNo1: this.resultData.appGuarantorCompanyObj.MobilePhnNo1,
-            ContactEmail: this.resultData.appGuarantorCompanyObj.ContactEmail,
-            MobilePhnNo2: this.resultData.appGuarantorCompanyObj.MobilePhnNo2,
-            FaxArea: this.resultData.appGuarantorCompanyObj.FaxArea,
-            Fax: this.resultData.appGuarantorCompanyObj.Fax,
-            PhnArea1: this.resultData.appGuarantorCompanyObj.PhnArea1,
-            Phn1: this.resultData.appGuarantorCompanyObj.Phn1,
-            PhnExt1: this.resultData.appGuarantorCompanyObj.PhnExt1,
-            PhnArea2: this.resultData.appGuarantorCompanyObj.PhnArea2,
-            Phn2: this.resultData.appGuarantorCompanyObj.Phn2,
-            PhnExt2: this.resultData.appGuarantorCompanyObj.PhnExt2
+            MrCustRelationshipCode: this.resultData.AppGuarantorObj.MrCustRelationshipCode,
+            TaxIdNo: this.resultData.AppGuarantorObj.TaxIdNo,
+            MrCompanyTypeCode: this.resultData.AppGuarantorCompanyObj.MrCompanyTypeCode,
+            ContactName: this.resultData.AppGuarantorCompanyObj.ContactName,
+            MrJobPositionCode: this.resultData.AppGuarantorCompanyObj.MrJobPositionCode,
+            MobilePhnNo1: this.resultData.AppGuarantorCompanyObj.MobilePhnNo1,
+            ContactEmail: this.resultData.AppGuarantorCompanyObj.ContactEmail,
+            MobilePhnNo2: this.resultData.AppGuarantorCompanyObj.MobilePhnNo2,
+            FaxArea: this.resultData.AppGuarantorCompanyObj.FaxArea,
+            Fax: this.resultData.AppGuarantorCompanyObj.Fax,
+            PhnArea1: this.resultData.AppGuarantorCompanyObj.PhnArea1,
+            Phn1: this.resultData.AppGuarantorCompanyObj.Phn1,
+            PhnExt1: this.resultData.AppGuarantorCompanyObj.PhnExt1,
+            PhnArea2: this.resultData.AppGuarantorCompanyObj.PhnArea2,
+            Phn2: this.resultData.AppGuarantorCompanyObj.Phn2,
+            PhnExt2: this.resultData.AppGuarantorCompanyObj.PhnExt2
           });
-          this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
-          this.setIndustryTypeName(this.resultData.appGuarantorCompanyObj.IndustryTypeCode);
+          this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
+          this.setIndustryTypeName(this.resultData.AppGuarantorCompanyObj.IndustryTypeCode);
           this.setAddrLegalObj();
-          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
+          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           console.log(this.guarantorCompanyObj);
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
         },
@@ -312,15 +312,15 @@ export class GuarantorCompanyComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorCompanyObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorCompanyObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorCompanyObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorCompanyObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorCompanyObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorCompanyObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorCompanyObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorCompanyObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorCompanyObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorCompanyObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorCompanyObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorCompanyObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorCompanyObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorCompanyObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
   }
 
   Add() {
@@ -334,7 +334,7 @@ export class GuarantorCompanyComponent implements OnInit {
     }
 
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "COMPANY";
+    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = CommonConstant.GuarantorTypeCodeCompany;
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorObj.MrCustRelationshipCode = this.CompanyForm.controls.MrCustRelationshipCode.value;
     this.guarantorCompanyObj.AppGuarantorObj.RowVersion = "";
