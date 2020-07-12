@@ -1,7 +1,6 @@
 import { environment } from "environments/environment";
 
 export class URLConstant {
-
     // NOTIFICATION HUB
     public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
     public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";
@@ -445,7 +444,6 @@ export class URLConstant {
     public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
 
     // LEAD
-    public static ViewHeaderLeadMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
     public static AddLead = environment.losUrl + "/Lead/AddLead";
     public static EditLead = environment.losUrl + "/Lead/EditLead";
     public static DeleteLead = environment.losUrl + "/Lead/DeleteLead";

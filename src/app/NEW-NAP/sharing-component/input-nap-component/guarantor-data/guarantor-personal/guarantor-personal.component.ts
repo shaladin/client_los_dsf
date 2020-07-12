@@ -83,24 +83,24 @@ export class GuarantorPersonalComponent implements OnInit {
           console.log("response: ");
           console.log(response);
           this.resultData = response;
-          this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
-          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
+          this.AppGuarantorPersonalId = this.resultData.AppGuarantorPersonalObj.AppGuarantorPersonalId;
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.AppGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.AppGuarantorObj.GuarantorName;
           this.PersonalForm.patchValue({
-            MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
-            MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
-            MrGenderCode: this.resultData.appGuarantorPersonalObj.MrGenderCode,
-            IdNo: this.resultData.appGuarantorPersonalObj.IdNo,
-            MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode,
-            IdExpDt: this.resultData.appGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.appGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
-            MrNationalityCode: this.resultData.appGuarantorPersonalObj.MrNationalityCode,
-            BirthPlace: this.resultData.appGuarantorPersonalObj.BirthPlace,
-            BirthDt: formatDate(this.resultData.appGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
-            TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
-            MrReligionCode: this.resultData.appGuarantorPersonalObj.MrReligionCode,
-            MobilePhnNo: this.resultData.appGuarantorPersonalObj.MobilePhnNo,
+            MrCustRelationshipCode: this.resultData.AppGuarantorObj.MrCustRelationshipCode,
+            MrIdTypeCode: this.resultData.AppGuarantorPersonalObj.MrIdTypeCode,
+            MrGenderCode: this.resultData.AppGuarantorPersonalObj.MrGenderCode,
+            IdNo: this.resultData.AppGuarantorPersonalObj.IdNo,
+            MrMaritalStatCode: this.resultData.AppGuarantorPersonalObj.MrMaritalStatCode,
+            IdExpDt: this.resultData.AppGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.AppGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
+            MrNationalityCode: this.resultData.AppGuarantorPersonalObj.MrNationalityCode,
+            BirthPlace: this.resultData.AppGuarantorPersonalObj.BirthPlace,
+            BirthDt: formatDate(this.resultData.AppGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
+            TaxIdNo: this.resultData.AppGuarantorObj.TaxIdNo,
+            MrReligionCode: this.resultData.AppGuarantorPersonalObj.MrReligionCode,
+            MobilePhnNo: this.resultData.AppGuarantorPersonalObj.MobilePhnNo,
           });
-          this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
+          this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
           this.setAddrLegalObj();
           this.clearExpDt();
 
@@ -109,7 +109,7 @@ export class GuarantorPersonalComponent implements OnInit {
           console.log(error);
         }
       );
-      await this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
+      await this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
     }
     else {
       this.ClearForm();
@@ -217,15 +217,15 @@ export class GuarantorPersonalComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorPersonalObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorPersonalObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorPersonalObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorPersonalObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorPersonalObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorPersonalObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorPersonalObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorPersonalObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorPersonalObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorPersonalObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorPersonalObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorPersonalObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorPersonalObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorPersonalObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorPersonalObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorPersonalObj.Zipcode };
   }
 
   async setCountryName(countryCode) {
@@ -399,7 +399,7 @@ export class GuarantorPersonalComponent implements OnInit {
     }
     
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "PERSONAL";
+    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = CommonConstant.GuarantorTypeCodePersonal;
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
     this.guarantorPersonalObj.AppGuarantorObj.MrCustRelationshipCode = this.PersonalForm.controls.MrCustRelationshipCode.value;
     this.guarantorPersonalObj.AppGuarantorObj.RowVersion = "";
