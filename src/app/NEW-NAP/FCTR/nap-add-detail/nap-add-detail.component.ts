@@ -9,6 +9,7 @@ import { FormBuilder } from '@angular/forms';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -21,7 +22,7 @@ export class NapAddDetailComponent implements OnInit {
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
@@ -62,7 +63,22 @@ export class NapAddDetailComponent implements OnInit {
       this.ClaimTask();
     }
     this.AppStepIndex = 0;
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(

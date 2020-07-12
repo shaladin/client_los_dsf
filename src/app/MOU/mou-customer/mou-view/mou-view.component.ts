@@ -6,6 +6,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-view',
@@ -23,6 +24,7 @@ export class MouViewComponent implements OnInit {
   IsResponseProcessed: boolean = false;
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
@@ -34,9 +36,16 @@ export class MouViewComponent implements OnInit {
     });
 
   }
-  viewMouHeader: string;
+  
   ngOnInit() {
-    this.viewMouHeader = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
 

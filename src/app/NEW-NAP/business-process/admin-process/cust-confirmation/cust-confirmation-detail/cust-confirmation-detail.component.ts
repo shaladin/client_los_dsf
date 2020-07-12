@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -12,6 +11,7 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -19,7 +19,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class CustConfirmationDetailComponent implements OnInit {
 
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   arrValue = [];
   AgrmntId: number;
   AppId: number;
@@ -56,7 +56,23 @@ export class CustConfirmationDetailComponent implements OnInit {
   ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
-    this.viewObj = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
 
     this.GetVerfResult();
   }
@@ -103,7 +119,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.verfResultObj.LobName = this.appObj.LobCode;
         this.verfResultObj.Notes = "-";
         this.http.post(URLConstant.AddVerfResultAndVerfResultH, this.verfResultObj).subscribe(
-          (response) => {
+          () => {
             this.GetVerfResult(true);
           },
           (error) => {
@@ -145,7 +161,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         wfTaskListId: this.TaskListId
       };
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
-        (response) => {
+        () => {
           this.toastr.successMessage("Success !");
           this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
           // this.toastr.successMessage(response["message"]);
@@ -166,7 +182,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext["UserName"];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 

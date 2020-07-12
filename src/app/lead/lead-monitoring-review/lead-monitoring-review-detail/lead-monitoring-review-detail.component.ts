@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -14,8 +15,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styles: []
 })
 export class LeadMonitoringReviewDetailComponent implements OnInit {
+
   inputPagingObj: UcPagingObj;
-  viewUpload: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UploadMonitoringHId: number;
   UploadNo: string;
   taskListId: number;
@@ -37,13 +39,15 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
         this.taskListId = params["TaskListId"];
       }
     });
-    this.viewUpload = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
   }
 
   ngOnInit() {
     if (this.taskListId > 0) {
       this.claimTask();
     }
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
+    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;

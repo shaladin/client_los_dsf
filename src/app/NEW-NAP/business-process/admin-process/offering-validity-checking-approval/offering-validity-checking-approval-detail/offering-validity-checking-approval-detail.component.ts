@@ -7,13 +7,14 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
   templateUrl: './offering-validity-checking-approval-detail.component.html'
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
   token: any = localStorage.getItem("Token");
@@ -36,7 +37,18 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   HoldTask(obj){

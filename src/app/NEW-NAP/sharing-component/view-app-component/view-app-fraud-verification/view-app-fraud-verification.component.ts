@@ -7,6 +7,8 @@ import { forkJoin } from 'rxjs';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-app-fraud-verification',
@@ -24,7 +26,7 @@ export class ViewAppFraudVerificationComponent implements OnInit {
   negCustList: Array<any>;
   appAssetList: Array<any>;
   negAssetList: Array<any>;
-  viewDukcapilObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   arrValue = [];
 
   constructor(
@@ -34,7 +36,10 @@ export class ViewAppFraudVerificationComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
+
     this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).pipe(
       map((response) => {
         this.appData = response;

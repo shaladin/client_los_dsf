@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-approval-general',
@@ -16,15 +17,15 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class MouApprovalGeneralComponent implements OnInit {
   mouCustObj: MouCustObj;
-  MouCustId : number;
+  MouCustId: number;
   taskId: number;
   instanceId: number;
-  MouType : string = "GENERAL";
+  MouType: string = "GENERAL";
   inputObj: any;
-  link : any; 
-  resultData : any;
-  viewObj : string;
-  mouCustObject : MouCustObj = new MouCustObj();
+  link: any;
+  resultData: any;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  mouCustObject: MouCustObj = new MouCustObj();
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
@@ -41,40 +42,43 @@ export class MouApprovalGeneralComponent implements OnInit {
       this.inputObj = obj;
     });
   }
-  
+
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
-        this.resultData = response; 
-      } 
+        this.resultData = response;
+      }
     );
   }
 
   MouApprovalDataForm = this.fb.group({
   })
 
-  onAvailableNextTask(event)
-  {
-    
+  onAvailableNextTask(event) {
+
   }
 
-  onApprovalSubmited(event)
-  {
+  onApprovalSubmited(event) {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Mou/Cust/Approval"]);
   }
 
-  onCancelClick()
-  {
+  onCancelClick() {
     this.router.navigate(["/Mou/Cust/Approval"]);
   }
-  GetCallBack(event)
-  {  
-    if(event.Key == "customer"){
+  GetCallBack(event) {
+    if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
@@ -87,6 +91,6 @@ export class MouApprovalGeneralComponent implements OnInit {
         }
       );
     }
-    
+
   }
 }

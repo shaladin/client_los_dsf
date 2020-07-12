@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { first } from 'rxjs/operators';
@@ -12,6 +11,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-review-general',
@@ -31,7 +31,7 @@ export class MouReviewGeneralComponent implements OnInit {
   MrCustTypeCode: any;
   link: any;
   resultData: any;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   mouCustObject: MouCustObj = new MouCustObj();
   listReason: any;
 
@@ -50,11 +50,17 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("aa");
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObject.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
@@ -116,7 +122,7 @@ export class MouReviewGeneralComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
@@ -168,8 +174,6 @@ export class MouReviewGeneralComponent implements OnInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"]; 
-          // window.open(this.link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

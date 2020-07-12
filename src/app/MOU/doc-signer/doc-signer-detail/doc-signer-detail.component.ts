@@ -14,6 +14,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -75,7 +76,7 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: any;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
@@ -155,8 +156,15 @@ export class DocSignerDetailComponent implements OnInit {
       });
   }
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
-    console.log('docsigner')
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
+
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }

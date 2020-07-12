@@ -4,14 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { first } from 'rxjs/operators';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -32,7 +32,7 @@ export class MouReviewFactoringComponent implements OnInit {
   MrCustTypeCode: string;
   link: any;
   resultData: any;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -46,7 +46,14 @@ export class MouReviewFactoringComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObject.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
@@ -116,7 +123,7 @@ export class MouReviewFactoringComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 

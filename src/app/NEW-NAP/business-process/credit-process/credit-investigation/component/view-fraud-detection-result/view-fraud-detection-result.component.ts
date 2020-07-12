@@ -17,6 +17,7 @@ import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-view-fraud-detection-result',
@@ -39,7 +40,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   getNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
   getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
-  viewFraudVerifResultObj: any;
+  viewFraudVerifResultObj: UcViewGenericObj = new UcViewGenericObj();
 
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
@@ -56,7 +57,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   listNegativeAppAsset: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   listNegativeAppCollateral: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   dukcapilObj: any;
-  viewDukcapilObj: string;
+  viewDukcapilObj: UcViewGenericObj = new UcViewGenericObj();
   listCustDuplicate: Array<ResDuplicateCustomerObj> = new Array<ResDuplicateCustomerObj>();
   trxRefNo: string;
   mrSrvySourceCode: string;
@@ -71,8 +72,13 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.getApp(this.appId);
     await this.getAppCust();
     this.arrValue.push(this.appId);
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-    this.viewFraudVerifResultObj = "./assets/ucviewgeneric/viewFraudVerifResult.json";
+    this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
+    this.viewDukcapilObj.whereValue = this.arrValue;
+    
+    this.viewFraudVerifResultObj.viewInput = "./assets/ucviewgeneric/viewFraudVerifResult.json";
+    this.viewFraudVerifResultObj.viewEnvironment = environment.losUrl;
+    this.viewFraudVerifResultObj.whereValue = this.arrValue;
   }
 
   async getAppCust() {

@@ -11,6 +11,7 @@ import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
 import { RdlcReportObj } from 'app/shared/model/Report/RdlcReportObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-document-view',
@@ -22,7 +23,7 @@ export class DocumentViewComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
   AggrementId: any;
-  inputViewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   inputObj: any;
   AgrmntDocObj: Object;
   listSelectedId: any[];
@@ -55,7 +56,22 @@ export class DocumentViewComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.inputViewObj = "./assets/ucviewgeneric/viewDocument.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "ApplicationNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AggrementNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
 
     this.GetListAgrmntDocByAgrmntId();
 

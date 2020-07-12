@@ -11,6 +11,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -18,7 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 
 export class DocSignerDetailComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -62,7 +63,18 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewDocSigner.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     await this.getAllData();
     this.setLookupObj();
   }

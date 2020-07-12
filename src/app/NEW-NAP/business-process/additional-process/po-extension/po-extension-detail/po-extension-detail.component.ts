@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-po-extension-detail',
@@ -12,7 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class PoExtensionDetailComponent implements OnInit {
   AppId: number;
   PurchaseOrderHId: number;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   BizTemplateCode: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
@@ -28,7 +30,22 @@ export class PoExtensionDetailComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewPOExtensionInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewPOExtensionInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "PurchaseOrderNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   SaveForm() {
