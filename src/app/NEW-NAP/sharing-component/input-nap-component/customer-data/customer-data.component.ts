@@ -24,6 +24,7 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-customer-data',
@@ -170,13 +171,13 @@ export class CustomerDataComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.warningMessage("Total Share (%) must be 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }      
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
       if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -249,7 +250,7 @@ export class CustomerDataComponent implements OnInit {
         this.isExpiredBirthDt = true;
 
     }else if(type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
-      this.toastr.warningMessage("Customer age must be at least 17 year old");
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }
@@ -773,7 +774,7 @@ export class CustomerDataComponent implements OnInit {
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
         // console.log(response);
-        if (response != "") {
+        if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
@@ -1190,9 +1191,9 @@ export class CustomerDataComponent implements OnInit {
   }
 
   initUrl() {
-    this.addEditCustDataPersonalUrl = AdInsConstant.AddEditCustDataPersonal;
-    this.getCustDataUrl = AdInsConstant.GetCustDataByAppId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
+    this.getCustDataUrl = URLConstant.GetCustDataByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   // bindCopyFrom(){

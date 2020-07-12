@@ -7,6 +7,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-guarantor-paging',
@@ -21,15 +22,15 @@ export class GuarantorPagingComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
-  result : any = new Array();
-  resultData : any;
+  result: any = new Array();
+  resultData: any;
   closeResult: any;
   AppGuarantorId: any;
   MrGuarantorTypeCode: any;
   mode: any;
   appWizardObj: AppWizardObj;
   closeChk: any;
-  MrCustRelationshipCode : any = new Array();
+  MrCustRelationshipCode: any = new Array();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -37,11 +38,11 @@ export class GuarantorPagingComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
-    this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
+    this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
 
     var guarantorObj = new GuarantorObj();
     guarantorObj.AppId = this.AppId;
-    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
+    this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {
@@ -86,7 +87,7 @@ export class GuarantorPagingComponent implements OnInit {
     this.outputTab.emit();
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -102,7 +103,7 @@ export class GuarantorPagingComponent implements OnInit {
         var guarantorObj = new GuarantorObj();
         guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
         guarantorObj.AppGuarantorObj.AppId = this.AppId;
-        this.http.post(AdInsConstant.DeleteAppGuarantor, guarantorObj).subscribe(
+        this.http.post(URLConstant.DeleteAppGuarantor, guarantorObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.inputGridObj.resultData = {
@@ -118,13 +119,12 @@ export class GuarantorPagingComponent implements OnInit {
         );
       }
     }
-
   }
 
-  loadGuarantorListData(appId : number) {
+  loadGuarantorListData(appId: number) {
     var guarantorObj = new AppGuarantorObj();
     guarantorObj.AppId = appId;
-    this.http.post(AdInsConstant.GetAppGuarantorList, guarantorObj).subscribe(
+    this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

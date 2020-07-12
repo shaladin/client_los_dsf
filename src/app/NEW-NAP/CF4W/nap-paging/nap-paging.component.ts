@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-paging',
@@ -46,7 +47,7 @@ export class NapPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -59,7 +60,7 @@ export class NapPagingComponent implements OnInit {
 
   AddApp() {
     var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
           this.router.navigate(["Nap/ConsumerFinance/Add"]);

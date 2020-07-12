@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { map, mergeMap } from 'rxjs/operators';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { DatePipe } from '@angular/common';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cust-tc',
@@ -27,7 +28,7 @@ export class MouCustTcComponent implements OnInit {
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
     private fb: FormBuilder
-  ) { 
+  ) {
     this.formSubmitted = false;
   }
 
@@ -39,7 +40,7 @@ export class MouCustTcComponent implements OnInit {
     var mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;
     var mouCustObjData;
-    this.httpClient.post(AdInsConstant.GetMouCustById, mouObj).pipe(
+    this.httpClient.post(URLConstant.GetMouCustById, mouObj).pipe(
       map((response: MouCustObj) => {
         mouCustObjData = response;
         return response;
@@ -47,36 +48,36 @@ export class MouCustTcComponent implements OnInit {
       mergeMap((response) => {
         var mouCustClause = new MouCustClauseObj();
         mouCustClause.MouCustId = this.MouCustId;
-        return this.httpClient.post(AdInsConstant.GetMouCustClauseByMouCustId, mouCustClause);
+        return this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
       }),
       mergeMap((response) => {
         var mouCustClause = response;
         var mouTcObj;
-        if(mouCustObjData["MrMouTypeCode"] == "GENERAL"){
-          mouTcObj = { MouCustId: this.MouCustId, AssetTypeCode: mouCustClause["AssetTypeCode"], MrCustTypeCode: mouCustObjData["MrCustTypeCode"], RowVersion: ""};
+        if (mouCustObjData["MrMouTypeCode"] == "GENERAL") {
+          mouTcObj = { MouCustId: this.MouCustId, AssetTypeCode: mouCustClause["AssetTypeCode"], MrCustTypeCode: mouCustObjData["MrCustTypeCode"], RowVersion: "" };
         }
-        else{
-          mouTcObj = { MouCustId: this.MouCustId, AssetTypeCode: "", MrCustTypeCode: mouCustObjData["MrCustTypeCode"], RowVersion: ""};
+        else {
+          mouTcObj = { MouCustId: this.MouCustId, AssetTypeCode: "", MrCustTypeCode: mouCustObjData["MrCustTypeCode"], RowVersion: "" };
         }
-        return this.httpClient.post(AdInsConstant.GetMouCustTcFromRule, mouTcObj);
+        return this.httpClient.post(URLConstant.GetMouCustTcFromRule, mouTcObj);
       })
     ).subscribe(
       (response: any) => {
         var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
-        for(const item of response["MouCustTcObjs"]){
+        for (const item of response["MouCustTcObjs"]) {
           var promiseDtValidation;
           var expiredDtValidation;
-          if(item.IsMandatory){
-            if(item.IsChecked){
+          if (item.IsMandatory) {
+            if (item.IsChecked) {
               promiseDtValidation = [];
               expiredDtValidation = [Validators.required];
             }
-            else{
+            else {
               promiseDtValidation = [Validators.required];
               expiredDtValidation = [];
             }
           }
-          else{
+          else {
             promiseDtValidation = [];
             expiredDtValidation = [];
           }
@@ -100,20 +101,20 @@ export class MouCustTcComponent implements OnInit {
     );
   }
 
-  checkedHandler(e, i){
+  checkedHandler(e, i) {
     var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
-    if(e.target.checked == true){
+    if (e.target.checked == true) {
       var mandatory = formArray.at(i).get("IsMandatory").value;
-      if(mandatory == true){
+      if (mandatory == true) {
         formArray.at(i).get("ExpiredDt").setValidators([Validators.required]);
         formArray.at(i).get("ExpiredDt").updateValueAndValidity();
         formArray.at(i).get("PromisedDt").clearValidators();
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
       }
     }
-    else{
+    else {
       var mandatory = formArray.at(i).get("IsMandatory").value;
-      if(mandatory == true){
+      if (mandatory == true) {
         formArray.at(i).get("PromisedDt").setValidators([Validators.required]);
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
         formArray.at(i).get("ExpiredDt").clearValidators();
@@ -122,24 +123,24 @@ export class MouCustTcComponent implements OnInit {
     }
   }
 
-  mandatoryHandler(e, i){
+  mandatoryHandler(e, i) {
     var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
-    if(e.target.checked == true){
+    if (e.target.checked == true) {
       var checked = formArray.at(i).get("IsChecked").value;
-      if(checked == true){
+      if (checked == true) {
         formArray.at(i).get("ExpiredDt").setValidators([Validators.required]);
         formArray.at(i).get("ExpiredDt").updateValueAndValidity();
         formArray.at(i).get("PromisedDt").clearValidators();
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
       }
-      else{
+      else {
         formArray.at(i).get("PromisedDt").setValidators([Validators.required]);
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
         formArray.at(i).get("ExpiredDt").clearValidators();
         formArray.at(i).get("ExpiredDt").updateValueAndValidity();
       }
     }
-    else{
+    else {
       formArray.at(i).get("PromisedDt").clearValidators();
       formArray.at(i).get("PromisedDt").updateValueAndValidity();
       formArray.at(i).get("ExpiredDt").clearValidators();
@@ -147,14 +148,14 @@ export class MouCustTcComponent implements OnInit {
     }
   }
 
-  Save(){
+  Save() {
     this.formSubmitted = true;
-    if(this.MouCustTcForm.valid){
+    if (this.MouCustTcForm.valid) {
       var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
       var formData = formArray.value;
-      var formFinal = {MouCustTcObjs: formData};
-  
-      this.httpClient.post(AdInsConstant.EditListMouCustTc, formFinal).subscribe(
+      var formFinal = { MouCustTcObjs: formData };
+
+      this.httpClient.post(URLConstant.EditListMouCustTc, formFinal).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.ResponseMouCustTc.emit(response);
@@ -166,8 +167,8 @@ export class MouCustTcComponent implements OnInit {
     }
   }
 
-  back(){
-    this.ResponseMouCustTc.emit({StatusCode: "-1"});
+  back() {
+    this.ResponseMouCustTc.emit({ StatusCode: "-1" });
   }
 
 }

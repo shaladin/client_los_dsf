@@ -4,13 +4,21 @@
     {
       "subSectionId": "MainInfoId",
       "subSectionTitle": "Main Information",
-      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
-          "type": "callback",
-          "key": "ViewApp",
+          "type": "link",
           "label": "Application No",
-          "property": "AppNo"
+          "property": "AppNo",
+          "name": "AppNo",
+          "path": "/Nap/View/AppView",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
         },
         {
           "type": "text",

@@ -12,6 +12,8 @@ import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { environment } from 'environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-fraud-verification-multi-asset',
@@ -37,14 +39,14 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   viewDukcapilMainDataObj: string;
   losUrl = environment.losUrl;
   foundationUrl = environment.FoundationR3Url;
-  getAppById = AdInsConstant.GetAppById;
-  getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = AdInsConstant.GetAppDupCheckCustByAppId;
-  getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
-  getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
-  getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
-  addAppFraudVerfUrl = AdInsConstant.AddAppFraudVerf;
+  getAppById = URLConstant.GetAppById;
+  getCustDataByAppId = URLConstant.GetCustDataByAppId;
+  getAppDupCheckCustByAppId = URLConstant.GetAppDupCheckCustByAppId;
+  getNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
+  getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
+  getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
+  getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
+  addAppFraudVerfUrl = URLConstant.AddAppFraudVerf;
   isDataAlreadyLoaded: boolean = false;
   closeResult: string;
   appCustObj: any;
@@ -55,7 +57,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   RowVersion: any;
   listNegativeAsset: any;
   dukcapilObj: any;
-  viewDukcapilObj: string;
+  viewDukcapilObj: UcViewGenericObj = new UcViewGenericObj();
   listCustDuplicate: any;
   trxRefNo: string;
   mrSrvySourceCode: string;
@@ -75,8 +77,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.WfTaskListId = params['WfTaskListId'];
       }
     });
-    this.getAppAssetListByAppIdUrl = AdInsConstant.GetAppAssetListByAppId;
-    this.getAssetNegativeDuplicateCheckByListOfAssetUrl = AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset;
+    this.getAppAssetListByAppIdUrl = URLConstant.GetAppAssetListByAppId;
+    this.getAssetNegativeDuplicateCheckByListOfAssetUrl = URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset;
   }
 
   async ngOnInit(): Promise<void> {
@@ -89,7 +91,10 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.verfCode = context["EmpNo"];
     await this.getApp();
     await this.getAppAsset();
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
+    this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
+    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
+    this.viewDukcapilObj.whereValue = this.arrValue;
+    
     this.isDataAlreadyLoaded = true;
     this.bizTemplateCode = CommonConstant.FL4W;
   }
@@ -97,7 +102,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   async ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   getApp() {

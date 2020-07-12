@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-return-handling-paging',
@@ -21,16 +22,15 @@ export class ReturnHandlingPagingComponent implements OnInit {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-      
     });
   }
-  
+
   ngOnInit() {
     //perubahan
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -43,7 +43,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
     critLobObj.propName = 'WTL.ACT_CODE';
-    critLobObj.value = "RTN_"+ this.BizTemplateCode;
+    critLobObj.value = "RTN_" + this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
   }
 

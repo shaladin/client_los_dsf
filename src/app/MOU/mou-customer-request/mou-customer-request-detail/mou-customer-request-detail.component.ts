@@ -6,10 +6,10 @@ import { Location, DatePipe } from '@angular/common';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -100,7 +100,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext["OfficeCode"];
-    this.httpClient.post(AdInsConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
+    this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
       (response: any) => {
         this.refOfficeId = response.RefOfficeId;
       },
@@ -112,7 +112,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     if(this.pageType == "edit" || this.pageType == "return"){
       var mouCust = new MouCustObj();
       mouCust.MouCustId = this.mouCustId;
-      this.httpClient.post(AdInsConstant.GetMouCustById, mouCust).subscribe(
+      this.httpClient.post(URLConstant.GetMouCustById, mouCust).subscribe(
         (response: any) => { 
           response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
@@ -121,7 +121,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
             ...response
           });
           var custObj = { CustNo: response['CustNo'] }; 
-          this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+          this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
             (response: any) => { 
               this.custId = response['CustId'];
             });
@@ -144,8 +144,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
     console.log(wfClaimObj);
-    this.httpClient.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
       });
   }
 
@@ -165,7 +165,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var mouCustFormData = this.MOUMainInfoForm.value;
     if(this.pageType == "add"){
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
-      this.httpClient.post(AdInsConstant.AddMouCust, mouCustFormData).subscribe(
+      this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response["MouCustId"];
@@ -177,7 +177,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       );
     }
     else if(this.pageType == "edit" || this.pageType == "return"){
-      this.httpClient.post(AdInsConstant.EditMouCust, mouCustFormData).subscribe(
+      this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){

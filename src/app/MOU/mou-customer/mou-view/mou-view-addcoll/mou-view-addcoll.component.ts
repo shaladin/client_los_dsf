@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-addcoll',
@@ -22,7 +23,7 @@ export class MouViewAddcollComponent implements OnInit {
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })

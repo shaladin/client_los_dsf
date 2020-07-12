@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-history',
@@ -27,21 +27,21 @@ export class CustHistoryComponent implements OnInit {
   AppPrcs: any;
 
   ngOnInit() {
-    this.http.post(AdInsConstant.GetCustDataByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.CustNo = response["AppCustObj"]["CustNo"];
         console.log(this.CustNo);
-        this.http.post(AdInsConstant.GetAgrmntByCustNo, { CustNo: this.CustNo }).subscribe(
+        this.http.post(URLConstant.GetAgrmntByCustNo, { CustNo: this.CustNo }).subscribe(
           (response) => {
             console.log(response);
             this.ExstAgrmnt = response;
           });
-        this.http.post(AdInsConstant.GetAppByCustNoAndAppStat, { CustNo: this.CustNo,AppStat:"REJECT" }).subscribe(
+        this.http.post(URLConstant.GetAppByCustNoAndAppStat, { CustNo: this.CustNo,AppStat:"REJECT" }).subscribe(
           (response) => {
             console.log(response);
             this.AppRjct = response;
           });
-          this.http.post(AdInsConstant.GetAppByCustNoAndIsAppInitDone, { CustNo: this.CustNo,IsAppInitDone: false }).subscribe(
+          this.http.post(URLConstant.GetAppByCustNoAndIsAppInitDone, { CustNo: this.CustNo,IsAppInitDone: false }).subscribe(
             (response) => {
               console.log(response);
               this.AppPrcs = response;

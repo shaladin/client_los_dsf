@@ -5,6 +5,7 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
+import { URLConstant } from "app/shared/constant/URLConstant";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -14,13 +15,13 @@ export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
 
-  constructor(private router:Router, private http:HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiry.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiry.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -43,13 +44,13 @@ export class AppInquiryPagingComponent implements OnInit {
     ];
   }
 
-  getEvent(event){
+  getEvent(event) {
     // console.log("productlink")
     // console.log(event)
     
     if(event.Key == "customer"){
         var custObj = { CustNo: event.RowObj.custNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },

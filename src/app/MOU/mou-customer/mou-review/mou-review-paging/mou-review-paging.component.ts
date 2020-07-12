@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-review-paging',
@@ -31,8 +32,7 @@ export class MouReviewPagingComponent implements OnInit {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-      console.log(AdInsConstant.GetPagingObjectBySQL);
+      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
       this.inputPagingObj.ddlEnvironments = [
         {
@@ -47,7 +47,7 @@ export class MouReviewPagingComponent implements OnInit {
   {
     if(event.Key == "customer"){
       var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
               AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-credit-inquiry',
@@ -12,14 +12,14 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class CreditInquiryComponent implements OnInit {
 
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+
   constructor(private http: HttpClient) { }
 
-  inputPagingObj;
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchCreditProcessInquiry.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCreditProcessInquiry.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditProcessInquiry.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -36,18 +36,18 @@ export class CreditInquiryComponent implements OnInit {
       }
     ];
   }
-  openView(ev){
-    if(ev.Key == "application"){
+  openView(ev) {
+    if (ev.Key == "application") {
       AdInsHelper.OpenAppViewByAppId(ev.RowObj.AppId);
     }
-    else if(ev.Key == "customer"){
-      this.http.post(AdInsConstant.GetCustByCustNo, {CustNo: ev.RowObj.CustNo}).subscribe(
-        (response)=>{
+    else if (ev.Key == "customer") {
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo }).subscribe(
+        (response) => {
           AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
         }
       )
     }
-    else if(ev.Key == "agreement"){
+    else if (ev.Key == "agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.agrmntId);
     }
   }

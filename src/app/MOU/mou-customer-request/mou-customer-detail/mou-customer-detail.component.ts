@@ -11,6 +11,8 @@ import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -28,7 +30,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mode: string;
   pageType: string;
   pageTitle: string;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -57,9 +59,16 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObject.MouCustId = this.mouCustId;
-    this.httpClient.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
       }
@@ -179,7 +188,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   submitHandler() {
     if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex == 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex == 5)) {
       var mouObj = { MouCustId: this.mouCustId }
-      this.httpClient.post(AdInsConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
+      this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         (response: any) => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
@@ -251,7 +260,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
-      this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },

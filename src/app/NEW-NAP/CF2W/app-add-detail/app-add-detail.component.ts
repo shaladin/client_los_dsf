@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -23,7 +23,7 @@ export class AppAddDetailComponent implements OnInit {
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
@@ -67,13 +67,27 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("this");
     //this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -106,7 +120,7 @@ export class AppAddDetailComponent implements OnInit {
         AppId: this.appId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -123,7 +137,7 @@ export class AppAddDetailComponent implements OnInit {
 
   CheckMultiAsset() {
     var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];
         if (this.ListAsset != undefined && this.ListAsset != null) {
@@ -179,7 +193,7 @@ export class AppAddDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) =>{
         console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
@@ -194,7 +208,7 @@ export class AppAddDetailComponent implements OnInit {
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
         this.router.navigate(["/Nap/CF2W/Paging"], { queryParams: { LobCode: "CF2W" } })
@@ -214,7 +228,7 @@ export class AppAddDetailComponent implements OnInit {
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, obj).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
           console.log(response);
         },

@@ -10,6 +10,7 @@ import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-data',
@@ -122,7 +123,7 @@ export class ApplicationDataComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
@@ -142,7 +143,7 @@ export class ApplicationDataComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         // console.log(response);   
         this.NapAppModelForm.patchValue({
@@ -162,7 +163,7 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListAppCross, obj).subscribe(
+    this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
         console.log(response);
         this.resultCrossApp = response["ReturnObject"];
@@ -184,7 +185,7 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     };
-    var url = AdInsConstant.GetAppDetailForTabAddEditAppById;
+    var url = URLConstant.GetAppDetailForTabAddEditAppById;
 
     this.http.post(url, obj).subscribe(
       (response) => {
@@ -258,7 +259,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getAppSrcData() {
-    var url = AdInsConstant.GetListKvpActiveRefAppSrc;
+    var url = URLConstant.GetListKvpActiveRefAppSrc;
     var obj = {
       RowVersion: ""
     };
@@ -275,7 +276,7 @@ export class ApplicationDataComponent implements OnInit {
 
   DictRefPayFreq: any = {};
   getPayFregData() {
-    var url = AdInsConstant.GetListActiveRefPayFreq;
+    var url = URLConstant.GetListActiveRefPayFreq;
     var obj = { RowVersion: "" };
 
     this.http.post(url, obj).subscribe(
@@ -302,7 +303,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getRefMasterTypeCode(code) {
-    var url = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    var url = URLConstant.GetRefMasterListKeyValueActiveByCode;
     var obj = {
       RefMasterTypeCode: code,
       RowVersion: ""
@@ -333,7 +334,7 @@ export class ApplicationDataComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -489,7 +490,7 @@ export class ApplicationDataComponent implements OnInit {
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
-    var url = AdInsConstant.EditAppAddAppCross;
+    var url = URLConstant.EditAppAddAppCross;
     var obj = {
       appObj: tempAppObj,
       listAppCrossObj: tempListAppCrossObj,
@@ -559,7 +560,7 @@ export class ApplicationDataComponent implements OnInit {
   DeleteCrossApp(idx) {
     if (confirm('Are you sure to delete this record?')) {
       if (this.resultCrossApp[idx].AppCrossId != null) {
-        var url = AdInsConstant.DeleteAppCross;
+        var url = URLConstant.DeleteAppCross;
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
         this.http.post(url, obj).subscribe(

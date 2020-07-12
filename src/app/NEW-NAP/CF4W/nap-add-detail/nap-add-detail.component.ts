@@ -11,6 +11,9 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -25,7 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  viewProdMainInfoObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
@@ -80,7 +83,22 @@ export class NapAddDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
@@ -90,7 +108,7 @@ export class NapAddDetailComponent implements OnInit {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
     } else {
-      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           console.log(response);
           if (response) {
@@ -172,7 +190,7 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -189,7 +207,7 @@ export class NapAddDetailComponent implements OnInit {
 
   CheckMultiAsset() {
     var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];
         if (this.ListAsset != undefined && this.ListAsset != null) {
@@ -268,7 +286,7 @@ export class NapAddDetailComponent implements OnInit {
 
   UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
       },
@@ -284,7 +302,7 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -304,7 +322,7 @@ export class NapAddDetailComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.warningMessage("Please Save TC Data First!");
+        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
@@ -316,7 +334,7 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
         ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-        this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
@@ -337,7 +355,7 @@ export class NapAddDetailComponent implements OnInit {
     wfClaimObj.Username = currentUserContext["UserName"];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
       () => {
       });
   }

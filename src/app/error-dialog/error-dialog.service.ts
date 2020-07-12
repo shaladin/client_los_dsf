@@ -4,24 +4,25 @@ import { ErrorDialogComponent } from 'app/error-dialog/error-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Injectable()
 export class ErrorDialogService {
-    constructor(public dialog: MatDialog,private http:HttpClient) { }
+    constructor(public dialog: MatDialog, private http: HttpClient) { }
     openDialog(data): void {
         console.log(data)
         //Ini Logout jadi panggil Service untuk Call Logoutnya
-        if(data.status=="001" && localStorage.getItem("Username") != undefined)
-        {   
+        if (data.status == "001" && localStorage.getItem("Username") != undefined) {
 
-            var url = environment.FoundationR3Url+AdInsConstant.Logout;
-            this.http.post(url,"");
+            var url = environment.FoundationR3Url + URLConstant.Logout;
+            this.http.post(url, "");
         }
         const dialogRef = this.dialog.open(ErrorDialogComponent, {
             width: '300px',
             position: {
-            top: '12px',
-            right: '12px'},
+                top: '12px',
+                right: '12px'
+            },
             data: data
         });
 

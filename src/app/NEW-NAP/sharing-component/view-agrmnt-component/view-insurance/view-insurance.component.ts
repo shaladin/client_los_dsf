@@ -5,6 +5,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'agrmnt-view-insurance',
@@ -42,9 +43,9 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
     console.log('Masuk');
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
-    this.inputGridObj.deleteUrl = AdInsConstant.DeleteAppGuarantor;
+    this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
     
-    this.http.post(AdInsConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
+    this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
       (response) => {
         this.listAppAssetObj = response["ReturnObject"];
         console.log(this.listAppAssetObj);

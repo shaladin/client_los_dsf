@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-approval-factoring',
@@ -18,7 +21,8 @@ export class MouApprovalFactoringComponent implements OnInit {
   instanceId: number;
   inputObj: any;
   MouType : string = "FACTORING";
-  viewObj : string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  resultData: any;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -39,7 +43,21 @@ export class MouApprovalFactoringComponent implements OnInit {
   
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
+    this.mouCustObj = new MouCustObj();
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
+      (response: MouCustObj) => {
+        this.resultData = response;
+      }
+    );
   }
 
   MouApprovalDataForm = this.fb.group({
@@ -59,5 +77,20 @@ export class MouApprovalFactoringComponent implements OnInit {
   onCancelClick()
   {
     this.router.navigate(["/Mou/Cust/Approval"]);
+  }
+  
+  GetCallBack(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: this.resultData['CustNo'] };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+
   }
 }

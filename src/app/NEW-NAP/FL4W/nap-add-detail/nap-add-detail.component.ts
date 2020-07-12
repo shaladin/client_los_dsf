@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -11,6 +10,9 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -27,7 +29,7 @@ export class NapAddDetailComponent implements OnInit {
   AppStepIndex: number = 1;
   appId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj = new AppObj();
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
@@ -81,14 +83,25 @@ export class NapAddDetailComponent implements OnInit {
 
   ngOnInit() {
     this.ClaimTask();
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
+    this.viewProdMainInfoObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj.AppId = this.appId;
 
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
     } else {
-      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           console.log(response);
           if (response) {
@@ -110,7 +123,7 @@ export class NapAddDetailComponent implements OnInit {
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
@@ -176,7 +189,7 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -204,13 +217,13 @@ export class NapAddDetailComponent implements OnInit {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     this.mainInfoContainer.clear();
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
@@ -228,7 +241,7 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -279,13 +292,13 @@ export class NapAddDetailComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-      // this.ucMainInfo.OnInit();
+    // this.ucMainInfo.OnInit();
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.warningMessage("Please Save TC Data First!");
+        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
@@ -297,7 +310,7 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
         ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-        this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
@@ -318,13 +331,13 @@ export class NapAddDetailComponent implements OnInit {
     wfClaimObj.Username = currentUserContext["UserName"];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      () => {
       });
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
   CheckCustType(ev: string) {

@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-outstanding-tc-paging',
@@ -30,7 +31,7 @@ export class OutstandingTcPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTC.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTC.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -51,7 +52,7 @@ export class OutstandingTcPagingComponent implements OnInit {
 
   getEvent(ev) {
     if(ev.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
           AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId'])
         },

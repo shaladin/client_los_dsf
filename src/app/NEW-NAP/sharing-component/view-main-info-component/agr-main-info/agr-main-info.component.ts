@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-agr-main-info',
@@ -9,14 +10,26 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class AgrMainInfoComponent implements OnInit {
 
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
  
   constructor(
     private router: Router ) { }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
   
   GetCallBack(ev: any){

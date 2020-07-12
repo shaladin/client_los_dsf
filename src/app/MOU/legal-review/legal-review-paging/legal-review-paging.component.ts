@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-legal-review-paging',
@@ -16,7 +17,7 @@ export class LegalReviewPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
 
-  constructor(private router: Router, private http : HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("UserAccess"));
@@ -25,12 +26,11 @@ export class LegalReviewPagingComponent implements OnInit {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
-    else
-    {
+    else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchLegalReview.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLegalReview.json";
       this.inputPagingObj.ddlEnvironments = [
         {
@@ -38,14 +38,14 @@ export class LegalReviewPagingComponent implements OnInit {
           environment: environment.losUrl
         }
       ];
-  
+
       const addCritMouStat = new CriteriaObj();
       addCritMouStat.DataType = 'text';
       addCritMouStat.propName = 'MOU.MOU_STAT';
       addCritMouStat.restriction = AdInsConstant.RestrictionNotIn;
       addCritMouStat.value = 'LRV';
       this.arrCrit.push(addCritMouStat);
-  
+
       const addCritOfficeCode = new CriteriaObj();
       addCritOfficeCode.DataType = 'text';
       addCritOfficeCode.propName = 'WTL.OFFICE_CODE';
@@ -58,7 +58,7 @@ export class LegalReviewPagingComponent implements OnInit {
     if(event.Key == "customer"){
         var link : string;
         var custObj = { CustNo: event.RowObj.CustNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },

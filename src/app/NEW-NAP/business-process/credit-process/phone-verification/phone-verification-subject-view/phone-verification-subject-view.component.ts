@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -67,11 +68,11 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.getListVerfResulHtUrl = AdInsConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
-    this.getVerfResulHtUrl = AdInsConstant.GetVerfResultHById;
-    this.getVerfResultDUrl = AdInsConstant.GetListVerfResultDInQuestionGrp;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
+    this.getListVerfResulHtUrl = URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
+    this.getVerfResulHtUrl = URLConstant.GetVerfResultHById;
+    this.getVerfResultDUrl = URLConstant.GetListVerfResultDInQuestionGrp;
   }
 
   async ngOnInit(): Promise<void> {

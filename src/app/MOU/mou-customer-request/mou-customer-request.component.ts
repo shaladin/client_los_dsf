@@ -9,6 +9,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -51,7 +52,7 @@ export class MouCustomerRequestComponent implements OnInit {
     var custNo = ev.RowObj.CustNo;
     var custObj = {CustNo : custNo};
     var custId : number
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       (response) => { 
         custId = response['CustId'];
         AdInsHelper.OpenCustomerViewByCustId(custId);

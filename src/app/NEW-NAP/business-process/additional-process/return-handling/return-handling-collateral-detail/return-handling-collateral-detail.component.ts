@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AllCollateralDataObj } from '../../../../../shared/model/AllCollateralDataObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
@@ -202,18 +203,15 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   initUrl() {
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAssetTypeUrl = AdInsConstant.GetAssetTypeKeyValueCode
-    this.GetAppCollateralUrl = AdInsConstant.GetAppCollateralByAppCollateralId;
-    this.GetAppCollateralRegistUrl = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
-    this.getAppUrl = AdInsConstant.GetAppById;
-
-    this.getAssetMasterTypeUrl = AdInsConstant.GetAssetMasterTypeByFullAssetCode;
-    this.AddEditAllCollateralDataUrl = AdInsConstant.AddEditAllCollateralDataByAppCollateraId;
-
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
-
-    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
+    this.getAssetTypeUrl = URLConstant.GetAssetTypeKeyValueCode;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.GetAppCollateralUrl = URLConstant.GetAppCollateralByAppCollateralId;
+    this.getAssetMasterTypeUrl = URLConstant.GetAssetMasterTypeByFullAssetCode;
+    this.AddEditAllCollateralDataUrl = URLConstant.AddEditAllCollateralDataByAppCollateraId;
+    this.GetAppCollateralRegistUrl = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
   }
 
   SaveForm() {
@@ -588,7 +586,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     var assetTypeObj = {
       AssetTypeCode: Code
     };
-    await this.http.post(AdInsConstant.GetAssetTypeByCode, assetTypeObj).toPromise().then(
+    await this.http.post(URLConstant.GetAssetTypeByCode, assetTypeObj).toPromise().then(
       (response) => {
         this.AssetTypeObj = response;
       }

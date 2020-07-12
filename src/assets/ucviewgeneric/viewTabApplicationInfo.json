@@ -4,7 +4,7 @@
       {
         "subSectionId": "SalesInfoId",
         "subSectionTitle": "Sales Information",
-        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
             "type": "text",
@@ -36,7 +36,7 @@
       {
         "subSectionId": "AppsInfoId",
         "subSectionTitle": "Application Information",
-        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
             "type": "text",
@@ -92,6 +92,7 @@
             "type": "link",
             "label": "Mou No",
             "property": "MouCustNo",
+            "name": "MouCustNo",
             "path": "/Mou/Cust/View",
             "target": "_blank",
             "param": [

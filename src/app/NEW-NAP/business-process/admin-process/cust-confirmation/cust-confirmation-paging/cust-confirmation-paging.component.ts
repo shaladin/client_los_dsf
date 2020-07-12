@@ -5,11 +5,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
-  templateUrl: './cust-confirmation-paging.component.html',
-  styleUrls: ['./cust-confirmation-paging.component.scss']
+  templateUrl: './cust-confirmation-paging.component.html'
 })
 export class CustConfirmationPagingComponent implements OnInit {
 
@@ -33,7 +33,7 @@ export class CustConfirmationPagingComponent implements OnInit {
     this.inputPagingObj = new UcpagingModule();
     this.inputPagingObj._url = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.ddlEnvironments = [
       {

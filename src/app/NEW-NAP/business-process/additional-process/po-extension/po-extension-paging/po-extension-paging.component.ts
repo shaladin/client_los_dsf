@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-po-extension-paging',
@@ -30,7 +31,7 @@ export class PoExtensionPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPOExtension.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPOExtension.json";
 
     this.inputPagingObj.addCritInput = new Array();
@@ -45,7 +46,7 @@ export class PoExtensionPagingComponent implements OnInit {
 
   getEvent(ev){
     if(ev.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
           AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
         },
@@ -54,7 +55,7 @@ export class PoExtensionPagingComponent implements OnInit {
         }
       );
     }else if(ev.Key == "suppl"){
-      this.http.post(AdInsConstant.GetVendorByVendorCode, {VendorCode : ev.RowObj.SupplCode}).subscribe(
+      this.http.post(URLConstant.GetVendorByVendorCode, {VendorCode : ev.RowObj.SupplCode}).subscribe(
         response => {
           AdInsHelper.OpenVendorBranchViewByVendorId(response['VendorId']);
         },

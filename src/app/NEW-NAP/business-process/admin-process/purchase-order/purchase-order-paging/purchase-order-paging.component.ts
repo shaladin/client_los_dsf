@@ -5,6 +5,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-purchase-order-paging',
@@ -19,9 +20,9 @@ export class PurchaseOrderPagingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
-        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
-      else{
+      else {
         this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
       }
     });
@@ -32,7 +33,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -55,12 +56,12 @@ export class PurchaseOrderPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
-    else if(ev.Key == "ViewAgrmnt"){
+    else if (ev.Key == "ViewAgrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
-    }    
+    }
   }
 }

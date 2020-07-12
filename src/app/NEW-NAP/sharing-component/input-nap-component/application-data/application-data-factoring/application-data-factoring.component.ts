@@ -11,6 +11,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -113,7 +114,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       AppId: this.resultData.AppId,
       MouType: "FACTORING"
     }
-    this.http.post(AdInsConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
+    this.http.post(URLConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
       (response) => {
         this.allMouCust = response;
         var MouCustId;
@@ -135,7 +136,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterIntrstType).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterIntrstType).subscribe(
       (response) => {
         this.allIntrstType = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -148,7 +149,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-      this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
+      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
         (response) => {
           this.allTopBased = response['ReturnObject'];
           if (this.mode != 'edit') {
@@ -161,7 +162,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           console.log(error);
         });
 
-    this.http.post(AdInsConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
       (response) => {
         this.allInScheme = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -174,7 +175,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
+    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
       (response) => {
         this.allInSalesOffice = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -188,7 +189,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
       (response) => {
         this.allInType = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -201,7 +202,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
       (response) => {
         this.allSlsRecom = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -214,7 +215,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       })
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
       (response) => {
         this.allWOP = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -227,7 +228,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetListKvpActiveRefAppSrc, null).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.allAppSource = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -240,7 +241,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterCalcMethod).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterCalcMethod).subscribe(
       (response) => {
         this.allCalcMethod = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -253,7 +254,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterAppPaidBy).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterAppPaidBy).subscribe(
       (response) => {
         this.allPaidby = response['ReturnObject'];
         if (this.mode != 'edit') {
@@ -266,7 +267,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         console.log(error);
       });
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
       (response) => {
         this.CheckInstType();
         this.allRecourseType = response['ReturnObject'];
@@ -287,10 +288,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
     var MouObj={
       MouCustId: MouCustId
     }
-    this.http.post<MouCustFctrObj>(AdInsConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
+    this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
       (response) => {
         this.mouCustFctrObj = response;
-        this.http.post(AdInsConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
+        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
           (response) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
@@ -354,7 +355,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -404,7 +405,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       AppId: this.AppId
     }
 
-    this.http.post(AdInsConstant.GetApplicationDataByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetApplicationDataByAppId, obj).subscribe(
       (response) => {
         this.resultData = response;
         this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
@@ -483,7 +484,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
     
     if (this.mode == "add") {
-      this.http.post(AdInsConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
+      this.http.post(URLConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
@@ -495,7 +496,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
       this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
       this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
-      this.http.post(AdInsConstant.EditApplicationData, this.salesAppInfoObj).subscribe(
+      this.http.post(URLConstant.EditApplicationData, this.salesAppInfoObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();

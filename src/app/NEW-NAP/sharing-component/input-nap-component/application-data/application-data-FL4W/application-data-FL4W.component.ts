@@ -11,6 +11,7 @@ import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -130,7 +131,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     var AppObj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.GetAppCustByAppId, AppObj).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => { 
        this.CustNo = response["CustNo"];
        console.log("asd")
@@ -141,7 +142,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.mouCustObj.StartDt = user.BusinessDt;
         this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
 
-        this.http.post(AdInsConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
             this.resMouCustObj = response["ReturnObject"];
             
@@ -167,7 +168,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         // console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
@@ -187,7 +188,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         // console.log(response);   
         this.NapAppModelForm.patchValue({
@@ -220,7 +221,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListAppCross, obj).subscribe(
+    this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
         this.resultCrossApp = response["ReturnObject"];
         for(var i = 0; i<this.resultCrossApp.length; i++){
@@ -243,7 +244,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
         console.log("testdata")
@@ -324,7 +325,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
       (response) => {
         console.log("GetListKvpActiveRefAppSrc Response : " + JSON.stringify(response));
         this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
@@ -340,7 +341,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetListActiveRefPayFreq, obj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
         console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
         var objTemp = response["ReturnObject"];
@@ -361,7 +362,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: ""
     };
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
       (response) => {
         var objTemp = response["ReturnObject"];
         this.applicationDDLitems[code] = objTemp;
@@ -390,7 +391,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -582,7 +583,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     console.log("appcross")
     console.log(obj)
 
-    this.http.post(AdInsConstant.EditAppAddAppCross, obj).subscribe(
+    this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
         console.log("response App Refinancing : " + JSON.stringify(response));
         this.outputTab.emit();
@@ -643,7 +644,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       if (this.resultCrossApp[idx].AppCrossId != null){
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
-        this.http.post(AdInsConstant.DeleteAppCross, obj).subscribe(
+        this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
           (response) =>{
           },
           (error) => {

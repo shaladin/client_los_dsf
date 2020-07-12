@@ -14,6 +14,7 @@ import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -93,7 +94,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     var obj = {
       AppId: this.ReturnHandlingHObj.AppId
     };
-    this.http.post<AppFinDataObj>(AdInsConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
@@ -119,14 +120,14 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   NapObj: AppObj = new AppObj();
   GetAndUpdateAppStep() {
     this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         console.log(response);
         if (response) {
           this.NapObj = response;
           if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
             this.NapObj.AppCurrStep = CommonConstant.AppStepComm;
-            this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+            this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
               (response) => {
                 console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
                 this.ChangeTab(CommonConstant.AppStepComm);
@@ -151,7 +152,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditComRsvFnd
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           console.log(response);
           this.returnHandlingDObj = response;
@@ -192,7 +193,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
@@ -222,7 +223,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   async ClaimTask(WfTaskListId) {
     var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   SubmitReturnHandling() {
@@ -236,7 +237,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
           var lobCode = localStorage.getItem("BizTemplateCode");

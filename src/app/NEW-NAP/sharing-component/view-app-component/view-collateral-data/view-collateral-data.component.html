@@ -6,7 +6,7 @@
           <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
         </span>
       </div>
-      <lib-ucviewgeneric *ngIf="IsReady" [viewInput]="viewObj" [viewEnvironment]="viewEnvironment" [whereValue]="arrValue"></lib-ucviewgeneric>
+      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
       <div *ngIf="this.AppCollateralDocs?.length">
         <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
         </lib-ucSubsection>
@@ -46,7 +46,7 @@
           </table>
         </div>
       </div>
-      <lib-ucviewgeneric *ngIf="IsReady" [viewInput]="viewUOLObj" [viewEnvironment]="viewEnvironment" [whereValue]="arrValue"></lib-ucviewgeneric>
+      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
     </div>
   </div>
 </div>

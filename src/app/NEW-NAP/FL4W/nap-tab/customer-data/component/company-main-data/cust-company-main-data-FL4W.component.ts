@@ -11,6 +11,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-company-main-data-FL4W',
@@ -89,7 +90,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.isReadonly = true;
 
     var custObj = {CustId: event.CustId};
-    this.http.post(AdInsConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
         console.log(response);
         this.CopyCustomer(response);
@@ -150,7 +151,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   setIndustryTypeName(industryTypeCode){
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -160,7 +161,6 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
 
   bindCustData(){
@@ -215,7 +215,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
 
   async bindCompanyTypeObj(){
     this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CompanyTypeObj = response["ReturnObject"];
         if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
@@ -230,7 +230,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
 
   async bindCustModelObj(){
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
-    await this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response["ReturnObject"];
         if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){

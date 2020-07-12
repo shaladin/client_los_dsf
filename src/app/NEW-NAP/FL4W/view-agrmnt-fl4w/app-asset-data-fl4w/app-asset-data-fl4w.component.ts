@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailFl4wComponent } from './app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class AppAssetDataFl4wComponent implements OnInit {
 
   ngOnInit() {
     var request = { AgrmntId: this.AgrmntId };
-    this.httpClient.post(AdInsConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, request).subscribe(
+    this.httpClient.post(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, request).subscribe(
       (response) => {
         this.appAssetList = response["ReturnObject"];
       },

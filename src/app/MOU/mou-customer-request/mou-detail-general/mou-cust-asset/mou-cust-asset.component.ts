@@ -7,6 +7,7 @@ import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-asset-detail.component';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cust-asset',
@@ -35,7 +36,7 @@ export class MouCustAssetComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.listExclude = new Array<string>();
-    this.httpClient.post(AdInsConstant.GetListAssetTypeByCode, null).subscribe(
+    this.httpClient.post(URLConstant.GetListAssetTypeByCode, null).subscribe(
       (response: any) => {
         this.assetTypeList = response;
         if (this.AssetTypeCode != null) {
@@ -62,7 +63,7 @@ export class MouCustAssetComponent implements OnInit {
     var mouAsset = new MouCustAssetObj();
     mouAsset.MouCustId = this.MouCustId;
 
-    this.httpClient.post(AdInsConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
       (response: any) => {
         console.log(this.IsAssetSelected);
 

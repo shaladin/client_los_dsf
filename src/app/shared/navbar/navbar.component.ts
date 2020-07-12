@@ -10,12 +10,12 @@ import { formatDate } from '@angular/common';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { NotificationHObj } from '../model/NotificationH/NotificationHObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from '../constant/URLConstant';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss'],
-    providers: [RolePickService,NGXToastrService]
+    providers: [RolePickService, NGXToastrService]
 })
 
 export class NavbarComponent implements AfterViewChecked, OnInit {
@@ -57,7 +57,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
         console.log(this.userAccess.UserName);
         var _hubConnection = new HubConnectionBuilder()
-            .withUrl(AdInsConstant.WebSocketUrl)
+            .withUrl(URLConstant.WebSocketUrl)
             //.withUrl("Http://localhost:5000/Notificationhub")
             .withAutomaticReconnect()
             .build();
@@ -69,24 +69,20 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
         _hubConnection.on("ReceiveNotification", (response) => {
             console.log("Response API : " + response);
-            if(response.type=="SUCCESS")
-            {
-                this.toastr.successMessageTitle(response.title,response.message);
+            if (response.type == "SUCCESS") {
+                this.toastr.successMessageTitle(response.title, response.message);
             }
-            else if(response.type=="ERROR")
-            {
-                this.toastr.errorMessageTitle(response.title,response.message);
+            else if (response.type == "ERROR") {
+                this.toastr.errorMessageTitle(response.title, response.message);
             }
-            else if(response.type=="INFO")
-            {
-                this.toastr.infoMessageTitle(response.title,response.message);
+            else if (response.type == "INFO") {
+                this.toastr.infoMessageTitle(response.title, response.message);
             }
-            
-            
+
+
             this.GetListNotifH();
-            if(response.isNeedLogout==true)
-            {
-                AdInsHelper.ForceLogOut(response.timeLogOut,this.toastr);
+            if (response.isNeedLogout == true) {
+                AdInsHelper.ForceLogOut(response.timeLogOut, this.toastr);
             }
             //this.notifications.push({ title: response, desc: "User " + response });
         });
@@ -94,9 +90,9 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     GetListNotifH() {
         var requestObj = {
-            isLoading : false
+            isLoading: false
         };
-        this.http.post(AdInsConstant.GetListNotificationHByRefUserId, {isLoading:false}).subscribe(
+        this.http.post(URLConstant.GetListNotificationHByRefUserId, { isLoading: false }).subscribe(
             (response) => {
                 this.TotalUnread = response["TotalUnreadNotification"];
                 this.NotificationHListObj = response["ResponseNotificationHCustomObjs"];
@@ -126,29 +122,26 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     }
 
-    ClickNotification(item)
-    {
-        this.http.post(AdInsConstant.UpdateReadNotification, {NotificationDId:item.NotificationDId}).subscribe(
+    ClickNotification(item) {
+        this.http.post(URLConstant.UpdateReadNotification, { NotificationDId: item.NotificationDId }).subscribe(
             (response) => {
             },
             (error) => {
                 console.log(error);
             });
-        if(item.MrNotificationMethodCode=="EXT_LINK")
-        {
-            window.open(item.Url,"_blank");
+        if (item.MrNotificationMethodCode == "EXT_LINK") {
+            window.open(item.Url, "_blank");
         }
-        else if(item.MrNotificationMethodCode="INT_LINK")
-        {
+        else if (item.MrNotificationMethodCode = "INT_LINK") {
             window.open(item.Url);
         }
 
-        
+
     }
 
 
     logout() {
-        var url = environment.FoundationR3Url + AdInsConstant.Logout;
+        var url = environment.FoundationR3Url + URLConstant.Logout;
         this.http.post(url, "");
         AdInsHelper.ClearAllLog();
         this.router.navigate(['pages/login']);
@@ -166,7 +159,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     changeModul(modul: string) {
         var token = localStorage.getItem("Token");
-        var url = environment.FoundationR3Web+AdInsConstant.LoginURLFrontEnd + "?token=" + token;
+        var url = environment.FoundationR3Web + URLConstant.LoginURLFrontEnd + "?token=" + token;
         window.open(url, "_blank");
     }
 

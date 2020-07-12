@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -55,7 +56,7 @@ export class MouCancelComponent implements OnInit {
     if (event.Key == "customer") {
       var link: string;
       var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
@@ -70,7 +71,7 @@ export class MouCancelComponent implements OnInit {
         mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
-        this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
+        this.http.post(URLConstant.EditMouForCancelByMouId, mouCancel).subscribe(
           response => {
             this.toastr.successMessage(response["Message"]);
             // this.router.navigate(["/Mou/Cust/Cancel"]);
