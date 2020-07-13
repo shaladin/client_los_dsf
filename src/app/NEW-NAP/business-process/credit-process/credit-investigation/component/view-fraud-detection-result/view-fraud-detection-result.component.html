@@ -176,7 +176,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewDukcapilObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+  <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewDukcapilObj"></lib-ucviewgeneric>
   </ng-template>
 </div>
 
@@ -271,6 +271,6 @@
   </div>
 </div>
 <div *ngIf="isView == false">
-  <lib-ucviewgeneric [viewInput]="viewFraudVerifResultObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+  <lib-ucviewgeneric [viewGenericObj]="viewFraudVerifResultObj"></lib-ucviewgeneric>
 </div>
 

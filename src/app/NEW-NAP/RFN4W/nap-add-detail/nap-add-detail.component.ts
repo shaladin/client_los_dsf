@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper'
@@ -10,6 +9,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -23,13 +23,12 @@ export class NapAddDetailComponent implements OnInit {
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  token : any = localStorage.getItem(CommonConstant.TOKEN);
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -64,7 +63,22 @@ export class NapAddDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
+    this.viewProdMainInfoObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
@@ -226,7 +240,7 @@ export class NapAddDetailComponent implements OnInit {
     this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFRFN4W } });
   }
 
-  GetCallback(ev){
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token ); 
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

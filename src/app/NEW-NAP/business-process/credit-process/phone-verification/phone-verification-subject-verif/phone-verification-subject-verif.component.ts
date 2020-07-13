@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray, FormGroup, FormGroupDirective } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { DatePipe } from '@angular/common';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
-import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
@@ -66,8 +64,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   subjectType: string;
   idSource: number;
   verfSchemeHId: number;
-  AppNoUrl = environment.losR3Web + '/Nap/View/AppView?AppId=';
-  CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
   appObj = {
     AppId: 0,
   };
@@ -163,9 +159,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       await this.GetVerfResultHData();
       await this.GetListVerfResulHtData(this.verfResHObj);
     };
+  }
 
-
-
+  OpenView(key: string) {
+    if (key == 'app') {
+      AdInsHelper.OpenAppViewByAppId(this.appId);
+    } else if (key == 'cust') {
+      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
   }
 
   SaveForm(formDirective: FormGroupDirective) {
@@ -498,8 +499,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   Navigate() {
-    var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
   }
 
   test() {

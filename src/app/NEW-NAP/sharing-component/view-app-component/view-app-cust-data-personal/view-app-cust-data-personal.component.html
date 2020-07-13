@@ -1,4 +1,4 @@
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewMainDataObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
 <div class="px-3">
     <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
     </lib-ucSubsection>
@@ -34,11 +34,11 @@
         </table>
     </div>
 </div>
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'PROF'" [viewInput]="viewJobDataProfObj" [whereValue]="arrValue"></lib-ucviewgeneric>
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'EMP'" [viewInput]="viewJobDataEmpObj" [whereValue]="arrValue"></lib-ucviewgeneric>
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'SME'" [viewInput]="viewJobDataSmeObj" [whereValue]="arrValue"></lib-ucviewgeneric>
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'NONPROF'" [viewInput]="viewJobDataNonProfObj" [whereValue]="arrValue"></lib-ucviewgeneric>
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewFinDataObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'PROF'" [viewGenericObj]="viewJobDataProfObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'EMP'" [viewGenericObj]="viewJobDataEmpObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'SME'" [viewGenericObj]="viewJobDataSmeObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'NONPROF'" [viewGenericObj]="viewJobDataNonProfObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewFinDataObj"></lib-ucviewgeneric>
 <div class="px-3">
     <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
     </lib-ucSubsection>

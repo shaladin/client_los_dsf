@@ -46,19 +46,11 @@ export class MouReviewPagingComponent implements OnInit {
 
   GetCallBack(event)
   {
-    // console.log("customerlink")
-    // console.log(event)
     if(event.Key == "customer"){
       var custObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          this.router.navigate([]).then(
-            result => { 
-              // window.open(this.link, '_blank'); 
               AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-            }
-          );
         },
         (error) => {
           console.log(error);

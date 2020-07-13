@@ -8,6 +8,8 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -15,7 +17,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class OutstandingTcDetailComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   listAppTCObj: any;
   appTC: any;
@@ -32,7 +34,14 @@ export class OutstandingTcDetailComponent implements OnInit {
   OustandingTCForm = this.fb.group({});
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewOutstandingTC.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   SaveForm() {
@@ -72,12 +81,5 @@ export class OutstandingTcDetailComponent implements OnInit {
 
   Back() {
     this.router.navigate(['/Nap/AddProcess/OutstandingTC/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
-  }
-
-  GetCallBack(ev: any) {
-    console.log(ev);
-    if (ev.Key == "ViewApp") {
-      AdInsHelper.OpenAppViewByAppId(ev.ViewObj.AppId);
-    }
   }
 }

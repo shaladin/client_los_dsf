@@ -15,7 +15,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class ReturnHandlingPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(
     private route: ActivatedRoute,
     private router: Router) {
@@ -51,7 +50,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
     }
   }
 }

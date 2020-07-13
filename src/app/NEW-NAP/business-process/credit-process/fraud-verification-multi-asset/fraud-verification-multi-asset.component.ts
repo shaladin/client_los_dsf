@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-fraud-verification-multi-asset',
@@ -56,7 +57,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   RowVersion: any;
   listNegativeAsset: any;
   dukcapilObj: any;
-  viewDukcapilObj: string;
+  viewDukcapilObj: UcViewGenericObj = new UcViewGenericObj();
   listCustDuplicate: any;
   trxRefNo: string;
   mrSrvySourceCode: string;
@@ -90,7 +91,10 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.verfCode = context[CommonConstant.EMP_NO];
     await this.getApp();
     await this.getAppAsset();
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
+    this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
+    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
+    this.viewDukcapilObj.whereValue = this.arrValue;
+    
     this.isDataAlreadyLoaded = true;
     this.bizTemplateCode = CommonConstant.FL4W;
   }

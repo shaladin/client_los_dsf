@@ -16,7 +16,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class DeliveryOrderMultiAssetComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   bizTemplateCode: string;
-  token : any = localStorage.getItem(CommonConstant.TOKEN);
   
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +59,7 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token ); 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion); 
     }
   }
 

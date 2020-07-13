@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-os-tc-detail',
@@ -22,7 +23,7 @@ export class MouOsTcDetailComponent implements OnInit {
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   MouCustId: number = 0;
   mouType: string;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -37,7 +38,14 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObject.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
@@ -73,8 +81,6 @@ export class MouOsTcDetailComponent implements OnInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          // window.open(this.link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

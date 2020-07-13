@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-tab-application',
@@ -12,16 +12,23 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class TabApplicationComponent implements OnInit {
   @Input() appId;
-  viewProdMainInfoObj;
+  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
 
-  constructor( 
+  constructor(
     private http: HttpClient
   ) { }
 
-  initData(){
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
+  initData() {
+    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
+    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
+    this.viewProdMainInfoObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   async ngOnInit() {
@@ -31,9 +38,9 @@ export class TabApplicationComponent implements OnInit {
   }
 
   ListCrossAppData
-  async GetCrossAppData(){
-    var obj={ AppId: this.appId };
-    
+  async GetCrossAppData() {
+    var obj = { AppId: this.appId };
+
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
         console.log(response);
@@ -43,11 +50,11 @@ export class TabApplicationComponent implements OnInit {
     );
   }
 
-  GetLoanObjData(){
+  GetLoanObjData() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
 
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, {AppId: this.appId}).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

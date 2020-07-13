@@ -16,7 +16,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
   BizTemplateCode: string;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(
     private route: ActivatedRoute,
     private router: Router,) {
@@ -73,7 +72,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
       }
     }
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  
     }
   }
 }

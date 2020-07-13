@@ -14,7 +14,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   inputPagingObj: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -36,7 +35,7 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   }
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 }

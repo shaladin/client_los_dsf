@@ -1,7 +1,6 @@
 import { environment } from "environments/environment";
 
 export class URLConstant {
-
     // NOTIFICATION HUB
     public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
     public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/NotificationH/GetListNotificationHByRefUserId";

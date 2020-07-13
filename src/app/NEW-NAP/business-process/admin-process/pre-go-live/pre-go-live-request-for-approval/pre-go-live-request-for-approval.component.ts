@@ -9,12 +9,13 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html'
 })
 export class PreGoLiveRequestForApprovalComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: any;
   itemApprovedBy: any;
   AgrmntNo: any;
@@ -53,16 +54,34 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       }
     );
     this.LoadRefReason();
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
     if (ev.Key == "customer") {
-      var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId;
-      window.open(link, "_blank");
+      AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
     }
   }
 

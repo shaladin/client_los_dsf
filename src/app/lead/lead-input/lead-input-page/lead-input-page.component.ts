@@ -9,6 +9,7 @@ import Stepper from 'bs-stepper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -23,7 +24,7 @@ export class LeadInputPageComponent implements OnInit {
   isLeadData: boolean;
   TaskListId: number;
   titlePageType: string;
-  viewLeadHeaderMainInfo : string; 
+  viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex :number =1;
@@ -53,7 +54,14 @@ export class LeadInputPageComponent implements OnInit {
     if (this.TaskListId > 0) {
       this.claimTask();
     }
-    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewLeadHeaderMainInfo.viewEnvironment = environment.losUrl;
+    this.viewLeadHeaderMainInfo.ddlEnvironments = [
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
@@ -64,7 +72,7 @@ export class LeadInputPageComponent implements OnInit {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     this.leadMainInfo.clear();
     const component = this.leadMainInfo.createComponent(componentFactory);
-    component.instance.viewInput = this.viewLeadHeaderMainInfo;
+    component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
   }
 
   EnterTab(type) {
@@ -110,7 +118,7 @@ export class LeadInputPageComponent implements OnInit {
           const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
           this.leadMainInfo.clear();
           const component = this.leadMainInfo.createComponent(componentFactory);
-          component.instance.viewInput = this.viewLeadHeaderMainInfo;
+          component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
         }
       }
       else{

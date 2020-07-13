@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -16,7 +17,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class InvoiceVerifDetailComponent implements OnInit {
 
-  viewObj: any;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listInvoice: any;
   listVerificationStatus: any;
   verifStatCode: RefMasterObj;
@@ -46,7 +47,18 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
   ngOnInit() {
     this.claimTask();
-    this.viewObj = "./assets/ucviewgeneric/viewInvoiceVerif.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "ApplicationNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
 
     this.GetListVerifStatus();
     var request = {
@@ -129,10 +141,10 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.OsPlafondAmt += item.get("InvoiceAmt").value;
     }
   }
-
-  GetCallBack(ev: any) {
-    if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+  
+  GetCallBack(ev: any){
+    if(ev.Key == "ViewProdOffering"){ 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
   }
 }

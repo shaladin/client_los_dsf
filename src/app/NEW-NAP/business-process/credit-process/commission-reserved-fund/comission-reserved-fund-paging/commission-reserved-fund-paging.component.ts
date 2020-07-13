@@ -27,7 +27,6 @@ export class CommissionReservedFundPagingComponent implements OnInit {
   }
 
   inputPagingObj;
-  token : any = localStorage.getItem(CommonConstant.TOKEN);
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
@@ -55,7 +54,7 @@ export class CommissionReservedFundPagingComponent implements OnInit {
   GetCallBack(ev: any){
     console.log(ev);
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
      
   }

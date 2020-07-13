@@ -61,6 +61,8 @@ export class CommonConstant {
     public static LeadStepCancel = "CAN";
     public static LeadStepNew = "NEW";
     public static LeadStepReject = "RJC";
+    public static LeadStepSelfVerification = "SVR";
+    
 
     //ASSET CONDITION 
     public static AssetConditionUsed = "USED";
@@ -403,6 +405,10 @@ export class CommonConstant {
     public static RefMasterTypeCodeInterestTypeFactoring = "INTEREST_TYPE";
     public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
     public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE"; 
+    public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
+    
+    public static RefMasterReservedField2NonFee = "NON_FEE";
+    public static RefMasterReservedField2Fee = "FEE";
 
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";

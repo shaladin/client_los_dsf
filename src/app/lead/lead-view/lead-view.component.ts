@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-lead-view',
@@ -7,11 +9,18 @@ import { Component, OnInit } from '@angular/core';
 
 export class LeadViewComponent implements OnInit {
 
-  constructor() { } 
-  leadViewHeader: string;
-   
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+
+  constructor() { }
+
   ngOnInit() {
-    this.leadViewHeader = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
- 
 }

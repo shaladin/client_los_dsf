@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -15,11 +16,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: any;
   AgrmntId: any;
   AppAgrmntCancelObj: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
@@ -38,7 +38,22 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
 
     var refReasonObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
@@ -72,7 +87,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 }

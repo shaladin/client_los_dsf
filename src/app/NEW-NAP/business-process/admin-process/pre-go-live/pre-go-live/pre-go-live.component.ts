@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -26,7 +27,7 @@ export class PreGoLiveComponent implements OnInit {
   AgrmntId: any;
   AgrmntNo: any;
   result: any;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   appTC: any;
   TaskListId: any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
@@ -100,7 +101,26 @@ export class PreGoLiveComponent implements OnInit {
       }
     );
     this.claimTask();
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     var agrmntObj = new AgrmntObj();
     agrmntObj.AgrmntId = this.AgrmntId;
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
@@ -120,8 +140,8 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+    if (ev.Key == "ViewProdOffering") { 
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
   }
 

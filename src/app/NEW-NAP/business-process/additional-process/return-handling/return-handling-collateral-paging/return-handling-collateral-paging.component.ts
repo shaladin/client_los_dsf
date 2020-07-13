@@ -20,7 +20,6 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   userAccess;
-  token : any = localStorage.getItem(CommonConstant.TOKEN);
   BizTemplateCode: string;
   constructor(
     private http: HttpClient,
@@ -67,7 +66,7 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
   
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  
     }
   }
 }

@@ -31,8 +31,7 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   inputGridObj: any;
   result : any = new Array();
   resultData : any;
-  closeResult: any;
-  token : any = localStorage.getItem("Token");
+  closeResult: any; 
   appAssetObj: AppAssetObj = new AppAssetObj();
   gridAssetDataObj: InputGridObj = new InputGridObj();
   listAppAssetObj: any;

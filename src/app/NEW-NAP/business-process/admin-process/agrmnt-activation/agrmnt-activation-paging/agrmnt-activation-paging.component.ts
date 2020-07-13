@@ -16,7 +16,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class AgrmntActivationPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
-  token : any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -58,7 +57,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );   
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);   
     }
   }
 

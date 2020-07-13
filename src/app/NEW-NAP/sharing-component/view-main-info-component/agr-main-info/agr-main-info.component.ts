@@ -3,6 +3,7 @@ import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-agr-main-info',
@@ -10,19 +11,31 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class AgrMainInfoComponent implements OnInit {
 
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
-  token : any = localStorage.getItem(CommonConstant.TOKEN);
+ 
   constructor(
     private router: Router ) { }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
   
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
   }
 
