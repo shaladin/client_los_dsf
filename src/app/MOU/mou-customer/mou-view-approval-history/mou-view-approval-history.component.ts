@@ -6,6 +6,7 @@ import { MouCustRvwHObj } from 'app/shared/model/MouCustRvwHObj.Model';
 import { MouCustRvwDObj } from 'app/shared/model/MouCustRvwDObj.Model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-approval-history',
@@ -47,7 +48,7 @@ export class MouViewApprovalHistoryComponent implements OnInit {
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];
             for (let i = 0; i < this.ListRfaLogObj.length; i++) {
-              if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_GEN_APV" && this.MrMouTypeCode == "GENERAL") {
+              if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_GEN_APV" && this.MrMouTypeCode == CommonConstant.GENERAL) {
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
@@ -55,7 +56,7 @@ export class MouViewApprovalHistoryComponent implements OnInit {
                   apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count1++;
-              } else if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_FCTR_APV" && this.MrMouTypeCode == "FACTORING") {
+              } else if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_FCTR_APV" && this.MrMouTypeCode == CommonConstant.FACTORING) {
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',

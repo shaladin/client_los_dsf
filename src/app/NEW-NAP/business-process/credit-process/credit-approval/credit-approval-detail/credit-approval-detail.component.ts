@@ -54,7 +54,7 @@ export class CreditApprovalDetailComponent implements OnInit {
     });
   }
   async ngOnInit(): Promise<void> {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     this.getApp();
@@ -88,7 +88,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   onApprovalSubmited(event) {
     if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
-      var user = JSON.parse(localStorage.getItem("UserAccess"));
+      var user = JSON.parse(localStorage.getItemCommonConstant.USER_ACCESS());
 
       returnHandlingHObj.AppId = this.appId;
       returnHandlingHObj.AgrmntId = null;
@@ -114,7 +114,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
 
   onCancelClick() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS)
     this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 }

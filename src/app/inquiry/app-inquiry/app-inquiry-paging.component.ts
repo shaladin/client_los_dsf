@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -14,7 +15,7 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private router: Router, private http: HttpClient) { }
 

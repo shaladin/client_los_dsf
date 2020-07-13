@@ -19,7 +19,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   AppAgrmntCancelObj: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
@@ -45,7 +45,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {
-        this.itemReasonCode = response["ReturnObject"];
+        this.itemReasonCode = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
           ReasonCode: this.itemReasonCode[0].Key
         });

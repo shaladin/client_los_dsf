@@ -60,9 +60,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   });
   AppId: any;
   AgrmntId: any;
-  token = localStorage.getItem("Token");
+  token = localStorage.getItem(CommonConstant.TOKEN);
   LeadId: string;
-  bizTemplateCode: string = localStorage.getItem("BizTemplateCode");
+  bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   MouCustId: any;
 
 
@@ -315,7 +315,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onCancelClick() {
-    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
   }
 
   openView(custNo) {

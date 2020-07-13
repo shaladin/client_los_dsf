@@ -20,6 +20,7 @@ import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-collateral-add-edit-single',
@@ -176,18 +177,18 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
         this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
           (response) => {
-            if (response["ReturnObject"].length > 0) {
-              for (var i = 0; i < response["ReturnObject"].length; i++) {
+            if (response[CommonConstant.ReturnObj].length > 0) {
+              for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
                 var assetDocumentDetail = this.fb.group({
-                  DocCode: response["ReturnObject"][i].AssetDocCode,
-                  AssetDocName: response["ReturnObject"][i].AssetDocName,
-                  IsValueNeeded: response["ReturnObject"][i].IsValueNeeded,
-                  IsMandatoryNew: response["ReturnObject"][i].IsMandatoryNew,
-                  IsMandatoryUsed: response["ReturnObject"][i].IsMandatoryUsed,
-                  IsReceived: response["ReturnObject"][i].IsReceived,
-                  DocNo: response["ReturnObject"][i].DocNo,
-                  ACDExpiredDt: response["ReturnObject"][i].ACDExpiredDt,
-                  DocNotes: response["ReturnObject"][i].DocNotes
+                  DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+                  AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+                  IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+                  IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+                  IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+                  IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+                  DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+                  ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+                  DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
                 }) as FormGroup;
                 this.items.push(assetDocumentDetail);
               }
@@ -290,10 +291,10 @@ export class CollateralAddEditSingleComponent implements OnInit {
   }
 
   bindAppData() {
-    var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.OwnerRelationshipObj = response["ReturnObject"];
+        this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
             OwnerRelationship: this.OwnerRelationshipObj[0].Key,
@@ -306,7 +307,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var attrobj = {};
     this.http.post(URLConstant.GetListRefAppAttrCollateral, attrobj).subscribe(
       (response) => {
-        this.listRefAppAttr = response['ReturnObject'];
+        this.listRefAppAttr = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.listRefAppAttr["length"]; i++) {
           var Attr = this.fb.group({
             AppAttrValue: this.listRefAppAttr[i].AppAttrValue,
@@ -319,41 +320,41 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var appIdObj = { AppId: this.AppId }
     this.http.post(URLConstant.GetAppCollateralByAppCollateralId, appIdObj).subscribe(
       (response) => {
-        this.listCollateralData = response['ReturnObject'];
+        this.listCollateralData = response[CommonConstant.ReturnObj];
       })
 
     var assetObj = {};
     this.http.post(URLConstant.GetListKeyValueByCode, assetObj).subscribe(
       (response) => {
-        this.CollTypeList = response['ReturnObject'];
+        this.CollTypeList = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
         });
       })
 
-    var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.IdTypeList = response['ReturnObject'];
+        this.IdTypeList = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
           MrIdType: this.IdTypeList[0].Key
         });
       })
 
-    var refMasterObj = { RefMasterTypeCode: 'ASSET_CONDITION' };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.ConditionCodeList = response['ReturnObject'];
+        this.ConditionCodeList = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
           MrCollateralConditionCode: this.ConditionCodeList[0].Key
         });
       })
 
 
-    var refMasterObj = { RefMasterTypeCode: 'ASSET_USAGE' };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetUsage };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.UsageCodeList = response['ReturnObject'];
+        this.UsageCodeList = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
           MrCollateralUsageCode: this.UsageCodeList[0].Key
         });
@@ -412,7 +413,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var getListUrl = URLConstant.GetListAppCollateralByAppId;
     this.http.post(getListUrl, obj).subscribe(
       (response) => {
-        this.listCollExisting = response['ReturnObject'];
+        this.listCollExisting = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);

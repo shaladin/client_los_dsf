@@ -28,7 +28,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   RFAPreGoLive: any;
   TaskListId: any;
   AgrmntId: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -46,7 +46,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListApprovedByForPreGoLive, schmCodeObj).subscribe(
       (response) => {
-        this.itemApprovedBy = response["ReturnObject"];
+        this.itemApprovedBy = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
           ApprovedBy: this.itemApprovedBy[0].Key
         });
@@ -72,7 +72,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {
-        this.itemReason = response["ReturnObject"];
+        this.itemReason = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
           Reason: this.itemReason[0].Value
         });
@@ -89,7 +89,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.RowVersion = "";
 
     this.http.post(URLConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
-      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
     },
       (error) => {
         console.log(error);

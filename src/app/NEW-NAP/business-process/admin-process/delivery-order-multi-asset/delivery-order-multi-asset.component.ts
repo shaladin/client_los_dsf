@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-delivery-order-multi-asset',
@@ -15,7 +16,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class DeliveryOrderMultiAssetComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   bizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
+  token : any = localStorage.getItem(CommonConstant.TOKEN);
   
   constructor(
     private route: ActivatedRoute,

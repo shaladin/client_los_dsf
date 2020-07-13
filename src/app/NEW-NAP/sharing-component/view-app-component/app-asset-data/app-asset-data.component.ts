@@ -4,6 +4,7 @@ import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailComponent } from './app-asset-data-detail/app-asset-data-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-asset-data',
@@ -26,7 +27,7 @@ export class AppAssetDataComponent implements OnInit {
     let getAppCollateral = this.httpClient.post(URLConstant.GetViewAppCollateralObjByAppId, request);
     forkJoin([getAppAsset, getAppCollateral]).subscribe(
       (response) => {
-        this.appAssetList = response[0]["ReturnObject"];
+        this.appAssetList = response[0][CommonConstant.ReturnObj];
         this.appCollateralList = response[1]["AppCollateralObjs"];
       },
       (error) => {

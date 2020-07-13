@@ -117,28 +117,28 @@ export class GuarantorPersonalComponent implements OnInit {
     }
 
     var refCustRelObj = {
-      RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship,
       RowVersion: ""
     }
     var idTypeObj = {
-      RefMasterTypeCode: "ID_TYPE",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
       RowVersion: ""
     }
     var genderObj = {
-      RefMasterTypeCode: "GENDER",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
       RowVersion: ""
     }
     var maritalObj = {
-      RefMasterTypeCode: "MARITAL_STAT",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
       RowVersion: ""
     }
     var religionObj = {
-      RefMasterTypeCode: "RELIGION",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
       (response) => {
-        this.MrIdTypeCode = response["ReturnObject"];
+        this.MrIdTypeCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrIdTypeCode: this.MrIdTypeCode[0].MasterCode
@@ -150,7 +150,7 @@ export class GuarantorPersonalComponent implements OnInit {
     );
     this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
       (response) => {
-        this.MrCustRelationshipCode = response["ReturnObject"];
+        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
@@ -160,7 +160,7 @@ export class GuarantorPersonalComponent implements OnInit {
     );
     this.http.post(URLConstant.GetListActiveRefMaster, genderObj).subscribe(
       (response) => {
-        this.MrGenderCode = response["ReturnObject"];
+        this.MrGenderCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrGenderCode: this.MrGenderCode[0].MasterCode
@@ -170,7 +170,7 @@ export class GuarantorPersonalComponent implements OnInit {
     );
     this.http.post(URLConstant.GetListActiveRefMaster, maritalObj).subscribe(
       (response) => {
-        this.MrMaritalStatCode = response["ReturnObject"];
+        this.MrMaritalStatCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrMaritalStatCode: this.MrMaritalStatCode[0].MasterCode
@@ -178,11 +178,11 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
+    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.MrNationalityCode = response["ReturnObject"];
+        this.MrNationalityCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           if (this.MrNationalityCode.length > 0) {
             this.PersonalForm.patchValue({
@@ -194,7 +194,7 @@ export class GuarantorPersonalComponent implements OnInit {
     );
     this.http.post(URLConstant.GetListActiveRefMaster, religionObj).subscribe(
       (response) => {
-        this.MrReligionCode = response["ReturnObject"];
+        this.MrReligionCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrReligionCode: this.MrReligionCode[0].MasterCode
@@ -209,7 +209,7 @@ export class GuarantorPersonalComponent implements OnInit {
   MaxDate: Date;
   Max17YO: Date;
   getDate() {
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
     this.Max17YO.setFullYear(this.MaxDate.getFullYear() - 17);
@@ -385,7 +385,7 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   clearExpDt() {
-    if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
+    if (this.PersonalForm.controls.MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.PersonalForm.patchValue({
         IdExpDt: '',
       });
@@ -421,9 +421,9 @@ export class GuarantorPersonalComponent implements OnInit {
       flag = false;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
-    if (this.guarantorPersonalObj.AppGuarantorPersonalObj.MrIdTypeCode != "EKTP") {
+    if (this.guarantorPersonalObj.AppGuarantorPersonalObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP) {
       var a = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
-      var Business_Date = localStorage.getItem('BusinessDate');
+      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DT);
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);

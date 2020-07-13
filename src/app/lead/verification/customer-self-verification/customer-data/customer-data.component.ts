@@ -158,10 +158,10 @@ export class CustomerDataComponent implements OnInit {
   }
 
   ngOnInit() {
-      var context = JSON.parse(localStorage.getItem("UserAccess"));
+      var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
       if (context != null && context != undefined) // TOLONG JANGAN DIHAPUS, SUPAYA BISA DIAKSES EXTERNAL PAGE TANPA PERLU LOGIN!!!
       {
-        this.businessDt = new Date(context["BusinessDt"]);
+        this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
         this.businessDt.setDate(this.businessDt.getDate() - 1);
       }
       this.reqLeadCustObj = new LeadCustObj();
@@ -182,7 +182,7 @@ export class CustomerDataComponent implements OnInit {
               this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
               this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
                 (response) => {
-                    this.resLeadCustSocmedObj = response["ReturnObject"];
+                    this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
                     console.log("aaa")
                     console.log(this.resLeadCustSocmedObj)
                     this.CustomerDataForm.patchValue({
@@ -314,7 +314,7 @@ export class CustomerDataComponent implements OnInit {
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
       (response) => {
-        this.tempGender = response["ReturnObject"];
+        this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
       }
     );
@@ -323,23 +323,23 @@ export class CustomerDataComponent implements OnInit {
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
     (response) => {
-        this.tempIdType = response['ReturnObject'];
-        this.CustomerDataForm.patchValue({ MrIdTypeCode: response['ReturnObject'][0]['Key'] });
+        this.tempIdType = response[CommonConstant.ReturnObj];
+        this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
     });
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
     this.http.post(this.getListActiveRefMasterUrl, this.maritalStatCode).subscribe(
       (response) => {
-          this.tempMrMaritalStatCode = response["ReturnObject"];
-          this.CustomerDataForm.patchValue({ MrMaritalStatCode: response['ReturnObject'][0]['Key'] });
+          this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
+          this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
         // if (this.tempCustPersonalObj.MrMaritalStatCode != null) {
         //   this.CustomerDataForm.patchValue({
         //     MrMaritalStatCode: this.tempCustPersonalObj.MrMaritalStatCode
         //   });
         // } else {
         //   this.CustomerDataForm.patchValue({
-        //     MrMaritalStatCode: response['ReturnObject'][0]['Key']
+        //     MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key']
         //   });
         // }
       }
@@ -350,9 +350,9 @@ export class CustomerDataComponent implements OnInit {
     this.custModel.ReserveField1 = CommonConstant.CustTypePersonal;
     this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
       (response) => {
-          this.listCustModel = response['ReturnObject'];
-          this.CustomerDataForm.patchValue({ CustModel: response['ReturnObject'][0]['Key'] });
-          this.CustModelKey = response['ReturnObject'][0]['Key'];
+          this.listCustModel = response[CommonConstant.ReturnObj];
+          this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
+          this.CustModelKey = response[CommonConstant.ReturnObj][0]['Key'];
           var arrAddCrit = new Array();
           var addCrit = new CriteriaObj();
           addCrit.DataType = "text";
@@ -410,7 +410,7 @@ export class CustomerDataComponent implements OnInit {
         this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
           (response) => {
-              this.resLeadCustSocmedObj = response["ReturnObject"];
+              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
                 Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
                 Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
@@ -560,7 +560,7 @@ export class CustomerDataComponent implements OnInit {
               this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
               this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
                 (response) => {
-                    this.resLeadCustSocmedObj = response["ReturnObject"];
+                    this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
                     console.log("aaa")
                     console.log(this.resLeadCustSocmedObj)
                     this.CustomerDataForm.patchValue({

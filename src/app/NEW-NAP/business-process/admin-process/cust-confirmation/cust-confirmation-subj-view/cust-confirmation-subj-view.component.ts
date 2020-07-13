@@ -10,6 +10,7 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -147,7 +148,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     };
     this.http.post(URLConstant.GetListVerfResultDInQuestionGrp, verfResultDObj).subscribe(
       (response) => {
-        this.VerfResultDListObj = response["ReturnObject"];
+        this.VerfResultDListObj = response[CommonConstant.ReturnObj];
         this.IsVerfDetail = true;
       },
       (error) => {

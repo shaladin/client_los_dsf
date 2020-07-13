@@ -77,7 +77,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.arrValue.push(this.appId);
     this.initUrl();
@@ -100,7 +100,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          var lobCode = localStorage.getItem("BizTemplateCode");
+          var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         },
         (error) => {
@@ -115,7 +115,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
@@ -169,7 +169,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   GetAppCollateralData() {
     this.http.post(this.getListAppCollateralUrl, this.appObj).subscribe(
       (response) => {
-        this.appCollateralObj = response["ReturnObject"];
+        this.appCollateralObj = response[CommonConstant.ReturnObj];
         console.log(this.appCollateralObj);
       }
     );
@@ -213,10 +213,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

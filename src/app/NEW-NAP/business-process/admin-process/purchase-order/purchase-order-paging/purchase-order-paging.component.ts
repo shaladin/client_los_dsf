@@ -5,6 +5,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-purchase-order-paging',
@@ -14,7 +15,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
   bizTemplateCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  token : any = localStorage.getItem("Token");
+  token : any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -23,7 +24,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
         localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
       }
       else{
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.TOKEN);
       }
     });
   }

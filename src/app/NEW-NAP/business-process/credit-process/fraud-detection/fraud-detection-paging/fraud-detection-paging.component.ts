@@ -19,7 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {

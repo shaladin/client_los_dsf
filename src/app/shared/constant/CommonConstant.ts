@@ -13,9 +13,15 @@ export class CommonConstant {
     public static OFFICE_CODE = "OfficeCode";
     public static ROLE_CODE = "RoleCode";
     public static CURRENT_USER_CONTEXT = "currentUserContext"
-    public static PAGE_ACCESS = "pageAccess";
+    public static PAGE_ACCESS = "PageAccess";
     public static BUSINESS_DT = "BusinessDt";
-
+    public static TOKEN = "Token";
+    public static LOCAL_IP = "LocalIp";
+    public static BIZ_TEMPLATE_CODE= "BizTemplateCode";
+    public static BUSINESS_DATE_RAW = "BusinessDateRaw";
+    public static VERSION = "Version";
+    public static LAST_ACCESS_TIME = "LastAccessTime";
+    public static EMP_NO = "EmpNo";
     // Module
     public static LOAN_ORIGINATION = "LOS";
     public static FOUNDATION = "FOUNDATION";
@@ -41,12 +47,7 @@ export class CommonConstant {
 
     //CUST PERSONAL RELATIONSHIP
     public static SelfCustomer = "SELF";
-
-    //OFFICE TYPE
-    public static HeadOffice = "HO";
-    public static CG = "CG"
-    public static CenterGroup = "Center Group"
-
+ 
     //MOU STAT
     public static MouStatCancel = "CAN";
     public static MouDocSigner = "DSG";
@@ -111,10 +112,14 @@ export class CommonConstant {
     public static CFNEWCAR = "CFNEWCAR";
     public static CENTER_GROUP_CODE = "CG";
 
+    //OFFICE TYPE
+    public static HeadOffice = "HO"; 
+    public static CenterGroup = "Center Group"
+
+
     public static GENERAL = "GENERAL";
     public static FACTORING = "FACTORING";
-    public static ID_TYPE_NPWP = "NPWP";
-    public static ID_TYPE_EKTP = "EKTP";
+    public static ID_TYPE_NPWP = "NPWP"; 
 
     public static SALES_JOB_CODE = "SALES_PERSON";
     public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
@@ -343,8 +348,7 @@ export class CommonConstant {
     public static RefMasterTypeCodeInstSchm = "INST_SCHM";
     public static RefMasterTypeCodePayFreq = "PAYFREQ";
     public static RefMasterTypeCodeCustNotifyOpt = "CUST_NOTIF_OPT";
-    public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE";
-    public static RefMasterTypeCodeInterestType = "INTRSTTYPE";
+    public static RefMasterTypeCodeFirstInstType = "FIRST_INST_TYPE"; 
     public static RefMasterTypeCodeAssetCondition = "ASSET_CONDITION";
     public static RefMasterTypeCodeAssetUsage = "ASSET_USAGE";
     public static RefMasterTypeCodeCustPersonalRelationship = "CUST_PERSONAL_RELATIONSHIP";
@@ -393,10 +397,16 @@ export class CommonConstant {
     public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
     public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
     public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
+    public static RefMasterTypeCodeInterestInputType = "INTEREST_INPUT_TYPE";
+    public static RefMasterTypeCodeAppPaidBy = "APP_PAID_BY";
+    public static RefMasterTypeCodeInterestTypeGeneral = "INTRSTTYPE";
+    public static RefMasterTypeCodeInterestTypeFactoring = "INTEREST_TYPE";
+    public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
+    public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE"; 
 
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";
-
+    
 
     //RATE TYPE
     public static RateTypeFlat = "FLT";

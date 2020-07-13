@@ -11,6 +11,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { NotificationHObj } from '../model/NotificationH/NotificationHObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from '../constant/URLConstant';
+import { CommonConstant } from '../constant/CommonConstant';
 
 @Component({
     selector: 'app-navbar',
@@ -41,7 +42,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         private http: HttpClient, public rolePickService: RolePickService, private toastr: NGXToastrService) {
         const browserLang: string = translate.getBrowserLang();
         translate.use(browserLang.match(/en|id|pt|de/) ? browserLang : 'en');
-        var userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+        var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
         var businessDate = localStorage.getItem("BusinessDate");
         var date = new Date(businessDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
         businessDate = formatDate(date, 'dd-MMM-yyyy', 'en-US');
@@ -158,7 +159,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     }
 
     changeModul(modul: string) {
-        var token = localStorage.getItem("Token");
+        var token = localStorage.getItem(CommonConstant.TOKEN);
         var url = environment.FoundationR3Web + URLConstant.LoginURLFrontEnd + "?token=" + token;
         window.open(url, "_blank");
     }

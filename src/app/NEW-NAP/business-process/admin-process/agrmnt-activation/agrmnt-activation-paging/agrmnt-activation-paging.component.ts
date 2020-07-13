@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-paging',
@@ -15,7 +16,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AgrmntActivationPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
+  token : any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {

@@ -152,7 +152,7 @@ export class InvoiceDataComponent implements OnInit {
   }
 
   DeleteInvoice(AppInvoiceFctrId: number) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.invoiceObj = new AppInvoiceFctrObj();
       this.invoiceObj.AppInvoiceFctrId = AppInvoiceFctrId;
 

@@ -9,6 +9,7 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalD
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-legal-doc-FL4W',
@@ -100,7 +101,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
   }
 
   delete(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
@@ -134,7 +135,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLegalDocType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.LegalDocTypeObj = response["ReturnObject"];
+        this.LegalDocTypeObj = response[CommonConstant.ReturnObj];
         if (this.LegalDocTypeObj.length > 0) {
           this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
           this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;

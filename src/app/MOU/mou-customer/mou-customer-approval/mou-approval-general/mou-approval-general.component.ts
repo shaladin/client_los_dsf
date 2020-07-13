@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-approval-general',
@@ -19,7 +20,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   MouCustId : number;
   taskId: number;
   instanceId: number;
-  MouType : string = "GENERAL";
+  MouType : string = CommonConstant.GENERAL;
   inputObj: any;
   link : any; 
   resultData : any;

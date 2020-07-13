@@ -168,7 +168,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.http.post(this.getFraudDukcapilByIdNo, reqObj).subscribe(
       (response) => {
         if(response["StatusCode"]==200)
-          this.dukcapilObj = response["ReturnObject"];
+          this.dukcapilObj = response[CommonConstant.ReturnObj];
       },
       () => {
         console.log("error")
@@ -179,7 +179,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   getAppDupCheckCust(appId) {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
       (response) => {
-        this.listCustDuplicate = response['ReturnObject']["CustDuplicate"];
+        this.listCustDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if (idxSelected < 0) {
           this.custStat = CommonConstant.CustStatExisting;
@@ -222,7 +222,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     var listAppCollateral = new Array<AppCollateralObj>();
     await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {
-        listAppCollateral = response["ReturnObject"];
+        listAppCollateral = response[CommonConstant.ReturnObj];
         
       },
       error => {
@@ -243,7 +243,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
       await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
         response => {
-          this.listNegativeAppCollateral = response["ReturnObject"];
+          this.listNegativeAppCollateral = response[CommonConstant.ReturnObj];
         });
     } 
   }
@@ -262,7 +262,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     }
     await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
       response => {
-        this.listNegativeAppAsset = response["ReturnObject"];
+        this.listNegativeAppAsset = response[CommonConstant.ReturnObj];
       },
       error => {
         console.log("error")

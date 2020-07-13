@@ -66,14 +66,14 @@ export class CreditReviewMainComponent implements OnInit {
 
 
   InitData() {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
     console.log(this.Arr);
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
     this.isReturnOn = false;
@@ -98,7 +98,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.ClaimTask();
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetAppNo();
@@ -379,10 +379,10 @@ export class CreditReviewMainComponent implements OnInit {
 
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

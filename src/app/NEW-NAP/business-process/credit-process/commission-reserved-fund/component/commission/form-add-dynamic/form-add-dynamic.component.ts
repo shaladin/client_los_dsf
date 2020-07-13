@@ -37,8 +37,8 @@ export class FormAddDynamicComponent implements OnInit {
   UserAccess;
   ngOnInit() {
     // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    // console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.arr = this.FormObj.get('arr') as FormArray;
     // console.log(this.FormInputObj);
     this.GetDDLContentName();
@@ -89,13 +89,13 @@ export class FormAddDynamicComponent implements OnInit {
         (response) => {
           // console.log("response bank");
           // console.log(response);
-          var len = response["ReturnObject"].length;
+          var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {
             var eachDDLDetail = this.fb.group({
-              Key: response["ReturnObject"][i]["BankAccountNo"],
-              Value: response["ReturnObject"][i]["BankAccountName"],
-              BankCode: response["ReturnObject"][i]["BankCode"],
-              BankName: response["ReturnObject"][i]["BankName"],
+              Key: response[CommonConstant.ReturnObj][i]["BankAccountNo"],
+              Value: response[CommonConstant.ReturnObj][i]["BankAccountName"],
+              BankCode: response[CommonConstant.ReturnObj][i]["BankCode"],
+              BankName: response[CommonConstant.ReturnObj][i]["BankName"],
               BankBranch: ""
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -115,13 +115,13 @@ export class FormAddDynamicComponent implements OnInit {
         (response) => {
           // console.log("response bank");
           // console.log(response);
-          var len = response["ReturnObject"].length;
+          var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {
             var eachDDLDetail = this.fb.group({
-              Key: response["ReturnObject"][i]["BankAccountNo"],
-              Value: response["ReturnObject"][i]["BankAccountName"],
-              BankCode: response["ReturnObject"][i]["BankCode"],
-              BankName: response["ReturnObject"][i]["BankName"],
+              Key: response[CommonConstant.ReturnObj][i]["BankAccountNo"],
+              Value: response[CommonConstant.ReturnObj][i]["BankAccountName"],
+              BankCode: response[CommonConstant.ReturnObj][i]["BankCode"],
+              BankName: response[CommonConstant.ReturnObj][i]["BankName"],
               BankBranch: ""
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -196,7 +196,7 @@ export class FormAddDynamicComponent implements OnInit {
 
   DeleteDataForm(idx) {
     // console.log(idx);
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.FormInputObj["isCalculated"] = false;
       if (this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value != 0)
         this.DeleteFromDatabase(this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value);
@@ -219,7 +219,7 @@ export class FormAddDynamicComponent implements OnInit {
 
   CheckData() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     console.log(this.FormObj);
   }
 

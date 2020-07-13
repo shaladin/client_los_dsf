@@ -96,7 +96,7 @@ export class MouReviewFactoringComponent implements OnInit {
 
     this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING }).pipe(first()).subscribe(
       (response) => {
-        this.listReason = response["ReturnObject"];
+        this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({
           Reason: this.listReason[0].Key
         });
@@ -112,8 +112,8 @@ export class MouReviewFactoringComponent implements OnInit {
   })
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

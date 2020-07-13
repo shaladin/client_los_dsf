@@ -79,7 +79,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
@@ -97,7 +97,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     }
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
       (response) => {
-        this.itemType = response["ReturnObject"];
+        this.itemType = response[CommonConstant.ReturnObj];
         this.DeliveryOrderForm.patchValue({
           MrCustRelationshipCode: this.itemType[0].Key
         });
@@ -128,20 +128,20 @@ export class DeliveryOrderDetailComponent implements OnInit {
         }
         this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
           (response) => {
-            if (response["ReturnObject"].length > 0) {
-              for (var i = 0; i < response["ReturnObject"].length; i++) {
+            if (response[CommonConstant.ReturnObj].length > 0) {
+              for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
                 var assetDocumentDetail = this.fb.group({
-                  DocCode: response["ReturnObject"][i].AssetDocCode,
-                  AssetDocName: response["ReturnObject"][i].AssetDocName,
-                  IsValueNeeded: response["ReturnObject"][i].IsValueNeeded,
-                  IsMandatoryNew: response["ReturnObject"][i].IsMandatoryNew,
-                  IsMandatoryUsed: response["ReturnObject"][i].IsMandatoryUsed,
-                  IsReceived: response["ReturnObject"][i].IsReceived,
-                  DocNo: response["ReturnObject"][i].DocNo,
-                  ACDExpiredDt: response["ReturnObject"][i].ACDExpiredDt,
-                  DocNotes: response["ReturnObject"][i].DocNotes
+                  DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+                  AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+                  IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+                  IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+                  IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+                  IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+                  DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+                  ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+                  DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
                 }) as FormGroup;
-                if (response["ReturnObject"][i].IsValueNeeded == true) {
+                if (response[CommonConstant.ReturnObj][i].IsValueNeeded == true) {
                   assetDocumentDetail.controls.DocNo.setValidators([Validators.required]);
                 }
                 this.items.push(assetDocumentDetail);
@@ -155,7 +155,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
   }
   SaveForm() {
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
     //   this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
     //   return;
@@ -257,10 +257,10 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
   async claimTask() {
     console.log("Claim");
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });

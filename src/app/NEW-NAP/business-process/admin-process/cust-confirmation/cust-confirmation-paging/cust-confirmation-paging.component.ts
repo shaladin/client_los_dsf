@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
@@ -16,7 +17,7 @@ export class CustConfirmationPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit = [];
   bizTemplateCode :any;
-  token : any = localStorage.getItem("Token");
+  token : any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -25,7 +26,7 @@ export class CustConfirmationPagingComponent implements OnInit {
         localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
       }
       else{
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }

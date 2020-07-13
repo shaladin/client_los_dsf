@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'agrmnt-view-insurance',
@@ -48,14 +49,14 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
     
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
       (response) => {
-        this.listAppAssetObj = response["ReturnObject"];
+        this.listAppAssetObj = response[CommonConstant.ReturnObj];
         console.log(this.listAppAssetObj);
 
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response["ReturnObject"];
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.result = this.inputGridObj.resultData.Data;
         console.log(this.result);
 

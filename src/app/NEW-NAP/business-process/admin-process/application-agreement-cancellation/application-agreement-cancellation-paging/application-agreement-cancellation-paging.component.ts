@@ -14,7 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   inputPagingObj: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router) { }
 
   ngOnInit() {

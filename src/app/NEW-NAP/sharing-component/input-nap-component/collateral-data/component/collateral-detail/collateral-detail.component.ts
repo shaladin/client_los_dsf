@@ -144,7 +144,7 @@ export class CollateralDetailComponent implements OnInit {
   initDropdownList() {
     this.http.post(URLConstant.GetListKeyValueByCode, {}).subscribe(
       (response) => {
-        this.CollTypeList = response['ReturnObject'];
+        this.CollTypeList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
             AssetTypeCode: this.CollTypeList[0].Key
@@ -153,9 +153,9 @@ export class CollateralDetailComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: 'ASSET_CONDITION' }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition }).subscribe(
       (response) => {
-        this.CollConditionList = response['ReturnObject'];
+        this.CollConditionList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
             MrCollateralConditionCode: this.CollConditionList[0].Key
@@ -163,9 +163,9 @@ export class CollateralDetailComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: 'ASSET_USAGE' }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetUsage }).subscribe(
       (response) => {
-        this.CollUsageList = response['ReturnObject'];
+        this.CollUsageList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
             MrCollateralUsageCode: this.CollUsageList[0].Key
@@ -178,7 +178,7 @@ export class CollateralDetailComponent implements OnInit {
       (response) => {
         let ListAttr = this.AddCollForm.get('ListAttr') as FormArray;
         let listRefAppAttr = new Array();
-        listRefAppAttr = response['ReturnObject'];
+        listRefAppAttr = response[CommonConstant.ReturnObj];
 
         for (let i = 0; i < listRefAppAttr.length; i++) {
           var Attr = this.fb.group({
@@ -188,24 +188,24 @@ export class CollateralDetailComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       (response) => {
-        this.OwnerRelationList = response["ReturnObject"];
+        this.OwnerRelationList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           if (this.OwnerRelationList.length > 0) {
             this.AddCollForm.patchValue({
               MrOwnerRelationshipCode: this.OwnerRelationList[0].Key,
               MrUserRelationshipCode: this.OwnerRelationList[0].Key,
-              CopyFromLegal: "LEGAL"
+              CopyFromLegal: CommonConstant.AddrTypeLegal
             });
           }
         }
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: 'ID_TYPE' }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
-        this.IdTypeList = response['ReturnObject'];
+        this.IdTypeList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
             MrIdTypeCode: this.IdTypeList[0].Key
@@ -259,19 +259,19 @@ export class CollateralDetailComponent implements OnInit {
   getRefAssetDocList() {
     this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
       (response) => {
-        if (response["ReturnObject"].length > 0) {
+        if (response[CommonConstant.ReturnObj].length > 0) {
           var ListDoc = this.AddCollForm.get('ListDoc') as FormArray;
-          for (var i = 0; i < response["ReturnObject"].length; i++) {
+          for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
             var assetDocumentDetail = this.fb.group({
-              DocCode: response["ReturnObject"][i].AssetDocCode,
-              AssetDocName: response["ReturnObject"][i].AssetDocName,
-              IsValueNeeded: response["ReturnObject"][i].IsValueNeeded,
-              IsMandatoryNew: response["ReturnObject"][i].IsMandatoryNew,
-              IsMandatoryUsed: response["ReturnObject"][i].IsMandatoryUsed,
-              IsReceived: response["ReturnObject"][i].IsReceived,
-              DocNo: response["ReturnObject"][i].DocNo,
-              ACDExpiredDt: response["ReturnObject"][i].ACDExpiredDt,
-              DocNotes: response["ReturnObject"][i].DocNotes
+              DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+              AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+              IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+              IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+              IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+              IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+              DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+              ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
             }) as FormGroup;
             ListDoc.push(assetDocumentDetail);
           }

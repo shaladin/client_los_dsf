@@ -68,7 +68,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
       }
     );
 
-    this.context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     if (this.Mode == "add") {

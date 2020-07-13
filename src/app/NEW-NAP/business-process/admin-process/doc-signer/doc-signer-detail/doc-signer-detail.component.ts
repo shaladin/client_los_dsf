@@ -36,10 +36,10 @@ export class DocSignerDetailComponent implements OnInit {
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
   ResponseAppCustDataObj: any;
-  MrCustTypeCode: string = "COMPANY";
+  MrCustTypeCode: string = CommonConstant.CustTypeCompany;
   CustFullName: string;
   ContactPersonName: string;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   BizTemplateCode: string;
   isHidden: boolean;
 
@@ -326,7 +326,7 @@ export class DocSignerDetailComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
     }
     if (ev.Key == "agrmnt") {
-      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
+      var bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
 
       if (bizTemplateCode == CommonConstant.CF4W || bizTemplateCode == CommonConstant.CFRFN4W || bizTemplateCode == CommonConstant.FACTORING) {
         window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");

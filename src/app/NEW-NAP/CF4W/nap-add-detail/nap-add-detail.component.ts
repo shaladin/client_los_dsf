@@ -35,7 +35,7 @@ export class NapAddDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
 
@@ -193,7 +193,7 @@ export class NapAddDetailComponent implements OnInit {
     var appObj = { AppId: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
-        this.ListAsset = response['ReturnObject'];
+        this.ListAsset = response[CommonConstant.ReturnObj];
         if (this.ListAsset != undefined && this.ListAsset != null) {
           if (this.ListAsset.length > 1)
             this.IsMultiAsset = 'True';
@@ -333,10 +333,10 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
     this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(

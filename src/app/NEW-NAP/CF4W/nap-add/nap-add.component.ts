@@ -83,12 +83,12 @@ export class NapAddComponent implements OnInit {
   isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == CommonConstant.CG) {
+    if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -177,7 +177,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.officeItems = response["ReturnObject"];
+        this.officeItems = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);

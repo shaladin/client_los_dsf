@@ -9,6 +9,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -66,7 +67,7 @@ export class AssetDataPagingComponent implements OnInit {
     }
 
     if (ev.Key == "delete") {
-      if (confirm("Are you sure to delete this record?")) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var appAssetObj = new AppAssetObj();
         appAssetObj.AppAssetId = ev.RowObj.AppAssetId;
         appAssetObj.AppId = ev.RowObj.AppId;
@@ -108,7 +109,7 @@ export class AssetDataPagingComponent implements OnInit {
     }
 
     if (ev.Key == "delete") {
-      if (confirm("Are you sure to delete this record?")) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var collateralObj = new AppCollateralObj();
         collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
         collateralObj.AppId = this.AppId;
@@ -117,10 +118,10 @@ export class AssetDataPagingComponent implements OnInit {
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
-            this.listAppCollateralObj = response["ReturnObject"];
+            this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
             var DetailForGridCollateral = {
-              Data: response["ReturnObject"],
+              Data: response[CommonConstant.ReturnObj],
               Count: "0"
             }
 
@@ -146,10 +147,10 @@ export class AssetDataPagingComponent implements OnInit {
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
         console.log("Response Asset : " + JSON.stringify(response));
-        this.listAppAssetObj = response["ReturnObject"];
+        this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
         var DetailForGridAsset = {
-          Data: response["ReturnObject"],
+          Data: response[CommonConstant.ReturnObj],
           Count: "0"
         }
 
@@ -169,10 +170,10 @@ export class AssetDataPagingComponent implements OnInit {
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
         console.log("Collateral : " + JSON.stringify(response));
-        this.listAppCollateralObj = response["ReturnObject"];
+        this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
         var DetailForGridCollateral = {
-          Data: response["ReturnObject"],
+          Data: response[CommonConstant.ReturnObj],
           Count: "0"
         }
 
@@ -193,10 +194,10 @@ export class AssetDataPagingComponent implements OnInit {
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
-        this.listAppCollateralObj = response["ReturnObject"];
+        this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
         var DetailForGridCollateral = {
-          Data: response["ReturnObject"],
+          Data: response[CommonConstant.ReturnObj],
           Count: "0"
         }
 

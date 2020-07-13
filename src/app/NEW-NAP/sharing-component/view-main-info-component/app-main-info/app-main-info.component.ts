@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-main-info',
@@ -15,7 +16,7 @@ export class AppMainInfoComponent implements OnInit {
 
   viewObj: string;
   @Input() arrValue = [];
-  token : any = localStorage.getItem("Token");
+  token : any = localStorage.getItem(CommonConstant.TOKEN);
   AppObj : any;
   constructor(private http: HttpClient,
     private router: Router ) { }
@@ -25,9 +26,9 @@ export class AppMainInfoComponent implements OnInit {
       (response) => {
         console.log(response);
         this.AppObj = response;
-        if(this.AppObj.BizTemplateCode == "CF4W"){
+        if(this.AppObj.BizTemplateCode == CommonConstant.CF4W){
           this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-        }else if(this.AppObj.BizTemplateCode == "FL4W"){
+        }else if(this.AppObj.BizTemplateCode == CommonConstant.FL4W){
           this.viewObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
         }else{
           this.viewObj = "./assets/ucviewgeneric/viewAppMainInfo.json";

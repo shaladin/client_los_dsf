@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-personal-financial-data',
@@ -89,10 +90,10 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   }
 
   bindSourceOfIncomeObj(){
-    this.refMasterObj.RefMasterTypeCode = "SOURCE_INCOME";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSourceIncome;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.SourceOfIncomeObj = response["ReturnObject"];
+        this.SourceOfIncomeObj = response[CommonConstant.ReturnObj];
         if(this.SourceOfIncomeObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
             MrSourceOfIncomeTypeCode: this.SourceOfIncomeObj[0].Key

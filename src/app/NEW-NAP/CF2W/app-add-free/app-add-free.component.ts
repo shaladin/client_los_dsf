@@ -92,8 +92,8 @@ export class AppAddFreeComponent implements OnInit {
   user;
   ngOnInit() {
     // Lookup Obj
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
 
@@ -107,7 +107,7 @@ export class AppAddFreeComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    } else if (this.user.MrOfficeTypeCode == CommonConstant.CG) {
+    } else if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -159,7 +159,7 @@ export class AppAddFreeComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.officeItems = response["ReturnObject"];
+        this.officeItems = response[CommonConstant.ReturnObj];
         this.NapAppForm.patchValue({
           OriOfficeCode: this.officeItems[0].Key,
           OriOfficeName: this.officeItems[0].Value,
@@ -261,7 +261,7 @@ export class AppAddFreeComponent implements OnInit {
     this.http.post(url,obj).subscribe(
       (response) => {
         // console.log(response);
-        var temp = response["ReturnObject"];
+        var temp = response[CommonConstant.ReturnObj];
         for(var i=0;i<temp.length;i++){
           if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob){
             tempLobCode = temp[i].CompntValue;

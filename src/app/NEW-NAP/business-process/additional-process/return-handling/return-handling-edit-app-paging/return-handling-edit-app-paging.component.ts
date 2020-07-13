@@ -16,7 +16,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
   BizTemplateCode: string;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(
     private route: ActivatedRoute,
     private router: Router,) {
@@ -31,7 +31,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   inputPagingObj;
   userAccess;
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingApp.json";

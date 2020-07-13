@@ -2,6 +2,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Injectable } from '@angular/core';
 import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from '../constant/CommonConstant';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router,public errorDialogService: ErrorDialogService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    var currentUser = localStorage.getItem("UserAccess");
+    var currentUser = localStorage.getItem(CommonConstant.USER_ACCESS);
     // console.log("Router Interceptor" + route.url);
 
     this.previousUrl = route.url;

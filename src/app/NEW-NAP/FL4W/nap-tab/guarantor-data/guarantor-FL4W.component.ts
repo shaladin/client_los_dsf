@@ -66,7 +66,7 @@ export class GuarantorFL4WComponent implements OnInit {
       (response) => {
         console.log("Response");
         console.log(response);
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
           if(MrCustTypeCode == undefined){
             this.CustDataForm.patchValue({

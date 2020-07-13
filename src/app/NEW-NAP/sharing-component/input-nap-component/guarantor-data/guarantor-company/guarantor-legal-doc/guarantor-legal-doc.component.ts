@@ -8,6 +8,7 @@ import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-guarantor-legal-doc',
@@ -57,7 +58,7 @@ export class GuarantorLegalDocComponent implements OnInit {
   MaxDate: Date;
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.bindLegalDocTypeObj();
     console.log(this.listLegalDoc);
@@ -105,7 +106,7 @@ export class GuarantorLegalDocComponent implements OnInit {
   }
 
   delete(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
@@ -169,10 +170,10 @@ export class GuarantorLegalDocComponent implements OnInit {
     return true;
   }
   bindLegalDocTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLegalDocType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.LegalDocTypeObj = response["ReturnObject"];
+        this.LegalDocTypeObj = response[CommonConstant.ReturnObj];
         if (this.LegalDocTypeObj.length > 0) {
           this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
           this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;

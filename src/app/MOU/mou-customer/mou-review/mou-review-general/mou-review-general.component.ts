@@ -24,7 +24,7 @@ export class MouReviewGeneralComponent implements OnInit {
   keyValueObj: KeyValueObj;
   MouCustId: number;
   WfTaskListId: any;
-  MouType: string = "GENERAL";
+  MouType: string = CommonConstant.GENERAL;
   PlafondAmt: number;
   listApprover: any;
   listRecommendationObj: any;
@@ -103,7 +103,7 @@ export class MouReviewGeneralComponent implements OnInit {
 
     this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL }).pipe(first()).subscribe(
       (response) => {
-        this.listReason = response["ReturnObject"];
+        this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({
           Reason: this.listReason[0].Key
         });
@@ -112,8 +112,8 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItemCommonConstant.USER_ACCESS());
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

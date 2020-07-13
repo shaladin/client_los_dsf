@@ -102,7 +102,7 @@ export class MouViewDetailComponent implements OnInit {
       })
     this.http.post(URLConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
       (response) => {
-        this.listAssetData = response['ReturnObject'];
+        this.listAssetData = response[CommonConstant.ReturnObj];
       });
       
   }

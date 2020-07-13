@@ -35,11 +35,11 @@ export class SingleInstFctrComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLInterestType();
   }
-
+  
   LoadDDLInterestType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "INTEREST_INPUT_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInterestInputType }).subscribe(
       (response) => {
-        this.InterestTypeOptions = response["ReturnObject"];
+        this.InterestTypeOptions = response[CommonConstant.ReturnObj];
         if (this.InterestTypeOptions != undefined && this.InterestTypeOptions != null) {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key

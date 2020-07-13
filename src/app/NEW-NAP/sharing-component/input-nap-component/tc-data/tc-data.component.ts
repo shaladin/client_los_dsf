@@ -8,6 +8,7 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { formatDate } from '@angular/common';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-tc-data',
@@ -194,7 +195,7 @@ export class TcDataComponent implements OnInit {
      // this.listAppTcObj.push(appTcObj);
     //}
 
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     this.listAppTcObj = new Array<AppTCObj>();
     for (var i = 0; i < this.AppTcForm.value.TCList["length"]; i++) {
       var appTC = new AppTCObj();
