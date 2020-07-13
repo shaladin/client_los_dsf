@@ -6,8 +6,12 @@ export class UcTempPagingObj {
     apiQryPaging: string;
     pagingJson: string;
     isReady: boolean;
+    isSearched:boolean;
     addCritInput: Array<CriteriaObj>;
     ddlEnvironments: Array<EnviObj>;
+    whereValue: Array<WhereValueObj>;
+    delay: number;
+    isHideSearch: boolean;
 
     constructor() {
         this.urlJson = "";
@@ -15,8 +19,12 @@ export class UcTempPagingObj {
         this.apiQryPaging = "";
         this.pagingJson = "";
         this.isReady = false;
+        this.isSearched = false;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
+        this.whereValue = new Array<WhereValueObj>();
+        this.delay = 0;
+        this.isHideSearch = false;
     }
 }
 
@@ -27,5 +35,14 @@ export class EnviObj {
     constructor() {
         this.name = "";
         this.environment = "";
+    }
+}
+
+export class WhereValueObj {
+    property: string;
+    value: any;
+
+    constructor() {
+        this.property = "";
     }
 }
