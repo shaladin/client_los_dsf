@@ -16,7 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
+  BizTemplateCode : string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {

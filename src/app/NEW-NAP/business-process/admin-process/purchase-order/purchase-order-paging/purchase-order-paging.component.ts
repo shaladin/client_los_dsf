@@ -24,7 +24,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
         localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
       else {
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
