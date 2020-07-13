@@ -286,6 +286,7 @@ export class AssetDataComponent implements OnInit {
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
+    this.initLookup();
     this.locationAddrObj = new AddrObj();
     this.ownerAddrObj = new AddrObj();
     this.inputFieldOwnerAddrObj = new InputFieldObj();
@@ -297,15 +298,13 @@ export class AssetDataComponent implements OnInit {
       await this.GetAppCustCoy();
     }
     await this.GetListAddr();
-    //this.assetMasterObj.FullAssetCode = 'CAR';
-    //this.GetAssetMaster(this.assetMasterObj);
-
+    this.AssetConditionChanged();
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
     //this.AllAssetObjs.splice(0, 1);
 
     await this.getAllAssetData();
-    this.initLookup();
+
 
   }
 
@@ -1156,7 +1155,6 @@ export class AssetDataComponent implements OnInit {
         this.AssetDataForm.patchValue({
           MrAssetConditionCode: this.assetCondObj.CompntValue
         });
-        this.AssetConditionChanged();
       }
     );
   }
@@ -1305,8 +1303,16 @@ export class AssetDataComponent implements OnInit {
 
           this.AssetDataForm.controls.SerialNo5.clearValidators();
           this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+
+          this.InputLookupCityIssuerObj.isRequired = false;
+          this.AssetDataForm.controls.TaxIssueDt.clearValidators();
+          this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
         }
         if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
+          this.InputLookupCityIssuerObj.isRequired = true;
+          this.AssetDataForm.controls.TaxIssueDt.setValidators([Validators.required]);
+          this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
+
           if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
             this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
             this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
@@ -1372,9 +1378,15 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls.SerialNo4.updateValueAndValidity();
       this.AssetDataForm.controls.SerialNo5.clearValidators();
       this.AssetDataForm.controls.SerialNo5.updateValueAndValidity();
+      this.InputLookupCityIssuerObj.isRequired = false;
+      this.AssetDataForm.controls.TaxIssueDt.clearValidators();
+      this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
     }
-    if (this.AssetMasterObj != null) {
-      if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == 'USED') {
+      this.InputLookupCityIssuerObj.isRequired = true;
+      this.AssetDataForm.controls.TaxIssueDt.setValidators([Validators.required]);
+      this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
+      if (this.AssetMasterObj != null) {
         if (this.AssetMasterObj.SerialNo1Label != "" && this.AssetMasterObj.SerialNo1Label != null) {
           this.AssetDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
           this.AssetDataForm.controls.SerialNo1.updateValueAndValidity();
