@@ -105,6 +105,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         for (var i = 0; i < this.ListResultRefundIncomeInfo.length; i++){
           totalListResultRefundIncomeInfoAmount += this.ListResultRefundIncomeInfo[i].RefundAmount;
           this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom] = this.ListResultRefundIncomeInfo[i];
+          if(this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
         }
         // console.log(this.DictMaxIncomeForm);
         
@@ -112,7 +113,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
           this.viewIncomeInfoObj.MaxAllocatedAmount = totalListResultRefundIncomeInfoAmount;
         else
           this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt;
-          
+
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
           this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
           this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,

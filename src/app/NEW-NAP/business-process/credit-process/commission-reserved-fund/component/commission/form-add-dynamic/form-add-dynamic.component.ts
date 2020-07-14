@@ -602,14 +602,14 @@ export class FormAddDynamicComponent implements OnInit {
 
   SetRule(indexFormObj, code, idx) {
     var temp = this.GetTempRuleObj(code, idx);
-    console.log(temp);
+    // console.log(temp);
     var TotalCommisionAmount = 0;
     for (var i = 0; i < temp.length; i++) {
 
       let behaviour: string = temp[i].AllocationBehaviour;
       let maxAllocAmt: number = temp[i].MaxAllocationAmount;
       let allocAmt: number = temp[i].AllocationAmount;
-      console.log(this.DictMaxIncomeForm[temp[i].AllocationFrom]);
+      // console.log(this.DictMaxIncomeForm[temp[i].AllocationFrom]);
       if (this.DictMaxIncomeForm[temp[i].AllocationFrom] != undefined && this.DictMaxIncomeForm[temp[i].AllocationFrom] != null && this.DictMaxIncomeForm[temp[i].AllocationFrom].RefundAmount > 0) {
         if (maxAllocAmt <= 0) {
           behaviour = "LOCK";
