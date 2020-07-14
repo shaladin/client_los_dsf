@@ -205,7 +205,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   setPhoneVerifData() {
 
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -285,7 +285,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.QuestionObj = response["ReturnObject"];
+        this.QuestionObj = response[CommonConstant.ReturnObj];
         if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
           this.verfSchemeHId = this.QuestionObj.VerfSchemeHId
           this.GenerateFormVerfQuestion();
@@ -369,7 +369,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.http.post(this.getPhnNumberUrl, phnObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.PhoneNumberObj = response["ReturnObject"];
+        this.PhoneNumberObj = response[CommonConstant.ReturnObj];
         if (this.PhoneNumberObj.length > 0) {
           this.PhoneDataForm.patchValue({
             Phn: this.PhoneNumberObj[0].PhoneNumber,
@@ -413,7 +413,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.refStatusObj.StatusGrpCode = "VERF_RESULT_STAT";
     this.http.post(this.getRefStatusUrl, this.refStatusObj).subscribe(
       (response) => {
-        this.ResultObj = response["ReturnObject"];
+        this.ResultObj = response[CommonConstant.ReturnObj];
         if (this.ResultObj.length > 0) {
           this.PhoneDataForm.patchValue({
             MrVerfResultHStatCode: this.ResultObj[0].Key
@@ -428,7 +428,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.SubjectRelationObj = response["ReturnObject"];
+        this.SubjectRelationObj = response[CommonConstant.ReturnObj];
         if (this.SubjectRelationObj.length > 0) {
           this.PhoneDataForm.patchValue({
             MrVerfSubjectRelationCode: this.SubjectRelationObj[0].Key
@@ -520,7 +520,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 //  await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
 //    (response) => {
 //      console.log(response);
-//      this.QuestionObj = response["ReturnObject"];
+//      this.QuestionObj = response[CommonConstant.ReturnObj];
 //      this.verfResultDListObjs = new Array<VerfResultDObj>();
 //      for (let i = 0; i < this.QuestionObj.VerfQuestionAnswerListObj.length; i++) {
 //        for (let j = 0; j < this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList.length; j++) {

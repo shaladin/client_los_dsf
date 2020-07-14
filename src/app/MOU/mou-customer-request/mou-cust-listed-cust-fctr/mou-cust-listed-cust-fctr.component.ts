@@ -10,6 +10,7 @@ import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fct
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -89,7 +90,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
 
   deleteCustFctr(custFctrId, idx) {
     if (this.MouCustIsListedForm.controls["IsListedCust"].value == true) {
-      if (confirm('Are you sure to delete this record?')) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var mouListedFctr = new MouCustListedCustFctrObj();
         mouListedFctr.MouListedCustFctrId = custFctrId;
         this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, mouListedFctr).subscribe(

@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
     selector: 'app-login-page',
@@ -34,14 +35,14 @@ export class LoginPageComponent implements OnInit {
         private currentUserContextService: CurrentUserContextService) {
         //Ini buat check klo misal udah login jadi lgsg lempar ke tempat laennya lagi
 
-        this.version = localStorage.getItem("Version");
+        this.version = localStorage.getItem(CommonConstant.VERSION);
         this.route.queryParams.subscribe(params => {
             if (params['token'] != null) {
               this.token = params['token'];
             }
           });
       
-        if(localStorage.getItem("UserAccess") != null)
+        if(localStorage.getItem(CommonConstant.USER_ACCESS) != null)
         {
             this.router.navigate(['dashboard/dash-board']);
         }
@@ -93,7 +94,7 @@ export class LoginPageComponent implements OnInit {
                 console.log(response);
                 localStorage.setItem("Username",username);
                 const object = {
-                    response: response["ReturnObject"],
+                    response: response[CommonConstant.ReturnObj],
                     user: username,
                     pwd: password
                 };

@@ -60,7 +60,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {
-        this.itemReasonCode = response["ReturnObject"];
+        this.itemReasonCode = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
           ReasonCode: this.itemReasonCode[0].Key
         });

@@ -121,7 +121,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.http.post(URLConstant.GetAppAssetListByAppId, this.appAssetObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.ListAssetData = response["ReturnObject"];
+        this.ListAssetData = response[CommonConstant.ReturnObj];
 
         // console.log("lisassetdata");
         // console.log(this.ListAssetData);
@@ -140,7 +140,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.ListCollateralData = response["ReturnObject"];
+        this.ListCollateralData = response[CommonConstant.ReturnObj];
 
         // console.log("listcolldata");
         // console.log(this.ListCollateralData);

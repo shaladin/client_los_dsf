@@ -11,6 +11,7 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-bank-account',
@@ -138,7 +139,7 @@ export class CustBankAccountComponent implements OnInit {
   }
 
   delete(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listBankAcc.splice(i, 1);
       this.callbackSubmit.emit(this.listBankAcc);
     }
@@ -209,7 +210,7 @@ export class CustBankAccountComponent implements OnInit {
   }
 
   deleteBankStmnt(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
       bankStmnObjs.removeAt(i);
     }
@@ -245,10 +246,10 @@ export class CustBankAccountComponent implements OnInit {
   }
 
   bindMonthObj() {
-    this.refMasterObj.RefMasterTypeCode = "MONTH";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMonth;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.MonthObj = response["ReturnObject"];
+        this.MonthObj = response[CommonConstant.ReturnObj];
         if (this.MonthObj.length > 0) {
           this.defaultMonth = this.MonthObj[0].Key;
         }

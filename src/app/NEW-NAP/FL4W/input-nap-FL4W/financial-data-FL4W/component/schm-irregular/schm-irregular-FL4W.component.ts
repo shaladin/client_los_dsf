@@ -43,7 +43,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -56,7 +56,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   LoadDDLRateType() {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
       (response) => {
-        this.RateTypeOptions = response["ReturnObject"];
+        this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
@@ -64,7 +64,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   LoadDDLGracePeriodType() {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
-        this.GracePeriodeTypeOptions = response["ReturnObject"];
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }

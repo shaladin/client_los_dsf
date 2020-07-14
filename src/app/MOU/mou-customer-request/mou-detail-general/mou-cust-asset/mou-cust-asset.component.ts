@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-asset-detail.component';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-asset',
@@ -71,7 +72,7 @@ export class MouCustAssetComponent implements OnInit {
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {
           this.IsAssetSelected = true;
 
-          this.tempResponseMouCustAsset = response["ReturnObject"]
+          this.tempResponseMouCustAsset = response[CommonConstant.ReturnObj]
 
           var listMou = this.parentForm.controls[this.identifier] as FormArray;
           for (var i = this.index; i < this.tempResponseMouCustAsset.length; i++) {

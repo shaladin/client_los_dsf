@@ -55,7 +55,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     });
   }
   async ngOnInit() : Promise<void> {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
@@ -66,7 +66,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
   SaveForm(){
     var reqAppCrdInvstg = new RequestAppCrdInvstgObj();
 
-    var user = JSON.parse(localStorage.getItem("UserAccess"));
+    var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     reqAppCrdInvstg.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdInvstgStat = "DONE";
@@ -83,7 +83,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     }
 
     reqAppCrdInvstg.WfTaskListId = this.wfTaskListId;
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         console.log(response);
@@ -145,17 +145,17 @@ export class CreditInvestigationDetailComponent implements OnInit {
       var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
         (response) => {
-          this.analysisItemObj = response["ReturnObject"];
+          this.analysisItemObj = response[CommonConstant.ReturnObj];
         }
       );
     }
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
@@ -163,7 +163,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
       });
   }
   Back() {
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
   }
 }

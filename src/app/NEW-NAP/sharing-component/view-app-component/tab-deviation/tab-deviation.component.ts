@@ -8,6 +8,7 @@ import { Sort } from '@angular/material';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-tab-deviation',
@@ -192,7 +193,7 @@ export class TabDeviationComponent implements OnInit {
   
   DeleteFromManualDeviationData(idxData){
     console.log(idxData);
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.BindDDLDataFromTempDDLData(this.ManualDeviationData[idxData].DeviationCategory);
       this.ManualDeviationData.splice(idxData, 1);
 

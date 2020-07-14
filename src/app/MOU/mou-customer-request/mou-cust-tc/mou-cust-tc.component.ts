@@ -8,6 +8,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-tc',
@@ -34,8 +35,8 @@ export class MouCustTcComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.MouCustId);
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDate = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDate = new Date(context[CommonConstant.BUSINESS_DT]);
     var datePipe = new DatePipe("en-US");
     var mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;
@@ -53,7 +54,7 @@ export class MouCustTcComponent implements OnInit {
       mergeMap((response) => {
         var mouCustClause = response;
         var mouTcObj;
-        if (mouCustObjData["MrMouTypeCode"] == "GENERAL") {
+        if (mouCustObjData["MrMouTypeCode"] == CommonConstant.GENERAL) {
           mouTcObj = { MouCustId: this.MouCustId, AssetTypeCode: mouCustClause["AssetTypeCode"], MrCustTypeCode: mouCustObjData["MrCustTypeCode"], RowVersion: "" };
         }
         else {

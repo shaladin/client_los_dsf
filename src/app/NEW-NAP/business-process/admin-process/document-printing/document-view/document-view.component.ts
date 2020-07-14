@@ -10,6 +10,7 @@ import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
 import { RdlcReportObj } from 'app/shared/model/Report/RdlcReportObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
@@ -149,13 +150,13 @@ export class DocumentViewComponent implements OnInit {
 
     this.http.post(URLConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
       (response) => {
-        let linkSource: string = 'data:application/pdf;base64,' + response["ReturnObject"];
+        let linkSource: string = 'data:application/pdf;base64,' + response[CommonConstant.ReturnObj];
         let fileName: string = item.AgrmntDocName + ".pdf";
         const downloadLink = document.createElement("a");
         downloadLink.href = linkSource;
         downloadLink.download = fileName;
 
-        if (response["ReturnObject"] != undefined) {
+        if (response[CommonConstant.ReturnObj] != undefined) {
           downloadLink.click();
           this.SaveAgrmntDocPrint(item.AgrmntDocId);
           this.toastr.successMessage(response['message']);

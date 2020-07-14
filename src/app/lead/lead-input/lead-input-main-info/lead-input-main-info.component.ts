@@ -217,16 +217,16 @@ export class LeadInputMainInfoComponent implements OnInit {
     }
     this.MakeLookUpObj();
     this.GetOfficeDDL();
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     
     this.refLobObj = new RefLobObj();
     this.refLobObj.RefLobId = "-"
     this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
       (response) => {
-        this.listRefLob = response['ReturnObject'];
+        this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
-          LobCode: response['ReturnObject'][0]['Key'],
-          LobName: response['ReturnObject'][0]['Value']
+          LobCode: response[CommonConstant.ReturnObj][0]['Key'],
+          LobName: response[CommonConstant.ReturnObj][0]['Value']
         });
       },
       (error) => {
@@ -237,8 +237,8 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
     this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
       (response) => {
-        this.listLeadSource = response['ReturnObject'];
-        this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
+        this.listLeadSource = response[CommonConstant.ReturnObj];
+        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
   if (this.pageType == "edit" || this.pageType == "update") {
@@ -379,11 +379,11 @@ GetOfficeDDL(){
   this.refOfficeObj = new RefOfficeObj();
   this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
     (response) => {
-      this.listRefOffice = response['ReturnObject'];
+      this.listRefOffice = response[CommonConstant.ReturnObj];
       console.log(this.listRefOffice)
       // this.MainInfoForm.patchValue({
-      //   OfficeCode: response['ReturnObject'][0]['Key'],
-      //   OfficeName: response['ReturnObject'][0]['Value']
+      //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
+      //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
       // });
 
       if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
@@ -506,8 +506,8 @@ GetOfficeDDL(){
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

@@ -87,7 +87,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
     this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
       (response) => {
-        this.RefStatusList = response["ReturnObject"];
+        this.RefStatusList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({
           MrVerfResultHStatCode: this.RefStatusList[0].Key
         })
@@ -111,7 +111,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
     this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
       (response) => {
-        this.verfQuestionAnswerObj = response["ReturnObject"];
+        this.verfQuestionAnswerObj = response[CommonConstant.ReturnObj];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
           this.GenerateFormVerfQuestion();
         }
@@ -267,7 +267,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         VerfResultDList.push(VerfResultD);
       }
     }
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;

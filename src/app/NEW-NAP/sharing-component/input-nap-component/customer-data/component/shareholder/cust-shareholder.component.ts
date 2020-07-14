@@ -99,7 +99,7 @@ export class CustShareholderComponent implements OnInit {
   ngOnInit() {
     // console.log("User Access");
     // console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
     this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
@@ -263,7 +263,7 @@ export class CustShareholderComponent implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listShareholder.splice(i, 1);
       this.callbackSubmit.emit(this.listShareholder);
     }
@@ -496,10 +496,10 @@ export class CustShareholderComponent implements OnInit {
   }
 
   bindCustTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         if(this.CustTypeObj.length > 0){
           this.defaultCustType = this.CustTypeObj[0].Key;
           this.defaultCustTypeName = this.CustTypeObj[0].Value;
@@ -510,10 +510,10 @@ export class CustShareholderComponent implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.GenderObj = response["ReturnObject"];
+        this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
           this.defaultGender = this.GenderObj[0].Key
         }
@@ -522,10 +522,10 @@ export class CustShareholderComponent implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if(this.IdTypeObj.length > 0){
           this.defaultIdType = this.IdTypeObj[0].Key
         }
@@ -534,10 +534,10 @@ export class CustShareholderComponent implements OnInit {
   }
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
         if(this.JobPositionObj.length > 0){
           this.defaultJobPosition = this.JobPositionObj[0].Key;
           this.defaultJobPositionName = this.JobPositionObj[0].Value;
@@ -547,10 +547,10 @@ export class CustShareholderComponent implements OnInit {
   }
 
   bindCompanyTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if(this.CompanyTypeObj.length > 0){
           this.defaultCompanyType = this.CompanyTypeObj[0].Key;
         }
@@ -583,7 +583,7 @@ export class CustShareholderComponent implements OnInit {
   }
 
   clearExpDt(){
-    if(this.CustShareholderForm.value.MrIdTypeCode == "EKTP"){
+    if(this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP){
       this.CustShareholderForm.patchValue({
         IdExpiredDt: ''
       });

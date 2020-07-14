@@ -10,6 +10,7 @@ import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -79,9 +80,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       this.claimTask();
 
     var datePipe = new DatePipe("en-US");
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDtMin = new Date(context["BusinessDt"]);
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDtMin = new Date(context[CommonConstant.USER_ACCESS]);
     this.businessDtMin.setDate(this.businessDtMin.getDate());
     
     this.inputLookupCust = new InputLookupObj();
@@ -99,7 +100,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     ];
    
     var refOffice = new RefOfficeObj();
-    refOffice.OfficeCode = currentUserContext["OfficeCode"];
+    refOffice.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
       (response: any) => {
         this.refOfficeId = response.RefOfficeId;
@@ -141,8 +142,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"]};
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME]};
     console.log(wfClaimObj);
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {

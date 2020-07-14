@@ -77,7 +77,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.http.post(poUrl, appAssetObj).subscribe(
       (response) => {
         console.log(response);
-        this.AssetObj = response["ReturnObject"];
+        this.AssetObj = response[CommonConstant.ReturnObj];
         this.ProportionalValue = this.AssetObj["ProportionalValue"];
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
         this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];

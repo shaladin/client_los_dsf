@@ -224,10 +224,10 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
       (response) => {

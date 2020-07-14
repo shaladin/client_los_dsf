@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
 
 @Component({
   selector: 'app-app-main-info',
@@ -24,9 +25,9 @@ export class AppMainInfoComponent implements OnInit {
       (response) => {
         console.log(response);
         this.AppObj = response;
-        if (this.AppObj.BizTemplateCode == "CF4W") {
+        if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-        } else if (this.AppObj.BizTemplateCode == "FL4W") {
+        } else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
         } else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";

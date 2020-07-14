@@ -228,14 +228,14 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.SubmitReturnHandling();
     }
     else {
-      var lobCode = localStorage.getItem("BizTemplateCode");
+      var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     }
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
@@ -253,7 +253,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
-          var lobCode = localStorage.getItem("BizTemplateCode");
+          var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           this.router.navigate(["/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         },
         (error) => {
@@ -266,7 +266,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   Back() {
     // console.log("test back commReserveFund");
     // console.log(this.ReturnHandlingHObj);
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
       this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } });
     } else {

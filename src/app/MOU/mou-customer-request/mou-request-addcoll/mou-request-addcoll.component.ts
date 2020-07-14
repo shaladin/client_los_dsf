@@ -136,7 +136,7 @@ export class MouRequestAddcollComponent implements OnInit {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.OwnerRelationshipObj = response["ReturnObject"];
+        this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
             OwnerRelationship: this.OwnerRelationshipObj[0].Key,
@@ -149,7 +149,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.AssetConditionList = response["ReturnObject"];
+        this.AssetConditionList = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][0]['Key'] });
 
         if (response['ReturnObject'][0]['Key'] == CommonConstant.AssetConditionUsed) {
@@ -640,7 +640,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   delete(MouCustCollId) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var custCollObj = { MouCustCollateralId: MouCustCollId };
       this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
         (response) => {

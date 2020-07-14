@@ -7,6 +7,8 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-asset-leasing-paging',
@@ -73,7 +75,7 @@ eventColl(ev){
 
   if(ev.Key == "delete")
   {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var collateralObj = new AppCollateralObj();
       collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
       console.log("qwe")
@@ -81,10 +83,10 @@ eventColl(ev){
       this.http.post(URLConstant.DeleteAppCollateral, collateralObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.listAppCollateralObj = response["ReturnObject"];
+          this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
           var DetailForGridCollateral ={
-            Data: response["ReturnObject"],
+            Data: response[CommonConstant.ReturnObj],
             Count: "0"
           }
 
@@ -107,10 +109,10 @@ eventColl(ev){
     this.appAssetObj.AppAssetId = "-";
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
-          this.listAppAssetObj = response["ReturnObject"];
+          this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
           var DetailForGridAsset ={
-            Data: response["ReturnObject"],
+            Data: response[CommonConstant.ReturnObj],
             Count: "0"
           }
 
@@ -129,10 +131,10 @@ eventColl(ev){
     this.appCollateralObj.AppCollateralId = "-";
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
-          this.listAppCollateralObj = response["ReturnObject"];
+          this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
           var DetailForGridCollateral ={
-            Data: response["ReturnObject"],
+            Data: response[CommonConstant.ReturnObj],
             Count: "0"
           }
 

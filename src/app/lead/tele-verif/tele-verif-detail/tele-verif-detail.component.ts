@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import Stepper from 'bs-stepper';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 
@@ -56,10 +57,10 @@ export class TeleVerifDetailComponent implements OnInit {
     }
   }
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_NAME));
     var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
         console.log(response);

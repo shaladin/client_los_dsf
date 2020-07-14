@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 
@@ -56,7 +57,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
       (response) => { 
         this.LeadStep = response["LeadStep"];
         console.log(this.LeadStep);
-         if (this.LeadStep != "SVR"){
+         if (this.LeadStep != CommonConstant.LeadStepSelfVerification){
           this.reason = "resubmit"; 
          }else{ 
           if (this.WfTaskListId > 0) {
@@ -92,7 +93,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(

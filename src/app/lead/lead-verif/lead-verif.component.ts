@@ -11,6 +11,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-lead-verif',
@@ -224,7 +225,7 @@ export class LeadVerifComponent implements OnInit {
   }
 
   deleteFromTemp(LeadId: string) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.arrAddCrit = new Array();
       if (this.arrCrit.length != 0) {
         for (var i = 0; i < this.arrCrit.length; i++) {

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-collateral-multi-asset',
@@ -24,7 +25,7 @@ export class ViewCollateralMultiAssetComponent implements OnInit {
     }
     this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppIdObj).subscribe(
       (response) => {
-        this.AppCollateralObj = response["ReturnObject"];
+        this.AppCollateralObj = response[CommonConstant.ReturnObj];
       });
   }
 

@@ -95,8 +95,8 @@ export class CustShareholderFL4WComponent implements OnInit {
      }
 
   ngOnInit() {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.initLookup();
     this.bindAllRefMasterObj();
@@ -253,7 +253,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listShareholder.splice(i, 1);
       this.callbackSubmit.emit(this.listShareholder);
     }
@@ -456,7 +456,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         console.log("bind cust type");
         console.log(this.CustTypeObj);
         if(this.CustTypeObj.length > 0){
@@ -471,7 +471,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.GenderObj = response["ReturnObject"];
+        this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
           this.defaultGender = this.GenderObj[0].Key
         }
@@ -483,7 +483,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if(this.IdTypeObj.length > 0){
           this.defaultIdType = this.IdTypeObj[0].Key
         }
@@ -495,7 +495,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
         if(this.JobPositionObj.length > 0){
           this.defaultJobPosition = this.JobPositionObj[0].Key;
           this.defaultJobPositionName = this.JobPositionObj[0].Value;
@@ -508,7 +508,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if(this.CompanyTypeObj.length > 0){
           this.defaultCompanyType = this.CompanyTypeObj[0].Key;
         }

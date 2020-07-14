@@ -88,14 +88,14 @@ export class LegalReviewDetailComponent implements OnInit {
         var refLglReviewObj = { "RefMasterTypeCode": CommonConstant.RefMasterTypeLegalReview };
         this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
           (response) => {
-            var lengthDataReturnObj = response["ReturnObject"].length;
-            this.responseRefMasterObj = response["ReturnObject"];
+            var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
+            this.responseRefMasterObj = response[CommonConstant.ReturnObj];
             for (var i = 0; i < lengthDataReturnObj; i++) {
               var eachDataDetail = this.fb.group({
-                ReviewComponentName: [response["ReturnObject"][i].Descr],
-                ReviewComponentValue: [response["ReturnObject"][i].MasterCode],
-                RowVersion: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, true)],
-                values: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, false), [Validators.required]]
+                ReviewComponentName: [response[CommonConstant.ReturnObj][i].Descr],
+                ReviewComponentValue: [response[CommonConstant.ReturnObj][i].MasterCode],
+                RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, true)],
+                values: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, false), [Validators.required]]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
@@ -111,8 +111,8 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

@@ -30,7 +30,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   inputPagingObj;
   userAccess;
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingApp.json";

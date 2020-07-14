@@ -40,6 +40,8 @@ export class ExceptionConstant {
     public static PLEASE_CALCULATE_AGAIN = "Please Calculate Again";
     public static MUST_CALCUCATE_FIRST = "Must Calculate First";
 
+
+    public static OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP = "Office Is Not Allowed to Create App";
     public static DUPLICATE_SOCIAL_MEDIA = "Social Media cannot be duplicate!";
     public static CUSTOMER_AGE_MUST_17_YEARS_OLD = "Customer age must be at least 17 year old";
     public static GUARANTOR_AGE_MUST_17_YEARS_OLD = "Guarantor age must be at least 17 year old";

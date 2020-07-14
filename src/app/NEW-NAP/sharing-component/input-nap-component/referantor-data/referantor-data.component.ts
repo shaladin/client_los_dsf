@@ -9,6 +9,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-referantor-data',
@@ -258,7 +259,7 @@ export class ReferantorDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.bankItems = response["ReturnObject"];
+        this.bankItems = response[CommonConstant.ReturnObj];
         console.log(this.bankItems);
       },
       (error) => {

@@ -65,8 +65,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
@@ -299,7 +299,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrIdTypeCode: this.IdTypeObj[0].Key
@@ -324,7 +324,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        this.GenderObj = response["ReturnObject"];
+        this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrGenderCode: this.GenderObj[0].Key
@@ -338,7 +338,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        this.MaritalStatObj = response["ReturnObject"];
+        this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrMaritalStatCode: this.MaritalStatObj[0].Key
@@ -354,7 +354,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.NationalityObj = response["ReturnObject"];
+        this.NationalityObj = response[CommonConstant.ReturnObj];
         if (this.NationalityObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrNationalityCode: this.NationalityObj[0].MasterCode
@@ -368,7 +368,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeEducation;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        this.EducationObj = response["ReturnObject"];
+        this.EducationObj = response[CommonConstant.ReturnObj];
         if (this.EducationObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrEducationCode: this.EducationObj[0].Key
@@ -382,7 +382,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeReligion;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        this.ReligionObj = response["ReturnObject"];
+        this.ReligionObj = response[CommonConstant.ReturnObj];
         if (this.ReligionObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrReligionCode: this.ReligionObj[0].Key

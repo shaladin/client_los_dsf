@@ -7,6 +7,7 @@ import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
 import { ActivatedRoute } from "@angular/router";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "phone-verification-paging",
@@ -27,7 +28,7 @@ export class PhoneVerificationPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    var userAccess = JSON.parse(localStorage.getItem("UserAccess"))
+    var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS))
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;

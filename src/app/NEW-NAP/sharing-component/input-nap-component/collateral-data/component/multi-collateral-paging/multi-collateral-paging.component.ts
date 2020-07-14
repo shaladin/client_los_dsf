@@ -4,6 +4,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-multi-collateral-paging',
@@ -28,7 +30,7 @@ export class MultiCollateralPagingComponent implements OnInit {
     }
     this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
       (response) => {
-        this.ListAppCollObj = response["ReturnObject"];
+        this.ListAppCollObj = response[CommonConstant.ReturnObj];
         this.list.emit(this.ListAppCollObj);
       },
       (error) => {
@@ -42,7 +44,7 @@ export class MultiCollateralPagingComponent implements OnInit {
   }
 
   deleteData(AppCollateralId: number){
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
     this.http.post(URLConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

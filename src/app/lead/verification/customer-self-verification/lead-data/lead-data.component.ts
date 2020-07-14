@@ -129,7 +129,7 @@ export class LeadDataComponent implements OnInit {
         while (this.items.length) {
           this.items.removeAt(0);
         }
-        this.SerialNoList = response['ReturnObject'];
+        this.SerialNoList = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.SerialNoList["length"]; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -195,8 +195,8 @@ export class LeadDataComponent implements OnInit {
     this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
-        this.returnAssetConditionObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -204,8 +204,8 @@ export class LeadDataComponent implements OnInit {
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
-        this.returnDownPaymentObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -213,8 +213,8 @@ export class LeadDataComponent implements OnInit {
     this.firstInstObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
-        this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnFirstInstObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -278,7 +278,7 @@ export class LeadDataComponent implements OnInit {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }
-                      this.SerialNoList = response['ReturnObject'];
+                      this.SerialNoList = response[CommonConstant.ReturnObj];
                       for (var i = 0; i < this.SerialNoList["length"]; i++) {
                         var eachDataDetail = this.fb.group({
                           SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -403,7 +403,7 @@ export class LeadDataComponent implements OnInit {
                         while (this.items.length) {
                           this.items.removeAt(0);
                         }
-                        this.SerialNoList = response['ReturnObject'];
+                        this.SerialNoList = response[CommonConstant.ReturnObj];
                         for (var i = 0; i < this.SerialNoList["length"]; i++) {
                           var eachDataDetail = this.fb.group({
                             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],

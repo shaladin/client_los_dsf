@@ -28,7 +28,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   TrxNo: string;
   PlafondAmt: any;
   OsPlafondAmt: any;
-  token = localStorage.getItem("Token");
+  token = localStorage.getItem(CommonConstant.TOKEN);
 
   InvoiceForm = this.fb.group({
     Invoices: this.fb.array([])
@@ -40,9 +40,9 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.WfTaskListId = params["TaskListId"];
       this.TrxNo = params["TrxNo"];
     });
-    this.BusinessDate = new Date(localStorage.getItem("BusinessDateRaw"));
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    this.Username = currentUserContext["UserName"];
+    this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.Username = currentUserContext[CommonConstant.USER_NAME];
   }
 
   ngOnInit() {
@@ -99,7 +99,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   GetListVerifStatus() {
     this.httpClient.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { statusGrpCode: CommonConstant.INV_VERF_RESULT_STAT }).subscribe((response) => {
       console.log(response);
-      this.listVerificationStatus = response["ReturnObject"];
+      this.listVerificationStatus = response[CommonConstant.ReturnObj];
     })
   }
 
@@ -123,10 +123,10 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });

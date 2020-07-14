@@ -1058,10 +1058,10 @@ export class AssetDataComponent implements OnInit {
   }
 
   bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = "ASSET_USAGE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.AssetUsageObj = response["ReturnObject"];
+        this.AssetUsageObj = response[CommonConstant.ReturnObj];
         //if (this.AssetUsageObj.length > 0) {
         //  this.AssetDataForm.patchValue({
         //    MrAssetUsageCode: this.AssetUsageObj[0].Key
@@ -1073,10 +1073,10 @@ export class AssetDataComponent implements OnInit {
   }
 
   bindAsseConditionObj() {
-    this.refMasterObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.AssetConditionObj = response["ReturnObject"];
+        this.AssetConditionObj = response[CommonConstant.ReturnObj];
         //if (this.AssetConditionObj.length > 0) {
         //  this.AssetDataForm.patchValue({
         //    MrAssetConditionCode: this.AssetConditionObj[0].Key
@@ -1088,10 +1088,10 @@ export class AssetDataComponent implements OnInit {
   }
 
   bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         //if (this.IdTypeObj.length > 0) {
         //  this.AssetDataForm.patchValue({
         //    MrIdTypeCode: this.IdTypeObj[0].Key
@@ -1102,25 +1102,25 @@ export class AssetDataComponent implements OnInit {
   }
 
   bindDownPaymentTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.DpObj = response["ReturnObject"];
+        this.DpObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   bindUserOwnerRelationshipObj() {
     if (this.CustType == CommonConstant.CustTypePersonal) {
-      this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     }
     else {
-      this.refMasterObj.RefMasterTypeCode = "CUST_COMPANY_RELATIONSHIP";
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     }
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.UserRelationObj = response["ReturnObject"];
-        this.OwnerRelationObj = response["ReturnObject"];
+        this.UserRelationObj = response[CommonConstant.ReturnObj];
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
         //if (this.UserRelationObj.length > 0) {
         //  this.AssetDataForm.patchValue({
         //    MrUserRelationshipCode: this.UserRelationObj[0].Key,
@@ -1251,7 +1251,7 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         console.log(this.vendorObj);
-        this.EmpObj = response["ReturnObject"];
+        this.EmpObj = response[CommonConstant.ReturnObj];
         this.AdminHeadObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
         this.SalesPersonObj = this.EmpObj.filter(
@@ -1485,7 +1485,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   deleteAccessory(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
       var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
       appAccessoryObjs.removeAt(i);
@@ -1633,7 +1633,7 @@ export class AssetDataComponent implements OnInit {
     this.appObj.AppId = this.AppId;
     await this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
-        this.AppCustAddrObj = response["ReturnObject"];
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
       }

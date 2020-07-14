@@ -96,10 +96,10 @@ export class FraudDetectionVerifComponent implements OnInit {
 
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.verfUser = context["UserName"];
-    this.verfDt = context["BusinessDt"];
-    this.verfCode = context["EmpNo"];
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.verfUser = context[CommonConstant.USER_NAME];
+    this.verfDt = context[CommonConstant.BUSINESS_DT];
+    this.verfCode = context[CommonConstant.EMP_NO];
     await this.getApp();
 
   }
@@ -222,7 +222,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
       response => {
         this.respAppDupCheck = response;
-        this.listCustDuplicate = response["ReturnObject"]["CustDuplicate"];
+        this.listCustDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
 
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if (idxSelected > -1) {
@@ -265,7 +265,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     var listAppCollateral = new Array<AppCollateralObj>();
     await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {
-        listAppCollateral = response["ReturnObject"];
+        listAppCollateral = response[CommonConstant.ReturnObj];
 
       },
       error => {
@@ -286,7 +286,7 @@ export class FraudDetectionVerifComponent implements OnInit {
       }
       await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
         response => {
-          this.ListAssetNegativeCollateral = response["ReturnObject"];
+          this.ListAssetNegativeCollateral = response[CommonConstant.ReturnObj];
         });
     }
   }
@@ -316,7 +316,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
       response => {
         this.respAssetNegative = response;
-        this.ListAssetNegativeAsset = response["ReturnObject"];
+        this.ListAssetNegativeAsset = response[CommonConstant.ReturnObj];
       },
       error => {
         console.log("error")
@@ -344,7 +344,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   cancel() {
-    var lobCode = localStorage.getItem("BizTemplateCode")
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: lobCode } });
   }
 
@@ -360,7 +360,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
-        var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+        var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
         this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
       },
       error => {
@@ -370,10 +370,10 @@ export class FraudDetectionVerifComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = {
       pWFTaskListID: this.WfTaskListId,
-      pUserID: currentUserContext["UserName"],
+      pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
     console.log(wfClaimObj);

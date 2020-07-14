@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SubsidyAddEditComponent } from '../subsidy-add-edit/subsidy-add-edit.component';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-subsidy',
@@ -56,7 +57,7 @@ export class SubsidyComponent implements OnInit {
 
   deleteSubsidy(obj)
   {
-      if (confirm('Are you sure to delete this record?')) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         console.log(obj)
         this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {

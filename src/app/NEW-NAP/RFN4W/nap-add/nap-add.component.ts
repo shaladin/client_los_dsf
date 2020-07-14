@@ -81,7 +81,7 @@ export class NapAddComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
@@ -173,7 +173,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.officeItems = response["ReturnObject"];
+        this.officeItems = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -264,7 +264,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         // console.log(response);
-        var temp = response["ReturnObject"];
+        var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == "LOB") {
             tempLobCode = temp[i].CompntValue;

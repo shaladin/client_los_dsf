@@ -118,7 +118,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async SaveForm() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
       this.setReturnHandlingH();
       this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
@@ -164,7 +164,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   setReturnHandlingH() {
     this.ReturnHandlingHData = new ReturnHandlingHObj();
     this.ReturnHandlingHData.AppId = this.appId;
-    this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
+    this.ReturnHandlingHData.ReturnBy = localStorage.getItem(CommonConstant.USER_NAME);
     this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
     this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.TrxTypeCodePhn;
     this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
@@ -175,7 +175,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
@@ -242,12 +242,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
     );
     if (this.verifResultObj.VerfResultId == 0) {
-      var Business_Date = localStorage.getItem('BusinessDate');
+      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
 
-      var useraccess = localStorage.getItem('UserAccess');
+      var useraccess = localStorage.getItem(CommonConstant.USER_ACCESS);
       console.log(useraccess);
       this.addVerifResultObj = new VerfResultObj();
 
@@ -296,10 +296,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = {
       pWFTaskListID: this.wfTaskListId,
-      pUserID: currentUserContext["UserName"],
+      pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
@@ -308,7 +308,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
       this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
     }

@@ -10,6 +10,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-paging',
@@ -32,8 +33,8 @@ export class NapPagingComponent implements OnInit {
 
   ngOnInit() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
@@ -96,7 +97,7 @@ export class NapPagingComponent implements OnInit {
         if (response["IsAllowAppCreated"] == true) {
           this.router.navigate(["Nap/CFRefinancing/Add"]);
         } else {
-          this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
+          this.toastr.typeErrorCustom(ExceptionConstant.OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP);
         }
       },
       (error) => {

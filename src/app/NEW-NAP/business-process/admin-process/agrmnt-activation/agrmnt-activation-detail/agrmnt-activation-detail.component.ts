@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -64,7 +66,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
     var obj = {
@@ -80,7 +82,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
@@ -153,7 +155,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   deleteFromTemp(AppAssetId: string) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var index: number = this.tempListId.indexOf(AppAssetId);
       if (index > -1) {
         this.tempListId.splice(index, 1);

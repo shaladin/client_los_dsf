@@ -68,7 +68,7 @@ export class CustCompanyMainDataComponent implements OnInit {
 
   ngOnInit() {
 
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -240,10 +240,10 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindCompanyTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
@@ -258,7 +258,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
     this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
-        this.CustModelObj = response["ReturnObject"];
+        this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
