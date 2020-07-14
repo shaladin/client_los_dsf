@@ -423,7 +423,7 @@ export class GuarantorPersonalComponent implements OnInit {
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
     if (this.guarantorPersonalObj.AppGuarantorPersonalObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP) {
       var a = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
-      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DT);
+      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);

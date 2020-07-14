@@ -242,7 +242,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
     );
     if (this.verifResultObj.VerfResultId == 0) {
-      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DT);
+      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);

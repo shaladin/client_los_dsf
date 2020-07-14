@@ -15,6 +15,7 @@ export class CommonConstant {
     public static CURRENT_USER_CONTEXT = "currentUserContext"
     public static PAGE_ACCESS = "PageAccess";
     public static BUSINESS_DT = "BusinessDt";
+    public static BUSINESS_DATE = "BusinessDate";
     public static TOKEN = "Token";
     public static LOCAL_IP = "LocalIp";
     public static BIZ_TEMPLATE_CODE= "BizTemplateCode";
