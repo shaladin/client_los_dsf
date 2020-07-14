@@ -8,6 +8,9 @@ import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalcul
 import { environment } from 'environments/environment';
 import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-irregular-FL4W',
@@ -37,10 +40,10 @@ export class SchmIrregularFL4WComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -51,17 +54,17 @@ export class SchmIrregularFL4WComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
       (response) => {
-        this.RateTypeOptions = response["ReturnObject"];
+        this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
-        this.GracePeriodeTypeOptions = response["ReturnObject"];
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
@@ -111,7 +114,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     }
     this.calcIrregularObj = this.ParentForm.value;
     this.calcIrregularObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
 
@@ -176,7 +179,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
       if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
           && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " " + ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }

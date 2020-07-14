@@ -8,6 +8,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-return-handling-phone-verif-paging',
@@ -18,7 +20,6 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   userAccess;
-  token : any = localStorage.getItem("Token");
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router) {
@@ -31,12 +32,12 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingPhnVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingPhnVerif.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -61,7 +62,7 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
     }
   }
 }

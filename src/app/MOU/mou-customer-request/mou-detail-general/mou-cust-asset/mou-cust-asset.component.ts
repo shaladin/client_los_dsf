@@ -7,11 +7,12 @@ import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-asset-detail.component';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-asset',
-  templateUrl: './mou-cust-asset.component.html',
-  styleUrls: ['./mou-cust-asset.component.scss']
+  templateUrl: './mou-cust-asset.component.html'
 })
 export class MouCustAssetComponent implements OnInit {
   @Input() MouCustId: number;
@@ -36,7 +37,7 @@ export class MouCustAssetComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.listExclude = new Array<string>();
-    this.httpClient.post(AdInsConstant.GetListAssetTypeByCode, null).subscribe(
+    this.httpClient.post(URLConstant.GetListAssetTypeByCode, null).subscribe(
       (response: any) => {
         this.assetTypeList = response;
         if (this.AssetTypeCode != null) {
@@ -63,7 +64,7 @@ export class MouCustAssetComponent implements OnInit {
     var mouAsset = new MouCustAssetObj();
     mouAsset.MouCustId = this.MouCustId;
 
-    this.httpClient.post(AdInsConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
       (response: any) => {
         console.log(this.IsAssetSelected);
 
@@ -71,7 +72,7 @@ export class MouCustAssetComponent implements OnInit {
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {
           this.IsAssetSelected = true;
 
-          this.tempResponseMouCustAsset = response["ReturnObject"]
+          this.tempResponseMouCustAsset = response[CommonConstant.ReturnObj]
 
           var listMou = this.parentForm.controls[this.identifier] as FormArray;
           for (var i = this.index; i < this.tempResponseMouCustAsset.length; i++) {

@@ -5,6 +5,8 @@ import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-fee',
@@ -38,9 +40,9 @@ export class FeeComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
-    await this.http.post(AdInsConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
-        this.listAppFeeObj = response["ReturnObject"];
+        this.listAppFeeObj = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
 
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
@@ -245,7 +247,7 @@ export class FeeComponent implements OnInit {
     calcObj.Fee = this.ParentForm.get(this.identifier).value;
 
 
-    this.http.post(AdInsConstant.CalculateProvisionFee, calcObj).subscribe(
+    this.http.post(URLConstant.CalculateProvisionFee, calcObj).subscribe(
       (response) => {
         response["ProvisionFeePercentage"];
         var fb_provision = this.GetProvisionFormGroup();
@@ -263,7 +265,6 @@ export class FeeComponent implements OnInit {
       }
     );
   }
-
 
   xxx(){
     console.log(this.ParentForm);

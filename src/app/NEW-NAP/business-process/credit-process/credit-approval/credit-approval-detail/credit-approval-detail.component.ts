@@ -7,6 +7,8 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
   styleUrls: []
 })
 export class CreditApprovalDetailComponent implements OnInit {
-    appId: number;
+  appId: number;
   mrCustTypeCode: string;
   viewObj: string;
   arrValue = [];
@@ -44,34 +46,34 @@ export class CreditApprovalDetailComponent implements OnInit {
         approvalBaseUrl: environment.ApprovalR3Url
       }
       this.inputObj = obj;
-      
+
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = obj.taskId
-  
+
       this.HoldTask(ApvHoldObj);
     });
   }
   async ngOnInit(): Promise<void> {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     this.getApp();
   }
 
-  HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{
+  HoldTask(obj) {
+    this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
       },
-      (error)=>{
+      (error) => {
         this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
       }
     )
   }
 
-  getApp(){
+  getApp() {
     var appObj = new AppObj();
     appObj.AppId = this.appId
-    this.http.post<AppObj>(AdInsConstant.GetAppById, appObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.AppObj = response;
       },
@@ -84,9 +86,9 @@ export class CreditApprovalDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
-    if(event.result.toLowerCase() == AdInsConstant.ApvResultReturn.toLowerCase()){
+    if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
-      var user = JSON.parse(localStorage.getItem("UserAccess"));
+      var user = JSON.parse(localStorage.getItemCommonConstant.USER_ACCESS());
 
       returnHandlingHObj.AppId = this.appId;
       returnHandlingHObj.AgrmntId = null;
@@ -95,7 +97,7 @@ export class CreditApprovalDetailComponent implements OnInit {
       returnHandlingHObj.ReturnNotes = event.notes;
       returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
 
-      this.http.post(AdInsConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
+      this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
           this.toastr.successMessage("Success");
           this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
@@ -105,15 +107,14 @@ export class CreditApprovalDetailComponent implements OnInit {
         }
       );
 
-    }else{
+    } else {
       this.toastr.successMessage("Success");
       this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
-    }   
+    }
   }
 
-  onCancelClick()
-  {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+  onCancelClick() {
+    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS)
     this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 }

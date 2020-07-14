@@ -10,6 +10,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-company-main-data-FL4W',
@@ -59,8 +61,8 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustNo: [''],
@@ -88,7 +90,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.isReadonly = true;
 
     var custObj = {CustId: event.CustId};
-    this.http.post(AdInsConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
         console.log(response);
         this.CopyCustomer(response);
@@ -149,7 +151,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   setIndustryTypeName(industryTypeCode){
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -159,7 +161,6 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
 
   bindCustData(){
@@ -201,7 +202,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
@@ -213,10 +214,10 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   }
 
   async bindCompanyTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
@@ -228,10 +229,10 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   }
 
   async bindCustModelObj(){
-    this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypeCompany;
-    await this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
+    await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
-        this.CustModelObj = response["ReturnObject"];
+        this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key

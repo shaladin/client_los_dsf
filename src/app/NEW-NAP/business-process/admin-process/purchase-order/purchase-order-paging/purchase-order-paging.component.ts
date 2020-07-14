@@ -4,6 +4,9 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-purchase-order-paging',
@@ -13,16 +16,15 @@ export class PurchaseOrderPagingComponent implements OnInit {
   bizTemplateCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  token : any = localStorage.getItem("Token");
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
-        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
-      else{
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+      else {
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
@@ -32,7 +34,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseOrder.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -55,14 +57,12 @@ export class PurchaseOrderPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
-    else if(ev.Key == "ViewAgrmnt"){
-      var link = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
-    }    
+    else if (ev.Key == "ViewAgrmnt") {
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
+    }
   }
 }

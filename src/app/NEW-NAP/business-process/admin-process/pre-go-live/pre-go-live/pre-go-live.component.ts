@@ -13,6 +13,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -24,13 +27,13 @@ export class PreGoLiveComponent implements OnInit {
   AgrmntId: any;
   AgrmntNo: any;
   result: any;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   appTC: any;
   TaskListId: any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
 
   IsCheckedAll: boolean = false;
 
@@ -55,6 +58,7 @@ export class PreGoLiveComponent implements OnInit {
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
   lengthListRfaLogObj: number;
+  IsApvReady: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -74,31 +78,52 @@ export class PreGoLiveComponent implements OnInit {
 
   ngOnInit() {
     console.log('Shinano');
-    this.http.post(AdInsConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: "PRE_GPV_APV" }).subscribe(
+    this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
-        this.lengthListRfaLogObj = this.ListRfaLogObj.length-1;
+        this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
             approvalBaseUrl: environment.ApprovalR3Url,
             type: 'task',
-            refId: this.ListRfaLogObj[i].RfaNo
+            refId: this.ListRfaLogObj[i].RfaNo,
+            apvStat: this.ListRfaLogObj[i].ApvStat,
           };
           if (this.ListRfaLogObj[i].ApvStat == "ApproveFinal") {
             this.IsCheckedAll = true;
             this.hasApproveFinal = true;
           }
         }
+        this.IsApvReady = true;
       },
       (error) => {
         console.log(error);
       }
     );
     this.claimTask();
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     var agrmntObj = new AgrmntObj();
     agrmntObj.AgrmntId = this.AgrmntId;
-    this.http.post(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         this.result = response;
         this.MainInfoForm.patchValue({
@@ -116,16 +141,16 @@ export class PreGoLiveComponent implements OnInit {
 
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
   }
 
   ReceiveIsChecked(ev) {
     console.log("for debug");
     if (this.ListRfaLogObj.length != 0) {
-      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal"){
-      this.IsCheckedAll = false;
-      return;
+      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal") {
+        this.IsCheckedAll = false;
+        return;
       }
     }
     if (this.hasApproveFinal) {
@@ -138,7 +163,7 @@ export class PreGoLiveComponent implements OnInit {
 
   RFA() {
     console.log("asdasd");
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));   
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     this.ListAppTCObj = new ListAppTCObj();
     this.ListAppTCObj["ListAppTcObj"] = new Array();
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
@@ -162,27 +187,27 @@ export class PreGoLiveComponent implements OnInit {
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }
       }
       this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
     }
-      this.http.post(AdInsConstant.EditAppTc, this.ListAppTCObj).subscribe(
-        (response) => {
-          this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
-            this.toastr.successMessage(response['message']);
-          
-        },
-        (error) => {
-          console.log(error);
-        });
-    
+    this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
+      (response) => {
+        this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+        this.toastr.successMessage(response['message']);
+
+      },
+      (error) => {
+        console.log(error);
+      });
+
   }
 
   SaveForm(flag = true) {
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
@@ -208,7 +233,7 @@ export class PreGoLiveComponent implements OnInit {
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }
@@ -233,11 +258,11 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
 
-    this.http.post(AdInsConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
+    this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-          this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
-          this.toastr.successMessage(response['message']);
-        
+        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
+        this.toastr.successMessage(response['message']);
+
       },
       (error) => {
         console.log(error);
@@ -246,15 +271,12 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
-
-
-
 }

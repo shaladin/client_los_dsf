@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray, FormGroup, FormGroupDirective } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { DatePipe } from '@angular/common';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
-import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -64,15 +64,13 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   subjectType: string;
   idSource: number;
   verfSchemeHId: number;
-  AppNoUrl = environment.losR3Web + '/Nap/View/AppView?AppId=';
-   CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
   appObj = {
     AppId: 0,
   };
 
   verfResObj = {
     TrxRefNo: "",
-    MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
+    MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
   };
 
   verfResHObj = {
@@ -101,7 +99,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHObj: any;
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
-  verfResultDListObjs: Array<VerfResultDObj>; 
+  verfResultDListObjs: Array<VerfResultDObj>;
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;
@@ -127,16 +125,16 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.getListVerfResulHtUrl = AdInsConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
-    this.getVerfResulHtUrl = AdInsConstant.GetVerfResultHById;
-    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefStatusUrl = AdInsConstant.GetListActiveRefStatusByStatusGrpCode;
-    this.getPhnNumberUrl = AdInsConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
-    this.getQuestionUrl = AdInsConstant.GetVerfQuestionListByAppIdAndSubjectForPhoneVerif;
-    this.saveVerfResultHDetailUrl = AdInsConstant.AddVerfResultHeaderAndVerfResultDetail;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
+    this.getListVerfResulHtUrl = URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode;
+    this.getVerfResulHtUrl = URLConstant.GetVerfResultHById;
+    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefStatusUrl = URLConstant.GetListActiveRefStatusByStatusGrpCode;
+    this.getPhnNumberUrl = URLConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
+    this.getQuestionUrl = URLConstant.GetVerfQuestionListByAppIdAndSubjectForPhoneVerif;
+    this.saveVerfResultHDetailUrl = URLConstant.AddVerfResultHeaderAndVerfResultDetail;
   }
 
   async ngOnInit(): Promise<void> {
@@ -161,15 +159,20 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       await this.GetVerfResultHData();
       await this.GetListVerfResulHtData(this.verfResHObj);
     };
+  }
 
-
-
+  OpenView(key: string) {
+    if (key == 'app') {
+      AdInsHelper.OpenAppViewByAppId(this.appId);
+    } else if (key == 'cust') {
+      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
   }
 
   SaveForm(formDirective: FormGroupDirective) {
     var activeButton = document.activeElement.id;
     if (this.isQuestionLoaded == false) {
-      this.toastr.errorMessage("Can't process further because questions are not loaded");
+      this.toastr.warningMessage("Can't process further because questions are not loaded");
     }
     else {
       this.setPhoneVerifData();
@@ -202,7 +205,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   setPhoneVerifData() {
 
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -271,11 +274,9 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetCust() {
-
     var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(AdInsConstant.GetCustByCustNo, custObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, custObj).toPromise().then(
       (response) => {
-
         this.custId = response["CustId"];
       })
   };
@@ -284,15 +285,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.QuestionObj = response["ReturnObject"];
+        this.QuestionObj = response[CommonConstant.ReturnObj];
         if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
           this.verfSchemeHId = this.QuestionObj.VerfSchemeHId
           this.GenerateFormVerfQuestion();
-
         }
         else {
           this.isQuestionLoaded = false;
-          this.toastr.errorMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
+          this.toastr.warningMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
         }
       }
     );
@@ -341,7 +341,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+          if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -352,7 +352,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
               this.ListVerfAnswer[i].push("");
             }
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
-          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+          } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
@@ -369,7 +369,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.http.post(this.getPhnNumberUrl, phnObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.PhoneNumberObj = response["ReturnObject"];
+        this.PhoneNumberObj = response[CommonConstant.ReturnObj];
         if (this.PhoneNumberObj.length > 0) {
           this.PhoneDataForm.patchValue({
             Phn: this.PhoneNumberObj[0].PhoneNumber,
@@ -413,7 +413,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.refStatusObj.StatusGrpCode = "VERF_RESULT_STAT";
     this.http.post(this.getRefStatusUrl, this.refStatusObj).subscribe(
       (response) => {
-        this.ResultObj = response["ReturnObject"];
+        this.ResultObj = response[CommonConstant.ReturnObj];
         if (this.ResultObj.length > 0) {
           this.PhoneDataForm.patchValue({
             MrVerfResultHStatCode: this.ResultObj[0].Key
@@ -425,10 +425,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   bindSubjectRelationObj() {
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.SubjectRelationObj = response["ReturnObject"];
+        this.SubjectRelationObj = response[CommonConstant.ReturnObj];
         if (this.SubjectRelationObj.length > 0) {
           this.PhoneDataForm.patchValue({
             MrVerfSubjectRelationCode: this.SubjectRelationObj[0].Key
@@ -499,8 +499,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   Navigate() {
-    var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
   }
 
   test() {
@@ -521,7 +520,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 //  await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
 //    (response) => {
 //      console.log(response);
-//      this.QuestionObj = response["ReturnObject"];
+//      this.QuestionObj = response[CommonConstant.ReturnObj];
 //      this.verfResultDListObjs = new Array<VerfResultDObj>();
 //      for (let i = 0; i < this.QuestionObj.VerfQuestionAnswerListObj.length; i++) {
 //        for (let j = 0; j < this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList.length; j++) {

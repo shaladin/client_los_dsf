@@ -8,6 +8,8 @@ import { environment } from 'environments/environment';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/ResultSubsidySchmMaxRuleObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-subsidy-add-edit',
@@ -63,7 +65,7 @@ export class SubsidyAddEditComponent implements OnInit {
     }
 
     GetAppSubsidy(){
-      this.http.post<AppSubsidyObj>(AdInsConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
+      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
         (response) => {
           var subdObj = response;
 
@@ -95,7 +97,7 @@ export class SubsidyAddEditComponent implements OnInit {
 
     LoadSubsidyMaxRule()
     {
-      this.http.post(AdInsConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
+      this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
         (response) => {
           this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
           console.log(this.subsidyMaxRuleObj);
@@ -126,10 +128,10 @@ export class SubsidyAddEditComponent implements OnInit {
       subdObj.AppFees = this.listAppFeeObj;
 
       if(this.mode == "add"){
-        this.http.post(AdInsConstant.AddAppSubsidy, subdObj ).subscribe(
+        this.http.post(URLConstant.AddAppSubsidy, subdObj ).subscribe(
           (response) => {
             console.log(response);
-            var x = response["ReturnObject"];
+            var x = response[CommonConstant.ReturnObj];
             this.emitData.emit(x);
             this.activeModal.close();
           }
@@ -138,10 +140,10 @@ export class SubsidyAddEditComponent implements OnInit {
       if(this.mode == "edit"){
         subdObj.AppSubsidyId = this.AppSubsidyId;
         
-        this.http.post(AdInsConstant.EditAppSubsidy, subdObj ).subscribe(
+        this.http.post(URLConstant.EditAppSubsidy, subdObj ).subscribe(
           (response) => {
             console.log(response);
-            var x = response["ReturnObject"];
+            var x = response[CommonConstant.ReturnObj];
             this.emitData.emit(x);
             this.activeModal.close();
           }
@@ -150,9 +152,9 @@ export class SubsidyAddEditComponent implements OnInit {
     }
   
     LoadDDLFromTypeCode() {
-      this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
+      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSubsidyFromType  }).subscribe(
         (response) => {
-          this.FromTypeCodeOptions = response["ReturnObject"];
+          this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
         }
       );
     }
@@ -160,7 +162,7 @@ export class SubsidyAddEditComponent implements OnInit {
     LoadDDLFromValue(fromTypeCode: string) {
       this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
         (response) => {
-          this.FromValueOptions = response["ReturnObject"];
+          this.FromValueOptions = response[CommonConstant.ReturnObj];
         }
       );
     }
@@ -168,7 +170,7 @@ export class SubsidyAddEditComponent implements OnInit {
     LoadDDLSubsidyAlloc(fromTypeCode: string) {
       this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation", { SubsidyFromType: fromTypeCode }).subscribe(
         (response) => {
-          this.AllocCodeOptions = response["ReturnObject"];
+          this.AllocCodeOptions = response[CommonConstant.ReturnObj];
         }
       );
     }
@@ -176,7 +178,7 @@ export class SubsidyAddEditComponent implements OnInit {
     LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
       this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidySource", { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
         (response) => {
-          this.SourceCodeOptions = response["ReturnObject"];
+          this.SourceCodeOptions = response[CommonConstant.ReturnObj];
         }
       );
     }
@@ -188,7 +190,7 @@ export class SubsidyAddEditComponent implements OnInit {
                         SubsidySourceCode: sourceCode
                       }).subscribe(
         (response) => {
-          this.ValueTypeOptions = response["ReturnObject"];
+          this.ValueTypeOptions = response[CommonConstant.ReturnObj];
 
           if(this.ValueTypeOptions.length == 1)
           {

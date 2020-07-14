@@ -1,4 +1,4 @@
-<lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
 <lib-ucSubsection *ngIf="responseObj.length > 0" [id]="'Hierarchy'" [title]="'List Document'" [panel]="'ListDocId'">
 </lib-ucSubsection>
 <div id="ListDocId">
@@ -34,6 +34,6 @@
 </div>
 <div class="float-right">
   <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/CustomerDoc/Paging']" translate>
-    <i class="ft-x"></i> Back
+    <i class="fa fa-arrow-left"></i> Back
   </button>
 </div>

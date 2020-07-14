@@ -10,6 +10,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-add',
@@ -72,7 +74,7 @@ export class NapAddComponent implements OnInit {
     RsvField3: [''],
     RsvField4: [''],
     RsvField5: [''],
-    BizTemplateCode: [AdInsConstant.FL4W]
+    BizTemplateCode: [CommonConstant.FL4W]
   });
 
   constructor(private fb: FormBuilder, private router: Router,
@@ -80,13 +82,13 @@ export class NapAddComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MakeLookUpObj();
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == "CG") {
+    if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -110,7 +112,7 @@ export class NapAddComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -118,7 +120,7 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -136,7 +138,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.FL4W;
+    critObj.value = CommonConstant.FL4W;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
@@ -152,12 +154,12 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.FL4W;
+    addCritBizTempalte.value = CommonConstant.FL4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    if (this.user.MrOfficeTypeCode != "CG") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.CENTER_GROUP_CODE) {
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
         OriOfficeName: this.user.OfficeName,
@@ -170,11 +172,11 @@ export class NapAddComponent implements OnInit {
     var obj = {
       RowVersion: ""
     };
-    var url = environment.FoundationR3Url + AdInsConstant.GetListKvpActiveRefOffice;
+    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.officeItems = response["ReturnObject"];
+        this.officeItems = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -207,15 +209,15 @@ export class NapAddComponent implements OnInit {
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-    napAppObj.BizTemplateCode = AdInsConstant.FL4W;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
+    napAppObj.BizTemplateCode = CommonConstant.FL4W;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
 
-    var url = AdInsConstant.AddApp;
+    var url = URLConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         console.log(response);
@@ -254,7 +256,7 @@ export class NapAddComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     console.log(ev);	
-    var url = AdInsConstant.GetListProdOfferingDByProdOfferingCode;
+    var url = URLConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
     };
@@ -265,20 +267,20 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         // console.log(response);
-        var temp = response["ReturnObject"];
+        var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
-          if (temp[i].RefProdCompntCode == "LOB") {
+          if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == "CURR") {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             var listPayFreqCode = temp[i].CompntValue.split(";");
             if(listPayFreqCode.length == 1){
               tempPayFreqCode = temp[i].CompntValue;
             }else{
               tempPayFreqCode = null;
             }            
-          } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
             console.log("Not");
@@ -318,7 +320,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = AdInsConstant.FL4W;
+    critObj.value = CommonConstant.FL4W;
     arrCopyLookupCrit.push(critObj);
 
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
@@ -336,7 +338,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = AdInsConstant.FL4W;
+    addCritBizTempalte.value = CommonConstant.FL4W;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;

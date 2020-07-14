@@ -6,6 +6,8 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { forkJoin } from 'rxjs';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-asset-data-detail',
@@ -28,9 +30,9 @@ export class AppAssetDataDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let getAppAsset = this.httpClient.post(AdInsConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
-    let getAppAssetSupplEmp = this.httpClient.post(AdInsConstant.GetListAppAssetSupplEmpByAppAssetId, { AppAssetId: this.AppAssetId });
-    let getAppCollReg = this.httpClient.post(AdInsConstant.GetAppCollateralRegistrationByAppId, { AppId: this.AppId });
+    let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
+    let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { AppAssetId: this.AppAssetId });
+    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppId, { AppId: this.AppId });
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];
@@ -43,13 +45,13 @@ export class AppAssetDataDetailComponent implements OnInit {
         // console.log(this.appCollateralRegistration)
 
         for (const item of this.appAssetSupplEmp.ReturnObject) {
-          if(item.MrSupplEmpPositionCode == AdInsConstant.SALES_JOB_CODE){
+          if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
           }
-          else if(item.MrSupplEmpPositionCode == AdInsConstant.BRANCH_MANAGER_JOB_CODE){
+          else if(item.MrSupplEmpPositionCode == CommonConstant.BRANCH_MANAGER_JOB_CODE){
             this.branchManagerName = item.SupplEmpName;
           }
-          else if(item.MrSupplEmpPositionCode == AdInsConstant.ADMIN_HEAD_JOB_CODE){
+          else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
           }
         }

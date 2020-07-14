@@ -8,6 +8,9 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -20,9 +23,9 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
-  GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppGuarantorDuplicateCheck;
-  GetAppShareholderDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppShareholderDuplicateCheck;
-  GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
+  GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppGuarantorDuplicateCheck;
+  GetAppShareholderDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppShareholderDuplicateCheck;
+  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   ListAppGuarantorDuplicate: any;
@@ -75,10 +78,9 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       response => {
         this.AppCustObj = response['AppCustObj'];
         var custObj = { CustNo: this.AppCustObj['CustNo'] };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + this.cust.CustId;
           },
           (error) => {
             console.log(error);
@@ -192,7 +194,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     appDupCheckObj.AppId = this.AppId;
     appDupCheckObj.WfTaskListId = this.WfTaskListId;
 
-    this.http.post(AdInsConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
+    this.http.post(URLConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"]);
@@ -203,12 +205,12 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
 
       });
@@ -216,18 +218,15 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
   Back() {
     // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 
-  OpenAppView(appId) {
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
-  }
-  OpenCustView(custNo) {
-    var custObj = { CustNo: custNo };
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
-      response => {
-        window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], "_blank");
-      }); 
+  OpenView(key: string, value: number){
+    if(key == "app"){
+      AdInsHelper.OpenAppViewByAppId(value);
+    }else if( key == "cust"){
+        AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+    }
   }
 }

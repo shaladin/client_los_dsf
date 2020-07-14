@@ -11,6 +11,8 @@ import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/R
 import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -53,7 +55,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   verfResObj =
     {
       TrxRefNo: "",
-      MrVerfTrxTypeCode: AdInsConstant.VerfTrxTypeCodePhn,
+      MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
     };
   phoneVerifObj: any;
   AppObj: any;
@@ -87,12 +89,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   initUrl() {
-    this.getPhoneVerifSubjUrl = AdInsConstant.GetAppPhoneVerifSubjectListByAppId;
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.getVerfResultUrl = AdInsConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.addVerfResultUrl = AdInsConstant.AddVerfResult;
-    this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = AdInsConstant.EditReturnHandlingD;
+    this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
+    this.addVerfResultUrl = URLConstant.AddVerfResult;
+    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
+    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -116,10 +118,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async SaveForm() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
       this.setReturnHandlingH();
-      this.http.post(AdInsConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
+      this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
         (response) => {
 
           this.toastr.successMessage(response["message"]);
@@ -162,9 +164,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   setReturnHandlingH() {
     this.ReturnHandlingHData = new ReturnHandlingHObj();
     this.ReturnHandlingHData.AppId = this.appId;
-    this.ReturnHandlingHData.ReturnBy = localStorage.getItem("Username");
+    this.ReturnHandlingHData.ReturnBy = localStorage.getItem(CommonConstant.USER_NAME);
     this.ReturnHandlingHData.ReturnNotes = this.ReturnHandlingForm.controls.UpdateNotes.value;
-    this.ReturnHandlingHData.ReturnFromTrxType = AdInsConstant.TrxTypeCodePhn;
+    this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.TrxTypeCodePhn;
     this.ReturnHandlingHData.WfTaskListId = this.wfTaskListId;
     this.ReturnHandlingHData.IsReturn = (this.ReturnHandlingForm.controls['IsAnyUpdate'].value == 'YES') ? true : false;
   }
@@ -173,8 +175,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
-    var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { BizTemplateCode: lobCode } })
@@ -200,9 +202,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.returnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingAddPhnVerf
+        MrReturnTaskCode: CommonConstant.ReturnHandlingAddPhnVerf
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         },
@@ -239,21 +241,21 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
       }
     );
-    if (this.verifResultObj == "") {
-      var Business_Date = localStorage.getItem('BusinessDate');
+    if (this.verifResultObj.VerfResultId == 0) {
+      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
 
-      var useraccess = localStorage.getItem('UserAccess');
+      var useraccess = localStorage.getItem(CommonConstant.USER_ACCESS);
       console.log(useraccess);
       this.addVerifResultObj = new VerfResultObj();
 
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
       this.addVerifResultObj.VerfDt = businessDt;
       this.addVerifResultObj.EmpNo = "-";
-      this.addVerifResultObj.MrVerfResultStatCode = AdInsConstant.VerfResultStatCodeNew;
-      this.addVerifResultObj.MrVerfTrxTypeCode = AdInsConstant.VerfTrxTypeCodePhn;
+      this.addVerifResultObj.MrVerfResultStatCode = CommonConstant.VerfResultStatCodeNew;
+      this.addVerifResultObj.MrVerfTrxTypeCode = CommonConstant.VerfTrxTypeCodePhn;
       this.addVerifResultObj.LobCode = this.AppObj.LobCode;
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";
@@ -294,19 +296,19 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = {
       pWFTaskListID: this.wfTaskListId,
-      pUserID: currentUserContext["UserName"],
+      pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
       this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
     }

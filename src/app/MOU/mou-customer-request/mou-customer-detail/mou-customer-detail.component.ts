@@ -10,6 +10,9 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -27,7 +30,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mode: string;
   pageType: string;
   pageTitle: string;
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -56,9 +59,16 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObject.MouCustId = this.mouCustId;
-    this.httpClient.post(AdInsConstant.GetMouCustById, this.mouCustObject).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
       }
@@ -72,7 +82,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == CommonConstant.GENERAL) {
       this.stepperGeneral = new Stepper(document.querySelector('#stepperGeneral'), {
         linear: false,
         animation: true
@@ -80,7 +90,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       this.stepperGeneral.to(this.currentStepIndex);
       console.log(this.stepperGeneral);
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == CommonConstant.FACTORING) {
       this.stepperFactoring = new Stepper(document.querySelector('#stepperFactoring'), {
         linear: false,
         animation: true
@@ -115,10 +125,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   designatedStepHandler(idx) {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == CommonConstant.GENERAL) {
       this.stepperGeneral.to(idx);
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == CommonConstant.FACTORING) {
       this.stepperFactoring.to(idx);
     }
     this.currentStepIndex = idx;
@@ -129,29 +139,31 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   // }
 
   saveMouTc() {
-    if (this.mouType == AdInsConstant.GENERAL) {
+    if (this.mouType == CommonConstant.GENERAL) {
       this.mouTcGeneral.Save();
     }
-    else if (this.mouType == AdInsConstant.FACTORING) {
+    else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
     }
   }
 
   backFromMouTc() {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == CommonConstant.GENERAL) {
       this.stepHandlerGeneral({ StatusCode: "-1" });
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == CommonConstant.FACTORING) {
       this.stepHandlerFactoring({ StatusCode: "-1" });
     }
   }
 
   mouDocumentBack() {
-    if (this.mouType == "GENERAL") {
+    if (this.mouType == CommonConstant.GENERAL) {
       this.stepperGeneral.previous();
+      this.currentStepIndex--;
     }
-    else if (this.mouType == "FACTORING") {
+    else if (this.mouType == CommonConstant.FACTORING) {
       this.stepperFactoring.previous();
+      this.currentStepIndex--;
     }
   }
 
@@ -174,9 +186,9 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   submitHandler() {
-    if ((this.mouType == AdInsConstant.GENERAL && this.currentStepIndex == 4) || (this.mouType == AdInsConstant.FACTORING && this.currentStepIndex == 5)) {
+    if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex == 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex == 5)) {
       var mouObj = { MouCustId: this.mouCustId }
-      this.httpClient.post(AdInsConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
+      this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         (response: any) => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
@@ -192,7 +204,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       );
     }
     else {
-      this.toastr.errorMessage("Please follow the steps first");
+      this.toastr.warningMessage("Please follow the steps first");
     }
   }
 
@@ -248,10 +260,8 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
-      this.httpClient.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          // window.open(this.link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

@@ -11,6 +11,8 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -44,7 +46,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
   businessDt: Date = new Date();
 
-  PurchaseOrderDt : Date = new Date();
+  PurchaseOrderDt: Date = new Date();
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -77,35 +79,34 @@ export class DeliveryOrderDetailComponent implements OnInit {
   ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
       AgrmntId: this.AgrmntId
     }
 
-    this.http.post(AdInsConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
+    this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
       (response) => {
         this.PurchaseOrderDt = new Date(response["PurchaseOrderDt"]);
       }
     );
 
     var refMasterTypeObj = {
-      RefMasterTypeCode: "CUST_RELATIONSHIP",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustRelationship,
     }
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
       (response) => {
-        this.itemType = response["ReturnObject"];
+        this.itemType = response[CommonConstant.ReturnObj];
         this.DeliveryOrderForm.patchValue({
           MrCustRelationshipCode: this.itemType[0].Key
         });
       }
     );
 
-
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
 
-    this.http.post(AdInsConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
+    this.http.post(URLConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
         console.log(response);
         this.appAssetObj = response;
@@ -125,22 +126,22 @@ export class DeliveryOrderDetailComponent implements OnInit {
         var assetDocListobj = {
           AssetTypeCode: this.appAssetObj.AssetTypeCode
         }
-        this.http.post(AdInsConstant.GetRefAssetDocList, assetDocListobj).subscribe(
+        this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
           (response) => {
-            if (response["ReturnObject"].length > 0) {
-              for (var i = 0; i < response["ReturnObject"].length; i++) {
+            if (response[CommonConstant.ReturnObj].length > 0) {
+              for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
                 var assetDocumentDetail = this.fb.group({
-                  DocCode: response["ReturnObject"][i].AssetDocCode,
-                  AssetDocName: response["ReturnObject"][i].AssetDocName,
-                  IsValueNeeded: response["ReturnObject"][i].IsValueNeeded,
-                  IsMandatoryNew: response["ReturnObject"][i].IsMandatoryNew,
-                  IsMandatoryUsed: response["ReturnObject"][i].IsMandatoryUsed,
-                  IsReceived: response["ReturnObject"][i].IsReceived,
-                  DocNo: response["ReturnObject"][i].DocNo,
-                  ACDExpiredDt: response["ReturnObject"][i].ACDExpiredDt,
-                  DocNotes: response["ReturnObject"][i].DocNotes
+                  DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+                  AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+                  IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+                  IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+                  IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+                  IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+                  DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+                  ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+                  DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
                 }) as FormGroup;
-                if (response["ReturnObject"][i].IsValueNeeded == true) {
+                if (response[CommonConstant.ReturnObj][i].IsValueNeeded == true) {
                   assetDocumentDetail.controls.DocNo.setValidators([Validators.required]);
                 }
                 this.items.push(assetDocumentDetail);
@@ -154,7 +155,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
   }
   SaveForm() {
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
     //   this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
     //   return;
@@ -227,9 +228,9 @@ export class DeliveryOrderDetailComponent implements OnInit {
       var prmsDt = new Date(this.appTC.PromisedDt);
       var prmsDtForm = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
       if (this.appTC.IsChecked == false) {
-        if(prmsDtForm != null){
-          if(prmsDt < businessDt){
-            this.toastr.errorMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+        if (prmsDtForm != null) {
+          if (prmsDt < businessDt) {
+            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }
@@ -243,7 +244,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     this.deliveryOrderObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    this.http.post(AdInsConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
+    this.http.post(URLConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdminProcess/DeliveryOrder/Paging"]);
@@ -256,11 +257,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
   async claimTask() {
     console.log("Claim");
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }

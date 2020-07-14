@@ -12,6 +12,8 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-job-data-FL4W',
@@ -68,8 +70,8 @@ export class CustJobDataFL4WComponent implements OnInit {
      }
 
    ngOnInit() {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log(this.identifier);
     console.log(this.parentForm);
@@ -101,7 +103,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   CustModelChanged(){
     console.log(this.parentForm);
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelNonProfessional){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.parentForm.removeControl("jobDataAddr");
       this.parentForm.removeControl("jobDataAddrZipcode");
@@ -109,17 +111,17 @@ export class CustJobDataFL4WComponent implements OnInit {
       this.custModelCode = "NONPROF";
       this.setLookupProfessionCriteria();
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "PROF"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelProfessional){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.custModelCode = "PROF";
       this.setLookupProfessionCriteria();
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelEmployee){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
       this.custModelCode = "EMP";
       this.setLookupProfessionCriteria();
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME"){
+    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelSmallMediumEnterprise){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
       this.custModelCode = "SME";
       this.setLookupProfessionCriteria();
@@ -137,7 +139,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   setProfessionName(professionCode){
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(AdInsConstant.GetRefProfessionByCode, this.professionObj).subscribe(
+    this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
@@ -151,7 +153,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   setIndustryTypeName(industryTypeCode){
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -249,10 +251,10 @@ export class CustJobDataFL4WComponent implements OnInit {
   
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
         console.log("job position");
         if(this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
@@ -264,10 +266,10 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindCompanyScaleObj(){
-    this.refMasterObj.RefMasterTypeCode = "COY_SCALE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCoyScale;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyScaleObj = response["ReturnObject"];
+        this.CompanyScaleObj = response[CommonConstant.ReturnObj];
         if(this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyScaleCode: this.CompanyScaleObj[0].Key
@@ -278,10 +280,10 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindJobStatObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_STAT";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobStat;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobStatObj = response["ReturnObject"];
+        this.JobStatObj = response[CommonConstant.ReturnObj];
         if(this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrJobStatCode: this.JobStatObj[0].Key
@@ -292,10 +294,10 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindInvestmentTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "INVESTMENT_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInvestmentType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.InvestmentTypeObj = response["ReturnObject"];
+        this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
         if(this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrInvestmentTypeCode: this.InvestmentTypeObj[0].Key
@@ -306,10 +308,10 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
  bindCustModelObj(){
-    this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypePersonal;
-     this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
+     this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
-        this.CustModelObj = response["ReturnObject"];
+        this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0 && this.custModelCode == undefined){
           this.custModelCode = this.CustModelObj[0].Key;
           console.log("aawdawdwda" + this.custModelCode)

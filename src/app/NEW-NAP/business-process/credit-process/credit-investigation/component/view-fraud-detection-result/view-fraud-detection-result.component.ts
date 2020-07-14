@@ -15,8 +15,9 @@ import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Mo
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
-
-
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-view-fraud-detection-result',
@@ -32,14 +33,14 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   viewDukcapilMainDataObj: string;
   losUrl = environment.losUrl;
   foundationUrl = environment.FoundationR3Url;
-  getAppById = AdInsConstant.GetAppById;
-  getCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = AdInsConstant.GetCustomerDuplicateCheck;
-  getFraudDukcapilByIdNo = AdInsConstant.GetFraudDukcapilByIdNo;
-  getNegativeCustomerDuplicateCheckUrl = AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  getAppAssetByAppId = AdInsConstant.GetAppAssetByAppId;
-  getAssetNegativeDuplicateCheck = AdInsConstant.GetAssetNegativeDuplicateCheck;
-  viewFraudVerifResultObj: any;
+  getAppById = URLConstant.GetAppById;
+  getCustDataByAppId = URLConstant.GetCustDataByAppId;
+  getAppDupCheckCustByAppId = URLConstant.GetCustomerDuplicateCheck;
+  getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
+  getNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
+  getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
+  getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
+  viewFraudVerifResultObj: UcViewGenericObj = new UcViewGenericObj();
 
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
@@ -56,7 +57,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   listNegativeAppAsset: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   listNegativeAppCollateral: Array<NegativeAssetObj> = new Array<NegativeAssetObj>();
   dukcapilObj: any;
-  viewDukcapilObj: string;
+  viewDukcapilObj: UcViewGenericObj = new UcViewGenericObj();
   listCustDuplicate: Array<ResDuplicateCustomerObj> = new Array<ResDuplicateCustomerObj>();
   trxRefNo: string;
   mrSrvySourceCode: string;
@@ -71,8 +72,13 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.getApp(this.appId);
     await this.getAppCust();
     this.arrValue.push(this.appId);
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-    this.viewFraudVerifResultObj = "./assets/ucviewgeneric/viewFraudVerifResult.json";
+    this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
+    this.viewDukcapilObj.whereValue = this.arrValue;
+    
+    this.viewFraudVerifResultObj.viewInput = "./assets/ucviewgeneric/viewFraudVerifResult.json";
+    this.viewFraudVerifResultObj.viewEnvironment = environment.losUrl;
+    this.viewFraudVerifResultObj.whereValue = this.arrValue;
   }
 
   async getAppCust() {
@@ -90,7 +96,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         var fraudDukcapilReqObj = { "IdNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
-        if (this.appCustObj.MrCustTypeCode == "PERSONAL") {
+        if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -103,7 +109,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
             "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
             "RowVersion": this.RowVersion
           };
-        } else if (this.appCustObj.MrCustTypeCode == "COMPANY") {
+        } else if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
@@ -118,7 +124,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
           };
         }
         this.getNegativeCustomer(this.requestDupCheck);
-        this.getAppDupCheckCust(this.requestDupCheck);
+        if(this.appCustObj.IsExistingCust == false){
+          this.getAppDupCheckCust(this.requestDupCheck);
+        }
       },
       () => {
         console.log("error")
@@ -166,7 +174,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.http.post(this.getFraudDukcapilByIdNo, reqObj).subscribe(
       (response) => {
         if(response["StatusCode"]==200)
-          this.dukcapilObj = response["ReturnObject"];
+          this.dukcapilObj = response[CommonConstant.ReturnObj];
       },
       () => {
         console.log("error")
@@ -177,12 +185,12 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   getAppDupCheckCust(appId) {
     this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
       (response) => {
-        this.listCustDuplicate = response['ReturnObject']["CustDuplicate"];
+        this.listCustDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
         if (idxSelected < 0) {
-          this.custStat = "EXISTING";
+          this.custStat = CommonConstant.CustStatExisting;
         } else {
-          this.custStat = "NEW";
+          this.custStat = CommonConstant.CustStatNew;
           this.listCustDuplicate[idxSelected].IsSelected = true;
         }
 
@@ -218,9 +226,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     appCollateralObj.AppId = this.appId;
     var listAppCollateral = new Array<AppCollateralObj>();
-    await this.http.post(AdInsConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
+    await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {
-        listAppCollateral = response["ReturnObject"];
+        listAppCollateral = response[CommonConstant.ReturnObj];
         
       },
       error => {
@@ -239,9 +247,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
         negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
       }
-      await this.http.post(AdInsConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
+      await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
         response => {
-          this.listNegativeAppCollateral = response["ReturnObject"];
+          this.listNegativeAppCollateral = response[CommonConstant.ReturnObj];
         });
     } 
   }
@@ -260,7 +268,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     }
     await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
       response => {
-        this.listNegativeAppAsset = response["ReturnObject"];
+        this.listNegativeAppAsset = response[CommonConstant.ReturnObj];
       },
       error => {
         console.log("error")

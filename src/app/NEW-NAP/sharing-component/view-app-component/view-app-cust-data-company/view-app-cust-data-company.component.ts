@@ -7,6 +7,9 @@ import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -17,12 +20,12 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalD
 export class ViewAppCustDataCompanyComponent implements OnInit {
 
   @Input() appId: number;
-  viewMainDataObj: string;
+  viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj: string;
   viewJobDataEmpObj: string;
   viewJobDataSmeObj: string;
   viewJobDataNonProfObj: string;
-  viewFinDataObj: string;
+  viewFinDataObj: UcViewGenericObj = new UcViewGenericObj();
 
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
@@ -40,15 +43,20 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
   async ngOnInit() : Promise<void>{
     await this.getCustData();
     this.arrValue.push(this.appId);
-    this.viewMainDataObj = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
-    this.viewFinDataObj = "./assets/ucviewgeneric/viewAppCustCompanyFinData.json";
+    this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
+    this.viewMainDataObj.viewEnvironment = environment.losUrl;
+    this.viewMainDataObj.whereValue = this.arrValue;
+
+    this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyFinData.json";
+    this.viewFinDataObj.viewEnvironment = environment.losUrl;
+    this.viewFinDataObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;
   }
 
   async getCustData(){
     var reqObj = {AppId: this.appId}
-    await this.http.post(AdInsConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.appCustAddrForViewObjs = response["AppCustAddrObjs"];

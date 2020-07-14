@@ -5,6 +5,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustRvwHObj } from 'app/shared/model/MouCustRvwHObj.Model';
 import { MouCustRvwDObj } from 'app/shared/model/MouCustRvwDObj.Model';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-approval-history',
@@ -12,60 +14,64 @@ import { environment } from 'environments/environment';
 })
 export class MouViewApprovalHistoryComponent implements OnInit {
   @Input() MouCustId: number;
-  GetMouCustRvwHByMouCustIdUrl : string;
-  GetListMouCustRvwDUrl : string;
+  GetMouCustRvwHByMouCustIdUrl: string;
+  GetListMouCustRvwDUrl: string;
   responseMouCustRvwH: MouCustRvwHObj;
-  mouCustRvwHObj : MouCustRvwHObj;
-  mouCustRvwDObj : MouCustRvwDObj;
-  listMouCustRvwDObj : any;
+  mouCustRvwHObj: MouCustRvwHObj;
+  mouCustRvwDObj: MouCustRvwDObj;
+  listMouCustRvwDObj: any;
   MouCustNo: string;
-  MrMouTypeCode : string;
-  result : any;
-  constructor(private http: HttpClient, private router: Router) { 
-    this.GetMouCustRvwHByMouCustIdUrl = AdInsConstant.GetMouCustRvwHByMouCustId;
-    this.GetListMouCustRvwDUrl = AdInsConstant.GetListMouCustRvwD;
+  MrMouTypeCode: string;
+  result: any;
+  IsApvReady: boolean = false;
+  constructor(private http: HttpClient, private router: Router) {
+    this.GetMouCustRvwHByMouCustIdUrl = URLConstant.GetMouCustRvwHByMouCustId;
+    this.GetListMouCustRvwDUrl = URLConstant.GetListMouCustRvwD;
   }
 
-  RfaLogObj :{
+  RfaLogObj: {
     RfaNo: any
   }
-  ListRfaLogObj : any = new Array(this.RfaLogObj); 
-  inputObj:  any;
-  listMouAppvrObj : any = new Array(this.inputObj);   
-  count1 : number = 0; 
+  ListRfaLogObj: any = new Array(this.RfaLogObj);
+  inputObj: any;
+  listMouAppvrObj: any = new Array(this.inputObj);
+  count1: number = 0;
 
   ngOnInit() {
-    this.http.post(AdInsConstant.GetMouCustById, {MouCustID : this.MouCustId}).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { MouCustID: this.MouCustId }).subscribe(
       (response) => {
         this.MouCustNo = response["MouCustNo"];
         this.MrMouTypeCode = response["MrMouTypeCode"];
         console.log(response);
-        this.http.post(AdInsConstant.GetRfaLogByTrxNo, {TrxNo : this.MouCustNo}).subscribe(
+        this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.MouCustNo }).subscribe(
           (response) => {
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];
-            for(let i =0;i<this.ListRfaLogObj.length;i++){
-              if(this.ListRfaLogObj[i]["ApvCategory"]=="MOUC_GEN_APV" && this.MrMouTypeCode == "GENERAL"){
+            for (let i = 0; i < this.ListRfaLogObj.length; i++) {
+              if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_GEN_APV" && this.MrMouTypeCode == CommonConstant.GENERAL) {
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count1++;
-              }else if(this.ListRfaLogObj[i]["ApvCategory"]=="MOUC_FCTR_APV" && this.MrMouTypeCode == "FACTORING"){
+              } else if (this.ListRfaLogObj[i]["ApvCategory"] == "MOUC_FCTR_APV" && this.MrMouTypeCode == CommonConstant.FACTORING) {
                 this.listMouAppvrObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
-                  refId: this.ListRfaLogObj[i]["RfaNo"]
+                  refId: this.ListRfaLogObj[i]["RfaNo"],
+                  apvStat: this.ListRfaLogObj[i]["ApvStat"]
                 };
                 this.count1++;
-              } 
+              }
             }
           },
           (error) => {
             console.log(error);
           }
         );
+        this.IsApvReady = true;
       },
       (error) => {
         console.log(error);

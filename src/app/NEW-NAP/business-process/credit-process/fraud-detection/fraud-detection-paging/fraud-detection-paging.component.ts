@@ -8,6 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-fraud-detection-paging',
@@ -17,7 +19,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class FraudDetectionPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -31,7 +33,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchFraudDetection.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchFraudDetection.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -52,12 +54,12 @@ export class FraudDetectionPagingComponent implements OnInit {
   GetCallBack(event) {
 
     if (event.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion);
     }
     else {
       if(event.RowObj.ActCode == "FCR_" + this.BizTemplateCode){
         var appObj = {AppId: event.RowObj.AppId};
-        this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
+        this.http.post(URLConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
             var dupCheckErrorMessage = response["DupCheckErrorMessage"];
             var surveyErrorMessage = response["SurveyErrorMessage"];
@@ -75,7 +77,7 @@ export class FraudDetectionPagingComponent implements OnInit {
             }
 
             if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
-              if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+              if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
                 this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
               else
                 this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
@@ -86,7 +88,7 @@ export class FraudDetectionPagingComponent implements OnInit {
           }
         );
       }else{
-        if (event.RowObj.BizTemplateCode == AdInsConstant.FL4W)
+        if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
         this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
       else
         this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });

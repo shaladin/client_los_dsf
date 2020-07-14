@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-ucaddress-FL4W',
@@ -13,7 +15,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 export class CustUcaddressFL4WComponent implements OnInit {
 
   @Input() UCAddrForm: FormGroup;
-  @Input() enjiForm: NgForm;  
+  @Input() enjiForm: NgForm;
   @Input() identifier: any;
   @Input() default: any;
   @Input() title = "Address Information";
@@ -30,15 +32,15 @@ export class CustUcaddressFL4WComponent implements OnInit {
   houseOwnershipObj: any;
   inputLookupObj: any;
   identifierZipcode: any;
-  
+
   constructor(private fb: FormBuilder, private http: HttpClient) {
   }
-  ngOnInit() { 
+  ngOnInit() {
     console.log("UcAddressForm");
 
     this.identifierZipcode = this.identifier + "Zipcode";
 
-    if(this.default == undefined){
+    if (this.default == undefined) {
       this.default = new Array();
       this.default = {
         Addr: '',
@@ -59,7 +61,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
         FaxArea: '',
         Fax: '',
         MrHouseOwnershipCode: '',
-        SubZipcode:''
+        SubZipcode: ''
       };
     }
     this.UCAddrForm.addControl(this.identifier, this.fb.group({
@@ -70,7 +72,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
       AreaCode1: [''],
       City: [''],
       PhnArea1: ['', [Validators.pattern("^[0-9]+$")]],
-      Phn1: ['', [ Validators.pattern("^[0-9]+$")]],
+      Phn1: ['', [Validators.pattern("^[0-9]+$")]],
       PhnExt1: ['', Validators.pattern("^[0-9]+$")],
       PhnArea2: ['', Validators.pattern("^[0-9]+$")],
       Phn2: ['', Validators.pattern("^[0-9]+$")],
@@ -81,14 +83,14 @@ export class CustUcaddressFL4WComponent implements OnInit {
       FaxArea: ['', Validators.pattern("^[0-9]+$")],
       Fax: ['', Validators.pattern("^[0-9]+$")],
       MrHouseOwnershipCode: [''],
-      SubZipcode:['']
+      SubZipcode: ['']
     }));
 
-    if(this.inputField.inputLookupObj == undefined){
+    if (this.inputField.inputLookupObj == undefined) {
       this.inputField.inputLookupObj = new InputLookupObj();
     }
 
-    
+
     this.inputField.inputLookupObj.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputField.inputLookupObj.urlEnviPaging = "http://r3app-server.ad-ins.com/FOUNDATION_R3";
@@ -96,7 +98,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
     this.inputField.inputLookupObj.genericJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.isRequired = this.isRequired;
 
-    if(this.showOwnership == true){
+    if (this.showOwnership == true) {
       this.bindHouseOwnershipObj();
     }
   }
@@ -111,19 +113,19 @@ export class CustUcaddressFL4WComponent implements OnInit {
         City: event.City,
         SubZipcode: event.SubZipcode
       });
-      this.inputField.inputLookupObj.nameSelect = event.Zipcode;
-      this.inputField.inputLookupObj.idSelect = event.Zipcode;
+    this.inputField.inputLookupObj.nameSelect = event.Zipcode;
+    this.inputField.inputLookupObj.idSelect = event.Zipcode;
   }
 
-  bindHouseOwnershipObj(){
-    var refMasterObj = {RefMasterTypeCode: ""};
-    refMasterObj.RefMasterTypeCode = "BUILDING_OWNERSHIP";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+  bindHouseOwnershipObj() {
+    var refMasterObj = { RefMasterTypeCode: "" };
+    refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeBuildingOwnership;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.houseOwnershipObj = response["ReturnObject"];
-        if(this.houseOwnershipObj.length > 0 
+        this.houseOwnershipObj = response[CommonConstant.ReturnObj];
+        if (this.houseOwnershipObj.length > 0
           && (this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == ""
-              || this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == undefined)){
+            || this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == undefined)) {
           this.UCAddrForm.controls[this.identifier].patchValue({
             MrHouseOwnershipCode: this.houseOwnershipObj[0].Key
           });

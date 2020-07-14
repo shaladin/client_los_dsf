@@ -7,6 +7,7 @@ import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model
 import { AgrmntFeeObj } from 'app/shared/model/AgrmntFeeObj.Model';
 import { AgrmntSubsidyObj } from 'app/shared/model/AgrmntSubsidyObj.Model';
 import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-agrmnt-financial',
@@ -29,7 +30,7 @@ export class AgrmntFinancialComponent implements OnInit {
 
   getFinancialData(){
     var reqObj = {AgrmntId: this.AgrmntId};
-    this.http.post(AdInsConstant.GetFinancialDataByAgrmntIdForView, reqObj).subscribe(
+    this.http.post(URLConstant.GetFinancialDataByAgrmntIdForView, reqObj).subscribe(
       (response) => {
         console.log(response);
         this.listSubsidy = response["AgrmntSubsidyObjs"];

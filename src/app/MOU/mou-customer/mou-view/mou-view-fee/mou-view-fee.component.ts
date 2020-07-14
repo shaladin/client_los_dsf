@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-fee',
@@ -20,7 +21,7 @@ export class MouViewFeeComponent implements OnInit {
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustFeeByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustFeeByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listFeeData = response;
       })

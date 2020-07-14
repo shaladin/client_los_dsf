@@ -10,6 +10,9 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-paging',
@@ -19,8 +22,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: any;
-  token: any = localStorage.getItem("Token");
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(AdInsConstant.USER_ACCESS));
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -38,13 +41,13 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
     critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
-    critInputOnlyOffering.value = AdInsConstant.OFFERING_VALIDITY_APV;
+    critInputOnlyOffering.value = CommonConstant.OFFERING_VALIDITY_APV;
 
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.addCritInput = new Array();
     arrCrit.push(critInputOnlyOffering);
@@ -76,21 +79,21 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   CallbackHandler(ev: any) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
     }
     else if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
         this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Detail"], { queryParams: { "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId } });
       }
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_HOLD);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       }else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
-        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+        this.httpClient.post(URLConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }
@@ -99,10 +102,10 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     }
     else if (ev.Key == "TakeBack") {
       if (String.Format("{0:L}", ev.RowObj.MainUserId) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(AdInsConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
+        this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }
@@ -110,7 +113,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
       }
     }
     else {
-      this.toastr.errorMessage(String.Format(AdInsConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
+      this.toastr.errorMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
 

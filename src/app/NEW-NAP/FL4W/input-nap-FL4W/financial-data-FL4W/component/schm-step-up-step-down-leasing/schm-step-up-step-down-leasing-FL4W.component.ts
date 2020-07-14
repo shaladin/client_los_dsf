@@ -12,6 +12,9 @@ import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-step-up-step-down-leasing-FL4W',
@@ -42,10 +45,10 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -56,25 +59,25 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
       (response) => {
-        this.RateTypeOptions = response["ReturnObject"];
+        this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
-        this.GracePeriodeTypeOptions = response["ReturnObject"];
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLStepUpStepDownInputType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "STEP_UP_STEP_DOWN_INPUT_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeStepUpStepDownInputType }).subscribe(
       (response) => {
-        this.StepUpStepDownInputOptions = response["ReturnObject"];
+        this.StepUpStepDownInputOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
@@ -132,8 +135,8 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     });
   }
 
-  InputTypeChanged(){
-    for(let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++){
+  InputTypeChanged() {
+    for (let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++) {
       this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
         InstAmt: 0
       });
@@ -144,18 +147,18 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
 
   SetEntryInstallment(){
     if(this.ParentForm.get("NumOfStep").value < 1){
-      this.toastr.errorMessage("Num of Step must be higher than 0.");
+      this.toastr.warningMessage(ExceptionConstant.NUM_OF_STEP_MUST_HIGHER + '0.');
       return;
     }
     if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
-      this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
+      this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
-    
+
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value ; i++){
+    for (let i = 0; i < this.ParentForm.controls.NumOfStep.value; i++) {
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
@@ -169,11 +172,11 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
 
 
   CalculateAmortization() {
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
     }    
     if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
-      this.toastr.errorMessage("Please choose Step Up Step Down Input Type.");
+      this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
 
@@ -183,8 +186,7 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
     this.calcStepUpStepDownObj["InstAmt"] = 0;
 
-
-    this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.listAppInstStepSchm = response.AppInstStepSchmObjs;
@@ -232,7 +234,7 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     if (gracePeriodType != "") {
       if (gracePeriod == 0) {
         valid = false;
-        this.toastr.errorMessage("Grace Period must be set");
+        this.toastr.warningMessage(ExceptionConstant.GRACE_PERIOD_MUST_SET);
       }
     }
 
@@ -250,13 +252,13 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
 
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
@@ -284,12 +286,11 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }
@@ -300,6 +301,4 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
     console.log(this.ParentForm)
     console.log(this.ParentForm.value);
   }
-
-
 }

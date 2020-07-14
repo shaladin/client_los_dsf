@@ -4,6 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
 import { RequestInsuranceDataObj } from 'app/shared/model/RequestInsuranceDataObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-insurance-detail',
@@ -15,10 +17,10 @@ export class AppInsuranceDetailComponent implements OnInit {
   appInsObj: AppInsObjObj;
   appInsCvgs: any;
   appInsCvgsFinal: Array<any>;
-  public static CUSTOMER: string = "CU";
-  public static COMPANY: string = "CO";
-  public static CUSTOMER_COMPANY: string = "CUCO";
-  public static OFF_SYSTEM: string = "OFF";
+  public static CUSTOMER: string = CommonConstant.InsuredByCustomer;
+  public static COMPANY: string = CommonConstant.InsuredByCompany;
+  public static CUSTOMER_COMPANY: string = CommonConstant.InsuredByCustomerCompany;
+  public static OFF_SYSTEM: string = CommonConstant.InsuredByOffSystem;
   reqInsuranceDataObj: any;
 
   constructor(
@@ -31,7 +33,7 @@ export class AppInsuranceDetailComponent implements OnInit {
     // this.appInsObj.AppInsObjId = this.AppInsObjId
     this.reqInsuranceDataObj = new RequestInsuranceDataObj();
     this.reqInsuranceDataObj.AppInsObjObj.AppInsObjId = this.AppInsObjId;
-    this.httpClient.post(AdInsConstant.GetAppInsObjViewDetail, this.reqInsuranceDataObj).subscribe(
+    this.httpClient.post(URLConstant.GetAppInsObjViewDetail, this.reqInsuranceDataObj).subscribe(
       (response: any) => {
         this.appInsObj = response.appInsObj;
         this.appInsCvgs = response.appInsCvgs;
@@ -44,10 +46,10 @@ export class AppInsuranceDetailComponent implements OnInit {
         for (const item of this.appInsCvgs) {
           var addCvg = "";
           for (var i = 0; i < item.appInsAddCvgObjs.length; i++) {
-            if(i == (item.appInsAddCvgObjs.length - 1)){
+            if (i == (item.appInsAddCvgObjs.length - 1)) {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
             }
-            else{
+            else {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
             }
           }
@@ -67,5 +69,4 @@ export class AppInsuranceDetailComponent implements OnInit {
       }
     );
   }
-
 }

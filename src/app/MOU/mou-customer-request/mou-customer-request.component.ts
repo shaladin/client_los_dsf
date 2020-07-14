@@ -8,6 +8,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -23,9 +25,9 @@ export class MouCustomerRequestComponent implements OnInit {
   constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -50,10 +52,9 @@ export class MouCustomerRequestComponent implements OnInit {
     var custNo = ev.RowObj.CustNo;
     var custObj = {CustNo : custNo};
     var custId : number
-    this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       (response) => { 
         custId = response['CustId'];
-        // window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + custId, "_blank");
         AdInsHelper.OpenCustomerViewByCustId(custId);
       },
       (error) => {

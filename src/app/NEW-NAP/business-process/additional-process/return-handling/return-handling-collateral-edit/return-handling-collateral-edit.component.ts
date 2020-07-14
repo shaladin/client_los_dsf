@@ -4,12 +4,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { DatePipe } from '@angular/common';
 import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 
@@ -71,14 +70,14 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   initUrl() {
-    this.getListAppCollateralUrl = AdInsConstant.GetListAppCollateralByAppId;
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.rtnHandlingDUrl = AdInsConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = AdInsConstant.EditReturnHandlingD;
+    this.getListAppCollateralUrl = URLConstant.GetListAppCollateralByAppId;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
+    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.arrValue.push(this.appId);
     this.initUrl();
@@ -101,7 +100,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          var lobCode = localStorage.getItem("BizTemplateCode");
+          var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         },
         (error) => {
@@ -116,8 +115,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
-    var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.ResumeWorkflow, workflowApiObj).subscribe(
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
@@ -154,9 +153,9 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     if (this.returnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingAddColtr
+        MrReturnTaskCode: CommonConstant.ReturnHandlingAddColtr
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         },
@@ -170,7 +169,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   GetAppCollateralData() {
     this.http.post(this.getListAppCollateralUrl, this.appObj).subscribe(
       (response) => {
-        this.appCollateralObj = response["ReturnObject"];
+        this.appCollateralObj = response[CommonConstant.ReturnObj];
         console.log(this.appCollateralObj);
       }
     );
@@ -191,7 +190,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   Delete(AppCollateralId) {
     if (confirm('Are you sure to delete this data?')) {
       this.appCollObj.AppCollateralId = AppCollateralId;
-      this.http.post(AdInsConstant.DeleteAppCollateral, this.appCollObj).subscribe(
+      this.http.post(URLConstant.DeleteAppCollateral, this.appCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -207,23 +206,20 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   AddEdit(AppCollateralId) {
     if (this.isReturnHandling == false) {
-
     }
     if (this.isReturnHandling == true) {
       this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail?AppId=" + this.appId + "&AppCollateralId=" + AppCollateralId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
     }
-
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+  ClaimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
       });
   }
 }

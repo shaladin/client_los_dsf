@@ -6,6 +6,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-review-paging',
@@ -20,9 +22,9 @@ export class MouReviewPagingComponent implements OnInit {
   constructor(private router: Router, private http:HttpClient) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -31,8 +33,7 @@ export class MouReviewPagingComponent implements OnInit {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
-      console.log(AdInsConstant.GetPagingObjectBySQL);
+      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
       this.inputPagingObj.ddlEnvironments = [
         {
@@ -45,19 +46,11 @@ export class MouReviewPagingComponent implements OnInit {
 
   GetCallBack(event)
   {
-    // console.log("customerlink")
-    // console.log(event)
     if(event.Key == "customer"){
       var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          this.router.navigate([]).then(
-            result => { 
-              // window.open(this.link, '_blank'); 
               AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-            }
-          );
         },
         (error) => {
           console.log(error);

@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -50,7 +52,7 @@ export class MouViewDetailComponent implements OnInit {
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId}
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         // console.log("cekmoudetail")
         // console.log(response)
@@ -60,7 +62,7 @@ export class MouViewDetailComponent implements OnInit {
         this.PlafondAmt = this.mouCust.PlafondAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
 
-        if (this.MouType == AdInsConstant.GENERAL)
+        if (this.MouType == CommonConstant.GENERAL)
         {
           this.mouCustClause = response["MouCustClauseObj"];
           this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
@@ -73,7 +75,7 @@ export class MouViewDetailComponent implements OnInit {
           this.TenorFrom = this.mouCustClause.TenorFrom;
           this.TenorTo = this.mouCustClause.TenorTo;
         }
-        else if (this.MouType == AdInsConstant.FACTORING)
+        else if (this.MouType == CommonConstant.FACTORING)
         {
           this.mouCustFctr = response["MouCustFctrObj"];
           this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
@@ -98,9 +100,9 @@ export class MouViewDetailComponent implements OnInit {
           this.Notes = this.mouCustFctr.Notes;
         }
       })
-    this.http.post(AdInsConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
       (response) => {
-        this.listAssetData = response['ReturnObject'];
+        this.listAssetData = response[CommonConstant.ReturnObj];
       });
       
   }

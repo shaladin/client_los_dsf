@@ -9,6 +9,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-bank-account',
@@ -55,12 +58,12 @@ export class CustBankAccountComponent implements OnInit {
 
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private modalService: NgbModal,) {
 
-     }
+  }
 
   ngOnInit() {
     this.initLookup();
@@ -68,31 +71,31 @@ export class CustBankAccountComponent implements OnInit {
     console.log(this.listBankAcc);
   }
 
-  SaveForm(){
+  SaveForm() {
     console.log(this.CustBankAccountForm);
     this.appCustBankAccObj = new AppCustBankAccObj();
-    if(this.listBankAcc == undefined){
+    if (this.listBankAcc == undefined) {
       this.listBankAcc = new Array<AppCustBankAccObj>();
     }
     this.setAppCustBankAcc();
-    if(this.mode == "add"){
-      if(this.CustBankAccountForm.controls.IsDefault.value == true){
+    if (this.mode == "add") {
+      if (this.CustBankAccountForm.controls.IsDefault.value == true) {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
-  
-        if(check != undefined){
-          this.toastr.errorMessage("Other bank account is already default");
+
+        if (check != undefined) {
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }
 
       this.listBankAcc.push(this.appCustBankAccObj);
     }
-    if(this.mode == "edit"){
-      if(this.CustBankAccountForm.controls.IsDefault.value == true && this.listBankAcc[this.currentEditedIndex].IsDefault == false){
+    if (this.mode == "edit") {
+      if (this.CustBankAccountForm.controls.IsDefault.value == true && this.listBankAcc[this.currentEditedIndex].IsDefault == false) {
         var check = this.listBankAcc.find(x => x.IsDefault == true);
-  
-        if(check != undefined){
-          this.toastr.errorMessage("Other bank account is already default");
+
+        if (check != undefined) {
+          this.toastr.warningMessage(ExceptionConstant.OTHER_BANK_ACCOUNT_ALREADY_DEFAULT);
           return;
         }
       }
@@ -103,13 +106,13 @@ export class CustBankAccountComponent implements OnInit {
     this.clearForm();
   }
 
-  add(content){
+  add(content) {
     this.mode = "add";
     this.clearForm();
     this.open(content);
   }
 
-  edit(i, content){
+  edit(i, content) {
     this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
@@ -120,8 +123,8 @@ export class CustBankAccountComponent implements OnInit {
       IsDefault: this.listBankAcc[i].IsDefault
     });
 
-    if(this.listBankAcc[i].AppCustBankStmntObjs != undefined){
-      for(let j = 0; j < this.listBankAcc[i].AppCustBankStmntObjs.length; j++){
+    if (this.listBankAcc[i].AppCustBankStmntObjs != undefined) {
+      for (let j = 0; j < this.listBankAcc[i].AppCustBankStmntObjs.length; j++) {
         var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
         bankStmnObjs.push(this.addGroup(this.listBankAcc[i].AppCustBankStmntObjs[j]));
       }
@@ -130,19 +133,19 @@ export class CustBankAccountComponent implements OnInit {
     this.selectedBankCode = this.listBankAcc[i].BankCode;
     this.selectedBankName = this.listBankAcc[i].BankName;
     this.InputLookupBankObj.nameSelect = this.listBankAcc[i].BankName;
-    this.InputLookupBankObj.jsonSelect = {BankName: this.listBankAcc[i].BankName}; 
+    this.InputLookupBankObj.jsonSelect = { BankName: this.listBankAcc[i].BankName };
 
     this.open(content);
   }
 
-  delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+  delete(i) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listBankAcc.splice(i, 1);
       this.callbackSubmit.emit(this.listBankAcc);
     }
   }
 
-  clearForm(){
+  clearForm() {
     this.CustBankAccountForm = this.fb.group({
       BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
       BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -155,7 +158,7 @@ export class CustBankAccountComponent implements OnInit {
     this.initLookup();
   }
 
-  setAppCustBankAcc(){
+  setAppCustBankAcc() {
     this.appCustBankAccObj.BankCode = this.selectedBankCode;
     this.appCustBankAccObj.BankName = this.selectedBankName;
     this.appCustBankAccObj.BankBranch = this.CustBankAccountForm.controls.BankBranch.value;
@@ -164,7 +167,7 @@ export class CustBankAccountComponent implements OnInit {
     this.appCustBankAccObj.BalanceAmt = 0;
     this.appCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
     this.appCustBankAccObj.AppCustBankStmntObjs = new Array<AppCustBankStmntObj>();
-    for(let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++){
+    for (let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++) {
       var appCustBankStmntObj = new AppCustBankStmntObj();
       appCustBankStmntObj.Month = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].Month;
       appCustBankStmntObj.Year = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].Year;
@@ -174,25 +177,25 @@ export class CustBankAccountComponent implements OnInit {
       this.appCustBankAccObj.AppCustBankStmntObjs.push(appCustBankStmntObj);
     }
 
-    if(this.appCustBankAccObj.AppCustBankStmntObjs.length > 0){
+    if (this.appCustBankAccObj.AppCustBankStmntObjs.length > 0) {
       this.appCustBankAccObj.IsBankStmnt = true;
-    }else{
+    } else {
       this.appCustBankAccObj.IsBankStmnt = false;
     }
   }
 
-  GetBank(event){
+  GetBank(event) {
     this.selectedBankCode = event.BankCode;
     this.selectedBankName = event.BankName;
   }
 
-  setBankName(bankCode){
+  setBankName(bankCode) {
     this.bankObj.BankCode = bankCode;
-    this.http.post(environment.FoundationR3Url+AdInsConstant.GetRefBankByBankCodeAsync, this.bankObj).subscribe(
+    this.http.post(environment.FoundationR3Url + URLConstant.GetRefBankByBankCodeAsync, this.bankObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupBankObj.nameSelect = response["BankName"];
-        this.InputLookupBankObj.jsonSelect = response;     
+        this.InputLookupBankObj.jsonSelect = response;
       },
       (error) => {
         console.log(error);
@@ -200,21 +203,21 @@ export class CustBankAccountComponent implements OnInit {
     );
   }
 
-  addBankStmnt(){
+  addBankStmnt() {
     var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
     bankStmnObjs.push(this.addGroup(undefined));
     console.log(this.CustBankAccountForm);
   }
 
-  deleteBankStmnt(i){
-    if (confirm("Are you sure to delete this record?")) {
+  deleteBankStmnt(i) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
       bankStmnObjs.removeAt(i);
     }
   }
 
-  addGroup(bankStmntObj){
-    if(bankStmntObj == undefined){
+  addGroup(bankStmntObj) {
+    if (bankStmntObj == undefined) {
       return this.fb.group({
         Month: [this.defaultMonth, [Validators.required, Validators.maxLength(2)]],
         Year: ['', [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
@@ -222,7 +225,7 @@ export class CustBankAccountComponent implements OnInit {
         CreditAmt: [0, Validators.required],
         BalanceAmt: [0, Validators.required]
       })
-    }else{
+    } else {
       return this.fb.group({
         Month: [bankStmntObj.Month, [Validators.required, Validators.maxLength(2)]],
         Year: [bankStmntObj.Year, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
@@ -230,10 +233,10 @@ export class CustBankAccountComponent implements OnInit {
         CreditAmt: [bankStmntObj.CreditAmt, Validators.required],
         BalanceAmt: [bankStmntObj.BalanceAmt, Validators.required]
       })
-    } 
+    }
   }
 
-  initLookup(){
+  initLookup() {
     this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -242,12 +245,12 @@ export class CustBankAccountComponent implements OnInit {
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
   }
 
-  bindMonthObj(){
-    this.refMasterObj.RefMasterTypeCode = "MONTH";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+  bindMonthObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMonth;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.MonthObj = response["ReturnObject"];
-        if(this.MonthObj.length > 0){
+        this.MonthObj = response[CommonConstant.ReturnObj];
+        if (this.MonthObj.length > 0) {
           this.defaultMonth = this.MonthObj[0].Key;
         }
       }
@@ -273,13 +276,7 @@ export class CustBankAccountComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modalService.dismissAll();
   }
-
-
-
-
-
 }

@@ -9,8 +9,9 @@ import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.mo
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-
-
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: "reserved-fund",
@@ -65,11 +66,11 @@ export class ReservedFundComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppFeeUrl = AdInsConstant.GetListAppFeeByAppId;
-    this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
-    this.addEditRsvFundUrl = AdInsConstant.AddEditAppReservedFund;
-    this.getAppRsvFundRuleUrl = AdInsConstant.CreateRsvFundRule;
-    // this.getMaxAllocAmtRsvFundUrl = AdInsConstant.CreateMaxAllocAmtRsvFund;
+    this.getAppFeeUrl = URLConstant.GetListAppFeeByAppId;
+    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
+    this.addEditRsvFundUrl = URLConstant.AddEditAppReservedFund;
+    this.getAppRsvFundRuleUrl = URLConstant.CreateRsvFundRule;
+    // this.getMaxAllocAmtRsvFundUrl = URLConstant.CreateMaxAllocAmtRsvFund;
   }
 
   ngOnInit() {
@@ -88,22 +89,22 @@ export class ReservedFundComponent implements OnInit {
 
   SaveForm() {
     if (this.isCalculated == false) {
-      this.toastr.errorMessage("Please Calculate First");
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_FIRST);
     }
     else {
       this.calculating()
       if (this.totalRsvFundAmtWhenSave != this.totalRsvFundAmt)
       {
-        this.toastr.errorMessage("Please Calculate Again");
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       }
       else if (this.remainingAllocatedAmt < 0) {
-        this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Remaining Allocated Amount");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
       }
       else if (this.maxAllocAmt < this.totalRsvFundAmt) {
-        this.toastr.warningMessage("Total Reserved Fund Amount Must be Less Than Max Allocated Amount");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
       }
       else {
-        var lobCode = localStorage.getItem("BizTemplateCode");
+        var lobCode = localStorage.getItem(CommonConstant.USER_ACCESS);
         this.setAppReservedFundData();
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
@@ -142,7 +143,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFinData(appObj) {
-    this.http.post(AdInsConstant.GetIncomeInfoRsvFund, appObj).subscribe(
+    this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
       (response) => {
         console.log(response);
         this.uppingRate = response["DiffRateAmt"];
@@ -164,7 +165,7 @@ export class ReservedFundComponent implements OnInit {
   GetAppFee(appObj) {
     this.http.post(this.getAppFeeUrl, appObj).subscribe(
       (response) => {
-        this.appFeeObj = response["ReturnObject"];
+        this.appFeeObj = response[CommonConstant.ReturnObj];
 
       }
     );
@@ -172,9 +173,9 @@ export class ReservedFundComponent implements OnInit {
 
 
   GetAppCust(appObj) {
-    this.http.post<AppCustObj>(AdInsConstant.GetAppCustByAppId, appObj).subscribe(
+    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, appObj).subscribe(
       (response) => {
-        if (response.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+        if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.allAppReservedFundObj.IsPersonal = false
         }
       }
@@ -247,7 +248,7 @@ export class ReservedFundComponent implements OnInit {
     };
 
     this.calculatedRemainingAmt();
-    this.http.post(AdInsConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
+    this.http.post(URLConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
       (response) => {
         this.calcGrossYieldObj = response;
         this.grossYield = this.calcGrossYieldObj.GrossYieldPrcnt;

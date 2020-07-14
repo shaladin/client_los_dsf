@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-agreement-view-container',
@@ -63,7 +65,7 @@ export class AgreementViewContainerComponent implements OnInit {
 
   async GetAppAndAppCustDetailByAgrmntId() {
     var obj = { agrmntId: this.AgrmntId };
-    await this.http.post(AdInsConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ResponseAppDetailData = response;
@@ -78,11 +80,11 @@ export class AgreementViewContainerComponent implements OnInit {
     var agrmntObj = {
       AgrmntId: this.AgrmntId,
     };
-    this.http.post(AdInsConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         var bizTemplateCode = response["BizTemplateCode"];
 
-        if (bizTemplateCode == AdInsConstant.FCTR) {
+        if (bizTemplateCode == CommonConstant.FCTR) {
           this.IsCollateral = false;
           this.IsCommission = false;
           this.IsAsset = false;
@@ -92,7 +94,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsTC = false;
           this.IsReservedFund = false;
         }
-        else if (bizTemplateCode == AdInsConstant.CFRFN4W) {
+        else if (bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
@@ -106,7 +108,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsMulti = false;
           this.IsCollateral = false;
         }
-        else if (bizTemplateCode == AdInsConstant.CF4W) {
+        else if (bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
           this.IsInsuranceFL4W = false;
           this.IsLifeInsurance = false;
@@ -115,7 +117,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsAppCollateral = false;
         }
-        else if (bizTemplateCode == AdInsConstant.FL4W) {
+        else if (bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
           this.IsInsurance = false;
           this.IsCustomerCard = false;

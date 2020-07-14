@@ -9,7 +9,7 @@
         </div>
       </div><br>
       <div class="card-body">
-        <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">

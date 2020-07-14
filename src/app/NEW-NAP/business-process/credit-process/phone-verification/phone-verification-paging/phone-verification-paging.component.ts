@@ -6,6 +6,8 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
 import { ActivatedRoute } from "@angular/router";
 import { AdInsHelper } from "app/shared/AdInsHelper";
+import { URLConstant } from "app/shared/constant/URLConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "phone-verification-paging",
@@ -16,7 +18,6 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 export class PhoneVerificationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode : string;
-  token : any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -27,11 +28,11 @@ export class PhoneVerificationPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    var userAccess = JSON.parse(localStorage.getItem("UserAccess"))
+    var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS))
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -53,7 +54,7 @@ export class PhoneVerificationPagingComponent implements OnInit {
   GetCallBack(ev: any){
     console.log(ev);
     if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
 }

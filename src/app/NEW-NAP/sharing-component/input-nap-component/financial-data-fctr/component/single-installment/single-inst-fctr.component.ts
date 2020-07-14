@@ -2,12 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { environment } from 'environments/environment';
 import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -35,11 +35,11 @@ export class SingleInstFctrComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLInterestType();
   }
-
+  
   LoadDDLInterestType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "INTEREST_INPUT_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInterestInputType }).subscribe(
       (response) => {
-        this.InterestTypeOptions = response["ReturnObject"];
+        this.InterestTypeOptions = response[CommonConstant.ReturnObj];
         if (this.InterestTypeOptions != undefined && this.InterestTypeOptions != null) {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key
@@ -52,7 +52,7 @@ export class SingleInstFctrComponent implements OnInit {
   Calculate() {
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.errorMessage("Insert Estimation Effective Date");
+      this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
       return;
     }
     for (let i = 0; i < this.ParentForm.value.AppFee.length; i++) {
@@ -61,16 +61,16 @@ export class SingleInstFctrComponent implements OnInit {
       }
     }
     if (this.IsAppFeePrcntValid == false) {
-      this.toastr.errorMessage("App Fee Prcnt must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.APP_FEE_PRCNT_MUST_GREATER + '0.');
       return;
     }
     if (this.ParentForm.value.EffectiveRatePrcnt < 0 && this.ParentForm.value.InterestType == "PRCNT") {
-      this.toastr.errorMessage("Effective Rate must be greater than 0");
+      this.toastr.warningMessage(ExceptionConstant.EFFECTIVE_RATE_MUST_GREATER + '0.');
       return;
     }
     else {
       this.calcSingleInstObj = this.ParentForm.value;
-      this.http.post<ResponseCalculateObj>(AdInsConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
@@ -123,12 +123,12 @@ export class SingleInstFctrComponent implements OnInit {
   EstEffDtFocusOut(event) {
     var topBased = this.ParentForm.get("TopBased").value;
     var maturityDate: Date;
-    if (topBased == AdInsConstant.TopCalcBasedInvcDt) {
+    if (topBased == CommonConstant.TopCalcBasedInvcDt) {
       maturityDate = new Date(this.ParentForm.get("InvcDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }
 
-    if (topBased == AdInsConstant.TopCalcBasedEffDt) {
+    if (topBased == CommonConstant.TopCalcBasedEffDt) {
       maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
     }

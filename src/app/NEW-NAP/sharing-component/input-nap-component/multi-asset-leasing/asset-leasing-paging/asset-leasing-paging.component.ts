@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
-import { WizardComponent } from 'angular-archwizard';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-asset-leasing-paging',
@@ -32,8 +33,8 @@ export class AssetLeasingPagingComponent implements OnInit {
   editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListAppCollateral = AdInsConstant.GetListAppCollateral;
+    this.getListAppAssetData = URLConstant.GetListAppAssetData;
+    this.getListAppCollateral = URLConstant.GetListAppCollateral;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
@@ -74,18 +75,18 @@ eventColl(ev){
 
   if(ev.Key == "delete")
   {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var collateralObj = new AppCollateralObj();
       collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
       console.log("qwe")
       console.log(collateralObj.AppCollateralId)
-      this.http.post(AdInsConstant.DeleteAppCollateral, collateralObj).subscribe(
+      this.http.post(URLConstant.DeleteAppCollateral, collateralObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.listAppCollateralObj = response["ReturnObject"];
+          this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
           var DetailForGridCollateral ={
-            Data: response["ReturnObject"],
+            Data: response[CommonConstant.ReturnObj],
             Count: "0"
           }
 
@@ -108,10 +109,10 @@ eventColl(ev){
     this.appAssetObj.AppAssetId = "-";
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
-          this.listAppAssetObj = response["ReturnObject"];
+          this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
           var DetailForGridAsset ={
-            Data: response["ReturnObject"],
+            Data: response[CommonConstant.ReturnObj],
             Count: "0"
           }
 
@@ -124,16 +125,16 @@ eventColl(ev){
 
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
-    this.gridAppCollateralObj.deleteUrl = AdInsConstant.DeleteAppCollateral;
+    this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;
     
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppCollateralId = "-";
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
-          this.listAppCollateralObj = response["ReturnObject"];
+          this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
           var DetailForGridCollateral ={
-            Data: response["ReturnObject"],
+            Data: response[CommonConstant.ReturnObj],
             Count: "0"
           }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from '../../../shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-application-view',
@@ -53,12 +55,12 @@ export class ApplicationViewComponent implements OnInit {
     var appObj = {
       AppId: this.AppId,
     };
-    this.http.post(AdInsConstant.GetAppById, appObj).subscribe(
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         var bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
 
-        if(bizTemplateCode == AdInsConstant.FCTR)
+        if(bizTemplateCode == CommonConstant.FCTR)
         {
           this.IsCollateral = false;
           this.IsGuarantor = false;
@@ -72,7 +74,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInsurance = false;
       
         }
-        else if(bizTemplateCode == AdInsConstant.CFRFN4W){
+        else if(bizTemplateCode == CommonConstant.CFRFN4W){
           this.IsAsset = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -80,7 +82,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(bizTemplateCode == AdInsConstant.CF4W){
+        else if(bizTemplateCode == CommonConstant.CF4W){
           this.IsCollateral = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -88,7 +90,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(bizTemplateCode == AdInsConstant.FL4W)
+        else if(bizTemplateCode == CommonConstant.FL4W)
         {
           this.IsAsset = false;
           this.IsCollateral = false;

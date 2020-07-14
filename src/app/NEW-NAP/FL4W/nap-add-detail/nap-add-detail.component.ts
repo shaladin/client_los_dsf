@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -10,6 +9,10 @@ import { environment } from 'environments/environment';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -26,17 +29,17 @@ export class NapAddDetailComponent implements OnInit {
   AppStepIndex: number = 1;
   appId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj = new AppObj();
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  custType: string = AdInsConstant.CustTypePersonal;
-  stepperMode: string = AdInsConstant.CustTypePersonal;
+  custType: string = CommonConstant.CustTypePersonal;
+  stepperMode: string = CommonConstant.CustTypePersonal;
   showCancel: boolean = true;
   getApp: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   @ViewChild("FL4WMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
@@ -80,14 +83,25 @@ export class NapAddDetailComponent implements OnInit {
 
   ngOnInit() {
     this.ClaimTask();
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
+    this.viewProdMainInfoObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj.AppId = this.appId;
 
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
     } else {
-      this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           console.log(response);
           if (response) {
@@ -109,21 +123,21 @@ export class NapAddDetailComponent implements OnInit {
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } });
+    this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } });
   }
 
   ChangeStepper() {
-    if (this.custType == AdInsConstant.CustTypePersonal) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
         linear: false,
         animation: true
       });
-      this.stepperMode = AdInsConstant.CustTypePersonal;
+      this.stepperMode = CommonConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
@@ -138,12 +152,12 @@ export class NapAddDetailComponent implements OnInit {
         "FIN": 8,
         "TC": 9,
       };
-    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
         linear: false,
         animation: true
       });
-      this.stepperMode = AdInsConstant.CustTypeCompany;
+      this.stepperMode = CommonConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
@@ -162,9 +176,9 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ChooseStep(idxStep: number) {
-    if (this.custType == AdInsConstant.CustTypePersonal) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.to(idxStep);
-    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.to(idxStep);
     }
   }
@@ -173,9 +187,9 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post<ReturnHandlingDObj>(AdInsConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -194,22 +208,22 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId == 0) this.UpdateAppStep(Step);
 
     this.ChangeTab(Step);
-    if (this.custType == AdInsConstant.CustTypePersonal) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
-    } else if (this.custType == AdInsConstant.CustTypeCompany) {
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     this.mainInfoContainer.clear();
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
@@ -227,11 +241,11 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+          this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } })
         },
         (error) => {
           console.log(error);
@@ -243,48 +257,48 @@ export class NapAddDetailComponent implements OnInit {
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
     switch (AppStep) {
-      case AdInsConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
-      case AdInsConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepGuar];
+      case CommonConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
         break;
-      case AdInsConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepRef];
+      case CommonConstant.AppStepRef:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
         break;
-      case AdInsConstant.AppStepApp:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
+      case CommonConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepAsset:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+      case CommonConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case AdInsConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+      case CommonConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
-      case AdInsConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
+      case CommonConstant.AppStepLIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
         break;
-      case AdInsConstant.AppStepFin:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFin];
+      case CommonConstant.AppStepFin:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
-      case AdInsConstant.AppStepTC:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
+      case CommonConstant.AppStepTC:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
       default:
         break;
     }
-    if (AppStep == AdInsConstant.AppStepTC)
+    if (AppStep == CommonConstant.AppStepTC)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
 
-      // this.ucMainInfo.OnInit();
+    // this.ucMainInfo.OnInit();
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       if (!this.IsSavedTC) {
-        this.toastr.errorMessage("Please Save TC Data First!");
+        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
       }
       else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
@@ -296,11 +310,11 @@ export class NapAddDetailComponent implements OnInit {
         ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
         ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-        this.http.post(AdInsConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             console.log(response);
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: AdInsConstant.FL4W } })
+            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } })
           },
           (error) => {
             console.log(error);
@@ -311,24 +325,24 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      () => {
       });
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token );
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
   CheckCustType(ev: string) {
     this.custType = ev;
     this.ChangeStepper();
-    this.NextStep(AdInsConstant.AppStepGuar);
+    this.NextStep(CommonConstant.AppStepGuar);
   }
 }

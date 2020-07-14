@@ -1,4 +1,4 @@
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewMainDataObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
 <div class="px-3">
     <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
     </lib-ucSubsection>
@@ -63,7 +63,7 @@
         </table>
     </div>
 </div>
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewFinDataObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewFinDataObj"></lib-ucviewgeneric>
 <div class="px-3">
     <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
     </lib-ucSubsection>

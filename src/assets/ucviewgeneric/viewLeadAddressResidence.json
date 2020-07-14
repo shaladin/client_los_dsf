@@ -4,16 +4,16 @@
     {
       "subSectionId": "ViewLeadResidenceAddressId",
       "subSectionTitle": "Residence Address",
-      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
           "type": "text",
-          "label": "ADDRESS",
+          "label": "Address",
           "property": "Addr"
         },
         {
           "type": "text",
-          "label": "ZIP CODE",
+          "label": "Zip Code",
           "property": "ZipCode"
         },
         {
@@ -23,39 +23,39 @@
         },
         {
           "type": "text",
-          "label": "KELURAHAN",
+          "label": "Kelurahan",
           "property": "Kelurahan"
         },
         {
           "type": "text",
-          "label": "PHONE 1",
+          "label": "Phone 1",
           "property": "Phone1"
         },
         {
           "type": "text",
-          "label": "KECAMATAN",
+          "label": "Kecamatan",
           "property": "Kecamatan"
         },
         {
           "type": "text",
-          "label": "PHONE 2",
+          "label": "Phone 2",
           "property": "Phone2"
         },
         {
           "type": "text",
-          "label": "CITY",
+          "label": "City",
           "property": "City"
         },
         {
           "type": "text",
-          "label": "FAX",
+          "label": "Fax",
           "property": "Fax"
         }
       ],
       "querystring": {
         "select": "SELECT lca.ADDR AS Addr, lca.ZIPCODE AS ZipCode, CONCAT(lca.AREA_CODE_4, '/', lca.AREA_CODE_3) AS RtRw, lca.AREA_CODE_2 AS Kelurahan, lca.AREA_CODE_1 AS Kecamatan, lca.CITY AS City, CONCAT(lca.PHN_AREA_1,' ',lca.PHN_1, '-',lca.PHN_EXT_1) AS Phone1, CONCAT(lca.PHN_AREA_2,' ',lca.PHN_2, '-',lca.PHN_EXT_2) AS Phone2, CONCAT(lca.FAX_AREA,'-', lca.FAX) AS Fax",
         "from": "FROM dbo.LEAD_CUST_ADDR lca WITH(NOLOCK) JOIN dbo.LEAD_CUST lc WITH(NOLOCK) on lca.LEAD_CUST_ID = lc.LEAD_CUST_ID",
-        "where": "WHERE lca.MR_CUST_ADDR_TYPE_CODE = 'RESIDENCE' AND lc.LEAD_ID={0}"
+        "where": "WHERE lca.MR_CUST_ADDR_TYPE_CODE = N'RESIDENCE' AND lc.LEAD_ID={0}"
       }
     }
   ]

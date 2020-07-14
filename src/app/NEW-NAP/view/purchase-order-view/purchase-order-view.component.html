@@ -1,7 +1,7 @@
 <div class="col-md-12 text-left">
     <div class="card">
         <div class="card-body">
-            <lib-ucviewgeneric [viewInput]="POInfo" [viewEnvironment]="viewEnvironment"></lib-ucviewgeneric>
+            <lib-ucviewgeneric [viewGenericObj]="POInfo"></lib-ucviewgeneric>
             <div class="px-3">
                 <lib-ucSubsection [id]="'viewSupplInfoId'" [title]="'Supplier Information'" [panel]="'viewSupplInfo'">
                 </lib-ucSubsection>
@@ -33,8 +33,8 @@
                     </div>
                 </div>
             </div>
-            <lib-ucviewgeneric [viewInput]="ADFinancialInfo" [viewEnvironment]="viewEnvironment" *ngIf="MrFirstInstTypeCode=='AD'"></lib-ucviewgeneric>
-            <lib-ucviewgeneric [viewInput]="ARFinancialInfo" [viewEnvironment]="viewEnvironment" *ngIf="MrFirstInstTypeCode=='AR'"></lib-ucviewgeneric>
+            <lib-ucviewgeneric [viewGenericObj]="ADFinancialInfo" *ngIf="MrFirstInstTypeCode=='AD'"></lib-ucviewgeneric>
+            <lib-ucviewgeneric [viewGenericObj]="ARFinancialInfo" *ngIf="MrFirstInstTypeCode=='AR'"></lib-ucviewgeneric>
         </div>
     </div>
 </div>

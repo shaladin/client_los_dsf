@@ -8,6 +8,8 @@ import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SubsidyAddEditFL4WComponent } from '../subsidy-add-edit/subsidy-add-edit-FL4W.component';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-subsidy-FL4W',
@@ -57,9 +59,9 @@ export class SubsidyFL4WComponent implements OnInit {
 
   deleteSubsidy(obj)
   {
-      if (confirm('Are you sure to delete this record?')) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         console.log(obj)
-        this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
+        this.http.post(URLConstant.DeleteSubsidy, { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);
@@ -73,7 +75,7 @@ export class SubsidyFL4WComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(AdInsConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
       }
@@ -82,7 +84,7 @@ export class SubsidyFL4WComponent implements OnInit {
 
   LoadSubsidyDataWithoutRule()
   {
-    this.http.post(AdInsConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
       }

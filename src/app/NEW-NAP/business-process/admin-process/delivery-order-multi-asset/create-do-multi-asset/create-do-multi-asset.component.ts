@@ -10,6 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -57,7 +59,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
     // console.log("Selected : " + JSON.stringify(this.SelectedDOAssetList));
     var datePipe = new DatePipe("en-US");
 
-    this.httpClient.post(AdInsConstant.GetPurchaseOrderHByAgrmntId, {AgrmntId: this.AgrmntId}).subscribe(
+    this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
         this.PODt = new Date(response["PurchaseOrderDt"]);
       },
@@ -66,11 +68,11 @@ export class CreateDoMultiAssetComponent implements OnInit {
       }
     );
 
-    this.context = JSON.parse(localStorage.getItem("UserAccess"));
+    this.context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var rmRelation = new RefMasterObj();
-    rmRelation.RefMasterTypeCode = this.CustType == 'PERSONAL' ? 'CUST_PERSONAL_RELATIONSHIP' : 'CUST_COMPANY_RELATIONSHIP';
-    if(this.Mode == "add"){
-      this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
+    rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+    if (this.Mode == "add") {
+      this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
         (response) => {
           this.relationshipList = response;
           this.DeliveryOrderForm.patchValue({
@@ -82,14 +84,14 @@ export class CreateDoMultiAssetComponent implements OnInit {
         }
       );
     }
-    else if(this.Mode == "edit"){
+    else if (this.Mode == "edit") {
       var reqDeliveryOrderH = { DeliveryOrderHId: this.DeliveryOrderHId };
-      this.httpClient.post(AdInsConstant.GetDeliveryOrderHByDeliveryOrderHId, reqDeliveryOrderH).pipe(
+      this.httpClient.post(URLConstant.GetDeliveryOrderHByDeliveryOrderHId, reqDeliveryOrderH).pipe(
         map((response) => {
           return response;
         }),
         mergeMap((response) => {
-          let getRelation = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRelation);
+          let getRelation = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRelation);
           var tempResponse = [response];
           return forkJoin([tempResponse, getRelation]);
         })
@@ -114,7 +116,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
     });
   }
 
-  AssetTempLetterHandler(appAssetId){
+  AssetTempLetterHandler(appAssetId) {
     const modalDOAppAsset = this.modalServiceAsset.open(DoAssetDetailComponent);
     modalDOAppAsset.componentInstance.AppAssetId = appAssetId;
     modalDOAppAsset.componentInstance.AppId = this.AppId;
@@ -122,12 +124,12 @@ export class CreateDoMultiAssetComponent implements OnInit {
       (response) => {
         this.spinner.show();
         var doRequest = { AppId: this.AppId, AgrmntId: this.AgrmntId };
-        this.httpClient.post(AdInsConstant.GetAssetListForDOMultiAsset, doRequest).subscribe(
+        this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, doRequest).subscribe(
           (response) => {
             var doAssetList = response["AssetListForDOMultiAssetObj"];
             for (let selected of this.SelectedDOAssetList) {
               for (let item of doAssetList) {
-                if(selected.AppAssetId == item.AppAssetId){
+                if (selected.AppAssetId == item.AppAssetId) {
                   selected.AssetSeqNo = item.AssetSeqNo;
                   selected.FullAssetName = item.FullAssetName;
                   selected.AssetPriceAmt = item.AssetPriceAmt;
@@ -156,15 +158,15 @@ export class CreateDoMultiAssetComponent implements OnInit {
         this.toastr.successMessage(response["Message"]);
       }
     ).catch((error) => {
-      if(error != 0){
+      if (error != 0) {
         console.log(error);
       }
     });
   }
 
-  Save(){
+  Save() {
     var formData = this.DeliveryOrderForm.value;
-    var DeliveryOrderH = {...formData};
+    var DeliveryOrderH = { ...formData };
     var DeliveryOrderDs = [];
     var url = "";
     for (const item of this.SelectedDOAssetList) {
@@ -178,11 +180,11 @@ export class CreateDoMultiAssetComponent implements OnInit {
     }
     var DOData = { DeliveryOrderH, DeliveryOrderDs, RefOfficeId: this.context.OfficeId };
 
-    if(this.Mode == "add"){
-      url = AdInsConstant.AddDeliveryOrderMultiAsset;
+    if (this.Mode == "add") {
+      url = URLConstant.AddDeliveryOrderMultiAsset;
     }
-    else if(this.Mode == "edit"){
-      url = AdInsConstant.EditDeliveryOrderMultiAsset;
+    else if (this.Mode == "edit") {
+      url = URLConstant.EditDeliveryOrderMultiAsset;
     }
     this.httpClient.post(url, DOData).subscribe(
       (response) => {

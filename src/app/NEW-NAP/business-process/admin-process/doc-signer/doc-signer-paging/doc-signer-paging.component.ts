@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-doc-signer-paging',
-  templateUrl: './doc-signer-paging.component.html',
-  styleUrls: ['./doc-signer-paging.component.scss']
+  templateUrl: './doc-signer-paging.component.html'
 })
 export class DocSignerPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
   BizTemplateCode: string;
   
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private router: Router) { 
+  constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -29,7 +28,7 @@ export class DocSignerPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchDocSigner.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocSigner.json";
     var whereValueObj = new WhereValueObj();
     whereValueObj.property = "BizTemplateCode";
@@ -42,23 +41,16 @@ export class DocSignerPagingComponent implements OnInit {
 
   getEvent(ev){
     if(ev.Key == "prodOff"){
-      this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
         },
         (error) => {
           console.log(error);
         }
       );
     }else if(ev.Key == "agrmnt"){
-      var bizTemplateCode = ev.RowObj.BizTemplateCode;
-
-      if(bizTemplateCode == "CF4W" || bizTemplateCode == "CFRFN4W" || bizTemplateCode == "FACTORING"){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
-      }
-      else if(bizTemplateCode == "FL4W"){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
-      }
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }
   }
 }

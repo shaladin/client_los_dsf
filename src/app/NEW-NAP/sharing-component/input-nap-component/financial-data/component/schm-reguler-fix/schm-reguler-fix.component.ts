@@ -8,6 +8,8 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-schm-reguler-fix',
@@ -35,10 +37,10 @@ export class SchmRegulerFixComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -49,23 +51,23 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
       (response) => {
-        this.RateTypeOptions = response["ReturnObject"];
+        this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType  }).subscribe(
       (response) => {
-        this.GracePeriodeTypeOptions = response["ReturnObject"];
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   CalcBaseOnRate() {
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
     }
 
@@ -106,7 +108,7 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   CalcBaseOnInst() {
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
     }
     this.calcRegFixObj = this.ParentForm.value;
@@ -132,7 +134,7 @@ export class SchmRegulerFixComponent implements OnInit {
 
           TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
           LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-          
+
           DownPaymentGrossAmt: response.DownPaymentGrossAmt,
           DownPaymentNettAmt: response.DownPaymentNettAmt
 
@@ -169,7 +171,7 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   EffectiveRatePrcntInput_FocusOut() {
-   // var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
+    // var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     // var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
     // var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
     // var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
@@ -199,11 +201,11 @@ export class SchmRegulerFixComponent implements OnInit {
     });
   }
 
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }

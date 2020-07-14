@@ -13,7 +13,7 @@
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Application No</label>
               <div class="col-md-4 blue">
-                <label id="AppNo" translate><a (click)="ToApp()">{{AppNo}}</a></label>
+                <label id="AppNo" translate><a href="javascript:void(0);" (click)="OpenView('app')">{{AppNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Num Of Asset</label>
               <div class="col-md-4">
@@ -24,7 +24,7 @@
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Agreement No</label>
               <div class="col-md-4 blue">
-                <label id="AgrmntDt" translate><a (click)="ToAgrmnt()">{{AgrmntNo}}</a></label>
+                <label id="AgrmntDt" translate><a href="javascript:void(0);" (click)="OpenView('agrmnt')">{{AgrmntNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Tenor</label>
               <div class="col-md-4">
@@ -43,15 +43,14 @@
               </div>
             </div>
 
-
             <div class="form-group row">
               <label class="col-md-2 adInsLabel" translate>Lead No</label>
               <div class="col-md-4 blue">
-                <label id="LeadNo" translate><a (click)="ToLead()">{{LeadNo}}</a></label>
+                <label id="LeadNo" translate><a href="javascript:void(0);" (click)="OpenView('lead')">{{LeadNo}}</a></label>
               </div>
               <label class="col-md-2 adInsLabel" translate>Mou No</label>
               <div class="col-md-4 blue">
-                <label id="MouNo" translate><a (click)="ToMou()">{{MouNo}}</a></label>
+                <label id="MouNo" translate><a href="javascript:void(0);" (click)="OpenView('mou')">{{MouNo}}</a></label>
               </div>
             </div>
 
@@ -73,7 +72,7 @@
               </div>
               <label class="col-md-2 adInsLabel" translate>Product Offering Name</label>
               <div class="col-md-4 blue">
-                <label id="ProdOfferingName" translate><a (click)="ToProdOffering()">{{ProdOfferingName}}</a></label>
+                <label id="ProdOfferingName" translate><a href="javascript:void(0);" (click)="OpenView('prod')">{{ProdOfferingName}}</a></label>
               </div>
             </div>
 
@@ -87,23 +86,15 @@
                 <label id="WayOfFinancing" translate>{{WayOfFinancing}}</label>
               </div>
             </div>
-
-
           </div>
-
-
 
           <div *ngIf="result">
             <div *ngIf="count1>0">
               <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
                 [panel]="'PreGoLiveApprovalHistory'">
               </lib-ucSubsection>
-              <div id="PreGoLiveApprovalHistory">
-                <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index">
-                  <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj[i]">
-                  </lib-ucapprovalhist>
-                </div>
-              </div>
+              <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj">
+              </lib-ucapprovalhist>
             </div>
           </div>
 
@@ -113,7 +104,6 @@
           <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
             (ngSubmit)="MainInfoForm.valid && SaveForm()">
             <div id="DataTable">
-
 
               <div formArrayName="{{identifier}}">
                 <table class="table table-responsive-md text-center table-hover">
@@ -155,7 +145,6 @@
                   </tbody>
                 </table>
               </div>
-
             </div>
           </form>
         </div>
@@ -164,6 +153,6 @@
   </div>
 </div>
 
-<lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" 
-(nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+<lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()"
+  (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
 </lib-ucapproval>

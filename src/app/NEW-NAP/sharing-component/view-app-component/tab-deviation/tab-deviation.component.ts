@@ -6,6 +6,9 @@ import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-tab-deviation',
@@ -55,7 +58,7 @@ export class TabDeviationComponent implements OnInit {
       RowVersion: ""
     };
 
-    await this.http.post(AdInsConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         var temp = response["deviationResultObjs"];
@@ -63,7 +66,7 @@ export class TabDeviationComponent implements OnInit {
         this.DDLApproveAtData = response["ApproveAt"];
         for(var i=0;i<temp.length;i++){
           var tempObj;
-          if(temp[i].MrDeviationType == "AUTOMATIC_DEV"){
+          if(temp[i].MrDeviationType == CommonConstant.DeviationTypeAutomaticDev){
             tempObj={
               SeqNo: temp[i].SeqNo,
               DeviationType: temp[i].MrDeviationTypeDesc,
@@ -73,7 +76,7 @@ export class TabDeviationComponent implements OnInit {
               Notes: temp[i].Notes
             };
             this.AutoDeviationData.push(tempObj);
-          }else if(temp[i].MrDeviationType == "MANUAL_DEV"){
+          }else if(temp[i].MrDeviationType == CommonConstant.DeviationTypeManualDev){
             this.BindManualDeviationData(temp[i]);
           }
         }
@@ -190,7 +193,7 @@ export class TabDeviationComponent implements OnInit {
   
   DeleteFromManualDeviationData(idxData){
     console.log(idxData);
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.BindDDLDataFromTempDDLData(this.ManualDeviationData[idxData].DeviationCategory);
       this.ManualDeviationData.splice(idxData, 1);
 

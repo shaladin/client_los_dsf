@@ -8,6 +8,9 @@ import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-reguler-fix-FL4W',
@@ -35,10 +38,10 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.http.post<AppObj>(AdInsConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -49,17 +52,17 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
       (response) => {
-        this.RateTypeOptions = response["ReturnObject"];
+        this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
-        this.GracePeriodeTypeOptions = response["ReturnObject"];
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
@@ -71,7 +74,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
 
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -111,7 +114,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
     }
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateInstallmentRegularFix", this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -203,7 +206,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
     for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
       if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
           && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.errorMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " " + ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }

@@ -6,11 +6,12 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustFeeObj } from 'app/shared/model/MouCustFeeObj.Model';
 import { MouCustFeeDetailComponent } from './mou-cust-fee-detail/mou-cust-fee-detail.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-cust-fee',
-  templateUrl: './mou-cust-fee.component.html',
-  styleUrls: ['./mou-cust-fee.component.scss']
+  templateUrl: './mou-cust-fee.component.html'
 })
 export class MouCustFeeComponent implements OnInit {
   @Input() MouCustId: number;
@@ -29,7 +30,7 @@ export class MouCustFeeComponent implements OnInit {
     this.refFeeIdList = new Array();
     var mouCustFee = new MouCustFeeObj();
     mouCustFee.MouCustId = this.MouCustId;
-    this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
       (response) => {
         this.mouCustFeeList = response;
         for (var i = 0; i < this.mouCustFeeList.length; i++) {
@@ -51,7 +52,7 @@ export class MouCustFeeComponent implements OnInit {
         this.spinner.show();
         var mouCustFee = new MouCustFeeObj();
         mouCustFee.MouCustId = this.MouCustId;
-        this.httpClient.post(AdInsConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
+        this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
           (response) => {
             this.mouCustFeeList = response;
             this.refFeeIdList = new Array();
@@ -75,10 +76,10 @@ export class MouCustFeeComponent implements OnInit {
   }
 
   deleteMouCustFee(mouCustFeeId, idx) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var mouCustFee = new MouCustFeeObj();
       mouCustFee.MouCustFeeId = mouCustFeeId;
-      this.httpClient.post(AdInsConstant.DeleteMouCustFee, mouCustFee).subscribe(
+      this.httpClient.post(URLConstant.DeleteMouCustFee, mouCustFee).subscribe(
         (response: any) => {
           this.mouCustFeeList.splice(idx, 1);
           this.refFeeIdList.splice(idx, 1);

@@ -10,6 +10,7 @@
             "type": "link",
             "label": "Application No",
             "property": "AppNo",
+            "name": "AppNo",
             "path": "/Nap/View/AppView",
             "target": "_blank",
             "param": [
@@ -30,6 +31,7 @@
             "type": "link",
             "label": "Agreement No",
             "property": "AgrmntNo",
+            "name": "AgrmntNo",
             "path": "/Nap/View/AgrmntView",
             "target": "_blank",
             "param": [

@@ -7,6 +7,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-detail-factoring',
@@ -63,32 +65,32 @@ export class MouDetailFactoringComponent implements OnInit {
 
   ngOnInit() {
     var rmRecourseType = new RefMasterObj();
-    rmRecourseType.RefMasterTypeCode = "RECOURSE_TYPE";
-    let getRecourseType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
+    rmRecourseType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRecourseType;
+    let getRecourseType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
     var rmWop = new RefMasterObj();
-    rmWop.RefMasterTypeCode = "WOP";
-    let getWop = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmWop);
+    rmWop.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
+    let getWop = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmWop);
     var rmPaidBy = new RefMasterObj();
-    rmPaidBy.RefMasterTypeCode = "PAID_BY";
-    let getPaidBy = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmPaidBy);
+    rmPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodePaidBy;
+    let getPaidBy = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmPaidBy);
     var rmInstType = new RefMasterObj();
-    rmInstType.RefMasterTypeCode = "INST_TYPE";
-    let getInstType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstType);
+    rmInstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstType;
+    let getInstType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstType);
     var rmSingleInstCalcMethod = new RefMasterObj();
-    rmSingleInstCalcMethod.RefMasterTypeCode = "SINGLE_INST_CALC_METHOD";
-    let getSingleInstCalcMethod = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
+    rmSingleInstCalcMethod.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSingleInstCalcMethod;
+    let getSingleInstCalcMethod = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
     // var rmPayFreq = new RefMasterObj();
     // rmPayFreq.RefMasterTypeCode = "PAY_FREQ";
-    let getPayFreq = this.httpClient.post(AdInsConstant.GetListActiveRefPayFreq, null);
+    let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
-    rmInstSchm.RefMasterTypeCode = "INST_SCHM";
-    let getInstSchm = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
+    rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
+    let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
     var refMasterCurrency = new RefMasterObj();
-    refMasterCurrency.RefMasterTypeCode = "CURRENCY";
-    let getCurrency = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
+    refMasterCurrency.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCurrency;
+    let getCurrency = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
     var mouCustFctr = new MouCustFctrObj();
     mouCustFctr.MouCustId = this.MouCustId;
-    let getMouFctr = this.httpClient.post(AdInsConstant.GetMouCustFctrByMouCustId, mouCustFctr);
+    let getMouFctr = this.httpClient.post(URLConstant.GetMouCustFctrByMouCustId, mouCustFctr);
     forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouFctr]).subscribe(
       (response) => {
         this.recourseTypeList = response[0];
@@ -133,10 +135,10 @@ export class MouDetailFactoringComponent implements OnInit {
 
   instTypeHandler(){
     var value = this.MouDetailFactoringForm.controls["MrInstTypeCode"].value;
-    if(value == AdInsConstant.SINGLE_INST_TYPE){
+    if(value == CommonConstant.SINGLE_INST_TYPE){
       this.MouDetailFactoringForm.patchValue({
-        PayFreqCode: AdInsConstant.PAY_FREQ_MONTHLY,
-        MrInstSchmCode: AdInsConstant.INST_SCHM_REGULAR_FIXED
+        PayFreqCode: CommonConstant.PAY_FREQ_MONTHLY,
+        MrInstSchmCode: CommonConstant.INST_SCHM_REGULAR_FIXED
       });
       this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
@@ -145,7 +147,7 @@ export class MouDetailFactoringComponent implements OnInit {
         SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key
       });
     }
-    else if(value == AdInsConstant.MULTIPLE_INST_TYPE){
+    else if(value == CommonConstant.MULTIPLE_INST_TYPE){
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].disable();
@@ -162,7 +164,7 @@ export class MouDetailFactoringComponent implements OnInit {
     formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
     if(formData.IsListedCust){
       if(!this.MouListedFctrComp.listedCusts || this.MouListedFctrComp.listedCusts.length <= 0){
-        this.toastr.errorMessage("At Least 1 Listed Customer Factoring Needed To Submit");
+        this.toastr.warningMessage("At Least 1 Listed Customer Factoring Needed To Submit");
         return false;
       }
     }
@@ -186,10 +188,10 @@ export class MouDetailFactoringComponent implements OnInit {
     }
 
     if(this.mode == "add"){
-      url = AdInsConstant.AddMouCustFctr;
+      url = URLConstant.AddMouCustFctr;
     }
     else{
-      url = AdInsConstant.EditMouCustFctr;
+      url = URLConstant.EditMouCustFctr;
     }
 
     this.httpClient.post(url, formData).subscribe(
@@ -202,8 +204,8 @@ export class MouDetailFactoringComponent implements OnInit {
     );
   }
 
-  back(){
-    this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
-  }
+  // back(){
+  //   this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
+  // }
 
 }
