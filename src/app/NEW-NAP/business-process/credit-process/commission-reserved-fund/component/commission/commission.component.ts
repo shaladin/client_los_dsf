@@ -35,6 +35,7 @@ export class CommissionComponent implements OnInit {
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
+  @Input() DictMaxIncomeForm: any = {};
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
@@ -95,6 +96,7 @@ export class CommissionComponent implements OnInit {
     this.GetAppFeeData();
     this.GetContentName(CommonConstant.ContentSupplier);
     this.GetContentName(CommonConstant.ContentReferantor);
+    // console.log(this.DictMaxIncomeForm);
   }
 
   GetInfoCommission() {
@@ -105,7 +107,7 @@ export class CommissionComponent implements OnInit {
     this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).subscribe(
       (response) => {
         console.log("response edit comm");
-        console.log(response);
+        // console.log(response);
         var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
         if (tempObj.length > 0) {
           // console.log("edit data");
@@ -122,7 +124,7 @@ export class CommissionComponent implements OnInit {
             var totalExpenseAmt = 0;
             for (var i = 0; i < tempObj.length; i++) {
               var obj = tempObj[i];
-              console.log(obj);
+              // console.log(obj);
               totalExpenseAmt += obj.TotalExpenseAmt;
               if (obj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier) {
                 this.FormAdd1.AddNewDataForm();
@@ -200,10 +202,10 @@ export class CommissionComponent implements OnInit {
     };
     this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
-        console.log(this.ListResultRefundIncomeInfo);
+        // console.log(this.ListResultRefundIncomeInfo);
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
           this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
           this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
@@ -234,7 +236,7 @@ export class CommissionComponent implements OnInit {
     this.http.post(URLConstant.GetListAppFeeByAppId, obj).subscribe(
       (response) => {
         console.log("response app fee data");
-        console.log(response);
+        // console.log(response);
         var listData: Array<AppFeeObj> = response[CommonConstant.ReturnObj];
         for (var i = 0; i < listData.length; i++) {
           var otherObj = {
@@ -292,7 +294,7 @@ export class CommissionComponent implements OnInit {
     this.http.post(URLConstant.GetAppCommissionRule, obj).subscribe(
       (response) => {
         console.log("Cek Rule");
-        console.log(response);
+        // console.log(response);
         // console.log(response["length"]);
 
         if (response["length"] != 0) {
@@ -494,7 +496,7 @@ export class CommissionComponent implements OnInit {
       this.FormInputObjSupplier["isCalculated"] = false;
       this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
-      console.log(this.FormInputObjSupplier);
+      // console.log(this.FormInputObjSupplier);
     } else if (content == CommonConstant.ContentSupplierEmp) {
       this.FormInputObjSupplierEmpl["title"] = CommonConstant.TitleSupplierEmp;
       this.FormInputObjSupplierEmpl["content"] = CommonConstant.ContentSupplierEmp;
@@ -507,7 +509,7 @@ export class CommissionComponent implements OnInit {
       this.FormInputObjSupplierEmpl["isDataInputed"] = false;
       this.FormInputObjSupplierEmpl["dictSuppl"] = this.DictSupplierCode;
       this.OnForm2 = true;
-      console.log(this.FormInputObjSupplierEmpl);
+      // console.log(this.FormInputObjSupplierEmpl);
     } else if (content == CommonConstant.ContentReferantor) {
       this.FormInputObjReferantor["title"] = CommonConstant.TitleReferantor;
       this.FormInputObjReferantor["content"] = CommonConstant.ContentReferantor;
@@ -519,7 +521,7 @@ export class CommissionComponent implements OnInit {
       this.FormInputObjReferantor["isCalculated"] = false;
       this.FormInputObjReferantor["isDataInputed"] = false;
       this.OnForm3 = true;
-      console.log(this.FormInputObjReferantor);
+      // console.log(this.FormInputObjReferantor);
     }
   }
 
@@ -542,6 +544,8 @@ export class CommissionComponent implements OnInit {
       }
 
       if (this.isCalcSuppl && this.isCalcSupplEmp && this.isCalcReferantor) {
+        // console.log(this.DictTotalIncomeForm);
+        // console.log(this.ListAllocFromForDict);
         this.CalculateGrossYield(this.viewIncomeInfoObj.ExpenseAmount);
       }
     }
@@ -553,10 +557,10 @@ export class CommissionComponent implements OnInit {
       AppId: this.AppId,
       TotalExpenseAmt: expenseAmt
     };
-    console.log(obj);
+    // console.log(obj);
     this.http.post(URLConstant.CalCulateGrossYield, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.Summary.GrossYield = response["GrossYield"];
         this.outputUpdateRemainingAlloc.emit(expenseAmt);
       },
@@ -578,6 +582,12 @@ export class CommissionComponent implements OnInit {
       TotalVATAmount: 0,
       GrossYield: 0
     };
+    
+    for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
+      // console.log("test nol semua");
+      this.DictTotalIncomeForm[this.ListAllocFromForDict[i]] = 0;
+    }
+
     this.viewIncomeInfoObj.ExpenseAmount = 0;
     if (this.FormGetObj[CommonConstant.ContentSupplier] != undefined && this.FormGetObj[CommonConstant.ContentSupplier].value.arr.length != 0) {
       this.isCalcSuppl = false;
@@ -603,6 +613,8 @@ export class CommissionComponent implements OnInit {
     }
   }
 
+  DictTotalIncomeForm: any = {};
+  ListAllocFromForDict: Array<string> = new Array();
   CalculateEachData(FormObj) {
     // console.log(FormObj);
     var arr = FormObj.get('arr') as FormArray;
@@ -613,6 +625,15 @@ export class CommissionComponent implements OnInit {
     var tempTotalExpenseAmount = 0;
     for (var i = 0; i < len; i++) {
       var temp = arr["controls"][i].value;
+      // console.log(temp);
+      for (var j = 0; j < temp.ListAllocated.length; j++) {
+        if (this.DictTotalIncomeForm[temp.ListAllocated[j].AllocationFrom] == undefined){
+          // console.log("kosong");
+          this.DictTotalIncomeForm[temp.ListAllocated[j].AllocationFrom] = 0;
+          this.ListAllocFromForDict.push(temp.ListAllocated[j].AllocationFrom);
+        }
+        this.DictTotalIncomeForm[temp.ListAllocated[j].AllocationFrom] += temp.ListAllocated[j].AllocationAmount;
+      }
       tempTotalCommisionAmount += temp.TotalCommisionAmount;
       tempTotalTaxAmmount += temp.TotalTaxAmount;
       tempTotalVATAmount += temp.TotalVATAmount;
@@ -704,6 +725,17 @@ export class CommissionComponent implements OnInit {
     return listAppCommissionDObj;
   }
 
+  CekMaxValueIncomeInfo(){
+    var flag = false;
+    for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
+      if (this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]){
+        flag = true;
+        this.toastr.warningMessage(this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAllocationFromDesc + " cannot be more than " + this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAmount);
+      }
+    }
+    return flag;
+  }
+
   isCalculated;
   SaveData() {
     // console.log(this.FormInputObjSupplier["isCalculated"]);
@@ -725,6 +757,9 @@ export class CommissionComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
       return;
     }
+    if (this.CekMaxValueIncomeInfo()) {
+      return;
+    }
     this.listAppCommissionHObj = new Array();
     if (this.FormGetObj != null) {
       if (this.FormGetObj[CommonConstant.ContentSupplier] && this.FormGetObj[CommonConstant.ContentSupplier].value.arr.length > 0) {
@@ -744,7 +779,7 @@ export class CommissionComponent implements OnInit {
         ListAppCommissionHObj: this.listAppCommissionHObj,
         RowVersion: ""
       };
-      console.log(obj);
+      // console.log(obj);
       this.http.post(URLConstant.AddOrEditAppCommissionData, obj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
