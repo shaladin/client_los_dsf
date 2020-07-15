@@ -147,7 +147,7 @@ export class TermConditionsComponent implements OnInit {
         if (isChecked) {
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
-          item.get("ExpiredDt").setValidators([Validators.required]);
+          // item.get("ExpiredDt").setValidators([Validators.required]);
           item.get("ExpiredDt").updateValueAndValidity();
           this.totalCheckAll++;
         } else {
@@ -161,7 +161,7 @@ export class TermConditionsComponent implements OnInit {
         if (isChecked) {
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
-          item.get("ExpiredDt").setValidators([Validators.required]);
+          // item.get("ExpiredDt").setValidators([Validators.required]);
           item.get("ExpiredDt").updateValueAndValidity();
         } else {
           item.get("ExpiredDt").disable();

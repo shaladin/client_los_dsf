@@ -69,7 +69,7 @@
       </div>
     </div>
     <div id="stepper1" class="bs-stepper">
-      <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+      <div class="bs-stepper-header bs-stepper-center" role="tablist" style="overflow-x: auto;">
         <!-- your steps here -->
         <div class="step" data-target="#commission-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="commission-tab"
@@ -91,7 +91,7 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount"
+          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm"
             (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
