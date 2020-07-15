@@ -450,7 +450,7 @@ export class CollateralDetailComponent implements OnInit {
           }
         }
 
-        if(this.mode == "edit"){
+        if(this.appCollateralObj != null){
           for(var i = 0; i < this.items.length ; i++){
             if (this.items.controls[i] != null) {
               this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo"+(i+1)];
