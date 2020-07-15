@@ -1,0 +1,86 @@
+
+<div class="px-3">
+  <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="custInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Name </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.CustName}}</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Age </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.Age}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Address </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustAddrLegalObj?.FullAddr}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Occupation </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustPersonalJobDataObj?.ProfessionName}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Status </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustPersonalObj?.MaritalStatName}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Existing Customer </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.IsExistingCust == true ? 'Yes' : 'No'}} </label>
+          </div>
+        </div>
+        <div *ngIf="SummaryAppObj?.AppCustObj?.IsExistingCust == true" class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Negative Customer </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.NegCustTypeName}} </label>
+            <i class="fa fa-circle" aria-hidden="true" [ngStyle]="'color': "></i>
+          </div>
+        </div>
+        <div *ngIf="SummaryAppObj?.AppCustPersonalObj?.MrMaritalStatCode == 'SPOUSE'" class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Spouse </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.SpouseName}} </label>
+          </div>
+        </div>
+        <div class="row" *ngFor="let item of SummaryAppObj?.AppGuarantorObjs; let i=index">
+          <div class="col-md-6">
+            <label *ngIf="i == 0" class="adInsLabel"> Guarantor </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{item.GuarantorName + ' - ' + item.CustRelationshipCodeDesc}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

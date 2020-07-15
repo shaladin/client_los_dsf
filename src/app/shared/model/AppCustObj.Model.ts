@@ -14,6 +14,7 @@ export class AppCustObj {
     IsAffiliateWithMf: boolean;
     CustNotes: string;
     IsExistingCust: boolean;
+    Age: number;
 
 constructor() { 
         this.AppCustId = 0; 

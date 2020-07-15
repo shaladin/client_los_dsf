@@ -33,6 +33,7 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
 import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approvalhist-dev/approvalhist-dev.component';
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
+import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.component";
 
 @NgModule({
   exports: [
@@ -61,7 +62,8 @@ import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey
     ApprovalHistComponent,
     ApprovalhistDevComponent,
     ViewFraudDetectionResultComponent,
-    ViewSurveyTaskListComponent
+    ViewSurveyTaskListComponent,
+    ViewSummaryAppComponent
   ],
   imports: [
     CommonModule,
@@ -98,7 +100,8 @@ import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey
     ViewCollateralMultiAssetComponent,
     ApprovalhistDevComponent,
     ViewFraudDetectionResultComponent,
-    ViewSurveyTaskListComponent
+    ViewSurveyTaskListComponent,
+    ViewSummaryAppComponent
   ],
   providers: [
     NGXToastrService
