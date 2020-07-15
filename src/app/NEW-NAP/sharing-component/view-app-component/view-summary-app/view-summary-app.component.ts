@@ -10,6 +10,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
+import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 
 @Component({
   selector: "view-summary-app",
@@ -20,6 +21,7 @@ import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
 export class ViewSummaryAppComponent implements OnInit {
   @Input() AppId: number;
   SummaryAppObj: SummaryAppObj = new SummaryAppObj();
+  SerialNoObjs: Array<SerialNoObj> = new Array<SerialNoObj>();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
   }
@@ -33,6 +35,15 @@ export class ViewSummaryAppComponent implements OnInit {
     this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryAppObj = response;
+        console.log(this.SummaryAppObj);
+        if(this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs != null && this.SummaryAppObj.AppAssetObjs.length == 1){
+          for(let i = 0; i < this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs.length; i++){
+            var serialNoObj = new SerialNoObj();
+            serialNoObj.SerialNoLabel = this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs[i].SerialNoLabel;
+            serialNoObj.SerialNoValue = this.SummaryAppObj.AppAssetObjs[0]["SerialNo" + (i+1)];
+            this.SerialNoObjs.push(serialNoObj);
+          }
+        }
       },
       (error) => {
         console.log(error);
