@@ -1,118 +1,12 @@
-<form class="form form-horizontal" name="LeadCancelForm" #LeadCancelForm="ngForm" novalidate
-  (ngSubmit)="SaveLeadCancel(LeadCancelForm)">
-    <div class="ucSearch-Button-Right">
-      <span class="mr-1">
-        <button type="submit" class="backButton" (click)="formValidate(LeadCancelForm)" translate>Cancel Lead
-      </button>
-      </span>
-  </div>
-  <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
-  </lib-UCSearch>
-  <div [hidden]="resultData == null">
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)" id="checkAll" name="CheckAll">
-          </th>
-          <th class="text-center"><span class="thead-header" (click)="searchSort($event)" name='leadNo' translate>LEAD NO</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='officeName'
-              translate>OFFICE NAME</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='orderNo' translate>ORDER
-              NO</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='custName' translate>CUST
-              NAME</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='leadSource' translate>LEAD
-              SOURCE</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='fullAssetName'
-              translate>FULL ASSET NAME</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='leadStep' translate>LEAD
-              STEP</span>
-          </th>
-          <th class="text-left"><span class="thead-header" (click)="searchSort($event)" name='leadStatus' translate>LEAD
-              STATUS</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of resultData">
-          <td>
-            <div *ngIf="listSelectedId.indexOf(item.LeadId) >- 1">
-              <input type="checkbox" id="checkSame" name="itemSame"
-                (change)="Checked(item.LeadId,  $event.target.checked)" [checked]="true">
-            </div>
-            <div *ngIf="listSelectedId.indexOf(item.LeadId) < 0">
-              <input type="checkbox" id="checkDiff" name="itemDiff"
-                (change)="Checked(item.LeadId,  $event.target.checked)" [checked]=false>
-            </div>
-          </td>
-          <!-- <td class="text-center">{{item.LeadNo}}</td> -->
-          <td class="text-center"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
-          <td class="text-center" style="display: none;">{{item.WfTaskListId}}</td>
-          <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-left">{{item.OrderNo}}</td>
-          <td class="text-left">{{item.CustName}}</td>
-          <td class="text-left">{{item.LeadSource}}</td>
-          <td class="text-left">{{item.FullAssetName}}</td>
-          <td class="text-left">{{item.LeadStep}}</td>
-          <td class="text-left">{{item.LeadStatus}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <lib-ucgridfooter (select)="onSelect($event)"></lib-ucgridfooter>
-    <div class="form-body">
-      <div class="form-actions right">
-        <button type="button" class="btn btn-raised btn-primary mr-1" (click)="addToTemp()" translate>
-          <i class="fa ft-plus"></i> Add To Temp
+<div class="card">
+  <div class="card-body">
+    <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+    </lib-ucaddtotemp>
+    <div class="card-header">
+      <div class="text-right">
+        <button type="submit" class="btn btn-info btn-raised" (click)="SaveLeadCancel()" translate>Cancel Lead
         </button>
       </div>
     </div>
-    <table *ngIf="tempData.length > 0" class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th class="text-center"><span class="thead-header" name='leadNo' translate>LEAD
-              NO</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='officeName' translate>OFFICE NAME</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='leadSource' translate>LEAD SOURCE</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='fullAssetName' translate>FULL ASSET NAME</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STEP</span>
-          </th>
-          <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STATUS</span>
-          </th>
-          <th translate>ACTION</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of tempData">
-          <td class="text-center"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
-          <td class="text-center" style="display: none;">{{item.WfTaskListId}}</td>
-          <td class="text-left">{{item.OfficeName}}</td>
-          <td class="text-left">{{item.OrderNo}}</td>
-          <td class="text-left">{{item.CustName}}</td>
-          <td class="text-left">{{item.LeadSource}}</td>
-          <td class="text-left">{{item.FullAssetName}}</td>
-          <td class="text-left">{{item.LeadStep}}</td>
-          <td class="text-left">{{item.LeadStatus}}</td>
-          <td class="text-center">
-            <a class="danger p-0" (click)="deleteFromTemp(item.LeadId)">
-              <i class="ft-trash-2 font-medium-3 mr-2"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-</form>
+</div>

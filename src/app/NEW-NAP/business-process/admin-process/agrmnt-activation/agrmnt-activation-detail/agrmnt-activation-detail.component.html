@@ -39,79 +39,12 @@
               </div>
             </div>
           </div>
-          <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
+          <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetList'">
           </lib-ucSubsection>
-          <div class="form-body" id="AssetInfo">
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th></th>
-                  <th><span translate class="thead-header text-left">Asset Name</span></th>
-                  <th><span translate class="thead-header text-right">Asset Price</span></th>
-                  <th><span translate class="thead-header text-right">Down Payment</span></th>
-                  <th><span translate class="thead-header">Serial No 1</span></th>
-                  <th><span translate class="thead-header">Serial No 2</span></th>
-                  <th><span translate class="thead-header">License Plate</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of AssetObj">
-                  <td>
-                    <div *ngIf="listSelectedId.indexOf(item.AppAssetId) >- 1">
-                      <input type="checkbox" id="checkSame" name="itemSame"
-                        (change)="Checked(item.AppAssetId, $event.target.checked)" [checked]="true">
-                    </div>
-                    <div *ngIf="listSelectedId.indexOf(item.AppAssetId) < 0">
-                      <input type="checkbox" id="checkDiff" name="itemDiff"
-                        (change)="Checked(item.AppAssetId, $event.target.checked)" [checked]=false>
-                    </div>
-                  </td>
-                  <td class="text-left">{{item.FullAssetName}}</td>
-                  <td class="text-right">{{item.AssetPriceAmt | number}}</td>
-                  <td class="text-right">{{item.DownPaymentAmt | number}}</td>
-                  <td>{{item.SerialNo1}}</td>
-                  <td>{{item.SerialNo2}}</td>
-                  <td>{{item.SerialNo3}}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="card-header">
-              <div class="text-right">
-                <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
-                  <i class="fa ft-plus"></i> Add To Temp
-                </button>
-              </div>
-            </div>
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th><span translate class="thead-header text-left">Asset Name</span></th>
-                  <th><span translate class="thead-header text-right">Asset Price</span></th>
-                  <th><span translate class="thead-header text-right">Down Payment</span></th>
-                  <th><span translate class="thead-header">Serial No 1</span></th>
-                  <th><span translate class="thead-header">Serial No 2</span></th>
-                  <th><span translate class="thead-header">License Plate</span></th>
-                  <th><span translate class="thead-header">Delete</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of tempData">
-                  <td class="text-left">{{item.FullAssetName}}</td>
-                  <td class="text-right">{{item.AssetPriceAmt | number}}</td>
-                  <td class="text-right">{{item.DownPaymentAmt | number}}</td>
-                  <td>{{item.SerialNo1}}</td>
-                  <td>{{item.SerialNo2}}</td>
-                  <td>{{item.SerialNo3}}</td>
-                  <td>
-                    <a class="danger p-0" (click)="deleteFromTemp(item.AppAssetId)">
-                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="form-body" id="AssetList">
+            <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+            </lib-ucaddtotemp>
           </div>
-
           <lib-ucSubsection [id]="'AppFinId'" [title]="'Financial Information'" [panel]="'AppFin'">
           </lib-ucSubsection>
           <div class="form-body" id="AppFin">
@@ -163,7 +96,8 @@
           </div>
           <form>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AdminProcess/AgrmntActivation/Paging']"
+              [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()">
