@@ -74,14 +74,16 @@
             <div formArrayName="QuestionObjs">
               <div class="form-body" [formGroupName]="i"
                 *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
-                <!--<h4 class="form-section card-title" translate>
-                  <i class="ft-file-text"></i>{{QuestionGrpList.value.VerfQuestionGrpName}}
-                </h4>-->
                 <lib-ucSubsection [id]="'grpName'+i+'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
                   [panel]="'grpName'+i">
                 </lib-ucSubsection>
                 <div id="grpName{{i}}">
                   <span formArrayName="VerfQuestionAnswerList">
+                    <div class= "row">
+                      <label class="col-md-3"translate><h4 class="modal-title">Question</h4></label>
+                      <label class="col-md-5"translate><h4 class="modal-title">Answer</h4></label>
+                      <label class="col-md-4"translate><h4 class="modal-title">Notes</h4></label>
+                    </div>
                     <div class="form-group row" [formGroupName]="j"
                       *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList.controls; let j = index">
                       <label class="col-md-3 adins-required-label"
