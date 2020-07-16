@@ -84,6 +84,7 @@ export class InsuranceDataComponent implements OnInit {
   showGenerate: boolean = false;
   isGenerate: boolean = false;
   isCalculate: boolean = false;
+  businessDt: Date = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
   InsuranceDataForm = this.fb.group({
     InsAssetCoveredBy: ['', [Validators.required, Validators.maxLength(50)]],
@@ -161,7 +162,7 @@ export class InsuranceDataComponent implements OnInit {
         return;
       }
       if (insCpltzAmt > totalPremiToCust - custDiscAmt) {
-        this.toastr.warningMessage( ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +"Total Premi to Customer after Discount.");
+        this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer after Discount.");
         return;
       }
     }
@@ -169,9 +170,8 @@ export class InsuranceDataComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCustomer || insuredBy == CommonConstant.InsuredByCustomerCompany) {
       var startDt = new Date(this.InsuranceDataForm.controls.CustCoverStartDt.value);
       var endDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
-      var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
-      if (endDt < businessDt) {
+      if (endDt < this.businessDt) {
         this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Business Date.");
         return;
       }
@@ -619,6 +619,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   GenerateMainAndAddCvgTable() {
+    var ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
     var yearCount = this.InsuranceDataForm.controls.InsLength.value;
     var noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
 
@@ -641,7 +642,8 @@ export class InsuranceDataComponent implements OnInit {
       obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
       obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
       obj.StdMainPremiRate = this.ruleObj.BaseRatePercentage[index];
-      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj));
+      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, ManufYearDiff));
+      ManufYearDiff++;
       yearCount -= 12;
     }
   }
@@ -680,7 +682,7 @@ export class InsuranceDataComponent implements OnInit {
     });
   }
 
-  addGroup(i, obj) {
+  addGroup(i, obj, ManufYearDiff) {
     var group = this.fb.group({
       YearNo: i + 1,
       Tenor: obj.Tenor,
@@ -713,10 +715,18 @@ export class InsuranceDataComponent implements OnInit {
         inscoAddPremiRate = this.ruleObj.RateToInsco[index];
       }
 
+      var checkboxValue = false;
+      if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
+        if (ManufYearDiff <= 5)
+          checkboxValue = false;
+        else
+          checkboxValue = true;
+      }
+
       const control = this.fb.group({
         MrAddCvgTypeCode: o.Key,
         AddCvgTypeName: o.Value,
-        Value: false,
+        Value: checkboxValue,
         SumInsuredPercentage: obj.SumInsuredPercentage,
         SumInsuredAmt: 0,
         PremiumType: premiumType,
@@ -833,6 +843,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   ApplyToCoverage() {
+    var ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
         MrMainCvgTypeCode: this.InsuranceDataForm.controls.InsMainCvgType.value
@@ -844,18 +855,31 @@ export class InsuranceDataComponent implements OnInit {
         var check = formAddCvgChecked.find(x => x.value.Key == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].AddCvgTypeName.value);
 
         if (check != undefined) {
-          this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
-            Value: true
-          });
+          if (check.value.Key == CommonConstant.AddCvgTypeNameLoading) {
+            if (ManufYearDiff <= 5) {
+              this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+                Value: false
+              });
+            }
+            else {
+              this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+                Value: true
+              });
+            }
+          }
+          else {
+            this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+              Value: check.value.Value
+            });
+          };
         } else {
           this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
             Value: false
           });
         }
       }
+      ManufYearDiff++;
     }
-
-    this.isCalculate = false;
   }
 
   CvgAmtChanged() {
@@ -933,12 +957,11 @@ export class InsuranceDataComponent implements OnInit {
   setTenorCustCompany(tenor) {
     var months;
     var endDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
     //Calculate the differences between the start and end dates
-    var yearsDifference = endDt.getFullYear() - businessDt.getFullYear();
-    var monthsDifference = endDt.getMonth() - businessDt.getMonth();
-    var daysDifference = endDt.getDate() - businessDt.getDate();
+    var yearsDifference = endDt.getFullYear() - this.businessDt.getFullYear();
+    var monthsDifference = endDt.getMonth() - this.businessDt.getMonth();
+    var daysDifference = endDt.getDate() - this.businessDt.getDate();
 
     var monthCorrection = 0;
     if (daysDifference > 0) {
@@ -1360,9 +1383,16 @@ export class InsuranceDataComponent implements OnInit {
 
   addCheckbox() {
     this.insAddCvgTypeRuleObj.forEach((o) => {
+
+      var checkboxValue;
+      if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading)
+        checkboxValue = true;
+      else
+        checkboxValue = false;
+
       const control = this.fb.group({
         Key: o.Value,
-        Value: false
+        Value: checkboxValue
       });
       (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray).push(control);
     });

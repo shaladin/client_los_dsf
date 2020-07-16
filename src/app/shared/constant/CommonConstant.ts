@@ -257,6 +257,10 @@ export class CommonConstant {
     public static InsuredByCompany = "CO";
     public static InsuredByCustomerCompany = "CUCO";
 
+    // INSURANCE ADDITIONAL COVERAGE
+    public static MrAddCvgTypeCodeLoading = 'LOADING';
+    public static AddCvgTypeNameLoading = 'Loading';
+
     //INS PAID BY
     public static InsPaidByCustomer = "CU";
     public static InsPaidByAtCost = "CO";
