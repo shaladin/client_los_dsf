@@ -9,8 +9,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lead-verif',
-  templateUrl: './lead-verif.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './lead-verif.component.html'
 })
 
 export class LeadVerifComponent implements OnInit {
@@ -52,7 +51,7 @@ export class LeadVerifComponent implements OnInit {
     } 
 
     for (let index = 0; index < this.listSelectedId.length; index++) {
-      var tempLeadVerfObj = new LeadVerfObj();
+      let tempLeadVerfObj = new LeadVerfObj();
       tempLeadVerfObj.VerifyStat = verifyStatus;
       tempLeadVerfObj.LeadId = this.listSelectedId[index].LeadId;
       tempLeadVerfObj.WfTaskListId = this.listSelectedId[index].WfTaskListId

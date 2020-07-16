@@ -13,7 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: 'app-agrmnt-activation-detail',
   templateUrl: './agrmnt-activation-detail.component.html',
-  providers: [AdminProcessService, NGXToastrService]
+  providers: [AdminProcessService]
 })
 export class AgrmntActivationDetailComponent implements OnInit {
   arrValue = [];
@@ -31,7 +31,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   BizTemplateCode: string;
   IsEnd: boolean = false;
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
-  
+
   constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -76,23 +76,23 @@ export class AgrmntActivationDetailComponent implements OnInit {
     this.tempPagingObj.isSearched = true;
     this.tempPagingObj.delay = 1000;
     this.tempPagingObj.isHideSearch = true;
-    
-    var whereValueObj = new WhereValueObj();
+
+    let whereValueObj = new WhereValueObj();
     whereValueObj.property = "AppId";
     whereValueObj.value = this.AppId;
     this.tempPagingObj.whereValue.push(whereValueObj);
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
+    let currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   getListTemp(ev) {
     this.listSelectedId = ev.TempListId;
 
-    var obj = {
+    let obj = {
       AppId: this.AppId,
       ListAppAssetId: this.listSelectedId
     };
@@ -101,7 +101,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
       this.AssetObj = response["ListAppAsset"];
       if (this.AssetObj.length == 0)
         this.IsEnd = true;
-      var objFinDataAndFee = {
+      let objFinDataAndFee = {
         AppId: this.AppId,
         ListAppAssetId: this.listSelectedId,
         IsEnd: this.IsEnd
@@ -113,38 +113,33 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
   }
 
-Submit() {
-  this.markFormTouched(this.AgrmntActForm);
-  if (this.listSelectedId.length == 0) {
-    this.toastr.typeErrorCustom("Please select at least one Asset");
-    return;
-  }
-  if (this.AgrmntActForm.valid) {
-    var Obj = {
-      CreateDt: this.CreateDt,
-      ListAppAssetId: this.listSelectedId,
-      TaskListId: this.WfTaskListId,
-      TransactionNo: this.TrxNo,
-      AgreementNo: this.AgrmntNo,
-      IsEnd: this.IsEnd
+  Submit() {
+    this.markFormTouched(this.AgrmntActForm);
+    if (this.listSelectedId.length == 0) {
+      this.toastr.typeErrorCustom("Please select at least one Asset");
+      return;
     }
-    this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
-      var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
-      this.router.navigate([]).then(result => { window.open(link, '_self'); });
+    if (this.AgrmntActForm.valid) {
+      let Obj = {
+        CreateDt: this.CreateDt,
+        ListAppAssetId: this.listSelectedId,
+        TaskListId: this.WfTaskListId,
+        TransactionNo: this.TrxNo,
+        AgreementNo: this.AgrmntNo,
+        IsEnd: this.IsEnd
+      }
+      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
+        let link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
+        this.router.navigate([]).then(result => { window.open(link, '_self'); });
+      });
+    }
+  }
+
+  markFormTouched(group: FormGroup | FormArray) {
+    Object.keys(group.controls).forEach((key: string) => {
+      const control = group.controls[key];
+      if (control instanceof FormGroup || control instanceof FormArray) { control.markAsTouched(); this.markFormTouched(control); }
+      else { control.markAsTouched(); };
     });
   }
-}
-
-markFormTouched(group: FormGroup | FormArray) {
-  Object.keys(group.controls).forEach((key: string) => {
-    const control = group.controls[key];
-    if (control instanceof FormGroup || control instanceof FormArray) { control.markAsTouched(); this.markFormTouched(control); }
-    else { control.markAsTouched(); };
-  });
-};
-
-Cancel() {
-  var link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
-  this.router.navigate([]).then(result => { window.open(link, '_self'); });
-}
 }
