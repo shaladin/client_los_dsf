@@ -115,15 +115,8 @@ export class AssetDataComponent implements OnInit {
     SelfUsage: [false],
     AssetAccessoriesObjs: this.fb.array([]),
     items: this.fb.array([])
-    //AssetAccessoryCode: ['', [Validators.required, Validators.maxLength(50)]],
-    //AssetAccessoryName: ['', [Validators.maxLength(100)]],
-    //SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
-    //SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-    //AccessoryPriceAmt: ['', Validators.required],
-    //AccessoryDownPaymentAmt: ['', Validators.required],
-    //AccessoryNotes: ['']
-
   });
+
   CustType: string = "";
   AddrObj: any;
   refMasterObj = {
@@ -246,10 +239,6 @@ export class AssetDataComponent implements OnInit {
   dictSuppLookup: { [key: string]: any; } = {};
   isOnlookup: boolean = false;
 
-  //AllAssetObjs: [{
-  //  list: []
-  //}] = [{ list: [] }];
-
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -282,10 +271,8 @@ export class AssetDataComponent implements OnInit {
     this.AssetConditionChanged();
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
-    //this.AllAssetObjs.splice(0, 1);
-
+  
     await this.getAllAssetData();
-
 
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
@@ -310,8 +297,8 @@ export class AssetDataComponent implements OnInit {
         }
 
         this.SerialNoList = response[CommonConstant.ReturnObj];
-        for (var i = 0; i < this.SerialNoList.length; i++) {
-          var eachDataDetail = this.fb.group({
+        for (let i = 0; i < this.SerialNoList.length; i++) {
+          let eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
             SerialNoValue: [''],
             IsMandatory: [this.SerialNoList[i].IsMandatory]
@@ -319,7 +306,7 @@ export class AssetDataComponent implements OnInit {
           this.items.push(eachDataDetail);
         }
 
-        for (var i = 0; i < this.items.length; i++) {
+        for (let i = 0; i < this.items.length; i++) {
           if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
             this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
@@ -327,7 +314,7 @@ export class AssetDataComponent implements OnInit {
         }
 
         if (this.appAssetObj != null) {
-          for (var i = 0; i < this.items.length; i++) {
+          for (let i = 0; i < this.items.length; i++) {
             if (this.items.controls[i] != null) {
               this.items.controls[i]['controls']['SerialNoValue'].value = this.appAssetObj.ResponseAppAssetObj["SerialNo" + (i + 1)];
             }
@@ -337,7 +324,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   async SaveForm() {
-    console.log(this.AssetDataForm);
     this.isValidOk = true;
     await this.CheckValidation();
     if (this.CheckValidationObj != null) {
@@ -398,7 +384,6 @@ export class AssetDataComponent implements OnInit {
       this.setAllAssetObj();
       this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
         },
@@ -429,7 +414,6 @@ export class AssetDataComponent implements OnInit {
     }
     await this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.CheckValidationObj = response;
       },
       (error) => {
@@ -449,7 +433,6 @@ export class AssetDataComponent implements OnInit {
     }
     this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).subscribe(
       (response) => {
-        console.log(response);
         this.SetDpObj = response;
         if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
           if (this.SetDpObj.DPGrossBehaviour == 'MIN') {
@@ -480,7 +463,6 @@ export class AssetDataComponent implements OnInit {
     }
     this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).subscribe(
       (response) => {
-        console.log(response);
         this.SetManuYearObj = response;
         this.AssetDataForm.patchValue({
           ManufacturingYear: this.SetManuYearObj.MinManufYear
@@ -499,7 +481,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   setAllAssetObj() {
-    console.log(this.AssetDataForm.controls.MrUserRelationshipCode.value)
     this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetId;
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
@@ -642,7 +623,6 @@ export class AssetDataComponent implements OnInit {
     this.vendorObj.VendorId = event.VendorId;
     await this.GetVendor();
     this.GetVendorEmpList();
-    console.log(this.GetVendorEmpList);
   }
 
   SetBpkbCity(event) {
@@ -654,7 +634,6 @@ export class AssetDataComponent implements OnInit {
 
   SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
-    console.log(event);
     this.GetAssetMaster(this.assetMasterObj);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
@@ -667,7 +646,6 @@ export class AssetDataComponent implements OnInit {
     if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
       this.SetDpValue();
     }
-    console.log(event);
   }
 
   ChangeAssetUsage() {
@@ -680,7 +658,6 @@ export class AssetDataComponent implements OnInit {
       this.vendorEmpObj.VendorEmpId = event.target.value;
       this.GetVendorEmpSupervisi();
 
-      console.log(event);
       var temp: any;
       temp = this.EmpObj.filter(
         emp => emp.VendorEmpId == event.target.value);
@@ -725,7 +702,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   DpTypeChange() {
-    console.log(this.AssetDataForm.controls.selectedDpType.value);
     if (this.AssetDataForm.controls.selectedDpType.value != '') {
       if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
         this.AssetDataForm.patchValue({
@@ -751,7 +727,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   async SelfUsageChange(event) {
-    console.log(event);
     if (event.checked == true) {
       this.AssetDataForm.patchValue({
         UserName: this.AppCustObj.CustName,
@@ -816,15 +791,10 @@ export class AssetDataComponent implements OnInit {
   async getAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    console.log(this.appData);
     await this.http.post(URLConstant.GetAllAssetDataByAppId, this.appData).toPromise().then(
       (response) => {
-        console.log("RESPOOOON");
         this.appAssetObj = response;
-        console.log(this.appAssetObj);
         if (this.appAssetObj.ResponseAppAssetObj != null) {
-
-          console.log("AAAA");
           this.AssetDataForm.patchValue({
             FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
             FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
@@ -899,7 +869,6 @@ export class AssetDataComponent implements OnInit {
               LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
             });
           }
-          console.log(this.AssetDataForm.value)
           this.AssetConditionChanged();
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
@@ -1079,12 +1048,6 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
-        //if (this.AssetUsageObj.length > 0) {
-        //  this.AssetDataForm.patchValue({
-        //    MrAssetUsageCode: this.AssetUsageObj[0].Key
-        //  });
-
-        //}
       }
     );
   }
@@ -1094,12 +1057,6 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.AssetConditionObj = response[CommonConstant.ReturnObj];
-        //if (this.AssetConditionObj.length > 0) {
-        //  this.AssetDataForm.patchValue({
-        //    MrAssetConditionCode: this.AssetConditionObj[0].Key
-        //  });
-
-        //}
       }
     );
   }
@@ -1109,11 +1066,6 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
-        //if (this.IdTypeObj.length > 0) {
-        //  this.AssetDataForm.patchValue({
-        //    MrIdTypeCode: this.IdTypeObj[0].Key
-        //  });
-        //}
       }
     );
   }
@@ -1138,12 +1090,6 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         this.UserRelationObj = response[CommonConstant.ReturnObj];
         this.OwnerRelationObj = response[CommonConstant.ReturnObj];
-        //if (this.UserRelationObj.length > 0) {
-        //  this.AssetDataForm.patchValue({
-        //    MrUserRelationshipCode: this.UserRelationObj[0].Key,
-        //    MrOwnerRelationshipCode: this.UserRelationObj[0].Key
-        //  });
-        //}
       }
     );
   }
@@ -1152,11 +1098,9 @@ export class AssetDataComponent implements OnInit {
     this.appObj.AppId = this.AppId;
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AppObj = response;
         this.GetProdOfferingAssetCond();
         this.OfficeCode = this.AppObj.OriOfficeCode;
-        console.log(this.OfficeCode);
       }
     );
   }
@@ -1188,9 +1132,6 @@ export class AssetDataComponent implements OnInit {
         this.vendorObj.VendorId = this.VendorObj.VendorId;
         this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
         this.InputLookupSupplierObj.nameSelect = this.VendorObj.VendorName;
-        //if (this.AssetDataForm.controls.FullAssetCode.value != undefined && this.AssetDataForm.controls.FullAssetCode.value != '') {
-        //  this.SetMinManuYear()
-        //}
       }
     );
   }
@@ -1239,13 +1180,11 @@ export class AssetDataComponent implements OnInit {
   GetVendorEmpSalesPerson() {
     this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpSalesObj).subscribe(
       (response) => {
-        console.log(response);
         this.VendorEmpSalesObj = response;
         this.AssetDataForm.patchValue({
           SalesPersonId: this.VendorEmpSalesObj.VendorEmpId
         });
         this.vendorEmpObj.VendorEmpId = this.VendorEmpSalesObj.VendorEmpId;
-        //this.GetVendorEmpSupervisi();
       }
     );
   }
@@ -1253,7 +1192,6 @@ export class AssetDataComponent implements OnInit {
   GetVendorEmpAdminHead() {
     this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpAdminObj).subscribe(
       (response) => {
-        console.log(response);
         this.VendorAdminHeadObj = response;
         this.AssetDataForm.patchValue({
           AdminHeadId: this.VendorAdminHeadObj.VendorEmpId
@@ -1265,29 +1203,11 @@ export class AssetDataComponent implements OnInit {
   GetVendorEmpList() {
     this.http.post(URLConstant.GetListVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
-        console.log(response);
-        console.log(this.vendorObj);
         this.EmpObj = response[CommonConstant.ReturnObj];
         this.AdminHeadObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
         this.SalesPersonObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE);
-
-        //if (this.AdminHeadObj.length > 0) {
-        //  this.AssetDataForm.patchValue({
-        //    AdminHeadName: this.AdminHeadObj[0].VendorEmpName,
-        //    AdminHeadNo: this.AdminHeadObj[0].VendorEmpNo,
-        //    AdminHeadPositionCode: this.AdminHeadObj[0].MrVendorEmpPositionCode,
-        //  });
-        //};
-
-        //if (this.SalesPersonObj.length > 0) {
-        //  this.AssetDataForm.patchValue({
-        //    SalesPersonName: this.SalesPersonObj[0].VendorEmpName,
-        //    SalesPersonNo: this.SalesPersonObj[0].VendorEmpNo,
-        //    SalesPersonPositionCode: this.SalesPersonObj[0].MrVendorEmpPositionCode,
-        //  });
-        //};
       }
     );
   }
@@ -1296,8 +1216,6 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, assetMasterObj).subscribe(
       (response) => {
         this.AssetMasterObj = response;
-        console.log("asset master");
-        console.log(this.AssetMasterObj);
         this.AssetDataForm.patchValue({
           FullAssetCode: this.AssetMasterObj.FullAssetCode,
           FullAssetName: this.AssetMasterObj.FullAssetName,
@@ -1380,8 +1298,6 @@ export class AssetDataComponent implements OnInit {
 
     this.dictAccLookup[max + 1] = InputLookupAccObj;
     this.dictSuppLookup[max + 1] = InputLookupAccSupObj;
-
-    //this.AllAssetObjs.push({ list: [] });
   }
 
   deleteAccessory(i) {
@@ -1389,7 +1305,6 @@ export class AssetDataComponent implements OnInit {
       var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
       var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
       appAccessoryObjs.removeAt(i);
-      //this.AllAssetObjs.splice(i, 1);
       this.AssetDataForm.removeControl("lookupSupplierObj" + no);
       this.AssetDataForm.removeControl("lookupAccObj" + no);
     }
@@ -1411,7 +1326,6 @@ export class AssetDataComponent implements OnInit {
         this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
         this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
       }
-      console.log(this.appAssetAccessoriesObjs);
     }
   }
 
@@ -1419,7 +1333,6 @@ export class AssetDataComponent implements OnInit {
     this.vendorAccSuppObj.VendorCode = SupplCode;
     this.http.post(URLConstant.GetVendorByVendorCode, this.vendorAccSuppObj).subscribe(
       (response) => {
-        console.log(response);
         this.dictSuppLookup[i].nameSelect = response["VendorName"];
         this.dictSuppLookup[i].jsonSelect = response;
         this.InputLookupSupplObjs[i].jsonSelect = response;
@@ -1435,7 +1348,6 @@ export class AssetDataComponent implements OnInit {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
     this.http.post(URLConstant.GetAssetAccessoryByCode, this.accObj).subscribe(
       (response) => {
-        console.log(response);
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
         this.dictAccLookup[i].jsonSelect = response;
         this.InputLookupAcceObjs[i].jsonSelect = response;
@@ -1596,10 +1508,8 @@ export class AssetDataComponent implements OnInit {
   CheckValue() {
     this.allAssetDataObj = new AllAssetDataObj();
     this.setAllAssetObj();
-    console.log(this.allAssetDataObj);
-    console.log(this.AssetDataForm);
-    console.log(this.appAssetId);
   }
+
   SetLocationAddrType(event) {
     this.copyFromAppCustAddrForLocation = event;
   }
@@ -1615,7 +1525,6 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
       (response) => {
         this.AppCustObj = response;
-        console.log(response);
         this.CustType = this.AppCustObj.MrCustTypeCode;
         if (this.CustType == CommonConstant.CustTypePersonal) {
           this.AssetDataForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1667,7 +1576,6 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, appObj).toPromise().then(
       (response) => {
         this.AppCustCoyObj = response;
-        console.log(response);
       }
     );
   }
@@ -1680,8 +1588,6 @@ export class AssetDataComponent implements OnInit {
         invalid.push(name);
       }
     }
-    console.log(invalid)
-    console.log(this.AssetDataForm);
   }
 
 }
