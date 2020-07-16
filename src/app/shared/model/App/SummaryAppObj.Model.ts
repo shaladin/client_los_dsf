@@ -31,6 +31,12 @@ export class SummaryAppObj{
     TotalPrincipalAmt: number;
     TotalIncomeAmt: number;
     TotalExpenseAmt: number;
+    CustExposureAmt: number;
+    CustGrpExposureAmt: number;
+    ObligorExposureAmt: number;
+    OsArAgrmntAmt: number;
+    AppRejectCount: number;
+    AppInProcessCount: number;
 
     constructor(){
         this.AppObj = new AppObj();
