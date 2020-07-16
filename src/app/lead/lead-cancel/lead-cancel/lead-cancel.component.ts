@@ -1,63 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UCSearchComponent } from '@adins/ucsearch';
+import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UcgridfooterComponent } from '@adins/ucgridfooter';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
+import { Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { String, StringBuilder } from 'typescript-string-operations';
+import { String } from 'typescript-string-operations';
+import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 
 @Component({
   selector: 'app-lead-cancel',
-  templateUrl: './lead-cancel.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './lead-cancel.component.html'
 })
 
 export class LeadCancelComponent implements OnInit {
-  @ViewChild(UcgridfooterComponent) ucgridFooter;
-  @ViewChild(UCSearchComponent) UCSearchComponent;
-  resultData: any;
-  pageNow: number;
-  totalData: number;
-  pageSize: number;
-  apiUrl: string;
-  orderByKey: any = null;
-  orderByValue = true;
-  deleteUrl: string;
-  inputObj: InputSearchObj;
-  responseResultData: any;
-  listSelectedId: Array<string> = [];
-  tempListId: Array<string> = [];
-  tempData: Array<any> = [];
-  arrAddCrit = new Array<CriteriaObj>();
-  checkboxAll: boolean = false;
-  confirmUrl = "/Lead/ConfirmCancel";
+  listSelectedId: Array<any> = new Array<any>();
+  tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   allowedStat = ['INP', 'NEW'];
-  leadUrl: string;
   tempLeadCancelObj: LeadCancelObj;
+
   constructor(
-    private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private adInsService: AdInsService) { }
+    private router: Router) { }
 
   ngOnInit() {
-    this.inputObj = new InputSearchObj();
-    this.inputObj._url = './assets/search/searchLeadCancel.json';
-    this.inputObj.enviromentUrl = environment.losUrl;
-    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputObj.addCritInput = new Array();
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.inputObj.ddlEnvironments = [
+    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
+    this.tempPagingObj.enviromentUrl = environment.losUrl;
+    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
+    this.tempPagingObj.ddlEnvironments = [
       {
         name: "L.ORI_OFFICE_CODE",
         environment: environment.FoundationR3Url
@@ -75,196 +48,39 @@ export class LeadCancelComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
-    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
 
-    var addCrit: CriteriaObj = new CriteriaObj();
+    let addCrit: CriteriaObj = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "L.LEAD_STAT";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = this.allowedStat;
-    this.arrAddCrit.push(addCrit);
-    this.inputObj.addCritInput.push(addCrit);
-    var GetListLeadVerfUrl: string = URLConstant.GetListLeadVerf;
-    var obj = {};
-    var arr: Array<number> = [0];
-    var temp: Array<any>;
-    this.http.post(GetListLeadVerfUrl, obj).subscribe(
-      response => {
-        temp = response['ReturnObject'];
-        for (var i = 0; i < temp.length; i++) {
-          arr.push(temp[i]['LeadId']);
-        }
-      },
-      error => {
-        this.router.navigateByUrl('Error');
-      }
-    );
+    this.tempPagingObj.addCritInput.push(addCrit);
+
+    this.tempPagingObj.isReady = true;
   }
 
-  searchSort(event: any) {
-    if (this.resultData != null) {
-      if (this.orderByKey == event.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = event.target.attributes.name.nodeValue;
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
+  getListTemp(ev) {
+    this.listSelectedId = ev.TempListObj;
   }
-  Checked(LeadId: string, isChecked: boolean): void {
-    if (isChecked) {
-      this.listSelectedId.push(LeadId);
-    } else {
-      const index = this.listSelectedId.indexOf(LeadId);
-      if (index > -1) { this.listSelectedId.splice(index, 1); }
-    }
-  }
-  searchPagination(event: number): void {
-    this.pageNow = event;
-    let order = null;
-    if (this.orderByKey != null) {
-      order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-    }
-    this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-  }
-  getResult(event): void {
-    console.log(this.resultData);
-    this.resultData = event.response.Data;
-    this.totalData = event.response.Count;
-    this.ucgridFooter.pageNow = event.pageNow;
-    this.ucgridFooter.totalData = this.totalData;
-    this.ucgridFooter.resultData = this.resultData;
-  }
-  onSelect(event): void {
-    this.pageNow = event.pageNow;
-    this.pageSize = event.pageSize;
-    this.searchPagination(this.pageNow);
-    this.totalData = event.Count;
-  }
-
-  formValidate(form: any) {
-    this.adInsService.scrollIfFormHasErrors(form);
-  }
-
-  SaveLeadCancel(leadVerfForm: any) {
-    this.tempLeadCancelObj = new LeadCancelObj();
-    for (let index = 0; index < this.tempData.length; index++) {
-      this.tempLeadCancelObj.LeadIds.push(this.tempData[index].LeadId);
-      if (this.tempData[index].WfTaskListId != null && this.tempData[index].WfTaskListId != undefined)
-        this.tempLeadCancelObj.listWfTaskListId.push(this.tempData[index].WfTaskListId)
-    }
-    if (this.tempLeadCancelObj.LeadIds.length == 0) {
-      this.toastr.typeErrorCustom(ExceptionConstant.ADD_MIN_1_DATA);
+  
+  SaveLeadCancel() {
+    if (this.listSelectedId.length == 0) {
+      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
-    }
-    else if (this.tempLeadCancelObj.LeadIds.length > 50) {
+    } else if (this.listSelectedId.length > 50) {
       this.toastr.typeErrorCustom(String.Format(ExceptionConstant.MAX_DATA, 50));
       return;
     }
-    var params: string = this.tempLeadCancelObj.LeadIds.join(',')
-    var taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
-    this.router.navigate([this.confirmUrl], { queryParams: { "LeadIds": params, "WfTaskListIds": taskListId } });
-  }
 
-  addToTemp() {
-    if (this.listSelectedId.length !== 0) {
-      this.checkboxAll = false;
-      for (var i = 0; i < this.listSelectedId.length; i++) {
-        this.tempListId.push(this.listSelectedId[i]);
-        var object = this.resultData.find(x => x.LeadId == this.listSelectedId[i]);
-        this.tempData.push(object);
-      }
-      this.arrAddCrit = new Array();
-      var addCrit: CriteriaObj = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "L.LEAD_ID";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.tempListId;
-
-      var allowedCrit: CriteriaObj = new CriteriaObj();
-      allowedCrit.DataType = "text";
-      allowedCrit.propName = "L.LEAD_STAT";
-      allowedCrit.restriction = AdInsConstant.RestrictionIn;
-      allowedCrit.listValue = this.allowedStat;
-      this.arrAddCrit.push(allowedCrit);
-
-      this.arrAddCrit.push(addCrit);
-      var order = null;
-      if (this.orderByKey != null) {
-        order = {
-          key: this.orderByKey,
-          value: this.orderByValue
-        };
-      }
-      this.inputObj.addCritInput = this.arrAddCrit;
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-      this.listSelectedId = [];
+    this.tempLeadCancelObj = new LeadCancelObj();
+    for (let index = 0; index < this.listSelectedId.length; index++) {
+      this.tempLeadCancelObj.LeadIds.push(this.listSelectedId[index].LeadId);
+      if (this.listSelectedId[index].WfTaskListId != undefined && this.listSelectedId[index].WfTaskListId != null)
+        this.tempLeadCancelObj.listWfTaskListId.push(this.listSelectedId[index].WfTaskListId)
     }
-    else {
-      this.toastr.typeErrorCustom(ExceptionConstant.SELECT_ONE_DATA_ON_LEAD);
-    }
-  }
 
-  SelectAll(condition) {
-    this.checkboxAll = condition;
-    if (condition) {
-      for (let i = 0; i < this.resultData.length; i++) {
-        if (this.listSelectedId.indexOf(this.resultData[i].LeadId) < 0) {
-          this.listSelectedId.push(this.resultData[i].LeadId);
-        }
-      }
-    } else {
-      for (let i = 0; i < this.resultData.length; i++) {
-        let index = this.listSelectedId.indexOf(this.resultData[i].LeadId);
-        if (index > -1) {
-          this.listSelectedId.splice(index, 1);
-        }
-      }
-    }
-  }
-
-  deleteFromTemp(LeadId: any) {
-    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.arrAddCrit = new Array();
-      var index = this.tempListId.indexOf(LeadId);
-      if (index > -1) {
-        this.tempListId.splice(index, 1);
-        this.tempData.splice(index, 1);
-      }
-      var addCrit: CriteriaObj = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "L.LEAD_ID";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.tempListId;
-
-      var allowedCrit: CriteriaObj = new CriteriaObj();
-      allowedCrit.DataType = "text";
-      allowedCrit.propName = "L.LEAD_STAT";
-      allowedCrit.restriction = AdInsConstant.RestrictionIn;
-      allowedCrit.listValue = this.allowedStat;
-      this.arrAddCrit.push(allowedCrit);
-
-      if (this.tempListId.length != 0) {
-        this.arrAddCrit.push(addCrit);
-      }
-      var order = null;
-      if (this.orderByKey != null) {
-        order = {
-          key: this.orderByKey,
-          value: this.orderByValue
-        };
-      }
-      this.inputObj.addCritInput = this.arrAddCrit;
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrAddCrit);
-    }
+    let params: string = this.tempLeadCancelObj.LeadIds.join(',')
+    let taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
+    this.router.navigate(["/Lead/ConfirmCancel"], { queryParams: { "LeadIds": params, "WfTaskListIds": taskListId } });
   }
 }

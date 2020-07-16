@@ -257,6 +257,10 @@ export class CommonConstant {
     public static InsuredByCompany = "CO";
     public static InsuredByCustomerCompany = "CUCO";
 
+    // INSURANCE ADDITIONAL COVERAGE
+    public static MrAddCvgTypeCodeLoading = 'LOADING';
+    public static AddCvgTypeNameLoading = 'Loading';
+
     //INS PAID BY
     public static InsPaidByCustomer = "CU";
     public static InsPaidByAtCost = "CO";
@@ -276,6 +280,7 @@ export class CommonConstant {
     public static RefProdCompntAssetType = "ASSETTYPE";
     public static RefProdCompntSupplSchm = "SUPPLSCHM";
     public static RefProdCompntAssetSchm = "ASSETSCHM";
+    public static RefProdCompntAssetCond = "ASSETCOND";
     public static RefProdCompntLob = "LOB";
     public static RefProdCompntCurr = "CURR";
     public static RefProdCompntPayFreq = "PAYFREQ";
