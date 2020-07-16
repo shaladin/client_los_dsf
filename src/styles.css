@@ -335,6 +335,11 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
     padding: 0px !important;
 }
 
+.bs-stepper-center{
+    width: 50%;
+    margin: auto;
+}
+
 label {
     text-transform: none !important;
     letter-spacing: 0.5px !important;

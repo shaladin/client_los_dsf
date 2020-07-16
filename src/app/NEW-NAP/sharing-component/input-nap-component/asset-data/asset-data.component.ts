@@ -267,6 +267,7 @@ export class AssetDataComponent implements OnInit {
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
+    this.initLookup();
     this.locationAddrObj = new AddrObj();
     this.ownerAddrObj = new AddrObj();
     this.inputFieldOwnerAddrObj = new InputFieldObj();
@@ -278,15 +279,13 @@ export class AssetDataComponent implements OnInit {
       await this.GetAppCustCoy();
     }
     await this.GetListAddr();
-    //this.assetMasterObj.FullAssetCode = 'CAR';
-    //this.GetAssetMaster(this.assetMasterObj);
-
+    this.AssetConditionChanged();
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
     //this.AllAssetObjs.splice(0, 1);
 
     await this.getAllAssetData();
-    this.initLookup();
+
 
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
@@ -1174,7 +1173,6 @@ export class AssetDataComponent implements OnInit {
         this.AssetDataForm.patchValue({
           MrAssetConditionCode: this.assetCondObj.CompntValue
         });
-        this.AssetConditionChanged();
       }
     );
   }
@@ -1319,7 +1317,6 @@ export class AssetDataComponent implements OnInit {
         cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
       this.AssetConditionName = filter[0].Value;
     }
-
     if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
       this.SetDpValue();
     }
