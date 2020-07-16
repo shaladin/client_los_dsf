@@ -40,7 +40,7 @@
             "type": "sort",
             "position": "left",
             "label": "Address",
-            "name": "CA.FULL_ADDR"
+            "name": "CA.ADDR"
         },
         {
             "type": "label",

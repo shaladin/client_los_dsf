@@ -276,6 +276,7 @@ export class CommonConstant {
     public static RefProdCompntAssetType = "ASSETTYPE";
     public static RefProdCompntSupplSchm = "SUPPLSCHM";
     public static RefProdCompntAssetSchm = "ASSETSCHM";
+    public static RefProdCompntAssetCond = "ASSETCOND";
     public static RefProdCompntLob = "LOB";
     public static RefProdCompntCurr = "CURR";
     public static RefProdCompntPayFreq = "PAYFREQ";

@@ -58,35 +58,20 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-md-5"
-                    [ngClass]="{ 'adins-required-label': AddCollForm.controls.MrCollateralConditionCode.value == 'USED' }"
-                    translate>Serial No 1</label>
-                  <div class="col-md-7">
-                    <input type="text" class="form-control" formControlName="SerialNo1"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
-                    <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo1" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-5"
-                    [ngClass]="{ 'adins-required-label': AddCollForm.controls.MrCollateralConditionCode.value == 'USED' }"
-                    translate>Serial No 2</label>
-                  <div class="col-md-7">
-                    <input type="text" class="form-control" formControlName="SerialNo2"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
-                    <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo2" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-5" translate>Serial No 3</label>
-                  <div class="col-md-7">
-                    <input type="text" class="form-control" formControlName="SerialNo3"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
-                    <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo3" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                <div formArrayName="items">
+                  <div *ngFor="let item of items.controls; let i = index;">
+                    <div class="form-group row" [formGroupName]="i">
+                      <label class="col-md-5 "
+                        [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
+                        {{item.controls.SerialNoLabel.value}} </label>
+                      <div class="col-md-7">
+                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                        <lib-uc-show-errors
+                          [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
