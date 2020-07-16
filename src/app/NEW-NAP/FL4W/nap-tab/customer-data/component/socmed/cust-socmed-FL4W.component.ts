@@ -6,6 +6,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-socmed-FL4W',
@@ -56,7 +57,7 @@ export class CustSocmedFL4WComponent implements OnInit {
   }
 
   deleteSocmed(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
     var custSocmedObjs = this.parentForm.controls[this.identifier] as FormArray;
     custSocmedObjs.removeAt(i);
     }
@@ -98,7 +99,7 @@ export class CustSocmedFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSocmedType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.SocmedObj = response["ReturnObject"];
+        this.SocmedObj = response[CommonConstant.ReturnObj];
         if(this.SocmedObj.length > 0){
             this.defaultSocmedCode = this.SocmedObj[0].Key,
             this.defaultSocmedName = this.SocmedObj[0].Value

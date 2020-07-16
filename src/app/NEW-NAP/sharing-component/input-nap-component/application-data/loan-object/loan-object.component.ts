@@ -11,6 +11,7 @@ import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-loan-object',
@@ -263,7 +264,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   deleteLoanObject(AppLoanPurposeId) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var obj = {
         AppLoanPurposeId: AppLoanPurposeId
       };

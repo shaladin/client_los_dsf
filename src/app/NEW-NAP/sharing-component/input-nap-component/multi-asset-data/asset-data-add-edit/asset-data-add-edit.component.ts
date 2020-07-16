@@ -237,8 +237,8 @@ export class AssetDataAddEditComponent implements OnInit {
     this.appObj.AppId = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
-        this.AppCustAddrObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ LocationAddrType: response['ReturnObject'][0]['AppCustAddrId'] });
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
       }
     );
   }
@@ -277,12 +277,12 @@ export class AssetDataAddEditComponent implements OnInit {
     this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
       (response) => {
-        this.listBranchObj = response["ReturnObject"];
+        this.listBranchObj = response[CommonConstant.ReturnObj];
         if (this.listBranchObj) {
           if (this.listBranchObj.length > 0) {
             this.AssetDataForm.patchValue({
-              BranchManagerNo: response['ReturnObject'][0]['Key'],
-              BranchManagerName: response['ReturnObject'][0]['Value']
+              BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
+              BranchManagerName: response[CommonConstant.ReturnObj][0]['Value']
             });
           }
         }
@@ -293,12 +293,12 @@ export class AssetDataAddEditComponent implements OnInit {
     this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
       (response) => {
-        this.listSalesObj = response["ReturnObject"];
+        this.listSalesObj = response[CommonConstant.ReturnObj];
         if (this.listSalesObj) {
           if (this.listSalesObj.length > 0) {
             this.AssetDataForm.patchValue({
-              SalesPersonNo: response['ReturnObject'][0]['Key'],
-              SalesPersonName: response['ReturnObject'][0]['Value']
+              SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
+              SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
             });
           }
         }
@@ -309,12 +309,12 @@ export class AssetDataAddEditComponent implements OnInit {
     this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
       (response) => {
-        this.listAdminHeadObj = response["ReturnObject"];
+        this.listAdminHeadObj = response[CommonConstant.ReturnObj];
         if (this.listAdminHeadObj) {
           if (this.listAdminHeadObj.length > 0) {
             this.AssetDataForm.patchValue({
-              AdminHeadNo: response['ReturnObject'][0]['Key'],
-              AdminHeadName: response['ReturnObject'][0]['Value']
+              AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
+              AdminHeadName: response[CommonConstant.ReturnObj][0]['Value']
             });
           }
         }
@@ -582,7 +582,7 @@ export class AssetDataAddEditComponent implements OnInit {
                   this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
                   this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
                     (response) => {
-                      this.listBranchObj = response["ReturnObject"];
+                      this.listBranchObj = response[CommonConstant.ReturnObj];
                       this.AssetDataForm.patchValue({
                         BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
                         BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
@@ -608,7 +608,7 @@ export class AssetDataAddEditComponent implements OnInit {
                   this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
                   this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
                     (response) => {
-                      this.listAdminHeadObj = response["ReturnObject"];
+                      this.listAdminHeadObj = response[CommonConstant.ReturnObj];
                       this.AssetDataForm.patchValue({
                         AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
                         AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
@@ -628,7 +628,7 @@ export class AssetDataAddEditComponent implements OnInit {
                   this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
                   this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
                     (response) => {
-                      this.listSalesObj = response["ReturnObject"];
+                      this.listSalesObj = response[CommonConstant.ReturnObj];
                       this.AssetDataForm.patchValue({
                         SalesPersonNo: this.salesAppAssetSupplEmpObj.SupplEmpNo,
                         SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName
@@ -719,7 +719,7 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetCond = response[1];
         var assetType = response[2];
         var assetSchm = response[3];
-        var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
         this.AssetDataForm.patchValue({
           MrAssetConditionCode: assetCond["CompntValue"],
@@ -739,7 +739,7 @@ export class AssetDataAddEditComponent implements OnInit {
         critObjSuppl.DataType = "text";
         critObjSuppl.restriction = AdInsConstant.RestrictionEq;
         critObjSuppl.propName = "ro.OFFICE_CODE";
-        critObjSuppl.value = currentUserContext["OfficeCode"];
+        critObjSuppl.value = currentUserContext[CommonConstant.OFFICE_CODE];
         arrCritSuppl.push(critObjSuppl);
         this.InputLookupSupplierObj.addCritInput = arrCritSuppl;
         this.InputLookupSupplierObj.isReady = true;
@@ -770,8 +770,8 @@ export class AssetDataAddEditComponent implements OnInit {
     this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
-        this.returnAssetConditionObj = response["ReturnObject"];
-        // this.AssetDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
+        // this.AssetDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -779,8 +779,8 @@ export class AssetDataAddEditComponent implements OnInit {
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
-        this.returnDownPaymentObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -788,8 +788,8 @@ export class AssetDataAddEditComponent implements OnInit {
     this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getListActiveRefMasterUrl, this.userRelationshipObj).subscribe(
       (response) => {
-        this.returnUserRelationshipObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ UserRelationship: response['ReturnObject'][0]['Key'] });
+        this.returnUserRelationshipObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -797,9 +797,9 @@ export class AssetDataAddEditComponent implements OnInit {
     this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
       (response) => {
-        this.returnAssetUsageObj = response["ReturnObject"];
+        this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({
-          AssetUsage: response['ReturnObject'][0]['Key']
+          AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
         });
       }
     );

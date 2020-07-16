@@ -37,7 +37,7 @@ export class DocSignerDetailComponent implements OnInit {
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
   ResponseAppCustDataObj: any;
-  MrCustTypeCode: string = "COMPANY";
+  MrCustTypeCode: string = CommonConstant.CustTypeCompany;
   CustFullName: string;
   ContactPersonName: string;
   BizTemplateCode: string;

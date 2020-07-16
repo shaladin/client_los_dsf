@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +8,7 @@ import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -65,7 +64,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
 
@@ -85,7 +84,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }

@@ -6,6 +6,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
@@ -52,7 +53,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouObj).subscribe(
       response => {
-        this.responseObj = response['ReturnObject'];
+        this.responseObj = response[CommonConstant.ReturnObj];
       },
       error => {
         this.router.navigateByUrl('Error');
@@ -77,7 +78,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         var mouCustObj = { "MouCustId": this.MouCustId };
         this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouCustObj).subscribe(
           response => {
-            this.responseObj = response['ReturnObject'];
+            this.responseObj = response[CommonConstant.ReturnObj];
           },
           error => {
             this.router.navigateByUrl('Error');

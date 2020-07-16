@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
@@ -15,9 +16,9 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
+  BizTemplateCode : string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {
     this.route.queryParams.subscribe(params => {
 

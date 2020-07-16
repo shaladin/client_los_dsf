@@ -10,6 +10,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { exception } from 'core-js/fn/log';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-schm-step-up-step-down-normal',
@@ -42,7 +43,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == "CFRFN4W"){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
           this.PriceLabel = "Financing Amount";
         }
       },
@@ -53,25 +54,25 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
       (response) => {
-        this.RateTypeOptions = response["ReturnObject"];
+        this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType  }).subscribe(
       (response) => {
-        this.GracePeriodeTypeOptions = response["ReturnObject"];
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   LoadDDLStepUpStepDownInputType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "STEP_UP_STEP_DOWN_INPUT_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeStepUpStepDownInputType }).subscribe(
       (response) => {
-        this.StepUpStepDownInputOptions = response["ReturnObject"];
+        this.StepUpStepDownInputOptions = response[CommonConstant.ReturnObj];
       }
     );
   }

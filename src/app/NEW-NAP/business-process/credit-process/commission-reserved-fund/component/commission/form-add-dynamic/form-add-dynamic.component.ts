@@ -22,6 +22,7 @@ export class FormAddDynamicComponent implements OnInit {
 
   @Output('update') DataEmit: EventEmitter<any> = new EventEmitter<any>();
   @Input() FormInputObj;
+  @Input() DictMaxIncomeForm: any = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -37,12 +38,13 @@ export class FormAddDynamicComponent implements OnInit {
   UserAccess;
   ngOnInit() {
     // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    // console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.arr = this.FormObj.get('arr') as FormArray;
     // console.log(this.FormInputObj);
     this.GetDDLContentName();
     // console.log(this.FormInputObj["ruleObj"]);
+    // console.log(this.DictMaxIncomeForm);
     this.GenerateAutoAtStart();
   }
 
@@ -51,7 +53,7 @@ export class FormAddDynamicComponent implements OnInit {
       this.FormInputObj["isDataInputed"] = true;
       console.log("Auto Genereate");
       var len = this.DDLContentName.length;
-      console.log(len);
+      // console.log(len);
       for (var i = len - 1; i >= 0; i--) {
         // console.log("Genereate");
         var j = len - i - 1;
@@ -89,13 +91,13 @@ export class FormAddDynamicComponent implements OnInit {
         (response) => {
           // console.log("response bank");
           // console.log(response);
-          var len = response["ReturnObject"].length;
+          var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {
             var eachDDLDetail = this.fb.group({
-              Key: response["ReturnObject"][i]["BankAccountNo"],
-              Value: response["ReturnObject"][i]["BankAccountName"],
-              BankCode: response["ReturnObject"][i]["BankCode"],
-              BankName: response["ReturnObject"][i]["BankName"],
+              Key: response[CommonConstant.ReturnObj][i]["BankAccountNo"],
+              Value: response[CommonConstant.ReturnObj][i]["BankAccountName"],
+              BankCode: response[CommonConstant.ReturnObj][i]["BankCode"],
+              BankName: response[CommonConstant.ReturnObj][i]["BankName"],
               BankBranch: ""
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -115,13 +117,13 @@ export class FormAddDynamicComponent implements OnInit {
         (response) => {
           // console.log("response bank");
           // console.log(response);
-          var len = response["ReturnObject"].length;
+          var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {
             var eachDDLDetail = this.fb.group({
-              Key: response["ReturnObject"][i]["BankAccountNo"],
-              Value: response["ReturnObject"][i]["BankAccountName"],
-              BankCode: response["ReturnObject"][i]["BankCode"],
-              BankName: response["ReturnObject"][i]["BankName"],
+              Key: response[CommonConstant.ReturnObj][i]["BankAccountNo"],
+              Value: response[CommonConstant.ReturnObj][i]["BankAccountName"],
+              BankCode: response[CommonConstant.ReturnObj][i]["BankCode"],
+              BankName: response[CommonConstant.ReturnObj][i]["BankName"],
               BankBranch: ""
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
@@ -196,7 +198,7 @@ export class FormAddDynamicComponent implements OnInit {
 
   DeleteDataForm(idx) {
     // console.log(idx);
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.FormInputObj["isCalculated"] = false;
       if (this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value != 0)
         this.DeleteFromDatabase(this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value);
@@ -219,7 +221,7 @@ export class FormAddDynamicComponent implements OnInit {
 
   CheckData() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     console.log(this.FormObj);
   }
 
@@ -277,7 +279,7 @@ export class FormAddDynamicComponent implements OnInit {
         IsSave: false,
         Content: this.FormInputObj["content"],
       };
-      console.log(obj);
+      // console.log(obj);
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
           // console.log("response Tax");
@@ -411,7 +413,7 @@ export class FormAddDynamicComponent implements OnInit {
     this.DDLContentName.splice(idx, 1);
     // console.log(this.tempDDLContentName);
     // console.log(this.DDLContentName);
-    console.log(this.FormObj);
+    // console.log(this.FormObj);
     this.PassData("ADD");
   }
 
@@ -438,7 +440,7 @@ export class FormAddDynamicComponent implements OnInit {
 
     var idxTemp: number = indexFormObj;
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
-      console.log(this.FormInputObj["contentObj"]);
+      // console.log(this.FormInputObj["contentObj"]);
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[indexFormObj].Key));
     }
     var temp = this.GetTempRuleObj(code, idxTemp);
@@ -465,7 +467,7 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   async GenerateExistingContentName(objExist, idx) {
-    console.log(objExist);
+    // console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
 
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
@@ -546,7 +548,7 @@ export class FormAddDynamicComponent implements OnInit {
 
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
-    console.log(this.DDLContentName);
+    // console.log(this.DDLContentName);
     this.PassData(CommonConstant.MessagePassData);
   }
 
@@ -600,20 +602,28 @@ export class FormAddDynamicComponent implements OnInit {
 
   SetRule(indexFormObj, code, idx) {
     var temp = this.GetTempRuleObj(code, idx);
-    console.log(temp);
+    // console.log(temp);
     var TotalCommisionAmount = 0;
     for (var i = 0; i < temp.length; i++) {
 
       let behaviour: string = temp[i].AllocationBehaviour;
       let maxAllocAmt: number = temp[i].MaxAllocationAmount;
-      if (maxAllocAmt <= 0) {
+      let allocAmt: number = temp[i].AllocationAmount;
+      // console.log(this.DictMaxIncomeForm[temp[i].AllocationFrom]);
+      if (this.DictMaxIncomeForm[temp[i].AllocationFrom] != undefined && this.DictMaxIncomeForm[temp[i].AllocationFrom] != null && this.DictMaxIncomeForm[temp[i].AllocationFrom].RefundAmount > 0) {
+        if (maxAllocAmt <= 0) {
+          behaviour = "LOCK";
+          maxAllocAmt = 0;
+        }
+
+        if (allocAmt <= 0)
+          allocAmt = 0;
+
+      } else {
         behaviour = "LOCK";
         maxAllocAmt = 0;
-      }
-
-      let allocAmt: number = temp[i].AllocationAmount;
-      if (allocAmt <= 0)
         allocAmt = 0;
+      }
 
       var eachAllocationDetail = this.fb.group({
         AppCommissionDId: [0],

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-from-lead-paging',
@@ -32,7 +33,7 @@ export class NapFromLeadPagingComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();    
     this.makeCriteria();

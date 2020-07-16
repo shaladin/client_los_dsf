@@ -1,12 +1,12 @@
 <div class="col-md-12 text-left">
     <div class="card">
         <form action="">
-            <app-form-add-dynamic #Form1 *ngIf="OnForm1" [FormInputObj]="FormInputObjSupplier"
+            <app-form-add-dynamic #Form1 *ngIf="OnForm1" [DictMaxIncomeForm]="DictMaxIncomeForm" [FormInputObj]="FormInputObjSupplier"
                 (update)="GetData($event, 'Supplier')"></app-form-add-dynamic>
-            <app-form-add-dynamic #Form2 *ngIf="OnForm2" [FormInputObj]="FormInputObjSupplierEmpl"
+            <app-form-add-dynamic #Form2 *ngIf="OnForm2" [DictMaxIncomeForm]="DictMaxIncomeForm" [FormInputObj]="FormInputObjSupplierEmpl"
                 (update)="GetData($event, 'SupplierEmployee')">
             </app-form-add-dynamic>
-            <app-form-add-dynamic #Form3 *ngIf="OnForm3" [FormInputObj]="FormInputObjReferantor"
+            <app-form-add-dynamic #Form3 *ngIf="OnForm3" [DictMaxIncomeForm]="DictMaxIncomeForm" [FormInputObj]="FormInputObjReferantor"
                 (update)="GetData($event, 'Referantor')"></app-form-add-dynamic>
         </form>
 

@@ -17,6 +17,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCompanyLegalDocObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -77,7 +78,7 @@ export class GuarantorCompanyComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
   async ngOnInit(): Promise<void> {
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
     this.initAddr();
@@ -131,20 +132,20 @@ export class GuarantorCompanyComponent implements OnInit {
 
 
     var refCompObj = {
-      RefMasterTypeCode: "COMPANY_TYPE",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
     }
     var refCustRelObj = {
-      RefMasterTypeCode: "CUST_COMPANY_RELATIONSHIP",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
       RowVersion: ""
     }
     var refJobObj = {
-      RefMasterTypeCode: "JOB_POSITION",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListActiveRefMaster, refCompObj).subscribe(
       (response) => {
-        this.MrCompanyTypeCode = response["ReturnObject"];
+        this.MrCompanyTypeCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.CompanyForm.patchValue({
             MrCompanyTypeCode: this.MrCompanyTypeCode[0].MasterCode
@@ -154,7 +155,7 @@ export class GuarantorCompanyComponent implements OnInit {
     );
     this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
       (response) => {
-        this.MrCustRelationshipCode = response["ReturnObject"];
+        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.CompanyForm.patchValue({
             MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
@@ -164,7 +165,7 @@ export class GuarantorCompanyComponent implements OnInit {
     );
     this.http.post(URLConstant.GetListActiveRefMaster, refJobObj).subscribe(
       (response) => {
-        this.MrJobPositionCode = response["ReturnObject"];
+        this.MrJobPositionCode = response[CommonConstant.ReturnObj];
         //if(this.mode != "edit"){
         //  this.CompanyForm.patchValue({
         //    MrJobPositionCode: this.MrJobPositionCode[0].MasterCode
@@ -450,12 +451,12 @@ export class GuarantorCompanyComponent implements OnInit {
 
   getDocType() {
     var legalDocObj = {
-      RefMasterTypeCode: "LEGAL_DOC_TYPE",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListActiveRefMaster, legalDocObj).subscribe(
       (response) => {
-        this.DocObjs = response["ReturnObject"];
+        this.DocObjs = response[CommonConstant.ReturnObj];
         if (this.DocObjs.length > 0) {
           this.defLegalDocType = this.DocObjs[0].MasterCode;
         }
@@ -489,7 +490,7 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   deleteLegalDoc(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
       legalDocObjs.removeAt(i);
     }

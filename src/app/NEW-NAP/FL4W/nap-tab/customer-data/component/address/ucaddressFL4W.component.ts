@@ -122,7 +122,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
     refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeBuildingOwnership;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.houseOwnershipObj = response["ReturnObject"];
+        this.houseOwnershipObj = response[CommonConstant.ReturnObj];
         if (this.houseOwnershipObj.length > 0
           && (this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == ""
             || this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == undefined)) {

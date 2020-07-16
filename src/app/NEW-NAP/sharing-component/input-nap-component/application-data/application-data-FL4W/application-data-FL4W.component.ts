@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -122,12 +123,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
-    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
 
-    var user = JSON.parse(localStorage.getItem("UserAccess"));
+    var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var AppObj = {
       AppId: this.AppId
     }
@@ -144,7 +145,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
         this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
-            this.resMouCustObj = response["ReturnObject"];
+            this.resMouCustObj = response[CommonConstant.ReturnObj];
             
               // console.log("resMouCustObj")
               // console.log(this.resMouCustObj)
@@ -184,7 +185,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   getInterestTypeCode(){
     var obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestType,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
@@ -223,7 +224,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
-        this.resultCrossApp = response["ReturnObject"];
+        this.resultCrossApp = response[CommonConstant.ReturnObj];
         for(var i = 0; i<this.resultCrossApp.length; i++){
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
@@ -328,7 +329,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
       (response) => {
         console.log("GetListKvpActiveRefAppSrc Response : " + JSON.stringify(response));
-        this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
+        this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -344,7 +345,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
         console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
-        var objTemp = response["ReturnObject"];
+        var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
 
         // console.log("PayFreq")
@@ -364,7 +365,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
       (response) => {
-        var objTemp = response["ReturnObject"];
+        var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
 
         console.log("testddl")
@@ -640,7 +641,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
 
   DeleteCrossApp(idx){
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       if (this.resultCrossApp[idx].AppCrossId != null){
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];

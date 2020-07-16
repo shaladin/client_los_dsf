@@ -24,7 +24,7 @@ export class DocSignerComponent implements OnInit {
   constructor(private router: Router,  private http: HttpClient) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);

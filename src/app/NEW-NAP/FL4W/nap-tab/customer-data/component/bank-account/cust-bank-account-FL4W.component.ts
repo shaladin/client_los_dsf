@@ -138,7 +138,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
   }
 
   delete(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listBankAcc.splice(i, 1);
       this.callbackSubmit.emit(this.listBankAcc);
     }
@@ -209,7 +209,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
   }
 
   deleteBankStmnt(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
       bankStmnObjs.removeAt(i);
     }
@@ -248,7 +248,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMonth;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.MonthObj = response["ReturnObject"];
+        this.MonthObj = response[CommonConstant.ReturnObj];
         if (this.MonthObj.length > 0) {
           this.defaultMonth = this.MonthObj[0].Key;
         }

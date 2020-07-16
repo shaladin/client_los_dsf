@@ -1,17 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UCSearchComponent } from '@adins/ucsearch';
+import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UcgridfooterComponent } from '@adins/ucgridfooter';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AdInsService } from 'app/shared/services/adIns.service';
 import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lead-verif',
@@ -27,7 +21,7 @@ export class LeadVerifComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router,) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/LeadVerifTempPaging.json";
@@ -67,7 +61,6 @@ export class LeadVerifComponent implements OnInit {
 
     this.http.post(URLConstant.AddRangeLeadVerf, {LeadVerfObjs: this.arrLeadVerf}).subscribe(
       response => {
-        console.log(response);
         this.toastr.successMessage(response['message']);
       },
       error => {

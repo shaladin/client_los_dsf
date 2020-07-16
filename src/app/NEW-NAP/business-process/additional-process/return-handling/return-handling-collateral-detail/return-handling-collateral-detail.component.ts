@@ -478,7 +478,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.AssetUsageObj = response["ReturnObject"];
+        this.AssetUsageObj = response[CommonConstant.ReturnObj];
         if (this.AssetUsageObj.length > 0) {
           this.CollateralDataForm.patchValue({
             MrCollateralUsageCode: this.AssetUsageObj[0].Key
@@ -495,7 +495,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     };
     this.http.post(this.getAssetTypeUrl, obj).subscribe(
       (response) => {
-        this.AssetTypeDllObj = response["ReturnObject"];
+        this.AssetTypeDllObj = response[CommonConstant.ReturnObj];
         if (this.AssetTypeDllObj.length > 0) {
           this.CollateralDataForm.patchValue({
             AssetTypeCode: this.AssetTypeDllObj[0].Key
@@ -511,7 +511,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.AssetConditionObj = response["ReturnObject"];
+        this.AssetConditionObj = response[CommonConstant.ReturnObj];
         //if (this.AssetConditionObj.length > 0) {
         //  this.CollateralDataForm.patchValue({
         //    MrCollateralConditionCode: this.AssetConditionObj[0].Key
@@ -526,7 +526,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.CollateralDataForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[0].Key
@@ -541,8 +541,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.UserRelationObj = response["ReturnObject"];
-        this.OwnerRelationObj = response["ReturnObject"];
+        this.UserRelationObj = response[CommonConstant.ReturnObj];
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
         if (this.UserRelationObj.length > 0) {
           this.CollateralDataForm.patchValue({
             MrUserRelationshipCode: this.UserRelationObj[0].Key,
@@ -727,7 +727,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.appObj.AppId = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
-        this.AppCustAddrObj = response["ReturnObject"];
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
 

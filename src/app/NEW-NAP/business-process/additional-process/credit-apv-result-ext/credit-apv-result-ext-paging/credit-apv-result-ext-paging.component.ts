@@ -11,10 +11,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
-  selector: 'app-po-extension-paging',
-  templateUrl: './po-extension-paging.component.html'
+  selector: 'app-credit-apv-result-ext-paging',
+  templateUrl: './credit-apv-result-ext-paging.component.html'
 })
-export class PoExtensionPagingComponent implements OnInit {
+export class CreditApvResultExtPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
   BizTemplateCode: string;
@@ -29,10 +29,10 @@ export class PoExtensionPagingComponent implements OnInit {
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchPOExtension.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCrdApvResExtension.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPOExtension.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCrdApvResExtension.json";
 
     this.inputPagingObj.addCritInput = new Array();
     
@@ -41,6 +41,12 @@ export class PoExtensionPagingComponent implements OnInit {
     critObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = this.BizTemplateCode;
+    this.inputPagingObj.addCritInput.push(critObj);
+
+    critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WF.ACT_CODE';
+    critObj.value = "PO_" + this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
   }
 

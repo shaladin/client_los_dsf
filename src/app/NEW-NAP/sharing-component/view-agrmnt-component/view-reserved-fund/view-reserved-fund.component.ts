@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "agrmnt-view-reserved-fund",
@@ -40,7 +41,7 @@ export class ViewAgrmntReservedFundComponent implements OnInit {
     this.http.post(URLConstant.GetListAgrmntReservedFundByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         console.log(response);
-        this.RsvFundObj = response["ReturnObject"];
+        this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {
           for (let i = 0; i < this.RsvFundObj.length; i++) {
             this.totalRsvFund = this.RsvFundObj[i].ReservedFundAmt;

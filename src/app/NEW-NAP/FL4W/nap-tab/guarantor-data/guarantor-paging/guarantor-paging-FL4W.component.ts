@@ -9,6 +9,8 @@ import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-guarantor-paging-FL4W',
@@ -50,7 +52,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response["ReturnObject"];
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.result = this.inputGridObj.resultData.Data;
         console.log(this.result);
       },
@@ -100,7 +102,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
     }
 
     if (ev.Key == "delete") {
-      if (confirm("Are you sure to delete this record?")) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var guarantorObj = new GuarantorObj();
         guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
         guarantorObj.AppGuarantorObj.AppId = this.AppId;
@@ -111,7 +113,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
               Data: ""
             }
             this.inputGridObj.resultData["Data"] = new Array();
-            this.inputGridObj.resultData.Data = response["ReturnObject"]
+            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
             this.result = this.inputGridObj.resultData.Data;
           },
           (error) => {
@@ -132,7 +134,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response["ReturnObject"]
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
         this.result = this.inputGridObj.resultData.Data;
       },
       (error) => {

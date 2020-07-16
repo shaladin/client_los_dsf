@@ -25,7 +25,7 @@ export class MouCustomerRequestComponent implements OnInit {
   constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);

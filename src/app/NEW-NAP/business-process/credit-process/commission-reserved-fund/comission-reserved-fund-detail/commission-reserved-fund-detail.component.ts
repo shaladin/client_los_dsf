@@ -90,22 +90,36 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   TotalHalfListResultRefundIncomeInfo: number = 0;
+  DictMaxIncomeForm: any = {};
   GetIncomeInfoObj() {
     var obj = {
       AppId: this.ReturnHandlingHObj.AppId
     };
     this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
-        console.log(this.ListResultRefundIncomeInfo);
+        // console.log(this.ListResultRefundIncomeInfo);
+        let totalListResultRefundIncomeInfoAmount = 0;
+        for (var i = 0; i < this.ListResultRefundIncomeInfo.length; i++){
+          totalListResultRefundIncomeInfoAmount += this.ListResultRefundIncomeInfo[i].RefundAmount;
+          this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom] = this.ListResultRefundIncomeInfo[i];
+          if(this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
+        }
+        // console.log(this.DictMaxIncomeForm);
+        
+        if (totalListResultRefundIncomeInfoAmount < response.MaxAllocatedRefundAmt)
+          this.viewIncomeInfoObj.MaxAllocatedAmount = totalListResultRefundIncomeInfoAmount;
+        else
+          this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt;
+
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
           this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
           this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
-          this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt,
+          // this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt,
           this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
-          this.viewIncomeInfoObj.RemainingAllocatedAmount = response.MaxAllocatedRefundAmt - response.ExpenseAmount - response.ReservedFundAllocatedAmt,
+          this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - response.ExpenseAmount - response.ReservedFundAllocatedAmt,
           this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
         this.viewIncomeInfoObj.ExpenseAmount = response.ExpenseAmount;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
@@ -215,14 +229,14 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.SubmitReturnHandling();
     }
     else {
-      var lobCode = localStorage.getItem("BizTemplateCode");
+      var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
     }
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
@@ -240,7 +254,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           console.log(response);
-          var lobCode = localStorage.getItem("BizTemplateCode");
+          var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           this.router.navigate(["/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         },
         (error) => {
@@ -253,7 +267,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   Back() {
     // console.log("test back commReserveFund");
     // console.log(this.ReturnHandlingHObj);
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
       this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } });
     } else {

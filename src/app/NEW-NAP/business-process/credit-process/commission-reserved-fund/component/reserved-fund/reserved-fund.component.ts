@@ -104,7 +104,7 @@ export class ReservedFundComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
       }
       else {
-        var lobCode = localStorage.getItem("BizTemplateCode");
+        var lobCode = localStorage.getItem(CommonConstant.USER_ACCESS);
         this.setAppReservedFundData();
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
@@ -165,7 +165,7 @@ export class ReservedFundComponent implements OnInit {
   GetAppFee(appObj) {
     this.http.post(this.getAppFeeUrl, appObj).subscribe(
       (response) => {
-        this.appFeeObj = response["ReturnObject"];
+        this.appFeeObj = response[CommonConstant.ReturnObj];
 
       }
     );

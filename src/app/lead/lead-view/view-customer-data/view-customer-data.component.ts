@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 
@@ -59,7 +60,7 @@ export class ViewCustomerDataComponent implements OnInit {
         this.leadCustSocmedObj.LeadCustId = this.tempLeadCustObj.LeadCustId;
         this.http.post(this.GetListLeadCustSocmedByLeadCustIdUrl, this.leadCustSocmedObj).subscribe(
           response => {
-            this.listLeadCustSocmed = response["ReturnObject"];
+            this.listLeadCustSocmed = response[CommonConstant.ReturnObj];
           });
       });
   }

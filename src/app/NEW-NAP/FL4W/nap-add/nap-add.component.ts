@@ -82,13 +82,13 @@ export class NapAddComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MakeLookUpObj();
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == CommonConstant.CG) {
+    if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -159,7 +159,7 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
 
-    if (this.user.MrOfficeTypeCode != CommonConstant.CG) {
+    if (this.user.MrOfficeTypeCode != CommonConstant.CENTER_GROUP_CODE) {
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
         OriOfficeName: this.user.OfficeName,
@@ -176,7 +176,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.officeItems = response["ReturnObject"];
+        this.officeItems = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -267,7 +267,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         // console.log(response);
-        var temp = response["ReturnObject"];
+        var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;

@@ -135,7 +135,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
     this.http.post(this.getVerfResultDUrl, this.verfResDObj).subscribe(
       (response) => {
         console.log(response);
-        this.listVerifResultDObj = response["ReturnObject"];
+        this.listVerifResultDObj = response[CommonConstant.ReturnObj];
         console.log(this.listVerifResultDObj);
       }
     );

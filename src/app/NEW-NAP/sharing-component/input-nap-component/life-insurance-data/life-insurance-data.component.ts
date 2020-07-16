@@ -113,7 +113,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, paidMethodObj).toPromise().then(
       (response) => {
-        this.MrLifeInsPaidMethodCode = response["ReturnObject"];
+        this.MrLifeInsPaidMethodCode = response[CommonConstant.ReturnObj];
         //this.LifeInsForm.patchValue({
         //  MrLifeInsPaidMethodCode: this.MrLifeInsPaidMethodCode[0].Key
         //});

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({

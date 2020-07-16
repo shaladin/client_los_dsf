@@ -21,7 +21,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class PreGoLiveApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
 

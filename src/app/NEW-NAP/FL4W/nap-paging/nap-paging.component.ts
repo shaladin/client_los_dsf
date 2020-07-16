@@ -32,8 +32,8 @@ export class NapPagingComponent implements OnInit {
 
   async ngOnInit() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
