@@ -721,7 +721,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     }
 
     if (this.appCollateralObj.ListCollateralId.length == 0) {
-      this.toastr.typeErrorCustom('Please Add At Least One Data');
+      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
 

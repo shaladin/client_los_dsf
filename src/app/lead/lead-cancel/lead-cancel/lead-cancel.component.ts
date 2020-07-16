@@ -65,7 +65,7 @@ export class LeadCancelComponent implements OnInit {
   
   SaveLeadCancel() {
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage('Please Add At Least One Data');
+      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     } else if (this.listSelectedId.length > 50) {
       this.toastr.typeErrorCustom(String.Format(ExceptionConstant.MAX_DATA, 50));

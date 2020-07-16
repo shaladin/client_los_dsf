@@ -6,6 +6,7 @@ import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { Router } from '@angular/router';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-lead-verif',
@@ -46,7 +47,7 @@ export class LeadVerifComponent implements OnInit {
   
   SaveLeadVerf(verifyStatus : string) {
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage('Please Add At Least One Data');
+      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     } 
 
