@@ -44,6 +44,7 @@ import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.compo
 import { UcuploadModule } from "@adins/ucupload";
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
+import { UcaddtotempModule } from "@adins/ucaddtotemp";
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -78,7 +79,8 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     UcinputnumberModule,
     CustSharingComponentModule,
-    UcuploadModule
+    UcuploadModule,
+    UcaddtotempModule
   ],
   declarations: [
     LeadMainInfoComponent, 
