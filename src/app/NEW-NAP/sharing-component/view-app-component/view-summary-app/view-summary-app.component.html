@@ -163,10 +163,17 @@
   <lib-ucSubsection [id]="'scoringInfoId'" [title]="'Scoring Information'" [panel]="'scoringInfo'">
   </lib-ucSubsection>
   <div class="form-body" id="scoringInfo">
-    <span class="fa-stack fa-3x">
-      <i class="fa fa-circle fa-stack-2x" style="color: green"></i>
-      <strong class="fa-stack-1x" style="color: white; font-size: 50%;">497,00</strong>
-    </span>  
+    <div class="form-group row">
+      <div class="col-md-4">
+        <view-app-score-grade-scoring [AppId]="AppId"></view-app-score-grade-scoring>
+      </div>
+      <div class="col-md-4">
+        <view-app-score-grade-dsr [AppId]="AppId"></view-app-score-grade-dsr>
+      </div>
+      <div class="col-md-4">
+        <view-app-score-grade-dukcapil *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" [AppId]="AppId"></view-app-score-grade-dukcapil>
+      </div>
+    </div>  
   </div>
   <lib-ucSubsection [id]="'appInfoId'" [title]="'Application Information'" [panel]="'appInfo'">
   </lib-ucSubsection>

@@ -1073,4 +1073,8 @@ export class URLConstant {
 
     //REF PAY FREQ
     public static GetRefPayFreqByPayFreqCode = environment.FoundationR3Url + "/RefPayFreq/GetRefPayFreqByPayFreqCode";
+
+    //APP SCORE GRADE
+    public static GetAppScoreGradeByAppIdAndMrScoreTypeCode = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeByAppIdAndMrScoreTypeCode";
+    public static GetAppScoreGradeDsrByAppId = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeDsrByAppId";
 }

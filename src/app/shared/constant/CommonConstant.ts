@@ -423,5 +423,10 @@ export class CommonConstant {
     //RATE TYPE
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
+
+    //SCORE TYPE
+    public static ScoreTypeScoring = "SCORING";
+    public static ScoreTypeDsr = "DSR";
+    public static ScoreTypeDukcapil = "DUKCAPIL";
     
 }

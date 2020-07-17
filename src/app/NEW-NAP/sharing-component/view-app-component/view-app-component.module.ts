@@ -34,6 +34,9 @@ import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approval
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.component";
+import { ViewAppScoreGradeScoringComponent } from "./view-app-score-grade-scoring/view-app-score-grade-scoring.component";
+import { ViewAppScoreGradeDsrComponent } from "./view-app-score-grade-dsr/view-app-score-grade-dsr.component";
+import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukcapil/view-app-score-grade-dukcapil.component";
 
 @NgModule({
   exports: [
@@ -63,7 +66,10 @@ import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.com
     ApprovalhistDevComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
-    ViewSummaryAppComponent
+    ViewSummaryAppComponent,
+    ViewAppScoreGradeScoringComponent,
+    ViewAppScoreGradeDsrComponent,
+    ViewAppScoreGradeDukcapilComponent
   ],
   imports: [
     CommonModule,
@@ -101,7 +107,10 @@ import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.com
     ApprovalhistDevComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
-    ViewSummaryAppComponent
+    ViewSummaryAppComponent,
+    ViewAppScoreGradeScoringComponent,
+    ViewAppScoreGradeDsrComponent,
+    ViewAppScoreGradeDukcapilComponent
   ],
   providers: [
     NGXToastrService
