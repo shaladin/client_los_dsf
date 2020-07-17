@@ -147,7 +147,8 @@
                   <lib-uc-show-errors [control]="AssetDataForm.controls.ManufacturingYear"
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>BPKB Issue Date</label>
+                <label class="col-md-2" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">BPKB Issue Date</label>
+                <label class="col-md-2 adins-required-label" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">BPKB Issue Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.TaxIssueDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -161,7 +162,8 @@
                   <lib-uc-show-errors [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>BPKB City Issuer</label>
+                <label class="col-md-2" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">BPKB City Issuer</label>
+                <label class="col-md-2 adins-required-label" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">BPKB City Issuer</label>
                 <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
                     [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
