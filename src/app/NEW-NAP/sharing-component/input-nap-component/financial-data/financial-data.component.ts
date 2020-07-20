@@ -80,7 +80,10 @@ export class FinancialDataComponent implements OnInit {
         RoundingAmt: 0,
         SupplEffectiveRatePrcnt: 0,
         SupplFlatRatePrcnt: 0,
+
         DiffRateAmt: 0,
+        SubsidyAmtFromDiffRate: 0,
+        CommissionAmtFromDiffRate: 0,
 
         TotalInterestAmt: 0,
         TotalAR: 0,
@@ -110,6 +113,7 @@ export class FinancialDataComponent implements OnInit {
         ApvAmt: 0,
         TotalDpAmt: 0,
 
+        CalcBase: '',
         NeedReCalculate: true
       }
     );
@@ -182,10 +186,8 @@ export class FinancialDataComponent implements OnInit {
       return;
     }
     if (isValidGrossYield && isValidGracePeriod) {
-      console.log("GROSSSS");
-      console.log(this.FinDataForm.value);
-
-      this.http.post(environment.losUrl + "/AppFinData/SaveAppFinData", this.FinDataForm.value).subscribe(
+      this.SetDiffRateAmt();
+      this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.value).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["Message"]);
@@ -197,6 +199,19 @@ export class FinancialDataComponent implements OnInit {
 
   Cancel() {
     this.outputCancel.emit();
+  }
+
+  SetDiffRateAmt(){
+    if(this.FinDataForm.value.SubsidyAmtFromDiffRate > 0){
+      this.FinDataForm.patchValue({
+        DiffRateAmt: this.FinDataForm.value.SubsidyAmtFromDiffRate * -1
+      });
+    }
+    if(this.FinDataForm.value.CommissionAmtFromDiffRate > 0){
+      this.FinDataForm.patchValue({
+        DiffRateAmt: this.FinDataForm.value.CommissionAmtFromDiffRate
+      });
+    }
   }
 
   ValidateGracePeriode() {
@@ -248,29 +263,8 @@ export class FinancialDataComponent implements OnInit {
     }
   }
 
-  // EffectiveRatePrcntInput_FocusOut(){
-  //   var EffectiveRatePrcnt = this.FinDataForm.get("EffectiveRatePrcnt").value
-  //   var SupplEffectiveRatePrcnt = this.FinDataForm.get("SupplEffectiveRatePrcnt").value
-  //   var StdEffectiveRatePrcnt = this.FinDataForm.get("StdEffectiveRatePrcnt").value
-  //   var DiffRateAmtStd= +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
-
-  //   var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-  //   if(diffRate < DiffRateAmtStd)
-  //   {
-  //     this.FinDataForm.patchValue({
-  //       DiffRateAmt : 0
-  //     });
-  //   }
-  //   else
-  //   {
-  //     this.FinDataForm.patchValue({
-  //       DiffRateAmt : DiffRateAmtStd
-  //     });
-  //   }
+  // test() {
+  //   console.log(this.FinDataForm)
+  //   console.log(this.FinDataForm.value);
   // }
-
-  test() {
-    console.log(this.FinDataForm)
-    console.log(this.FinDataForm.value);
-  }
 }

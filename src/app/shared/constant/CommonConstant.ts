@@ -412,6 +412,7 @@ export class CommonConstant {
     public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
     public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE"; 
     public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
+    public static RefMasterTypeCodeFinDataCalcBaseOn = "FIN_DATA_CALC_BASE_ON";
     
     public static RefMasterReservedField2NonFee = "NON_FEE";
     public static RefMasterReservedField2Fee = "FEE";
@@ -423,5 +424,8 @@ export class CommonConstant {
     //RATE TYPE
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
+
+    //FIN DATA CALC BASE ON
+    public static FinDataCalcBaseOnInst = "CALC_BASE_ON_INST";
     
 }

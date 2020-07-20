@@ -20,6 +20,7 @@ export class ExceptionConstant {
     public static GROSS_YIELD_CANNOT_GREATER_THAN = "Gross Yield cannot be greater than ";
     public static CUMMULATIVE_TENOR_MUST_HIGHER_THAN = "Cummulative Tenor must be higher than "
     public static BALLOON_AMOUNT_MUST_HIGHER_THAN = "Balloon Amount must be higher than ";
+    public static INST_AMOUNT_MUST_HIGHER_THAN = "Installment Amount must be higher than ";
     public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
     public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
@@ -55,6 +56,7 @@ export class ExceptionConstant {
     public static CHOOSE_REGION = "Please choose Region.";
     public static CHOOSE_COVER_PERIOD = "Please choose Cover Period.";
     public static INPUT_INSURANCE_LENGTH = "Please input Insurance Length.";
+    public static CHOOSE_CALCULATE_BASE = "Please choose Calculate Base.";
     public static SAVE_TC_DATA = "Please Save TC Data First!";
     public static SELECT_ONE_DATA_ON_LEAD = "Please select at least one Available Lead";
     public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';

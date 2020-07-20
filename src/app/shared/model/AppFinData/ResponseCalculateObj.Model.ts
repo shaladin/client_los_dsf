@@ -26,7 +26,8 @@ export class ResponseCalculateObj {
     LifeInsCptlzAmt: number;
     DownPaymentGrossAmt: number;
     DownPaymentNettAmt: number;
-
+    SubsidyAmtFromDiffRate: number;
+    CommissionAmtFromDiffRate: number;
     constructor() {
     }
 }
