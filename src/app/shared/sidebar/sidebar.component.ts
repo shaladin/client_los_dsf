@@ -62,4 +62,10 @@ export class SidebarComponent implements OnInit {
         if (path.indexOf('forms/ngx') != -1)
             this.router.navigate(['forms/ngx/wizard'], { skipLocationChange: false });
     }
+    
+    navigateSkipLocationChange(ev) {
+        this.router.navigateByUrl("/dashboard/dash-board", { skipLocationChange: true }).then(() => {
+            this.router.navigate([ev.Path], { queryParams: this.genParam(ev.Params) });
+        });
+    }
 }
