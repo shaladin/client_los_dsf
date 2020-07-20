@@ -7,6 +7,8 @@ import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Mod
 import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-form-commission-generate',
@@ -21,6 +23,7 @@ export class FormCommissionGenerateComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
   @Input() FormInputObj: any = {};
+  @Input() DictMaxIncomeForm: any = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -92,7 +95,7 @@ export class FormCommissionGenerateComponent implements OnInit {
 
     var obj;
     var code;
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       obj = {
         Key: ev.target.selectedOptions[0].value,
         Value: ev.target.selectedOptions[0].text,
@@ -129,7 +132,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       ContentName: ev.target.selectedOptions[0].value,
       ContentNameValue: ev.target.selectedOptions[0].text
     });
-    if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp)
+    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
         MrSupplEmpPositionCodeDesc: this.DDLContentName[idx].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[idx].SupplCode
@@ -151,14 +154,22 @@ export class FormCommissionGenerateComponent implements OnInit {
 
       let behaviour: string = ruleObj[i].AllocationBehaviour;
       let maxAllocAmt: number = ruleObj[i].MaxAllocationAmount;
-      if (maxAllocAmt <= 0) {
+      let allocAmt: number = ruleObj[i].AllocationAmount;
+      // console.log(this.DictMaxIncomeForm[temp[i].AllocationFrom]);
+      if (this.DictMaxIncomeForm[ruleObj[i].AllocationFrom] != undefined && this.DictMaxIncomeForm[ruleObj[i].AllocationFrom] != null && this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount > 0) {
+        if (maxAllocAmt <= 0) {
+          behaviour = "LOCK";
+          maxAllocAmt = 0;
+        }
+
+        if (allocAmt <= 0)
+          allocAmt = 0;
+
+      } else {
         behaviour = "LOCK";
         maxAllocAmt = 0;
-      }
-
-      let allocAmt: number = ruleObj[i].AllocationAmount;
-      if (allocAmt <= 0)
         allocAmt = 0;
+      }
 
       var eachAllocationDetail = this.fb.group({
         AppCommissionDId: [0],
@@ -175,7 +186,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         RowVersion: [''],
         TotalListAllocatedDivided: [Math.ceil(ruleObj.length / 2)]
       }) as FormGroup;
-      TotalCommisionAmount += ruleObj[i].AllocationAmount;
+      TotalCommisionAmount += allocAmt;
       this.parentForm.controls[this.identifier]["controls"][formIdx].controls.ListAllocated.push(eachAllocationDetail);
 
     }
@@ -188,11 +199,11 @@ export class FormCommissionGenerateComponent implements OnInit {
 
   GetTempRuleObj(supplCode: string, role: string) {
     var tempObj;
-    if (this.FormInputObj['content'] == AdInsConstant.ContentSupplier) {
+    if (this.FormInputObj['content'] == CommonConstant.ContentSupplier) {
       tempObj = this.FormInputObj['ruleObj'][supplCode];
-    } else if (this.FormInputObj['content'] == AdInsConstant.ContentSupplierEmp) {
+    } else if (this.FormInputObj['content'] == CommonConstant.ContentSupplierEmp) {
       tempObj = this.FormInputObj['ruleObj'][supplCode][role];
-    } else if (this.FormInputObj['content'] == AdInsConstant.ContentReferantor) {
+    } else if (this.FormInputObj['content'] == CommonConstant.ContentReferantor) {
       tempObj = this.FormInputObj['ruleObj'][supplCode];
     }
     return tempObj;
@@ -203,12 +214,12 @@ export class FormCommissionGenerateComponent implements OnInit {
     // console.log("Obj Code");
     // console.log(code);
     var obj;
-    if (content == AdInsConstant.ContentSupplier) {
+    if (content == CommonConstant.ContentSupplier) {
       obj = {
         VendorCode: code,
         RowVersion: ""
       };
-      this.http.post<VendorBankAccObj>(AdInsConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
         (response) => {
           // console.log("response bank");
           // console.log(response);
@@ -229,12 +240,12 @@ export class FormCommissionGenerateComponent implements OnInit {
           console.log(error);
         }
       );
-    } else if (content == AdInsConstant.ContentSupplierEmp) {
+    } else if (content == CommonConstant.ContentSupplierEmp) {
       obj = {
         VendorEmpNo: code,
         VendorCode: this.parentForm.value[this.identifier][idx].SupplCode,
       };
-      this.http.post<VendorBankAccObj>(AdInsConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
         (response) => {
           // console.log("response bank");
           // console.log(response);
@@ -255,7 +266,7 @@ export class FormCommissionGenerateComponent implements OnInit {
           console.log(error);
         }
       );
-    } else if (content == AdInsConstant.ContentReferantor) {
+    } else if (content == CommonConstant.ContentReferantor) {
       var eachDDLDetail = this.fb.group({
         Key: this.FormInputObj["BankData"].BankAccNo,
         Value: this.FormInputObj["BankData"].BankAccName,
@@ -291,7 +302,7 @@ export class FormCommissionGenerateComponent implements OnInit {
 
   DeleteFromDatabase(AppCommissionHId) {
     var obj = { AppCommissionHId: AppCommissionHId };
-    this.http.post(AdInsConstant.DeleteAppCommissionData, obj).subscribe(
+    this.http.post(URLConstant.DeleteAppCommissionData, obj).subscribe(
       (response) => {
         console.log(response);
       },

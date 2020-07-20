@@ -324,6 +324,9 @@ export class CommonConstant {
     public static CommissionReceipientTypeCodeSupplier = "SUPPLIER";
     public static CommissionReceipientTypeCodeSupplierEmp = "SUPPLIER_EMP";
     public static CommissionReceipientTypeCodeReferantor = "REFERANTOR";
+    public static CommissionIdentifierSupplier = "SupplierIdentifier";
+    public static CommissionIdentifierSupplierEmp = "SupplierEmpIdentifier";
+    public static CommissionIdentifierReferantor = "SupplierReferantor";
     public static MessageCalculate = "CALC";
     public static MessagePassData = "PASS";
     public static MessageDel = "DEL";

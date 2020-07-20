@@ -12,6 +12,8 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
 import { temporaryDeclaration } from '@angular/compiler/src/compiler_util/expression_converter';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-commission-v2',
@@ -20,11 +22,12 @@ import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 })
 export class CommissionV2Component implements OnInit {
 
-  @Input() AppId: number = 10550;
+  @Input() AppId: number = 0;
   @Input() showCancel: boolean = true;
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
+  @Input() DictMaxIncomeForm: any = {};
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -48,9 +51,16 @@ export class CommissionV2Component implements OnInit {
     ListItemRule: []
   };
 
-  identifierSupplier: string = AdInsConstant.CommissionIdentifierSupplier;
-  identifierSupplierEmp: string = AdInsConstant.CommissionIdentifierSupplierEmp;
-  identifierReferantor: string = AdInsConstant.CommissionIdentifierReferantor;
+  Summary = {
+    TotalCommisionAmount: 0,
+    TotalTaxAmmount: 0,
+    TotalVATAmount: 0,
+    GrossYield: 0
+  };
+
+  identifierSupplier: string = CommonConstant.CommissionIdentifierSupplier;
+  identifierSupplierEmp: string = CommonConstant.CommissionIdentifierSupplierEmp;
+  identifierReferantor: string = CommonConstant.CommissionIdentifierReferantor;
   FormInputObjSupplier: any = {};
   FormInputObjSupplierEmp: any = {};
   FormInputObjReferantor: any = {};
@@ -60,10 +70,10 @@ export class CommissionV2Component implements OnInit {
   OnForm2: boolean = false;
   OnForm3: boolean = false;
   GetFormAddDynamicObj(content) {
-    if (content == AdInsConstant.ContentSupplier) {
-      this.FormInputObjSupplier["title"] = AdInsConstant.TitleSupplier;
-      this.FormInputObjSupplier["content"] = AdInsConstant.ContentSupplier;
-      this.FormInputObjSupplier["labelName"] = AdInsConstant.LabelSupplier;
+    if (content == CommonConstant.ContentSupplier) {
+      this.FormInputObjSupplier["title"] = CommonConstant.TitleSupplier;
+      this.FormInputObjSupplier["content"] = CommonConstant.ContentSupplier;
+      this.FormInputObjSupplier["labelName"] = CommonConstant.LabelSupplier;
       this.FormInputObjSupplier["AppId"] = this.AppId;
       this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
       this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
@@ -72,10 +82,10 @@ export class CommissionV2Component implements OnInit {
       this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
       console.log(this.FormInputObjSupplier);
-    } else if (content == AdInsConstant.ContentSupplierEmp) {
-      this.FormInputObjSupplierEmp["title"] = AdInsConstant.TitleSupplierEmp;
-      this.FormInputObjSupplierEmp["content"] = AdInsConstant.ContentSupplierEmp;
-      this.FormInputObjSupplierEmp["labelName"] = AdInsConstant.LabelSupplierEmp;
+    } else if (content == CommonConstant.ContentSupplierEmp) {
+      this.FormInputObjSupplierEmp["title"] = CommonConstant.TitleSupplierEmp;
+      this.FormInputObjSupplierEmp["content"] = CommonConstant.ContentSupplierEmp;
+      this.FormInputObjSupplierEmp["labelName"] = CommonConstant.LabelSupplierEmp;
       this.FormInputObjSupplierEmp["AppId"] = this.AppId;
       this.FormInputObjSupplierEmp["contentObj"] = this.ContentObjSupplierEmp;
       this.FormInputObjSupplierEmp["ruleObj"] = this.RuleSupplierEmpData;
@@ -85,10 +95,10 @@ export class CommissionV2Component implements OnInit {
       this.FormInputObjSupplierEmp["dictSuppl"] = this.DictSupplierCode;
       this.OnForm2 = true;
       console.log(this.FormInputObjSupplierEmp);
-    } else if (content == AdInsConstant.ContentReferantor) {
-      this.FormInputObjReferantor["title"] = AdInsConstant.TitleReferantor;
-      this.FormInputObjReferantor["content"] = AdInsConstant.ContentReferantor;
-      this.FormInputObjReferantor["labelName"] = AdInsConstant.LabelReferantor;
+    } else if (content == CommonConstant.ContentReferantor) {
+      this.FormInputObjReferantor["title"] = CommonConstant.TitleReferantor;
+      this.FormInputObjReferantor["content"] = CommonConstant.ContentReferantor;
+      this.FormInputObjReferantor["labelName"] = CommonConstant.LabelReferantor;
       this.FormInputObjReferantor["AppId"] = this.AppId;
       this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
       this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
@@ -119,12 +129,12 @@ export class CommissionV2Component implements OnInit {
       RowVersion: ""
     };
     // console.log("response list appAsset & appAssetSupplEmp");
-    await this.http.post<AppAssetDetailObj>(AdInsConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).toPromise().then(
+    await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).toPromise().then(
       (response) => {
         // console.log(response);
         if (response.ListAppAssetObj.length != 0) {
-          this.GetDDLContent(response.ListAppAssetObj, AdInsConstant.ContentSupplier);
-          this.GetDDLContent(response.ListAppAssetSupplEmpObj, AdInsConstant.ContentSupplierEmp);
+          this.GetDDLContent(response.ListAppAssetObj, CommonConstant.ContentSupplier);
+          this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
         }
         // this.GetContentName(AdInsConstant.ContentSupplierEmp);
       },
@@ -137,10 +147,10 @@ export class CommissionV2Component implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     };
-    await this.http.post<NapAppReferantorModel>(AdInsConstant.GetAppReferantorByAppId, obj).toPromise().then(
+    await this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).toPromise().then(
       (response) => {
         // console.log(response);
-        this.GetDDLContent(response, AdInsConstant.ContentReferantor);
+        this.GetDDLContent(response, CommonConstant.ContentReferantor);
       },
       (error) => {
         console.log(error);
@@ -155,7 +165,7 @@ export class CommissionV2Component implements OnInit {
   DictSupplierCode: any = {};
   GetDDLContent(ReturnObject, content: string) {
     // console.log(ReturnObject);
-    if (content == AdInsConstant.ContentReferantor) {
+    if (content == CommonConstant.ContentReferantor) {
       if (ReturnObject.AppId == null) return;
       var KVPObj;
       KVPObj = {
@@ -173,7 +183,7 @@ export class CommissionV2Component implements OnInit {
     } else {
       for (var i = 0; i < ReturnObject.length; i++) {
         var KVPObj;
-        if (content == AdInsConstant.ContentSupplier) {
+        if (content == CommonConstant.ContentSupplier) {
           KVPObj = {
             Key: ReturnObject[i].SupplCode,
             Value: ReturnObject[i].SupplName
@@ -182,7 +192,7 @@ export class CommissionV2Component implements OnInit {
           // console.log(this.DictSupplierCode[ReturnObject[i].SupplCode]);
           this.DictSupplierCode[ReturnObject[i].SupplCode] = ReturnObject[i].SupplName;
           this.ContentObjSupplier.push(KVPObj);
-        } else if (content == AdInsConstant.ContentSupplierEmp) {
+        } else if (content == CommonConstant.ContentSupplierEmp) {
           // console.log(ReturnObject[i]);
           KVPObj = {
             Key: ReturnObject[i].SupplEmpNo,
@@ -202,18 +212,18 @@ export class CommissionV2Component implements OnInit {
   RuleReferantorData: any = {};
   async GetRuleDataForForm() {
     var obj = { AppId: this.AppId };
-    await this.http.post(AdInsConstant.GetAppCommissionRule, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
         console.log("Cek Rule");
         console.log(response);
         for (var i = 0; i < response["length"]; i++) {
-          var temp: RuleCommissionObj = response[i][AdInsConstant.ReturnObj].RuleDataObjects;
+          var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
           // console.log(temp);
-          this.BindRuleData(temp.ResultSupplier, AdInsConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-          this.BindRuleData(temp.ResultSupplierEmp, AdInsConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+          this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+          this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
         }
-        if (response[0][AdInsConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
-          this.BindRuleData(response[0][AdInsConstant.ReturnObj].RuleDataObjects.ResultReferantor, AdInsConstant.ContentReferantor, this.ContentObjReferantor[0].Key);  
+        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
+          this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);  
         
         console.log(this.RuleSupplierData);
         console.log(this.RuleSupplierEmpData);
@@ -231,7 +241,7 @@ export class CommissionV2Component implements OnInit {
     // console.log(contentType);
     // console.log(supplCode);
     var listTempObj = new Array();
-    if (contentType == AdInsConstant.ContentSupplier) {
+    if (contentType == CommonConstant.ContentSupplier) {
       for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
         var temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
@@ -247,7 +257,7 @@ export class CommissionV2Component implements OnInit {
       listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
       this.RuleSupplierData[supplCode] = listTempObj;
     }
-    if (contentType == AdInsConstant.ContentSupplierEmp) {
+    if (contentType == CommonConstant.ContentSupplierEmp) {
       var DictJobPosition: any = {};
       var tempJobPosition: string = "";
       var listJobPosition = new Array();
@@ -277,7 +287,7 @@ export class CommissionV2Component implements OnInit {
       }
       this.RuleSupplierEmpData[supplCode] = DictJobPosition;
     }
-    if (contentType == AdInsConstant.ContentReferantor) {
+    if (contentType == CommonConstant.ContentReferantor) {
       for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
         var temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
@@ -298,24 +308,24 @@ export class CommissionV2Component implements OnInit {
   isAutoGenerate: boolean = true;
   async GetExistingAppCommData(){
     var objApi = { AppId: this.AppId };
-    await this.http.post(AdInsConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
+    await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
         console.log("response edit comm");
         console.log(response);
-        var tempObj: Array<AppCommissionHObj> = response[AdInsConstant.ReturnObj];
+        var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
         if (tempObj.length > 0) {
           // console.log("edit data");
           this.isAutoGenerate = false;
-          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
-          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
-          this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
+          this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
+          this.GetFormAddDynamicObj(CommonConstant.ContentSupplierEmp);
+          this.GetFormAddDynamicObj(CommonConstant.ContentReferantor);
 
 
         } else {
           // console.log("new data");
-          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplier);
-          this.GetFormAddDynamicObj(AdInsConstant.ContentSupplierEmp);
-          this.GetFormAddDynamicObj(AdInsConstant.ContentReferantor);
+          this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
+          this.GetFormAddDynamicObj(CommonConstant.ContentSupplierEmp);
+          this.GetFormAddDynamicObj(CommonConstant.ContentReferantor);
         }
       },
       (error) => {
