@@ -223,8 +223,13 @@ export class CustBankAccountComponent implements OnInit {
       // console.log(dateYear);
       if (this.CustBankAccountForm.value['BankStmntObjs'].length > 0)
         dateYear = this.CustBankAccountForm.value['BankStmntObjs'][0].Year;
-      else
-        dateYear = new Date(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)).BusinessDt).getFullYear();
+      else{
+        var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        var month = new Date(userAcc.BusinessDt).getMonth();
+        dateYear = new Date(userAcc.BusinessDt).getFullYear();
+        console.log(month);
+        if (month == 0) dateYear--;
+      }
 
       return this.fb.group({
         Month: [this.defaultMonth, [Validators.required, Validators.maxLength(2)]],
