@@ -6,6 +6,9 @@ export class CommonConstant {
     public static EDIT = 'Edit';
     public static DELETE = 'Delete';
     public static UPDATE = 'Update';
+    
+    // Behaviour
+    public static DEFAULT = 'DEF';
 
     //Application Item
     public static USER_ACCESS = "UserAccess";
