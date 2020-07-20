@@ -66,7 +66,7 @@
             <label class="adInsLabel"> Negative Customer </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.NegCustTypeName}} <i class="fa fa-circle" aria-hidden="true" [ngStyle]="{'color': SummaryAppObj?.MrNegCustTypeCode == 'BAD' ? 'red' : (SummaryAppObj?.MrNegCustTypeCode == 'WARNING' ? 'yellow' : 'green')}"></i></label>            
+            <label class="adInsLabel"> {{SummaryAppObj?.NegCustTypeName}} <i class="fa fa-circle" *ngIf="SummaryAppObj?.NegCustColor != ''" aria-hidden="true" [ngStyle]="{'color': SummaryAppObj?.NegCustColor}"></i></label>            
           </div>
         </div>
         <div *ngIf="SummaryAppObj?.AppCustPersonalObj?.MrMaritalStatCode == 'MARRIED'" class="row">
@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-  <lib-ucSubsection [id]="'exposureInfoId'" [title]="'Exposure Information'" [panel]="'exosureInfo'">
+  <lib-ucSubsection [id]="'exposureInfoId'" [title]="'Exposure Information'" [panel]="'exposureInfo'">
   </lib-ucSubsection>
   <div class="form-body" id="exposureInfo">
     <div class="form-group row">

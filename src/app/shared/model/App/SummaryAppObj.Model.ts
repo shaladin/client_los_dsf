@@ -25,6 +25,8 @@ export class SummaryAppObj{
     AssetTypeSerialNoLabelCustomObjs: Array<AssetTypeSerialNoLabelObj>;
     MrNegCustTypeCode: string;
     NegCustTypeName: string;
+    NegCustColor: string;
+    NegCustGrade: string;
     SpouseName: string;
     SalesDealerName: string;
     DealerName: string;

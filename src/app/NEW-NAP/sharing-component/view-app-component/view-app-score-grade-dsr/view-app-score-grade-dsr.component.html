@@ -3,7 +3,7 @@
     <label class="adInsLabel" style="font-weight: bold;"> Debt Service Ratio (DSR) </label>
   </div>
 </div>
-<div *ngIf="AppScoreGradeObj?.AppScoreGradeId > 0" class="row">
+<div *ngIf="AppScoreGradeDsrObj?.AppScoreGradeId > 0" class="row">
   <span class="fa-stack fa-4x">
     <span class="fa fa-stack-1x"></span>
     <strong class="fa-stack-1x">{{AppScoreGradeDsrObj?.Grade}}</strong>
@@ -14,7 +14,7 @@
   </span>
 </div>
 <br>
-<div *ngIf="AppScoreGradeObj?.AppScoreGradeId > 0" class="row">
+<div *ngIf="AppScoreGradeDsrObj?.AppScoreGradeId > 0" class="row">
   <div class="col-md-6">
     <label class="adInsLabel"> Total Join Income {{AppScoreGradeDsrObj?.IsJoinIncome == true ? 'with Spouse': ''}} </label>
   </div>
