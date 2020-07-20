@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailComponent } from './app-asset-data-detail/app-asset-data-detail.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-asset-data',
@@ -22,11 +23,11 @@ export class AppAssetDataComponent implements OnInit {
 
   ngOnInit() {
     var request = { AppId: this.AppId };
-    let getAppAsset = this.httpClient.post(AdInsConstant.GetAppAssetListByAppId, request);
-    let getAppCollateral = this.httpClient.post(AdInsConstant.GetViewAppCollateralObjByAppId, request);
+    let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetListByAppId, request);
+    let getAppCollateral = this.httpClient.post(URLConstant.GetViewAppCollateralObjByAppId, request);
     forkJoin([getAppAsset, getAppCollateral]).subscribe(
       (response) => {
-        this.appAssetList = response[0]["ReturnObject"];
+        this.appAssetList = response[0][CommonConstant.ReturnObj];
         this.appCollateralList = response[1]["AppCollateralObjs"];
       },
       (error) => {

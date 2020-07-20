@@ -14,6 +14,9 @@ import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -80,19 +83,19 @@ export class LeadInputMainInfoComponent implements OnInit {
     LobCode: ['', [Validators.required]],
     LeadSource: ['', [Validators.required]],
   });
-  leadUrl: string;
+  leadUrl: any;
   WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-    this.addLead = AdInsConstant.AddLead;
-    this.editLead = AdInsConstant.EditLead;
-    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
-    this.getListRefOffice = AdInsConstant.GetListKvpActiveRefOfficeForPaging;
-    this.getListActiveLob = AdInsConstant.GetListActiveLob;
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getVendorByVendorCode = AdInsConstant.GetVendorByVendorCode;
-    this.getLeadPersonalForLookup = AdInsConstant.GetLeadPersonalForLookupCopy;
+    this.addLead = URLConstant.AddLead;
+    this.editLead = URLConstant.EditLead;
+    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
+    this.getListRefOffice = URLConstant.GetListKvpActiveRefOfficeForPaging;
+    this.getListActiveLob = URLConstant.GetListActiveLob;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getVendorByVendorCode = URLConstant.GetVendorByVendorCode;
+    this.getLeadPersonalForLookup = URLConstant.GetLeadPersonalForLookupCopy;
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
         this.pageType = params["mode"];
@@ -105,8 +108,12 @@ export class LeadInputMainInfoComponent implements OnInit {
       }
       
     });
-    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=' + this.LeadId;
   }
+
+  AddView(){
+    AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
+  }
+
   backHandler(){
     if(this.pageType == "update"){
         this.router.navigate(['/Lead/LeadUpdate/Paging']);  
@@ -175,7 +182,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.cmoExistObj = new RefEmpForLookupObj();
         this.cmoExistObj.Username = this.returnExistLead.CmoUsername;
-        this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.cmoExistObj).subscribe(
+        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoExistObj).subscribe(
           (response) => {
             this.returnCmoExistObj = response;
             this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.Username;
@@ -185,7 +192,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.surveyorExistObj = new RefEmpForLookupObj();
         this.surveyorExistObj.Username = this.returnExistLead.SurveyorUsername;
-        this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.surveyorExistObj).subscribe(
+        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorExistObj).subscribe(
           (response) => {
             this.returnSurveyorExistObj = response;
             this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.Username;
@@ -194,7 +201,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.salesExistObj = new RefEmpForLookupObj();
         this.salesExistObj.Username = this.returnExistLead.TeleMarketingUsername;
-        this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.salesExistObj).subscribe(
+        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.salesExistObj).subscribe(
           (response) => {
             this.returnSalesExistObj = response;
             this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.Username;
@@ -210,16 +217,16 @@ export class LeadInputMainInfoComponent implements OnInit {
     }
     this.MakeLookUpObj();
     this.GetOfficeDDL();
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     
     this.refLobObj = new RefLobObj();
     this.refLobObj.RefLobId = "-"
     this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
       (response) => {
-        this.listRefLob = response['ReturnObject'];
+        this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
-          LobCode: response['ReturnObject'][0]['Key'],
-          LobName: response['ReturnObject'][0]['Value']
+          LobCode: response[CommonConstant.ReturnObj][0]['Key'],
+          LobName: response[CommonConstant.ReturnObj][0]['Value']
         });
       },
       (error) => {
@@ -227,11 +234,11 @@ export class LeadInputMainInfoComponent implements OnInit {
       });
 
     this.leadSource = new RefMasterObj();
-    this.leadSource.RefMasterTypeCode = "LEAD_SOURCE";
+    this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
     this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
       (response) => {
-        this.listLeadSource = response['ReturnObject'];
-        this.MainInfoForm.patchValue({ LeadSource: response['ReturnObject'][0]['Key'] });
+        this.listLeadSource = response[CommonConstant.ReturnObj];
+        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
   if (this.pageType == "edit" || this.pageType == "update") {
@@ -280,9 +287,8 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
 
           this.cmoObj = new RefEmpForLookupObj();
-          this.cmoObj.Username = this.returnLead.CmoUsername;
-          console.log("awdawd");
-          this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
+          this.cmoObj.Username = this.returnLead.CmoUsername; 
+          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
             (response) => {
                 this.returnCmoObj = response;
                 this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.Username;
@@ -291,7 +297,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.surveyorObj = new RefEmpForLookupObj();
           this.surveyorObj.Username = this.returnLead.SurveyorUsername;
-          this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
+          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
             (response) => {
                 this.returnSurveyorObj = response;
                 this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.Username;
@@ -300,7 +306,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.salesObj = new RefEmpForLookupObj();
           this.salesObj.Username = this.returnLead.TeleMarketingUsername;
-          this.http.post(AdInsConstant.GetRefEmpForLookupByUsername, this.salesObj).subscribe(
+          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.salesObj).subscribe(
             (response) => {
                 this.returnSalesObj = response;
                 this.salesNameLookUpObj.nameSelect = this.returnSalesObj.Username;
@@ -373,14 +379,14 @@ GetOfficeDDL(){
   this.refOfficeObj = new RefOfficeObj();
   this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
     (response) => {
-      this.listRefOffice = response['ReturnObject'];
+      this.listRefOffice = response[CommonConstant.ReturnObj];
       console.log(this.listRefOffice)
       // this.MainInfoForm.patchValue({
-      //   OfficeCode: response['ReturnObject'][0]['Key'],
-      //   OfficeName: response['ReturnObject'][0]['Value']
+      //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
+      //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
       // });
 
-      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == "HO") {
+      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
         this.MainInfoForm.patchValue({
           CrtOfficeCode: this.user.OfficeCode,
           OfficeCode : this.listRefOffice[0].Key,
@@ -413,8 +419,8 @@ GetOfficeDDL(){
     this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
     this.leadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
-    this.leadObj.LeadStat = "NEW";
-    this.leadObj.LeadStep = "NEW";
+    this.leadObj.LeadStat = CommonConstant.LeadStatNew;
+    this.leadObj.LeadStep = CommonConstant.LeadStatNew;
     this.leadObj.AgencyCode = this.tempAgencyCode;
     this.leadObj.CmoUsername = this.tempCmoUsername;
     this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
@@ -500,10 +506,10 @@ GetOfficeDDL(){
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
     }	

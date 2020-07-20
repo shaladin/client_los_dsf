@@ -4,10 +4,14 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-customer-data',
-  templateUrl: './view-customer-data.component.html' 
+  templateUrl: './view-customer-data.component.html'
 })
 export class ViewCustomerDataComponent implements OnInit {
 
@@ -15,10 +19,10 @@ export class ViewCustomerDataComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
-    this.GetLeadCustByLeadIdUrl = AdInsConstant.GetLeadCustByLeadId;
-    this.GetListLeadCustSocmedByLeadCustIdUrl = AdInsConstant.GetListLeadCustSocmedByLeadCustId;
+    this.GetLeadCustByLeadIdUrl = URLConstant.GetLeadCustByLeadId;
+    this.GetListLeadCustSocmedByLeadCustIdUrl = URLConstant.GetListLeadCustSocmedByLeadCustId;
   }
-  viewLeadCustomerPersonalMaindata: string;
+  viewLeadCustomerPersonalMaindata: UcViewGenericObj = new UcViewGenericObj();;
   LeadId: string;
   GetLeadCustByLeadIdUrl: string;
   GetListLeadCustSocmedByLeadCustIdUrl: string;
@@ -26,17 +30,27 @@ export class ViewCustomerDataComponent implements OnInit {
   leadCustObj: LeadCustObj = new LeadCustObj();
   leadCustSocmedObj: LeadCustSocmedObj = new LeadCustSocmedObj();
   tempLeadCustObj: any;
-  listLeadCustSocmed : any;
-  viewLeadAddressLegal : string;
-  viewLeadAddressResidence : string;
-  viewLeadCustPersonalJobData : string;
-  viewLeadCustPersonalFinData : string;
+  listLeadCustSocmed: any;
+  viewLeadAddressLegal: UcViewGenericObj = new UcViewGenericObj();
+  viewLeadAddressResidence: UcViewGenericObj = new UcViewGenericObj();
+  viewLeadCustPersonalJobData: UcViewGenericObj = new UcViewGenericObj();
+  viewLeadCustPersonalFinData: UcViewGenericObj = new UcViewGenericObj();
   ngOnInit() {
-    this.viewLeadCustomerPersonalMaindata = "./assets/ucviewgeneric/viewLeadCustomerPersonal.json";
-    this.viewLeadAddressLegal = "./assets/ucviewgeneric/viewLeadAddressLegal.json";
-    this.viewLeadAddressResidence = "./assets/ucviewgeneric/viewLeadAddressResidence.json";
-    this.viewLeadCustPersonalJobData = "./assets/ucviewgeneric/viewLeadCustPersonalJobData.json";
-    this.viewLeadCustPersonalFinData ="./assets/ucviewgeneric/viewLeadCustPersonalFinData.json";
+    this.viewLeadCustomerPersonalMaindata.viewInput = "./assets/ucviewgeneric/viewLeadCustomerPersonal.json";
+    this.viewLeadCustomerPersonalMaindata.viewEnvironment = environment.losUrl;
+
+    this.viewLeadAddressLegal.viewInput = "./assets/ucviewgeneric/viewLeadAddressLegal.json";
+    this.viewLeadAddressLegal.viewEnvironment = environment.losUrl;
+
+    this.viewLeadAddressResidence.viewInput = "./assets/ucviewgeneric/viewLeadAddressResidence.json";
+    this.viewLeadAddressResidence.viewEnvironment = environment.losUrl;
+
+    this.viewLeadCustPersonalJobData.viewInput = "./assets/ucviewgeneric/viewLeadCustPersonalJobData.json";
+    this.viewLeadCustPersonalJobData.viewEnvironment = environment.losUrl;
+
+    this.viewLeadCustPersonalFinData.viewInput = "./assets/ucviewgeneric/viewLeadCustPersonalFinData.json";
+    this.viewLeadCustPersonalFinData.viewEnvironment = environment.losUrl;
+
     this.leadCustObj.LeadId = this.LeadId;
 
     this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
@@ -46,7 +60,7 @@ export class ViewCustomerDataComponent implements OnInit {
         this.leadCustSocmedObj.LeadCustId = this.tempLeadCustObj.LeadCustId;
         this.http.post(this.GetListLeadCustSocmedByLeadCustIdUrl, this.leadCustSocmedObj).subscribe(
           response => {
-            this.listLeadCustSocmed = response["ReturnObject"];
+            this.listLeadCustSocmed = response[CommonConstant.ReturnObj];
           });
       });
   }

@@ -4,6 +4,9 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-return-handling-edit-app-paging',
@@ -13,7 +16,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
   BizTemplateCode: string;
-  token: any = localStorage.getItem("Token");
   constructor(
     private route: ActivatedRoute,
     private router: Router,) {
@@ -28,12 +30,12 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   inputPagingObj;
   userAccess;
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingApp.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -59,20 +61,18 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   GetCallback(ev) {
     console.log(ev);
     if (ev.Key == "Edit") {
-      if (this.BizTemplateCode == AdInsConstant.CF4W) {
+      if (this.BizTemplateCode == CommonConstant.CF4W) {
         this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
-      if (this.BizTemplateCode == AdInsConstant.FL4W) {
+      if (this.BizTemplateCode == CommonConstant.FL4W) {
         this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
-      if (this.BizTemplateCode == AdInsConstant.CFRFN4W) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
         this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
     }
     if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
-      this.router.navigate([]).then(() => { window.open(link, '_blank'); });
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  
     }
   }
-
 }

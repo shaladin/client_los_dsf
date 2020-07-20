@@ -5,6 +5,8 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
+import { URLConstant } from "app/shared/constant/URLConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -13,15 +15,14 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
-  token : any = localStorage.getItem("Token");
 
-  constructor(private router:Router, private http:HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiry.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiry.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -36,20 +37,23 @@ export class AppInquiryPagingComponent implements OnInit {
       {
         name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
         environment: environment.FoundationR3Url
+      },
+      {
+        name: "B.AGRMNT_STAT",
+        environment: environment.FoundationR3Url
       }
     ];
   }
 
-  getEvent(event){
+  getEvent(event) {
     // console.log("productlink")
     // console.log(event)
     
     if(event.Key == "customer"){
         var custObj = { CustNo: event.RowObj.custNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
-            this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            window.open(this.link, '_blank');
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },
           (error) => {
             console.log(error);
@@ -57,19 +61,13 @@ export class AppInquiryPagingComponent implements OnInit {
         );
     }
     else if(event.Key == "product"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.prodOfferingCode,event.RowObj.prodOfferingVersion); 
     }
-    else if(event.Key == "agreement"){ 
-      window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
+    else if(event.Key == "agreement"){
+      AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
     else if(event.Key == "application"){
-      //TEMUAN STEVEN : OPEN APPLICATION DIGANTI PAKE HELPER SUPAYA NANTI GANTINYA GAK DIBANYAK TITIK
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
-      //window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
-    }
-    else if(event.Key == "product"){
-      window.open( environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion, "_blank");
     }
   }
 }

@@ -7,6 +7,9 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Model';
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -14,21 +17,21 @@ import { environment } from 'environments/environment';
   providers: [NGXToastrService]
 })
 export class LeadCancelConfirmComponent implements OnInit {
-  GetListLeadForLeadCancelByListLeadId = AdInsConstant.GetListLeadForLeadCancelByListLeadId;
+  GetListLeadForLeadCancelByListLeadId = URLConstant.GetListLeadForLeadCancelByListLeadId;
   responseObj = new Array();
   LeadConfirmCancelForm = this.fb.group({
     CancelReason: ['', Validators.required],
     Notes: ['']
   });
-  GetListKeyValueActiveByCode = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+  GetListKeyValueActiveByCode = URLConstant.GetRefMasterListKeyValueActiveByCode;
   ItemCancelReason: any;
   deletedArr = new Array();
-  EditListLeadForCancelByListLeadId = AdInsConstant.EditListLeadForCancelByListLeadId;
+  EditListLeadForCancelByListLeadId = URLConstant.EditListLeadForCancelByListLeadId;
   tempWfTaskListArr = new Array();
   leadUrl: string;
-  tempLeadIds : string;
-  tempLeadArr : Array<string>;
-  WfTaskListIds : string;
+  tempLeadIds: string;
+  tempLeadArr: Array<string>;
+  WfTaskListIds: string;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -44,7 +47,7 @@ export class LeadCancelConfirmComponent implements OnInit {
         this.tempLeadIds = params['LeadIds'];
         this.tempLeadArr = this.tempLeadIds.split(',');
       }
-      
+
       if (params['WfTaskListIds'] != null && params['WfTaskListIds'] != "") {
         this.WfTaskListIds = params['WfTaskListIds'];
         this.tempWfTaskListArr = this.WfTaskListIds.split(',');
@@ -67,12 +70,13 @@ export class LeadCancelConfirmComponent implements OnInit {
     );
     this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
   }
+
   deleteFromTemp(leadId) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.deletedArr.push(leadId);
       var idxToDel = 0;
       for (var i = 0; i < this.responseObj.length; i++) {
-        if(this.responseObj[i]['LeadId'] == leadId){
+        if (this.responseObj[i]['LeadId'] == leadId) {
           idxToDel = i;
           break;
         }
@@ -82,18 +86,16 @@ export class LeadCancelConfirmComponent implements OnInit {
   }
 
   SaveLeadConfirmCancel() {
-    if(this.responseObj.length > 0){
-      var leadObj : LeadConfirmCancelObj = new LeadConfirmCancelObj();
-      leadObj.LeadStat = "CAN";
-      leadObj.LeadStep = "CAN";
+    if (this.responseObj.length > 0) {
+      var leadObj: LeadConfirmCancelObj = new LeadConfirmCancelObj();
+      leadObj.LeadStat = CommonConstant.LeadStatCancel;
+      leadObj.LeadStep = CommonConstant.LeadStepCancel;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
       var tempId = new Array();
       for (var i = 0; i < this.responseObj.length; i++) {
-        // if (this.deletedArr.includes(this.responseObj[i]['LeadId']) == false) {
-          tempId.push(this.responseObj[i]['LeadId']);
-        // }
+        tempId.push(this.responseObj[i]['LeadId']);
       }
       leadObj.ListLeadId = tempId;
       leadObj.ListWfTaskListId = this.tempWfTaskListArr;
@@ -104,8 +106,8 @@ export class LeadCancelConfirmComponent implements OnInit {
         }
       );
     }
-    else{
-      this.toastr.errorMessage("No Lead Available to Cancel");
+    else {
+      this.toastr.warningMessage(ExceptionConstant.NO_LEAD_DATA_AVAILABLE);
     }
   }
 }

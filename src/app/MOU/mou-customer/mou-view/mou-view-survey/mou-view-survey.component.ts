@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-survey',
@@ -17,7 +17,7 @@ export class MouViewSurveyComponent implements OnInit {
 
   ngOnInit() {
     var mouObj = { MouCustId: this.MouCustId }
-    this.http.post(AdInsConstant.GetSrvyResultDataByTrxRefNo, mouObj).subscribe(
+    this.http.post(URLConstant.GetSrvyResultDataByTrxRefNo, mouObj).subscribe(
       (response) => {
         console.log(mouObj);
         this.listSrvyOrder = response;

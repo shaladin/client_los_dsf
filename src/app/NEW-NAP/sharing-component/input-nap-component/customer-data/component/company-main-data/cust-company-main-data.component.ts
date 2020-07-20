@@ -11,6 +11,8 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -66,7 +68,7 @@ export class CustCompanyMainDataComponent implements OnInit {
 
   ngOnInit() {
 
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -95,7 +97,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.isReadonly = true;
 
     var custObj = { CustId: event.CustId };
-    this.http.post(AdInsConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
         console.log(response);
         this.CopyCustomer(response);
@@ -157,7 +159,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   setIndustryTypeName(industryTypeCode) {
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -214,14 +216,14 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     var AppObj = { AppId: this.AppId };
-    this.http.post<AppObj>(AdInsConstant.GetAppById, AppObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
       (response) => {
         this.AppObj = response;
         
-        if (this.AppObj.BizTemplateCode != AdInsConstant.FCTR) {
+        if (this.AppObj.BizTemplateCode != CommonConstant.FCTR) {
           this.InputLookupCustomerObj.isReadonly = false;
         }
 
@@ -238,10 +240,10 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindCompanyTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
@@ -253,10 +255,10 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    this.custModelReqObj.MrCustTypeCode = AdInsConstant.CustTypeCompany;
-    this.http.post(AdInsConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
+    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
-        this.CustModelObj = response["ReturnObject"];
+        this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key

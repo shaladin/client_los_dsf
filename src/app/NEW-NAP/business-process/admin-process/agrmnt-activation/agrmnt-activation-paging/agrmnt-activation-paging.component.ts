@@ -5,16 +5,17 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-paging',
-  templateUrl: './agrmnt-activation-paging.component.html',
-  styleUrls: ['./agrmnt-activation-paging.component.scss']
+  templateUrl: './agrmnt-activation-paging.component.html'
 })
 export class AgrmntActivationPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -29,7 +30,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
     this.inputPagingObj = new UcpagingModule();
     this.inputPagingObj._url = "./assets/ucpaging/searchAgrmntActivation.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAgrmntActivation.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -56,8 +57,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);   
     }
   }
 

@@ -10,6 +10,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-shareholder-FL4W',
@@ -92,8 +95,8 @@ export class CustShareholderFL4WComponent implements OnInit {
      }
 
   ngOnInit() {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.initLookup();
     this.bindAllRefMasterObj();
@@ -107,14 +110,14 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.setAppCustCompanyMgmntShrholder();
     if(this.mode == "add"){
       if(this.checkSharePrcnt(-1) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
-        this.toastr.errorMessage("Total Share Percentage cannot be more than 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
@@ -187,7 +190,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.mode = "edit";
     this.currentEditedIndex = i;
 
-    if(this.listShareholder[i].MrCustTypeCode == AdInsConstant.CustTypePersonal){
+    if(this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePersonal){
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrGenderCode: this.listShareholder[i].MrGenderCode,
@@ -220,7 +223,7 @@ export class CustShareholderFL4WComponent implements OnInit {
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
-    if(this.listShareholder[i].MrCustTypeCode == AdInsConstant.CustTypeCompany){
+    if(this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypeCompany){
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
@@ -250,7 +253,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listShareholder.splice(i, 1);
       this.callbackSubmit.emit(this.listShareholder);
     }
@@ -288,18 +291,18 @@ export class CustShareholderFL4WComponent implements OnInit {
     var custObj = {CustId: event.CustId};
     var url;
 
-    if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
-      url = AdInsConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
+    if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
+      url = URLConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
-    if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
-      url = AdInsConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
+    if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
+      url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
     this.http.post(url, custObj).subscribe(
       (response) => {
         console.log(response);
 
-        if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+        if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
           if(response["CustObj"] != undefined){
             this.CustShareholderForm.patchValue({
               MrCustTypeCode: response["CustObj"].MrCustTypeCode,
@@ -339,7 +342,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
         }
 
-        if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+        if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
           if(response["CustObj"] != undefined){
             this.CustShareholderForm.patchValue({
               MrCustTypeCode: response["CustObj"].MrCustTypeCode,
@@ -370,7 +373,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   setAppCustCompanyMgmntShrholder(){
-    if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypePersonal){
+    if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MrGenderCode = this.CustShareholderForm.controls.MrGenderCode.value;
@@ -390,7 +393,7 @@ export class CustShareholderFL4WComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
     }
 
-    if(this.CustShareholderForm.controls.MrCustTypeCode.value == AdInsConstant.CustTypeCompany){
+    if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypeCompany){
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustShareholderForm.controls.lookupCustomerShareholder.value.value;
@@ -409,7 +412,7 @@ export class CustShareholderFL4WComponent implements OnInit {
 
   setIndustryTypeName(industryTypeCode){
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -450,10 +453,10 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindCustTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         console.log("bind cust type");
         console.log(this.CustTypeObj);
         if(this.CustTypeObj.length > 0){
@@ -465,10 +468,10 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.GenderObj = response["ReturnObject"];
+        this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
           this.defaultGender = this.GenderObj[0].Key
         }
@@ -477,10 +480,10 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if(this.IdTypeObj.length > 0){
           this.defaultIdType = this.IdTypeObj[0].Key
         }
@@ -489,10 +492,10 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
         if(this.JobPositionObj.length > 0){
           this.defaultJobPosition = this.JobPositionObj[0].Key;
           this.defaultJobPositionName = this.JobPositionObj[0].Value;
@@ -502,10 +505,10 @@ export class CustShareholderFL4WComponent implements OnInit {
   }
 
   bindCompanyTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if(this.CompanyTypeObj.length > 0){
           this.defaultCompanyType = this.CompanyTypeObj[0].Key;
         }

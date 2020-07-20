@@ -6,6 +6,10 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -20,7 +24,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   isCustData: boolean;
   isLeadData: boolean;
   leadObj: LeadObj;
-  viewLeadHeaderMainInfo : any;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   WfTaskListId: number;
   reason : string;
   AppStepIndex :number =1;
@@ -38,14 +42,22 @@ export class CustomerSelfVerificationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewLeadHeaderMainInfo = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
+    
     this.leadObj = new LeadObj;
     this.leadObj.LeadId = this.LeadId;
-    this.http.post(AdInsConstant.GetLeadByLeadId, this.leadObj).subscribe(
+    this.http.post(URLConstant.GetLeadByLeadId, this.leadObj).subscribe(
       (response) => { 
         this.LeadStep = response["LeadStep"];
         console.log(this.LeadStep);
-         if (this.LeadStep != "SVR"){
+         if (this.LeadStep != CommonConstant.LeadStepSelfVerification){
           this.reason = "resubmit"; 
          }else{ 
           if (this.WfTaskListId > 0) {
@@ -81,10 +93,10 @@ export class CustomerSelfVerificationComponent implements OnInit {
 
   async claimTask()
   {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
     console.log(wfClaimObj);
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }

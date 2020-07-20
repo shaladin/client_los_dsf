@@ -8,6 +8,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 @Component({
@@ -115,7 +118,7 @@ export class FinancialDataComponent implements OnInit {
 
   LoadAppFinData() {
     console.log("Load App Fin Data Started...");
-    this.http.post<AppFinDataObj>(AdInsConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
@@ -175,7 +178,7 @@ export class FinancialDataComponent implements OnInit {
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
 
     if (NeedReCalculate) {
-      this.toastr.errorMessage("Please Calculate Again");
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       return;
     }
     if (isValidGrossYield && isValidGracePeriod) {
@@ -192,7 +195,7 @@ export class FinancialDataComponent implements OnInit {
     }
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -204,7 +207,7 @@ export class FinancialDataComponent implements OnInit {
     if (gracePeriodType != "") {
       if (gracePeriod == 0) {
         valid = false;
-        this.toastr.errorMessage("Grace Period must be set");
+        this.toastr.warningMessage(ExceptionConstant.GRACE_PERIOD_MUST_SET);
       }
     }
 
@@ -219,25 +222,25 @@ export class FinancialDataComponent implements OnInit {
 
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be less than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.errorMessage("Gross Yield cannot be greater than " + StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
     return valid;
   }
 
-  setValidator(mrInstSchemeCode){
-    if(mrInstSchemeCode == AdInsConstant.InstSchmBalloon){
+  setValidator(mrInstSchemeCode) {
+    if (mrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
       this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
     }
-    if(mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == AdInsConstant.InstSchmStepUpStepDownLeasing){
+    if (mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownLeasing) {
       this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
       this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
       this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);

@@ -6,6 +6,9 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-application-data-multi',
@@ -20,7 +23,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     private http: HttpClient,
     private modalService: NgbModal
   ) { }
-  
+
   GuarantorData;
   CommData;
   ReferantorData;
@@ -31,15 +34,17 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   InsuranceTitle;
   ListAssetData;
   closeResult;
+  inputGridObj: InputGridObj;
+  IsGridTcReady: boolean = false;
 
-  InitData(){
+  InitData() {
     // this.appId = 31;
     this.GuarantorData = new Array();
     this.CommData = new Array();
     this.ReferantorData = {
       ReferantorName: "",
       CooperationDate: "",
-      NumOfSales: 0 ,
+      NumOfSales: 0,
       NumOfApplication: 0,
       TotalSalesAmount: 0,
       InAmount: 0,
@@ -88,7 +93,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
       LifeInsuranceCompany: ""
     }
   }
-  
+
   async ngOnInit() {
     this.InitData();
     await this.GetGuarantorData();
@@ -99,8 +104,9 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     await this.GetListAssetData();
     await this.GetListCollateralData();
     await this.GetLifeInsData();
+    await this.GetAppTc();
 
-    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy == "CO"){
+    if (this.AssetInsuranceAndLifeInsuranceData.CoverBy == CommonConstant.InsuredByCompany) {
       this.InsuranceTitle = "Asset Insurance";
     } else {
       this.InsuranceTitle = "Asset Insurance & Life Insurance"
@@ -109,13 +115,13 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   }
 
   appAssetObj;
-  async GetListAssetData(){
+  async GetListAssetData() {
     this.appAssetObj = new AppAssetObj();
     this.appAssetObj.AppId = this.AppId
-    await this.http.post(AdInsConstant.GetAppAssetListByAppId, this.appAssetObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetListByAppId, this.appAssetObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.ListAssetData = response["ReturnObject"];
+        this.ListAssetData = response[CommonConstant.ReturnObj];
 
         // console.log("lisassetdata");
         // console.log(this.ListAssetData);
@@ -128,13 +134,13 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   appCollateralObj;
   ListCollateralData;
-  async GetListCollateralData(){
+  async GetListCollateralData() {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId
-    await this.http.post(AdInsConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.ListCollateralData = response["ReturnObject"];
+        this.ListCollateralData = response[CommonConstant.ReturnObj];
 
         // console.log("listcolldata");
         // console.log(this.ListCollateralData);
@@ -147,10 +153,10 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   lifeInsObj;
   LifeInsuranceData;
-  async GetLifeInsData(){
+  async GetLifeInsData() {
     this.lifeInsObj = new LifeInsObj();
     this.lifeInsObj.AppId = this.AppId
-    await this.http.post(AdInsConstant.GetAppLifeInsHByAppId, this.lifeInsObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppLifeInsHByAppId, this.lifeInsObj).toPromise().then(
       (response) => {
         console.log(response);
         this.LifeInsuranceData = response;
@@ -164,18 +170,18 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     );
   }
 
-  async GetGuarantorData(){
+  async GetGuarantorData() {
     var obj = {
       AppGuarantorObj: {
         AppID: this.AppId
       },
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetListAppGuarantorDetail, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListAppGuarantorDetail, obj).toPromise().then(
       (response) => {
         console.log(response);
-        for(var i=0;i<response[AdInsConstant.ReturnObj].length;i++){
-          var tempResponse = response[AdInsConstant.ReturnObj][i];
+        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+          var tempResponse = response[CommonConstant.ReturnObj][i];
           var temp = {
             GuarantorName: tempResponse.appGuarantorObj.GuarantorName,
             GuarantorType: tempResponse.appGuarantorObj.GuarantorTypeCodeDesc,
@@ -184,12 +190,12 @@ export class ViewApplicationDataMultiComponent implements OnInit {
             Address: "",
             MobilePhone: ""
           };
-          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == AdInsConstant.GuarantorTypeCodeCompany){
+          if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodeCompany) {
             temp.IdNo = tempResponse.appGuarantorObj.TaxIdNo;
             temp.Address = tempResponse.appGuarantorCompanyObj.Addr;
             temp.MobilePhone = tempResponse.appGuarantorCompanyObj.MobilePhnNo1 + " / " + tempResponse.appGuarantorCompanyObj.MobilePhnNo2;
           }
-          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == AdInsConstant.GuarantorTypeCodePersonal){
+          if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodePersonal) {
             temp.IdNo = tempResponse.appGuarantorPersonalObj.IdNo;
             temp.Address = tempResponse.appGuarantorPersonalObj.Addr;
             temp.MobilePhone = tempResponse.appGuarantorPersonalObj.MobilePhnNo;
@@ -203,12 +209,12 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     );
   }
 
-  async GetReferantorData(){
+  async GetReferantorData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppReferantorForAppsData, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ReferantorData.ReferantorName = response["ReferantorName"];
@@ -221,12 +227,12 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     );
   }
 
-  async GetAppDetailData(){
+  async GetAppDetailData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppDetailForAppTabById, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
       (response) => {
         console.log(response);
 
@@ -266,12 +272,12 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     );
   }
 
-  async GetDealerData(){
+  async GetDealerData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DealerData = {
@@ -298,14 +304,38 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     );
   }
 
+  async GetAppTc() {
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
+
+
+    var AppObj = {
+      AppId: this.AppId
+    }
+
+    this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["AppTcs"]
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.IsGridTcReady = true;
+  }
+
   AssetDealerData;
   dealerAssetObj;
-  getDealer(appAssetId, content)
-  {
+  getDealer(appAssetId, content) {
     this.dealerAssetObj = new AppAssetObj();
     this.dealerAssetObj.AppAssetId = appAssetId
 
-    this.http.post(AdInsConstant.GetAppAssetForDealerDataByAppAssetId, this.dealerAssetObj).toPromise().then(
+    this.http.post(URLConstant.GetAppAssetForDealerDataByAppAssetId, this.dealerAssetObj).toPromise().then(
       (response) => {
         console.log(response);
         this.AssetDealerData = response;
@@ -339,21 +369,20 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modalService.dismissAll();
   }
 
-  async GetCommData(){
+  async GetCommData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
-        var temp = response[AdInsConstant.ReturnObj];
-        for(var i=0;i<temp.length;i++){
+        var temp = response[CommonConstant.ReturnObj];
+        for (var i = 0; i < temp.length; i++) {
           var tempObj = {
             Subject: temp[i].MrCommissionRecipientTypeCodeDesc,
             Name: temp[i].CommissionRecipientRefNoDesc,
@@ -390,7 +419,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     });
   }
 
-  sortCommData(sort: Sort){
+  sortCommData(sort: Sort) {
     const data = this.CommData.slice();
     if (!sort.active || sort.direction === '') {
       this.CommData = data;

@@ -4,7 +4,6 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
@@ -14,6 +13,8 @@ import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -101,15 +102,15 @@ export class LeadInputLeadDataComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.addEditLeadData = AdInsConstant.AddEditLeadData;
-    this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
-    this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
-    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
-    this.editLead = AdInsConstant.EditLead;
-    this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditLeadData = URLConstant.AddEditLeadData;
+    this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
+    this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
+    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
+    this.editLead = URLConstant.EditLead;
+    this.submitWorkflowLeadInput = URLConstant.SubmitWorkflowLeadInput;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -137,12 +138,12 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
 
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
-    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
-        this.SerialNoList = response['ReturnObject'];
+        this.SerialNoList = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.SerialNoList["length"]; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -166,7 +167,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   // }
 
   radioChange(event) {
-    if (event.target.value == "USED") {
+    if (event.target.value == CommonConstant.AssetConditionUsed) {
       this.isUsed = true;
     } else {
       this.isUsed = false;
@@ -227,13 +228,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
-        this.returnAssetConditionObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
 
-        if (response['ReturnObject'][0]['Key'] == "USED") {
+        if (response[CommonConstant.ReturnObj][0]['Key'] == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -242,20 +243,20 @@ export class LeadInputLeadDataComponent implements OnInit {
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
-        this.returnDownPaymentObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
+    this.firstInstObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
-        this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnFirstInstObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -265,7 +266,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+          if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;
@@ -296,16 +297,16 @@ export class LeadInputLeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                 (response: any) => {
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }
-                      this.SerialNoList = response['ReturnObject'];
+                      this.SerialNoList = response[CommonConstant.ReturnObj];
                       for (var i = 0; i < this.SerialNoList["length"]; i++) {
                         var eachDataDetail = this.fb.group({
                           SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -372,7 +373,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+          if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;
@@ -387,7 +388,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
             });
 
-            if (this.resLeadAssetObj.MrDownPaymentTypeCode == "AMT") {
+            if (this.resLeadAssetObj.MrDownPaymentTypeCode ==  CommonConstant.DownPaymentTypeAmt) {
               this.LeadDataForm.controls.DownPaymentPercent.disable();
               this.LeadDataForm.controls.DownPaymentAmount.enable();
             }
@@ -413,16 +414,16 @@ export class LeadInputLeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                   (response: any) => {
 
                     var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                       (response: any) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
                         }
-                        this.SerialNoList = response['ReturnObject'];
+                        this.SerialNoList = response[CommonConstant.ReturnObj];
                         for (var i = 0; i < this.SerialNoList["length"]; i++) {
                           var eachDataDetail = this.fb.group({
                             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -465,9 +466,9 @@ export class LeadInputLeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                   (response: any) => {
-                    if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
                       this.serial1Mandatory = true;
@@ -478,7 +479,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial1Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
                       this.serial2Mandatory = true;
@@ -489,7 +490,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial2Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
                       this.serial3Mandatory = true;
@@ -500,7 +501,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial3Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
                       this.serial4Mandatory = true;
@@ -511,7 +512,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                       this.serial4Mandatory = false;
                     }
 
-                    if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+                    if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
                       this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
                       this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
                       this.serial5Mandatory = true;
@@ -561,7 +562,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   DownPaymentChange() {
-    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT") {
+    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
       this.LeadDataForm.controls.DownPaymentAmount.enable();
 
@@ -607,7 +608,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
     this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
 
-    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == "AMT") {
+    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
       this.DPPercentage = this.DPAmount / this.AssetPrice * 100;
 
       this.LeadDataForm.patchValue({
@@ -643,20 +644,20 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
 
     if (this.DPAmount > this.AssetPrice) {
-      this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
+      this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
     if (this.DPAmount <= 0) {
-      this.toastr.errorMessage("Please Check Down Payment Amount!");
+      this.toastr.warningMessage("Please Check Down Payment Amount!");
       return;
     }
     if (this.Tenor == '') {
-      this.toastr.errorMessage("Fill The Tenor First!");
+      this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     this.InstAmt = this.NTFAmt / this.Tenor;
-    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == "AD") {
+    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
       this.TotalDownPayment = this.DPAmount + this.InstAmt;
     }
     else {
@@ -676,11 +677,11 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
 
     if (this.DPAmount > this.AssetPrice) {
-      this.toastr.errorMessage("Down Payment Amount Must Be Lower Than Asset Price!");
+      this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
     if (this.Tenor == '') {
-      this.toastr.errorMessage("Fill The Tenor First!");
+      this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
     this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
@@ -732,7 +733,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   save() {
     if (this.Calculate == false) {
-      this.toastr.errorMessage("Calculate First");
+      this.toastr.warningMessage("Calculate First");
       return;
     }
     if (this.typePage == "edit" || this.typePage == "update") {
@@ -764,7 +765,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           //this.setLeadAsset();
           this.setLeadApp();
-          this.http.post(AdInsConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
+          this.http.post(URLConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
@@ -784,7 +785,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else {
           if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-            this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
+            this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -815,7 +816,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         //this.setLeadAsset();
         this.setLeadApp();
-        this.http.post(AdInsConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
+        this.http.post(URLConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
@@ -864,7 +865,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   SaveForm() {
     if (this.Calculate == false) {
-      this.toastr.errorMessage("Calculate First");
+      this.toastr.warningMessage("Calculate First");
       return;
     }
 
@@ -901,7 +902,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           //this.setLeadAsset();
           this.setLeadApp();
           this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-          this.http.post(AdInsConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+          this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
@@ -921,7 +922,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else {
           if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-            this.toastr.errorMessage("Manufacturing Year must be lower or equal than current year.");
+            this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -954,7 +955,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         //this.setLeadAsset();
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-        this.http.post(AdInsConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+        this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {

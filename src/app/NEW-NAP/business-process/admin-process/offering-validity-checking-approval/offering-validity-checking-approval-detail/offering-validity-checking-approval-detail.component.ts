@@ -5,17 +5,20 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
-  templateUrl: './offering-validity-checking-approval-detail.component.html',
-  styleUrls: ['./offering-validity-checking-approval-detail.component.scss']
+  templateUrl: './offering-validity-checking-approval-detail.component.html'
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
-  viewObj: string;
-  BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  BizTemplateCode : string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
-
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {
     this.route.queryParams.subscribe(params => {
 
@@ -35,13 +38,23 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+    this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{
-        this.toastr.successMessage(response["Message"]);
       },
       (error)=>{
         this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
@@ -60,6 +73,12 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   onCancelClick()
   {
     this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+  }
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 
 }

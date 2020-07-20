@@ -9,6 +9,9 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -51,7 +54,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    this.lobCode = localStorage.getItem("BizTemplateCode");
+    this.lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.arrValue.push(this.appId);
     await this.bindTaskObj();
@@ -63,7 +66,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     reqObj.WfTaskListId = this.wfTaskListId;
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
 
-    this.http.post(AdInsConstant.ResumeReturnHandling, reqObj).subscribe(
+    this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
@@ -96,10 +99,10 @@ export class ReturnHandlingDetailComponent implements OnInit {
     var reqObj = new ReturnHandlingDObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     reqObj.MrReturnTaskCode = this.ReturnHandlingForm.controls.MrReturnTaskCode.value;
-    reqObj.ReturnStat = AdInsConstant.ReturnStatNew;
+    reqObj.ReturnStat = CommonConstant.ReturnStatNew;
     reqObj.ReturnHandlingNotes = this.ReturnHandlingForm.controls.ReturnHandlingNotes.value;
 
-    this.http.post(AdInsConstant.AddReturnHandlingD, reqObj).subscribe(
+    this.http.post(URLConstant.AddReturnHandlingD, reqObj).subscribe(
       (response) => {
         console.log(response);
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
@@ -116,12 +119,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
       reqObj.ReturnHandlingHId = this.returnHandlingHId;
-      reqObj.ReturnStat = AdInsConstant.ReturnStatRequest;
+      reqObj.ReturnStat = CommonConstant.ReturnStatRequest;
       reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
       reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
 
-      this.http.post(AdInsConstant.RequestReturnTask, reqObj).subscribe(
+      this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
           console.log(response);
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
@@ -135,12 +138,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   Delete(item, i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
       reqObj.ReturnHandlingHId = this.returnHandlingHId;
 
-      this.http.post(AdInsConstant.DeleteReturnHandlingD, reqObj).subscribe(
+      this.http.post(URLConstant.DeleteReturnHandlingD, reqObj).subscribe(
         (response) => {
           console.log(response);
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
@@ -156,7 +159,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   async getReturnHandling(){
     var reqObj = new ReturnHandlingHObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
-    await this.http.post(AdInsConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
+    await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
         console.log(response);
         this.returnHandlingHObj = response["ReturnHandlingHObj"];
@@ -169,10 +172,10 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: "RETURN_TASK", ReserveField1: this.lobCode};
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReturnTask, ReserveField1: this.lobCode};
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
-        this.taskObj = response["ReturnObject"];
+        this.taskObj = response[CommonConstant.ReturnObj];
         if(this.taskObj.length > 0){
           this.ReturnHandlingForm.patchValue({
             MrReturnTaskCode: this.taskObj[0].Key
@@ -183,12 +186,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
     
       });

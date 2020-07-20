@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-paging',
@@ -18,7 +21,6 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   userAccess: any;
-  token : any = localStorage.getItem("Token");
 
   constructor(
     private http: HttpClient,
@@ -30,16 +32,16 @@ export class NapPagingComponent implements OnInit {
 
   async ngOnInit() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    
-    this.arrCrit = new Array();    
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+
+    this.arrCrit = new Array();
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -52,30 +54,30 @@ export class NapPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  makeCriteria(){
+  makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "NAP_"+AdInsConstant.FL4W;
+    critObj.value = "NAP_" + CommonConstant.FL4W;
     this.arrCrit.push(critObj);
-    
+
     critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionIn;
-    if(this.userAccess.MrOfficeTypeCode!=AdInsConstant.CENTER_GROUP_CODE){
+    if (this.userAccess.MrOfficeTypeCode != CommonConstant.CENTER_GROUP_CODE) {
       critObj.propName = 'a.ORI_OFFICE_CODE';
       critObj.listValue = [this.userAccess.OfficeCode];
-    }else{
+    } else {
       critObj.propName = 'a.ORI_OFFICE_CODE';
-      var obj = { CenterGrpCode: AdInsConstant.CENTER_GROUP_CODE };
-      this.http.post(AdInsConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
+      var obj = { CenterGrpCode: CommonConstant.CENTER_GROUP_CODE };
+      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
         (response) => {
           // console.log(response);
-          var CenterGrpOfficeMbrObjs : Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
+          var CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
 
           var listDataTemp = new Array();
-          for(var i=0;i<CenterGrpOfficeMbrObjs.length;i++){
+          for (var i = 0; i < CenterGrpOfficeMbrObjs.length; i++) {
             listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
-          } 
+          }
           critObj.listValue = listDataTemp;
         },
         (error) => {
@@ -86,14 +88,14 @@ export class NapPagingComponent implements OnInit {
     // critObj.value = localStorage.getItem("LobCode");
     this.arrCrit.push(critObj);
   }
-  
-  AddApp(){
+
+  AddApp() {
     var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
-        if(response["IsAllowAppCreated"] == true){
+        if (response["IsAllowAppCreated"] == true) {
           this.router.navigate(["Nap/FinanceLeasing/Add"]);
-        }else{
+        } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
       },
@@ -103,13 +105,12 @@ export class NapPagingComponent implements OnInit {
     );
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion  + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
-    if(ev.Key == "Edit"){
-      this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId, "IsMultiAsset": "true" } });
+    if (ev.Key == "Edit") {
+      this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMultiAsset": "true" } });
     }
   }
 }

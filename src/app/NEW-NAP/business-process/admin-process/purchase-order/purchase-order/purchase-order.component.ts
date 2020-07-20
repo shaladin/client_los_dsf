@@ -6,6 +6,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-purchase-order',
@@ -54,9 +56,9 @@ export class PurchaseOrderComponent implements OnInit {
       AgrmntId: this.AgrmntId
     }
     this.claimTask();
-    this.http.post(AdInsConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
-        this.AppAssetList = response["ReturnObject"];
+        this.AppAssetList = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -92,9 +94,9 @@ export class PurchaseOrderComponent implements OnInit {
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
 
 
-      this.http.post(AdInsConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
+      this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
-          this.AppAssetList = response["ReturnObject"];
+          this.AppAssetList = response[CommonConstant.ReturnObj];
           this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
           this.toastr.successMessage(response["message"]);
         },
@@ -105,16 +107,16 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext["UserName"];
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
   Cancel() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 }

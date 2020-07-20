@@ -7,6 +7,9 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-legal-doc',
@@ -59,7 +62,7 @@ export class CustLegalDocComponent implements OnInit {
   ngOnInit() {
     // console.log("User Access");
     // console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.bindLegalDocTypeObj();
     console.log(this.listLegalDoc);
@@ -107,7 +110,7 @@ export class CustLegalDocComponent implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
@@ -148,13 +151,13 @@ export class CustLegalDocComponent implements OnInit {
     console.log(d2);
     console.log(d3);
     if (d1 > d3 && d1 != d3) {
-      this.toastr.errorMessage("Expired Date can not be less than " + this.MaxDate);
+      this.toastr.warningMessage( ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxDate);
       flag = false;
     }
     d1.setDate(d1.getDate()+1);
     console.log(d1);
     if (d1 < d2 && d1 != d2) {
-      this.toastr.errorMessage("Issued Date can not be more than " + this.MaxDate);
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxDate);
       flag = false;
     }    
     return flag;
@@ -164,17 +167,17 @@ export class CustLegalDocComponent implements OnInit {
     if(this.listLegalDoc.length > 0){
       var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
       if(duplicateIndex != currentEditedIndex && duplicateIndex != -1){
-        this.toastr.errorMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
+        this.toastr.warningMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");    
         return false;  
       }
     }
     return true;
   }
   bindLegalDocTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLegalDocType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.LegalDocTypeObj = response["ReturnObject"];
+        this.LegalDocTypeObj = response[CommonConstant.ReturnObj];
         if(this.LegalDocTypeObj.length > 0){
             this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
             this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;

@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-company-contact-information-FL4W',
@@ -44,26 +47,26 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
 
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,) {
 
-     }
+  }
 
   ngOnInit() {
     this.bindJobPositionObj();
   }
 
-  SaveForm(){
+  SaveForm() {
     this.appCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
-    if(this.listContactPersonCompany == undefined){
+    if (this.listContactPersonCompany == undefined) {
       this.listContactPersonCompany = new Array<AppCustCompanyContactPersonObj>();
     }
     this.setAppCustCompanyContactPerson();
-    if(this.mode == "add"){
+    if (this.mode == "add") {
       this.listContactPersonCompany.push(this.appCustCompanyContactPersonObj);
     }
-    if(this.mode == "edit"){
+    if (this.mode == "edit") {
       this.listContactPersonCompany[this.currentEditedIndex] = this.appCustCompanyContactPersonObj;
     }
     this.callbackSubmit.emit(this.listContactPersonCompany);
@@ -71,13 +74,13 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
     this.clearForm();
   }
 
-  add(content){
+  add(content) {
     this.mode = "add";
     this.clearForm();
     this.open(content);
   }
 
-  edit(i, content){
+  edit(i, content) {
     this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
@@ -93,18 +96,18 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
     this.open(content);
   }
 
-  delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+  delete(i) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listContactPersonCompany.splice(i, 1);
       this.callbackSubmit.emit(this.listContactPersonCompany);
     }
   }
 
-  JobPositionChanged(event){
+  JobPositionChanged(event) {
     this.selectedJobPositionName = event.target.options[event.target.options.selectedIndex].text;
   }
-  
-  clearForm(){
+
+  clearForm() {
     this.ContactInfoCompanyForm = this.fb.group({
       ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
@@ -116,7 +119,7 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
     this.selectedJobPositionName = this.defaultJobPositionName;
   }
 
-  setAppCustCompanyContactPerson(){
+  setAppCustCompanyContactPerson() {
     this.appCustCompanyContactPersonObj.ContactPersonName = this.ContactInfoCompanyForm.controls.ContactPersonName.value;
     this.appCustCompanyContactPersonObj.MrJobPositionCode = this.ContactInfoCompanyForm.controls.MrJobPositionCode.value;
     this.appCustCompanyContactPersonObj.MobilePhnNo1 = this.ContactInfoCompanyForm.controls.MobilePhnNo1.value;
@@ -126,14 +129,14 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
     this.appCustCompanyContactPersonObj.JobPositionName = this.selectedJobPositionName;
   }
 
-  bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+  bindJobPositionObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
-        if(this.JobPositionObj.length > 0){
-            this.defaultJobPosition = this.JobPositionObj[0].Key;
-            this.defaultJobPositionName = this.JobPositionObj[0].Value;
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
+        if (this.JobPositionObj.length > 0) {
+          this.defaultJobPosition = this.JobPositionObj[0].Key;
+          this.defaultJobPositionName = this.JobPositionObj[0].Value;
         }
       }
     );
@@ -157,8 +160,7 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modalService.dismissAll();
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
@@ -8,6 +8,8 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-referantor-data',
@@ -34,7 +36,7 @@ export class ReferantorDataComponent implements OnInit {
     CheckBoxAppReferantor: [false],
     ReferantorName: [''],
     ReferantorType: [''],
-    AccountBank: ['']
+    AccountBank: ['', Validators.required]
   });
 
   ReferantorOn = false;
@@ -55,7 +57,7 @@ export class ReferantorDataComponent implements OnInit {
   OfficeCode: String;
   async GetAppData() {
     var obj = { AppId: this.appId };
-    await this.http.post<AppObj>(AdInsConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.OfficeCode = response.OriOfficeCode;
@@ -71,7 +73,7 @@ export class ReferantorDataComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "v.MR_VENDOR_CATEGORY_CODE ";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [AdInsConstant.VendorCategoryAgencyCompany, AdInsConstant.VendorCategoryAgencyPersonal];
+    addCrit.listValue = [URLConstant.VendorCategoryAgencyCompany, URLConstant.VendorCategoryAgencyPersonal];
     this.arrAddCrit.push(addCrit);
 
     // var addCrit1 = new CriteriaObj(); 
@@ -91,7 +93,7 @@ export class ReferantorDataComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
@@ -112,7 +114,7 @@ export class ReferantorDataComponent implements OnInit {
       RowVersion: "",
     }
 
-    this.http.post(AdInsConstant.GetAppReferantorByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
         console.log(response);
         if(response["AppReferantorId"]!=0){
@@ -127,6 +129,8 @@ export class ReferantorDataComponent implements OnInit {
             CheckBoxAppReferantor: true,
             AccountBank: this.appReferantorObj.BankAccNo
           });
+          this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+          this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
           this.cdRef.detectChanges();
           console.log(this.NapAppReferantorForm);
           this.getDDLBank(this.appReferantorObj.ReferantorCode);
@@ -157,7 +161,7 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save Existed Data");
-        url = AdInsConstant.EditAppReferantor;
+        url = URLConstant.EditAppReferantor;
         this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Save Edit Data');
@@ -165,7 +169,7 @@ export class ReferantorDataComponent implements OnInit {
       } else {
         // delete & go to paging
         console.log("Delete Existed Data");
-        url = AdInsConstant.DeleteAppReferantor;
+        url = URLConstant.DeleteAppReferantor;
         this.SaveData(url);    
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Remove Data');
@@ -175,7 +179,7 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         console.log("Save New Data");
-        url = AdInsConstant.AddAppReferantor;
+        url = URLConstant.AddAppReferantor;
         this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
@@ -203,7 +207,9 @@ export class ReferantorDataComponent implements OnInit {
     } else {
       this.inputLookupObj.isRequired = true;
       this.inputLookupObj.isReady = true;
-      this.NapAppReferantorForm.controls.AccountBank.enable();
+      this.NapAppReferantorForm.controls.AccountBank.enable();      
+      this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+      this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
     }
   }
 
@@ -244,7 +250,7 @@ export class ReferantorDataComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = AdInsConstant.GetListVendorBankAccByVendorCode;
+    var url = URLConstant.GetListVendorBankAccByVendorCode;
     var obj = {
       VendorCode: VendorCode,
       RowVersion: ""
@@ -253,7 +259,7 @@ export class ReferantorDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.bankItems = response["ReturnObject"];
+        this.bankItems = response[CommonConstant.ReturnObj];
         console.log(this.bankItems);
       },
       (error) => {
@@ -264,9 +270,11 @@ export class ReferantorDataComponent implements OnInit {
 
   bankItems = [];
   ChangeValueBank(ev) {
-    // console.log(ev);
-    var idx = ev.target.selectedIndex;
-    // console.log(this.bankItems[idx]);
+    console.log(ev);
+    var idx = ev.target.selectedIndex - 1;
+    console.log(idx);
+    if (idx < 0) return;
+    console.log(this.bankItems[idx]);
     this.appReferantorObj.RefBankCode = this.bankItems[idx].BankCode;
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;

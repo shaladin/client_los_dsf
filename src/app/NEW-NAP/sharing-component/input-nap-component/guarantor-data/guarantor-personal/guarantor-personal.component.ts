@@ -13,6 +13,9 @@ import { formatDate, DatePipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -75,29 +78,29 @@ export class GuarantorPersonalComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorPersonalObj = new GuarantorPersonalObj();
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      await this.http.post(AdInsConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
+      await this.http.post(URLConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
         (response) => {
           console.log("response: ");
           console.log(response);
           this.resultData = response;
-          this.AppGuarantorPersonalId = this.resultData.appGuarantorPersonalObj.AppGuarantorPersonalId;
-          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
-          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
+          this.AppGuarantorPersonalId = this.resultData.AppGuarantorPersonalObj.AppGuarantorPersonalId;
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.AppGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.AppGuarantorObj.GuarantorName;
           this.PersonalForm.patchValue({
-            MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
-            MrIdTypeCode: this.resultData.appGuarantorPersonalObj.MrIdTypeCode,
-            MrGenderCode: this.resultData.appGuarantorPersonalObj.MrGenderCode,
-            IdNo: this.resultData.appGuarantorPersonalObj.IdNo,
-            MrMaritalStatCode: this.resultData.appGuarantorPersonalObj.MrMaritalStatCode,
-            IdExpDt: this.resultData.appGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.appGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
-            MrNationalityCode: this.resultData.appGuarantorPersonalObj.MrNationalityCode,
-            BirthPlace: this.resultData.appGuarantorPersonalObj.BirthPlace,
-            BirthDt: formatDate(this.resultData.appGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
-            TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
-            MrReligionCode: this.resultData.appGuarantorPersonalObj.MrReligionCode,
-            MobilePhnNo: this.resultData.appGuarantorPersonalObj.MobilePhnNo,
+            MrCustRelationshipCode: this.resultData.AppGuarantorObj.MrCustRelationshipCode,
+            MrIdTypeCode: this.resultData.AppGuarantorPersonalObj.MrIdTypeCode,
+            MrGenderCode: this.resultData.AppGuarantorPersonalObj.MrGenderCode,
+            IdNo: this.resultData.AppGuarantorPersonalObj.IdNo,
+            MrMaritalStatCode: this.resultData.AppGuarantorPersonalObj.MrMaritalStatCode,
+            IdExpDt: this.resultData.AppGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.AppGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
+            MrNationalityCode: this.resultData.AppGuarantorPersonalObj.MrNationalityCode,
+            BirthPlace: this.resultData.AppGuarantorPersonalObj.BirthPlace,
+            BirthDt: formatDate(this.resultData.AppGuarantorPersonalObj['BirthDt'], 'yyyy-MM-dd', 'en-US'),
+            TaxIdNo: this.resultData.AppGuarantorObj.TaxIdNo,
+            MrReligionCode: this.resultData.AppGuarantorPersonalObj.MrReligionCode,
+            MobilePhnNo: this.resultData.AppGuarantorPersonalObj.MobilePhnNo,
           });
-          this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
+          this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
           this.setAddrLegalObj();
           this.clearExpDt();
 
@@ -106,7 +109,7 @@ export class GuarantorPersonalComponent implements OnInit {
           console.log(error);
         }
       );
-      await this.setCountryName(this.resultData.appGuarantorPersonalObj.CountryCode);
+      await this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
     }
     else {
       this.ClearForm();
@@ -114,28 +117,28 @@ export class GuarantorPersonalComponent implements OnInit {
     }
 
     var refCustRelObj = {
-      RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship,
       RowVersion: ""
     }
     var idTypeObj = {
-      RefMasterTypeCode: "ID_TYPE",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
       RowVersion: ""
     }
     var genderObj = {
-      RefMasterTypeCode: "GENDER",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
       RowVersion: ""
     }
     var maritalObj = {
-      RefMasterTypeCode: "MARITAL_STAT",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
       RowVersion: ""
     }
     var religionObj = {
-      RefMasterTypeCode: "RELIGION",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListActiveRefMaster, idTypeObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
       (response) => {
-        this.MrIdTypeCode = response["ReturnObject"];
+        this.MrIdTypeCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrIdTypeCode: this.MrIdTypeCode[0].MasterCode
@@ -145,9 +148,9 @@ export class GuarantorPersonalComponent implements OnInit {
         this.clearExpDt();
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
       (response) => {
-        this.MrCustRelationshipCode = response["ReturnObject"];
+        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
@@ -155,9 +158,9 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, genderObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, genderObj).subscribe(
       (response) => {
-        this.MrGenderCode = response["ReturnObject"];
+        this.MrGenderCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrGenderCode: this.MrGenderCode[0].MasterCode
@@ -165,9 +168,9 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, maritalObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, maritalObj).subscribe(
       (response) => {
-        this.MrMaritalStatCode = response["ReturnObject"];
+        this.MrMaritalStatCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrMaritalStatCode: this.MrMaritalStatCode[0].MasterCode
@@ -175,11 +178,11 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    var obj = { RefMasterTypeCodes: ["NATIONALITY"] };
-    this.http.post(AdInsConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
+    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         console.log(response);
-        this.MrNationalityCode = response["ReturnObject"];
+        this.MrNationalityCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           if (this.MrNationalityCode.length > 0) {
             this.PersonalForm.patchValue({
@@ -189,9 +192,9 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, religionObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, religionObj).subscribe(
       (response) => {
-        this.MrReligionCode = response["ReturnObject"];
+        this.MrReligionCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrReligionCode: this.MrReligionCode[0].MasterCode
@@ -206,7 +209,7 @@ export class GuarantorPersonalComponent implements OnInit {
   MaxDate: Date;
   Max17YO: Date;
   getDate() {
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
     this.Max17YO.setFullYear(this.MaxDate.getFullYear() - 17);
@@ -214,21 +217,21 @@ export class GuarantorPersonalComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorPersonalObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorPersonalObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorPersonalObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorPersonalObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorPersonalObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorPersonalObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorPersonalObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorPersonalObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorPersonalObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorPersonalObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorPersonalObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorPersonalObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorPersonalObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorPersonalObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorPersonalObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorPersonalObj.Zipcode };
   }
 
   async setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    await this.http.post(AdInsConstant.GetRefCountryByCountryCode, this.countryObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).toPromise().then(
       (response) => {
         console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
@@ -278,7 +281,7 @@ export class GuarantorPersonalComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypePersonal);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupCountry.json";
@@ -300,7 +303,7 @@ export class GuarantorPersonalComponent implements OnInit {
     console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.PersonalForm.patchValue(
@@ -314,7 +317,7 @@ export class GuarantorPersonalComponent implements OnInit {
         );
         this.clearExpDt();
       });
-    this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+    this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
       (response) => {
         console.log(response);
         this.resultData = response;
@@ -336,7 +339,7 @@ export class GuarantorPersonalComponent implements OnInit {
         this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
         this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
       });
-    this.http.post(AdInsConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.PersonalForm.patchValue({
@@ -355,7 +358,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
           this.inputLookupObj1.nameSelect = this.MrNationalityCode[idx].ReserveField2;
         }
-        this.http.post(AdInsConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+        this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
           (response) => {
             this.inputLookupObj1.nameSelect = response["CountryName"];
           }
@@ -382,7 +385,7 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   clearExpDt() {
-    if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
+    if (this.PersonalForm.controls.MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.PersonalForm.patchValue({
         IdExpDt: '',
       });
@@ -396,7 +399,7 @@ export class GuarantorPersonalComponent implements OnInit {
     }
     
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = "PERSONAL";
+    this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = CommonConstant.GuarantorTypeCodePersonal;
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
     this.guarantorPersonalObj.AppGuarantorObj.MrCustRelationshipCode = this.PersonalForm.controls.MrCustRelationshipCode.value;
     this.guarantorPersonalObj.AppGuarantorObj.RowVersion = "";
@@ -413,19 +416,19 @@ export class GuarantorPersonalComponent implements OnInit {
     let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
-      // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
-      this.toastr.errorMessage("Guarantor age must be at least 17 year old");
+      // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
+      this.toastr.warningMessage(ExceptionConstant.GUARANTOR_AGE_MUST_17_YEARS_OLD);
       flag = false;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
-    if (this.guarantorPersonalObj.AppGuarantorPersonalObj.MrIdTypeCode != "EKTP") {
+    if (this.guarantorPersonalObj.AppGuarantorPersonalObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP) {
       var a = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
-      var Business_Date = localStorage.getItem('BusinessDate');
+      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
       if (businessDt > a) {
-        this.toastr.errorMessage("Id Expired Date can not be more than business date");
+        this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN);
         flag = false;
       }
     }
@@ -459,7 +462,7 @@ export class GuarantorPersonalComponent implements OnInit {
       this.guarantorPersonalObj.RowVersion = this.resultData.RowVersion;
       this.guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorPersonalObj.AppGuarantorPersonalObj.AppGuarantorPersonalId = this.AppGuarantorPersonalId;
-      this.http.post(AdInsConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
+      this.http.post(URLConstant.EditAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
@@ -469,7 +472,7 @@ export class GuarantorPersonalComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(AdInsConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
+      this.http.post(URLConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

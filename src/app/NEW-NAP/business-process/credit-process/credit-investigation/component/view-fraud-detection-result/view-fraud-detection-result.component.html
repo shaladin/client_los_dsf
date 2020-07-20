@@ -1,12 +1,12 @@
 <div class="card px-3">
   <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
   </lib-ucSubsection>
-  <div class="form-body" id="CustDupCheck">
+  <div class="form-body table-responsive" id="CustDupCheck">
     <div *ngIf="listCustDuplicate?.length > 0"class="form-group row">
       <label class="col-md-3 adInsLabel">Customer No</label>
-      <label class="col-md-3 adInsLabel">{{appCustObj.CustNo}} ({{custStat}})</label>
+      <label class="col-md-3 adInsLabel">{{appCustObj?.CustNo}} ({{custStat}})</label>
     </div>
-    <table class="table table-responsive-md text-center table-hover">
+    <table class="table text-center table-hover">
       <thead>
         <tr class="table-header">
           <th><span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
@@ -39,19 +39,19 @@
         <tr *ngFor="let item of listCustDuplicate">
           <td>{{item.CustNo}}</td>
           <td>{{item.CustName}}</td>
-          <td *ngIf="item.IdType!=null">{{item.IdType}}</td>
-          <td *ngIf="item.IdType==null"> - </td>
+          <td *ngIf="item.MrIdType!=null">{{item.MrIdType}}</td>
+          <td *ngIf="item.MrIdType==null"> - </td>
           <td *ngIf="item.IdNo!=null">{{item.IdNo}}</td>
           <td *ngIf="item.IdNo==null"> - </td>
-          <td>{{item.BirthDt | date: 'dd-MMMM-yyyy'}}</td>
+          <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
           <td *ngIf="item.MobilePhnNo1!=null">{{item.MobilePhnNo1}}</td>
           <td *ngIf="item.MobilePhnNo1==null"> - </td>
           <td *ngIf="item.MotherMaidenName!=null">{{item.MotherMaidenName}}</td>
           <td *ngIf="item.MotherMaidenName==null"> - </td>
-          <td>{{item.Npwp}}</td>
+          <td>{{item.TaxIdNo}}</td>
           <td>{{item.DuplicateItem}}</td>
-          <td *ngIf="item.IsSelected == '1'">Selected</td>
-          <td *ngIf="item.IsSelected == '0'"></td>
+          <td *ngIf="item.IsSelected">Selected</td>
+          <td *ngIf="!item.IsSelected">Not Selected</td>
         </tr>
       </tbody>
     </table>
@@ -101,7 +101,7 @@
         <td>{{item.CustName}}</td>
         <td>{{item.MrIdTypeCode}}</td>
         <td>{{item.IdNo}}</td>
-        <td>{{item.BirthDt | date: 'dd-MMMM-yyyy'}}</td>
+        <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
         <td>{{item.MobilePhnNo1}}</td>
         <td>{{item.MotherMaidenName}}</td>
         <td>{{item.TaxIdNo}}</td>
@@ -176,7 +176,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewDukcapilObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+  <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewDukcapilObj"></lib-ucviewgeneric>
   </ng-template>
 </div>
 
@@ -255,8 +255,8 @@
         <tr *ngFor="let item of listNegativeAsset">
           <td *ngIf="item.FullAssetName!=null">{{item.FullAssetName}}</td>
           <td *ngIf="item.FullAssetName==null"> - </td>
-          <td *ngIf="item.SourceType!=null">{{item.SourceType}}</td>
-          <td *ngIf="item.SourceType==null"> - </td>
+          <td *ngIf="item.MrNegAssetSource!=null">{{item.MrNegAssetSource}}</td>
+          <td *ngIf="item.MrNegAssetSource==null"> - </td>
           <td *ngIf="item.SerialNo1!=null">{{item.SerialNo1}}</td>
           <td *ngIf="item.SerialNo1==null"> - </td>
           <td *ngIf="item.SerialNo2!=null">{{item.SerialNo2}}</td>
@@ -271,6 +271,6 @@
   </div>
 </div>
 <div *ngIf="isView == false">
-  <lib-ucviewgeneric [viewInput]="viewFraudVerifResultObj" [whereValue]="arrValue"></lib-ucviewgeneric>
+  <lib-ucviewgeneric [viewGenericObj]="viewFraudVerifResultObj"></lib-ucviewgeneric>
 </div>
 

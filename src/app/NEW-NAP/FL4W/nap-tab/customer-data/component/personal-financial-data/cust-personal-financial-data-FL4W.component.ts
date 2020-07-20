@@ -4,6 +4,8 @@ import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroup
 import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-cust-personal-financial-data-FL4W',
@@ -18,7 +20,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
-  @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+  @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj;
   totalMonthlyIncome: number;
   nettMonthlyIncome: number;
   totalMonthlyExpense: number;
@@ -80,14 +82,14 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   }
   
   initUrl(){
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
   bindSourceOfIncomeObj(){
-    this.refMasterObj.RefMasterTypeCode = "SOURCE_INCOME";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSourceIncome;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.SourceOfIncomeObj = response["ReturnObject"];
+        this.SourceOfIncomeObj = response[CommonConstant.ReturnObj];
         if(this.SourceOfIncomeObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
             MrSourceOfIncomeTypeCode: this.SourceOfIncomeObj[0].Key

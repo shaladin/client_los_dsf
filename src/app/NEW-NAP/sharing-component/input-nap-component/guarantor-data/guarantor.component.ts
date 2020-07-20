@@ -5,6 +5,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-guarantor',
@@ -35,7 +37,7 @@ export class GuarantorComponent implements OnInit {
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+  getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
 
   CustDataForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
@@ -57,12 +59,12 @@ export class GuarantorComponent implements OnInit {
   }
 
   bindCustTypeObj(MrCustTypeCode? : string) {
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         console.log("Response");
         console.log(response);
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
           if(MrCustTypeCode == undefined){
             this.CustDataForm.patchValue({

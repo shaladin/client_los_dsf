@@ -4,12 +4,13 @@
         {
             "subSectionId": "MainInfoId",
             "subSectionTitle": "Main Information",
-            "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
             "mainInfo": [
                 {
                     "type": "link",
                     "label": "Application No",
                     "property": "AppNo",
+                    "name": "AppNo",
                     "path": "/Nap/View/AppView",
                     "target": "_blank",
                     "param": [
@@ -28,6 +29,7 @@
                     "type": "link",
                     "label": "Agreement No",
                     "property": "AgrmntNo",
+                    "name": "AgrmntNo",
                     "path": "/Nap/View/AgrmntView",
                     "target": "_blank",
                     "param": [
@@ -53,9 +55,22 @@
                     "property": "PurchaseOrderDt"
                 },
                 {
-                    "type": "text",
+                    "type": "link",
                     "label": "Purchase Order No",
-                    "property": "PurchaseOrderNo"
+                    "property": "PurchaseOrderNo",
+                    "name": "PurchaseOrderNo",
+                    "path": "/Nap/View/POView",
+                    "target": "_blank",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type": "PurchaseOrderHId",
+                            "property": "PurchaseOrderHId"
+                        }
+                    ]
                 },
                 {
                     "type": "date",
@@ -69,7 +84,7 @@
                 }
             ],
             "querystring": {
-                "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, POH.TOTAL_PURCHASE_ORDER_AMT AS TotalPurchaseOrderAmt, POH.NUM_OF_EXTENSION AS NumOfExtension, (CASE WHEN DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), POH.PURCHASE_ORDER_EXPIRED_DT) < 0 THEN 0 ELSE DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), POH.PURCHASE_ORDER_EXPIRED_DT) END) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId",
+                "select": "SELECT A.APP_NO AS AppNo, A.PROD_OFFERING_NAME AS ProdOfferingName, AC.CUST_NAME As CustName, POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, AG.AGRMNT_NO AS AgrmntNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpiredDt, AA.SUPPL_NAME AS SupplName, POH.TOTAL_PURCHASE_ORDER_AMT AS TotalPurchaseOrderAmt, POH.NUM_OF_EXTENSION AS NumOfExtension, (CASE WHEN DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), POH.PURCHASE_ORDER_EXPIRED_DT) < 0 THEN 0 ELSE DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), POH.PURCHASE_ORDER_EXPIRED_DT) END) AS RemainingDays, A.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId, POH.PURCHASE_ORDER_H_ID AS PurchaseOrderHId",
                 "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID JOIN dbo.APP_ASSET AA ON AA.AGRMNT_ID = AG.AGRMNT_ID JOIN dbo.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID LEFT JOIN dbo.V_SYS_CTRL_COY SCC WITH(NOLOCK) ON 1=1 AND SCC.SYS_KEY = 'BusinessDate'",
                 "where": "WHERE A.APP_ID = {0}"
             }

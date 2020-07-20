@@ -4,12 +4,13 @@
     {
       "subSectionId": "AgrMainInformationId",
       "subSectionTitle": "Request Pre Go Live Main Information",
-      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
           "type": "link",
           "label": "Application No",
           "property": "AppNo",
+          "name": "AppNo",
           "path": "/Nap/View/AppView",
           "target": "_blank",
           "param": [
@@ -23,6 +24,7 @@
           "type": "link",
           "label": "Lead No",
           "property": "LeadNo",
+          "name": "LeadNo",
           "path": "/Lead/View",
           "target": "_blank",
           "param": [
@@ -36,12 +38,27 @@
           "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
+          "name": "AgrmntNo",
           "path": "/Nap/View/AgrmntView",
           "target": "_blank",
           "param": [
             {
               "type": "AgrmntId",
               "property": "AgrmntId"
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "name": "MouCustNo",
+          "path": "/Mou/Cust/View",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
             }
           ]
         },
@@ -79,8 +96,8 @@
         }
       ],
       "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, vCust.CUST_ID AS CustId ,AGR.CUST_NO AS CustNo, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, L.LEAD_NO AS LeadNo, A.LEAD_ID AS LeadId, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId",
-        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID JOIN dbo.APP_CUST apCust WITH(NOLOCK) ON apCust.APP_ID = A.APP_ID JOIN dbo.V_CUST vCust WITH(NOLOCK) ON agr.CUST_NO = vCust.CUST_NO LEFT JOIN dbo.LEAD L ON L.LEAD_ID = A.LEAD_ID",
+        "select": "SELECT A.APP_NO AS AppNo, AGR.AGRMNT_NO AS AgrmntNo, AGR.CUST_NAME AS CustName, vCust.CUST_ID AS CustId ,AGR.CUST_NO AS CustNo, AGR.TENOR AS Tenor, AGR.CURR_CODE AS CurrCode, AGR.NUM_OF_ASSET AS NumOfAsset, AGR.OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, L.LEAD_NO AS LeadNo, A.LEAD_ID AS LeadId, AGR.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, E.MOU_CUST_NO AS MouCustNo, E.MOU_CUST_ID AS MouCustId",
+        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) LEFT JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID LEFT JOIN dbo.APP_CUST apCust WITH(NOLOCK) ON apCust.APP_ID = A.APP_ID LEFT JOIN dbo.V_CUST vCust WITH(NOLOCK) ON agr.CUST_NO = vCust.CUST_NO LEFT JOIN dbo.LEAD L ON L.LEAD_ID = A.LEAD_ID LEFT JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = A.MOU_CUST_ID LEFT JOIN MOU_CUST_FCTR D ON D.MOU_CUST_ID = E.MOU_CUST_ID",
         "where": "WHERE AGR.AGRMNT_ID = {0}"
       }
     }

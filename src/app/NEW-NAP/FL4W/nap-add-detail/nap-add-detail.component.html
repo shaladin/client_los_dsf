@@ -1,6 +1,7 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
+    <!-- <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
+    <ng-template #FL4WMainInfoContainer></ng-template>
     <div class="card-body">
       <div class="px-3">
         <div id="stepperPersonal" class="bs-stepper">
@@ -83,7 +84,7 @@
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
-              [showCancel]="showCancel" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
               </app-customer-data-FL4W>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
@@ -199,7 +200,7 @@
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
-              [showCancel]="showCancel" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
+              [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
               </app-customer-data-FL4W>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">

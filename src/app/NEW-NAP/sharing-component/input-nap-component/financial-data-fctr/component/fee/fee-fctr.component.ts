@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-fee-fctr',
@@ -37,9 +40,9 @@ export class FeeFctrComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
-    await this.http.post(environment.losUrl + "/AppFee/GetListAppFeeByAppId", { AppId: AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
-        this.listAppFeeObj = response["ReturnObject"];
+        this.listAppFeeObj = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
 
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
@@ -48,6 +51,7 @@ export class FeeFctrComponent implements OnInit {
         }
 
         this.PatchProvisionFeeValue();
+        this.ProvisionFeeInput_FocusOut();
       }
     );
   }
@@ -241,7 +245,11 @@ export class FeeFctrComponent implements OnInit {
  
           fb_provision.patchValue({
             AppFeeAmt : response["ProvisionFeeAmt"],
-            AppFeePrcnt : response["ProvisionFeePercentage"]
+            AppFeePrcnt : response["ProvisionFeePercentage"],
+            StdFeeAmt: response["StdProvisionFeeAmt"],
+            StdFeePrcnt: response["StdProvisionFeePercentage"],
+            SellFeeAmt: response["SellProvisionFeeAmt"],
+            SellFeePrcnt: response["SellProvisionFeePercentage"]
           });
 
           this.CalculateTotalFeeAndCaptlzAmt();

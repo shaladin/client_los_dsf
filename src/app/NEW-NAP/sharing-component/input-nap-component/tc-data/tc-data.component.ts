@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { formatDate } from '@angular/common';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-tc-data',
@@ -172,7 +173,7 @@ export class TcDataComponent implements OnInit {
       // if(item.get("IsChecked").value){
       //   if(expDtForm != null){
       //     if(expDt < businessDt){
-      //       this.toastr.errorMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
+      //       this.toastr.warningMessage("Expired Date for " + item.get("TcName").value + " can't be lower than Business Date");
       //       return;
       //     }
       //   }
@@ -180,7 +181,7 @@ export class TcDataComponent implements OnInit {
       // if (item.get("IsChecked").value == false) {
       //   if(prmsDtForm != null){
       //     if(prmsDt < businessDt){
-      //       this.toastr.errorMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
+      //       this.toastr.warningMessage("Promise Date for " + item.get("TcName").value + " can't be lower than Business Date");
       //       return;
       //     }
       //   }
@@ -194,7 +195,7 @@ export class TcDataComponent implements OnInit {
      // this.listAppTcObj.push(appTcObj);
     //}
 
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     this.listAppTcObj = new Array<AppTCObj>();
     for (var i = 0; i < this.AppTcForm.value.TCList["length"]; i++) {
       var appTC = new AppTCObj();
@@ -217,7 +218,7 @@ export class TcDataComponent implements OnInit {
       if (appTC.IsChecked == false) {
         if(prmsDtForm != null){
           if(prmsDt < businessDt){
-            this.toastr.errorMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
             return;
           }
         }
@@ -226,7 +227,7 @@ export class TcDataComponent implements OnInit {
     }
     this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
     if (this.mode == "edit") {
-      this.http.post(AdInsConstant.EditAppTc, this.ReqTCObj).subscribe(
+      this.http.post(URLConstant.EditAppTc, this.ReqTCObj).subscribe(
         (response) => {
           console.log(response);
           // this.toastr.successMessage(response["message"]);
@@ -237,7 +238,7 @@ export class TcDataComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(AdInsConstant.AddAppTc, this.ReqTCObj).subscribe(
+      this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
         (response) => {
           console.log(response);
           // this.toastr.successMessage(response["message"]);

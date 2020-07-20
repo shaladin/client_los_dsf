@@ -15,6 +15,9 @@ import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCompanyLegalDocObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -40,11 +43,11 @@ export class GuarantorCompanyComponent implements OnInit {
   MrJobPositionCode: any;
   inputFieldObj: InputFieldObj;
   AddrObj: AddrObj;
-  appGuarantorCompanyObj : AppGuarantorCompanyObj;
-  guarantorCompanyObj : GuarantorCompanyObj = new GuarantorCompanyObj();
-  AppGuarantorCompanyId : any;
+  appGuarantorCompanyObj: AppGuarantorCompanyObj;
+  guarantorCompanyObj: GuarantorCompanyObj = new GuarantorCompanyObj();
+  AppGuarantorCompanyId: any;
   listLegalDoc: Array<AppGuarantorCompanyLegalDocObj> = new Array<AppGuarantorCompanyLegalDocObj>();
-  DocObjs : any;
+  DocObjs: any;
   defLegalDocType: string;
   appLegalDoc: any = new Array();
   isReady: boolean = false;
@@ -69,13 +72,13 @@ export class GuarantorCompanyComponent implements OnInit {
     PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]]
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) { 
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
   UserAccess: any;
   MaxDate: Date;
   async ngOnInit(): Promise<void> {
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
     this.initAddr();
@@ -85,36 +88,36 @@ export class GuarantorCompanyComponent implements OnInit {
     if (this.mode == "edit") {
       var guarantorCompanyObj = new GuarantorCompanyObj();
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
-      await this.http.post(AdInsConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
+      await this.http.post(URLConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
         (response) => {
           console.log(response);
-          this.resultData=response;
-          this.AppGuarantorCompanyId = this.resultData.appGuarantorCompanyObj.AppGuarantorCompanyId;
-          this.inputLookupObj.jsonSelect = { CustName: this.resultData.appGuarantorObj.GuarantorName };
-          this.inputLookupObj.nameSelect = this.resultData.appGuarantorObj.GuarantorName;
-          this.inputLookupObj1.jsonSelect = {IndustryTypeName: this.resultData.appGuarantorCompanyObj.IndustryTypeCode};
+          this.resultData = response;
+          this.AppGuarantorCompanyId = this.resultData.AppGuarantorCompanyObj.AppGuarantorCompanyId;
+          this.inputLookupObj.jsonSelect = { CustName: this.resultData.AppGuarantorObj.GuarantorName };
+          this.inputLookupObj.nameSelect = this.resultData.AppGuarantorObj.GuarantorName;
+          this.inputLookupObj1.jsonSelect = { IndustryTypeName: this.resultData.AppGuarantorCompanyObj.IndustryTypeCode };
           this.CompanyForm.patchValue({
-            MrCustRelationshipCode: this.resultData.appGuarantorObj.MrCustRelationshipCode,
-            TaxIdNo: this.resultData.appGuarantorObj.TaxIdNo,
-            MrCompanyTypeCode: this.resultData.appGuarantorCompanyObj.MrCompanyTypeCode,
-            ContactName: this.resultData.appGuarantorCompanyObj.ContactName,
-            MrJobPositionCode: this.resultData.appGuarantorCompanyObj.MrJobPositionCode,
-            MobilePhnNo1: this.resultData.appGuarantorCompanyObj.MobilePhnNo1,
-            ContactEmail: this.resultData.appGuarantorCompanyObj.ContactEmail,
-            MobilePhnNo2: this.resultData.appGuarantorCompanyObj.MobilePhnNo2,
-            FaxArea: this.resultData.appGuarantorCompanyObj.FaxArea,
-            Fax: this.resultData.appGuarantorCompanyObj.Fax,
-            PhnArea1: this.resultData.appGuarantorCompanyObj.PhnArea1,
-            Phn1: this.resultData.appGuarantorCompanyObj.Phn1,
-            PhnExt1: this.resultData.appGuarantorCompanyObj.PhnExt1,
-            PhnArea2: this.resultData.appGuarantorCompanyObj.PhnArea2,
-            Phn2: this.resultData.appGuarantorCompanyObj.Phn2,
-            PhnExt2: this.resultData.appGuarantorCompanyObj.PhnExt2
+            MrCustRelationshipCode: this.resultData.AppGuarantorObj.MrCustRelationshipCode,
+            TaxIdNo: this.resultData.AppGuarantorObj.TaxIdNo,
+            MrCompanyTypeCode: this.resultData.AppGuarantorCompanyObj.MrCompanyTypeCode,
+            ContactName: this.resultData.AppGuarantorCompanyObj.ContactName,
+            MrJobPositionCode: this.resultData.AppGuarantorCompanyObj.MrJobPositionCode,
+            MobilePhnNo1: this.resultData.AppGuarantorCompanyObj.MobilePhnNo1,
+            ContactEmail: this.resultData.AppGuarantorCompanyObj.ContactEmail,
+            MobilePhnNo2: this.resultData.AppGuarantorCompanyObj.MobilePhnNo2,
+            FaxArea: this.resultData.AppGuarantorCompanyObj.FaxArea,
+            Fax: this.resultData.AppGuarantorCompanyObj.Fax,
+            PhnArea1: this.resultData.AppGuarantorCompanyObj.PhnArea1,
+            Phn1: this.resultData.AppGuarantorCompanyObj.Phn1,
+            PhnExt1: this.resultData.AppGuarantorCompanyObj.PhnExt1,
+            PhnArea2: this.resultData.AppGuarantorCompanyObj.PhnArea2,
+            Phn2: this.resultData.AppGuarantorCompanyObj.Phn2,
+            PhnExt2: this.resultData.AppGuarantorCompanyObj.PhnExt2
           });
-          this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
-          this.setIndustryTypeName(this.resultData.appGuarantorCompanyObj.IndustryTypeCode);
+          this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
+          this.setIndustryTypeName(this.resultData.AppGuarantorCompanyObj.IndustryTypeCode);
           this.setAddrLegalObj();
-          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.appGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
+          this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           console.log(this.guarantorCompanyObj);
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
         },
@@ -129,20 +132,20 @@ export class GuarantorCompanyComponent implements OnInit {
 
 
     var refCompObj = {
-      RefMasterTypeCode: "COMPANY_TYPE",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
     }
     var refCustRelObj = {
-      RefMasterTypeCode: "CUST_COMPANY_RELATIONSHIP",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
       RowVersion: ""
     }
     var refJobObj = {
-      RefMasterTypeCode: "JOB_POSITION",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListActiveRefMaster, refCompObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, refCompObj).subscribe(
       (response) => {
-        this.MrCompanyTypeCode = response["ReturnObject"];
+        this.MrCompanyTypeCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.CompanyForm.patchValue({
             MrCompanyTypeCode: this.MrCompanyTypeCode[0].MasterCode
@@ -150,9 +153,9 @@ export class GuarantorCompanyComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
       (response) => {
-        this.MrCustRelationshipCode = response["ReturnObject"];
+        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.CompanyForm.patchValue({
             MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
@@ -160,9 +163,9 @@ export class GuarantorCompanyComponent implements OnInit {
         }
       }
     );
-    this.http.post(AdInsConstant.GetListActiveRefMaster, refJobObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, refJobObj).subscribe(
       (response) => {
-        this.MrJobPositionCode = response["ReturnObject"];
+        this.MrJobPositionCode = response[CommonConstant.ReturnObj];
         //if(this.mode != "edit"){
         //  this.CompanyForm.patchValue({
         //    MrJobPositionCode: this.MrJobPositionCode[0].MasterCode
@@ -192,7 +195,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(AdInsConstant.CustTypeCompany);
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustryType.json";
@@ -215,7 +218,7 @@ export class GuarantorCompanyComponent implements OnInit {
     console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(AdInsConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.CompanyForm.patchValue(
@@ -224,7 +227,7 @@ export class GuarantorCompanyComponent implements OnInit {
             TaxIdNo: this.resultData.TaxIdNo
           }
         );
-        this.http.post(AdInsConstant.GetCustCompanyByCustId, { CustId: event.CustId }).subscribe(
+        this.http.post(URLConstant.GetCustCompanyByCustId, { CustId: event.CustId }).subscribe(
           (response) => {
             this.resultData = response;
             this.CompanyForm.patchValue({
@@ -232,7 +235,7 @@ export class GuarantorCompanyComponent implements OnInit {
             });
 
             if (this.resultData.RefIndustryTypeId != null) {
-              this.http.post(AdInsConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
+              this.http.post(URLConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
                   this.inputLookupObj1.jsonSelect = response;
@@ -243,7 +246,7 @@ export class GuarantorCompanyComponent implements OnInit {
               this.inputLookupObj1.jsonSelect = {};
             }
 
-            this.http.post(AdInsConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
+            this.http.post(URLConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
               (response) => {
                 this.resultData = response;
                 this.CompanyForm.patchValue({
@@ -266,7 +269,7 @@ export class GuarantorCompanyComponent implements OnInit {
             );
           }
         );
-        this.http.post(AdInsConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
           (response) => {
             console.log(response);
             this.resultData = response;
@@ -310,15 +313,15 @@ export class GuarantorCompanyComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorCompanyObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorCompanyObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorCompanyObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorCompanyObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorCompanyObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorCompanyObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorCompanyObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorCompanyObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorCompanyObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorCompanyObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorCompanyObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorCompanyObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorCompanyObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorCompanyObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
   }
 
   Add() {
@@ -332,14 +335,14 @@ export class GuarantorCompanyComponent implements OnInit {
     }
 
     this.guarantorCompanyObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
-    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = "COMPANY";
+    this.guarantorCompanyObj.AppGuarantorObj.MrGuarantorTypeCode = CommonConstant.GuarantorTypeCodeCompany;
     this.guarantorCompanyObj.AppGuarantorObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorObj.MrCustRelationshipCode = this.CompanyForm.controls.MrCustRelationshipCode.value;
     this.guarantorCompanyObj.AppGuarantorObj.RowVersion = "";
     this.guarantorCompanyObj.AppGuarantorObj.AppId = this.AppId;
   }
 
-  setAppGuarantorCompany(){
+  setAppGuarantorCompany() {
     this.guarantorCompanyObj.AppGuarantorCompanyObj.MrCompanyTypeCode = this.CompanyForm.controls.MrCompanyTypeCode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.TaxIdNo = this.CompanyForm.controls.TaxIdNo.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.IndustryTypeCode = this.inputLookupObj1.jsonSelect.IndustryTypeCode;
@@ -382,7 +385,7 @@ export class GuarantorCompanyComponent implements OnInit {
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorCompanyObj.AppGuarantorCompanyObj.AppGuarantorCompanyId = this.AppGuarantorCompanyId;
       console.log(this.guarantorCompanyObj);
-      this.http.post(AdInsConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
+      this.http.post(URLConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
@@ -392,7 +395,7 @@ export class GuarantorCompanyComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(AdInsConstant.AddAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
+      this.http.post(URLConstant.AddAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -448,12 +451,12 @@ export class GuarantorCompanyComponent implements OnInit {
 
   getDocType() {
     var legalDocObj = {
-      RefMasterTypeCode: "LEGAL_DOC_TYPE",
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListActiveRefMaster, legalDocObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, legalDocObj).subscribe(
       (response) => {
-        this.DocObjs = response["ReturnObject"];
+        this.DocObjs = response[CommonConstant.ReturnObj];
         if (this.DocObjs.length > 0) {
           this.defLegalDocType = this.DocObjs[0].MasterCode;
         }
@@ -487,12 +490,12 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   deleteLegalDoc(i) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var legalDocObjs = this.CompanyForm.controls["LegalDocForm"] as FormArray;
       legalDocObjs.removeAt(i);
     }
   }
-    
+
 
   setIndustryTypeName(industryTypeCode) {
     var refIndustryObj = {
@@ -500,7 +503,7 @@ export class GuarantorCompanyComponent implements OnInit {
     };
     refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(AdInsConstant.GetRefIndustryTypeByCode, refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, refIndustryObj).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
         this.inputLookupObj1.jsonSelect = response;
@@ -510,7 +513,6 @@ export class GuarantorCompanyComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
 
   cancel() {
@@ -542,6 +544,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.controls.Phn1.clearValidators();
     this.CompanyForm.controls.Phn1.updateValueAndValidity();
   }
+  
   ChangeNameValue() {
     if (this.CompanyForm.controls.ContactName.value == '') {
       this.clearValidatorContactInfo();

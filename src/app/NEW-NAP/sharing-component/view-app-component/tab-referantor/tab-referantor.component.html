@@ -42,7 +42,7 @@
               </div>
             </div>
           </div>
-          <lib-ucSubsection [id]="'npwpReferantorInfoId'" [title]="'Referantor\'s NPWP Info'" [panel]="'npwpReferantorInfo'">
+          <lib-ucSubsection *ngIf="existData" [id]="'npwpReferantorInfoId'" [title]="'Referantor\'s NPWP Info'" [panel]="'npwpReferantorInfo'">
           </lib-ucSubsection>
           <div class="form-body" [id]="'npwpReferantorInfo'">
             <div *ngIf="existData">

@@ -14,6 +14,8 @@ import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-data',
@@ -83,16 +85,16 @@ export class LeadDataComponent implements OnInit {
   tempMrDownPaymentTypeCode : any;
   tempMrFirstInstTypeCode : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.addEditLeadData = AdInsConstant.AddEditLeadData;
-    this.getLeadAssetByLeadId = AdInsConstant.GetLeadAssetByLeadId;
-    this.getLeadAppByLeadId = AdInsConstant.GetLeadAppByLeadId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getGeneralSettingByCode = AdInsConstant.GetGeneralSettingByCode;
-    this.getLeadByLeadId = AdInsConstant.GetLeadByLeadId;
-    this.editLead = AdInsConstant.EditLead;
-    this.submitWorkflowLeadInput = AdInsConstant.SubmitWorkflowLeadInput;
-    this.GetRefMasterByMasterCode = AdInsConstant.GetRefMasterByMasterCode;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditLeadData = URLConstant.AddEditLeadData;
+    this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
+    this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
+    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
+    this.editLead = URLConstant.EditLead;
+    this.submitWorkflowLeadInput = URLConstant.SubmitWorkflowLeadInput;
+    this.GetRefMasterByMasterCode = URLConstant.GetRefMasterByMasterCode;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -122,12 +124,12 @@ export class LeadDataComponent implements OnInit {
     console.log("aawd");
     console.log(AssetTypeCode);
 
-    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
-        this.SerialNoList = response['ReturnObject'];
+        this.SerialNoList = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.SerialNoList["length"]; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -153,7 +155,7 @@ export class LeadDataComponent implements OnInit {
 
     var assetType : AssetTypeObj= new AssetTypeObj();
     assetType.AssetTypeId = this.assetTypeId;
-    this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+    this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
       (response: any) => { 
  
       }
@@ -190,29 +192,29 @@ export class LeadDataComponent implements OnInit {
     );
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
-        this.returnAssetConditionObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
-        this.returnDownPaymentObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.firstInstObj = new RefMasterObj();
-    this.firstInstObj.RefMasterTypeCode = "FIRST_INST_TYPE";
+    this.firstInstObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     this.http.post(this.getListActiveRefMasterUrl, this.firstInstObj).subscribe(
       (response) => {
-        this.returnFirstInstObj = response["ReturnObject"];
-        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnFirstInstObj = response[CommonConstant.ReturnObj];
+        this.LeadDataForm.patchValue({ MrFirstInstTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -222,7 +224,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == "USED") {
+          if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;
@@ -266,17 +268,17 @@ export class LeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                 (response: any) => { 
                   
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }
-                      this.SerialNoList = response['ReturnObject'];
+                      this.SerialNoList = response[CommonConstant.ReturnObj];
                       for (var i = 0; i < this.SerialNoList["length"]; i++) {
                         var eachDataDetail = this.fb.group({
                           SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -391,17 +393,17 @@ export class LeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(AdInsConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
                   (response: any) => { 
                     
 
                     var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                       (response: any) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
                         }
-                        this.SerialNoList = response['ReturnObject'];
+                        this.SerialNoList = response[CommonConstant.ReturnObj];
                         for (var i = 0; i < this.SerialNoList["length"]; i++) {
                           var eachDataDetail = this.fb.group({
                             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],

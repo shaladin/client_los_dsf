@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-multi-coll-data',
@@ -44,7 +45,7 @@ export class MultiCollDataComponent implements OnInit {
 
   Next() {
     if (this.AppCollateral.length == 0) {
-      this.toastr.errorMessage("Please Input At Least 1 Collateral Data");
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
     }
     else {
       this.outputTab.emit();

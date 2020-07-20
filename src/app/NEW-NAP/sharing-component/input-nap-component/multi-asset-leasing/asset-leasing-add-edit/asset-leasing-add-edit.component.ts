@@ -3,14 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
@@ -19,6 +17,8 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -150,21 +150,21 @@ export class AssetLeasingAddEditComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListVendorEmp = AdInsConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
-    this.getAppCustAddrByAppCustAddrId = AdInsConstant.GetAppCustAddrByAppCustAddrId;
-    this.addEditAllAssetDataUrl = AdInsConstant.AddEditAllAssetData;
-    this.getRefCoy = AdInsConstant.GetRefCoy;
-    this.getAppCustUrl = AdInsConstant.GetAppCustByAppId;
-    this.getAppAssetByAppAssetId = AdInsConstant.GetAppAssetByAppAssetId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getAppCollateralByAppId = AdInsConstant.GetAppCollateralByAppId;
-    this.getAppCollateralRegistByAppCollateralId = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
-    this.getListAppAssetSupplEmpByAppAssetId = AdInsConstant.GetListAppAssetSupplEmpByAppAssetId;
-    this.getVendorForLookup = AdInsConstant.GetVendorForLookup;
-    this.getAppAssetSupplEmpByAppAssetIdAndCode = AdInsConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
+    this.getListAppAssetData = URLConstant.GetListAppAssetData;
+    this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
+    this.addEditAllAssetDataUrl = URLConstant.AddEditAllAssetData;
+    this.getRefCoy = URLConstant.GetRefCoy;
+    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
+    this.getAppAssetByAppAssetId = URLConstant.GetAppAssetByAppAssetId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
+    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
+    this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
+    this.getVendorForLookup = URLConstant.GetVendorForLookup;
+    this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {
@@ -201,8 +201,8 @@ GetListAddr() {
   this.appObj.AppId = this.AppId;
   this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
     (response) => {
-      this.AppCustAddrObj = response["ReturnObject"];
-      this.AssetDataForm.patchValue({ LocationAddrType: response['ReturnObject'][0]['AppCustAddrId'] });
+      this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+      this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
     }
   );
 }
@@ -241,10 +241,10 @@ copyToLocationAddr() {
     this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
     this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
     (response) => {
-        this.listBranchObj = response["ReturnObject"];
+        this.listBranchObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ 
-          BranchManagerNo: response['ReturnObject'][0]['Key'],
-          BranchManagerName: response['ReturnObject'][0]['Value'] 
+          BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
+          BranchManagerName: response[CommonConstant.ReturnObj][0]['Value'] 
         });
       
     });
@@ -254,10 +254,10 @@ copyToLocationAddr() {
     this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
     this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
     (response) => {
-        this.listSalesObj = response["ReturnObject"];
+        this.listSalesObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ 
-          SalesPersonNo: response['ReturnObject'][0]['Key'],
-          SalesPersonName: response['ReturnObject'][0]['Value']
+          SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
+          SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
         });
       
     });
@@ -267,10 +267,10 @@ copyToLocationAddr() {
     this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
     this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
     (response) => {
-        this.listAdminHeadObj = response["ReturnObject"];
+        this.listAdminHeadObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ 
-          AdminHeadNo: response['ReturnObject'][0]['Key'],
-          AdminHeadName: response['ReturnObject'][0]['Value'] 
+          AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
+          AdminHeadName: response[CommonConstant.ReturnObj][0]['Value'] 
         });
       
     });
@@ -393,7 +393,7 @@ copyToLocationAddr() {
                 this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
                 this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
                 (response) => {
-                    this.listBranchObj = response["ReturnObject"];
+                    this.listBranchObj = response[CommonConstant.ReturnObj];
                     this.AssetDataForm.patchValue({
                       BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
                       BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
@@ -413,7 +413,7 @@ copyToLocationAddr() {
                 this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
                 this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
                 (response) => {
-                    this.listAdminHeadObj = response["ReturnObject"];
+                    this.listAdminHeadObj = response[CommonConstant.ReturnObj];
                     this.AssetDataForm.patchValue({
                       AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
                       AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
@@ -433,7 +433,7 @@ copyToLocationAddr() {
                 this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
                 this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
                 (response) => {
-                    this.listSalesObj = response["ReturnObject"];
+                    this.listSalesObj = response[CommonConstant.ReturnObj];
                     this.AssetDataForm.patchValue({
                       SalesPersonNo: this.salesAppAssetSupplEmpObj.SupplEmpNo,
                       SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName
@@ -496,37 +496,37 @@ copyToLocationAddr() {
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
     this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = "ASSET_CONDITION";
+    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
-        this.returnAssetConditionObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ MrAssetConditionCode: response['ReturnObject'][0]['Key'] });
+        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.downPaymentObj = new RefMasterObj();
-    this.downPaymentObj.RefMasterTypeCode = "DOWN_PAYMENT_TYPE";
+    this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
       (response) => {
-        this.returnDownPaymentObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ MrDownPaymentTypeCode: response['ReturnObject'][0]['Key'] });
+        this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.userRelationshipObj = new RefMasterObj();
-    this.userRelationshipObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getListActiveRefMasterUrl, this.userRelationshipObj).subscribe(
       (response) => {
-        this.returnUserRelationshipObj = response["ReturnObject"];
-        this.AssetDataForm.patchValue({ UserRelationship: response['ReturnObject'][0]['Key'] });
+        this.returnUserRelationshipObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.assetUsageObj = new RefMasterObj();
-    this.assetUsageObj.RefMasterTypeCode = "ASSET_USAGE";
+    this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
       (response) => {
-        this.returnAssetUsageObj = response["ReturnObject"];
+        this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({
           AssetUsage: response['ReturnObject'][0]['Key']
         });
@@ -570,7 +570,7 @@ copyToLocationAddr() {
     } else {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls["BranchManagerName"].value;
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls["BranchManagerNo"].value;
-      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = AdInsConstant.BRANCH_MANAGER_JOB_CODE;
+      this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
     }
   }
 

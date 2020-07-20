@@ -1,3 +1,6 @@
+import { URLConstant } from "../constant/URLConstant"
+import { environment } from "environments/environment"
+
 export class InputLookupObj{
     urlJson: any
     urlQryPaging: any
@@ -17,6 +20,9 @@ export class InputLookupObj{
 
     constructor()
     {
+        this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
+        this.urlQryPaging = URLConstant.GetPagingObjectBySQL;
+        this.urlEnviPaging = environment.FoundationR3Url;
         this.jsonSelect = "";
         this.idSelect = "";
         this.nameSelect = "";

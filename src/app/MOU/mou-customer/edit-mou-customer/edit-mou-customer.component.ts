@@ -7,6 +7,9 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -22,9 +25,9 @@ export class EditMouCustomerComponent implements OnInit {
   constructor(private http: HttpClient, private toastr: NGXToastrService,private router: Router) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -56,10 +59,9 @@ export class EditMouCustomerComponent implements OnInit {
     if(event.Key == "customer"){
         var link : string;
         var custObj = { CustNo: event.RowObj.CustNo };
-        this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
-            link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            window.open(link, '_blank');
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },
           (error) => {
             console.log(error);

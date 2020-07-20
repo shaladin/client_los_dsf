@@ -4,6 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-view',
@@ -20,8 +23,11 @@ export class MouViewComponent implements OnInit {
   MrCustTypeCode: string;
   IsResponseProcessed: boolean = false;
   isListedCustFactoring: boolean;
+  IsReady: boolean = false;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
-    this.getMouCustByIdUrl = AdInsConstant.GetMouCustById;
+    this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
         this.MouCustId = params["MouCustId"];
@@ -30,9 +36,16 @@ export class MouViewComponent implements OnInit {
     });
 
   }
-  viewMouHeader: string;
+  
   ngOnInit() {
-    this.viewMouHeader = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
 
@@ -42,6 +55,7 @@ export class MouViewComponent implements OnInit {
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
         this.IsResponseProcessed = true;
+        this.IsReady = true;
       },
       (error) => {
         console.log(error);
@@ -52,10 +66,9 @@ export class MouViewComponent implements OnInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);

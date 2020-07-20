@@ -7,6 +7,8 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-list-company',
@@ -19,11 +21,11 @@ export class ListCompanyComponent implements OnInit {
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
-  GetCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetCustomerDuplicateCheck;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + AdInsConstant.GetNegativeCustomerDuplicateCheck;
-  GetAppCustDuplicateCheckUrl = this.LOSUrl + AdInsConstant.GetAppCustDuplicateCheck;
-  GetCustDataByAppId = AdInsConstant.GetCustDataByAppId;
-  AddAppDupCheckCustUrl = this.LOSUrl + AdInsConstant.AddAppDupCheckCust;
+  GetCustomerDuplicateCheckUrl = URLConstant.GetCustomerAndNegativeCustDuplicateCheck;
+  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
+  GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
+  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
+  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   AppCustObj: AppCustObj; 
   AppCustCompanyObj: AppCustCompanyObj;
   AppCustAddrObj: AppCustAddrObj;
@@ -80,8 +82,8 @@ export class ListCompanyComponent implements OnInit {
         //List Cust And Negative Cust Dup Check
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
-            this.ListCustomerDuplicate = response['ReturnObject'].CustDuplicate;
-            this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
+            this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
+            this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
           },
           error => {
             console.log("error");
@@ -91,7 +93,7 @@ export class ListCompanyComponent implements OnInit {
         //List App Cust Duplicate Checking
         this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
-            this.ListAppCustDuplicate = response['ReturnObject'];
+            this.ListAppCustDuplicate = response[CommonConstant.ReturnObj];
           },
           error => {
             console.log("error");
@@ -144,7 +146,7 @@ export class ListCompanyComponent implements OnInit {
   SelectCust(item) {
     var AppDupCheckObj = {"AppId": this.AppId, 
     "CustNo":item.CustNo};
-    this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
@@ -156,7 +158,7 @@ export class ListCompanyComponent implements OnInit {
   NewCustomer(){
     var AppDupCheckObj = {"AppId": this.AppId, 
     "CustNo": this.AppCustObj.CustNo, RowVersion: ""};
-    this.http.post(AdInsConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
       },
@@ -166,19 +168,19 @@ export class ListCompanyComponent implements OnInit {
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
     
       });
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 }

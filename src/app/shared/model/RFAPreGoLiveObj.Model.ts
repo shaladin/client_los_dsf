@@ -3,6 +3,7 @@ export class RFAPreGoLiveObj {
     InstanceId: any;
     TaskListId: any;
     TransactionNo: any;
+    Reason: any;
     WFCode: any;
     ListValue: any;
     ApprovedBy: any;

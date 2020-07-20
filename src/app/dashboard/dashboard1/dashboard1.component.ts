@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from "ng-chartist";
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 declare var require: any;
 
@@ -17,16 +18,16 @@ export interface Chart {
 @Component({
     selector: 'app-dashboard1',
     templateUrl: './dashboard1.component.html',
-    styleUrls: ['./dashboard1.component.scss']
+    styleUrls: []
 })
 
-export class Dashboard1Component implements OnInit{
+export class Dashboard1Component implements OnInit {
 
     message = "loading...";
-    constructor(){}
+    constructor() { }
     ngOnInit() {
-        var getObject = JSON.parse(localStorage.getItem('currentUserContext'));
-        var getAccess = JSON.parse(localStorage.getItem('pageAccess'));
+        var getObject = JSON.parse(localStorage.getItem(CommonConstant.CURRENT_USER_CONTEXT));
+        var getAccess = JSON.parse(localStorage.getItem(CommonConstant.PAGE_ACCESS));
         console.log(getObject);
         console.log(getAccess);
     }
@@ -123,7 +124,6 @@ export class Dashboard1Component implements OnInit{
                         style: 'stroke-width: 5px',
                         x1: data.x1 + 0.001
                     });
-
                 }
                 else if (data.type == 'label') {
                     data.element.attr({
@@ -149,7 +149,7 @@ export class Dashboard1Component implements OnInit{
             axisY: {
                 low: 0,
                 scaleMinSpace: 50,
-            }            
+            }
         },
         responsiveOptions: [
             ['screen and (max-width: 640px) and (min-width: 381px)', {

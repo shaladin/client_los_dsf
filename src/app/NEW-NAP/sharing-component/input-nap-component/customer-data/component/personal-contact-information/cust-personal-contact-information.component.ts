@@ -5,12 +5,14 @@ import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
-
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { formatDate } from '@angular/common';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -98,7 +100,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
@@ -113,13 +115,13 @@ export class CustPersonalContactInformationComponent implements OnInit {
     if(this.listContactPersonPersonal == undefined){
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
-    var userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var businessDtStr = formatDate(userAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var businessDt = new Date(businessDtStr);
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
 
     if(birthDt > businessDt){
-      this.toastr.errorMessage("Birth Date can not be more than " + businessDtStr);
+      this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + businessDtStr);
       return;
     }
 
@@ -190,7 +192,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listContactPersonPersonal.splice(i, 1);
       this.callbackSubmit.emit(this.listContactPersonPersonal);
     }
@@ -323,9 +325,9 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   initUrl(){
-    this.getCustContactPersonPersonalUrl = AdInsConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = AdInsConstant.GetRefProfessionByCode;
+    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
   }
 
   bindCopyFrom(){
@@ -341,10 +343,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.GenderObj = response["ReturnObject"];
+        this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
           this.defaultGender = this.GenderObj[0].Key;
           this.defaultGenderName = this.GenderObj[0].Value;
@@ -354,10 +356,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if(this.IdTypeObj.length > 0){
           this.defaultIdType = this.IdTypeObj[0].Key;
         }
@@ -366,10 +368,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   bindCustRelationshipObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_RELATIONSHIP";  
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.CustRelationshipObj = response["ReturnObject"];
+        this.CustRelationshipObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipObj.length > 0){
           this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
           this.defaultRelationshipName = this.CustRelationshipObj[0].Value;

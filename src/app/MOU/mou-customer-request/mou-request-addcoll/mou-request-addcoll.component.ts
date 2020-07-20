@@ -16,6 +16,9 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -110,7 +113,7 @@ export class MouRequestAddcollComponent implements OnInit {
   bindUcAddToTempData() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
     const addCritCustNo = new CriteriaObj();
@@ -124,16 +127,16 @@ export class MouRequestAddcollComponent implements OnInit {
   bindMouData() {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(AdInsConstant.GetMouCustById, this.mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         var returnMouCust = response;
         this.custNo = returnMouCust["CustNo"];
       });
 
-    var refMasterObj = { RefMasterTypeCode: "CUST_PERSONAL_RELATIONSHIP" };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.OwnerRelationshipObj = response["ReturnObject"];
+        this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
             OwnerRelationship: this.OwnerRelationshipObj[0].Key,
@@ -142,14 +145,14 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       }
     );
-    var refMasterObj = { RefMasterTypeCode: "ASSET_CONDITION" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition };
 
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.AssetConditionList = response["ReturnObject"];
+        this.AssetConditionList = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][0]['Key'] });
 
-        if (response['ReturnObject'][0]['Key'] == "USED") {
+        if (response['ReturnObject'][0]['Key'] == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -159,13 +162,13 @@ export class MouRequestAddcollComponent implements OnInit {
 
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
 
     var assetObj = {};
-    this.http.post(AdInsConstant.GetListAssetTypeByCode, assetObj).subscribe(
+    this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
@@ -174,8 +177,8 @@ export class MouRequestAddcollComponent implements OnInit {
         this.updateUcLookup(this.CollTypeList[0].Value, true);
       })
 
-    var refMasterObj = { RefMasterTypeCode: 'ID_TYPE' };
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType };
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.IdTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
@@ -272,7 +275,7 @@ export class MouRequestAddcollComponent implements OnInit {
     });
 
     var AssetTypeCode = { 'AssetTypeCode': e.AssetTypeCode };
-    this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -298,7 +301,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   radioChange(event) {
-    if (event.target.value == "USED") {
+    if (event.target.value == CommonConstant.AssetConditionUsed) {
       this.isUsed = true;
     } else {
       this.isUsed = false;
@@ -322,7 +325,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
     if (this.collateralObj == null) {
 
-      this.http.post(AdInsConstant.AddMouCustCollateralData, custCollObj).subscribe(
+      this.http.post(URLConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
           this.AddCollForm.reset();
@@ -336,7 +339,7 @@ export class MouRequestAddcollComponent implements OnInit {
       );
     }
     else {
-      this.http.post(AdInsConstant.EditMouCustCollateralData, custCollObj).subscribe(
+      this.http.post(URLConstant.EditMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
@@ -435,12 +438,12 @@ export class MouRequestAddcollComponent implements OnInit {
   editData(MouCustCollId) {
     this.type = "AddEdit";
     var collObj = { MouCustCollateralId: MouCustCollId };
-    this.http.post(AdInsConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
+    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
       (response) => {
 
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
-        if (this.collateralObj.MrCollateralConditionCode == "USED") {
+        if (this.collateralObj.MrCollateralConditionCode == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -449,7 +452,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
         var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
-        this.http.post(AdInsConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
           (response: any) => {
             while (this.items.length) {
               this.items.removeAt(0);
@@ -606,12 +609,12 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.ListCollateralId = new Array();
 
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage('Please add at least one data');
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
     this.mouCustCollateralObj.ListCollateralId = this.listSelectedId;
 
-    this.http.post(AdInsConstant.AddExistingCustCollateralData, this.mouCustCollateralObj).subscribe(
+    this.http.post(URLConstant.AddExistingCustCollateralData, this.mouCustCollateralObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
         this.type = 'Paging';
@@ -637,9 +640,9 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   delete(MouCustCollId) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var custCollObj = { MouCustCollateralId: MouCustCollId };
-      this.http.post(AdInsConstant.DeleteMouCustCollateral, custCollObj).subscribe(
+      this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

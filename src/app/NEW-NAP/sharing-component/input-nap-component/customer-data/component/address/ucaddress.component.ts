@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-ucaddress',
@@ -120,10 +122,10 @@ export class CustUcaddressComponent implements OnInit {
 
   bindHouseOwnershipObj(){
     var refMasterObj = {RefMasterTypeCode: ""};
-    refMasterObj.RefMasterTypeCode = "BUILDING_OWNERSHIP";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeBuildingOwnership;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.houseOwnershipObj = response["ReturnObject"];
+        this.houseOwnershipObj = response[CommonConstant.ReturnObj];
         if(this.houseOwnershipObj.length > 0 
           && (this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == ""
               || this.UCAddrForm.controls[this.identifier]["controls"]["MrHouseOwnershipCode"].value == undefined)){

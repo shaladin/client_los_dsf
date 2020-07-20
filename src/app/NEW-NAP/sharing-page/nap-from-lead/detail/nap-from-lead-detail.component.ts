@@ -9,6 +9,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
@@ -27,7 +29,7 @@ export class NapFromLeadDetailComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       this.leadId = params["LeadId"];
     })
@@ -91,9 +93,9 @@ export class NapFromLeadDetailComponent implements OnInit {
   leadObj: LeadObj;
   bizTemplateCode: string;
 
-  async ngOnInit() : Promise<void> {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
-    this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+  async ngOnInit(): Promise<void> {
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     this.MakeLookUpObj();
     await this.GetLead();
@@ -103,16 +105,20 @@ export class NapFromLeadDetailComponent implements OnInit {
     });
   }
 
+  openView() {
+    window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.leadId, "_blank");
+  }
+
   arrAddCrit;
-  MakeLookUpObj(){   
+  MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
-    
+
     this.arrAddCrit = new Array();
 
     var addCrit = new CriteriaObj();
@@ -136,7 +142,7 @@ export class NapFromLeadDetailComponent implements OnInit {
     var obj = new LeadObj();
     obj.LeadId = this.leadId;
 
-    await this.http.post(AdInsConstant.GetLeadByLeadId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetLeadByLeadId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.leadObj = response as LeadObj;
@@ -152,20 +158,20 @@ export class NapFromLeadDetailComponent implements OnInit {
     );
   }
 
-  CheckValue(obj){
-    if(obj.MrWopCode == null){
+  CheckValue(obj) {
+    if (obj.MrWopCode == null) {
       obj.MrWopCode = "";
     }
-    if(obj.SalesOfficerNo == null){
+    if (obj.SalesOfficerNo == null) {
       obj.SalesOfficerNo = "";
     }
-    if(obj.MrAppSourceCode == null){
+    if (obj.MrAppSourceCode == null) {
       obj.MrAppSourceCode = "";
     }
-    if(obj.MrCustNotifyOptCode == null){
+    if (obj.MrCustNotifyOptCode == null) {
       obj.MrCustNotifyOptCode = "";
     }
-    if(obj.MrFirstInstTypeCode == null){
+    if (obj.MrFirstInstTypeCode == null) {
       obj.MrFirstInstTypeCode = "";
     }
 
@@ -177,27 +183,27 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
     napAppObj.BizTemplateCode = this.bizTemplateCode;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    this.http.post(AdInsConstant.AddAppFromLead, napAppObj).subscribe(
+    this.http.post(URLConstant.AddAppFromLead, napAppObj).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);
-        if(this.bizTemplateCode == AdInsConstant.CF4W){
+        if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-        if(this.bizTemplateCode == AdInsConstant.FL4W){
+        if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-        if(this.bizTemplateCode == AdInsConstant.CFRFN4W){
+        if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-        if(this.bizTemplateCode == AdInsConstant.FCTR){
+        if (this.bizTemplateCode == CommonConstant.FCTR) {
           this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
       },
@@ -208,65 +214,65 @@ export class NapFromLeadDetailComponent implements OnInit {
 
   }
 
-  test(){
+  test() {
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
     napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = AdInsConstant.AppStepNew;
-    napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
+    napAppObj.AppStat = CommonConstant.AppStepNew;
+    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
 
     napAppObj = this.CheckValue(napAppObj);
     console.log(napAppObj);
-}
+  }
 
-getLookupAppResponseName(ev: any) {
-  console.log(ev);
-  var obj = {
-    ProdOfferingCode: ev.ProdOfferingCode,
-    ProdOfferingVersion: ev.ProdOfferingVersion,
-  };
-  var tempLobCode;
-  var tempCurrCode;
-  var tempPayFreqCode;
-  var tempRefProdTypeCode;
-  this.http.post(AdInsConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, obj).subscribe(
-    (response) => {
-      console.log(response);
-      var temp = response["ListProdOfferingDObj"];
-      for (var i = 0; i < temp.length; i++) {
-        if (temp[i].RefProdCompntCode == "LOB") {
-          tempLobCode = temp[i].CompntValue;
-        } else if (temp[i].RefProdCompntCode == "CURR") {
-          tempCurrCode = temp[i].CompntValue;
-        } else if (temp[i].RefProdCompntCode == "PAYFREQ") {
-          var listPayFreqCode = temp[i].CompntValue.split(";");
-          if(listPayFreqCode.length == 1){
-            tempPayFreqCode = temp[i].CompntValue;
-          }else{
-            tempPayFreqCode = null;
+  getLookupAppResponseName(ev: any) {
+    console.log(ev);
+    var obj = {
+      ProdOfferingCode: ev.ProdOfferingCode,
+      ProdOfferingVersion: ev.ProdOfferingVersion,
+    };
+    var tempLobCode;
+    var tempCurrCode;
+    var tempPayFreqCode;
+    var tempRefProdTypeCode;
+    this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, obj).subscribe(
+      (response) => {
+        console.log(response);
+        var temp = response["ListProdOfferingDObj"];
+        for (var i = 0; i < temp.length; i++) {
+          if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
+            tempLobCode = temp[i].CompntValue;
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
+            tempCurrCode = temp[i].CompntValue;
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
+            var listPayFreqCode = temp[i].CompntValue.split(";");
+            if (listPayFreqCode.length == 1) {
+              tempPayFreqCode = temp[i].CompntValue;
+            } else {
+              tempPayFreqCode = null;
+            }
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
+            tempRefProdTypeCode = temp[i].CompntValue;
+          } else {
+            // console.log("Not");
           }
-        } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
-          tempRefProdTypeCode = temp[i].CompntValue;
-        } else {
-          // console.log("Not");
         }
+        this.NapAppForm.patchValue({
+          ProdOfferingCode: ev.ProdOfferingCode,
+          ProdOfferingName: ev.ProdOfferingName,
+          ProdOfferingVersion: ev.ProdOfferingVersion,
+          CurrCode: tempCurrCode,
+          LobCode: tempLobCode,
+          PayFreqCode: tempPayFreqCode,
+          RefProdTypeCode: tempRefProdTypeCode
+        });
+        console.log(this.NapAppForm);
+      },
+      (error) => {
+        console.log(error);
       }
-      this.NapAppForm.patchValue({
-        ProdOfferingCode: ev.ProdOfferingCode,
-        ProdOfferingName: ev.ProdOfferingName,
-        ProdOfferingVersion: ev.ProdOfferingVersion,
-        CurrCode: tempCurrCode,
-        LobCode: tempLobCode,
-        PayFreqCode: tempPayFreqCode,
-        RefProdTypeCode: tempRefProdTypeCode
-      });
-      console.log(this.NapAppForm);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-}
+    );
+  }
 
 }

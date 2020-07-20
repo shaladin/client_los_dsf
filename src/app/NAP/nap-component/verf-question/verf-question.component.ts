@@ -4,11 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-verf-question[ParentForm][VerfSchemeCode]',
-  templateUrl: './verf-question.component.html',
-  styleUrls: ['./verf-question.component.scss']
+  templateUrl: './verf-question.component.html'
 })
 export class VerfQuestionComponent implements OnInit {
 
@@ -26,16 +27,16 @@ export class VerfQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.InitFormVerfQuestion();
-    if(this.VerfResultHId !=0){
+    if (this.VerfResultHId != 0) {
       this.GetHistoryList();
     }
   }
 
 
   InitFormVerfQuestion() {
-    this.http.post(AdInsConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: this.VerfSchemeCode }).subscribe(
+    this.http.post(URLConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: this.VerfSchemeCode }).subscribe(
       (response) => {
-        this.VerfQuestionAnswerCustomObj = response["ReturnObject"];
+        this.VerfQuestionAnswerCustomObj = response[CommonConstant.ReturnObj];
         if (this.VerfQuestionAnswerCustomObj != null && this.VerfQuestionAnswerCustomObj.VerfQuestionAnswerListObj.length != 0) {
           this.GenerateFormVerfQuestion();
         }
@@ -53,7 +54,7 @@ export class VerfQuestionComponent implements OnInit {
         VerfQuestionGrpName: grpListObj[i].VerfQuestionGrpName,
         VerfQuestionAnswerList: this.fb.array([])
       }) as FormGroup;
-      var VerfResultDForm =  this.ParentForm.get("VerfResultDForm") as FormArray; 
+      var VerfResultDForm = this.ParentForm.get("VerfResultDForm") as FormArray;
       VerfResultDForm.push(QuestionGrp);
       var ResultGrp = VerfResultDForm.controls[i].get("VerfQuestionAnswerList") as FormArray;
       var QuestionList = grpListObj[i].verfQuestionAnswerList;
@@ -87,7 +88,7 @@ export class VerfQuestionComponent implements OnInit {
               VerfQuestionGroupCode: grpListObj[i].VerfQuestionGrpCode
             })
           }) as FormGroup;
-          if (QuestionList[j].VerfAnswerTypeCode == "DDL") {
+          if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeDdl) {
             if (QuestionList[j].VerfAnswer != "") {
               var ddlList = QuestionList[j].VerfAnswer.split(";");
               this.ListVerfAnswer[i].push(ddlList);
@@ -97,7 +98,7 @@ export class VerfQuestionComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-          } else if (QuestionList[j].VerfAnswerTypeCode == "UC_INPUT_NUMBER") {
+          } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
             QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             this.ListVerfAnswer[i].push("");
           } else {
@@ -110,17 +111,17 @@ export class VerfQuestionComponent implements OnInit {
     console.log(this.ParentForm.get("VerfResultDForm"));
   }
 
-  GetHistoryList(){
+  GetHistoryList() {
     var VerfResultHObj = {
       VerfResultHId: this.VerfResultHId
     };
-    this.http.post<VerfResultHObj>(AdInsConstant.GetVerfResultHById, VerfResultHObj).subscribe(
+    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, VerfResultHObj).subscribe(
       (response) => {
         var verfResultHObj = {
           VerfResultId: response.VerfResultId,
           MrVerfSubjectRelationCode: response.MrVerfSubjectRelationCode
         };
-        this.http.post(AdInsConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
+        this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
           (response) => {
             this.VerfResultHList = response["responseVerfResultHCustomObjs"];
           },

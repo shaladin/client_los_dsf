@@ -9,6 +9,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-application-data',
@@ -50,7 +53,7 @@ export class ApplicationDataComponent implements OnInit {
     CurrCode: [''],
     LobCode: [''],
     RefProdTypeCode: [''],
-    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required]],
+    Tenor: ["", [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
     NumOfInst: [''],
     PayFreqCode: ['', Validators.required],
     PayFreqCodeDesc: [''],
@@ -102,15 +105,15 @@ export class ApplicationDataComponent implements OnInit {
     this.applicationDDLitems = [];
     // data dummy test
     // data real
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustType);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeSlsRecom);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeWOP);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInstSchm);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeCustNotifyOpt);
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeFirstInstType);
-    // this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInstSchm);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
+    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
+    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     // this.getPayFregData();
-    this.getRefMasterTypeCode(AdInsConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getAppSrcData();
     this.GetCrossInfoData();
   }
@@ -121,7 +124,7 @@ export class ApplicationDataComponent implements OnInit {
       RefProdCompntCode: refProdCompntCode,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
@@ -137,11 +140,11 @@ export class ApplicationDataComponent implements OnInit {
   getInterestTypeCode(){
     var obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefMasterTypeCodeInterestType,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
-    this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         // console.log(response);   
         this.NapAppModelForm.patchValue({
@@ -161,10 +164,10 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     }
-    this.http.post(AdInsConstant.GetListAppCross, obj).subscribe(
+    this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
         console.log(response);
-        this.resultCrossApp = response["ReturnObject"];
+        this.resultCrossApp = response[CommonConstant.ReturnObj];
         console.log(this.resultCrossApp);
         for (var i = 0; i < this.resultCrossApp.length; i++) {
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
@@ -183,7 +186,7 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       RowVersion: ""
     };
-    var url = AdInsConstant.GetAppDetailForTabAddEditAppById;
+    var url = URLConstant.GetAppDetailForTabAddEditAppById;
 
     this.http.post(url, obj).subscribe(
       (response) => {
@@ -245,8 +248,9 @@ export class ApplicationDataComponent implements OnInit {
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
-        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodeInstSchm);
-        this.getDDLFromProdOffering(AdInsConstant.RefMasterTypeCodePayFreq);
+        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
+        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
+        this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
         this.getPayFregData();
       },
       (error) => {
@@ -256,14 +260,14 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getAppSrcData() {
-    var url = AdInsConstant.GetListKvpActiveRefAppSrc;
+    var url = URLConstant.GetListKvpActiveRefAppSrc;
     var obj = {
       RowVersion: ""
     };
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
+        this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -273,13 +277,13 @@ export class ApplicationDataComponent implements OnInit {
 
   DictRefPayFreq: any = {};
   getPayFregData() {
-    var url = AdInsConstant.GetListActiveRefPayFreq;
+    var url = URLConstant.GetListActiveRefPayFreq;
     var obj = { RowVersion: "" };
 
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        var objTemp = response["ReturnObject"];
+        var objTemp = response[CommonConstant.ReturnObj];
 
         for(var i=0;i<objTemp.length;i++){
           this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
@@ -300,7 +304,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getRefMasterTypeCode(code) {
-    var url = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    var url = URLConstant.GetRefMasterListKeyValueActiveByCode;
     var obj = {
       RefMasterTypeCode: code,
       RowVersion: ""
@@ -308,7 +312,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        var objTemp = response["ReturnObject"];
+        var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
       },
       (error) => {
@@ -331,7 +335,7 @@ export class ApplicationDataComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -362,7 +366,7 @@ export class ApplicationDataComponent implements OnInit {
     addCrit3.DataType = "text";
     addCrit3.propName = "rbt.JOB_TITLE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [AdInsConstant.SALES_JOB_CODE];
+    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
     this.arrAddCrit.push(addCrit3);
 
     var addCrit4 = new CriteriaObj();
@@ -388,8 +392,8 @@ export class ApplicationDataComponent implements OnInit {
     var idx = ev.target.selectedIndex - 1;
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
-      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[AdInsConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
+      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[CommonConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[CommonConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
@@ -487,7 +491,7 @@ export class ApplicationDataComponent implements OnInit {
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
-    var url = AdInsConstant.EditAppAddAppCross;
+    var url = URLConstant.EditAppAddAppCross;
     var obj = {
       appObj: tempAppObj,
       listAppCrossObj: tempListAppCrossObj,
@@ -555,9 +559,9 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   DeleteCrossApp(idx) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       if (this.resultCrossApp[idx].AppCrossId != null) {
-        var url = AdInsConstant.DeleteAppCross;
+        var url = URLConstant.DeleteAppCross;
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
         this.http.post(url, obj).subscribe(

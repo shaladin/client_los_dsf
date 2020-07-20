@@ -8,6 +8,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { LeadForRejectObj } from 'app/shared/model/LeadForRejectObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-update',
@@ -50,15 +52,15 @@ export class LeadUpdateComponent implements OnInit {
     if (confirm("Are you sure to reject this Lead?"))
     {
       var leadReject = new LeadForRejectObj;
-      leadReject.LeadStat = "RJC";
-      leadReject.LeadStep = "RJC";
+      leadReject.LeadStat = CommonConstant.LeadStatReject;
+      leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.WfTaskListId = event.RowObj.WfTaskListId;
 
       // console.log("test")
       // console.log(leadReject)
       
-      this.http.post(AdInsConstant.RejectLead, leadReject).subscribe(
+      this.http.post(URLConstant.RejectLead, leadReject).subscribe(
           response => {
             this.toastr.successMessage(response["Message"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

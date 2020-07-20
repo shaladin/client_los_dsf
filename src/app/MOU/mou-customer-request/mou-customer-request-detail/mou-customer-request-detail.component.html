@@ -9,7 +9,7 @@
             <div class="form-group row" *ngIf="pageType == 'edit' || pageType == 'return'">
               <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>
               <div class="col-md-9">
-                <a href="{{mouCustUrl}}" target="_blank">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
+                <a href="javascript:void(0);" (click)="OpenView('mou')">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
               </div>
             </div>
             <div class="form-group row">
@@ -19,7 +19,7 @@
                     (lookup)="getCustLookupResponse($event)"></lib-uclookupgeneric>
               </div>
               <div class="col-md-9" *ngIf="pageType == 'edit' || pageType == 'return'"> 
-                <a href="{{custUrl}}" target="_blank">{{MOUMainInfoForm.controls.CustName.value}}</a>
+                <a href="javascript:void(0);" (click)="OpenView('cust')">{{MOUMainInfoForm.controls.CustName.value}}</a>
               </div>
             </div>
             <div class="form-group row">
@@ -86,10 +86,10 @@
           </div>
           <div class="form-actions right">
             <button type="button" (click)="Back()" class="btn btn-raised btn-warning mr-1">
-              <i class="fa fa-arrow-circle-left"></i> Cancel
+              <i class="ft-x"></i> Cancel
             </button>
             <button type="submit" class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square-o"></i> Continue
+              <i class=" fa fa-arrow-circle-right"></i> Continue
             </button>
           </div>
         </form>

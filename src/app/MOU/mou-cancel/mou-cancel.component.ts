@@ -6,6 +6,9 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -23,9 +26,9 @@ export class MouCancelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItemCommonConstant.USER_ACCESS());
 
-    if (this.user.MrOfficeTypeCode != "HO") {
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
       return;
     }
@@ -53,10 +56,9 @@ export class MouCancelComponent implements OnInit {
     if (event.Key == "customer") {
       var link: string;
       var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(AdInsConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(link, '_blank');
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {
           console.log(error);
@@ -66,10 +68,10 @@ export class MouCancelComponent implements OnInit {
     else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
         var mouCancel = new MouCustConfirmCancelObj;
-        mouCancel.MouStat = "CAN";
+        mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
-        this.http.post(AdInsConstant.EditMouForCancelByMouId, mouCancel).subscribe(
+        this.http.post(URLConstant.EditMouForCancelByMouId, mouCancel).subscribe(
           response => {
             this.toastr.successMessage(response["Message"]);
             // this.router.navigate(["/Mou/Cust/Cancel"]);

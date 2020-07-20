@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-grp-member-FL4W',
@@ -80,11 +83,11 @@ export class CustGrpMemberFL4WComponent implements OnInit {
     this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
     this.dictLookup[max + 1] = InputLookupCustomerObj;
 
-    if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
+    if(this.identifier == CommonConstant.CustGrupIndentifierTypePersonal){
       this.CustRelationshipObjs.push({list: []});
     }
 
-    if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
+    if(this.identifier == CommonConstant.CustGrupIndentifierTypeCompany){
       this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
       this.parentForm.controls[this.identifier]["controls"][max].patchValue({
         MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
@@ -93,7 +96,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   }
 
   deleteCustGrp(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var custCustGrpObjs = this.parentForm.controls[this.identifier] as FormArray;
       var no = custCustGrpObjs.controls[i]["controls"]["No"].value;
       this.parentForm.removeControl("lookupCustomerForGrp" + no);
@@ -126,15 +129,15 @@ export class CustGrpMemberFL4WComponent implements OnInit {
       CustName: event.CustName
     });
 
-    if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-      if(event.MrCustTypeCode == AdInsConstant.CustTypePersonal){
+    if(this.identifier == CommonConstant.CustGrupIndentifierTypePersonal){
+      if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
         this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({
           MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
         });
       }
   
-      if(event.MrCustTypeCode == AdInsConstant.CustTypeCompany){
+      if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
         this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({
           MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
@@ -192,7 +195,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   async setCustNameAndCustRelationship(i, custNo){
     this.custObj.CustNo = custNo;
-    await this.http.post(AdInsConstant.GetCustByCustNo, this.custObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, this.custObj).toPromise().then(
       (response) => {
         console.log(response);
         this.custMasterObj = response;
@@ -200,11 +203,11 @@ export class CustGrpMemberFL4WComponent implements OnInit {
         this.dictLookup[i].jsonSelect = response;
         this.InputLookupCustomerObjs[i].jsonSelect = response;
         
-        if(response["MrCustTypeCode"] == AdInsConstant.CustTypePersonal){
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
           this.CustRelationshipObjs.push({list : this.CustRelationshipPersonalObj});
         }
 
-        if(response["MrCustTypeCode"] == AdInsConstant.CustTypeCompany){
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
           this.CustRelationshipObjs.push({list : this.CustRelationshipCompanyObj});
         }
 
@@ -221,10 +224,10 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   
 
   async bindCustRelationshipPersonalObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.CustRelationshipPersonalObj = response["ReturnObject"];
+        this.CustRelationshipPersonalObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipPersonalObj.length > 0){
             this.defaultCustRelationshipPersonalCode = this.CustRelationshipPersonalObj[0].Key
         }
@@ -233,10 +236,10 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   }
 
   async bindCustRelationshipCompanyObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_COMPANY_RELATIONSHIP";
-    await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.CustRelationshipCompanyObj = response["ReturnObject"];
+        this.CustRelationshipCompanyObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipCompanyObj.length > 0){
             this.defaultCustRelationshipCompanyCode = this.CustRelationshipCompanyObj[0].Key
         }

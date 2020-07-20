@@ -3,7 +3,7 @@
     <h4 class="card-title" translate> Customer Confirmation Detail </h4>
   </div>
   <div class="card-body">
-    <lib-ucviewgeneric [viewInput]="viewObj" [whereValue]="arrValue" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
 
     <div class="px-3">
       <lib-ucSubsection [id]="'SubjectListId'" [title]="'Subject List'" [panel]="'SubjectList'">
@@ -55,8 +55,8 @@
       </div>
       <div class="row" *ngIf="CustCnfrmObj.IsSkip">
         <label class="col-md-3" translate>Skip Reason</label>
-        <div class="col-md-9">
-          <input type="text" class="form-control" [(ngModel)]="CustCnfrmObj.SkipReason" name="SkipReason">
+        <div class="col-md-3">
+          <textarea class="form-control" [(ngModel)]="CustCnfrmObj.SkipReason" name="SkipReason"></textarea>
         </div>
       </div>
 

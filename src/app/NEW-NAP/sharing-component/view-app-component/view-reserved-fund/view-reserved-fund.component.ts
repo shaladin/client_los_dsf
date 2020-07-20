@@ -6,7 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
-
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: "view-reserved-fund",
   templateUrl: "./view-reserved-fund.component.html",
@@ -37,8 +38,8 @@ export class ViewReservedFundComponent implements OnInit {
   }
 
   initUrl() {
-    this.getAppUrl = AdInsConstant.GetAppById;
-    this.getAppRsvFundUrl = AdInsConstant.GetListAppReservedFundByAppId;
+    this.getAppUrl = URLConstant.GetAppById;
+    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
   }
 
   ngOnInit() {
@@ -52,7 +53,7 @@ export class ViewReservedFundComponent implements OnInit {
     this.http.post(this.getAppRsvFundUrl, this.appObj).subscribe(
       (response) => {
         console.log(response);
-        this.RsvFundObj = response["ReturnObject"];
+        this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {
           for (let i = 0; i < this.RsvFundObj.length; i++) {
             this.totalRsvFund = this.RsvFundObj[i].ReservedFundAmt;

@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-life-insurance',
@@ -10,7 +13,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 })
 export class LifeInsuranceComponent implements OnInit {
 
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
   @Input() AppId;
   inputGridObj: InputGridObj;
@@ -19,13 +22,15 @@ export class LifeInsuranceComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppLifeInsurance.json";
-    this.viewObj = "./assets/ucviewgeneric/viewAppLifeInsData.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppLifeInsData.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
 
     var AppObj = {
       AppId: this.AppId
     }
 
-    this.http.post(AdInsConstant.GetAppLifeInsHByAppId, AppObj).subscribe(
+    this.http.post(URLConstant.GetAppLifeInsHByAppId, AppObj).subscribe(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {

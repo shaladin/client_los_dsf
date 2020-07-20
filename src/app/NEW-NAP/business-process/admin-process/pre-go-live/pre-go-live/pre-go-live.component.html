@@ -1,5 +1,5 @@
 <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Pre Go Live</h4>
-<lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
@@ -27,7 +27,6 @@
                 </div>
               </div>
 
-
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="Note" translate>Notes</label>
                 <div class="col-md-4">
@@ -38,19 +37,13 @@
               </div>
             </div>
 
-
-
-
             <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
               [panel]="'PreGoLiveApprovalHistory'">
             </lib-ucSubsection>
-            <div id="PreGoLiveApprovalHistory">
-              <div *ngFor="let item of listPreGoLiveAppvrObj; let i = index">
-                <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj[i]">
-                </lib-ucapprovalhist>
-              </div>
+            <div *ngIf='IsApvReady' id="PreGoLiveApprovalHistory">
+              <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj">
+              </lib-ucapprovalhist>
             </div>
-
             <lib-ucSubsection [id]="'TCListId'" [title]="'Term and Condition'" [panel]="'TCList'">
             </lib-ucSubsection>
             <div id="TCList">
@@ -63,16 +56,13 @@
                 translate>
                 <i class="fa fa-check-square-o"></i> Request For Approval
               </button>
-
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                      [routerLink]="['/Nap/AdminProcess/PreGoLive/Paging']" translate>
+                [routerLink]="['/Nap/AdminProcess/PreGoLive/Paging']" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-
               <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
                 <i class="far fa-check-square"></i> Submit
               </button>
-
             </div>
           </form>
         </div>

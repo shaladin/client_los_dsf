@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lookup-tax-city-issuer',
@@ -21,7 +22,7 @@ export class LookupTaxCityIssuerComponent implements OnInit {
     this.inputObj = new UcPagingObj();
     this.inputObj._url="./assets/uclookup/NAP/lookupDistrict.json";
     this.inputObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     var disCrit = new Array();
     var critDisObj = new CriteriaObj();

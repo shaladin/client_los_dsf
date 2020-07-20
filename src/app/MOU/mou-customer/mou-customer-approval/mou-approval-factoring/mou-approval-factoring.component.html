@@ -1,4 +1,20 @@
-<app-mou-view [inputMouCustId]="MouCustId"></app-mou-view>
-<br/>
-<lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
-</lib-ucapproval>   
+<div class="row text-left">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header header-title" style="margin-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - Factoring
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+                <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()"
+                    (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+                </lib-ucapproval>
+            </div>
+        </div>
+    </div>
+</div>

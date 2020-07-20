@@ -5,19 +5,24 @@ import { HttpClient } from '@angular/common/http';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute } from '@angular/router'; 
+import { ActivatedRoute } from '@angular/router';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';  
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model'; 
-import { formatDate } from '@angular/common'; 
+import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
+import { formatDate } from '@angular/common';
 import { CustPersonalMainDataFL4WComponent } from './component/personal-main-data/cust-personal-main-data-FL4W.component';
 import { CustPersonalContactInformationFL4WComponent } from './component/personal-contact-information/cust-personal-contact-information-FL4W.component';
 import { CustGrpMemberFL4WComponent } from './component/cust-grp-member/cust-grp-member-FL4W.component';
 import { CustJobDataFL4WComponent } from './component/job-data/cust-job-data-FL4W.component';
+import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { CustPersonalFinancialDataFL4WComponent } from './component/personal-financial-data/cust-personal-financial-data-FL4W.component';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -31,6 +36,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   @ViewChild(CustPersonalContactInformationFL4WComponent) custContactInformationComponent;
   @ViewChild(CustJobDataFL4WComponent) custJobDataComponent;
   @ViewChild(CustGrpMemberFL4WComponent) custGrpMemberComponent;
+  @ViewChild("CustPersonalFinDataComp") custPersonalFinDataComponent: CustPersonalFinancialDataFL4WComponent;
 
 
   CustDataForm = this.fb.group({
@@ -46,7 +52,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  cancel:boolean = true;
+  cancel: boolean = true;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -122,26 +128,26 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-     
+    console.log('Shinano');
     this.cancel = this.showCancel;
     this.initUrl();
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
-    
+
 
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
   SaveForm() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
 
-      if(!this.isSocmedValid){
+      if (!this.isSocmedValid) {
         return;
       }
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
@@ -149,11 +155,11 @@ export class CustomerDataFL4WComponent implements OnInit {
           console.log(response);
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
+            this.EmitToMainComp();
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
+              this.toastr.warningMessage(message["Message"]);
             });
           }
         },
@@ -163,7 +169,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       );
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       var totalSharePrcnt = 0;
 
       if (this.listShareholder != undefined) {
@@ -173,16 +179,16 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.errorMessage("Total Share (%) must be 100.");
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
-      this.http.post(AdInsConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
+          this.EmitToMainComp();
         },
         (error) => {
           console.log(error);
@@ -219,7 +225,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCust() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataPersonalObj.AppCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
       this.custDataPersonalObj.AppCustObj.CustNo = this.mainDataComponent.selectedCustNo;
@@ -230,7 +236,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
 
-      if(this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "EKTP"){
+      if (this.custDataPersonalObj.AppCustObj.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
         this.custDataPersonalObj.AppCustObj.IdExpiredDt = null;
       }
       if (this.custDataPersonalObj.AppCustObj.CustNo != "" && this.custDataPersonalObj.AppCustObj.CustNo != undefined) {
@@ -240,7 +246,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.custDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataCompanyObj.AppCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       this.custDataCompanyObj.AppCustObj.CustNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustNo.value;
@@ -291,8 +297,8 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCustAddrLegal() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeLegal;
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
       this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
       this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
@@ -311,8 +317,8 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeLegal;
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+      this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
       this.custDataCompanyObj.AppCustAddrLegalObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
       this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
       this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
@@ -333,7 +339,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCustAddrResidence() {
-    this.custDataPersonalObj.AppCustAddrResidenceObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeResidence;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
     this.custDataPersonalObj.AppCustAddrResidenceObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode3 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode3.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode4 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode4.value;
@@ -354,8 +360,8 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCustAddrMailing() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustAddrMailingObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeMailing;
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      this.custDataPersonalObj.AppCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
       this.custDataPersonalObj.AppCustAddrMailingObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
       this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode3.value;
       this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode4.value;
@@ -374,8 +380,8 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustAddrMailingObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeMailing;
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+      this.custDataCompanyObj.AppCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
       this.custDataCompanyObj.AppCustAddrMailingObj.Addr = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Addr.value;
       this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode3.value;
       this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode4.value;
@@ -397,7 +403,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
   setAppCustAddrJob() {
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj = new AppCustAddrObj();
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.MrCustAddrTypeCode = AdInsConstant.AddrTypeJob;
+    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Addr = this.CustDataForm.controls["jobDataAddr"]["controls"].Addr.value;
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode3 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode3.value;
     this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode4 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode4.value;
@@ -455,7 +461,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   setAppCustPersonalJobData() {
     this.custDataPersonalObj.AppCustObj.CustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelProfessional) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
@@ -464,7 +470,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelEmployee) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelEmployee) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
@@ -478,7 +484,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelSmallMediumEnterprise) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
@@ -492,7 +498,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == AdInsConstant.CustModelNonProfessional) {
+    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
   }
@@ -505,11 +511,11 @@ export class CustomerDataFL4WComponent implements OnInit {
 
       var index = selectedSocmedCode.indexOf(tempKey);
       if (index > -1) {
-        this.toastr.errorMessage("Social Media cannot be duplicate!");
+        this.toastr.warningMessage(ExceptionConstant.DUPLICATE_SOCIAL_MEDIA);
         this.isSocmedValid = false;
         return;
       }
-      else{
+      else {
         selectedSocmedCode.push(tempKey);
       }
 
@@ -523,7 +529,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCustGrpObj() {
-    if (this.MrCustTypeCode == AdInsConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
       for (let i = 0; i < this.CustDataForm.controls["custGrpMember"].value.length; i++) {
         var appCustGrpObj = new AppCustGrpObj();
@@ -534,7 +540,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
     }
 
-    if (this.MrCustTypeCode == AdInsConstant.CustTypeCompany) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.custDataCompanyObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
       for (let i = 0; i < this.CustDataCompanyForm.controls["custGrpMemberCompany"].value.length; i++) {
         var appCustGrpObj = new AppCustGrpObj();
@@ -572,7 +578,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   copyToContactPersonAddr(event) {
-    if (event == AdInsConstant.AddrTypeLegal) {
+    if (event == CommonConstant.AddrTypeLegal) {
       this.custContactInformationComponent.contactPersonAddrObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -592,7 +598,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
     }
 
-    if (event == AdInsConstant.AddrTypeResidence) {
+    if (event == CommonConstant.AddrTypeResidence) {
       this.custContactInformationComponent.contactPersonAddrObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
@@ -612,7 +618,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
     }
 
-    if (event == AdInsConstant.AddrTypeMailing) {
+    if (event == CommonConstant.AddrTypeMailing) {
       this.custContactInformationComponent.contactPersonAddrObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode1.value;
       this.custContactInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode2.value;
@@ -634,7 +640,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   copyToResidence() {
-    if (this.copyFromResidence == AdInsConstant.AddrTypeLegal) {
+    if (this.copyFromResidence == CommonConstant.AddrTypeLegal) {
       this.residenceAddrObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.residenceAddrObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       this.residenceAddrObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -657,7 +663,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   copyToMailing() {
-    if (this.copyFromMailing == AdInsConstant.AddrTypeLegal) {
+    if (this.copyFromMailing == CommonConstant.AddrTypeLegal) {
       this.mailingAddrObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
       this.mailingAddrObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       this.mailingAddrObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
@@ -678,7 +684,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
     }
 
-    if (this.copyFromMailing == AdInsConstant.AddrTypeResidence) {
+    if (this.copyFromMailing == CommonConstant.AddrTypeResidence) {
       this.mailingAddrObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
       this.mailingAddrObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
       this.mailingAddrObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
@@ -701,7 +707,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   copyToMailingCompany() {
-    if (this.copyFromMailingCompany == AdInsConstant.AddrTypeLegal) {
+    if (this.copyFromMailingCompany == CommonConstant.AddrTypeLegal) {
       this.mailingAddrCompanyObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
       this.mailingAddrCompanyObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
       this.mailingAddrCompanyObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
@@ -723,8 +729,6 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   }
 
-
-
   test() {
     console.log(this.mainDataComponent);
     console.log(this.CustDataForm);
@@ -739,8 +743,8 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        if (response != "") {
-          if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypePersonal) {
+        if (response["AppCustObj"]["AppCustId"] > 0) {
+          if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
             this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
@@ -760,15 +764,15 @@ export class CustomerDataFL4WComponent implements OnInit {
               this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
             }
 
-            this.setAddrLegalObj(AdInsConstant.CustTypePersonal);
+            this.setAddrLegalObj(CommonConstant.CustTypePersonal);
             this.setAddrResidenceObj();
-            this.setAddrMailingObj(AdInsConstant.CustTypePersonal);
+            this.setAddrMailingObj(CommonConstant.CustTypePersonal);
 
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
           }
 
-          if (response["AppCustObj"]["MrCustTypeCode"] == AdInsConstant.CustTypeCompany) {
+          if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
             this.custDataCompanyObj = new CustDataCompanyObj();
             this.custDataCompanyObj.AppCustObj = response["AppCustObj"];
             this.custDataCompanyObj.AppCustCompanyObj = response["AppCustCompanyObj"];
@@ -790,8 +794,8 @@ export class CustomerDataFL4WComponent implements OnInit {
             this.listLegalDoc = this.custDataCompanyObj.AppCustCompanyLegalDocObjs;
             this.custDataCompanyObj.AppCustGrpObjs = response["AppCustGrpObjs"];
 
-            this.setAddrLegalObj(AdInsConstant.CustTypeCompany);
-            this.setAddrMailingObj(AdInsConstant.CustTypeCompany);
+            this.setAddrLegalObj(CommonConstant.CustTypeCompany);
+            this.setAddrMailingObj(CommonConstant.CustTypeCompany);
 
             this.MrCustTypeCode = this.custDataCompanyObj.AppCustObj.MrCustTypeCode;
           }
@@ -844,7 +848,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAddrLegalObj(custTypeCode) {
-    if (custTypeCode == AdInsConstant.CustTypePersonal) {
+    if (custTypeCode == CommonConstant.CustTypePersonal) {
       this.initAddrLegalObj();
 
       if (this.custDataPersonalObj.AppCustAddrLegalObj != undefined) {
@@ -869,7 +873,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
     }
 
-    if (custTypeCode == AdInsConstant.CustTypeCompany) {
+    if (custTypeCode == CommonConstant.CustTypeCompany) {
       this.initAddrLegalCompanyObj();
 
       if (this.custDataCompanyObj.AppCustAddrLegalObj != undefined) {
@@ -922,7 +926,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAddrMailingObj(custTypeCode) {
-    if (custTypeCode == AdInsConstant.CustTypePersonal) {
+    if (custTypeCode == CommonConstant.CustTypePersonal) {
       this.initAddrMailingObj();
 
       if (this.custDataPersonalObj.AppCustAddrMailingObj != undefined) {
@@ -947,7 +951,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
     }
 
-    if (custTypeCode == AdInsConstant.CustTypeCompany) {
+    if (custTypeCode == CommonConstant.CustTypeCompany) {
       this.initAddrMailingCompanyObj();
 
       if (this.custDataCompanyObj.AppCustAddrMailingObj != undefined) {
@@ -981,9 +985,28 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.listAppCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
     }
 
-    if (event["CustPersonalFinDataObj"] != undefined) {
+    this.custDataPersonalObj.AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+    if (event["CustPersonalFinDataObj"]) {
       this.custDataPersonalObj.AppCustPersonalFinDataObj = event["CustPersonalFinDataObj"];
       this.custDataPersonalObj.AppCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
+
+      this.CustDataForm.controls["financialData"].patchValue({
+        MonthlyIncomeAmt: event["CustPersonalFinDataObj"].MonthlyIncomeAmt,
+        MonthlyExpenseAmt: event["CustPersonalFinDataObj"].MonthlyExpenseAmt,
+        MonthlyInstallmentAmt: event["CustPersonalFinDataObj"].MonthlyInstallmentAmt,
+        MrSourceOfIncomeTypeCode: event["CustPersonalFinDataObj"].MrSourceOfIncomeTypeCode,
+        IsJoinIncome: event["CustPersonalFinDataObj"].IsJoinIncome,
+        SpouseMonthlyIncomeAmt: event["CustPersonalFinDataObj"].SpouseMonthlyIncomeAmt
+      });
+      if (event["CustPersonalFinDataObj"].IsJoinIncome == true) {
+        this.custPersonalFinDataComponent.totalMonthlyIncome = event["CustPersonalFinDataObj"].MonthlyIncomeAmt + event["CustPersonalFinDataObj"].SpouseMonthlyIncomeAmt;
+      }
+      else {
+        this.custPersonalFinDataComponent.totalMonthlyIncome = event["CustPersonalFinDataObj"].MonthlyIncomeAmt;
+      }
+
+      this.custPersonalFinDataComponent.totalMonthlyExpense = event["CustPersonalFinDataObj"].MonthlyExpenseAmt + event["CustPersonalFinDataObj"].MonthlyInstallmentAmt;
+      this.custPersonalFinDataComponent.nettMonthlyIncome = this.custPersonalFinDataComponent.totalMonthlyIncome - this.custPersonalFinDataComponent.totalMonthlyExpense;
     }
 
     if (event["CustBankAccObjs"] != undefined) {
@@ -1000,7 +1023,6 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custGrpMemberComponent.appCustGrpObjs = event["CustGrpObjs"];
       this.custGrpMemberComponent.copyAppGrp();
     }
-
   }
 
   CopyCustomerCompany(event) {
@@ -1032,7 +1054,6 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custGrpMemberComponent.appCustGrpObjs = event["CustGrpObjs"];
       this.custGrpMemberComponent.copyAppGrp();
     }
-
   }
 
   copyAddrFromLookup(event) {
@@ -1145,31 +1166,25 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   initUrl() {
-    this.addEditCustDataPersonalUrl = AdInsConstant.AddEditCustDataPersonal;
-    this.getCustDataUrl = AdInsConstant.GetCustDataByAppId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
+    this.getCustDataUrl = URLConstant.GetCustDataByAppId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
   }
 
-  // bindCopyFrom(){
-  //   this.CustDataForm.patchValue({
-  //     CopyFromResidence: this.copyToResidenceTypeObj[0].Key,
-  //     CopyFromMailing: this.copyToMailingTypeObj[0].Key
-  //   });
-
-  //   this.CustDataCompanyForm.patchValue({
-  //     CopyFromMailing: this.copyToMailingCompanyTypeObj[0].Key
-  //   });
-  // }
-
   bindCustTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
           this.MrCustTypeCode = this.CustTypeObj[0].Key;
         }
       }
     );
+  }
+
+  EmitToMainComp() {
+    console.log(this.MrCustTypeCode);
+    this.outputTab.emit(this.MrCustTypeCode);
   }
 }

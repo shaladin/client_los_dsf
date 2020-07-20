@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lead-monitoring-review',
@@ -21,7 +21,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadLead.json";
     this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -35,8 +35,8 @@ export class LeadMonitoringReviewComponent implements OnInit {
     var wfObj = new WorkflowApiObj();
     wfObj.TaskListId = ev.TaskListId;
     wfObj.TransactionNo = ev.UploadNo;
-    wfObj.ListValue = { "Status": "CAN" };
-    this.httpClient.post(AdInsConstant.CancelUpload, wfObj).subscribe(
+    wfObj.ListValue = { "Status": "RJC" };
+    this.httpClient.post(URLConstant.CancelUpload, wfObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

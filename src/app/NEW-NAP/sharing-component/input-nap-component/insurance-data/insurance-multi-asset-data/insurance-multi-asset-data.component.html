@@ -306,7 +306,8 @@
                         *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index"
                         class="custom-control display-inline-block">
                         <div [formGroupName]="i">
-                          <mat-checkbox formControlName="Value">{{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox>
+                          <mat-checkbox [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'" formControlName="Value">
+                            {{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox>
                         </div>
                       </label>
                     </div>
@@ -386,7 +387,9 @@
                           <td class="text-left">
                             <div formArrayName="AppInsAddCvgs">
                               <div [formGroupName]="j">
-                                <mat-checkbox formControlName="Value" (change)="IsAddCvgChanged($event)">
+                                <mat-checkbox
+                                  [disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value == 'Loading'"
+                                  formControlName="Value" (change)="IsAddCvgChanged($event)">
                                   {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
                                 </mat-checkbox>
                               </div>
@@ -477,8 +480,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                (click)="Cancel()" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary">
@@ -510,7 +512,8 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="CancelHandler()" translate>
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="CancelHandler()"
+              translate>
               <i class="ft-x"></i> Cancel
             </button>
             <button type="submit" class="btn btn-raised btn-primary">

@@ -8,13 +8,72 @@
       </span>
     </div> -->
     <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
+        </lib-ucSubsection>
+        <div class="form-body" id="viewIncomeInfo">
+          <div class="row">
+            <div class="col-md-6 ">
 
+              <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
+                <div class="row" *ngIf="i < TotalHalfListResultRefundIncomeInfo">
+                  <div class="col-md-6 form-inline">
+                    <label class="adInsLabel"> {{ item.RefundAllocationFromDesc }} </label>
+                  </div>
+                  <div class="col-md-6 form-inline form-inline-right">
+                    <label *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
+                    <label *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 form-inline">
+                  <label class="adInsLabel"> Max Allocated Amount </label>
+                </div>
+                <div class="col-md-6 form-inline form-inline-right">
+                  <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
+                    {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
+                  <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-inline">
+                  <label class="adInsLabel"> Remaining Allocated Amount </label>
+                </div>
+                <div class="col-md-6 form-inline form-inline-right">
+                  <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0">
+                    {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                  <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> (
+                    {{-viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} )</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 ">
+              <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
+                <div class="row" *ngIf="i >= TotalHalfListResultRefundIncomeInfo">
+                  <div class="col-md-6 form-inline">
+                    <label class="adInsLabel"> {{ item.RefundAllocationFromDesc }} </label>
+                  </div>
+                  <div class="col-md-6 form-inline form-inline-right">
+                    <label *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
+                    <label *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
     <div id="stepper1" class="bs-stepper">
-      <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+      <div class="bs-stepper-header bs-stepper-center" role="tablist" style="overflow-x: auto;">
         <!-- your steps here -->
         <div class="step" data-target="#commission-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="commission-tab"
-            id="commission-tab-trigger" (click)="ChangeTab('COM')">
+            id="commission-tab-trigger" (click)="ChangeTab('COM')" (click)="CekRemaining()">
             <span class="bs-stepper-circle">1</span>
             <span class="bs-stepper-label">Commission Data</span>
           </button>
@@ -22,7 +81,7 @@
         <div class="line"></div>
         <div class="step" data-target="#reserved-fund-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="reserved-fund-tab"
-            id="reserved-fund-tab-trigger" (click)="ChangeTab('RSV')">
+            id="reserved-fund-tab-trigger" (click)="ChangeTab('RSV')" (click)="CekRemaining()">
             <span class="bs-stepper-circle">2</span>
             <span class="bs-stepper-label">Reserved Fund Data</span>
           </button>
@@ -32,10 +91,12 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" (outputTab)="NextStep('RSV')" (outputCancel)="Back()"></app-commission>
+          <app-commission *ngIf="StepIndex == 1" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm"
+            (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
-          <reserved-fund *ngIf="StepIndex == 2" [ReturnHandlingHObj]="ReturnHandlingHObj" [showCancel]="showCancel" (outputTab)="LastStepHandler($event)" (outputCancel)="Back()"></reserved-fund>
+          <reserved-fund *ngIf="StepIndex == 2" [ReturnHandlingHObj]="ReturnHandlingHObj" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount"
+            (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromReservedFund($event)"></reserved-fund>
         </div>
       </div>
     </div>
@@ -50,7 +111,8 @@
       <div class="px-3">
         <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
         </lib-ucSubsection>
-        <div class="form-body" *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+        <div class="form-body" *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && OnFormReturnInfo"
+          [id]="'formReturnInfo'">
           <form class="form form-horizontal" [formGroup]="HandlingForm" (ngSubmit)="HandlingForm.valid"
             #enjiForm="ngForm">
             <div class="form-body">
@@ -67,7 +129,8 @@
                 <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="ReturnHandlingExecNotes"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && HandlingForm.controls.ReturnHandlingExecNotes.invalid}"></textarea>
-                  <lib-uc-show-errors [control]="HandlingForm.controls.ReturnHandlingExecNotes" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="HandlingForm.controls.ReturnHandlingExecNotes"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -75,11 +138,12 @@
           </form>
         </div>
         <div class="form-action pull-right">
-          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-            (click)="Back()" translate>
+          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0" type="button"
+            class="btn btn-raised btn-warning margin-r-5" (click)="Back()" translate>
             <i class="ft-x"></i> Cancel
           </button>
-          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary">
+          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && IsLastStep" type="button"
+            (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary">
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>

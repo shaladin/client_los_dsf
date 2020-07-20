@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-purchase-order-multi-asset-detail',
@@ -41,7 +42,7 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
       SupplCode : this.supplCode,
       PurchaseOrderHId : this.PurchaseOrderHId
      };
-    await this.http.post(AdInsConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];

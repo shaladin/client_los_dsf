@@ -4,9 +4,10 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
-import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-nap-from-lead-paging',
@@ -32,7 +33,7 @@ export class NapFromLeadPagingComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();    
     this.makeCriteria();
@@ -40,7 +41,7 @@ export class NapFromLeadPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchAppFromLead.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromLead.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -74,7 +75,7 @@ export class NapFromLeadPagingComponent implements OnInit {
 
   AddApp(ev){
     var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
           this.router.navigate(["/Nap/Sharing/NapFromLead/Detail"], { queryParams: { "LeadId": ev.RowObj.LeadId}});

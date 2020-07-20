@@ -23,6 +23,9 @@ import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { AssetCategoryObj } from 'app/shared/model/AssetCategoryObj.Model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-collateral-leasing-add-edit',
@@ -149,17 +152,17 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   });
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = AdInsConstant.GetListAppAssetData;
-    this.getListVendorEmp = AdInsConstant.GetListVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrByAppCustAddrId = AdInsConstant.GetAppCustAddrByAppCustAddrId;
-    this.getAppCustAddrUrl = AdInsConstant.GetListAppCustAddrByAppId;
-    this.addEditAllCollateralData = AdInsConstant.AddEditAllCollateralData;
-    this.getListAssetTypeByCode = AdInsConstant.GetListAssetTypeByCode;
-    this.getAssetCategoryById = AdInsConstant.GetAssetCategoryById;
-    this.getAppCollateralByAppCollateralId = AdInsConstant.GetAppCollateralByAppCollateralId;
-    this.getAssetMasterForLookupEmployee = AdInsConstant.GetAssetMasterForLookupEmployee;
-    this.getAppCollateralRegistByAppCollateralId = AdInsConstant.GetAppCollateralRegistrationByAppCollateralId;
+    this.getListAppAssetData = URLConstant.GetListAppAssetData;
+    this.getListVendorEmp = URLConstant.GetListVendorEmpByVendorIdAndPosition;
+    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
+    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.addEditAllCollateralData = URLConstant.AddEditAllCollateralData;
+    this.getListAssetTypeByCode = URLConstant.GetListAssetTypeByCode;
+    this.getAssetCategoryById = URLConstant.GetAssetCategoryById;
+    this.getAppCollateralByAppCollateralId = URLConstant.GetAppCollateralByAppCollateralId;
+    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppCollateralId"] != null) {
@@ -221,11 +224,11 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.inputObj = new InputSearchObj();
     this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
     this.inputObj.enviromentUrl = environment.FoundationR3Url; 
-    this.inputObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
 
     this.pageNow = 1;
     this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + AdInsConstant.GetPagingObjectBySQL;
+    this.apiUrl = environment.FoundationR3Url + URLConstant.GetPagingObjectBySQL;
     this.inputObj.addCritInput = new Array();
     
   }
@@ -334,7 +337,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   }
 
   deleteFromTemp(CollateralId: any) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.arrAddCrit = new Array();
       if (this.arrCrit.length != 0) {
         for (var i = 0; i < this.arrCrit.length; i++) {
@@ -371,10 +374,10 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.appObj.AppId = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
-        this.AppCustAddrObj = response["ReturnObject"];
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ 
-          LocationAddrType: response['ReturnObject'][0]['AppCustAddrId'],
-          CollateralOwnerAddr: response['ReturnObject'][0]['AppCustAddrId'] 
+          LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'],
+          CollateralOwnerAddr: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] 
         });
       }
     );
@@ -519,38 +522,38 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
     
     this.idTypeCode = new RefMasterObj();
-    this.idTypeCode.RefMasterTypeCode = "ID_TYPE";
+    this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
     (response) => {
-        this.tempIdType = response['ReturnObject'];
-        this.AddCollForm.patchValue({ MrIdTypeCode: response['ReturnObject'][0]['Key'] });
+        this.tempIdType = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
     });
 
     this.ownerRelationshipObj = new RefMasterObj();
-    this.ownerRelationshipObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getListActiveRefMasterUrl, this.ownerRelationshipObj).subscribe(
       (response) => {
-        this.returnOwnerRelationshipObj = response["ReturnObject"];
-        this.AddCollForm.patchValue({ OwnerRelationship: response['ReturnObject'][0]['Key'] });
+        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
     this.assetRegionObj = new RefMasterObj();
-    this.assetRegionObj.RefMasterTypeCode = "ASSET_INS_REGION";
+    this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetInsRegion;
     this.http.post(this.getListActiveRefMasterUrl, this.assetRegionObj).subscribe(
       (response) => {
-        this.returnAssetRegionObj = response["ReturnObject"];
-        this.AddCollForm.patchValue({ AssetRegion: response['ReturnObject'][0]['Key'] });
+        this.returnAssetRegionObj = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({ AssetRegion: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
     
     this.collTypeObj = new AssetTypeObj();
     this.http.post(this.getListAssetTypeByCode, this.collTypeObj).subscribe(
       (response) => {
-        this.returnCollTypeObj = response["ReturnObject"];
+        this.returnCollTypeObj = response[CommonConstant.ReturnObj];
         console.log("aaa");
         console.log(this.returnCollTypeObj);
-        this.AddCollForm.patchValue({ AssetTypeCode: response['ReturnObject'][0]['Key'] });
+        this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
@@ -718,11 +721,11 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     }
 
     if (this.appCollateralObj.ListCollateralId.length == 0) {
-      this.toastr.typeErrorCustom('Please Add At Least One Data');
+      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
 
-    this.http.post(AdInsConstant.AddExistingAppCollateralData, this.appCollateralObj).subscribe(
+    this.http.post(URLConstant.AddExistingAppCollateralData, this.appCollateralObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
         //this.router.navigate(["/Nap/AssetData/Paging"]);
@@ -741,7 +744,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   // delete(MouCustCollId) {
   //   var custCollObj = { MouCustCollateralId: MouCustCollId };
-  //   this.http.post(AdInsConstant.DeleteMouCustCollateral, custCollObj).subscribe(
+  //   this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
   //     (response) => {
   //       console.log(response);
   //       this.toastr.successMessage(response["message"]);

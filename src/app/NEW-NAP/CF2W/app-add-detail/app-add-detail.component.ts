@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -21,12 +23,12 @@ export class AppAddDetailComponent implements OnInit {
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
-  token : any = localStorage.getItem("Token");
+ 
 
   AppStep = {
     "NEW": 1,
@@ -65,13 +67,27 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("this");
     //this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(AdInsConstant.GetAppById, this.NapObj).subscribe(
+    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -99,12 +115,12 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   MakeViewReturnInfoObj() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.mode == CommonConstant.ModeResultHandling) {
       var obj = {
         AppId: this.appId,
-        MrReturnTaskCode: AdInsConstant.ReturnHandlingEditApp
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post(AdInsConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -121,7 +137,7 @@ export class AppAddDetailComponent implements OnInit {
 
   CheckMultiAsset() {
     var appObj = { AppId: this.appId }
-    this.http.post(AdInsConstant.GetAppAssetListByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];
         if (this.ListAsset != undefined && this.ListAsset != null) {
@@ -142,32 +158,32 @@ export class AppAddDetailComponent implements OnInit {
   ChangeTab(AppStep) {
     // console.log(AppStep);
     switch (AppStep) {
-      case AdInsConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepCust];
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
-      case AdInsConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepGuar];
+      case CommonConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
         break;
-      case AdInsConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepRef];
+      case CommonConstant.AppStepRef:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
         break;
-      case AdInsConstant.AppStepApp:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepApp];
+      case CommonConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case AdInsConstant.AppStepAsset:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepAsset];
+      case CommonConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case AdInsConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepIns];
+      case CommonConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
-      case AdInsConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepLIns];
+      case CommonConstant.AppStepLIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
         break;
-      case AdInsConstant.AppStepFin:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepFin];
+      case CommonConstant.AppStepFin:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
-      case AdInsConstant.AppStepTC:
-        this.AppStepIndex = this.AppStep[AdInsConstant.AppStepTC];
+      case CommonConstant.AppStepTC:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
 
       default:
@@ -177,7 +193,7 @@ export class AppAddDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(AdInsConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) =>{
         console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
@@ -192,7 +208,7 @@ export class AppAddDetailComponent implements OnInit {
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(AdInsConstant.SubmitNAP, this.NapObj).subscribe(
+    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
         console.log(response);
         this.router.navigate(["/Nap/CF2W/Paging"], { queryParams: { LobCode: "CF2W" } })
@@ -204,7 +220,7 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   Submit() {
-    if (this.mode == AdInsConstant.ModeResultHandling) {
+    if (this.mode == CommonConstant.ModeResultHandling) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
         ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
@@ -212,7 +228,7 @@ export class AppAddDetailComponent implements OnInit {
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
-      this.http.post(AdInsConstant.EditReturnHandlingD, obj).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
           console.log(response);
         },
@@ -236,8 +252,7 @@ export class AppAddDetailComponent implements OnInit {
   //     });
   // }
 
-  GetCallback(ev){
-    var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.ViewObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.ViewObj.ProdOfferingVersion + "&Token=" + this.token;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  GetCallback(ev){ 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

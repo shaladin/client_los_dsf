@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetDataDetailComponent } from '../app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { AppInsuranceDetailComponent } from './app-insurance-detail/app-insurance-detail.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-app-insurance',
@@ -28,16 +29,13 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.post(AdInsConstant.GetListAppInsObjByAppIdForView, { AppId: this.AppId }).subscribe(
+    this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { AppId: this.AppId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-
-        // console.log("resins")
-        // console.log(response)
       },
       (error) => {
         console.log(error);
@@ -57,8 +55,6 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   viewDetailCollateralHandler(appInsObjId){
-    // console.log("appInsObjId")
-    // console.log(appInsObjId)
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {

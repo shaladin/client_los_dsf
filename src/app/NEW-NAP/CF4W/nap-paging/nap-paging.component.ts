@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-nap-paging',
@@ -18,33 +21,33 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   userAccess: any;
-  token : any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router  ) {
+    private router: Router) {
   }
 
-  makeCriteria(){
+  makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "NAP_"+AdInsConstant.CF4W;
+    critObj.value = "NAP_" + CommonConstant.CF4W;
     this.arrCrit.push(critObj);
   }
-  
+
   async ngOnInit() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
-    
-    this.arrCrit = new Array();    
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+
+    this.arrCrit = new Array();
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchApp.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -54,14 +57,14 @@ export class NapPagingComponent implements OnInit {
     ];
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
-  
-  AddApp(){
+
+  AddApp() {
     var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(AdInsConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
-        if(response["IsAllowAppCreated"] == true){
+        if (response["IsAllowAppCreated"] == true) {
           this.router.navigate(["Nap/ConsumerFinance/Add"]);
-        }else{
+        } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
       },
@@ -71,13 +74,12 @@ export class NapPagingComponent implements OnInit {
     );
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.prodOfferingCode + "&prodOfferingVersion=" + ev.RowObj.prodOfferingVersion + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
-    if(ev.Key == "Edit"){
-      this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId" : ev.RowObj.WfTaskListId } });
+    if (ev.Key == "Edit") {
+      this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
     }
   }
 }

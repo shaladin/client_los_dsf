@@ -109,6 +109,23 @@
       "itemsUrl": [],
       "criteriaPropName": "StatusGrpCode",
       "criteriaPropValue": "APP_STEP"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "B.AGRMNT_STAT",
+      "id": "agrmntStatId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Contract Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropValue": "APP_STAT"
     }
   ],
   "querystring": {

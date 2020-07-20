@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PoExtensionPagingComponent } from './po-extension/po-extension-paging/po-extension-paging.component';
-import { PoExtensionDetailComponent } from './po-extension/po-extension-detail/po-extension-detail.component';
 import { OutstandingTcPagingComponent } from './outstanding-tc/outstanding-tc-paging/outstanding-tc-paging.component';
 import { OutstandingTcDetailComponent } from './outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component';
 import { ReturnHandlingPagingComponent } from './return-handling/return-handling-paging/return-handling-paging.component';
@@ -12,7 +9,6 @@ import { ListCompanyComponent } from './app-dup-check/list-company/list-company.
 import { ApplicantExistingDataPersonalComponent } from './app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component';
 import { ApplicantExistingDataCompanyComponent } from './app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component';
 import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
-import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from './return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component';
 import { ReturnHandlingSurveyComponent } from './return-handling/return-handling-survey/return-handling-survey.component';
 import { ReturnHandlingCollateralPagingComponent } from './return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component';
@@ -20,30 +16,34 @@ import { ReturnHandlingCollateralEditComponent } from './return-handling/return-
 import { ReturnHandlingCollateralDetailComponent } from './return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component';
 import { ReturnHandlingComRsvfundPagingComponent } from './return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component';
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
+import { AssetInquiryComponent } from './credit-apv-result-ext/asset-inquiry/asset-inquiry.component';
+import { CreditApvResultExtDetailComponent } from './credit-apv-result-ext/credit-apv-result-ext-detail/credit-apv-result-ext-detail.component';
+import { CreditApvResultExtPagingComponent } from './credit-apv-result-ext/credit-apv-result-ext-paging/credit-apv-result-ext-paging.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'POExtension/Paging',
-        component: PoExtensionPagingComponent,
+        path: 'CreditApprovalResultExt/Paging',
+        component: CreditApvResultExtPagingComponent,
         data: {
-          title: 'PO Extension Paging'
+          title: 'Credit Approval Result Extension Paging'
         }
       },
       {
-        path: 'POExtension/Detail',
-        component: PoExtensionDetailComponent,
+        path: 'CreditApprovalResultExt/Detail',
+        component: CreditApvResultExtDetailComponent,
         data: {
-          title: 'PO Extension Detail'
+          title: 'Credit Approval Result Extension Detail'
         }
       },
       {
-        path: 'POExtension/AssetInquiry',
+        path: 'CreditApprovalResultExt/AssetInquiry',
         component: AssetInquiryComponent,
         data: {
-          title: 'PO Extension Asset Inquiry'
+          title: 'Credit Approval Result Extension Asset Inquiry'
         }
       },
       {

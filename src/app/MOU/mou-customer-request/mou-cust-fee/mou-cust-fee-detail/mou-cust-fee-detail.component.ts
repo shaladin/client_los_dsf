@@ -6,11 +6,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-cust-fee-detail',
-  templateUrl: './mou-cust-fee-detail.component.html',
-  styleUrls: ['./mou-cust-fee-detail.component.scss']
+  templateUrl: './mou-cust-fee-detail.component.html'
 })
 export class MouCustFeeDetailComponent implements OnInit {
   @Input() MouCustId: number;
@@ -35,13 +36,13 @@ export class MouCustFeeDetailComponent implements OnInit {
     public activeModal: NgbActiveModal
   ) {
     var rmFeeType = new RefMasterObj();
-    rmFeeType.RefMasterTypeCode = "FEE_TYPE";
-    let getRefFee = this.httpClient.post(AdInsConstant.GetRefFeeList, null);
-    let getFeeType = this.httpClient.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
+    rmFeeType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFeeType;
+    let getRefFee = this.httpClient.post(URLConstant.GetRefFeeList, null);
+    let getFeeType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
     forkJoin([getRefFee, getFeeType]).subscribe(
       (response) => {
-        this.refFeeList = response[0]["ReturnObject"];
-        this.feeTypeList = response[1]["ReturnObject"];
+        this.refFeeList = response[0][CommonConstant.ReturnObj];
+        this.feeTypeList = response[1][CommonConstant.ReturnObj];
         this.MouCustFeeForm.patchValue({
           RefFeeId: this.refFeeList[0].RefFeeId,
           MrFeeTypeCode: this.feeTypeList[0].Key
@@ -71,7 +72,7 @@ export class MouCustFeeDetailComponent implements OnInit {
   }
 
   feeTypeHandler(e){
-    if(e.target.value == 'AMT'){
+    if(e.target.value == CommonConstant.FeeTypeAmt){
       this.MouCustFeeForm.patchValue({
         FeePrcnt: 0
       });
@@ -79,7 +80,7 @@ export class MouCustFeeDetailComponent implements OnInit {
       this.MouCustFeeForm.controls['FeeAmt'].setValidators([Validators.required, Validators.min(1)]);
       this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
     }
-    else if(e.target.value == 'PRCNT'){
+    else if(e.target.value ==  CommonConstant.FeeTypePrcnt){
       this.MouCustFeeForm.patchValue({
         FeeAmt: 0
       });
@@ -103,15 +104,15 @@ export class MouCustFeeDetailComponent implements OnInit {
     }
     if(this.UsedRefFeeIdList.includes(parseInt(formData.RefFeeId)) == true){
       var message = this.getDdlName(formData.RefFeeId) + " Already Exists";
-      this.toastr.errorMessage(message);
+      this.toastr.warningMessage(message);
       return;
     }
     if(formData['MrFeeTypeCode'] == 'AMT' && formData['FeeAmt'] == 0){
-      this.toastr.errorMessage(message);
+      this.toastr.warningMessage(message);
       return;
     }
 
-    this.httpClient.post(AdInsConstant.AddMouCustFee, formData).subscribe(
+    this.httpClient.post(URLConstant.AddMouCustFee, formData).subscribe(
       (response) => {
         this.activeModal.close(response);
       },

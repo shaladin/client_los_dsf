@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-application-data',
@@ -16,7 +18,7 @@ export class TabApplicationDataComponent implements OnInit {
   constructor(
     private http: HttpClient,
   ) { }
-  
+
   GuarantorData;
   CommData;
   ReferantorData;
@@ -28,14 +30,14 @@ export class TabApplicationDataComponent implements OnInit {
   inputGridObj: InputGridObj;
   IsGridTcReady: boolean = false;
 
-  InitData(){
+  InitData() {
     // this.appId = 31;
     this.GuarantorData = new Array();
     this.CommData = new Array();
     this.ReferantorData = {
       ReferantorName: "",
       CooperationDate: "",
-      NumOfSales: 0 ,
+      NumOfSales: 0,
       NumOfApplication: 0,
       TotalSalesAmount: 0,
       InAmount: 0,
@@ -84,7 +86,7 @@ export class TabApplicationDataComponent implements OnInit {
       LifeInsuranceCompany: ""
     }
   }
-  
+
   async ngOnInit() {
     this.InitData();
     await this.GetGuarantorData();
@@ -93,26 +95,26 @@ export class TabApplicationDataComponent implements OnInit {
     await this.GetDealerData();
     await this.GetCommData();
     await this.GetAppTc();
-    if(this.AssetInsuranceAndLifeInsuranceData.CoverBy=="CO"){
-      this.InsuranceTitle ="Asset Insurance";
-    }else{
-      this.InsuranceTitle ="Asset Insurance & Life Insurance"
+    if (this.AssetInsuranceAndLifeInsuranceData.CoverBy == CommonConstant.InsuredByCompany) {
+      this.InsuranceTitle = "Asset Insurance";
+    } else {
+      this.InsuranceTitle = "Asset Insurance & Life Insurance"
     }
     console.log(this.AssetInsuranceAndLifeInsuranceData);
   }
 
-  async GetGuarantorData(){
+  async GetGuarantorData() {
     var obj = {
       AppGuarantorObj: {
         AppID: this.AppId
       },
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetListAppGuarantorDetail, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListAppGuarantorDetail, obj).toPromise().then(
       (response) => {
         console.log(response);
-        for(var i=0;i<response[AdInsConstant.ReturnObj].length;i++){
-          var tempResponse = response[AdInsConstant.ReturnObj][i];
+        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+          var tempResponse = response[CommonConstant.ReturnObj][i];
           var temp = {
             GuarantorName: tempResponse.appGuarantorObj.GuarantorName,
             GuarantorType: tempResponse.appGuarantorObj.GuarantorTypeCodeDesc,
@@ -121,12 +123,12 @@ export class TabApplicationDataComponent implements OnInit {
             Address: "",
             MobilePhone: ""
           };
-          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == AdInsConstant.GuarantorTypeCodeCompany){
+          if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodeCompany) {
             temp.IdNo = tempResponse.appGuarantorObj.TaxIdNo;
             temp.Address = tempResponse.appGuarantorCompanyObj.Addr;
             temp.MobilePhone = tempResponse.appGuarantorCompanyObj.MobilePhnNo1 + " / " + tempResponse.appGuarantorCompanyObj.MobilePhnNo2;
           }
-          if(tempResponse.appGuarantorObj.MrGuarantorTypeCode == AdInsConstant.GuarantorTypeCodePersonal){
+          if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodePersonal) {
             temp.IdNo = tempResponse.appGuarantorPersonalObj.IdNo;
             temp.Address = tempResponse.appGuarantorPersonalObj.Addr;
             temp.MobilePhone = tempResponse.appGuarantorPersonalObj.MobilePhnNo;
@@ -140,12 +142,12 @@ export class TabApplicationDataComponent implements OnInit {
     );
   }
 
-  async GetReferantorData(){
+  async GetReferantorData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppReferantorForAppsData, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.ReferantorData.ReferantorName = response["ReferantorName"];
@@ -158,12 +160,12 @@ export class TabApplicationDataComponent implements OnInit {
     );
   }
 
-  async GetAppDetailData(){
+  async GetAppDetailData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppDetailForAppTabById, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
       (response) => {
         console.log(response);
 
@@ -203,12 +205,12 @@ export class TabApplicationDataComponent implements OnInit {
     );
   }
 
-  async GetDealerData(){
+  async GetDealerData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
         this.DealerData = {
@@ -235,16 +237,16 @@ export class TabApplicationDataComponent implements OnInit {
     );
   }
 
-  async GetCommData(){
+  async GetCommData() {
     var obj = {
       AppID: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(AdInsConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
       (response) => {
         console.log(response);
-        var temp = response[AdInsConstant.ReturnObj];
-        for(var i=0;i<temp.length;i++){
+        var temp = response[CommonConstant.ReturnObj];
+        for (var i = 0; i < temp.length; i++) {
           var tempObj = {
             Subject: temp[i].MrCommissionRecipientTypeCodeDesc,
             Name: temp[i].CommissionRecipientRefNoDesc,
@@ -260,16 +262,16 @@ export class TabApplicationDataComponent implements OnInit {
     );
   }
 
-  async GetAppTc(){
+  async GetAppTc() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
 
-    
+
     var AppObj = {
       AppId: this.AppId
     }
 
-    this.http.post(AdInsConstant.GetListTCbyAppId, AppObj).toPromise().then(
+    this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(
       (response) => {
         console.log(response);
         this.inputGridObj.resultData = {
@@ -284,7 +286,7 @@ export class TabApplicationDataComponent implements OnInit {
     );
     this.IsGridTcReady = true;
   }
-  
+
 
   sortGuarantorData(sort: Sort) {
     const data = this.GuarantorData.slice();
@@ -307,7 +309,7 @@ export class TabApplicationDataComponent implements OnInit {
     });
   }
 
-  sortCommData(sort: Sort){
+  sortCommData(sort: Sort) {
     const data = this.CommData.slice();
     if (!sort.active || sort.direction === '') {
       this.CommData = data;

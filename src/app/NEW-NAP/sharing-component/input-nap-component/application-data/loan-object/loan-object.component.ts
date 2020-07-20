@@ -9,11 +9,13 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-loan-object',
-  templateUrl: './loan-object.component.html',
-  styleUrls: ['./loan-object.component.scss']
+  templateUrl: './loan-object.component.html'
 })
 export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
@@ -74,7 +76,7 @@ export class LoanObjectComponent implements OnInit {
       AppLoanPurposeId: this.AppLoanPurposeId
     };
 
-    await this.http.post(AdInsConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
+    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -138,7 +140,7 @@ export class LoanObjectComponent implements OnInit {
     var SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
 
     if (SelfFinancingAmt > BudgetPlanAmt) {
-      this.toastr.errorMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
+      this.toastr.warningMessage("Self Financing Amount Must Be Lower Than Budget Plan Amount!");
       return;
     }
 
@@ -149,7 +151,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(AdInsConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
@@ -158,10 +160,10 @@ export class LoanObjectComponent implements OnInit {
 
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: AdInsConstant.RefProdCompntSupplSchm,
+      RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
       ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
     };
-    await this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptSupplSchm = response;
       }
@@ -171,13 +173,13 @@ export class LoanObjectComponent implements OnInit {
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.loanObjectInputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    this.supplierInputLookupObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.supplierInputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.addCritInput = new Array();
     
@@ -236,7 +238,7 @@ export class LoanObjectComponent implements OnInit {
     if (this.mode == "edit") {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
-      this.http.post(AdInsConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+      this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.modal.close();
           this.toastr.successMessage(response["message"]);
@@ -248,7 +250,7 @@ export class LoanObjectComponent implements OnInit {
         });
     }
     else {
-      this.http.post(AdInsConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+      this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.modal.close();
           this.toastr.successMessage(response["message"]);
@@ -262,12 +264,12 @@ export class LoanObjectComponent implements OnInit {
   }
 
   deleteLoanObject(AppLoanPurposeId) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var obj = {
         AppLoanPurposeId: AppLoanPurposeId
       };
 
-      this.http.post(AdInsConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
+      this.http.post(URLConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
         this.toastr.successMessage(response["Message"]);
         this.loadDataTable();
       },
@@ -281,7 +283,7 @@ export class LoanObjectComponent implements OnInit {
     var obj = {
       AppId: this.AppId
     }
-    this.http.post(AdInsConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
       (response) => {
         this.resultData = response["listResponseAppLoanPurpose"];
       },

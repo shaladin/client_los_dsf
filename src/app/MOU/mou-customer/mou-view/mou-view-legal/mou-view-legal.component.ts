@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-mou-view-legal',
@@ -14,13 +15,13 @@ export class MouViewLegalComponent implements OnInit {
   @Input() MouCustId: number;
 
   listLglReviewData: any;
-  
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
     console.log(mouCustObj);
-    this.http.post(AdInsConstant.GetMouCustLglReviewByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustLglReviewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listLglReviewData = response['ReturnObject'];
       })
@@ -28,5 +29,4 @@ export class MouViewLegalComponent implements OnInit {
 
   LegalReviewForm = this.fb.group({
   })
-
 }

@@ -12,6 +12,8 @@ import { RequestAppCrdInvstgObj } from 'app/shared/model/AppCrdInvstg/RequestApp
 import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AppCrdInvstgHObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgHObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
 @Component({
@@ -53,7 +55,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     });
   }
   async ngOnInit() : Promise<void> {
-    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
@@ -64,7 +66,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
   SaveForm(){
     var reqAppCrdInvstg = new RequestAppCrdInvstgObj();
 
-    var user = JSON.parse(localStorage.getItem("UserAccess"));
+    var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     reqAppCrdInvstg.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdInvstgStat = "DONE";
@@ -81,8 +83,8 @@ export class CreditInvestigationDetailComponent implements OnInit {
     }
 
     reqAppCrdInvstg.WfTaskListId = this.wfTaskListId;
-    var lobCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(AdInsConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["message"]);       
@@ -134,34 +136,34 @@ export class CreditInvestigationDetailComponent implements OnInit {
 
     var reqObj = { AppId: this.appId };
 
-    await this.http.post<AppCrdInvstgHObj>(AdInsConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
+    await this.http.post<AppCrdInvstgHObj>(URLConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
       (response) => {
         this.appCrdInvstgHObj = response;
       }
     );
     if(this.appCrdInvstgHObj.AppId == 0){
-      var refMasterObj = { RefMasterTypeCode: "CRD_INVSTG_ANALYSIS_ITEM"};
-      await this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+      var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
+      await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
         (response) => {
-          this.analysisItemObj = response["ReturnObject"];
+          this.analysisItemObj = response[CommonConstant.ReturnObj];
         }
       );
     }
   }
 
   ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
-    this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
     
       });
   }
   Back() {
-    var lobCode = localStorage.getItem("BizTemplateCode");
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
   }
 }

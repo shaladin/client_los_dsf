@@ -4,18 +4,33 @@
       {
         "subSectionId": "ApplicationAgreementCancellation",
         "subSectionTitle": "Main Information",
-        "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
-        "mainInfo": [ 
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
           {
             "type": "link",
             "label": "Application No",
             "property": "AppNo",
+            "name": "AppNo",
             "path": "/Nap/View/AppView",
-            "target" : "_blank",
+            "target": "_blank",
             "param": [
               {
                 "type": "AppId",
                 "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
               }
             ]
           }, 
@@ -23,20 +38,21 @@
             "type": "text",
             "label": "Installment Amount",
             "property": "InstAmt"
-          }, 
+          },
           {
             "type": "link",
             "label": "Agreement No",
             "property": "AgrmntNo",
+            "name": "AgrmntNo",
             "path": "/Nap/View/AgrmntView",
-            "target" : "_blank",
+            "target": "_blank",
             "param": [
               {
                 "type": "AgrmntId",
                 "property": "AgrmntId"
               }
             ]
-          }, 
+          },
           {
             "type": "text",
             "label": "Number Of Installment",
@@ -48,14 +64,16 @@
             "property": "CustName"
           },
           {
-            "type": "text",
-            "label": "PRODUCT OFFERING NAME",
+            "type": "callback",
+            "label": "Product Offering Name",
+            "key": "ViewProdOffering",
+            "position": "left",
             "property": "ProdOfferingName"
           }
         ],
         "querystring": {
-          "select": "SELECT ap.APP_NO AS AppNo, apFinData.INST_AMT AS InstAmt, agr.AGRMNT_NO AS AgrmntNo, ap.NUM_OF_INST AS NumOfInst, apCust.CUST_NAME AS CustName,ap.PROD_OFFERING_NAME AS ProdOfferingName, ap.APP_ID AS AppId, agr.AGRMNT_ID AS AgrmntId",
-          "from": "FROM dbo.APP ap LEFT JOIN dbo.AGRMNT agr ON ap.APP_ID = agr.APP_ID LEFT JOIN dbo.APP_CUST apCust ON ap.APP_ID = apCust.APP_ID LEFT JOIN dbo.APP_AGRMNT_CANCEL apagrc ON ap.APP_ID = apagrc.APP_ID LEFT JOIN dbo.APP_FIN_DATA apFinData ON ap.APP_ID = apFinData.APP_ID",
+          "select": "SELECT ap.APP_NO AS AppNo, apFinData.INST_AMT AS InstAmt, agr.AGRMNT_NO AS AgrmntNo, ap.NUM_OF_INST AS NumOfInst, apCust.CUST_NAME AS CustName,ap.PROD_OFFERING_NAME AS ProdOfferingName, ap.APP_ID AS AppId, agr.AGRMNT_ID AS AgrmntId, E.MOU_CUST_NO AS MouCustNo, E.MOU_CUST_ID AS MouCustId, ap.PROD_OFFERING_CODE AS ProdOfferingCode, ap.PROD_OFFERING_VERSION AS ProdOfferingVersion",
+          "from": "FROM dbo.APP ap LEFT JOIN dbo.AGRMNT agr ON ap.APP_ID = agr.APP_ID LEFT JOIN dbo.APP_CUST apCust ON ap.APP_ID = apCust.APP_ID LEFT JOIN dbo.APP_AGRMNT_CANCEL apagrc ON ap.APP_ID = apagrc.APP_ID LEFT JOIN dbo.APP_FIN_DATA apFinData ON ap.APP_ID = apFinData.APP_ID LEFT JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = ap.MOU_CUST_ID LEFT JOIN MOU_CUST_FCTR D ON D.MOU_CUST_ID = E.MOU_CUST_ID",
           "where": "WHERE ap.APP_ID = {0}"
         }
       }

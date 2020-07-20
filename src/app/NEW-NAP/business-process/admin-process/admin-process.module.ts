@@ -42,6 +42,8 @@ import { SharingModule } from "app/shared/sharing.module";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovalhistModule } from "@adins/ucapprovalhist";
 import { NgxCurrencyModule } from "ngx-currency";
+import { UcaddtotempModule } from "@adins/ucaddtotemp";
+
 export const customCurrencyMaskConfig = {     
   align: "left",     
   allowNegative: true,     
@@ -61,7 +63,8 @@ export const customCurrencyMaskConfig = {
     ViewMainInfoComponentModule,
     ProcessComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    AdInsModule
+    AdInsModule,
+    UcaddtotempModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

@@ -7,6 +7,9 @@ import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-legal-doc-FL4W',
@@ -48,25 +51,25 @@ export class CustLegalDocFL4WComponent implements OnInit {
   dateErrorMessage: any;
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private modalService: NgbModal,private toastr: NGXToastrService) {
-     }
+  constructor(private fb: FormBuilder, private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
+  }
 
   ngOnInit() {
     console.log('legal doc')
     this.bindLegalDocTypeObj();
   }
 
-  SaveForm(){
+  SaveForm() {
     this.appCustCompanyLegalDocObj = new AppCustCompanyLegalDocObj();
-    if(this.listLegalDoc == undefined){
+    if (this.listLegalDoc == undefined) {
       this.listLegalDoc = new Array<AppCustCompanyLegalDocObj>();
     }
     this.setAppCustCompanyLegalDoc();
 
-    if(this.mode == "Add"){
+    if (this.mode == "Add") {
       this.listLegalDoc.push(this.appCustCompanyLegalDocObj);
     }
-    if(this.mode == "Edit"){
+    if (this.mode == "Edit") {
       this.listLegalDoc[this.currentEditedIndex] = this.appCustCompanyLegalDocObj;
     }
     this.callbackSubmit.emit(this.listLegalDoc);
@@ -74,13 +77,13 @@ export class CustLegalDocFL4WComponent implements OnInit {
     this.clearForm();
   }
 
-  add(content){
+  add(content) {
     this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
-  edit(i, content){
+  edit(i, content) {
     this.clearForm();
     this.mode = "Edit";
     this.currentEditedIndex = i;
@@ -97,14 +100,14 @@ export class CustLegalDocFL4WComponent implements OnInit {
     this.open(content);
   }
 
-  delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+  delete(i) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listLegalDoc.splice(i, 1);
       this.callbackSubmit.emit(this.listLegalDoc);
     }
   }
 
-  clearForm(){
+  clearForm() {
     this.LegalDocForm = this.fb.group({
       MrLegalDocTypeCode: [this.defaultLegalDocType, [Validators.required, Validators.maxLength(50)]],
       DocNo: ['', [Validators.required, Validators.maxLength(50)]],
@@ -117,9 +120,9 @@ export class CustLegalDocFL4WComponent implements OnInit {
     this.selectedLegalDocName = this.defaultLegalDocName;
   }
 
-  setAppCustCompanyLegalDoc(){
+  setAppCustCompanyLegalDoc() {
     this.appCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
-    this.appCustCompanyLegalDocObj.DocDt =  this.LegalDocForm.controls.DocDt.value;
+    this.appCustCompanyLegalDocObj.DocDt = this.LegalDocForm.controls.DocDt.value;
     this.appCustCompanyLegalDocObj.DocNo = this.LegalDocForm.controls.DocNo.value;
     this.appCustCompanyLegalDocObj.DocExpiredDt = this.LegalDocForm.controls.DocExpiredDt.value;
     this.appCustCompanyLegalDocObj.ReleaseBy = this.LegalDocForm.controls.ReleaseBy.value;
@@ -128,14 +131,14 @@ export class CustLegalDocFL4WComponent implements OnInit {
     this.appCustCompanyLegalDocObj.LegalDocName = this.selectedLegalDocName;
   }
 
-  bindLegalDocTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "LEGAL_DOC_TYPE";
-    this.http.post(AdInsConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+  bindLegalDocTypeObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLegalDocType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.LegalDocTypeObj = response["ReturnObject"];
-        if(this.LegalDocTypeObj.length > 0){
-            this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
-            this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
+        this.LegalDocTypeObj = response[CommonConstant.ReturnObj];
+        if (this.LegalDocTypeObj.length > 0) {
+          this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
+          this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
         }
       }
     );
@@ -159,11 +162,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modalService.dismissAll();
   }
-
-
-
 }

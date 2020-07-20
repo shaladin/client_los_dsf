@@ -16,8 +16,10 @@
           <mat-tab-group *ngIf="IsReady">
             <mat-tab label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'" [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>
-                <app-view-app-cust-data-personal *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'" [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
+                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>
+                <app-view-app-cust-data-personal *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
+                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal>
               </ng-template>
             </mat-tab>
 
@@ -33,6 +35,14 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab *ngIf="IsAppCollateral" label="Collateral">
+              <ng-template matTabContent>
+                <app-view-app-collateral-multi *ngIf="IsMulti" [agrmntId]="AgrmntId"></app-view-app-collateral-multi>
+                <app-view-app-collateral-single *ngIf="!IsMulti" [agrmntId]="AgrmntId">
+                </app-view-app-collateral-single>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsInsurance" label="Insurance">
               <ng-template matTabContent>
                 <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance>
@@ -45,14 +55,15 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsLifeInsurance && ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'" label="Life Insurance">
+            <mat-tab *ngIf="IsLifeInsurance && ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
+              label="Life Insurance">
               <ng-template matTabContent>
-                <agrmnt-life-insurance [agrmntId]="AgrmntId" ></agrmnt-life-insurance>
+                <agrmnt-life-insurance [agrmntId]="AgrmntId"></agrmnt-life-insurance>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsFinancial" label="Financial">
-              <ng-template matTabContent> 
+              <ng-template matTabContent>
                 <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
               </ng-template>
             </mat-tab>
@@ -75,8 +86,8 @@
             </mat-tab>
 
             <mat-tab *ngIf="IsReservedFund" label="Reserved Fund">
-              <ng-template matTabContent> 
-                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId" ></agrmnt-view-reserved-fund>
+              <ng-template matTabContent>
+                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund>
               </ng-template>
             </mat-tab>
 

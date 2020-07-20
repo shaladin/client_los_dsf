@@ -4,18 +4,19 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
-  templateUrl: './cust-confirmation-paging.component.html',
-  styleUrls: ['./cust-confirmation-paging.component.scss']
+  templateUrl: './cust-confirmation-paging.component.html'
 })
 export class CustConfirmationPagingComponent implements OnInit {
 
   inputPagingObj: any;
   arrCrit = [];
   bizTemplateCode :any;
-  token : any = localStorage.getItem("Token");
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -24,7 +25,7 @@ export class CustConfirmationPagingComponent implements OnInit {
         localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
       }
       else{
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
@@ -33,7 +34,7 @@ export class CustConfirmationPagingComponent implements OnInit {
     this.inputPagingObj = new UcpagingModule();
     this.inputPagingObj._url = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = AdInsConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -59,8 +60,7 @@ export class CustConfirmationPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
-      this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion); 
     }
   }
 

@@ -9,6 +9,9 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-personal-contact-information-FL4W',
@@ -95,8 +98,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
      }
 
   ngOnInit() {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log('cust personal contact information')
     this.bindCopyFrom();
@@ -156,7 +159,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listContactPersonPersonal.splice(i, 1);
       this.callbackSubmit.emit(this.listContactPersonPersonal);
     }
@@ -281,9 +284,9 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   initUrl(){
-    this.getCustContactPersonPersonalUrl = AdInsConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = AdInsConstant.GetRefProfessionByCode;
+    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
+    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
   }
 
   bindCopyFrom(){
@@ -299,10 +302,10 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = "GENDER";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.GenderObj = response["ReturnObject"];
+        this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
           this.defaultGender = this.GenderObj[0].Key;
           this.defaultGenderName = this.GenderObj[0].Value;
@@ -312,10 +315,10 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "ID_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.IdTypeObj = response["ReturnObject"];
+        this.IdTypeObj = response[CommonConstant.ReturnObj];
         if(this.IdTypeObj.length > 0){
           this.defaultIdType = this.IdTypeObj[0].Key;
         }
@@ -324,10 +327,10 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   bindCustRelationshipObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_RELATIONSHIP";  
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustRelationship;  
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.CustRelationshipObj = response["ReturnObject"];
+        this.CustRelationshipObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipObj.length > 0){
           this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
           this.defaultRelationshipName = this.CustRelationshipObj[0].Value;
