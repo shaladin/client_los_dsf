@@ -71,7 +71,7 @@
                 </div>
               </div>
             </div>
-            <div formArrayName="QuestionObjs">
+            <div formArrayName="QuestionObjs" *ngIf="PhoneDataForm.controls.MrVerfResultHStatCode.value == 'SCS'">
               <div class="form-body" [formGroupName]="i"
                 *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
                 <lib-ucSubsection [id]="'grpName'+i+'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
