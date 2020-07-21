@@ -423,5 +423,14 @@ export class CommonConstant {
     //RATE TYPE
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
-    
+
+    //Gender Type
+    public static MasterCodeGenderFemale = "FEMALE";
+    public static MasteCodeGenderMale = "MALE";
+
+    //Martial Status
+    public static MasteCodeMartialStatsMarried = "MARRIED";
+
+    //Relationship Code
+    public static MasteCodeRelationshipSpouse = "SPOUSE";
 }

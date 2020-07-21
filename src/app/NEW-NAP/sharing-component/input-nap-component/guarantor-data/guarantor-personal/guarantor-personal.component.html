@@ -108,7 +108,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Gender</label>
+                    <label class="col-md-4 adInsLabel" translate>Gender</label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                               formControlName="MrGenderCode"
@@ -117,14 +117,12 @@
                         <option *ngFor="let it of MrGenderCode" value="{{it.MasterCode}}">
                           {{it.Descr}}
                         </option>
-                        <lib-uc-show-errors [control]="PersonalForm.controls.MrGenderCode"
-                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </select>
                       <lib-uc-show-errors [control]="PersonalForm.controls.MrGenderCode" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>
-                  <div class="form-group row adins-required">
+                  <div class="form-group row">
                     <label class="col-md-4 adInsLabel">Marital Status </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrMaritalStatCode"
@@ -133,9 +131,9 @@
                         <option *ngFor="let it of MrMaritalStatCode" value="{{it.MasterCode}}">
                           {{it.Descr}}
                         </option>
-                        <lib-uc-show-errors [control]="PersonalForm.controls.MrMaritalStatCode"
-                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </select>
+                      <lib-uc-show-errors [control]="PersonalForm.controls.MrMaritalStatCode"
+                                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row adins-required">
@@ -147,9 +145,9 @@
                         <option *ngFor="let it of MrNationalityCode" value="{{it.MasterCode}}">
                           {{it.Descr}}
                         </option>
-                        <lib-uc-show-errors [control]="PersonalForm.controls.MrNationalityCode"
-                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </select>
+                      <lib-uc-show-errors [control]="PersonalForm.controls.MrNationalityCode"
+                                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -161,7 +159,7 @@
                       <label *ngIf="isLocal"> {{selectedNationalityCountryName}} </label>
                     </div>
                   </div>
-                  <div class="form-group row adins-required">
+                  <div class="form-group row">
                     <label class="col-md-4 adInsLabel">Religion </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrReligionCode"
@@ -170,10 +168,10 @@
                         <option *ngFor="let it of MrReligionCode" value="{{it.MasterCode}}">
                           {{it.Descr}}
                         </option>
-                        <lib-uc-show-errors [control]="PersonalForm.controls.MrReligionCode"
-                                            [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
                       </select>
+                      <lib-uc-show-errors [control]="PersonalForm.controls.MrReligionCode"
+                                          [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                 </div>

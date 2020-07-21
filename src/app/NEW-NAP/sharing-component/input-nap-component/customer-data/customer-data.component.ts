@@ -117,6 +117,10 @@ export class CustomerDataComponent implements OnInit {
 
   defCustModelCode: string;
   MrCustTypeCode: any;
+  isMarried: boolean = true;
+  spouseGender: string = "";
+  isSpouseOk: boolean = true;
+  IsSpouseExist: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -141,24 +145,29 @@ export class CustomerDataComponent implements OnInit {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
-      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
-      this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
-        (response) => {
-          console.log(response);
-          if (response["StatusCode"] == 200) {
-            this.toastr.successMessage(response["message"]);
-            this.EmitToMainComp();
+      if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
+      if (this.isSpouseOk) {
+        this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
+          (response) => {
+            console.log(response);
+            if (response["StatusCode"] == 200) {
+              this.toastr.successMessage(response["message"]);
+              this.EmitToMainComp();
+            }
+            else {
+              response["ErrorMessages"].forEach((message: string) => {
+                this.toastr.errorMessage(message["Message"]);
+              });
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-          else {
-            response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
-            });
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
+      else {
+        this.toastr.warningMessage(ExceptionConstant.INPUT_SPOUSE_CONTACT_INFO);
+      }
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -201,6 +210,14 @@ export class CustomerDataComponent implements OnInit {
     this.setAppCustAddrResidence();
     this.setAppCustAddrMailing();
     this.setAppCustPersonalFinData();
+    var CheckSpouseContactInfo = this.listAppCustPersonalContactInformation.find(
+      x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
+    if (CheckSpouseContactInfo == null && this.isMarried == true) {
+      this.isSpouseOk = false;
+    }
+    else {
+      this.isSpouseOk = true;
+    }
     this.custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
     this.custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
     this.setAppCustPersonalJobData();
@@ -583,6 +600,7 @@ export class CustomerDataComponent implements OnInit {
 
   getCustContactInformation(event) {
     this.listAppCustPersonalContactInformation = event;
+    this.CheckSpouseExist();
   }
 
   getAppCustBankAcc(event) {
@@ -801,6 +819,8 @@ export class CustomerDataComponent implements OnInit {
 
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
+
+            this.CheckSpouseExist();
           }
 
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
@@ -1017,6 +1037,7 @@ export class CustomerDataComponent implements OnInit {
 
     if (event["CustPersonalContactPersonObjs"] != undefined) {
       this.listAppCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
+      this.CheckSpouseExist();
     }
 
     if (event["CustPersonalFinDataObj"] != undefined) {
@@ -1223,5 +1244,31 @@ export class CustomerDataComponent implements OnInit {
   EmitToMainComp(){
     console.log(this.MrCustTypeCode);
     this.outputTab.emit(this.MrCustTypeCode);
+  }
+
+  GenderChanged(event) {
+    console.log(event);
+    if (event.IsSpouseDelete == true) {
+      for (let i = 0; i < this.listAppCustPersonalContactInformation.length; i++) {
+        if (this.listAppCustPersonalContactInformation[i].MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse) {
+          this.listAppCustPersonalContactInformation.splice(i, 1);
+        }
+        this.IsSpouseExist = false;
+      }
+    }
+    this.spouseGender = event.SpouseGender;
+  }
+  MaritalChanged(event) {
+    this.isMarried = event;
+  }
+  CheckSpouseExist() {
+    var CheckSpouseContactInfo = this.listAppCustPersonalContactInformation.find(
+      x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
+    if (CheckSpouseContactInfo != null) {
+      this.IsSpouseExist = true;
+    }
+    else {
+      this.IsSpouseExist = false;
+    }
   }
 }

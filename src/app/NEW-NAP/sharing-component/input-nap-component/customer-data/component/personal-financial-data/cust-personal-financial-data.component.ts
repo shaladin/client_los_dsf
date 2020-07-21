@@ -21,7 +21,7 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
-
+  @Input() isMarried: boolean = true;
   refMasterObj = {
     RefMasterTypeCode: "",
   };

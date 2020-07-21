@@ -1,17 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-personal-main-data',
@@ -29,9 +29,10 @@ export class CustPersonalMainDataComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   @Input() custType: any;
-
+  @Input() IsSpouseExist: boolean = false;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-
+  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -170,6 +171,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.ChangeNationality(response["CustPersonalObj"].MrNationalityCode);
       this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
       this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
+      this.ChangeMaritalStats();
     }
   }
 
@@ -250,6 +252,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.selectedNationalityCountryCode = this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode;
       this.setCountryName(this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode);
       this.ChangeNationality(this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode);
+      this.ChangeMaritalStats();
     }
   }
 
@@ -350,6 +353,7 @@ export class CustPersonalMainDataComponent implements OnInit {
           this.parentForm.controls[this.identifier].patchValue({
             MrMaritalStatCode: this.MaritalStatObj[0].Key
           });
+          this.ChangeMaritalStats();
         }
       }
     );
@@ -413,6 +417,60 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.isLocal = true;
     }else{
       this.isLocal = false;
+    }
+  }
+
+  ChangeGender() {
+    var obj = {
+      SpouseGender: "",
+      IsSpouseDelete: false
+    };
+    if (this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value == CommonConstant.MasterCodeGenderFemale) {
+      if (this.IsSpouseExist) {
+        if (confirm("You have changed your gender, and it will delete your spouse data, countinue?")) {
+          obj.SpouseGender = CommonConstant.MasteCodeGenderMale;
+          obj.IsSpouseDelete = true;
+          this.spouseObj.emit(obj);
+        }
+        else {
+          this.parentForm.controls[this.identifier].patchValue({
+            MrGenderCode: CommonConstant.MasteCodeGenderMale
+          });
+        }
+      }
+      else {
+        obj.SpouseGender = CommonConstant.MasteCodeGenderMale;
+        obj.IsSpouseDelete = false;
+        this.spouseObj.emit(obj);
+      }
+    }
+    else if (this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value == CommonConstant.MasteCodeGenderMale) {
+      if (this.IsSpouseExist) {
+        if (confirm("You have changed your gender, and it will delete your spouse data, countinue?")) {
+          obj.SpouseGender = CommonConstant.MasterCodeGenderFemale;
+          obj.IsSpouseDelete = true;
+          this.spouseObj.emit(obj);
+        }
+        else {
+          this.parentForm.controls[this.identifier].patchValue({
+            MrGenderCode: CommonConstant.MasterCodeGenderFemale
+          });
+        }
+      }
+      else {
+        obj.SpouseGender = CommonConstant.MasterCodeGenderFemale;
+        obj.IsSpouseDelete = false;
+        this.spouseObj.emit(obj);
+      }
+    }
+  }
+
+  ChangeMaritalStats() {
+    if (this.parentForm.controls[this.identifier]['controls'].MrMaritalStatCode.value == CommonConstant.MasteCodeMartialStatsMarried) {
+      this.isMarried.emit(true);
+    }
+    else {
+      this.isMarried.emit(false);
     }
   }
 }
