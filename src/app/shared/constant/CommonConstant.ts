@@ -270,7 +270,6 @@ export class CommonConstant {
     public static LifeInsPayMethodFullCapitalized = "CPTLZ";
     public static LifeInsPayMethodPaidInAdvanceAndCapitalizedMix = "IN_ADV_CPTLZ_MIX";
 
-
     //INST SCHM
     public static InstSchmBalloon = "BL";
     public static InstSchmStepUpStepDownNormal = "STNM";
@@ -427,5 +426,8 @@ export class CommonConstant {
 
     //FIN DATA CALC BASE ON
     public static FinDataCalcBaseOnInst = "CALC_BASE_ON_INST";
+
+    //LIFE INS CUST TYPE
+    public static LifeInsCustTypeCustomer = "CUSTOMER";
     
 }

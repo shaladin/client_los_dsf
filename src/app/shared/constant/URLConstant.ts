@@ -502,6 +502,7 @@ export class URLConstant {
     public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
     public static GetRuleAdmFee = environment.losUrl + "/AppLifeIns/GetRuleAdmFee";
     public static GetRuleRate = environment.losUrl + "/AppLifeIns/GetRuleRate";
+    public static GetRuleRateV2 = environment.losUrl + "/AppLifeIns/GetRuleRateV2";
     public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
     public static AddEditAppLifeInsH = environment.losUrl + "/AppLifeIns/AddEditAppLifeInsH";
 
