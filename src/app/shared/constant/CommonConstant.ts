@@ -147,7 +147,8 @@ export class CommonConstant {
 
     //STATUS GRP
     public static StatusGrpVerfResultStat = "VERF_RESULT_STAT";
-
+    public static VerfResultStatSuccess = "SCS";
+    public static VerfResultStatFailed = "FAIL";
     public static TrxTypeCodePhn = "PHN";
     public static VerfTrxTypeCodePhn = "PHN_VERIF";
     public static VerfResultStatCodeNew = "NEW";
