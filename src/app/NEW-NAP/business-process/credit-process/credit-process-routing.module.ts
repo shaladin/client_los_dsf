@@ -16,7 +16,6 @@ import { PhoneVerificationSubjectViewComponent } from './phone-verification/phon
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 import { FraudVerificationMultiAssetComponent } from './fraud-verification-multi-asset/fraud-verification-multi-asset.component';
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
-import { CommissionV2Component } from './commission-reserved-fund/component/commission-v2/commission-v2.component';
 
 const routes: Routes = [
   {
@@ -34,13 +33,6 @@ const routes: Routes = [
         component: CommissionReservedFundDetailComponent,
         data: {
           title: 'Commission Reserved Fund Detail'
-        }
-      },
-      {
-        path: 'CommV2',
-        component: CommissionV2Component,
-        data: {
-          title: 'Commission V2'
         }
       },
       {
