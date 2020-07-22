@@ -34,6 +34,7 @@ export class URLConstant {
     public static GetListAppLoanPurposeByAppId = environment.losUrl + "/AppLoanPurpose/GetListAppLoanPurposeByAppId";
     public static GetAppLoanPurposeByAppLoanPurposeId = environment.losUrl + "/AppLoanPurpose/GetAppLoanPurposeByAppLoanPurposeId";
     public static DeleteAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/DeleteAppLoanPurpose"
+    public static CheckFinAmtAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/CheckFinAmtAppLoanPurpose"
 
     // App Collateral
     public static GetAppCollateralRegistrationByAppId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
