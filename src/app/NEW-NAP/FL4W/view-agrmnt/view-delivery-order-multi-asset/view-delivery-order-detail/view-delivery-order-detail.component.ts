@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewDeliveryOrderAssetDetailComponent } from '../view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-delivery-order-detail',
@@ -36,7 +37,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
     doObj.DeliveryOrderHId = this.DOHId;
     this.http.post(this.GetListAppAssetByDOHId, doObj).subscribe(
       (response) => { 
-       this.assetDetailList = response["ReturnObject"];
+       this.assetDetailList = response[CommonConstant.ReturnObj];
       });
 
     this.http.post(this.GetDeliveryOrderHByDeliveryOrderHId, doObj).subscribe(

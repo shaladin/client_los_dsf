@@ -4,14 +4,14 @@
   <div class="form-body" id="MainInfo">
     <div class="form-group">
       <label class="col-md-2 adInsLabel" translate>Mou No </label>
-      <a href="{{mouUrl}}" target="_blank"><label class="col-md-2 adInsLabel" style="color: #299699; cursor: pointer;" translate>{{mouCustNo}}</label></a>
+      <a href="javascript:void(0);" (click)="OpenView('mou')"><label class="col-md-2 adInsLabel" style="color: #299699; cursor: pointer;" translate>{{mouCustNo}}</label></a>
       <label class="col-md-2"></label>
       <label class="col-md-2 adInsLabel" translate>Mou Date </label>
       <label class="col-md-2 adInsLabel" translate>{{mouCustDt}} </label>
     </div>
     <div class="form-group">
       <label class="col-md-2 adInsLabel" translate>Customer Name </label>
-      <a href="{{custUrl}}" target="_blank"><label class="col-md-2 adInsLabel" style="color: #299699  ; cursor: pointer;" translate>{{custName}} </label></a>
+      <a href="javascript:void(0);" (click)="OpenView('cust')"><label class="col-md-2 adInsLabel" style="color: #299699  ; cursor: pointer;" translate>{{custName}} </label></a>
       <label class="col-md-2"></label>
       <label class="col-md-2 adInsLabel" translate>Plafond Amount </label>
       <label class="col-md-2 adInsLabel" translate>{{plafondAmt | number}} </label>

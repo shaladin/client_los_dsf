@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
@@ -11,9 +10,9 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -46,10 +45,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   BizTemplateCode: string;
   SubjectResponse: RefMasterObj = new RefMasterObj();
   cust: any;
-  custUrl: any;
-  appUrl: string;
-  agrmntUrl: string;
-  leadUrl: string;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -78,11 +73,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("aaaa");
-    this.appUrl = environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId;
-    this.agrmntUrl = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId;
 
-    console.log(this.appUrl);
     this.GetData();
 
     this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
@@ -96,7 +87,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
     this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
       (response) => {
-        this.RefStatusList = response["ReturnObject"];
+        this.RefStatusList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({
           MrVerfResultHStatCode: this.RefStatusList[0].Key
         })
@@ -120,9 +111,9 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
     this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
       (response) => {
-        this.verfQuestionAnswerObj = response["ReturnObject"];
+        this.verfQuestionAnswerObj = response[CommonConstant.ReturnObj];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
-          this.GenerateFormVerfQuestion(this.verfQuestionAnswerObj);
+          this.GenerateFormVerfQuestion();
         }
       },
       (error) => {
@@ -150,7 +141,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               console.log("retard");
               console.log(response);
               this.leadObj = response;
-              this.leadUrl = environment.losR3Web + "/Lead/View?LeadId=" + this.leadObj.LeadId;
             });
         }
       },
@@ -189,7 +179,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       }
     );
   }
-  GenerateFormVerfQuestion(obj) {
+  GenerateFormVerfQuestion() {
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
     var grpListObj = this.verfQuestionAnswerObj.VerfQuestionAnswerListObj;
 
@@ -277,7 +267,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         VerfResultDList.push(VerfResultD);
       }
     }
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -325,7 +315,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.CustConfirm.markAsUntouched();
 
 
-    this.GenerateFormVerfQuestion(this.verfQuestionAnswerObj);
+    this.GenerateFormVerfQuestion();
     if (this.PhnList.length > 0) {
       this.CustConfirm.patchValue({
         Phn: this.PhnList[0].Key
@@ -335,6 +325,16 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       this.CustConfirm.patchValue({
         MrVerfResultHStatCode: this.RefStatusList[0].Key
       });
+    }
+  }
+
+  OpenView(key: string){
+    if(key == "app"){
+      AdInsHelper.OpenAppViewByAppId(this.AppId);
+    }else if(key == "agrmnt"){
+      AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
+    }else if(key == "lead"){
+      AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
   }
 }

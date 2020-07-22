@@ -84,6 +84,7 @@ export class InsuranceDataComponent implements OnInit {
   showGenerate: boolean = false;
   isGenerate: boolean = false;
   isCalculate: boolean = false;
+  businessDt: Date = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
   InsuranceDataForm = this.fb.group({
     InsAssetCoveredBy: ['', [Validators.required, Validators.maxLength(50)]],
@@ -161,7 +162,7 @@ export class InsuranceDataComponent implements OnInit {
         return;
       }
       if (insCpltzAmt > totalPremiToCust - custDiscAmt) {
-        this.toastr.warningMessage( ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN +"Total Premi to Customer after Discount.");
+        this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer after Discount.");
         return;
       }
     }
@@ -169,9 +170,8 @@ export class InsuranceDataComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCustomer || insuredBy == CommonConstant.InsuredByCustomerCompany) {
       var startDt = new Date(this.InsuranceDataForm.controls.CustCoverStartDt.value);
       var endDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
-      var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
 
-      if (endDt < businessDt) {
+      if (endDt < this.businessDt) {
         this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Business Date.");
         return;
       }
@@ -264,8 +264,8 @@ export class InsuranceDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.TotalCustDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       this.saveObj.AppInsObjObj.TotalInsCustAmt = this.saveObj.AppInsObjObj.TotalCustMainPremiAmt + this.saveObj.AppInsObjObj.TotalCustAddPremiAmt + this.saveObj.AppInsObjObj.CustAdminFeeAmt - this.saveObj.AppInsObjObj.TotalCustDiscAmt;
       this.saveObj.AppInsObjObj.TotalInsInscoAmt = this.saveObj.AppInsObjObj.TotalInscoMainPremiAmt + this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt + this.saveObj.AppInsObjObj.InscoAdminFeeAmt - this.saveObj.AppInsObjObj.TotalInscoDiscAmt;
-      this.saveObj.AppInsObjObj.StartDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
-      this.saveObj.AppInsObjObj.EndDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
+      this.saveObj.AppInsObjObj.StartDt = this.setDateWithoutTimezone(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+      this.saveObj.AppInsObjObj.EndDt = this.setDateWithoutTimezone(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
       this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
 
@@ -277,9 +277,9 @@ export class InsuranceDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
-        insCoverage.StartDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
+        insCoverage.StartDt = this.setDateWithoutTimezone(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
         insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = this.setDateWithoutTimezone(localStorage.getItem("BusinessDateRaw"));
+        insCoverage.EndDt = this.setDateWithoutTimezone(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
         insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
 
         addedTenor += insCoverage.Tenor;
@@ -619,6 +619,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   GenerateMainAndAddCvgTable() {
+    var ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
     var yearCount = this.InsuranceDataForm.controls.InsLength.value;
     var noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
 
@@ -641,7 +642,8 @@ export class InsuranceDataComponent implements OnInit {
       obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
       obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
       obj.StdMainPremiRate = this.ruleObj.BaseRatePercentage[index];
-      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj));
+      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, ManufYearDiff));
+      ManufYearDiff++;
       yearCount -= 12;
     }
   }
@@ -680,7 +682,7 @@ export class InsuranceDataComponent implements OnInit {
     });
   }
 
-  addGroup(i, obj) {
+  addGroup(i, obj, ManufYearDiff) {
     var group = this.fb.group({
       YearNo: i + 1,
       Tenor: obj.Tenor,
@@ -713,10 +715,18 @@ export class InsuranceDataComponent implements OnInit {
         inscoAddPremiRate = this.ruleObj.RateToInsco[index];
       }
 
+      var checkboxValue = false;
+      if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
+        if (ManufYearDiff <= 5)
+          checkboxValue = false;
+        else
+          checkboxValue = true;
+      }
+
       const control = this.fb.group({
         MrAddCvgTypeCode: o.Key,
         AddCvgTypeName: o.Value,
-        Value: false,
+        Value: checkboxValue,
         SumInsuredPercentage: obj.SumInsuredPercentage,
         SumInsuredAmt: 0,
         PremiumType: premiumType,
@@ -833,6 +843,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   ApplyToCoverage() {
+    var ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
         MrMainCvgTypeCode: this.InsuranceDataForm.controls.InsMainCvgType.value
@@ -844,18 +855,31 @@ export class InsuranceDataComponent implements OnInit {
         var check = formAddCvgChecked.find(x => x.value.Key == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].AddCvgTypeName.value);
 
         if (check != undefined) {
-          this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
-            Value: true
-          });
+          if (check.value.Key == CommonConstant.AddCvgTypeNameLoading) {
+            if (ManufYearDiff <= 5) {
+              this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+                Value: false
+              });
+            }
+            else {
+              this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+                Value: true
+              });
+            }
+          }
+          else {
+            this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+              Value: check.value.Value
+            });
+          };
         } else {
           this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
             Value: false
           });
         }
       }
+      ManufYearDiff++;
     }
-
-    this.isCalculate = false;
   }
 
   CvgAmtChanged() {
@@ -933,12 +957,11 @@ export class InsuranceDataComponent implements OnInit {
   setTenorCustCompany(tenor) {
     var months;
     var endDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
 
     //Calculate the differences between the start and end dates
-    var yearsDifference = endDt.getFullYear() - businessDt.getFullYear();
-    var monthsDifference = endDt.getMonth() - businessDt.getMonth();
-    var daysDifference = endDt.getDate() - businessDt.getDate();
+    var yearsDifference = endDt.getFullYear() - this.businessDt.getFullYear();
+    var monthsDifference = endDt.getMonth() - this.businessDt.getMonth();
+    var daysDifference = endDt.getDate() - this.businessDt.getDate();
 
     var monthCorrection = 0;
     if (daysDifference > 0) {
@@ -1306,10 +1329,10 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   bindInsuredByObj() {
-    var refMasterObj = { RefMasterTypeCode: "INSURED_BY" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsuredBy };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.insuredByObj = response["ReturnObject"];
+        this.insuredByObj = response[CommonConstant.ReturnObj];
         // if(this.insuredByObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InsAssetCoveredBy: this.insuredByObj[0].Key
@@ -1321,10 +1344,10 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   bindPaidByObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_PAID_BY" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsPaidBy };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.paidByObj = response["ReturnObject"];
+        this.paidByObj = response[CommonConstant.ReturnObj];
         // if(this.paidByObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InsAssetPaidBy: this.paidByObj[0].Key
@@ -1335,10 +1358,10 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   async bindInsMainCvgTypeObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_MAIN_CVG_TYPE" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsMainCvgType };
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
-        this.insMainCvgTypeObj = response["ReturnObject"];
+        this.insMainCvgTypeObj = response[CommonConstant.ReturnObj];
         // if(this.insMainCvgTypeObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InsMainCvgType: this.insMainCvgTypeObj[0].Key
@@ -1350,29 +1373,36 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   async bindInsAddCvgTypeObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_ADD_CVG_TYPE" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsAddCvgType };
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
-        this.insAddCvgTypeObj = response["ReturnObject"];
+        this.insAddCvgTypeObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   addCheckbox() {
     this.insAddCvgTypeRuleObj.forEach((o) => {
+
+      var checkboxValue;
+      if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading)
+        checkboxValue = true;
+      else
+        checkboxValue = false;
+
       const control = this.fb.group({
         Key: o.Value,
-        Value: false
+        Value: checkboxValue
       });
       (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray).push(control);
     });
   }
 
   bindInsAssetCoverPeriodObj() {
-    var refMasterObj = { RefMasterTypeCode: "INS_COVER_PERIOD" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.insAssetCoverPeriodObj = response["ReturnObject"];
+        this.insAssetCoverPeriodObj = response[CommonConstant.ReturnObj];
         // if(this.insAssetCoverPeriodObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InsAssetCoverPeriod: this.insAssetCoverPeriodObj[0].Key
@@ -1385,10 +1415,10 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   bindInsAssetRegionObj() {
-    var refMasterObj = { RefMasterTypeCode: "ASSET_INS_REGION" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetInsRegion };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.insAssetRegionObj = response["ReturnObject"];
+        this.insAssetRegionObj = response[CommonConstant.ReturnObj];
         // if(this.insAssetRegionObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InsAssetRegion: this.insAssetRegionObj[0].Key
@@ -1402,7 +1432,7 @@ export class InsuranceDataComponent implements OnInit {
     var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
     this.http.post(URLConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
       (response) => {
-        this.inscoBranchObj = response["ReturnObject"];
+        this.inscoBranchObj = response[CommonConstant.ReturnObj];
         // if(this.inscoBranchObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InscoBranchCode: this.inscoBranchObj[0].Key,
@@ -1414,10 +1444,10 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   bindPayPeriodToInscoObj() {
-    var refMasterObj = { RefMasterTypeCode: "PAY_PERIOD_TO_INSCO" };
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePayPeriodToInsco };
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
-        this.payPeriodToInscoObj = response["ReturnObject"];
+        this.payPeriodToInscoObj = response[CommonConstant.ReturnObj];
         // if(this.insuredByObj.length > 0){
         //   this.InsuranceDataForm.patchValue({
         //     InsAssetCoveredBy: this.insuredByObj[0].Key

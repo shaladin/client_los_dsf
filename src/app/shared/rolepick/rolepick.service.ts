@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
+import { CommonConstant } from '../constant/CommonConstant';
 
 @Injectable()
 export class RolePickService {
@@ -21,7 +22,7 @@ export class RolePickService {
         if (type == "modal") {
             var loginByRole = environment.FoundationR3Url + URLConstant.LoginByToken;
             var roleObject2 = {
-                RequestDateTime: localStorage.getItem("BusinessDateRaw"),
+                RequestDateTime: localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW),
                 Ip: "",
                 RowVersion: ""
 

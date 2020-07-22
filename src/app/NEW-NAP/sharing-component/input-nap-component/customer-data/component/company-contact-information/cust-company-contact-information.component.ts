@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-company-contact-information',
@@ -95,7 +97,7 @@ export class CustCompanyContactInformationComponent implements OnInit {
   }
 
   delete(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listContactPersonCompany.splice(i, 1);
       this.callbackSubmit.emit(this.listContactPersonCompany);
     }
@@ -128,10 +130,10 @@ export class CustCompanyContactInformationComponent implements OnInit {
   }
 
   bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = "JOB_POSITION";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
         if(this.JobPositionObj.length > 0){
             this.defaultJobPosition = this.JobPositionObj[0].Key;
             this.defaultJobPositionName = this.JobPositionObj[0].Value;

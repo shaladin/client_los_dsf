@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-pre-go-live-paging',
@@ -14,8 +15,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class PreGoLivePagingComponent implements OnInit {
 
   inputPagingObj: any;
-  bizTemplateCode: any;
-  token: any = localStorage.getItem("Token");
+  bizTemplateCode: string; 
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -24,7 +24,7 @@ export class PreGoLivePagingComponent implements OnInit {
         localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
       else {
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
@@ -52,7 +52,7 @@ export class PreGoLivePagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 }

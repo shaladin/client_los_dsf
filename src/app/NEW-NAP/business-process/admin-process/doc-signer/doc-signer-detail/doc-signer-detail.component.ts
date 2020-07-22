@@ -11,6 +11,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -18,7 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 
 export class DocSignerDetailComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -36,10 +37,9 @@ export class DocSignerDetailComponent implements OnInit {
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
   ResponseAppCustDataObj: any;
-  MrCustTypeCode: string = "COMPANY";
+  MrCustTypeCode: string = CommonConstant.CustTypeCompany;
   CustFullName: string;
   ContactPersonName: string;
-  token: any = localStorage.getItem("Token");
   BizTemplateCode: string;
   isHidden: boolean;
 
@@ -62,7 +62,18 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewDocSigner.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     await this.getAllData();
     this.setLookupObj();
   }
@@ -320,20 +331,14 @@ export class DocSignerDetailComponent implements OnInit {
       );
     }
   }
-
-  Callback(ev: any) {
-    if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+  
+  Callback(ev: any){
+    if(ev.Key == "ViewProdOffering"){
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
-    if (ev.Key == "agrmnt") {
-      var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-
-      if (bizTemplateCode == CommonConstant.CF4W || bizTemplateCode == CommonConstant.CFRFN4W || bizTemplateCode == CommonConstant.FACTORING) {
-        window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
-      }
-      else if (bizTemplateCode == CommonConstant.FL4W) {
-        window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.ViewObj.AgrmntId, "_blank");
-      }
+    if(ev.Key == "agrmnt")
+    {
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
     }
 
     // if(ev.Key == "prodOff"){

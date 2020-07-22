@@ -236,7 +236,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
       this.custDataPersonalObj.AppCustObj.AppId = this.appId;
 
-      if (this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "EKTP") {
+      if (this.custDataPersonalObj.AppCustObj.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
         this.custDataPersonalObj.AppCustObj.IdExpiredDt = null;
       }
       if (this.custDataPersonalObj.AppCustObj.CustNo != "" && this.custDataPersonalObj.AppCustObj.CustNo != undefined) {
@@ -743,7 +743,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        if (response != "") {
+        if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
@@ -1175,7 +1175,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
           this.MrCustTypeCode = this.CustTypeObj[0].Key;
         }

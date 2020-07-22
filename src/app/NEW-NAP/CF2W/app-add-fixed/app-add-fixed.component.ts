@@ -102,14 +102,14 @@ export class AppAddFixedComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
 
     this.GetOfficeDDL();
 
-    if (this.user.MrOfficeTypeCode == "HO") {
+    if (this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
       this.NapAppForm.controls.OriOfficeCode.disable();
       this.NapAppForm.patchValue({
         OriOfficeCode: this.user.OfficeCode,
@@ -117,7 +117,7 @@ export class AppAddFixedComponent implements OnInit {
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
       });
-    } else if (this.user.MrOfficeTypeCode == "Center Group") {
+    } else if (this.user.MrOfficeTypeCode == CommonConstant.CenterGroup) {
       this.NapAppForm.patchValue({
         CrtOfficeCode: this.user.OfficeCode,
         CrtOfficeName: this.user.OfficeName,
@@ -127,7 +127,7 @@ export class AppAddFixedComponent implements OnInit {
     this.refOfficeObj = new RefOfficeObj();
     this.http.post(URLConstant.GetListKvpActiveRefOfficeIdForPaging, this.refOfficeObj).subscribe(
       (response) => {
-        this.returnRefOfficeObj = response["ReturnObject"];
+        this.returnRefOfficeObj = response[CommonConstant.ReturnObj];
         console.log("bbb");
         console.log(this.returnRefOfficeObj);
         for (let i = 0; i < this.returnRefOfficeObj.length; i++) {
@@ -207,7 +207,7 @@ export class AppAddFixedComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        this.officeItems = response["ReturnObject"];
+        this.officeItems = response[CommonConstant.ReturnObj];
         this.NapAppForm.patchValue({
           OriOfficeCode: this.officeItems[0].Key,
           OriOfficeName: this.officeItems[0].Value,
@@ -412,7 +412,7 @@ export class AppAddFixedComponent implements OnInit {
     feeAndInsFixedNAP.Tenor = parseInt(item.Tenor, 10);
     this.http.post(URLConstant.DataTableFeeAndInsNAP, feeAndInsFixedNAP).subscribe(
       (response) => {
-        this.returnFeeAndInsFixedNAP = response["ReturnObject"];
+        this.returnFeeAndInsFixedNAP = response[CommonConstant.ReturnObj];
         // console.log("vvv");
         // console.log(this.returnFeeAndInsFixedNAP);
 
@@ -529,7 +529,7 @@ export class AppAddFixedComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         // console.log(response);
-        var temp = response["ReturnObject"];
+        var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;

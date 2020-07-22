@@ -5,13 +5,15 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-lead-data',
   templateUrl: './view-lead-data.component.html' 
 })
 export class ViewLeadDataComponent implements OnInit {
-  viewLeadAssetData: string;
+  viewLeadAssetData: UcViewGenericObj = new UcViewGenericObj();
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
@@ -20,7 +22,7 @@ export class ViewLeadDataComponent implements OnInit {
     this.GetLeadByLeadIdUrl = URLConstant.GetLeadByLeadId;
   }
   LeadId: string;
-  viewLeadAppData : string;
+  viewLeadAppData : UcViewGenericObj = new UcViewGenericObj();
   GetLeadAssetByLeadIdUrl : string;
   GetLeadByLeadIdUrl : string;
   leadAssetObj : LeadAssetObj;
@@ -28,8 +30,11 @@ export class ViewLeadDataComponent implements OnInit {
   tempLeadAssetObj : any;
   tempLeadObj : any;
   ngOnInit() {
-    this.viewLeadAssetData = "./assets/ucviewgeneric/viewLeadAssetData.json";
-    this.viewLeadAppData = "./assets/ucviewgeneric/viewLeadAppData.json";
+    this.viewLeadAssetData.viewInput = "./assets/ucviewgeneric/viewLeadAssetData.json";
+    this.viewLeadAssetData.viewEnvironment = environment.losUrl;
+
+    this.viewLeadAppData.viewInput = "./assets/ucviewgeneric/viewLeadAppData.json";
+    this.viewLeadAppData.viewEnvironment = environment.losUrl;
      
     this.leadAssetObj = new LeadAssetObj();
     this.leadAssetObj.LeadId = this.LeadId;

@@ -10,6 +10,7 @@ import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fct
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -79,8 +80,6 @@ export class MouCustListedCustFctrComponent implements OnInit {
     var custObj = { CustNo: custNo };
     this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
-        // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-        // window.open(link, '_blank');
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       },
       (error) => {
@@ -91,7 +90,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
 
   deleteCustFctr(custFctrId, idx) {
     if (this.MouCustIsListedForm.controls["IsListedCust"].value == true) {
-      if (confirm('Are you sure to delete this record?')) {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var mouListedFctr = new MouCustListedCustFctrObj();
         mouListedFctr.MouListedCustFctrId = custFctrId;
         this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, mouListedFctr).subscribe(

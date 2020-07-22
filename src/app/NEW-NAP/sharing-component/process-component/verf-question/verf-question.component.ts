@@ -34,7 +34,7 @@ export class VerfQuestionComponent implements OnInit {
   InitFormVerfQuestion() {
     this.http.post(URLConstant.GetVerfQuestionAnswerListBySchemeCode, { VerfSchemeCode: "CF4W_PHONEVERIF" }).subscribe(
       (response) => {
-        this.VerfQuestionAnswerCustomObj = response["ReturnObject"];
+        this.VerfQuestionAnswerCustomObj = response[CommonConstant.ReturnObj];
         this.GenerateFormVerfQuestion();
       },
       (error) => {

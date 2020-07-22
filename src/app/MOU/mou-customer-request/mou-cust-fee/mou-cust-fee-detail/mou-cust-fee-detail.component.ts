@@ -41,8 +41,8 @@ export class MouCustFeeDetailComponent implements OnInit {
     let getFeeType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmFeeType);
     forkJoin([getRefFee, getFeeType]).subscribe(
       (response) => {
-        this.refFeeList = response[0]["ReturnObject"];
-        this.feeTypeList = response[1]["ReturnObject"];
+        this.refFeeList = response[0][CommonConstant.ReturnObj];
+        this.feeTypeList = response[1][CommonConstant.ReturnObj];
         this.MouCustFeeForm.patchValue({
           RefFeeId: this.refFeeList[0].RefFeeId,
           MrFeeTypeCode: this.feeTypeList[0].Key

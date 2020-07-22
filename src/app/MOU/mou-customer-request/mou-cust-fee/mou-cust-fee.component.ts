@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustFeeObj } from 'app/shared/model/MouCustFeeObj.Model';
 import { MouCustFeeDetailComponent } from './mou-cust-fee-detail/mou-cust-fee-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-cust-fee',
@@ -75,7 +76,7 @@ export class MouCustFeeComponent implements OnInit {
   }
 
   deleteMouCustFee(mouCustFeeId, idx) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var mouCustFee = new MouCustFeeObj();
       mouCustFee.MouCustFeeId = mouCustFeeId;
       this.httpClient.post(URLConstant.DeleteMouCustFee, mouCustFee).subscribe(

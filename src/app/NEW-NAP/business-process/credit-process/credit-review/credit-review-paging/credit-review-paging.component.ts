@@ -6,6 +6,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-credit-review-paging',
@@ -16,7 +17,6 @@ export class CreditReviewPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<any> = new Array();
-  token: any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -49,9 +49,8 @@ export class CreditReviewPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
   GetCallBack(ev: any) {
-    console.log(ev);
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
 

@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-fraud-verification-multi-asset',
@@ -56,7 +57,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   RowVersion: any;
   listNegativeAsset: any;
   dukcapilObj: any;
-  viewDukcapilObj: string;
+  viewDukcapilObj: UcViewGenericObj = new UcViewGenericObj();
   listCustDuplicate: any;
   trxRefNo: string;
   mrSrvySourceCode: string;
@@ -84,20 +85,23 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.arrValue.push(this.AppId);
   //  this.viewObj = "./assets/ucviewgeneric/viewFraudVerifMultiAssetMainInfo.json";
     await this.ClaimTask(); 
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.verfUser = context["UserName"];
-    this.verfDt = context["BusinessDt"];
-    this.verfCode = context["EmpNo"];
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.verfUser = context[CommonConstant.USER_NAME];
+    this.verfDt = context[CommonConstant.BUSINESS_DT];
+    this.verfCode = context[CommonConstant.EMP_NO];
     await this.getApp();
     await this.getAppAsset();
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
+    this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
+    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
+    this.viewDukcapilObj.whereValue = this.arrValue;
+    
     this.isDataAlreadyLoaded = true;
     this.bizTemplateCode = CommonConstant.FL4W;
   }
 
   async ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
@@ -173,7 +177,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         var fraudDukcapilReqObj = { "IdNo": this.idNo };
         this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
           response => {
-            this.dukcapilObj = response["ReturnObject"];
+            this.dukcapilObj = response[CommonConstant.ReturnObj];
             console.log(fraudDukcapilReqObj);
           },
           error => {
@@ -185,7 +189,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   getAppDupCheckCust(AppId) {
     this.http.post(this.getAppDupCheckCustByAppId, AppId).subscribe(
       response => {
-        this.listCustDuplicate = response["ReturnObject"];
+        this.listCustDuplicate = response[CommonConstant.ReturnObj];
         if (this.listCustDuplicate.indexOf(this.appCustObj.CustNo) < 0) {
           this.custStat = CommonConstant.CustStatExisting
         } else {
@@ -206,7 +210,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.http.post(this.getAppAssetListByAppIdUrl, this.appAssetObj).subscribe(
       response => {
         console.log(response);
-        this.listAssetData = response["ReturnObject"];
+        this.listAssetData = response[CommonConstant.ReturnObj];
 
         for (var i = 0; i < this.listAssetData.length; i++) {
           this.negativeAssetCheckObj = new NegativeAssetCheckObj();
@@ -222,7 +226,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.http.post(this.getAssetNegativeDuplicateCheckByListOfAssetUrl, this.negativeAssetCheckForMultiAssetObj).subscribe(
           response => {
             console.log(this.negativeAssetCheckForMultiAssetObj);
-            this.listAssetNegative = response["ReturnObject"];
+            this.listAssetNegative = response[CommonConstant.ReturnObj];
           });
       },
       error => {

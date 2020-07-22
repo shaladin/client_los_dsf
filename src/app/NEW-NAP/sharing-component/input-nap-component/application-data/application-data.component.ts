@@ -11,6 +11,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-application-data',
@@ -112,7 +113,7 @@ export class ApplicationDataComponent implements OnInit {
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     // this.getPayFregData();
-    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getAppSrcData();
     this.GetCrossInfoData();
   }
@@ -139,7 +140,7 @@ export class ApplicationDataComponent implements OnInit {
   getInterestTypeCode(){
     var obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestType,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
 
@@ -166,7 +167,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
         console.log(response);
-        this.resultCrossApp = response["ReturnObject"];
+        this.resultCrossApp = response[CommonConstant.ReturnObj];
         console.log(this.resultCrossApp);
         for (var i = 0; i < this.resultCrossApp.length; i++) {
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
@@ -266,7 +267,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        this.applicationDDLitems["APP_SOURCE"] = response["ReturnObject"];
+        this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);
@@ -282,7 +283,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         console.log(response);
-        var objTemp = response["ReturnObject"];
+        var objTemp = response[CommonConstant.ReturnObj];
 
         for(var i=0;i<objTemp.length;i++){
           this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
@@ -311,7 +312,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        var objTemp = response["ReturnObject"];
+        var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
       },
       (error) => {
@@ -558,7 +559,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   DeleteCrossApp(idx) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       if (this.resultCrossApp[idx].AppCrossId != null) {
         var url = URLConstant.DeleteAppCross;
         var obj = new NapAppCrossObj();

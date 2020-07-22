@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-document-paging',
@@ -12,7 +13,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class DocumentPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  token = localStorage.getItem("Token");
 
 
   constructor(private router: Router) { }
@@ -27,7 +27,7 @@ export class DocumentPagingComponent implements OnInit {
 
   GetCallback(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );   
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);   
     }
   }
 

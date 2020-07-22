@@ -225,7 +225,7 @@ export class CustomerDataComponent implements OnInit {
   isExpiredEstablishmentDt: boolean = false;
   isExpiredDate: boolean = false;
   CekDt(inputDate: Date, type: string){
-    var UserAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    var UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let max17Yodt = new Date(Max17YO);
@@ -774,7 +774,7 @@ export class CustomerDataComponent implements OnInit {
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
         // console.log(response);
-        if (response != "") {
+        if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
@@ -1208,11 +1208,11 @@ export class CustomerDataComponent implements OnInit {
   // }
 
   async bindCustTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = "CUST_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
         // console.log(response);
-        this.CustTypeObj = response["ReturnObject"];
+        this.CustTypeObj = response[CommonConstant.ReturnObj];
         // if (this.CustTypeObj.length > 0) {
         //   this.MrCustTypeCode = this.CustTypeObj[0].Key;
         // }

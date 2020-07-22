@@ -61,8 +61,8 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustNo: [''],
@@ -214,10 +214,10 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   }
 
   async bindCompanyTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = "COMPANY_TYPE";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.CompanyTypeObj = response["ReturnObject"];
+        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
@@ -232,7 +232,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
     await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
-        this.CustModelObj = response["ReturnObject"];
+        this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key

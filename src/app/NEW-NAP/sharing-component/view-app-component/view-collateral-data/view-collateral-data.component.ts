@@ -6,15 +6,16 @@ import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model'
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-view-collateral-data',
   templateUrl: './view-collateral-data.component.html'
 })
 export class ViewCollateralDataComponent implements OnInit {
-  viewObj: string;
-  viewUOLObj: string;
-  viewEnvironment: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  viewUOLObj: UcViewGenericObj = new UcViewGenericObj();
+  
   AppId: number;  @Input() appId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
@@ -31,10 +32,28 @@ export class ViewCollateralDataComponent implements OnInit {
     });}
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewCollateralData.json";  
-    this.viewUOLObj = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
+
+    this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
+    this.viewUOLObj.viewEnvironment = environment.losUrl;
+    this.viewUOLObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
+
     if(this.AppCollateralId!=0){
       this.arrValue.push(this.AppCollateralId);
+      this.viewGenericObj.whereValue = this.arrValue;
+      this.viewUOLObj.whereValue = this.arrValue;
       this.IsReady = true;
       this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, {AppCollateralId: this.AppCollateralId}).subscribe(
         (response) => {
@@ -55,7 +74,6 @@ export class ViewCollateralDataComponent implements OnInit {
           );
         });
     }
-    this.viewEnvironment = environment.losUrl;
   }
 
   Back(){

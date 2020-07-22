@@ -8,7 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-applicant-existing-data-personal',
@@ -75,7 +77,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-            this.custUrl = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + this.cust.CustId;
           },
           (error) => {
             console.log(error);
@@ -239,10 +240,10 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext["UserName"];
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
@@ -255,14 +256,11 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 
-  OpenAppView(appId) {
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + appId, "_blank");
-  }
-  OpenCustView(custNo) {
-    var custObj = { CustNo: custNo };
-    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-      response => {
-        window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"], "_blank");
-      });
+  OpenView(key: string, value: number){
+    if(key == "app"){
+      AdInsHelper.OpenAppViewByAppId(value);
+    }else if( key == "cust"){
+        AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+    }
   }
 }

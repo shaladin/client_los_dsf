@@ -19,7 +19,6 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: any;
   arrCrit: any;
   userAccess: any;
-  token: any = localStorage.getItem("Token");
 
   constructor(
     private http: HttpClient,
@@ -36,8 +35,8 @@ export class NapPagingComponent implements OnInit {
 
   ngOnInit() {
     console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem("UserAccess")));
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
@@ -111,7 +110,7 @@ export class NapPagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
       this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });

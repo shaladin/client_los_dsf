@@ -25,7 +25,7 @@ export class MouCustomerRequestComponent implements OnInit {
   constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
@@ -55,7 +55,6 @@ export class MouCustomerRequestComponent implements OnInit {
     this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       (response) => { 
         custId = response['CustId'];
-        // window.open( environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + custId, "_blank");
         AdInsHelper.OpenCustomerViewByCustId(custId);
       },
       (error) => {

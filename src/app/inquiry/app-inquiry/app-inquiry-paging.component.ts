@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -14,7 +15,6 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
-  token: any = localStorage.getItem("Token");
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -48,32 +48,26 @@ export class AppInquiryPagingComponent implements OnInit {
   getEvent(event) {
     // console.log("productlink")
     // console.log(event)
-
-    if (event.Key == "customer") {
-      var custObj = { CustNo: event.RowObj.custNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          window.open(this.link, '_blank');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    
+    if(event.Key == "customer"){
+        var custObj = { CustNo: event.RowObj.custNo };
+        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+          response => {
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
-    else if (event.Key == "product") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion, this.token);
+    else if(event.Key == "product"){
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.prodOfferingCode,event.RowObj.prodOfferingVersion); 
     }
-    else if (event.Key == "agreement") {
-      window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + event.RowObj.AgrmntId, "_blank");
+    else if(event.Key == "agreement"){
+      AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
-    else if (event.Key == "application") {
-      //TEMUAN STEVEN : OPEN APPLICATION DIGANTI PAKE HELPER SUPAYA NANTI GANTINYA GAK DIBANYAK TITIK
+    else if(event.Key == "application"){
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
-      //window.open( environment.losR3Web + "/Nap/View/AppView?AppId=" + event.RowObj.AppId, "_blank");
-    }
-    else if (event.Key == "product") {
-      window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + event.RowObj.prodOfferingCode + "&prodOfferingVersion=" + event.RowObj.prodOfferingVersion, "_blank");
     }
   }
 }

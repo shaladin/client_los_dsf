@@ -18,7 +18,7 @@ export interface Chart {
 @Component({
     selector: 'app-dashboard2',
     templateUrl: './dashboard2.component.html',
-    styleUrls: ['./dashboard2.component.scss']
+    styleUrls: []
 })
 
 export class Dashboard2Component {
@@ -327,7 +327,7 @@ export class Dashboard2Component {
 
     };
     // Line chart configuration Ends
-    
+
     // Line chart configuration Starts
     lineChart1: Chart = {
         type: 'Line', data: data['line1'],

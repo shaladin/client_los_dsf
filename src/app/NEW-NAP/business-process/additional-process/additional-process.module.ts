@@ -4,8 +4,6 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AdditionalProcessSharingRoutingModule } from "./additional-process-routing.module";
 import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/tc-sharing-component.module"
-import { PoExtensionPagingComponent } from "./po-extension/po-extension-paging/po-extension-paging.component";
-import { PoExtensionDetailComponent } from "./po-extension/po-extension-detail/po-extension-detail.component";
 import { OutstandingTcPagingComponent } from "./outstanding-tc/outstanding-tc-paging/outstanding-tc-paging.component";
 import { OutstandingTcDetailComponent } from "./outstanding-tc/outstanding-tc-detail/outstanding-tc-detail.component";
 import { ReturnHandlingPagingComponent } from "./return-handling/return-handling-paging/return-handling-paging.component";
@@ -17,7 +15,6 @@ import { ListCompanyComponent } from "./app-dup-check/list-company/list-company.
 import { ApplicantExistingDataPersonalComponent } from "./app-dup-check/applicant-existing-data-personal/applicant-existing-data-personal.component";
 import { ApplicantExistingDataCompanyComponent } from "./app-dup-check/applicant-existing-data-company/applicant-existing-data-company.component";
 import { ReturnHandlingEditAppPagingComponent } from './return-handling/return-handling-edit-app-paging/return-handling-edit-app-paging.component';
-import { AssetInquiryComponent } from './po-extension/asset-inquiry/asset-inquiry.component';
 import { AppInquiryComponent } from './app-inquiry/app-inquiry.component';
 import { CreditProcessInquiryComponent } from './credit-process-inquiry/credit-process-inquiry.component';
 import { ReturnHandlingPhoneVerifPagingComponent } from "./return-handling/return-handling-phone-verif-paging/return-handling-phone-verif-paging.component";
@@ -29,6 +26,9 @@ import { MatCheckboxModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
 import { NgxCurrencyModule } from "ngx-currency";
+import { CreditApvResultExtDetailComponent } from "./credit-apv-result-ext/credit-apv-result-ext-detail/credit-apv-result-ext-detail.component";
+import { CreditApvResultExtPagingComponent } from "./credit-apv-result-ext/credit-apv-result-ext-paging/credit-apv-result-ext-paging.component";
+import { AssetInquiryComponent } from "./credit-apv-result-ext/asset-inquiry/asset-inquiry.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -54,8 +54,8 @@ export const customCurrencyMaskConfig = {
 
   ],
   declarations: [
-    PoExtensionPagingComponent,
-    PoExtensionDetailComponent,
+    CreditApvResultExtPagingComponent,
+    CreditApvResultExtDetailComponent,
     OutstandingTcPagingComponent,
     OutstandingTcDetailComponent,
     ReturnHandlingPagingComponent,

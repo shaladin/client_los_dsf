@@ -2,6 +2,7 @@ import { formatDate } from "@angular/common";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CurrentUserContext } from "./model/CurrentUserContext.model";
 import { environment } from "environments/environment";
+import { CommonConstant } from "./constant/CommonConstant";
 
 export class AdInsHelper {
   //Function
@@ -10,8 +11,8 @@ export class AdInsHelper {
     var dateNow = formatDate(today, 'yyyy-MM-dd hh:mm:ss', 'en-US');
 
     var listPageAccess = [];
-    listPageAccess = JSON.parse(localStorage.getItem("PageAccess"));
-    var userAcc = JSON.parse(localStorage.getItem("UserAccess"));
+    listPageAccess = JSON.parse(localStorage.getItem(CommonConstant.PAGE_ACCESS));
+    var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var pageAccess = listPageAccess;
     if (listPageAccess == null) {
       pageAccess = [];
@@ -61,7 +62,7 @@ export class AdInsHelper {
     // localStorage.removeItem("UserAccess");
     // localStorage.removeItem("Token");
     // localStorage.removeItem("Menu");
-    let version = localStorage.getItem("Version");
+    let version = localStorage.getItem(CommonConstant.VERSION);
     localStorage.clear();
     localStorage.setItem("Version", version);
   }
@@ -72,10 +73,10 @@ export class AdInsHelper {
 
   public static CheckSessionTimeout() {
     let today = new Date();
-    var businessDtBefore = localStorage.getItem("LastAccessTime");
+    var businessDtBefore = localStorage.getItem(CommonConstant.LAST_ACCESS_TIME);
     var businessDtNow = formatDate(today, 'yyyy-MM-dd HH:mm:ss', 'en-US');
     if (businessDtBefore == undefined || businessDtBefore == null) {
-      localStorage.setItem("LastAccessTime", businessDtNow);
+      localStorage.setItem(CommonConstant.LAST_ACCESS_TIME, businessDtNow);
     }
     else {
       var bsDtBefore = new Date(businessDtBefore);
@@ -85,28 +86,53 @@ export class AdInsHelper {
         AdInsHelper.ClearAllLog();
         return "1";
       }
-      localStorage.setItem("LastAccessTime", businessDtNow);
+      localStorage.setItem(CommonConstant.LAST_ACCESS_TIME, businessDtNow);
     }
     return "0";
   }
 
+  
   public static OpenCustomerViewByCustId(CustId){
-      var url = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + CustId;
-      window.open(url, "_blank");
+    var token = localStorage.getItem("Token");
+      window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenAppViewByAppId(TrxNo) {
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + TrxNo, "_blank");
+  public static OpenAppViewByAppId(AppId) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + AppId + "&Token=" + token, "_blank");
   }
 
-  public static OpenProdOfferingViewByCodeAndVersion(Code, Version, Token) {
-    window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + Token, "_blank");
+  public static OpenProdOfferingViewByCodeAndVersion(Code, Version) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }
   
   public static OpenLeadViewByLeadId(LeadId)
   {
-      window.open(environment.losR3Web + '/Lead/View?LeadId=' + LeadId, "_blank");
+    var token = localStorage.getItem("Token");
+      window.open(environment.losR3Web + '/Lead/View?LeadId=' + LeadId  + "&Token=" + token, "_blank");
   }
+
+  public static OpenAgrmntViewByAgrmntId(AgrmntId){
+    var token = localStorage.getItem("Token");
+    window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
+  }
+
+  public static OpenMOUCustViewByMouCustId(MouCustId){
+    var token = localStorage.getItem("Token");
+    window.open( environment.losR3Web + "/Mou/Cust/View?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
+  }
+
+  public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId){
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
+  }
+
+  public static OpenVendorBranchViewByVendorId(VendorId){
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + "/Vendor/Branch/View?VendorId=" + VendorId + "&Token=" + token, '_blank');
+  }
+
 
   public static CreateUserAccess(response) {
     // var currentUserContext = new CurrentUserContext;

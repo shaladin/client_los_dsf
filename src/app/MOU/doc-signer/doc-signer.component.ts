@@ -24,7 +24,7 @@ export class DocSignerComponent implements OnInit {
   constructor(private router: Router,  private http: HttpClient) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);
@@ -70,8 +70,6 @@ export class DocSignerComponent implements OnInit {
         var custObj = { CustNo: event.RowObj.CustNo };
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
-            // link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-            // window.open(link, '_blank');
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           },
           (error) => {

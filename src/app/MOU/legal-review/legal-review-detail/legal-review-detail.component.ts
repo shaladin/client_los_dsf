@@ -11,6 +11,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -18,7 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class LegalReviewDetailComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   MouCustId: number;
   WfTaskListId: any;
   GetListActiveRefMasterUrl: string = URLConstant.GetListActiveRefMaster;
@@ -64,7 +65,14 @@ export class LegalReviewDetailComponent implements OnInit {
 
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
@@ -80,14 +88,14 @@ export class LegalReviewDetailComponent implements OnInit {
         var refLglReviewObj = { "RefMasterTypeCode": CommonConstant.RefMasterTypeLegalReview };
         this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
           (response) => {
-            var lengthDataReturnObj = response["ReturnObject"].length;
-            this.responseRefMasterObj = response["ReturnObject"];
+            var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
+            this.responseRefMasterObj = response[CommonConstant.ReturnObj];
             for (var i = 0; i < lengthDataReturnObj; i++) {
               var eachDataDetail = this.fb.group({
-                ReviewComponentName: [response["ReturnObject"][i].Descr],
-                ReviewComponentValue: [response["ReturnObject"][i].MasterCode],
-                RowVersion: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, true)],
-                values: [this.SearchLegalReview(response["ReturnObject"][i].MasterCode, false), [Validators.required]]
+                ReviewComponentName: [response[CommonConstant.ReturnObj][i].Descr],
+                ReviewComponentValue: [response[CommonConstant.ReturnObj][i].MasterCode],
+                RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, true)],
+                values: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, false), [Validators.required]]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
@@ -103,8 +111,8 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext["UserName"] };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
@@ -160,8 +168,6 @@ export class LegalReviewDetailComponent implements OnInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          // window.open(this.link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray, FormGroup, FormGroupDirective } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { DatePipe } from '@angular/common';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
-import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 
@@ -66,8 +64,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   subjectType: string;
   idSource: number;
   verfSchemeHId: number;
-  AppNoUrl = environment.losR3Web + '/Nap/View/AppView?AppId=';
-  CustNoUrl = environment.FoundationR3Web + '/Customer/CustomerView/Page?CustId=';
   appObj = {
     AppId: 0,
   };
@@ -163,9 +159,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       await this.GetVerfResultHData();
       await this.GetListVerfResulHtData(this.verfResHObj);
     };
+  }
 
-
-
+  OpenView(key: string) {
+    if (key == 'app') {
+      AdInsHelper.OpenAppViewByAppId(this.appId);
+    } else if (key == 'cust') {
+      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
   }
 
   SaveForm(formDirective: FormGroupDirective) {
@@ -204,7 +205,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   setPhoneVerifData() {
 
-    var businessDt = new Date(localStorage.getItem("BusinessDateRaw"));
+    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -222,19 +223,20 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.PhoneDataObj.VerfResultHObj.Phn = this.PhoneDataForm.controls["Phn"].value;
     this.PhoneDataObj.VerfResultHObj.PhnType = this.PhoneDataForm.controls["PhnType"].value;
     this.PhoneDataObj.VerfResultHObj.Notes = this.PhoneDataForm.controls["Notes"].value;
-
-    for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"].value.length; i++) {
-      var currGrp = this.PhoneDataForm.controls["QuestionObjs"].value[i].VerfQuestionAnswerList;
-      for (let j = 0; j < currGrp.length; j++) {
-        var currAnswer = currGrp[j].ResultGrp;
-        var question = new VerfResultDObj();
-        question.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
-        question.VerfQuestionText = currAnswer.VerfQuestionText;
-        question.Answer = currAnswer.Answer;
-        question.Notes = currAnswer.Notes;
-        question.SeqNo = currAnswer.SeqNo;
-        question.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
-        this.PhoneDataObj.VerfResultDListObj.push(question);
+    if (this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatSuccess) {
+      for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"].value.length; i++) {
+        var currGrp = this.PhoneDataForm.controls["QuestionObjs"].value[i].VerfQuestionAnswerList;
+        for (let j = 0; j < currGrp.length; j++) {
+          var currAnswer = currGrp[j].ResultGrp;
+          var question = new VerfResultDObj();
+          question.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
+          question.VerfQuestionText = currAnswer.VerfQuestionText;
+          question.Answer = currAnswer.Answer;
+          question.Notes = currAnswer.Notes;
+          question.SeqNo = currAnswer.SeqNo;
+          question.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
+          this.PhoneDataObj.VerfResultDListObj.push(question);
+        }
       }
     }
   }
@@ -284,7 +286,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.QuestionObj = response["ReturnObject"];
+        this.QuestionObj = response[CommonConstant.ReturnObj];
         if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
           this.verfSchemeHId = this.QuestionObj.VerfSchemeHId
           this.GenerateFormVerfQuestion();
@@ -360,6 +362,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           }
           ResultGrp.push(QuestionResultGrp);
         }
+        console.log(this.PhoneDataForm);
+        this.ChangeResult();
       }
     }
   }
@@ -368,7 +372,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     await this.http.post(this.getPhnNumberUrl, phnObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.PhoneNumberObj = response["ReturnObject"];
+        this.PhoneNumberObj = response[CommonConstant.ReturnObj];
         if (this.PhoneNumberObj.length > 0) {
           this.PhoneDataForm.patchValue({
             Phn: this.PhoneNumberObj[0].PhoneNumber,
@@ -409,10 +413,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   bindResultObj() {
-    this.refStatusObj.StatusGrpCode = "VERF_RESULT_STAT";
+    this.refStatusObj.StatusGrpCode = CommonConstant.StatusGrpVerfResultStat;
     this.http.post(this.getRefStatusUrl, this.refStatusObj).subscribe(
       (response) => {
-        this.ResultObj = response["ReturnObject"];
+        this.ResultObj = response[CommonConstant.ReturnObj];
         if (this.ResultObj.length > 0) {
           this.PhoneDataForm.patchValue({
             MrVerfResultHStatCode: this.ResultObj[0].Key
@@ -427,7 +431,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.SubjectRelationObj = response["ReturnObject"];
+        this.SubjectRelationObj = response[CommonConstant.ReturnObj];
         if (this.SubjectRelationObj.length > 0) {
           this.PhoneDataForm.patchValue({
             MrVerfSubjectRelationCode: this.SubjectRelationObj[0].Key
@@ -498,8 +502,26 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   Navigate() {
-    var link = environment.losR3Web + "/Nap/View/AppView/AppId=" + this.AppObj.AppId;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
+  }
+
+  ChangeResult() {
+    if (this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatSuccess) {
+      for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
+        for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
+          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
+          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+        }
+      }  
+    }
+    else {
+      for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
+        for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
+          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].clearValidators();
+          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+        }
+      }
+    }
   }
 
   test() {
@@ -514,45 +536,3 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     //}
   }
 }
-
-
-//async GetQuestionList(VerfQAObj) {
-//  await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
-//    (response) => {
-//      console.log(response);
-//      this.QuestionObj = response["ReturnObject"];
-//      this.verfResultDListObjs = new Array<VerfResultDObj>();
-//      for (let i = 0; i < this.QuestionObj.VerfQuestionAnswerListObj.length; i++) {
-//        for (let j = 0; j < this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList.length; j++) {
-//          var verfResultD = new VerfResultDObj();
-//          //verfResultD.VerfResultHId = this.verfResultHId;
-//          verfResultD.VerfQuestionAnswerId = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfQuestionAnswerId;
-//          verfResultD.VerfQuestionText = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfQuestionText;
-//          verfResultD.Answer = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfAnswer;
-//          verfResultD.Notes = this.QuestionObj.VerfQuestionAnswerListObj[i].verfQuestionAnswerList[j].VerfAnswerTypeDescr;
-//          verfResultD.VerfQuestionGroupCode = this.QuestionObj.VerfQuestionAnswerListObj[i].VerfQuestionGrpCode;
-//          this.verfResultDListObjs.push(verfResultD);
-//        }
-//      }
-//      this.verfSchemeHId = verfResultD.VerfQuestionAnswerId = this.QuestionObj.VerfQuestionAnswerListObj[0].verfQuestionAnswerList[0].VerfSchemeHId;
-//      for (let k = 0; k < this.verfResultDListObjs.length; k++) {
-//        var listquestions = this.PhoneDataForm.controls["QuestionObjs"] as FormArray;
-//        listquestions.push(this.addGroup(this.verfResultDListObjs[k], k));
-//      }
-
-//    }
-//  );
-//}
-
-//addGroup(verfResultDListObjs, k) {
-//  return this.fb.group({
-//    No: [k],
-//    //VerfResultHId: [verfResultDListObjs.VerfResultHId],
-//    VerfQuestionAnswerId: [verfResultDListObjs.VerfQuestionAnswerId],
-//    VerfQuestionText: [verfResultDListObjs.VerfQuestionText],
-//    Answer: [verfResultDListObjs.Answer],
-//    Notes: [verfResultDListObjs.Notes],
-//    VerfQuestionGroupCode: [verfResultDListObjs.VerfQuestionGroupCode]
-//  })
-
-//}

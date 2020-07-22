@@ -7,13 +7,14 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
-  selector: 'app-po-extension-paging',
-  templateUrl: './po-extension-paging.component.html'
+  selector: 'app-credit-apv-result-ext-paging',
+  templateUrl: './credit-apv-result-ext-paging.component.html'
 })
-export class PoExtensionPagingComponent implements OnInit {
+export class CreditApvResultExtPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
   BizTemplateCode: string;
@@ -28,10 +29,10 @@ export class PoExtensionPagingComponent implements OnInit {
   
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchPOExtension.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCrdApvResExtension.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPOExtension.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCrdApvResExtension.json";
 
     this.inputPagingObj.addCritInput = new Array();
     
@@ -41,13 +42,19 @@ export class PoExtensionPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
+
+    critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WF.ACT_CODE';
+    critObj.value = "PO_" + this.BizTemplateCode;
+    this.inputPagingObj.addCritInput.push(critObj);
   }
 
   getEvent(ev){
     if(ev.Key == "prodOff"){
       this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
         },
         (error) => {
           console.log(error);
@@ -56,21 +63,14 @@ export class PoExtensionPagingComponent implements OnInit {
     }else if(ev.Key == "suppl"){
       this.http.post(URLConstant.GetVendorByVendorCode, {VendorCode : ev.RowObj.SupplCode}).subscribe(
         response => {
-          window.open(environment.FoundationR3Web + "/Vendor/Branch/View?VendorId=" + response['VendorId'], '_blank');
+          AdInsHelper.OpenVendorBranchViewByVendorId(response['VendorId']);
         },
         (error) => {
           console.log(error);
         }
       );
     }else if(ev.Key == "agrmnt"){
-      var bizTemplateCode = ev.RowObj.BizTemplateCode;
-
-      if(bizTemplateCode == CommonConstant.CF4W || bizTemplateCode == CommonConstant.CFRFN4W  || bizTemplateCode == CommonConstant.FACTORING){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
-      }
-      else if(bizTemplateCode == CommonConstant.FL4W){
-        window.open( environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId, "_blank");
-      }
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }
   }
 }

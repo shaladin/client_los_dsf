@@ -8,6 +8,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-return-handling-com-rsvfund-paging',
@@ -17,7 +18,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
 
   BizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router) {
@@ -31,7 +31,7 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
   userAccess;
   inputPagingObj;
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingCommission.json";
@@ -62,7 +62,7 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  
     }
   }
 }

@@ -89,7 +89,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSourceIncome;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.SourceOfIncomeObj = response["ReturnObject"];
+        this.SourceOfIncomeObj = response[CommonConstant.ReturnObj];
         if(this.SourceOfIncomeObj.length > 0){
           this.parentForm.controls[this.identifier].patchValue({
             MrSourceOfIncomeTypeCode: this.SourceOfIncomeObj[0].Key

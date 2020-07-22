@@ -70,8 +70,8 @@ export class CustJobDataFL4WComponent implements OnInit {
      }
 
    ngOnInit() {
-    var context = JSON.parse(localStorage.getItem("UserAccess"));
-    this.businessDt = new Date(context["BusinessDt"]);
+    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     console.log(this.identifier);
     console.log(this.parentForm);
@@ -254,7 +254,7 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobPositionObj = response["ReturnObject"];
+        this.JobPositionObj = response[CommonConstant.ReturnObj];
         console.log("job position");
         if(this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
@@ -269,7 +269,7 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCoyScale;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.CompanyScaleObj = response["ReturnObject"];
+        this.CompanyScaleObj = response[CommonConstant.ReturnObj];
         if(this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyScaleCode: this.CompanyScaleObj[0].Key
@@ -283,7 +283,7 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobStat;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.JobStatObj = response["ReturnObject"];
+        this.JobStatObj = response[CommonConstant.ReturnObj];
         if(this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrJobStatCode: this.JobStatObj[0].Key
@@ -297,7 +297,7 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInvestmentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
-        this.InvestmentTypeObj = response["ReturnObject"];
+        this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
         if(this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrInvestmentTypeCode: this.InvestmentTypeObj[0].Key
@@ -311,7 +311,7 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
      this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
-        this.CustModelObj = response["ReturnObject"];
+        this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0 && this.custModelCode == undefined){
           this.custModelCode = this.CustModelObj[0].Key;
           console.log("aawdawdwda" + this.custModelCode)

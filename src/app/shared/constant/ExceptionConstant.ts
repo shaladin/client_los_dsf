@@ -3,26 +3,26 @@ export class ExceptionConstant {
     public static DateErrorMessageIdExpiredDate = "Id Expired Date";
     public static DateErrorMessageEstablishmentDate = "Establishment Date";
     public static DateErrorMessageBirthDate = "Birth Date";
-  
+
     //Application Item
     public static ERROR_NO_CALLBACK_SETTING = "System Error - No Callback Handler for {0} Callback Trigger";
     public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
     public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
     public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
 
-    public static TOTAL_SHARE_PERCENTAGE_MAX_100 = "Total Share Percentage cannot be more than 100.";  
+    public static TOTAL_SHARE_PERCENTAGE_MAX_100 = "Total Share Percentage cannot be more than 100.";
     public static INVOICE_AMOUNT_CANNOT_ZERO = "Invoice Amount cannot be zero (0).";
-    public static INVOICE_AMOUNT_CANNOT_LESS_THAN = "Invoice Amount cannot be less than ";  
+    public static INVOICE_AMOUNT_CANNOT_LESS_THAN = "Invoice Amount cannot be less than ";
     public static APP_FEE_PRCNT_MUST_GREATER = "App Fee Prcnt must be greater than ";
     public static EFFECTIVE_RATE_MUST_GREATER = "Effective Rate must be greater than ";
-    public static NUM_OF_STEP_MUST_HIGHER = "Num of Step must be higher than "; 
+    public static NUM_OF_STEP_MUST_HIGHER = "Num of Step must be higher than ";
     public static GROSS_YIELD_CANNOT_LESS_THAN = "Gross Yield cannot be less than ";
-    public static GROSS_YIELD_CANNOT_GREATER_THAN = "Gross Yield cannot be greater than "; 
-    public static CUMMULATIVE_TENOR_MUST_HIGHER_THAN = "Cummulative Tenor must be higher than " 
+    public static GROSS_YIELD_CANNOT_GREATER_THAN = "Gross Yield cannot be greater than ";
+    public static CUMMULATIVE_TENOR_MUST_HIGHER_THAN = "Cummulative Tenor must be higher than "
     public static BALLOON_AMOUNT_MUST_HIGHER_THAN = "Balloon Amount must be higher than ";
-    public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than "; 
+    public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
-    public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than "; 
+    public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
     public static INSURANCE_LENGTH_MUST_LOWER_THAN = "Insurance Length must be lower than ";
     public static BIRTH_DATE_CANNOT_MORE_THAN = "Birth Date can not be more than ";
     public static EXPIRED_DATE_CANNOT_LESS_THAN = "Expired Date can not be less than ";
@@ -35,11 +35,13 @@ export class ExceptionConstant {
     public static TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN = "Total Reserved Fund Amount Must be Less Than ";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
-    public static CLICK_CALCULATE_INSURANCE ="Please click Calculate Insurance.";
+    public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";
     public static PLEASE_CALCULATE_FIRST = "Please Calculate First";
     public static PLEASE_CALCULATE_AGAIN = "Please Calculate Again";
     public static MUST_CALCUCATE_FIRST = "Must Calculate First";
-    
+
+
+    public static OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP = "Office Is Not Allowed to Create App";
     public static DUPLICATE_SOCIAL_MEDIA = "Social Media cannot be duplicate!";
     public static CUSTOMER_AGE_MUST_17_YEARS_OLD = "Customer age must be at least 17 year old";
     public static GUARANTOR_AGE_MUST_17_YEARS_OLD = "Guarantor age must be at least 17 year old";
@@ -54,15 +56,19 @@ export class ExceptionConstant {
     public static CHOOSE_COVER_PERIOD = "Please choose Cover Period.";
     public static INPUT_INSURANCE_LENGTH = "Please input Insurance Length.";
     public static SAVE_TC_DATA = "Please Save TC Data First!";
+    public static SELECT_ONE_DATA_ON_LEAD = "Please select at least one Available Lead";
+    public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';
+    public static NO_LEAD_DATA_AVAILABLE = 'No Lead Available to Cancel';
 
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";
-    public static OTHER_BANK_ACCOUNT_ALREADY_DEFAULT = "Other bank account is already default";   
+    public static OTHER_BANK_ACCOUNT_ALREADY_DEFAULT = "Other bank account is already default";
     public static INPUT_MIN_1_INVOICE = "Please Input At Least 1 invoice";
     public static ADD_MIN_1_DATA = "Please add at least one data";
     public static INPUT_MIN_1_COLLATERAL_DATA = "Please Input At Least 1 Collateral Data";
     public static MIN_1_SUBJECT = "Minimal 1 Subject";
     public static MIN_1_ASSET = "Asset minimum is 1";
-    public static ONE_DELIVERY_ORDER_NEEDED_TO_SAVE ="At Least 1 Delivery Order Needed To Save";
+    public static ONE_DELIVERY_ORDER_NEEDED_TO_SAVE = "At Least 1 Delivery Order Needed To Save";
     public static COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET = "Please Complete Serial No. 1 and Serial No. 2 on all asset first.";
+    public static MAX_DATA = "Maximum {50} Data";
 }

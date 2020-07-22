@@ -6,13 +6,15 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-customer-doc-printing-detail',
   templateUrl: './customer-doc-printing-detail.component.html',
 })
 export class CustomerDocPrintingDetailComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   MouCustId: number;
   GetListMouCustDocPrintForViewByMouCustIdUrl: string = URLConstant.GetListMouCustDocPrintForViewByMouCustId;
   responseObj: Array<any> = new Array<any>();
@@ -33,7 +35,14 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.viewObj = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
@@ -44,7 +53,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     var mouObj = { "MouCustId": this.MouCustId };
     this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouObj).subscribe(
       response => {
-        this.responseObj = response['ReturnObject'];
+        this.responseObj = response[CommonConstant.ReturnObj];
       },
       error => {
         this.router.navigateByUrl('Error');
@@ -69,7 +78,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         var mouCustObj = { "MouCustId": this.MouCustId };
         this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouCustObj).subscribe(
           response => {
-            this.responseObj = response['ReturnObject'];
+            this.responseObj = response[CommonConstant.ReturnObj];
           },
           error => {
             this.router.navigateByUrl('Error');
@@ -86,8 +95,6 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
       var custObj = { CustNo: this.resultData['CustNo'] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          // this.link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"];
-          // window.open(this.link, '_blank');
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         },
         (error) => {

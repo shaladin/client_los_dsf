@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -13,6 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -29,7 +29,7 @@ export class NapAddDetailComponent implements OnInit {
   AppStepIndex: number = 1;
   appId: number;
   mode: string;
-  viewProdMainInfoObj: string;
+  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj = new AppObj();
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
@@ -39,7 +39,7 @@ export class NapAddDetailComponent implements OnInit {
   stepperMode: string = CommonConstant.CustTypePersonal;
   showCancel: boolean = true;
   getApp: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   @ViewChild("FL4WMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
@@ -83,7 +83,18 @@ export class NapAddDetailComponent implements OnInit {
 
   ngOnInit() {
     this.ClaimTask();
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
+    this.viewProdMainInfoObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
     this.NapObj.AppId = this.appId;
 
     if (this.ReturnHandlingHId > 0) {
@@ -112,7 +123,7 @@ export class NapAddDetailComponent implements OnInit {
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
@@ -206,7 +217,7 @@ export class NapAddDetailComponent implements OnInit {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     this.mainInfoContainer.clear();
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewInput = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
@@ -314,19 +325,19 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext["UserName"];
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
     this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
   GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
   CheckCustType(ev: string) {

@@ -22,7 +22,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
@@ -79,7 +79,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   CallbackHandler(ev: any) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
     }
     else if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {

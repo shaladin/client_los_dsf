@@ -7,6 +7,9 @@ import { forkJoin } from 'rxjs';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-app-fraud-verification',
@@ -24,7 +27,7 @@ export class ViewAppFraudVerificationComponent implements OnInit {
   negCustList: Array<any>;
   appAssetList: Array<any>;
   negAssetList: Array<any>;
-  viewDukcapilObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   arrValue = [];
 
   constructor(
@@ -34,7 +37,10 @@ export class ViewAppFraudVerificationComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
-    this.viewDukcapilObj = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
+
     this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).pipe(
       map((response) => {
         this.appData = response;
@@ -54,9 +60,9 @@ export class ViewAppFraudVerificationComponent implements OnInit {
       }),
       mergeMap((response) => {
         this.appCustData = response[0];
-        this.dupCustList = response[1]["ReturnObject"];
+        this.dupCustList = response[1][CommonConstant.ReturnObj];
         this.negCustList = response[2]["appNegativeCheckCusts"];
-        this.appAssetList = response[3]["ReturnObject"];
+        this.appAssetList = response[3][CommonConstant.ReturnObj];
         this.fraudVerfData = response[4];
         var reqNegAsset = new NegativeAssetCheckForMultiAssetObj();
         var negAssetList = new Array<NegativeAssetCheckObj>();
@@ -75,7 +81,7 @@ export class ViewAppFraudVerificationComponent implements OnInit {
       })
     ).subscribe(
       (response) => {
-        this.negAssetList = response["ReturnObject"];
+        this.negAssetList = response[CommonConstant.ReturnObj];
       },
       (error) => {
         console.log(error);

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-survey-task-list',
@@ -23,7 +24,7 @@ export class ViewSurveyTaskListComponent implements OnInit {
     var reqObj = {trxRefNo : this.trxRefNo, mrSurveySourceCode : this.mrSrvySourceCode}
     this.http.post(URLConstant.GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode, reqObj).subscribe(
       response => {
-        this.listSrvy = (response["ReturnObject"]);
+        this.listSrvy = (response[CommonConstant.ReturnObj]);
       },
       error => {
         console.log("error");

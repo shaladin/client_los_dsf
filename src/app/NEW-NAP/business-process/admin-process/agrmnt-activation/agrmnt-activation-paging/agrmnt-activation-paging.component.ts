@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-paging',
@@ -15,7 +16,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AgrmntActivationPagingComponent implements OnInit {
   inputPagingObj: any;
   BizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -57,7 +57,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
 
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion, this.token );   
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);   
     }
   }
 

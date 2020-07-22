@@ -9,12 +9,13 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html'
 })
 export class PreGoLiveRequestForApprovalComponent implements OnInit {
-  viewObj: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: any;
   itemApprovedBy: any;
   AgrmntNo: any;
@@ -28,7 +29,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   RFAPreGoLive: any;
   TaskListId: any;
   AgrmntId: any;
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -46,23 +47,41 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListApprovedByForPreGoLive, schmCodeObj).subscribe(
       (response) => {
-        this.itemApprovedBy = response["ReturnObject"];
+        this.itemApprovedBy = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
           ApprovedBy: this.itemApprovedBy[0].Key
         });
       }
     );
     this.LoadRefReason();
-    this.viewObj = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
     if (ev.Key == "customer") {
-      var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + ev.ViewObj.AppCustId;
-      window.open(link, "_blank");
+      AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
     }
   }
 
@@ -72,7 +91,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
       (response) => {
-        this.itemReason = response["ReturnObject"];
+        this.itemReason = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
           Reason: this.itemReason[0].Value
         });
@@ -89,7 +108,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.RowVersion = "";
 
     this.http.post(URLConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
-      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
     },
       (error) => {
         console.log(error);

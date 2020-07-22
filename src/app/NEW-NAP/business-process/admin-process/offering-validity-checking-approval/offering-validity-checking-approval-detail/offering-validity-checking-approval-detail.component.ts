@@ -7,16 +7,18 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
   templateUrl: './offering-validity-checking-approval-detail.component.html'
 })
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
-  viewObj: string;
-  BizTemplateCode : string = localStorage.getItem("BizTemplateCode");
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  BizTemplateCode : string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
-  token: any = localStorage.getItem("Token");
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {
     this.route.queryParams.subscribe(params => {
 
@@ -36,7 +38,18 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewObj = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
 
   HoldTask(obj){
@@ -64,7 +77,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion, this.token);
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 

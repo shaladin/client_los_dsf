@@ -155,7 +155,7 @@ export class AppComponent implements OnInit {
     await this.GetListAddr();
     //DDL Var Type Code
     var refMasterSalesRecommendation = new RefMasterObj();
-    refMasterSalesRecommendation.RefMasterTypeCode = 'SLS_RECOM';
+    refMasterSalesRecommendation.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSlsRecom;
     var AppSourceObj = {
       RowVersion: ""
     };
@@ -165,13 +165,13 @@ export class AppComponent implements OnInit {
     var refMasterFirstInstType = new RefMasterObj();
     refMasterFirstInstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     var refMasterInterestType = new RefMasterObj();
-    refMasterInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestType;
+    refMasterInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
     var refMasterCustNotifyOpt = new RefMasterObj();
     refMasterCustNotifyOpt.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustNotifyOpt;
     var refMasterWop = new RefMasterObj();
     refMasterWop.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
     var refMasterCodeInterestType = new RefMasterObj();
-    refMasterCodeInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestType;
+    refMasterCodeInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
     var refMasterCodeAssetCondition = new RefMasterObj();
     refMasterCodeAssetCondition.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     var refMasterCodeAssetUsage = new RefMasterObj();
@@ -189,7 +189,7 @@ export class AppComponent implements OnInit {
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterSalesRecommendation).subscribe(
       (response) => {
-        this.tempMrSalesRecommendCode = response["ReturnObject"];
+        this.tempMrSalesRecommendCode = response[CommonConstant.ReturnObj];
 
         if (this.tempMrSalesRecommendCode.length > 0) {
           this.appForm.patchValue({
@@ -200,7 +200,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getListKvpActiveRefAppSrcUrl, AppSourceObj).subscribe(
       (response) => {
-        this.tempMrAppSourceCode = response["ReturnObject"];
+        this.tempMrAppSourceCode = response[CommonConstant.ReturnObj];
         if (this.tempMrAppSourceCode.length > 0) {
           this.appForm.patchValue({
             MrAppSourceCode: this.tempMrAppSourceCode[0].Key
@@ -210,7 +210,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getListActiveRefPayFreqUrl, PayFreqCodeObj).subscribe(
       (response) => {
-        this.tempPayFreqCode = response["ReturnObject"];
+        this.tempPayFreqCode = response[CommonConstant.ReturnObj];
         if (this.tempPayFreqCode.length > 0) {
           this.appForm.patchValue({
             PayFreqCode: this.tempPayFreqCode[0].PayFreqCode
@@ -220,7 +220,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterFirstInstType).subscribe(
       (response) => {
-        this.tempMrFirstInstTypeCode = response["ReturnObject"];
+        this.tempMrFirstInstTypeCode = response[CommonConstant.ReturnObj];
         if (this.tempMrFirstInstTypeCode.length > 0) {
           this.appForm.patchValue({
             MrFirstInstTypeCode: this.tempMrFirstInstTypeCode[0].Key
@@ -231,7 +231,7 @@ export class AppComponent implements OnInit {
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterFirstInstType).subscribe(
       (response) => {
-        this.tempMrFirstInstTypeCode = response["ReturnObject"];
+        this.tempMrFirstInstTypeCode = response[CommonConstant.ReturnObj];
 
         if (this.tempMrFirstInstTypeCode.length > 0) {
           this.appForm.patchValue({
@@ -243,7 +243,7 @@ export class AppComponent implements OnInit {
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCustNotifyOpt).subscribe(
       (response) => {
-        this.tempMrCustNotifyOptCode = response["ReturnObject"];
+        this.tempMrCustNotifyOptCode = response[CommonConstant.ReturnObj];
 
         if (this.tempMrCustNotifyOptCode.length > 0) {
           this.appForm.patchValue({
@@ -255,7 +255,7 @@ export class AppComponent implements OnInit {
 
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterWop).subscribe(
       (response) => {
-        this.tempMrWopCode = response["ReturnObject"];
+        this.tempMrWopCode = response[CommonConstant.ReturnObj];
         if (this.tempMrWopCode.length > 0) {
           this.appForm.patchValue({
             MrWopCode: this.tempMrWopCode[0].Key
@@ -265,7 +265,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeInterestType).subscribe(
       (response) => {
-        this.tempInterestType = response["ReturnObject"];
+        this.tempInterestType = response[CommonConstant.ReturnObj];
         if (this.tempInterestType.length > 0) {
           this.appForm.patchValue({
             InterestType: this.tempInterestType[0].Key
@@ -275,7 +275,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeAssetCondition).subscribe(
       (response) => {
-        this.tempMrAssetConditionCode = response["ReturnObject"];
+        this.tempMrAssetConditionCode = response[CommonConstant.ReturnObj];
         if (this.tempMrAssetConditionCode.length > 0) {
           this.appForm.patchValue({
             MrAssetConditionCode: this.tempMrAssetConditionCode[0].Key
@@ -285,7 +285,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeAssetUsage).subscribe(
       (response) => {
-        this.tempMrAssetUsageCode = response["ReturnObject"];
+        this.tempMrAssetUsageCode = response[CommonConstant.ReturnObj];
         if (this.tempMrAssetUsageCode.length > 0) {
           this.appForm.patchValue({
             MrAssetUsageCode: this.tempMrAssetUsageCode[0].Key
@@ -295,8 +295,8 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeCustPersonalRelationship).subscribe(
       (response) => {
-        this.tempMrUserRelationshipCode = response["ReturnObject"];
-        this.tempMrOwnerRelationshipCode = response["ReturnObject"];
+        this.tempMrUserRelationshipCode = response[CommonConstant.ReturnObj];
+        this.tempMrOwnerRelationshipCode = response[CommonConstant.ReturnObj];
         if (this.tempMrUserRelationshipCode.length > 0) {
           this.appForm.patchValue({
             MrUserRelationshipCode: this.tempMrUserRelationshipCode[0].Key,
@@ -307,7 +307,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeIdType).subscribe(
       (response) => {
-        this.tempMrIdTypeCode = response["ReturnObject"];
+        this.tempMrIdTypeCode = response[CommonConstant.ReturnObj];
         if (this.tempMrIdTypeCode.length > 0) {
           this.appForm.patchValue({
             MrIdTypeCode: this.tempMrIdTypeCode[0].Key,
@@ -318,7 +318,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterCodeRateType).subscribe(
       (response) => {
-        this.tempRateType = response["ReturnObject"];
+        this.tempRateType = response[CommonConstant.ReturnObj];
         if (this.tempRateType.length > 0) {
           this.appForm.patchValue({
             RateType: this.tempRateType[0].Key, 
@@ -335,8 +335,8 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterTypeCodeAddrType).subscribe(
       (response) => {
-        this.tempCopyAddrOwnerFrom = response["ReturnObject"];
-        this.tempCopyAddrLocationFrom = response["ReturnObject"]; 
+        this.tempCopyAddrOwnerFrom = response[CommonConstant.ReturnObj];
+        this.tempCopyAddrLocationFrom = response[CommonConstant.ReturnObj]; 
         if (this.tempRateType.length > 0) {
           this.appForm.patchValue({
             CopyAddrOwnerFrom: this.tempCopyAddrOwnerFrom[0].Key,
@@ -349,7 +349,7 @@ export class AppComponent implements OnInit {
     );
     this.http.post(this.getRefMasterListKeyValueActiveByCodeUrl, refMasterTypeCodeGracePeriodType).subscribe(
       (response) => {
-        this.tempMrGracePeriodTypeCode = response["ReturnObject"];
+        this.tempMrGracePeriodTypeCode = response[CommonConstant.ReturnObj];
         if (this.tempMrGracePeriodTypeCode.length > 0) {
           this.appForm.patchValue({
             MrGracePeriodTypeCode: this.tempMrGracePeriodTypeCode[0].Key,
@@ -420,7 +420,7 @@ export class AppComponent implements OnInit {
     this.http.post(this.getAppCustAddrUrl, this.appCustAddrObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.AppCustAddrObj = response["ReturnObject"];
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
         this.AddrResidenceObj = this.AppCustAddrObj.filter(

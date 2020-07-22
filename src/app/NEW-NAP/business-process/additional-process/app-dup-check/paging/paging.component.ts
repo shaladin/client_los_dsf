@@ -50,7 +50,7 @@ export class PagingComponent implements OnInit {
     critLobObj.restriction = AdInsConstant.RestrictionLike;
     critLobObj.DataType = 'text';
     critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critLobObj.value = localStorage.getItem("BizTemplateCode");
+    critLobObj.value = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.inputPagingObj.addCritInput.push(critLobObj);
 
     // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));

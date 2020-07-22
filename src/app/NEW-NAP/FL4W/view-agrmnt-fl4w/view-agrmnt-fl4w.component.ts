@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-agrmnt-fl4w',
@@ -18,12 +20,23 @@ export class ViewAgrmntFl4wComponent implements OnInit {
     });
 
   }
-  viewAgrMainInfo: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AgrmntId: number;
   AppId: number;
   MrCustTypeCode: string;
   ngOnInit() {
-    this.viewAgrMainInfo = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "AgrmntNo",
+        environment: environment.losR3Web
+      },
+    ];
 
     var AgrmntObj = {
       AgrmntId: this.AgrmntId

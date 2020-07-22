@@ -4,12 +4,13 @@
     {
       "subSectionId": "AgrMainInformationId",
       "subSectionTitle": "Main Information",
-      "mainInfoUrl": "http://r3app-server.ad-ins.com/LOS/Generic/GetDataViewBySQL",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
           "type": "link",
           "label": "Application No",
           "property": "AppNo",
+          "name": "AppNo",
           "path": "/Nap/View/AppView",
           "target": "_blank",
           "param": [
@@ -23,6 +24,7 @@
           "type": "link",
           "label": "Lead No",
           "property": "LeadNo",
+          "name": "LeadNo",
           "path": "/Lead/View",
           "target": "_blank",
           "param": [
@@ -36,6 +38,7 @@
           "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
+          "name": "AgrmntNo",
           "path": "/Nap/View/AgrmntView",
           "target": "_blank",
           "param": [
@@ -49,6 +52,7 @@
           "type": "link",
           "label": "Mou No",
           "property": "MouCustNo",
+          "name": "MouCustNo",
           "path": "/Mou/Cust/View",
           "target": "_blank",
           "param": [

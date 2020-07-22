@@ -9,6 +9,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-return-handling-collateral-paging',
@@ -19,7 +20,6 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   userAccess;
-  token : any = localStorage.getItem("Token");
   BizTemplateCode: string;
   constructor(
     private http: HttpClient,
@@ -35,7 +35,7 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem("UserAccess"));
+    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingCollateral.json";
@@ -66,7 +66,7 @@ export class ReturnHandlingCollateralPagingComponent implements OnInit {
   
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion, this.token );  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  
     }
   }
 }

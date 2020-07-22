@@ -60,9 +60,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   });
   AppId: any;
   AgrmntId: any;
-  token = localStorage.getItem("Token");
+  token = localStorage.getItem(CommonConstant.TOKEN);
   LeadId: string;
-  bizTemplateCode: string = localStorage.getItem("BizTemplateCode");
+  bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   MouCustId: any;
 
 
@@ -275,35 +275,29 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.updateValueAndValidity();
   }
   //nanti bakalan ke View, sementara kek gini dlu
-  ToApp() {
 
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + this.AppId, "_blank");
-  }
-  ToAgrmnt() {
-    window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + this.AgrmntId, "_blank");
-  }
-  ToLead() {
-    window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.LeadId, "_blank");
-  }
-  ToMou() {
-    window.open(environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId, "_blank");
-
-  }
-  ToCust() {
-    var custObj = { CustNo: this.CustNo };
-    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-      response => {
-        var link = environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + response["CustId"] + "&Token=" + this.token;
-        window.open(link, '_blank');
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  ToProdOffering() {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(this.ProdOfferingCode, this.ProdOfferingVersion, this.token);
+  OpenView(key: string){
+    if(key == 'app'){
+      AdInsHelper.OpenAppViewByAppId(this.AppId);
+    }else if(key == 'agrmnt'){
+      AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
+    }else if(key == 'lead'){
+      AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
+    }else if(key == 'mou'){
+      AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
+    }else if(key == 'cust'){
+      var custObj = { CustNo: this.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId (response["CustId"])
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }else if(key == 'prod'){
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion); 
+    }
   }
 
   onAvailableNextTask() {
@@ -315,7 +309,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onCancelClick() {
-    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem("BizTemplateCode"));
+    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
   }
 
   openView(custNo) {

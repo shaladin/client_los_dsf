@@ -7,6 +7,8 @@ import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-view-app-cust-data-personal',
@@ -16,12 +18,12 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewAppCustDataPersonalComponent implements OnInit {
 
   @Input() appId: number;
-  viewMainDataObj: string;
-  viewJobDataProfObj: string;
-  viewJobDataEmpObj: string;
-  viewJobDataSmeObj: string;
-  viewJobDataNonProfObj: string;
-  viewFinDataObj: string;
+  viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataProfObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataEmpObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataSmeObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataNonProfObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewFinDataObj:  UcViewGenericObj = new UcViewGenericObj();
 
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
@@ -39,12 +41,29 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.getCustData();
     this.arrValue.push(this.appId);
-    this.viewMainDataObj = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
-    this.viewJobDataProfObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataProf.json";
-    this.viewJobDataEmpObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataEmp.json";
-    this.viewJobDataSmeObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataSme.json";
-    this.viewJobDataNonProfObj = "./assets/ucviewgeneric/viewAppCustPersonalJobDataNonProf.json";
-    this.viewFinDataObj = "./assets/ucviewgeneric/viewAppCustPersonalFinData.json";
+    this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
+    this.viewMainDataObj.viewEnvironment = environment.losUrl;
+    this.viewMainDataObj.whereValue = this.arrValue;
+
+    this.viewJobDataProfObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataProf.json";
+    this.viewJobDataProfObj.viewEnvironment = environment.losUrl;
+    this.viewJobDataProfObj.whereValue = this.arrValue;
+
+    this.viewJobDataEmpObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataEmp.json";
+    this.viewJobDataEmpObj.viewEnvironment = environment.losUrl;
+    this.viewJobDataEmpObj.whereValue = this.arrValue;
+
+    this.viewJobDataSmeObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataSme.json";
+    this.viewJobDataSmeObj.viewEnvironment = environment.losUrl;
+    this.viewJobDataSmeObj.whereValue = this.arrValue;
+
+    this.viewJobDataNonProfObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataNonProf.json";
+    this.viewJobDataNonProfObj.viewEnvironment = environment.losUrl;
+    this.viewJobDataNonProfObj.whereValue = this.arrValue;
+
+    this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalFinData.json";
+    this.viewFinDataObj.viewEnvironment = environment.losUrl;
+    this.viewFinDataObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;
   }

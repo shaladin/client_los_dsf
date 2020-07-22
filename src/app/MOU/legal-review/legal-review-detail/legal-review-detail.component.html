@@ -1,5 +1,5 @@
 <form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm">
-  <lib-ucviewgeneric [viewInput]="viewObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
   <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc> 
   <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'"></lib-ucSubsection>
   <div id="ReviewId">

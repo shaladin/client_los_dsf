@@ -8,6 +8,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-grp-member',
@@ -97,7 +98,7 @@ export class CustGrpMemberComponent implements OnInit {
   }
 
   deleteCustGrp(i){
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var custCustGrpObjs = this.parentForm.controls[this.identifier] as FormArray;
       var no = custCustGrpObjs.controls[i]["controls"]["No"].value;
       this.parentForm.removeControl("lookupCustomerForGrp" + no);
@@ -225,10 +226,10 @@ export class CustGrpMemberComponent implements OnInit {
   
 
   async bindCustRelationshipPersonalObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_PERSONAL_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.CustRelationshipPersonalObj = response["ReturnObject"];
+        this.CustRelationshipPersonalObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipPersonalObj.length > 0){
             this.defaultCustRelationshipPersonalCode = this.CustRelationshipPersonalObj[0].Key
         }
@@ -237,10 +238,10 @@ export class CustGrpMemberComponent implements OnInit {
   }
 
   async bindCustRelationshipCompanyObj(){
-    this.refMasterObj.RefMasterTypeCode = "CUST_COMPANY_RELATIONSHIP";
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.CustRelationshipCompanyObj = response["ReturnObject"];
+        this.CustRelationshipCompanyObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipCompanyObj.length > 0){
             this.defaultCustRelationshipCompanyCode = this.CustRelationshipCompanyObj[0].Key
         }

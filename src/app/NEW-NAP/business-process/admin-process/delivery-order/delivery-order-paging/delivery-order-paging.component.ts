@@ -4,7 +4,9 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-delivery-order-paging',
@@ -13,7 +15,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class DeliveryOrderPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   bizTemplateCode: string;
-  token : any = localStorage.getItem("Token");
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -21,7 +22,7 @@ export class DeliveryOrderPagingComponent implements OnInit {
         localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
       }
       else{
-        this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
@@ -54,12 +55,10 @@ export class DeliveryOrderPagingComponent implements OnInit {
   
   GetCallBack(ev: any){ 
     if(ev.Key == "ViewProdOffering"){
-      var link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + 0 + "&prodOfferingCode=" + ev.RowObj.ProdOfferingCode + "&prodOfferingVersion=" + ev.RowObj.ProdOfferingVersion  + "&Token=" + this.token;
-       window.open(link, '_blank');   
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
     else if(ev.Key == "ViewAgrmnt"){
-      var link = environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + ev.RowObj.AgrmntId;
-      window.open(link, '_blank');  
+      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }    
   }
 }

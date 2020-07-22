@@ -94,8 +94,8 @@ export class NapFromLeadDetailComponent implements OnInit {
   bizTemplateCode: string;
 
   async ngOnInit(): Promise<void> {
-    this.user = JSON.parse(localStorage.getItem("UserAccess"));
-    this.bizTemplateCode = localStorage.getItem("BizTemplateCode");
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     this.MakeLookUpObj();
     await this.GetLead();
