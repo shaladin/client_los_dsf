@@ -117,7 +117,7 @@ export class MouReviewGeneralComponent implements OnInit {
       }
     );
 
-    this.http.post(AdInsConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+    this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -129,7 +129,7 @@ export class MouReviewGeneralComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
+      (response) => {
       });
   }
 
