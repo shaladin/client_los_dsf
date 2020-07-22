@@ -5,6 +5,7 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { InputNapCFNARoutingModule } from "./input-nap-routing.module";
 import { ArchwizardModule } from "angular-archwizard";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
+import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
     // NapAddComponent,
     // NapPagingComponent,
     // NapAddDetailComponent
-  ],
+  NapAddDetailComponent],
   providers: [
     NGXToastrService
   ]

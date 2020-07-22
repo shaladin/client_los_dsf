@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FinancialDataComponent } from '../sharing-component/input-nap-component/financial-data/financial-data.component';
+import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
 
 const routes: Routes = [
   {
@@ -20,13 +21,13 @@ const routes: Routes = [
       //         title: 'Add'
       //     }
       // },
-      // {
-      //     path: 'Add/Detail',
-      //     component: "",
-      //     data: {
-      //         title: 'AddDetail'
-      //     }
-      // },
+      {
+          path: 'Add/Detail',
+          component: NapAddDetailComponent,
+          data: {
+              title: 'AddDetail'
+          }
+      },
     ]
   }
 ];
