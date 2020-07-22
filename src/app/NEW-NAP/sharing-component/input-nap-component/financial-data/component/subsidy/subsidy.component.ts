@@ -16,6 +16,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class SubsidyComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm : FormGroup;
+  @Output() emitData = new EventEmitter();
+
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -35,6 +37,7 @@ export class SubsidyComponent implements OnInit {
     const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
@@ -47,6 +50,7 @@ export class SubsidyComponent implements OnInit {
     const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
     modalRef.componentInstance.mode = "edit";
     modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.AppSubsidyId = obj.AppSubsidyId;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
@@ -76,6 +80,7 @@ export class SubsidyComponent implements OnInit {
     this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
+        this.emitData.emit(this.listSubsidy);
       }
     );
   }
@@ -85,6 +90,7 @@ export class SubsidyComponent implements OnInit {
     this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
+        this.emitData.emit(this.listSubsidy);
       }
     );
   }

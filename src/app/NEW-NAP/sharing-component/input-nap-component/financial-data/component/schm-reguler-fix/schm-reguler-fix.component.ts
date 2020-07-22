@@ -78,11 +78,11 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   Calculate(){
-    if(this.ParentForm.value.CalcBase == ''){
+    if(this.ParentForm.getRawValue().CalcBase == ''){
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
     }
-    if(this.ParentForm.value.CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0){
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.getRawValue().InstAmt <= 0){
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
@@ -90,7 +90,7 @@ export class SchmRegulerFixComponent implements OnInit {
       return;
     }
 
-    this.calcRegFixObj = this.ParentForm.value;
+    this.calcRegFixObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
@@ -187,9 +187,38 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.patchValue({
         SubsidyAmtFromDiffRate: 0
       });
-      this.ParentForm.get('SubsidyAmtFromDiffRate').disable();
+    }
+  }
+
+  CalcBaseChanged(event){
+    if(event.target.value == CommonConstant.FinDataCalcBaseOnRate){
+      this.ParentForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+
+      this.ParentForm.get("RateType").enable();
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+      this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnInst){
+      this.ParentForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+      
+      this.ParentForm.get("RateType").disable();
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+      this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnCommission){
+      this.ParentForm.get("RateType").disable();
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+      this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }else{
-      this.ParentForm.get('SubsidyAmtFromDiffRate').enable();
+      this.ParentForm.get("RateType").enable();
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+      this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }
   }
 
