@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <div *ngFor="let item of parentForm.controls[identifier].controls; let i = index;">
+    <div *ngFor="let item of parentForm.controls[identifier].controls; let i = index;" style="margin-bottom: 2em;">
       <div [formGroupName]="i">
 
         <div class="form-group row">
@@ -75,7 +75,7 @@
             </div>
 
             <!-- Tax Amount -->
-            <label class="col-md-2 adInsLabel">Tax Amount </label>
+            <label class="col-md-2 adInsLabel">With Holding Tax Amount </label>
             <div class="col-md-4" style="text-align: right;">
               <label class="adInsLabel" currencyMask *ngIf="item.controls.TotalTaxAmount.value != ''">
                 {{item.controls.TotalTaxAmount.value | number:'.2':'en-US'}} </label>
@@ -104,56 +104,62 @@
             </div>
           </div>
           
-          <div formArrayName="ListAllocated">
-            <div class="form-group">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
-                    <div class="form-group row" [formGroupName]="idx"
-                      *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
-                      <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
-                      </label>
-                      <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
-                        <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
-                          class="form-control adInsInput text-right"
-                          formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
-                        <input type="text" currencyMask
-                          max="FormObj.controls.arr['controls'][i].controls.ListAllocated.controls[idx].controls.MaxAllocationAmount.value"
-                          *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
-                          formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
-                        <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+          <!-- <div class="px-3" style="padding-right:0rem !important;"> -->
+            <!-- <lib-ucSubsection [id]="'ListAllocated' + item.controls.ContentName.value + 'id'" [title]="'Allocate Commission For ' + item.controls.ContentNameValue.value "
+              [panel]="'ListAllocated' + item.controls.ContentName.value">
+            </lib-ucSubsection> -->
+            <h4 class="form-section card-title" style="font-size: 1rem;" translate>Allocate Commission From</h4>
+            <div formArrayName="ListAllocated" [id]="'ListAllocated' + item.controls.ContentName.value">
+              <div class="form-group">
+                <div class="row">
+  
+                  <div class="col-md-6">
+                    <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
+                      <div class="form-group row" [formGroupName]="idx"
+                        *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
+                        <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
+                        </label>
+                        <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                          <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                            class="form-control adInsInput text-right"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <input type="text" currencyMask
+                            max="FormObj.controls.arr['controls'][i].controls.ListAllocated.controls[idx].controls.MaxAllocationAmount.value"
+                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
-                    <div class="form-group row" [formGroupName]="idx"
-                      *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
-                      <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
-                      </label>
-                      <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
-                        <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
-                          class="form-control adInsInput  text-right"
-                          formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
-                        <input type="text" max="ruleItem.controls.MaxAllocationAmount.value" currencyMask
-                          *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
-                          formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
-                        <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+  
+                  <div class="col-md-6">
+                    <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
+                      <div class="form-group row" [formGroupName]="idx"
+                        *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
+                        <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
+                        </label>
+                        <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                          <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                            class="form-control adInsInput  text-right"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <input type="text" max="ruleItem.controls.MaxAllocationAmount.value" currencyMask
+                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
                       </div>
                     </div>
                   </div>
+  
                 </div>
-
               </div>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
         <br>
       </div>

@@ -35,6 +35,7 @@ export class ReservedFundComponent implements OnInit {
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
+  @Input() DictMaxIncomeForm: any = {};
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
@@ -84,6 +85,7 @@ export class ReservedFundComponent implements OnInit {
     // this.GetMaxAllocAmt(appObj);
     this.GetAppFee(appObj);
     this.GetAppCust(appObj);
+    console.log(this.DictMaxIncomeForm);
     console.log(this.maxAllocAmt);
   }
 
@@ -159,6 +161,7 @@ export class ReservedFundComponent implements OnInit {
 
   calculatedRemainingAmt() {
     this.remainingAllocatedAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+    if (0 > this.remainingAllocatedAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
   }
 
@@ -212,19 +215,33 @@ export class ReservedFundComponent implements OnInit {
         }
         for (let j = 0; j < this.appReservedFundObjs.length; j++) {
           var listAppRsvFunds = this.RsvForm.controls["ReservedFundObjs"] as FormArray;
-          listAppRsvFunds.push(this.addGroup(this.appReservedFundObjs[j], j));
+          let maxAmt = 0;
+          let allocAmt = 0;
+          console.log(this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode]);
+          if (this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode] != undefined) {
+            if (this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount > 0){
+              maxAmt = this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount;
+              allocAmt = this.appReservedFundObjs[j].ReservedFundAmt;
+            }
+            else{
+              maxAmt = 0;
+              allocAmt = 0;
+            }
+          }
+          listAppRsvFunds.push(this.addGroup(this.appReservedFundObjs[j], j, maxAmt, allocAmt));
         }
       }
 
     );
   }
 
-  addGroup(appReservedFundObjs, i) {
+  addGroup(appReservedFundObjs, i, maxAmt: number, allocAmt: number) {
     return this.fb.group({
       No: [i],
       MrReservedFundSourceCode: [appReservedFundObjs.MrReservedFundSourceCode],
       MrReservedFundCode: [appReservedFundObjs.MrReservedFundCode],
-      ReservedFundAmt: [appReservedFundObjs.ReservedFundAmt, Validators.required],
+      ReservedFundAmt: [allocAmt, [Validators.required, Validators.max(maxAmt)]],
+      MaxAmt: [maxAmt],
       StdReservedFundAmt: [appReservedFundObjs.StdReservedFundAmt],
       Behaviour: [appReservedFundObjs.Behaviour],
       MrReservedFundSourceName: [appReservedFundObjs.MrReservedFundSourceName]

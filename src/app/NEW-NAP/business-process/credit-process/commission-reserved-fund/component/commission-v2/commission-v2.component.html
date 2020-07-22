@@ -6,22 +6,15 @@
         <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
           #enjiForm="ngForm">
           <div class="form-body">
-            <app-form-commission-generate *ngIf="OnForm1" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm"
+            <app-form-commission-generate #Form1 *ngIf="OnForm1" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
             </app-form-commission-generate>
-            <app-form-commission-generate *ngIf="OnForm2" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm"
+            <app-form-commission-generate #Form2 *ngIf="OnForm2" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp"
               [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate>
-            <app-form-commission-generate *ngIf="OnForm3" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm"
+            <app-form-commission-generate #Form3 *ngIf="OnForm3" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
             </app-form-commission-generate>
-          </div>
-
-
-          <div class="form-actions right">
-            <button type="button" (click)="CalculateTotal()" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Calculate
-            </button>
           </div>
 
           <!-- Summary -->
@@ -34,10 +27,10 @@
                   <label>Total Commision Amount</label>
                 </div>
                 <div class="col-md-4 form-inline form-inline-right">
-                  <label *ngIf="Summary.TotalCommisionAmount <= viewIncomeInfoObj.MaxAllocatedAmount"
+                  <label *ngIf="Summary.TotalCommisionAmount <= RemainingAllocAmt"
                     style="text-align: right;">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
-                  <label *ngIf="Summary.TotalCommisionAmount > viewIncomeInfoObj.MaxAllocatedAmount"
+                  <label *ngIf="Summary.TotalCommisionAmount > RemainingAllocAmt"
                     style="color: red; text-align: right;">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
                 </div>
@@ -73,6 +66,9 @@
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
               translate>
               <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" (click)="CalculateTotal()" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Calculate
             </button>
             <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
