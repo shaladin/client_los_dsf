@@ -34,6 +34,7 @@ export class MouReviewFactoringComponent implements OnInit {
   resultData: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: any;
+  ScoreResult: number;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -107,6 +108,12 @@ export class MouReviewFactoringComponent implements OnInit {
         this.MouReviewDataForm.patchValue({
           Reason: this.listReason[0].Key
         });
+      }
+    );
+
+    this.http.post(AdInsConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+      (response) => {
+        this.ScoreResult = response["ScoreResult"];
       }
     );
   }

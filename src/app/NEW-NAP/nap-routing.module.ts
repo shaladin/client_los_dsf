@@ -31,6 +31,10 @@ const routes: Routes = [
                 loadChildren: './RFN4W/input-nap.module#InputNapRFN4WModule'
             },
             {
+                path: 'CFNA',
+                loadChildren: './CFNA/input-nap.module#InputNapCFNAModule'
+            },
+            {
                 path: 'Factoring',
                 loadChildren: './FCTR/input-nap.module#InputNapFCTRModule'
             },
