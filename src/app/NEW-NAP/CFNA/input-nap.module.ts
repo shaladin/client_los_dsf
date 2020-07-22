@@ -6,6 +6,8 @@ import { InputNapCFNARoutingModule } from "./input-nap-routing.module";
 import { ArchwizardModule } from "angular-archwizard";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
+import { NapPagingComponent } from './nap-paging/nap-paging.component';
+import { NapAddComponent } from './nap-add/nap-add.component';
 
 @NgModule({
   imports: [
@@ -16,10 +18,10 @@ import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component
     ArchwizardModule,
   ],
   declarations: [
-    // NapAddComponent,
-    // NapPagingComponent,
-    // NapAddDetailComponent
-  NapAddDetailComponent],
+    NapAddDetailComponent,
+    NapPagingComponent,
+    NapAddComponent
+  ],
   providers: [
     NGXToastrService
   ]
