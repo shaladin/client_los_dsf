@@ -231,6 +231,9 @@ export class FormCommissionGenerateComponent implements OnInit {
 
         if (allocAmt >= maxAllocAmt)
           allocAmt = maxAllocAmt;
+        
+        if (allocAmt <= 0)
+          allocAmt = 0;
 
       } else {
         console.log("No Rule Data or DictMaxAmt <= 0");
