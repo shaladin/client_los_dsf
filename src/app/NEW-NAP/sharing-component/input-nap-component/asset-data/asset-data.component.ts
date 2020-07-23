@@ -645,21 +645,22 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
       this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
     }
+    if (this.AppAssetAttrObj != null) {
+      for (let i = 0; i < this.AssetDataForm.controls["AppAssetAttrObjs"].value.length; i++) {
+        var appAssetAttrObj = new AppAssetAttrObj();
+        var appCollAttrcObj = new AppCollateralAttrObj();
+        appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
+        appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
+        appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
 
-    for (let i = 0; i < this.AssetDataForm.controls["AppAssetAttrObjs"].value.length; i++) {
-      var appAssetAttrObj = new AppAssetAttrObj();
-      var appCollAttrcObj = new AppCollateralAttrObj();
-      appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
-      appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
-      appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
-
-      appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
-      appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
-      appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
+        appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
+        appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
+        appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
 
 
-      this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
-      this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
+        this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
+        this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
+      }
     }
   }
 
