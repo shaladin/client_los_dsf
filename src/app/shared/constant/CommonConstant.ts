@@ -113,6 +113,7 @@ export class CommonConstant {
     public static FCTR = "FCTR";
     public static CFRFN4W = "CFRFN4W";
     public static CFNEWCAR = "CFNEWCAR";
+    public static CFNA = "CFNA";
     public static CENTER_GROUP_CODE = "CG";
 
     //OFFICE TYPE
