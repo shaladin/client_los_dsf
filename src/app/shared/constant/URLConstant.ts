@@ -506,6 +506,9 @@ export class URLConstant {
     public static AddEditAppLifeInsH = environment.losUrl + "/AppLifeIns/AddEditAppLifeInsH";
 
 
+    // MOU CUST SCORING
+    public static GetMouCustScoreByMouCustId = environment.losUrl + "/MouCustScoring/GetMouCustScoreByMouCustId";
+
     // MOU CUST ASSET
     public static GetMouCustAssetByMouCustId = environment.losUrl + "/MouCustAsset/GetMouCustAssetByMouCustId";
 
@@ -532,7 +535,6 @@ export class URLConstant {
 
     public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
     public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
-    public static GetMouCustScoreByMouCustId = environment.losUrl + "/MouCustScoring/GetMouCustScoreByMouCustId";
 
     // MOU CUST FCTR
     public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
@@ -742,6 +744,7 @@ export class URLConstant {
     public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
     public static GetListAppCollateralByAgrmntId = environment.losUrl + "/AppCollateral/GetListAppCollateralByAgrmntId";
     public static GetAppCollateralByAgrmntId = environment.losUrl + "/AppCollateral/GetAppCollateralByAgrmntId";
+    public static GetListNegativeCollateralByAppId = environment.losUrl + "/AppCollateral/GetListNegativeCollateralByAppId";
 
     // App Collateral Suppl Emp
     public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -801,6 +804,7 @@ export class URLConstant {
     public static GetListAppInsObjByAppIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAppIdForView";
     public static GetListAppInsObjByAgrmntIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAgrmntIdForView";
     public static GetAppInsObjViewDetail = environment.losUrl + "/AppIns/GetAppInsObjViewDetail";
+    public static GetListCollateralAppInsObjForViewByAppId = environment.losUrl + "/AppIns/GetListCollateralAppInsObjForViewByAppId";
 
     //APP INSURANCE
     public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";

@@ -16,6 +16,8 @@ import { PhoneVerificationSubjectViewComponent } from './phone-verification/phon
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 import { FraudVerificationMultiAssetComponent } from './fraud-verification-multi-asset/fraud-verification-multi-asset.component';
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { NewCreditInvestigationDetailComponent } from './new-credit-investigation/new-credit-investigation-detail/new-credit-investigation-detail.component';
+import { NewCreditInvestigationComponent } from './new-credit-investigation/new-credit-investigation.component';
 
 const routes: Routes = [
   {
@@ -73,6 +75,20 @@ const routes: Routes = [
       {
         path: 'CreditInvestigation/Detail',
         component: CreditInvestigationDetailComponent,
+        data: {
+          title: 'Credit Investigation'
+        }
+      },
+      {
+        path: 'NewCreditInvestigation/Paging',
+        component: NewCreditInvestigationComponent,
+        data: {
+          title: 'Credit Investigation'
+        }
+      },
+      {
+        path: 'NewCreditInvestigation/Detail',
+        component: NewCreditInvestigationDetailComponent,
         data: {
           title: 'Credit Investigation'
         }
