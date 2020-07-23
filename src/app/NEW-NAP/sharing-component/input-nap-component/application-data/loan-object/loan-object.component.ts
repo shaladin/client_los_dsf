@@ -33,6 +33,7 @@ export class LoanObjectComponent implements OnInit {
   AppObj: any;
   OfficeCode: string;
   RefProdCmptSupplSchm: any;
+  isCFNA : boolean = false;
 
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
@@ -155,6 +156,10 @@ export class LoanObjectComponent implements OnInit {
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
+        if(this.AppObj.LobCode == CommonConstant.CFNA){
+          this.isCFNA = true;
+          console.log(this.isCFNA);
+        }
       }
     );
 
@@ -238,6 +243,15 @@ export class LoanObjectComponent implements OnInit {
     if (this.mode == "edit") {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
+      if(this.isCFNA){
+      this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+        (response) => {
+        },
+        (error) => {
+          console.log(error);
+          return;
+        });
+      }
       this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.modal.close();
@@ -250,6 +264,15 @@ export class LoanObjectComponent implements OnInit {
         });
     }
     else {
+      if(this.isCFNA){
+      this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+        (response) => {
+        },
+        (error) => {
+          console.log(error);
+          return;
+        });
+      }
       this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
           this.modal.close();

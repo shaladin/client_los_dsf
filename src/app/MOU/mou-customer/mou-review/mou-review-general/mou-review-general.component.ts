@@ -129,7 +129,7 @@ export class MouReviewGeneralComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
+      (response) => {
       });
   }
 
