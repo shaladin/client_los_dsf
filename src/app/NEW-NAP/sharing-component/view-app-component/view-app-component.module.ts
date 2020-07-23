@@ -31,6 +31,8 @@ import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process
 import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
 import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
 import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approvalhist-dev/approvalhist-dev.component';
+import { NewApplicationDataComponent } from "./application-data/new-application-data.component";
+import { FraudDetectionResultComponent } from './fraud-detection-result/fraud-detection-result.component';
 
 @NgModule({
   exports: [
@@ -92,7 +94,9 @@ import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approval
     InvoiceViewComponent,
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
-    ApprovalhistDevComponent
+    ApprovalhistDevComponent,
+    NewApplicationDataComponent,
+    FraudDetectionResultComponent
   ],
   providers: [
     NGXToastrService
