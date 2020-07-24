@@ -18,10 +18,10 @@
 
               <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
                 <div class="row" *ngIf="i < TotalHalfListResultRefundIncomeInfo">
-                  <div class="col-md-6 form-inline">
-                    <label class="adInsLabel"> {{ item.RefundAllocationFromDesc }} </label>
+                  <div class="col-md-6">
+                    <label class="label-control"> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
-                  <div class="col-md-6 form-inline form-inline-right">
+                  <div class="col-md-6 form-inline-right">
                     <label *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
                     <label *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                   </div>
@@ -29,20 +29,20 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6 form-inline">
-                  <label class="adInsLabel"> Max Allocated Amount </label>
+                <div class="col-md-6">
+                  <label class="label-control"> Max Allocated Amount </label>
                 </div>
-                <div class="col-md-6 form-inline form-inline-right">
+                <div class="col-md-6 form-inline-right">
                   <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
                     {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
                   <label *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 form-inline">
-                  <label class="adInsLabel"> Remaining Allocated Amount </label>
+                <div class="col-md-6">
+                  <label class="label-control"> Remaining Allocated Amount </label>
                 </div>
-                <div class="col-md-6 form-inline form-inline-right">
+                <div class="col-md-6 form-inline-right">
                   <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0">
                     {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
                   <label *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> (
@@ -53,10 +53,10 @@
             <div class="col-md-6 ">
               <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
                 <div class="row" *ngIf="i >= TotalHalfListResultRefundIncomeInfo">
-                  <div class="col-md-6 form-inline">
+                  <div class="col-md-6">
                     <label class="adInsLabel"> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
-                  <div class="col-md-6 form-inline form-inline-right">
+                  <div class="col-md-6 form-inline-right">
                     <label *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
                     <label *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                   </div>
