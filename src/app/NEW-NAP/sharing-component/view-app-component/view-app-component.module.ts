@@ -31,6 +31,12 @@ import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process
 import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
 import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
 import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approvalhist-dev/approvalhist-dev.component';
+import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
+import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
+import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.component";
+import { ViewAppScoreGradeScoringComponent } from "./view-app-score-grade-scoring/view-app-score-grade-scoring.component";
+import { ViewAppScoreGradeDsrComponent } from "./view-app-score-grade-dsr/view-app-score-grade-dsr.component";
+import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukcapil/view-app-score-grade-dukcapil.component";
 
 @NgModule({
   exports: [
@@ -57,7 +63,13 @@ import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approval
     AppInsuranceDetailComponent,
     AppAssetDataDetailComponent,
     ApprovalHistComponent,
-    ApprovalhistDevComponent
+    ApprovalhistDevComponent,
+    ViewFraudDetectionResultComponent,
+    ViewSurveyTaskListComponent,
+    ViewSummaryAppComponent,
+    ViewAppScoreGradeScoringComponent,
+    ViewAppScoreGradeDsrComponent,
+    ViewAppScoreGradeDukcapilComponent
   ],
   imports: [
     CommonModule,
@@ -92,7 +104,13 @@ import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approval
     InvoiceViewComponent,
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
-    ApprovalhistDevComponent
+    ApprovalhistDevComponent,
+    ViewFraudDetectionResultComponent,
+    ViewSurveyTaskListComponent,
+    ViewSummaryAppComponent,
+    ViewAppScoreGradeScoringComponent,
+    ViewAppScoreGradeDsrComponent,
+    ViewAppScoreGradeDukcapilComponent
   ],
   providers: [
     NGXToastrService

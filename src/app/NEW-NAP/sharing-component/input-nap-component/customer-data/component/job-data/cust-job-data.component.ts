@@ -217,9 +217,10 @@ export class CustJobDataComponent implements OnInit {
   bindAppCustPersonalJobData(){
     console.log("bind")
     console.log(this.custModelCode);
-    if (this.custModelCode != null && this.custModelCode != "")
+    console.log(this.appCustPersonalJobDataObj);
+    if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
-    if(this.appCustPersonalJobDataObj != undefined){
+    if(this.appCustPersonalJobDataObj.AppCustPersonalId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.appCustPersonalJobDataObj.ProfessionalNo,

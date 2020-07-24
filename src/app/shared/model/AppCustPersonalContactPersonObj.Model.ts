@@ -33,6 +33,10 @@ export class AppCustPersonalContactPersonObj {
     Zipcode: string; 
     SubZipcode: string;
     FullAddr: string;
-
-constructor() { this.AppCustPersonalContactPersonId = 0; }
+    IsGuarantor: boolean; 
+    constructor()
+    {
+      this.AppCustPersonalContactPersonId = 0;
+      this.IsGuarantor = false;
+    }
 }
