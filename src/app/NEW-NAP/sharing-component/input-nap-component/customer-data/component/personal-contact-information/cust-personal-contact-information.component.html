@@ -74,6 +74,12 @@
             </lib-ucSubsection>
             <div id="addContactInfomation">
               <div class="px-3">
+                <div class="form-group row">
+                  <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                    <div class="col-md-4">
+                      <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                    </div>               
+                </div>
                 <div class="row">
                   <!-- left -->
                   <div class="col-md-6 ">
@@ -81,15 +87,15 @@
                       <label class="col-md-4 adins-required-label" for="ContactPersonName" translate>Name</label>
                       <div class="col-md-8">
                         <input type="text" id="ContactPersonName" class="form-control" formControlName="ContactPersonName"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.ContactPersonName.invalid }">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.ContactPersonName.invalid }">
                         <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-md-4" for="idType" translate>ID Type</label>
                       <div class="col-md-8">
-                        <select class="form-control" id="idType" formControlName="MrIdTypeCode" 
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrIdTypeCode.invalid }">
+                        <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrIdTypeCode.invalid }">
                           <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                             {{item.Value}}
                           </option>
@@ -121,7 +127,7 @@
                       <label class="col-md-4 adins-required-label" for="mobilePhone" translate>Mobile Phone 1</label>
                       <div class="col-md-8">
                         <input type="text" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MobilePhnNo1.invalid }">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MobilePhnNo1.invalid }">
                         <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
@@ -139,7 +145,7 @@
                       <label class="col-md-4" for="Gender" translate>Gender</label>
                       <div class="col-md-8">
                         <select class="form-control" id="Gender" formControlName="MrGenderCode" (change)="GenderChanged($event)"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrGenderCode.invalid }">
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.MrGenderCode.invalid }">
                           <option *ngFor="let item of GenderObj" [value]="item.Key">
                             {{item.Value}}
                           </option>

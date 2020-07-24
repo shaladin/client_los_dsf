@@ -218,9 +218,22 @@ export class CustBankAccountComponent implements OnInit {
 
   addGroup(bankStmntObj) {
     if (bankStmntObj == undefined) {
+      // console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
+      var dateYear = 0;
+      // console.log(dateYear);
+      if (this.CustBankAccountForm.value['BankStmntObjs'].length > 0)
+        dateYear = this.CustBankAccountForm.value['BankStmntObjs'][0].Year;
+      else{
+        var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        var month = new Date(userAcc.BusinessDt).getMonth();
+        dateYear = new Date(userAcc.BusinessDt).getFullYear();
+        console.log(month);
+        if (month == 0) dateYear--;
+      }
+
       return this.fb.group({
         Month: [this.defaultMonth, [Validators.required, Validators.maxLength(2)]],
-        Year: ['', [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
+        Year: [dateYear, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
         DebitAmt: [0, Validators.required],
         CreditAmt: [0, Validators.required],
         BalanceAmt: [0, Validators.required]

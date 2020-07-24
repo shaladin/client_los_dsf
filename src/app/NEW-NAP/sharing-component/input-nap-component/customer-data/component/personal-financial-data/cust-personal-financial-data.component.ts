@@ -21,7 +21,7 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
-
+  @Input() isMarried: boolean = true;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -72,7 +72,7 @@ export class CustPersonalFinancialDataComponent implements OnInit {
 
   bindAppCustPersonalFinData(){
     console.log(this.appCustPersonalFinDataObj);
-    if(this.appCustPersonalFinDataObj != undefined){
+    if(this.appCustPersonalFinDataObj.AppCustPersonalId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
         MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,

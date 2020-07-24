@@ -54,15 +54,15 @@ export class GuarantorPersonalComponent implements OnInit {
   PersonalForm = this.fb.group({
     MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-    MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrGenderCode: ['', [Validators.maxLength(50)]],
     IdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     MrMaritalStatCode: ['', [Validators.required, Validators.maxLength(50)]],
     IdExpDt: ['', [Validators.required]],
-    MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrNationalityCode: ['', [Validators.maxLength(50)]],
     BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
     BirthDt: ['', [Validators.required]],
     TaxIdNo: ['', [Validators.maxLength(50)]],
-    MrReligionCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrReligionCode: ['', [Validators.maxLength(50)]],
     MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     CountryCode: ['']
   });
@@ -489,15 +489,15 @@ export class GuarantorPersonalComponent implements OnInit {
     this.PersonalForm = this.fb.group({
       MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-      MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
+      MrGenderCode: ['', [Validators.maxLength(50)]],
       IdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      MrMaritalStatCode: ['', [Validators.required, Validators.maxLength(50)]],
+      MrMaritalStatCode: ['', [Validators.maxLength(50)]],
       IdExpDt: ['', [Validators.required]],
       MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
       BirthDt: ['', [Validators.required]],
       TaxIdNo: ['', [Validators.maxLength(50)]],
-      MrReligionCode: ['', [Validators.required, Validators.maxLength(50)]],
+      MrReligionCode: ['', [Validators.maxLength(50)]],
       MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       CountryCode: ['']
     });

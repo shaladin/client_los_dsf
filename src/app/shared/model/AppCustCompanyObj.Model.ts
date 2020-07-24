@@ -1,24 +1,25 @@
 export class AppCustCompanyObj {
-    AppCustCompanyId: any;
-    AppCustId: any;
-    CompanyBrandName: any;
-    MrCompanyTypeCode: any;
-    IndustryTypeCode: any;
-    RegistrationNo: any;
-    LicenseNo: any;
-    NumOfEmp: any;
-    MrInvestmentTypeCode: any;
-    EstablishmentDt: any;
-    IsAffiliated: any;
-    Website: any;
-    PhnArea1: any;
-    Phn1: any;
-    PhnExt1: any;
-    PhnArea2: any;
-    Phn2: any;
-    PhnExt2: any;
-    Email1: any;
-    Email2: any;
+    AppCustCompanyId: number;
+    AppCustId: number;
+    CompanyBrandName: string;
+    MrCompanyTypeCode: string;
+    IndustryTypeCode: string;
+    IndustryTypeName: string;
+    RegistrationNo: string;
+    LicenseNo: string;
+    NumOfEmp: number;
+    MrInvestmentTypeCode: string;
+    EstablishmentDt: Date;
+    IsAffiliated: boolean;
+    Website: string;
+    PhnArea1: string;
+    Phn1: string;
+    PhnExt1: string;
+    PhnArea2: string;
+    Phn2: string;
+    PhnExt2: string;
+    Email1: string;
+    Email2: string;
 
 constructor() { 
         this.AppCustCompanyId = 0;
@@ -28,7 +29,7 @@ constructor() {
         this.IndustryTypeCode = "";
         this.RegistrationNo = "";
         this.LicenseNo = "";
-        this.NumOfEmp = "";
+        this.NumOfEmp = 0;
         this.MrInvestmentTypeCode = "";
         this.EstablishmentDt = new Date();
         this.IsAffiliated = false;

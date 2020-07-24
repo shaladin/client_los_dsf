@@ -2,12 +2,12 @@ import { environment } from "environments/environment";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
-
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
   selector: "app-inquiry-paging",
   templateUrl: "./app-inquiry-paging.component.html"
@@ -15,8 +15,15 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   link: string;
-
-  constructor(private router: Router, private http: HttpClient) { }
+  BizTemplateCode: string;
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
+  }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -43,6 +50,13 @@ export class AppInquiryPagingComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
+    this.inputPagingObj.addCritInput = new Array();
+
+    var critLobObj = new CriteriaObj();
+    critLobObj.restriction = AdInsConstant.RestrictionEq;
+    critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
+    critLobObj.value = this.BizTemplateCode;
+    this.inputPagingObj.addCritInput.push(critLobObj);
   }
 
   getEvent(event) {

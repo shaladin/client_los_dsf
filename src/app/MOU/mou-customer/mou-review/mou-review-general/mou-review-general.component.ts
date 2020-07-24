@@ -34,6 +34,7 @@ export class MouReviewGeneralComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   mouCustObject: MouCustObj = new MouCustObj();
   listReason: any;
+  ScoreResult: number;
 
   MouReviewDataForm = this.fb.group({
     ListApprover: [''],
@@ -115,6 +116,12 @@ export class MouReviewGeneralComponent implements OnInit {
         });
       }
     );
+
+    this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+      (response) => {
+        this.ScoreResult = response["ScoreResult"];
+      }
+    );
   }
 
   async claimTask() {
@@ -122,7 +129,7 @@ export class MouReviewGeneralComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
+      (response) => {
       });
   }
 
