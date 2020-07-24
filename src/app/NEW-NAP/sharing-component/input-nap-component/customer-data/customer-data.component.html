@@ -19,7 +19,7 @@
       #enjiForm="ngForm">
       <div class="form-body">
         <div *ngIf="isBindDataDone == true">
-          <app-cust-personal-main-data (callbackCopyCust)="CopyCustomer($event)" [appId]="appId"
+          <app-cust-personal-main-data (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)" (isMarried)="MaritalChanged($event)" [appId]="appId" [IsSpouseExist]="IsSpouseExist"
             [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
             [identifier]="'personalMainData'"></app-cust-personal-main-data>
           <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
@@ -78,10 +78,10 @@
               [showPhn3]="false"></lib-ucaddress>
           </div>
           <app-cust-personal-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)"
-            (callbackSubmit)="getCustContactInformation($event)"
+            (callbackSubmit)="getCustContactInformation($event)" [isMarried]="isMarried" [spouseGender]="spouseGender"
             [listContactPersonPersonal]="listAppCustPersonalContactInformation"></app-cust-personal-contact-information>
           <app-cust-personal-financial-data [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj"
-            [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'">
+            [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'" [isMarried]="isMarried">
           </app-cust-personal-financial-data>
           <app-cust-bank-account (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="listAppCustBankAcc">
           </app-cust-bank-account>

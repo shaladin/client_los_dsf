@@ -76,6 +76,12 @@
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'PERSONAL'">
               <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="custName" translate>Name</label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustShareholderForm" [identifier]="'lookupCustomerShareholder'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
@@ -93,7 +99,7 @@
                 <label class="col-md-2" for="idType" translate>Id Type</label>
                 <div class="col-md-4">
                   <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change)=clearExpDt()
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrIdTypeCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -103,12 +109,12 @@
                 <label class="col-md-2 adins-required-label" translate>Birth Place / Date</label>
                 <div class="col-md-2" style="border-right: 1px solid grey">
                   <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthPlace.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthPlace.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
                   <input type="date" class="form-control" formControlName="BirthDt" id="birthDt" max="{{Max17YO | date:'yyyy-MM-dd'}}"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthDt.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthDt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.BirthDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -116,13 +122,13 @@
                 <label class="col-md-2" for="idNo" translate>Id No</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="IdNo" id="idNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.IdNo.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.IdNo.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="taxIdNo" translate>NPWP</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="TaxIdNo" id="taxIdNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.TaxIdNo.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.TaxIdNo.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.TaxIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -135,7 +141,7 @@
                 <label class="col-md-2" for="mobilePhone" translate>Mobile Phone</label>
                 <div class="col-md-4">
                   <input type="number" class="form-control" id="mobilePhone" formControlName="MobilePhnNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MobilePhnNo.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MobilePhnNo.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.MobilePhnNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -143,13 +149,13 @@
                 <label class="col-md-2" for="email" translate>Email</label>
                 <div class="col-md-4">
                   <input type="text" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email" formControlName="Email"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.Email.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.Email.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.Email" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="sharePrcnt" translate>Share (%)</label>
                 <div class="col-md-4">
                   <input type="text" currencyMask class="form-control" id="sharePrcnt" formControlName="SharePrcnt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.SharePrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -157,7 +163,7 @@
                 <label class="col-md-2" for="jobPosition" translate>Job Position</label>
                 <div class="col-md-4">
                   <select class="form-control" id="jobPosition" formControlName="MrJobPositionCode" (change)="JobPositionChanged($event)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrJobPositionCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrJobPositionCode.invalid }">
                     <option *ngFor="let item of JobPositionObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -171,6 +177,12 @@
               </div>
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'COMPANY'">
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                </div>
+              </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="custName" translate>Name</label>
                 <div class="col-md-4">
@@ -186,7 +198,7 @@
                 <label class="col-md-2" for="companyType" translate>Company Type</label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" id="companyType" formControlName="MrCompanyTypeCode"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrCompanyTypeCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrCompanyTypeCode.invalid }">
                     <option *ngFor="let item of CompanyTypeObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -195,8 +207,8 @@
                 </div>
                 <label class="col-md-2 adins-required-label" for="establishmentDt" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" id="establishmentDt" class="form-control" formControlName="EstablishmentDt"  max="{{MaxDate | date:'yyyy-MM-dd'}}"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.EstablishmentDt.invalid}">
+                  <input type="date" id="establishmentDt" class="form-control" formControlName="EstablishmentDt" max="{{MaxDate | date:'yyyy-MM-dd'}}"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.EstablishmentDt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.EstablishmentDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -204,13 +216,13 @@
                 <label class="col-md-2" for="taxIdNo" translate>NPWP</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="TaxIdNo" id="taxIdNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.TaxIdNo.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.TaxIdNo.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.TaxIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" for="sharePrcnt" translate>Share (%)</label>
                 <div class="col-md-4">
                   <input type="text" currencyMask class="form-control" id="sharePrcnt" formControlName="SharePrcnt"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.SharePrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>

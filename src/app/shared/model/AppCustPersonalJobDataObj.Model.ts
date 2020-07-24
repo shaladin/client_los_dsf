@@ -1,20 +1,21 @@
 import { AppCustAddrObj } from "./AppCustAddrObj.Model";
 
 export class AppCustPersonalJobDataObj {
-    AppCustPersonalJobDataId: any;
-    AppCustPersonalId: any;
-    MrProfessionCode: any;
-    CompanyName: any;
-    MrJobPositionCode: any;
-    MrJobStatCode: any;
-    IsMfEmp: any;
-    IndustryTypeCode: any;
-    MrCompanyScaleCode: any;
-    EstablishmentDt: any;
-    MrJobTitleCode: any;
-    ProfessionalNo: any;
-    MrInvestmentTypeCode: any;
-    NumOfEmployee: any;
+    AppCustPersonalJobDataId: number;
+    AppCustPersonalId: number;
+    MrProfessionCode: string;
+    ProfessionName: string;
+    CompanyName: string;
+    MrJobPositionCode: string;
+    MrJobStatCode: string;
+    IsMfEmp: boolean;
+    IndustryTypeCode: string;
+    MrCompanyScaleCode: string;
+    EstablishmentDt: Date;
+    MrJobTitleCode: string;
+    ProfessionalNo: string;
+    MrInvestmentTypeCode: string;
+    NumOfEmployee: number;
     AppCustAddrJobObj: AppCustAddrObj;
 
 

@@ -29,11 +29,11 @@ export class ApplicationDataComponent implements OnInit {
   ListCrossAppObj: any = {};
   inputLookupObj;
   arrAddCrit;
-  salesRecommendationItems = [];
   isInputLookupObj: boolean = false;
   isFixedRate: boolean = false;
   PayFreqVal: number;
   PayFreqTimeOfYear: number;
+  FirstInstType : string;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -76,7 +76,6 @@ export class ApplicationDataComponent implements OnInit {
     CreditAnalystNo: [''],
     CreditRiskNo: [''],
     DataEntryNo: [''],
-    MrSalesRecommendCode: ["", Validators.required],
     MrCustNotifyOptCode: ["", Validators.required],
     PreviousAppId: [''],
     IsAppInitDone: [''],
@@ -99,7 +98,6 @@ export class ApplicationDataComponent implements OnInit {
   ngOnInit() {
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
-
     this.getAppModelInfo();
 
     this.applicationDDLitems = [];
@@ -130,6 +128,12 @@ export class ApplicationDataComponent implements OnInit {
         var listDDL = response["DDLRefProdComptCode"];
         // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
+        if(refProdCompntCode == CommonConstant.RefProdCompFirstInstType){
+          this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
+          this.NapAppModelForm.patchValue({
+            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -231,7 +235,6 @@ export class ApplicationDataComponent implements OnInit {
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
           DataEntryNo: this.resultResponse.DataEntryNo,
-          MrSalesRecommendCode: this.resultResponse.MrSalesRecommendCode,
           MrCustNotifyOptCode: this.resultResponse.MrCustNotifyOptCode,
           PreviousAppId: this.resultResponse.PreviousAppId,
           IsAppInitDone: this.resultResponse.IsAppInitDone,
@@ -444,7 +447,6 @@ export class ApplicationDataComponent implements OnInit {
     temp.CreditAnalystNo = this.NapAppModelForm.controls.CreditAnalystNo.value;
     temp.CreditRiskNo = this.NapAppModelForm.controls.CreditRiskNo.value;
     temp.DataEntryNo = this.NapAppModelForm.controls.DataEntryNo.value;
-    temp.MrSalesRecommendCode = this.NapAppModelForm.controls.MrSalesRecommendCode.value;
     temp.MrCustNotifyOptCode = this.NapAppModelForm.controls.MrCustNotifyOptCode.value;
     temp.PreviousAppId = this.NapAppModelForm.controls.PreviousAppId.value;
     temp.IsAppInitDone = this.NapAppModelForm.controls.IsAppInitDone.value;

@@ -9,5 +9,8 @@ export class AppCommissionDObj{
     CommissionAmtAfterTax: number;
     RowVersion: string;
     
-    constructor(){}
+    constructor(){
+        this.AppCommissionDId = 0;
+        this.AppCommissionHId = 0;
+    }
 }
