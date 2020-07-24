@@ -214,7 +214,7 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   next(){
-    if(this.gridAppCollateralObj.resultData.Data.length < 1)
+    if(this.gridAssetDataObj.resultData.Data.length < 1)
     {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;

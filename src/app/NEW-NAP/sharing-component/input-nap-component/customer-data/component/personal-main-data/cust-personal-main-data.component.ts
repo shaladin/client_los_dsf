@@ -208,7 +208,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   bindCustData(){
-    if(this.custDataPersonalObj.AppCustObj != undefined){
+    if(this.custDataPersonalObj.AppCustObj.AppCustId != 0){
       console.log(this.custDataPersonalObj.AppCustObj);
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.AppCustObj.MrIdTypeCode,
@@ -226,7 +226,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.clearExpDt();
     }
     
-    if(this.custDataPersonalObj.AppCustPersonalObj != undefined){
+    if(this.custDataPersonalObj.AppCustPersonalObj.AppCustId != 0){
       console.log(this.custDataPersonalObj.AppCustPersonalObj);
       this.parentForm.controls[this.identifier].patchValue({
         CustFullName: this.custDataPersonalObj.AppCustPersonalObj.CustFullName,
@@ -316,13 +316,14 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   async bindIdTypeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
       (response) => {
-        this.IdTypeObj = response[CommonConstant.ReturnObj];
+        this.IdTypeObj = response["RefMasterObjs"];
         console.log(this.IdTypeObj);
         if(this.IdTypeObj.length > 0){
+          var idxDefault = this.IdTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
           this.parentForm.controls[this.identifier].patchValue({
-            MrIdTypeCode: this.IdTypeObj[0].Key
+            MrIdTypeCode: this.IdTypeObj[idxDefault].MasterCode
           });
         }
         this.clearExpDt();
@@ -361,15 +362,18 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   async bindNationalityObj(){
     // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
-    await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeNationality;
+    // var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.NationalityObj = response[CommonConstant.ReturnObj];
+        this.NationalityObj = response["RefMasterObjs"];
         if(this.NationalityObj.length > 0){
+          var idxDefault = this.NationalityObj.findIndex(x => x.ReserveField3 == CommonConstant.DEFAULT);
           this.parentForm.controls[this.identifier].patchValue({
-            MrNationalityCode: this.NationalityObj[0].MasterCode
+            MrNationalityCode: this.NationalityObj[idxDefault].MasterCode
           });
+          this.ChangeNationality(this.NationalityObj[idxDefault].MasterCode);
         }
       }
     );

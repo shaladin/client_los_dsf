@@ -791,7 +791,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        // console.log(response);
+        console.log(response);
         if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
@@ -809,7 +809,7 @@ export class CustomerDataComponent implements OnInit {
             this.custDataPersonalObj.AppCustSocmedObjs = response["AppCustSocmedObjs"];
             this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
 
-            if (this.custDataPersonalObj.AppCustObj != undefined) {
+            if (this.custDataPersonalObj.AppCustObj.AppCustId != 0) {
               this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
             }
 

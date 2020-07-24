@@ -29,11 +29,11 @@ export class ApplicationDataComponent implements OnInit {
   ListCrossAppObj: any = {};
   inputLookupObj;
   arrAddCrit;
-  salesRecommendationItems = [];
   isInputLookupObj: boolean = false;
   isFixedRate: boolean = false;
   PayFreqVal: number;
   PayFreqTimeOfYear: number;
+  FirstInstType : string;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -99,7 +99,6 @@ export class ApplicationDataComponent implements OnInit {
   ngOnInit() {
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
-
     this.getAppModelInfo();
 
     this.applicationDDLitems = [];
@@ -130,6 +129,9 @@ export class ApplicationDataComponent implements OnInit {
         var listDDL = response["DDLRefProdComptCode"];
         // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
+        if(refProdCompntCode == CommonConstant.RefProdCompFirstInstType){
+          this.FirstInstType =this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
+        }
       },
       (error) => {
         console.log(error);
