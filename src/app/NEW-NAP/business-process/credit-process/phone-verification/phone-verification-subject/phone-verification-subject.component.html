@@ -26,6 +26,7 @@
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
+                  <th class="text-left">No</th>
                   <th class="text-left">Subject</th>
                   <th class="text-left">Name</th>
                   <th class="text-left">Phone</th>
@@ -39,7 +40,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of phoneVerifObj">
+                <tr *ngFor="let item of phoneVerifObj; let i = index;">
+                  <td class="text-left">{{i+1}}</td>
                   <td class="text-left">{{item.Subject}}</td>
                   <td class="text-left">{{item.SubjectName}}</td>
                   <td class="text-left">{{item.PhoneNumber}}</td>
@@ -85,16 +87,16 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-md-4  adInsLabel" translate>Success for Verified</label>
+                  <label class="col-md-4  adInsLabel" translate>New</label>
+                  <label class="col-md-8  adInsLabel" translate>{{blankCount}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4  adInsLabel" translate>Verified</label>
                   <label class="col-md-8  adInsLabel" translate>{{scsCount}}</label>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4  adInsLabel" translate>Fail for Verified</label>
+                  <label class="col-md-4  adInsLabel" translate>Failed</label>
                   <label class="col-md-8  adInsLabel" translate>{{failCount}}</label>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4  adInsLabel" translate>Not Verified Yet</label>
-                  <label class="col-md-8  adInsLabel" translate>{{blankCount}}</label>
                 </div>
               </div>
             </div>
