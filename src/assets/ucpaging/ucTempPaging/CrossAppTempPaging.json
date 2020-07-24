@@ -5,6 +5,14 @@
     "component": [
         {
             "type": "textbox",
+            "name": "ap.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Application No"
+        },
+        {
+            "type": "textbox",
             "name": "ag.AGRMNT_NO",
             "id": "AgrmntNoId",
             "value": "",
@@ -32,6 +40,12 @@
         {
             "type": "sort",
             "position": "left",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
             "label": "AGREEMENT NO",
             "name": "AgrmntNo"
         },
@@ -40,15 +54,14 @@
             "position": "left",
             "label": "CUSTOMER NAME",
             "name": "CustName"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "APPLICATION NO",
-            "name": "AppNo"
         }
     ],
     "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AppNo"
+        },
         {
             "type": "text",
             "position": "left",
@@ -58,11 +71,6 @@
             "type": "text",
             "position": "left",
             "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "AppNo"
         }
     ]
 }
