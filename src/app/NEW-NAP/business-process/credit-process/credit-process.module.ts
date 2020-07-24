@@ -46,6 +46,9 @@ import { NewCreditInvestigationComponent } from './new-credit-investigation/new-
 import { NewCreditInvestigationDetailComponent } from './new-credit-investigation/new-credit-investigation-detail/new-credit-investigation-detail.component';
 import { CommissionV2Component } from './commission-reserved-fund/component/commission-v2/commission-v2.component';
 import { FormCommissionGenerateComponent } from './commission-reserved-fund/component/commission-v2/form-commission-generate/form-commission-generate.component';
+import { CreditReviewCfnaComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna.component';
+import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
+
 
 
 export const customCurrencyMaskConfig = {
@@ -117,7 +120,9 @@ export const customCurrencyMaskConfig = {
     NewCreditInvestigationComponent,
     NewCreditInvestigationDetailComponent,
     CommissionV2Component,
-    FormCommissionGenerateComponent
+    FormCommissionGenerateComponent,
+    CreditReviewCfnaComponent,
+    CreditReviewCfnaPagingComponent
   ],
   providers: [
     NGXToastrService

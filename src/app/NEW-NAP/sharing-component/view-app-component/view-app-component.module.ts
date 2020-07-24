@@ -75,7 +75,9 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
     ViewAppScoreGradeDsrComponent,
-    ViewAppScoreGradeDukcapilComponent
+    ViewAppScoreGradeDukcapilComponent,
+    FraudDetectionResultComponent,
+    NewApplicationDataComponent
   ],
   imports: [
     CommonModule,
