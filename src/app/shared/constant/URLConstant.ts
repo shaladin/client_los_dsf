@@ -722,7 +722,7 @@ export class URLConstant {
     public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
     public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
     public static DeleteAppAsset = environment.losUrl + "/AppAsset/DeleteAppAsset";
-
+    public static GenerateAppAssetAttr = environment.losUrl + "/AppAsset/GenerateAppAssetAttr";
     //Asset Doc List
     public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
     public static GetListAppCollateralForDOView = environment.losUrl + "/AppCollateralDoc/GetListAppCollateralForDOView";
