@@ -28,6 +28,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
+  @Input() isMarried: boolean = true;
+  @Input() spouseGender: string = "";
 
   mode: any;
   currentEditedIndex: any;
@@ -87,7 +89,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
     IsFamily: [false],
     Email: ['', Validators.maxLength(100)],
-    CopyFromContactPerson: ['']
+    CopyFromContactPerson: [''],
+    IsGuarantor:[false]
   });
 
 
@@ -172,14 +175,15 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MobilePhnNo1: this.listContactPersonPersonal[i].MobilePhnNo1,
       MobilePhnNo2: this.listContactPersonPersonal[i].MobilePhnNo2,
       Email: this.listContactPersonPersonal[i].Email,
-      IsFamily: this.listContactPersonPersonal[i].IsFamily
+      IsFamily: this.listContactPersonPersonal[i].IsFamily,
+      IsGuarantor: this.listContactPersonPersonal[i].IsGuarantor
     });
 
     this.setCustRelationShip(this.listContactPersonPersonal[i].MrCustRelationshipCode);
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
-
+    this.CheckSpouse();
     this.open(content);
   }
 
@@ -212,7 +216,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
       Email: ['', Validators.maxLength(100)],
-      CopyFromContactPerson: ['']
+      CopyFromContactPerson: [''],
+      IsGuarantor: [false]
     });
 
     this.copyFromContactPerson = "";
@@ -222,6 +227,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
     this.initLookup();
     this.initContactPersonAddrObj();
+    this.CheckSpouse();
   }
 
   setAppCustPersonalContactPerson(){
@@ -247,6 +253,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.appCustPersonalContactPersonObj.City = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].City.value;
     this.appCustPersonalContactPersonObj.GenderName = this.selectedGenderName;
     this.appCustPersonalContactPersonObj.RelationshipName = this.selectedRelationshipName;
+    this.appCustPersonalContactPersonObj.IsGuarantor = this.ContactInfoPersonalForm.controls.IsGuarantor.value;
   }
 
   GetProfession(event){
@@ -259,14 +266,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   RelationshipChanged(event){
     this.selectedRelationshipName = event.target.options[event.target.options.selectedIndex].text;
-    if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == 'SPOUSE') {
-      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
-      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
-    }
-    else {
-      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
-      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
-    }
+    this.CheckSpouse();
   }
 
   copyFromChanged(){
@@ -403,6 +403,31 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-
+  CheckSpouse() {
+    if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == CommonConstant.MasteCodeRelationshipSpouse) {
+      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+      if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: CommonConstant.MasteCodeGenderMale
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+      }
+      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: CommonConstant.MasterCodeGenderFemale
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+      }
+      else {
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+      }
+    }
+    else {
+      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+      this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+    }
+  }
 
 }

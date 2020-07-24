@@ -16,8 +16,8 @@
           <div class="col-md-4">
             <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change) = "clearExpDt()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrIdTypeCode.invalid }">      
-              <option *ngFor="let item of IdTypeObj" [value]="item.Key">
-                {{item.Value}}
+              <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
+                {{item.Descr}}
               </option>
             </select>
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -121,7 +121,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="gender" translate>Gender</label>
           <div class="col-md-4">
-            <select class="form-control adInsInput" id="gender" formControlName="MrGenderCode">
+            <select class="form-control adInsInput" id="gender" formControlName="MrGenderCode" (change)="ChangeGender()">
               <option *ngFor="let item of GenderObj" [value]="item.Key">
                 {{item.Value}}
               </option>
@@ -139,7 +139,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="maritalStatus" translate>Marital Status</label>
           <div class="col-md-4">
-            <select class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode">
+            <select class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode" (change)="ChangeMaritalStats()"> 
               <option value="">-Select One-</option>
               <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
                 {{item.Value}}

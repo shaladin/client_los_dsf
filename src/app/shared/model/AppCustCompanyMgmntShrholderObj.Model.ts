@@ -23,7 +23,7 @@ export class AppCustCompanyMgmntShrholderObj {
     MrCustTypeCode: any;
     CustTypeName: any;
     CustNo: any;
-
+  IsGuarantor: boolean;
 
 constructor() { 
         this.AppCustCompanyId = 0;
@@ -44,6 +44,7 @@ constructor() {
         this.IndustryTypeCode = "";
         this.MrCompanyTypeCode = "";
         this.MrCustTypeCode = "";
-        this.CustNo = "";
+  this.CustNo = "";
+  this.IsGuarantor = false;
     }
 }
