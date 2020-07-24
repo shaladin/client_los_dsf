@@ -60,7 +60,8 @@ import { TabAppDataComponent } from './tab-application-data/tab-app-data.compone
     AppAssetDataDetailComponent,
     ApprovalHistComponent,
     ApprovalhistDevComponent,
-    TabAppDataComponent
+    TabAppDataComponent,
+    FraudVerificationComponent
   ],
   imports: [
     CommonModule,
