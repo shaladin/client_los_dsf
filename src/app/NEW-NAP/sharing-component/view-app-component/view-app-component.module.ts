@@ -33,6 +33,8 @@ import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset
 import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approvalhist-dev/approvalhist-dev.component';
 import { FraudVerificationComponent } from './fraud-verification/fraud-verification.component';
 import { TabAppDataComponent } from './tab-application-data/tab-app-data.component';
+import { NewApplicationDataComponent } from "./application-data/new-application-data.component";
+import { FraudDetectionResultComponent } from './fraud-detection-result/fraud-detection-result.component';
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.component";
@@ -111,6 +113,8 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
     ApprovalhistDevComponent,
     FraudVerificationComponent,
     TabAppDataComponent,
+    NewApplicationDataComponent,
+    FraudDetectionResultComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewSummaryAppComponent,
