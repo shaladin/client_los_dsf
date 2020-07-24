@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -12,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
+import { SubsidyComponent } from './component/subsidy/subsidy.component';
 
 
 @Component({
@@ -24,6 +25,9 @@ export class FinancialDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild(SubsidyComponent) subsidyComponent;
+
+
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -34,6 +38,7 @@ export class FinancialDataComponent implements OnInit {
   responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
+
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
 
 
@@ -223,15 +228,50 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
         this.FinDataForm.get("CalcBase").disable();
       }else{
-        if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
-          this.FinDataForm.get("RateType").enable();
-        }
-        this.FinDataForm.get("EffectiveRatePrcnt").enable();
-        this.FinDataForm.get("InstAmt").enable();
-        this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
+        this.SetInputByCalcBase(this.FinDataForm.getRawValue().CalcBase);
         this.FinDataForm.get("CalcBase").enable();
       }
     }  
+  }
+
+  SetInputByCalcBase(calcBase){
+    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
+      this.FinDataForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+
+      if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
+        this.FinDataForm.get("RateType").enable();
+      }      
+      this.FinDataForm.get("EffectiveRatePrcnt").enable();
+      this.FinDataForm.get("InstAmt").disable();
+      this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
+      this.FinDataForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+      
+      this.FinDataForm.get("RateType").disable();
+      this.FinDataForm.get("EffectiveRatePrcnt").disable();
+      this.FinDataForm.get("InstAmt").enable();
+      this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+      this.FinDataForm.get("RateType").disable();
+      this.FinDataForm.get("EffectiveRatePrcnt").disable();
+      this.FinDataForm.get("InstAmt").disable();
+      this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
+    }else{
+      if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
+        this.FinDataForm.get("RateType").enable();
+      }      
+      this.FinDataForm.get("EffectiveRatePrcnt").enable();
+      this.FinDataForm.get("InstAmt").enable();
+      this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
+    }
+  }
+
+  RefreshSubsidy(event){
+    this.subsidyComponent.LoadSubsidyData();
   }
 
   SetDiffRateAmt(){

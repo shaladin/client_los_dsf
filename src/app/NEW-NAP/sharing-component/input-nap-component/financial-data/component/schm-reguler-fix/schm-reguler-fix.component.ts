@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -20,6 +20,8 @@ export class SchmRegulerFixComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Output() RefreshSubsidy = new EventEmitter();
+
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -124,6 +126,10 @@ export class SchmRegulerFixComponent implements OnInit {
         this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
+
+        if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnCommission){
+          this.RefreshSubsidy.emit();
+        }
       }
     );
   }
@@ -172,8 +178,6 @@ export class SchmRegulerFixComponent implements OnInit {
         CommissionAmtFromDiffRate: 0
       });
       this.ParentForm.get('CommissionAmtFromDiffRate').disable();
-    }else{
-      this.ParentForm.get('CommissionAmtFromDiffRate').enable();
     }
   }
 

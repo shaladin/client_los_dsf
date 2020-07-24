@@ -316,7 +316,8 @@
               <label>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="CalcBase" class="form-control full-width">
+              <select formControlName="CalcBase" class="form-control full-width"
+              (change)="CalcBaseChanged($event)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -12,6 +12,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-subsidy',
   templateUrl: './subsidy.component.html',
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class SubsidyComponent implements OnInit {
   @Input() AppId: number;
@@ -28,6 +29,7 @@ export class SubsidyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("on init");
     this.LoadSubsidyData();
   }
 

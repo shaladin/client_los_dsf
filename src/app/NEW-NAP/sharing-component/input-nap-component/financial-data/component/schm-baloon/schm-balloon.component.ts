@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -20,6 +20,8 @@ export class SchmBalloonComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Output() RefreshSubsidy = new EventEmitter();
+
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -79,11 +81,11 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   Calculate() {
-    if(this.ParentForm.value.CalcBase == ''){
+    if(this.ParentForm.getRawValue().CalcBase == ''){
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
     }
-    if(this.ParentForm.value.CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0){
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0){
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
@@ -94,7 +96,7 @@ export class SchmBalloonComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
       return;
     }
-    this.calcBalloonObj = this.ParentForm.value;
+    this.calcBalloonObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
@@ -129,6 +131,10 @@ export class SchmBalloonComponent implements OnInit {
         this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
+
+        if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnCommission){
+          this.RefreshSubsidy.emit();
+        }
       }
     );
   }
@@ -177,8 +183,6 @@ export class SchmBalloonComponent implements OnInit {
         CommissionAmtFromDiffRate: 0
       });
       this.ParentForm.get('CommissionAmtFromDiffRate').disable();
-    }else{
-      this.ParentForm.get('CommissionAmtFromDiffRate').enable();
     }
   }
 
@@ -192,9 +196,34 @@ export class SchmBalloonComponent implements OnInit {
       this.ParentForm.patchValue({
         SubsidyAmtFromDiffRate: 0
       });
-      this.ParentForm.get('SubsidyAmtFromDiffRate').disable();
+    }
+  }
+
+  CalcBaseChanged(event){
+    if(event.target.value == CommonConstant.FinDataCalcBaseOnRate){
+      this.ParentForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+      this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnInst){
+      this.ParentForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+      
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+      this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnCommission){
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+      this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }else{
-      this.ParentForm.get('SubsidyAmtFromDiffRate').enable();
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+      this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }
   }
 
