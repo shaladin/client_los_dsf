@@ -1,11 +1,12 @@
 export class AppGuarantorObj {
-    AppGuarantorId: any;
-    AppId: any;
-    GuarantorName: any;
-    MrGuarantorTypeCode: any;
-    TaxIdNo: any;
-    MrCustRelationshipCode: any;
-    RowVersion: any;
-    CustNo :any;
+    AppGuarantorId: number;
+    AppId: number;
+    GuarantorName: string;
+    MrGuarantorTypeCode: string;
+    TaxIdNo: string;
+    MrCustRelationshipCode: string;
+    CustRelationshipCodeDesc: string;
+    RowVersion: string;
+    CustNo: string;
   constructor() { this.AppGuarantorId = 0; this.RowVersion = "" }
 }

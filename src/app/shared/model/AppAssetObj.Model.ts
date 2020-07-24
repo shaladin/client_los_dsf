@@ -6,7 +6,9 @@ export class AppAssetObj {
   FullAssetCode: string;
   FullAssetName: string;
   MrAssetConditionCode: string;
+  MrAssetConditionCodeDesc: string;
   MrAssetUsageCode: string;
+  MrAssetUsageCodeDesc: string;
   AssetStat: string;
   SerialNo1: string;
   SerialNo2: string;
@@ -15,6 +17,7 @@ export class AppAssetObj {
   SerialNo5: string;
   AssetPriceAmt: number;
   DownPaymentAmt: number;
+  DownPaymentPrcnt: number;
   AssetTypeCode: string;
   AssetCategoryCode: string;
   AssetTaxDt: Date;
@@ -35,6 +38,7 @@ export class AppAssetObj {
   RsvField3: string;
   RsvField4: string;
   RsvField5: string;
+  InsAssetCoveredByDesc: string;
   RowVersion: string;
 
   constructor() {

@@ -421,17 +421,19 @@ export class CommonConstant {
     public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
     public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE"; 
     public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
-    
     public static RefMasterReservedField2NonFee = "NON_FEE";
     public static RefMasterReservedField2Fee = "FEE";
-
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";
     
-
     //RATE TYPE
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
+
+    //SCORE TYPE
+    public static ScoreTypeScoring = "SCORING";
+    public static ScoreTypeDsr = "DSR";
+    public static ScoreTypeDukcapil = "DUKCAPIL";
 
     //Gender Type
     public static MasterCodeGenderFemale = "FEMALE";

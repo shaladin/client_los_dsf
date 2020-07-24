@@ -16,8 +16,6 @@ import { PhoneVerificationSubjectVerifComponent } from "./phone-verification/pho
 import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
 import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
 import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
-import { ViewFraudDetectionResultComponent } from "./credit-investigation/component/view-fraud-detection-result/view-fraud-detection-result.component";
-import { ViewSurveyTaskListComponent } from "./credit-investigation/component/view-survey-task-list/view-survey-task-list.component";
 import { CustHistoryComponent } from "./credit-investigation/component/cust-history/cust-history.component";
 import { ViewApprovalComponent } from "./credit-investigation/component/cust-history/view-approval/view-approval.component";
 import { FormAddDynamicComponent } from "./commission-reserved-fund/component/commission/form-add-dynamic/form-add-dynamic.component";
@@ -62,7 +60,6 @@ export const customCurrencyMaskConfig = {
 
 @NgModule({
   exports: [
-    ViewFraudDetectionResultComponent,
     ViewAppFraudVerificationComponent
   ],
   imports: [
@@ -108,8 +105,6 @@ export const customCurrencyMaskConfig = {
     FraudDetectionVerifComponent,
     CreditReviewMainComponent,
     CreditReviewPagingComponent,
-    ViewFraudDetectionResultComponent,
-    ViewSurveyTaskListComponent,
     ViewApprovalComponent,
     CreditReviewMainComponent,
     CreditInquiryComponent, 

@@ -8,7 +8,9 @@ export class AppCollateralObj {
   FullAssetCode: string;
   FullAssetName: string;
   MrCollateralConditionCode: string;
+  CollateralConditionName: string;
   MrCollateralUsageCode: string;
+  CollateralUsageName: string;
   CollateralStat: string;
   SerialNo1: string;
   SerialNo2: string;
@@ -32,6 +34,7 @@ export class AppCollateralObj {
   RsvField3: string;
   RsvField4: string;
   RsvField5: string;
+  InsAssetCoveredByDesc: string;
 
   constructor() {
     this.AppCollateralId = 0;
