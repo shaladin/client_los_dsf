@@ -317,6 +317,7 @@ export class CommonConstant {
     public static TaxTypeCode = "WHT";
     public static VATTypeCode = "VAT";
     public static TrxTypeCode = "APP_COM";
+    public static TrxTypeCodeAppCom = "APP_COM";
     public static LabelSupplier = "Supplier";
     public static LabelSupplierEmp = "Supplier Employee";
     public static LabelReferantor = "Referantor";
@@ -326,6 +327,9 @@ export class CommonConstant {
     public static CommissionReceipientTypeCodeSupplier = "SUPPLIER";
     public static CommissionReceipientTypeCodeSupplierEmp = "SUPPLIER_EMP";
     public static CommissionReceipientTypeCodeReferantor = "REFERANTOR";
+    public static CommissionIdentifierSupplier = "SupplierIdentifier";
+    public static CommissionIdentifierSupplierEmp = "SupplierEmpIdentifier";
+    public static CommissionIdentifierReferantor = "SupplierReferantor";
     public static MessageCalculate = "CALC";
     public static MessagePassData = "PASS";
     public static MessageDel = "DEL";
@@ -426,4 +430,6 @@ export class CommonConstant {
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
     
+    // Rule Behaviour
+    public static RuleBehaviourLock = "LOCK";
 }

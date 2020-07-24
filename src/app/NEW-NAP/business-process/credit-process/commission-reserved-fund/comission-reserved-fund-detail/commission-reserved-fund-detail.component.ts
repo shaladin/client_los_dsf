@@ -91,6 +91,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   TotalHalfListResultRefundIncomeInfo: number = 0;
   DictMaxIncomeForm: any = {};
+  isView: boolean = false;
   GetIncomeInfoObj() {
     var obj = {
       AppId: this.ReturnHandlingHObj.AppId
@@ -108,7 +109,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
           if(this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
         }
         // console.log(this.DictMaxIncomeForm);
-        
+        this.isView = true;
         if (totalListResultRefundIncomeInfoAmount < response.MaxAllocatedRefundAmt)
           this.viewIncomeInfoObj.MaxAllocatedAmount = totalListResultRefundIncomeInfoAmount;
         else
