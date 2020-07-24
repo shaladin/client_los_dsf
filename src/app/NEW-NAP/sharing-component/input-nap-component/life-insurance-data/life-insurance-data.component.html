@@ -19,7 +19,7 @@
                   <div class="class=form-group row adins-required">
                     <label class="col-md-6 adInsLabel">Life Insco Branch Name </label>
                     <div class="col-md-6">
-                      <select class="form-control adInsInput" formControlName="LifeInscoBranchName" style="width:50%" (change)="calculateAdminFee($event)">
+                      <select class="form-control adInsInput" formControlName="LifeInscoBranchName" style="width:50%" (change)="InscoBranchChanged($event)">
                         <option value="">-Select One-</option>
                         <option *ngFor="let it of LifeInscoBranchName" [value]="it.VendorCode">
                           {{it.VendorName}}

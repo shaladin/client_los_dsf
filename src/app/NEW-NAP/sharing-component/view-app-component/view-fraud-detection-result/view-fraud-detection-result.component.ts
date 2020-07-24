@@ -96,40 +96,37 @@ export class ViewFraudDetectionResultComponent implements OnInit {
         var fraudDukcapilReqObj = { "IdNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
-        if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-          this.requestDupCheck = {
-            "CustName": this.appCustObj.CustName,
-            "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
-            "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
-            "IdNo": this.appCustObj.IdNo,
-            "TaxIdNo": this.appCustObj.TaxIdNo,
-            "BirthDt": this.appCustPersonalObj.BirthDt,
-            "MotherMaidenName": this.appCustPersonalObj.MotherMaidenName,
-            "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
-            "RowVersion": this.RowVersion
-          };
-        } else if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-          this.requestDupCheck = {
-            "CustName": this.appCustObj.CustName,
-            "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
-            "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
-            "IdNo": this.appCustObj.IdNo,
-            "TaxIdNo": this.appCustObj.TaxIdNo,
-            "BirthDt": this.appCustCompanyObj.EstablishmentDt,
-            "MotherMaidenName": "-",
-            "MobilePhnNo1": "-",
-            "RowVersion": this.RowVersion
-          };
-        }
-        this.getNegativeCustomer(this.requestDupCheck);
-        if(this.appCustObj.IsExistingCust == false){
-          this.getAppDupCheckCust(this.requestDupCheck);
-        }
-      },
-      () => {
-        console.log("error")
+        // if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+        //   this.requestDupCheck = {
+        //     "CustName": this.appCustObj.CustName,
+        //     "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
+        //     "MrCustModelCode": this.appCustObj.CustModelCode,
+        //     "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
+        //     "IdNo": this.appCustObj.IdNo,
+        //     "TaxIdNo": this.appCustObj.TaxIdNo,
+        //     "BirthDt": this.appCustPersonalObj.BirthDt,
+        //     "MotherMaidenName": this.appCustPersonalObj.MotherMaidenName,
+        //     "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
+        //     "RowVersion": this.RowVersion
+        //   };
+        // } else if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+        //   this.requestDupCheck = {
+        //     "CustName": this.appCustObj.CustName,
+        //     "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
+        //     "MrCustModelCode": this.appCustObj.CustModelCode,
+        //     "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
+        //     "IdNo": this.appCustObj.IdNo,
+        //     "TaxIdNo": this.appCustObj.TaxIdNo,
+        //     "BirthDt": this.appCustCompanyObj.EstablishmentDt,
+        //     "MotherMaidenName": "-",
+        //     "MobilePhnNo1": "-",
+        //     "RowVersion": this.RowVersion
+        //   };
+        // }
+        // this.getNegativeCustomer(this.requestDupCheck);
+        // if(this.appCustObj.IsExistingCust == false){
+        //   this.getAppDupCheckCust(this.requestDupCheck);
+        // }
       }
     );
 

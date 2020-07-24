@@ -81,8 +81,8 @@
                   <span formArrayName="VerfQuestionAnswerList">
                     <div class= "row">
                       <label class="col-md-3"translate><h4 class="modal-title">Question</h4></label>
-                      <label class="col-md-5"translate><h4 class="modal-title">Answer</h4></label>
-                      <label class="col-md-4"translate><h4 class="modal-title">Notes</h4></label>
+                      <label class="col-md-4"translate><h4 class="modal-title">Answer</h4></label>
+                      <label class="col-md-5"translate><h4 class="modal-title">Notes</h4></label>
                     </div>
                     <div class="form-group row" [formGroupName]="j"
                          *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList.controls; let j = index">
@@ -90,7 +90,7 @@
                              translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
                       <label class="col-md-3 adInsLabel" *ngIf="PhoneDataForm.controls.MrVerfResultHStatCode.value != 'SCS'"
                              translate>{{QRList.value.QuestionGrp.VerfQuestionText}} </label>
-                      <div class="col-md-5" formGroupName="ResultGrp">
+                      <div class="col-md-4" formGroupName="ResultGrp">
                         <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
                           <select class="form-control" formControlName="Answer"
                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
@@ -125,7 +125,7 @@
                           </lib-uc-show-errors>
                         </span>
                       </div>
-                      <div class="col-md-4" formGroupName="ResultGrp">
+                      <div class="col-md-5" formGroupName="ResultGrp">
                         <textarea class="form-control" formControlName="Notes"></textarea>
                       </div>
                     </div>

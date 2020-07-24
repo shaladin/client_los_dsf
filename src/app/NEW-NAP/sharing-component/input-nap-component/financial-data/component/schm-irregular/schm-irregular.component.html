@@ -177,6 +177,12 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
+              <label>Standard Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.StdEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+            </div>
+            <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -186,7 +192,7 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.SupplEffectiveRatePrcnt"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -208,6 +214,12 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
+              <label>Diff Rate Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
+            </div>
+            <!-- <div class="col-md-3 form-inline">
               <label>Flat Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -217,7 +229,7 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.SupplFlatRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -235,12 +247,6 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>Diff Rate Amount</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>
