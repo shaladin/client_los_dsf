@@ -14,9 +14,10 @@
         <td>{{item.OfficeName}}</td>
         <td class="text-left">{{item.JobTitleName}}</td>
         <td>{{item.RoleName}}</td>
-        <td><a class="success p-0">
-          <button mat-button mat-dialog-close (click)="chooseRole(item)" class="ft-edit-2 font-medium-3 mr-2"></button>
-      </a></td>
+        <td><a class="success p-0" (click)="chooseRole(item)">
+  <!--<button mat-button mat-dialog-close (click)="chooseRole(item)" class="ft-edit-2 font-medium-3 mr-2"></button>-->
+  <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+</a></td>
       </tr>
     </tbody>
   </table>
