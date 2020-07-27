@@ -120,7 +120,7 @@ export class SchmRegulerFixComponent implements OnInit {
 
           SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
           CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-
+          SupplEffectiveRatePrcnt: response.SupplEffectiveRatePrcnt
         })
         this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
         this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
@@ -177,7 +177,6 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.patchValue({
         CommissionAmtFromDiffRate: 0
       });
-      this.ParentForm.get('CommissionAmtFromDiffRate').disable();
     }
   }
 
@@ -196,33 +195,21 @@ export class SchmRegulerFixComponent implements OnInit {
 
   CalcBaseChanged(event){
     if(event.target.value == CommonConstant.FinDataCalcBaseOnRate){
-      this.ParentForm.patchValue({
-        CommissionAmtFromDiffRate: 0
-      });
-
       this.ParentForm.get("RateType").enable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
-      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
     }else if(event.target.value == CommonConstant.FinDataCalcBaseOnInst){
-      this.ParentForm.patchValue({
-        CommissionAmtFromDiffRate: 0
-      });
-      
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
-      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
     }else if(event.target.value == CommonConstant.FinDataCalcBaseOnCommission){
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
-      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }else{
       this.ParentForm.get("RateType").enable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").enable();
-      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }
   }
 

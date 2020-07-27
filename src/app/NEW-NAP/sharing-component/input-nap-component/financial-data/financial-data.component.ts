@@ -220,53 +220,35 @@ export class FinancialDataComponent implements OnInit {
       if(subsidyRate != undefined){
         this.FinDataForm.patchValue({
           CommissionAmtFromDiffRate: 0,
-          CalcBase: CommonConstant.FinDataCalcBaseOnCommission
         });
-        this.FinDataForm.get("RateType").disable();
-        this.FinDataForm.get("EffectiveRatePrcnt").disable();
-        this.FinDataForm.get("InstAmt").disable();
         this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
-        this.FinDataForm.get("CalcBase").disable();
       }else{
-        this.SetInputByCalcBase(this.FinDataForm.getRawValue().CalcBase);
-        this.FinDataForm.get("CalcBase").enable();
+        this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
       }
     }  
   }
 
   SetInputByCalcBase(calcBase){
     if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
-      this.FinDataForm.patchValue({
-        CommissionAmtFromDiffRate: 0
-      });
-
       if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
         this.FinDataForm.get("RateType").enable();
       }      
       this.FinDataForm.get("EffectiveRatePrcnt").enable();
       this.FinDataForm.get("InstAmt").disable();
-      this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
-      this.FinDataForm.patchValue({
-        CommissionAmtFromDiffRate: 0
-      });
-      
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){      
       this.FinDataForm.get("RateType").disable();
       this.FinDataForm.get("EffectiveRatePrcnt").disable();
       this.FinDataForm.get("InstAmt").enable();
-      this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
     }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
       this.FinDataForm.get("RateType").disable();
       this.FinDataForm.get("EffectiveRatePrcnt").disable();
       this.FinDataForm.get("InstAmt").disable();
-      this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
     }else{
       if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
         this.FinDataForm.get("RateType").enable();
       }      
       this.FinDataForm.get("EffectiveRatePrcnt").enable();
       this.FinDataForm.get("InstAmt").enable();
-      this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
     }
   }
 
