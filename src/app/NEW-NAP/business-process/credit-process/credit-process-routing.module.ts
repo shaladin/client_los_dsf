@@ -20,6 +20,8 @@ import { NewCreditInvestigationDetailComponent } from './new-credit-investigatio
 import { NewCreditInvestigationComponent } from './new-credit-investigation/new-credit-investigation.component';
 import { CreditReviewCfnaComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna.component';
 import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
+import { CreditApprovalCfnaComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna.component';
+import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 
 
 const routes: Routes = [
@@ -134,6 +136,20 @@ const routes: Routes = [
       {
         path: 'CreditApproval/Detail',
         component: CreditApprovalDetailComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
+      },
+      {
+        path: 'CreditApprovalCfna/Paging',
+        component: CreditApprovalCfnaPagingComponent,
+        data: {
+          title: 'Credit Approval Paging'
+        }
+      },
+      {
+        path: 'CreditApprovalCfna/Detail',
+        component: CreditApprovalCfnaComponent,
         data: {
           title: 'Credit Approval Detail'
         }

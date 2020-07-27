@@ -31,7 +31,7 @@ export const ROUTES: RouteInfo[] = [
         { Path: '/Nap/AddProcess/CreditApprovalResultExt/Paging', Title: 'Credit Approval Result Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }] },
         { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }]},
         { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CF4W" }]},
-        { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
+        { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{attr: "BizTemplateCode", value: "CFNA"}] }
         ], Params: []
       },
       {
@@ -50,6 +50,7 @@ export const ROUTES: RouteInfo[] = [
   {
     Path: '', Title: 'CFNA', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
+      { Path: '/Inquiry/AppInquiry', Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       { Path: '/Nap/CFNA/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       { Path: '/Nap/Sharing/NapFromLead/Paging', Title: 'New Application from Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
       { Path: '/Nap/CreditProcess/CommissionReservedFund/Paging', Title: 'Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
@@ -58,37 +59,37 @@ export const ROUTES: RouteInfo[] = [
       // { Path: '/Nap/CreditProcess/FraudDetection/Paging', Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       // { Path: '/Nap/CreditProcess/CreditInvestigation/Paging', Title: 'Credit Investigation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
       { Path: '/Nap/CreditProcess/CreditReviewCfna/Paging', Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-      // { Path: '/Nap/CreditProcess/CreditApproval/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+      { Path: '/Nap/CreditProcess/CreditApprovalCfna/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       // { Path: '/Nap/AdminProcess/CustConfirmation/Paging', Title: 'Customer Confirmation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
       // { Path: '/Nap/AdminProcess/AgrmntActivation/Paging', Title: 'Agreement Activation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-      // { Path: '/Nap/AdminProcess/DocumentSigner/Paging', Title: 'Document Signer', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
+      { Path: '/Nap/AdminProcess/DocumentSigner/Paging', Title: 'Document Signer', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
       // { Path: '/Nap/AdminProcess/DocPrint/Paging', Title: 'Document Printing', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
       // { Path: '/Nap/AdminProcess/PurchaseOrder/Paging', Title: 'Purchase Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       // { Path: '/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging', Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       // { Path: '/Nap/AdminProcess/PreGoLive/Paging', Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
       // { Path: '/Nap/AdminProcess/PreGoLive/Approval/Paging', Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
       
-      // {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
-      // Submenu: [
-      //   { Path: '/Nap/AddProcess/OutstandingTC/Paging', Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-      //   { Path: '/Nap/AddProcess/CreditApprovalResultExt/Paging', Title: 'Credit Approval Result Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-      //   { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
-      //   { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
-      //   { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] }
+      {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+      Submenu: [
+        { Path: '/Nap/AddProcess/OutstandingTC/Paging', Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+        // { Path: '/Nap/AddProcess/CreditApprovalResultExt/Paging', Title: 'Credit Approval Result Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+        { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
+        // { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }]},
+        { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] }
       
-      //   ], Params: []
-      // },
-      {
-        Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
-        Submenu: [
-          { Path: '/Nap/AddProcess/ReturnHandling/Paging', Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-          { Path: '/Nap/AddProcess/ReturnHandling/EditAppPaging', Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-          { Path: '/Nap/AddProcess/ReturnHandlingPhoneVerif/Paging', Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-          // { Path: '/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-          { Path: '/Nap/AddProcess/ReturnHandling/Survey', Title: 'Return Handling - Survey', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
-          { Path: '/Nap/AddProcess/ReturnHandlingCollateral/Paging', Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] }
         ], Params: []
-      }
+      },
+      // {
+      //   Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+      //   Submenu: [
+      //     { Path: '/Nap/AddProcess/ReturnHandling/Paging', Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+      //     { Path: '/Nap/AddProcess/ReturnHandling/EditAppPaging', Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+      //     { Path: '/Nap/AddProcess/ReturnHandlingPhoneVerif/Paging', Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+      //     { Path: '/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging', Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+      //     { Path: '/Nap/AddProcess/ReturnHandling/Survey', Title: 'Return Handling - Survey', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] },
+      //     { Path: '/Nap/AddProcess/ReturnHandlingCollateral/Paging', Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ attr: "BizTemplateCode", value: "CFNA" }] }
+      //   ], Params: []
+      // }
     ], Params: []
   },
   {

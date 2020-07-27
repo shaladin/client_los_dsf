@@ -3,7 +3,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -14,7 +14,17 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   inputPagingObj: any;
-  constructor(private router: Router) { }
+  BizTemplateCode: string;
+  arrCrit: Array<any> = new Array();
+  constructor(private router: Router,
+    private route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
+  }
 
   ngOnInit() {
 
@@ -22,6 +32,13 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
     critInputAppStatNotCancel.propName = "ap.APP_STAT";
     critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
     critInputAppStatNotCancel.value = CommonConstant.AppStatCancel;
+    this.arrCrit.push(critInputAppStatNotCancel);
+
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'ap.BIZ_TEMPLATE_CODE';
+    critObj.value = this.BizTemplateCode;
+    this.arrCrit.push(critObj);
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApplicationAgreementCancellation.json";
@@ -30,7 +47,7 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationAgreementCancellation.json";
     this.inputPagingObj.addCritInput = new Array();
 
-    this.inputPagingObj.addCritInput.push(critInputAppStatNotCancel);
+    this.inputPagingObj.addCritInput = this.arrCrit;
 
   }
   GetCallBack(ev: any) {
