@@ -71,14 +71,14 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
+        if (this.resultData.MrMouTypeCode == CommonConstant.GENERAL) {
+          this.pageTitle = "MOU General";
+        }
+        else if (this.resultData.MrMouTypeCode == CommonConstant.FACTORING) {
+          this.pageTitle = "MOU Factoring";
+        }
       }
     );
-    if (this.pageType == "return") {
-      this.pageTitle = "MOU Return Detail";
-    }
-    else {
-      this.pageTitle = "MOU Customer Detail";
-    }
   }
 
   ngAfterViewInit(): void {
