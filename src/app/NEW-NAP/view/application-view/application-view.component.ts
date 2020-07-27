@@ -104,6 +104,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
+          this.IsCollateral = false;
         }
       }
     );
