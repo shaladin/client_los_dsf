@@ -4,6 +4,7 @@ export class AppLoanPurposeObj{
     MrLoanPurposeCode: any;
     IsDisburseToCust: boolean;
     SupplCode: any;
+    SupplName: any;
     BudgetPlanAmt: any;
     SelfFinancingAmt: any;
     FinancingAmt: any;
