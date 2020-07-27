@@ -98,6 +98,13 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsInsurance = false;
         }
+        else if(bizTemplateCode == CommonConstant.CFNA){
+          this.IsAsset = false;
+          this.IsInvoice = false;
+          this.IsMultiAsset = false;
+          this.IsMultiInsurance = false;
+          this.IsFraudDetectionMulti = false;
+        }
       }
     );
   }
