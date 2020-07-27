@@ -13,6 +13,7 @@ export class CommonConstant {
     //Application Item
     public static USER_ACCESS = "UserAccess";
     public static USER_NAME = "UserName";
+    public static USER_NAME_LOCAL_STORAGE = "Username";
     public static OFFICE_CODE = "OfficeCode";
     public static ROLE_CODE = "RoleCode";
     public static CURRENT_USER_CONTEXT = "currentUserContext"
