@@ -163,7 +163,13 @@ export class ReturnHandlingDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.returnHandlingHObj = response["ReturnHandlingHObj"];
-        this.returnHandlingDObjs = response["ReturnHandlingDObjs"]; 
+        this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+        if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.TrxTypeCodePhn) {
+          this.ReturnHandlingForm.patchValue({
+            MrReturnTaskCode: "RTN_EDIT_APP"
+          });
+          this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
+        }
       },
       (error) => {
         console.log(error);
