@@ -177,6 +177,10 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.patchValue({
         CommissionAmtFromDiffRate: 0
       });
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }
+    else{
+      this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
     }
   }
 
@@ -190,6 +194,7 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.patchValue({
         SubsidyAmtFromDiffRate: 0
       });
+      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
     }
   }
 
