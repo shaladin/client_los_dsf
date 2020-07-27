@@ -1,31 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
-import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
-import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
-import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
-import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
+import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
+import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
+import { HttpClient } from '@angular/common/http';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
+import { forkJoin } from 'rxjs';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
+import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 
 @Component({
-  selector: 'app-view-fraud-detection-result',
-  templateUrl: './view-fraud-detection-result.component.html'
+  selector: 'app-fraud-detection-result',
+  templateUrl: './fraud-detection-result.component.html',
+  styles: []
 })
-
-export class ViewFraudDetectionResultComponent implements OnInit {
-
+export class FraudDetectionResultComponent implements OnInit {
   @Input() appId: number;
   @Input() mrCustTypeCode: string = "";
   @Input() isView: boolean = false;
@@ -63,12 +62,16 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   mrSrvySourceCode: string;
   requestDupCheck: any;
   custStat: string;
+  newListNegativeAppCollateral: Array<Object>;
 
-  constructor(private http: HttpClient,
-    private modalService: NgbModal) { }
+  constructor(
+    private http: HttpClient,
+    private modalService: NgbModal
+  ) {
+    this.newListNegativeAppCollateral = new Array<Object>();
+   }
 
   async ngOnInit() : Promise<void>{
-
     this.getApp(this.appId);
     await this.getAppCust();
     this.arrValue.push(this.appId);
@@ -79,6 +82,18 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.viewFraudVerifResultObj.viewInput = "./assets/ucviewgeneric/viewFraudVerifResult.json";
     this.viewFraudVerifResultObj.viewEnvironment = environment.losUrl;
     this.viewFraudVerifResultObj.whereValue = this.arrValue;
+  }
+
+  async getNegativeCollateral(){
+    await this.http.post(URLConstant.GetListNegativeCollateralByAppId, { AppId: this.appId }).toPromise().then(
+      (response) => {
+        this.newListNegativeAppCollateral = response["GetListNegativeCollateralByAppId"];
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   async getAppCust() {
@@ -220,40 +235,39 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.listNegativeAsset = this.listNegativeAppAsset.concat(this.listNegativeAppCollateral);
   }
 
-  async getNegativeCollateral() {
-    var appCollateralObj = new AppCollateralObj();
-    var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
-    negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
-    appCollateralObj.AppId = this.appId;
-    var listAppCollateral = new Array<AppCollateralObj>();
-    await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
-      response => {
-        listAppCollateral = response[CommonConstant.ReturnObj];
+  // async getNegativeCollateral() {
+  //   var appCollateralObj = new AppCollateralObj();
+  //   var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
+  //   negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
+  //   appCollateralObj.AppId = this.appId;
+  //   var listAppCollateral = new Array<AppCollateralObj>();
+  //   await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
+  //     response => {
+  //       listAppCollateral = response[CommonConstant.ReturnObj];
         
-      },
-      error => {
-        console.log("error")
-      }
-    );
+  //     },
+  //     error => {
+  //       console.log("error")
+  //     }
+  //   );
     
-    if(listAppCollateral != null){
-      for (var i = 0; i < listAppCollateral.length; i++) {
-        var negativeAssetCheckObj = new NegativeAssetCheckObj();
-        negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
-        negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
-        negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
-        negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
-        negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
-        negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
-        negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
-      }
-      await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
-        response => {
-          this.listNegativeAppCollateral = response[CommonConstant.ReturnObj];
-        });
-    } 
-  }
-
+  //   if(listAppCollateral != null){
+  //     for (var i = 0; i < listAppCollateral.length; i++) {
+  //       var negativeAssetCheckObj = new NegativeAssetCheckObj();
+  //       negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
+  //       negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
+  //       negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
+  //       negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
+  //       negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
+  //       negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
+  //       negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
+  //     }
+  //     await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
+  //       response => {
+  //         this.listNegativeAppCollateral = response[CommonConstant.ReturnObj];
+  //       });
+  //   } 
+  // }
 
   async getNegativeAsset() {
     var negativeAssetObj = {
@@ -296,5 +310,3 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   }
 
 }
-
-

@@ -6,6 +6,9 @@ export class CommonConstant {
     public static EDIT = 'Edit';
     public static DELETE = 'Delete';
     public static UPDATE = 'Update';
+    
+    // Behaviour
+    public static DEFAULT = 'DEF';
 
     //Application Item
     public static USER_ACCESS = "UserAccess";
@@ -318,6 +321,7 @@ export class CommonConstant {
     public static TaxTypeCode = "WHT";
     public static VATTypeCode = "VAT";
     public static TrxTypeCode = "APP_COM";
+    public static TrxTypeCodeAppCom = "APP_COM";
     public static LabelSupplier = "Supplier";
     public static LabelSupplierEmp = "Supplier Employee";
     public static LabelReferantor = "Referantor";
@@ -327,6 +331,9 @@ export class CommonConstant {
     public static CommissionReceipientTypeCodeSupplier = "SUPPLIER";
     public static CommissionReceipientTypeCodeSupplierEmp = "SUPPLIER_EMP";
     public static CommissionReceipientTypeCodeReferantor = "REFERANTOR";
+    public static CommissionIdentifierSupplier = "SupplierIdentifier";
+    public static CommissionIdentifierSupplierEmp = "SupplierEmpIdentifier";
+    public static CommissionIdentifierReferantor = "SupplierReferantor";
     public static MessageCalculate = "CALC";
     public static MessagePassData = "PASS";
     public static MessageDel = "DEL";
@@ -416,14 +423,11 @@ export class CommonConstant {
     public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE"; 
     public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
     public static RefMasterTypeCodeFinDataCalcBaseOn = "FIN_DATA_CALC_BASE_ON";
-    
     public static RefMasterReservedField2NonFee = "NON_FEE";
     public static RefMasterReservedField2Fee = "FEE";
-
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";
     
-
     //RATE TYPE
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
@@ -442,4 +446,22 @@ export class CommonConstant {
     //SUBSIDY FROM TYPE
     public static SubsidyFromTypeAtpm = "ATPM";
 
+    
+    //SCORE TYPE
+    public static ScoreTypeScoring = "SCORING";
+    public static ScoreTypeDsr = "DSR";
+    public static ScoreTypeDukcapil = "DUKCAPIL";
+
+    //Gender Type
+    public static MasterCodeGenderFemale = "FEMALE";
+    public static MasteCodeGenderMale = "MALE";
+
+    //Martial Status
+    public static MasteCodeMartialStatsMarried = "MARRIED";
+
+    //Relationship Code
+    public static MasteCodeRelationshipSpouse = "SPOUSE";
+    
+    // Rule Behaviour
+    public static RuleBehaviourLock = "LOCK";
 }

@@ -16,6 +16,11 @@ import { PhoneVerificationSubjectViewComponent } from './phone-verification/phon
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 import { FraudVerificationMultiAssetComponent } from './fraud-verification-multi-asset/fraud-verification-multi-asset.component';
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { NewCreditInvestigationDetailComponent } from './new-credit-investigation/new-credit-investigation-detail/new-credit-investigation-detail.component';
+import { NewCreditInvestigationComponent } from './new-credit-investigation/new-credit-investigation.component';
+import { CreditReviewCfnaComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna.component';
+import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
+
 
 const routes: Routes = [
   {
@@ -78,6 +83,20 @@ const routes: Routes = [
         }
       },
       {
+        path: 'NewCreditInvestigation/Paging',
+        component: NewCreditInvestigationComponent,
+        data: {
+          title: 'Credit Investigation'
+        }
+      },
+      {
+        path: 'NewCreditInvestigation/Detail',
+        component: NewCreditInvestigationDetailComponent,
+        data: {
+          title: 'Credit Investigation'
+        }
+      },
+      {
         path: 'CreditReview/Paging',
         component: CreditReviewPagingComponent,
         data: {
@@ -87,6 +106,20 @@ const routes: Routes = [
       {
         path: 'CreditReview/Main',
         component: CreditReviewMainComponent,
+        data: {
+          title: 'Credit Review Main'
+        }
+      },
+      {
+        path: 'CreditReviewCfna/Paging',
+        component: CreditReviewCfnaPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: 'CreditReviewCfna/Main',
+        component: CreditReviewCfnaComponent,
         data: {
           title: 'Credit Review Main'
         }

@@ -32,19 +32,6 @@
               </div>
 
               <div class="form-group row">
-                <!-- Sales Recommendation -->
-                <div class="form-group col-md-2 adins-required">
-                  <label class="adInsLabel">Sales Recommendation </label>
-                </div>
-                <div class="col-md-4" *ngIf="applicationDDLitems['SLS_RECOM']">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrSalesRecommendCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['SLS_RECOM']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                </div>
                 <!-- Sales Notes -->
                 <label class="col-md-2 adInsLabel">Sales Notes </label>
                 <div class="col-md-4">
@@ -133,17 +120,18 @@
 
                 <div class="col-md-6">
                                     
-                  <div class="form-group row adins-required">
+                  <div class="form-group row">
                     <!-- First Installment Type -->
                     <label class="col-md-4 adInsLabel"> First Installment Type </label>
                     <div class="col-md-8">
-                      <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
+                      <label class="adInsLabel"> {{FirstInstType}} </label>
+                      <!-- <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
                         <option value="">-Select One-</option>
                         <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
                           {{it.Value}} </option>
                       </select>
-                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                      <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors > -->
                     </div>
                   </div>
                   
@@ -219,7 +207,7 @@
             </div>
 
             <!-- Cross Info -->
-            <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application Information'" [panel]="'crossInfomation'">
+            <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'" [panel]="'crossInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="crossInfomation">
 

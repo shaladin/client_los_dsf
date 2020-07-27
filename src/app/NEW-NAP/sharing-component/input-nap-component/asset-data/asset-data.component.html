@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="AssetDataForm" (ngSubmit)="AssetDataForm.valid && SaveForm()"
-          #enjiForm="ngForm">
+              #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'supplierDataId'" [title]="'Supplier Info'" [panel]="'supplierData'">
             </lib-ucSubsection>
@@ -12,15 +12,15 @@
                 <label class="col-md-2  adins-required-label" translate>Supplier Name </label>
                 <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplierObj" [identifier]="'lookupSupp'"
-                    [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
+                                       [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
                   </lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Sales Person</label>
                 <div class="col-md-4">
                   <select *ngIf="SalesPersonObj" class="form-control" id="salesPerson" formControlName="SalesPersonId"
-                    (change)="SalesPersonChanged($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }"
-                    style="width:50%">
+                          (change)="SalesPersonChanged($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }"
+                          style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of SalesPersonObj" [value]="item.VendorEmpId">
                       {{item.VendorEmpName}}
@@ -31,12 +31,12 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adins-required-label" translate>Admin Head</label>
+                <label class="col-md-2  adInsLabel" translate>Admin Head</label>
                 <div class="col-md-4">
                   <select *ngIf="AdminHeadObj" class="form-control" id="adminHead" formControlName="AdminHeadId"
-                    (change)="AdminHeadChanged($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }"
-                    style="width:50%">
+                          (change)="AdminHeadChanged($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }"
+                          style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of AdminHeadObj" [value]="item.VendorEmpId">
                       {{item.VendorEmpName}}
@@ -45,9 +45,19 @@
                   <lib-uc-show-errors [control]="AssetDataForm.controls.AdminHeadId" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Branch Manager</label>
+                <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
                 <div class="col-md-4">
-                  <label>{{BranchManagerName}}</label>
+                  <select *ngIf="BranchManagerObj" class="form-control" id="branchManager" formControlName="BranchManagerId"
+                          (change)="BranchManagerChanged($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.BranchManagerId.invalid }"
+                          style="width:50%">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of BranchManagerObj" [value]="item.VendorEmpId">
+                      {{item.VendorEmpName}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.BranchManagerId" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>
@@ -59,13 +69,13 @@
                 <label class="col-md-2  adins-required-label" translate>Asset Name </label>
                 <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'"
-                    [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
+                                       [enjiForm]='enjiForm' [parentForm]='AssetDataForm' (lookup)="SetAsset($event)">
                   </lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Down Payment Type</label>
                 <div class="col-md-4">
                   <select class="form-control" id="selectedDpTypeId" formControlName="selectedDpType"
-                    (change)="DpTypeChange()" style="width:50%">
+                          (change)="DpTypeChange()" style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of dpTypeValue" [value]="item.Key">
                       {{item.Value}}
@@ -79,14 +89,20 @@
                 <label class="col-md-2  adins-required-label" translate>Asset Price</label>
                 <div class="col-md-4">
                   <input type="" currencyMask id="assetPriceAmt" class="form-control" formControlName="AssetPriceAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPriceAmt.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPriceAmt.invalid}">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.AssetPriceAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adins-required-label" translate>Down Payment</label>
-                <div class="col-md-4">
+                <label class="col-md-2  adins-required-label" translate>Down Payment (%/Amt)</label>
+                <div class="col-md-2" style="border-right: 1px solid grey">
+                  <input type="" currencyMask id="downPaymentPrctg" class="form-control" formControlName="DownPaymentPrctg"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentPrctg.invalid}">
+                  <lib-uc-show-errors [control]="AssetDataForm.controls.DownPaymentPrctg" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-2">
                   <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -108,9 +124,9 @@
                 <label class="col-md-2  adins-required-label" translate>Asset Usage</label>
                 <div class="col-md-4">
                   <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
-                    (change)="ChangeAssetUsage()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }"
-                    style="width:50%">
+                          (change)="ChangeAssetUsage()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }"
+                          style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of AssetUsageObj" [value]="item.Key">
                       {{item.Value}}
@@ -126,13 +142,14 @@
                     <div class="form-group row" [formGroupName]="i">
                       <div class="col-md-4">
                         <label [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
-                          {{item.controls.SerialNoLabel.value}} </label>
+                          {{item.controls.SerialNoLabel.value}}
+                        </label>
                       </div>
                       <div class="col-md-8">
                         <input type="text" class="form-control" formControlName="SerialNoValue"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                         <lib-uc-show-errors [control]="AssetDataForm.controls.items['controls'][i]['controls'].SerialNoValue"
-                          [submit]="enjiForm.submitted">
+                                            [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                       </div>
                     </div>
@@ -143,9 +160,9 @@
                 <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="ManufacturingYear"
-                    (focusout)="ChangeManuYear()">
+                         (focusout)="ChangeManuYear()">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.ManufacturingYear"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">BPKB Issue Date</label>
                 <label class="col-md-2 adins-required-label" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">BPKB Issue Date</label>
@@ -158,7 +175,7 @@
                 <label class="col-md-2  adins-required-label" translate>Color</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="Color"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Color.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Color.invalid}">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.Color" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -166,8 +183,8 @@
                 <label class="col-md-2 adins-required-label" translate *ngIf="AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">BPKB City Issuer</label>
                 <div class="col-md-4" *ngIf="isOnlookup">
                   <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
-                    [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
-                    (lookup)="SetBpkbCity($event)">
+                                       [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
+                                       (lookup)="SetBpkbCity($event)">
                   </lib-uclookupgeneric>
                 </div>
               </div>
@@ -175,9 +192,54 @@
                 <label class="col-md-2  adins-required-label" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="AssetNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetNotes.invalid }"></textarea>
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetNotes.invalid }"></textarea>
                   <lib-uc-show-errors [control]="AssetDataForm.controls.AssetNotes" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="AppAssetAttrObj != null && isAssetAttrReady == 1">
+              <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Information'" [panel]="'assetAttr'">
+              </lib-ucSubsection>
+              <div [id]="assetAttr">
+                <div formArrayName="AppAssetAttrObjs">
+                  <div *ngFor="let item of AssetDataForm.controls['AppAssetAttrObjs'].controls;let i = index" >
+                    <div [formGroupName]="i" class="form-group row">
+                      <label class="col-md-2  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
+                      <div class="col-md-4">
+                        <div *ngIf="item.controls.AttrInputType.value == 'T'">
+                          <input type="text" class="form-control" formControlName="AttrValue"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == 'N'">
+                          <input type="" currencyMask class="form-control" formControlName="AttrValue"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == 'D'">
+                          <input type="date" class="form-control" formControlName="AttrValue"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == 'L'">
+                          <select class="form-control" formControlName="AttrValue" style="width:50%"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                            <lib-uc-show-errors [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                            <option value="">-Select One-</option>
+                            <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
+                              {{x}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -212,40 +274,37 @@
                       </td>
                       <td [formGroupName]="i" class="text-center">
                         <lib-uclookupgeneric [enjiForm]="enjiForm"
-                          [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]"
-                          [parentForm]="AssetDataForm"
-                          [identifier]="'lookupSupplierObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value"
-                          (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>
+                                             [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]"
+                                             [parentForm]="AssetDataForm"
+                                             [identifier]="'lookupSupplierObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value"
+                                             (lookup)="SetSupplierAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i" class="text-center">
                         <lib-uclookupgeneric [enjiForm]="enjiForm"
-                          [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]"
-                          [parentForm]="AssetDataForm"
-                          [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value"
-                          (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
+                                             [lookupInput]="dictAccLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]"
+                                             [parentForm]="AssetDataForm"
+                                             [identifier]="'lookupAccObj' + AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value"
+                                             (lookup)="SetAccessory(i,$event)"></lib-uclookupgeneric>
                       </td>
                       <td [formGroupName]="i">
                         <input type="" currencyMask id="accessoryPriceAmt{{i}}" class="form-control"
-                          formControlName="AccessoryPriceAmt" [options]="{ nullable: true }"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
-                        <lib-uc-show-errors
-                          [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                               formControlName="AccessoryPriceAmt" [options]="{ nullable: true }"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
+                        <lib-uc-show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </td>
                       <td [formGroupName]="i">
                         <input type="" currencyMask id="accessoryDownPaymentAmt{{i}}" class="form-control"
-                          formControlName="AccessoryDownPaymentAmt" [options]="{ nullable: true }"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
-                        <lib-uc-show-errors
-                          [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                               formControlName="AccessoryDownPaymentAmt" [options]="{ nullable: true }"
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
+                        <lib-uc-show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </td>
                       <td [formGroupName]="i">
                         <input type="text" class="form-control" formControlName="AccessoryNotes"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid }">
-                        <lib-uc-show-errors
-                          [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid }">
+                        <lib-uc-show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </td>
                       <td [formGroupName]="i">
                         <a class="danger p-0" (click)="deleteAccessory(i)">
@@ -277,14 +336,14 @@
                 <label class="col-md-2  adins-required-label" translate>User Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode"
-                    style="width:50%">
+                          style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of UserRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
                   <lib-uc-show-errors [control]="AssetDataForm.controls.MrUserRelationshipCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
             </div>
@@ -300,8 +359,8 @@
                 <label class="col-md-2  adins-required-label" translate>Id Type </label>
                 <div class="col-md-4">
                   <select class="form-control" id="idType" formControlName="MrIdTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }"
-                    style="width:50%">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }"
+                          style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
@@ -315,15 +374,15 @@
                 <label class="col-md-2  adins-required-label" translate>Owner Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrOwnerRelationshipCode.invalid }"
-                    style="width:50%">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrOwnerRelationshipCode.invalid }"
+                          style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of OwnerRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
                   <lib-uc-show-errors [control]="AssetDataForm.controls.MrOwnerRelationshipCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
                 <div class="col-md-4">
@@ -335,7 +394,7 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="OwnerAddrType"
-                      [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
+                            [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
                       <option value="">-Select One-</option>
                       <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
                         {{item.MrCustAddrTypeCode}}
@@ -361,8 +420,8 @@
             <div class="form-group row">
               <div class="col-md-12">
                 <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
-                  [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj"
-                  [showAllPhn]="false"></lib-ucaddress>
+                               [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj"
+                               [showAllPhn]="false"></lib-ucaddress>
               </div>
             </div>
 
@@ -375,7 +434,7 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="LocationAddrType"
-                      [(ngModel)]="copyFromAppCustAddrForLocation" (change)="SetLocationAddrType($event.target.value)">
+                            [(ngModel)]="copyFromAppCustAddrForLocation" (change)="SetLocationAddrType($event.target.value)">
                       <option value="">-Select One-</option>
                       <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
                         {{item.MrCustAddrTypeCode}}
@@ -394,14 +453,14 @@
               <div class="form-group row">
                 <div class="col-md-12">
                   <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'locationData'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj"
-                    [showAllPhn]="false"></lib-ucaddress>
+                                 [identifier]="'locationData'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj"
+                                 [showAllPhn]="false"></lib-ucaddress>
                 </div>
               </div>
             </div>
             <div class="form-actions right">
               <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-                translate>
+                      translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary">
