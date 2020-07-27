@@ -31,6 +31,8 @@ import { InvoiceViewComponent } from "app/NEW-NAP/business-process/admin-process
 import { ViewCollateralDataComponent } from "./view-collateral-data/view-collateral-data.component";
 import { ViewCollateralMultiAssetComponent } from "./view-collateral-multi-asset/view-collateral-multi-asset.component";
 import { ApprovalhistDevComponent } from 'app/NEW-NAP/sharing-component/approvalhist-dev/approvalhist-dev.component';
+import { FraudVerificationComponent } from './fraud-verification/fraud-verification.component';
+import { TabAppDataComponent } from './tab-application-data/tab-app-data.component';
 import { NewApplicationDataComponent } from "./application-data/new-application-data.component";
 import { FraudDetectionResultComponent } from './fraud-detection-result/fraud-detection-result.component';
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
@@ -66,12 +68,16 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
     AppAssetDataDetailComponent,
     ApprovalHistComponent,
     ApprovalhistDevComponent,
+    TabAppDataComponent,
+    FraudVerificationComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
     ViewAppScoreGradeDsrComponent,
-    ViewAppScoreGradeDukcapilComponent
+    ViewAppScoreGradeDukcapilComponent,
+    FraudDetectionResultComponent,
+    NewApplicationDataComponent
   ],
   imports: [
     CommonModule,
@@ -107,6 +113,8 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
     ApprovalhistDevComponent,
+    FraudVerificationComponent,
+    TabAppDataComponent,
     NewApplicationDataComponent,
     FraudDetectionResultComponent,
     ViewFraudDetectionResultComponent,

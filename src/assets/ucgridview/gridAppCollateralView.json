@@ -1,0 +1,51 @@
+{
+    "isSeq" : false,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Collateral Seq No",
+            "name": "CollateralSeqNo"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Full Asset Name",
+            "name": "FullAssetName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Collateral Value",
+            "name": "CollateralValueAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Collateral Percent",
+            "name": "CollateralPrcnt"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CollateralSeqNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "boolean",
+            "position": "right",
+            "property": "CollateralValueAmt"
+        },
+        {
+            "type": "date",
+            "position": "right",
+            "property": "CollateralPrcnt"
+        }
+    ]
+}
