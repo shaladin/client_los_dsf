@@ -1,3 +1,5 @@
+import { PurchaseOrderDObj } from "./PurchaseOrderDObj.Model";
+
 export class PurchaseOrderHObj {
     PurchaseOrderHId: number;
     PurchaseOrderNo: string;
@@ -13,6 +15,8 @@ export class PurchaseOrderHObj {
     Notes: string;
     NumOfExtension: number;
     MouNo: string;
+    PurchaseOrderDList: Array<PurchaseOrderDObj>;
+    SupplName: string;
     RowVersion: string;
 
     constructor() {
@@ -30,6 +34,8 @@ export class PurchaseOrderHObj {
         this.Notes = "";
         this.NumOfExtension = 0;
         this.MouNo = "";
+        this.PurchaseOrderDList = new Array<PurchaseOrderDObj>();
+        this.SupplName = "";
         this.RowVersion = "";
     }
 }
