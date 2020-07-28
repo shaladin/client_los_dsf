@@ -26,7 +26,7 @@ export class MouCancelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItemCommonConstant.USER_ACCESS());
+    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.router.navigate(["/Mou/UnauthorizedPage"]);

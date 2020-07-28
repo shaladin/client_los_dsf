@@ -86,7 +86,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
   onApprovalSubmited(event) {
     if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
-      var user = JSON.parse(localStorage.getItemCommonConstant.USER_ACCESS());
+      var user =  JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
       returnHandlingHObj.AppId = this.appId;
       returnHandlingHObj.AgrmntId = null;
