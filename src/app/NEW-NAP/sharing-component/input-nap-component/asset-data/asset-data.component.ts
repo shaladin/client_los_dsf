@@ -54,11 +54,11 @@ export class AssetDataComponent implements OnInit {
     AssetPriceAmt: ['', Validators.required],
     DownPaymentAmt: ['', Validators.required],
     DownPaymentPrctg: ['', Validators.max(100)],
-    AssetNotes: ['', [Validators.required, Validators.maxLength(4000)]],
+    AssetNotes: ['', [ Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
-    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
 
 
     /* AppAsset Value That required but not in form*/
@@ -786,7 +786,7 @@ export class AssetDataComponent implements OnInit {
       else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
         if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
           this.AssetDataForm.patchValue({
-            DownPaymentAmt: 0
+            DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
           });
         }
         else {
@@ -800,7 +800,36 @@ export class AssetDataComponent implements OnInit {
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
     }
   }
-
+  updateValueDownPaymentAmt(){
+    var DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
+    if(DownPaymentAmt > this.AssetDataForm.controls.AssetPriceAmt.value){
+      this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: 0,
+        DownPaymentPrctg: 0
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
+      });
+    }
+  }
+  updateValueDownPaymentPrctg(event : any){
+    var DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
+    if(DownPaymentPrctg > 100){
+      this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: 0,
+        DownPaymentPrctg: 0
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
+      });
+    }
+  }
   //DPAmtChanged() {
   //  if (this.AssetDataForm.controls.AssetPriceAmt.value != 0) {
   //    this.AssetDataForm.patchValue({
