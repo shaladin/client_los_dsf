@@ -1,12 +1,8 @@
-import { Component, OnInit, AfterViewInit, Inject, Injector } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { formatDate } from '@angular/common';
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
 
@@ -26,15 +22,12 @@ export class RolepickComponent implements OnInit, AfterViewInit {
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    private currentUserContextService: CurrentUserContextService,
-    private http: HttpClient,
-    private router: Router) {
+    private http: HttpClient, private router: Router) {
     this.listRole = data["response"];
   }
 
   chooseRole(item) {
     console.log(item);
-    var url = environment.FoundationR3Url + URLConstant.GetAllActiveRefFormByRefRoleId;
     var roleUrl = environment.FoundationR3Url + URLConstant.LoginByRole;
     var roleObject = {
       UserName: this.data.user,
@@ -55,18 +48,10 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           localStorage.setItem("Token", response["Token"]);
           localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
           AdInsHelper.CreateUserAccess(response);
-          // var currentUserContext = new CurrentUserContext;
-          // currentUserContext.UserName = localStorage.getItem("Username");
-          // currentUserContext.Office = item.OfficeCode;
-          // currentUserContext.Role = item.RoleCode;
-          // currentUserContext.BusinessDate = item.BusinessDt;
-          // localStorage.setItem("BusinessDateRaw",item.BusinessDt);
-          // var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
-          // localStorage.setItem("BusinessDate", DateParse);
-          // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-          // this.currentUserContextService.addCurrentUserContext(currentUserContext);
-          window.location.reload();
-          //this.router.navigate(['dashboard/dash-board']);
+          let currPath = this.router.routerState.snapshot.url;
+          this.router.navigateByUrl("/pages/content", { skipLocationChange: true }).then(() => {
+            this.router.navigateByUrl(currPath);
+          });
         },
         (error) => {
           console.log(error);
@@ -80,18 +65,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           localStorage.setItem("Token", response["Token"]);
           localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
           AdInsHelper.CreateUserAccess(response);
-          // var currentUserContext = new CurrentUserContext;
-          // currentUserContext.UserName = localStorage.getItem("Username");
-          // currentUserContext.Office = item.OfficeCode;
-          // currentUserContext.Role = item.RoleCode;
-          // currentUserContext.BusinessDate = item.BusinessDt;
-          // localStorage.setItem("BusinessDateRaw",item.BusinessDt);
-          // var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
-          // localStorage.setItem("BusinessDate", DateParse);
-          // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-          // this.currentUserContextService.addCurrentUserContext(currentUserContext);
-          window.location.reload();
-          //this.router.navigate(['dashboard/dash-board']);
+          this.router.navigate(["/dashboard/dash-board"]);
         },
         (error) => {
           console.log(error);
