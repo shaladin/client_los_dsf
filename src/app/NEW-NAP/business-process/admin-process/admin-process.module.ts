@@ -43,6 +43,9 @@ import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovalhistModule } from "@adins/ucapprovalhist";
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcaddtotempModule } from "@adins/ucaddtotemp";
+import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-order.component';
+import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
+import { PoEntryComponent } from './new-purchase-order/new-purchase-order-detail/po-entry/po-entry.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -97,14 +100,18 @@ export const customCurrencyMaskConfig = {
     CreateDoMultiAssetComponent,
     DoAssetDetailComponent,
     InvoiceVerifPagingComponent,
-    InvoiceVerifDetailComponent
+    InvoiceVerifDetailComponent,
+    NewPurchaseOrderComponent,
+    NewPurchaseOrderDetailComponent,
+    PoEntryComponent
   ],
   providers: [
     NGXToastrService
   ],
   entryComponents: [
     CreateDoMultiAssetComponent,
-    DoAssetDetailComponent
+    DoAssetDetailComponent,
+    PoEntryComponent
   ]
 })
 export class AdminProcessSharingModule { }
