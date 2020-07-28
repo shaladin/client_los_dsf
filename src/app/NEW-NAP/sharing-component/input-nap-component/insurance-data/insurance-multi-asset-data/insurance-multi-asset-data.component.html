@@ -21,17 +21,17 @@
           <form [hidden]="PageState != 'EditInsurance'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
             (ngSubmit)="InsuranceDataForm.valid && SaveForm()" #enjiForm="ngForm">
             <div class="form-body">
-              <lib-ucSubsection [id]="'collateralDataId'" [title]="'Collateral Data'" [panel]="'collateralData'">
+              <lib-ucSubsection [id]="'collateralDataId'" [title]="'Insurance Object'" [panel]="'collateralData'">
               </lib-ucSubsection>
               <div id="collateralData">
                 <div class="form-group row">
-                  <label class="col-md-2" translate>Collateral Name</label>
+                  <label class="col-md-2" translate>Insurance Object Name</label>
                   <label class="col-md-4" translate>{{appCollateralObj?.FullAssetName}}</label>
-                  <label class="col-md-2" translate>Collateral Price</label>
+                  <label class="col-md-2" translate>Insurance Object Price</label>
                   <label class="col-md-4" translate>{{totalAssetPriceAmt | number:'.2':'en-US'}}</label>
                 </div>
               </div>
-              <lib-ucSubsection [id]="'collateralAccessoriesId'" [title]="'Collateral Accessories'"
+              <lib-ucSubsection [id]="'collateralAccessoriesId'" [title]="'Insurance Object Accessories'"
                 [panel]="'collateralAccessories'">
               </lib-ucSubsection>
               <div id="collateralAccessories">
@@ -172,8 +172,7 @@
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetPaidBy"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
-                    <label class="col-md-2 adins-required-label" for="payPeriodToInsco" translate>Payment Period To
-                      Insco</label>
+                    <label class="col-md-2 adins-required-label" for="payPeriodToInsco" translate>Payment Type</label>
                     <div class="col-md-4">
                       <select class="form-control width-75-per" id="payPeriodToInsco" formControlName="PayPeriodToInsco"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.PayPeriodToInsco.invalid }">
@@ -415,8 +414,8 @@
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td class="text-center">
-                            <label class="col-md-12" style="font-weight:bold">Total Premi Amount</label>
+                          <td class="text-right">
+                            <label class="col-md-12" style="font-weight:bold">Total Premi per Year</label>
                           </td>
                           <td class="text-right">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value + InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}
@@ -430,29 +429,29 @@
                 </lib-ucSubsection>
                 <div id="totalPremi">
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" translate>Total Main Premi</label>
+                    <label class="col-md-4" style="font-size: 90%" translate>Total Main Premi</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
                       translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" translate>Total Additional Premi</label>
+                    <label class="col-md-4" style="font-size: 90%" translate>Total Additional Premi</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
                       translate>{{InsuranceDataForm.controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" translate>Total Fee</label>
+                    <label class="col-md-4" style="font-size: 90%" translate>Total Fee</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
                       translate>{{InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" translate>Total Premi to Customer</label>
+                    <label class="col-md-4" style="font-size: 90%" translate>Total Premi to Customer</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
                       translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" for="discAmt" translate>Discount</label>
+                    <label class="col-md-4" style="font-size: 90%" for="discAmt" translate>Discount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="discAmt" class="form-control" formControlName="TotalCustDiscAmt"
+                      <input type="" currencyMask id="discAmt" style="float: right;" class="form-control width-75-per" formControlName="TotalCustDiscAmt"
                         [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.TotalCustDiscAmt"
@@ -460,16 +459,16 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" translate>Total Premi to Customer after
+                    <label class="col-md-4" style="font-size: 90%" translate>Total Premi to Customer after
                       Discount</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
                       translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2" style="font-size: 90%" for="insCpltzAmt" translate>Capitalize
+                    <label class="col-md-4" style="font-size: 90%" for="insCpltzAmt" translate>Capitalize
                       Amount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="insCpltzAmt" class="form-control" formControlName="InsCpltzAmt"
+                      <input type="" currencyMask id="insCpltzAmt" style="float: right;" class="form-control width-75-per" formControlName="InsCpltzAmt"
                         [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsCpltzAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsCpltzAmt"

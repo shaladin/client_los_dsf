@@ -266,6 +266,8 @@ export class CommonConstant {
     // INSURANCE ADDITIONAL COVERAGE
     public static MrAddCvgTypeCodeLoading = 'LOADING';
     public static AddCvgTypeNameLoading = 'Loading';
+    public static MrAddCvgTypeCodeTpl = 'TPL';
+
 
     //INS PAID BY
     public static InsPaidByCustomer = "CU";

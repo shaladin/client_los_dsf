@@ -25,8 +25,9 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InsRateAddCvgRuleObj } from 'app/shared/model/InsRateAddCvgRuleObj.Model';
+
 
 @Component({
   selector: 'app-insurance-data',
@@ -76,10 +77,13 @@ export class InsuranceDataComponent implements OnInit {
     Key: "",
     Value: ""
   }];
+  groupedAddCvgType: Array<string>;
   insAssetCoverPeriodObj: Array<KeyValueObj>;
   insAssetRegionObj: Array<KeyValueObj>;
   payPeriodToInscoObj: Array<KeyValueObj>;
   defaultInsMainCvgType: string;
+  sumInsuredAmtObj: Array<string> = new Array<string>();
+  insRateAddCvgRuleTplObjs: Array<InsRateAddCvgRuleObj>;
 
   showGenerate: boolean = false;
   isGenerate: boolean = false;
@@ -596,9 +600,14 @@ export class InsuranceDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.ruleObj = response["Result"];
+        this.insRateAddCvgRuleTplObjs = response["InsRateAddCvgRuleTplObjs"];
         if (this.ruleObj.InsAssetCategory == "") {
           this.toastr.warningMessage(ExceptionConstant.SETTING_RULE_FIRST);
           return;
+        }
+        this.sumInsuredAmtObj = new Array<string>();
+        for(let i = 0; i < this.insRateAddCvgRuleTplObjs.length; i++){
+          this.sumInsuredAmtObj.push(this.insRateAddCvgRuleTplObjs[i].SumInsuredAmt.toString());
         }
         this.InsuranceDataForm.patchValue({
           CustAdminFeeAmt: this.ruleObj.AdminFeeToCust,
@@ -658,7 +667,8 @@ export class InsuranceDataComponent implements OnInit {
   bindInsAddCvgTypeRuleObj() {
     (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray) = this.fb.array([]);
     this.insAddCvgTypeRuleObj = [{ Key: "", Value: "" }];
-    this.ruleObj.AdditionalCoverageType.forEach((o) => {
+    this.groupedAddCvgType = Array.from( new Set(this.ruleObj.AdditionalCoverageType));
+    this.groupedAddCvgType.forEach((o) => {
       var item = this.insAddCvgTypeObj.find(x => x.Key == o);
       this.insAddCvgTypeRuleObj.push(item);
     });
@@ -700,6 +710,10 @@ export class InsuranceDataComponent implements OnInit {
     });
 
     this.insAddCvgTypeRuleObj.forEach((o) => {
+      var defaultSumInsuredAmt = 0;
+      if(o.Key == CommonConstant.MrAddCvgTypeCodeTpl){
+        defaultSumInsuredAmt = this.insRateAddCvgRuleTplObjs[0].SumInsuredAmt;   
+      }
       var index = this.ruleObj.AdditionalCoverageType.findIndex(x => x == o.Key);
       var premiumType = this.ruleObj.PremiumType[index];
       var custAddPremiRate = 0;
@@ -728,7 +742,7 @@ export class InsuranceDataComponent implements OnInit {
         AddCvgTypeName: o.Value,
         Value: checkboxValue,
         SumInsuredPercentage: obj.SumInsuredPercentage,
-        SumInsuredAmt: 0,
+        SumInsuredAmt: defaultSumInsuredAmt,
         PremiumType: premiumType,
         CustAddPremiRate: custAddPremiRate,
         CustAddPremiAmt: 0,
@@ -840,6 +854,16 @@ export class InsuranceDataComponent implements OnInit {
         StdAddPremiRate: this.ruleObj.BaseRate[indexAdd]
       });
     }
+  }
+
+  setTplPremiAmt(sumInsuredAmt, i, j){
+    var addCvgTplObj = this.insRateAddCvgRuleTplObjs.find(x => x.SumInsuredAmt == sumInsuredAmt);
+
+    // this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+    //   CustAddPremiRate: custAddPremiRate,
+    //   InscoAddPremiRate: inscoAddPremiRate,
+    //   StdAddPremiRate: this.ruleObj.BaseRate[indexAdd]
+    // });
   }
 
   ApplyToCoverage() {
@@ -1458,9 +1482,9 @@ export class InsuranceDataComponent implements OnInit {
     );
   }
 
-  // test(){
-  //   console.log(this.InsuranceDataForm);
-  // }
+  test(){
+    console.log(this.InsuranceDataForm);
+  }
 
   back() {
     this.outputTab.emit();
