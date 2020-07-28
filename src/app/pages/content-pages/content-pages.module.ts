@@ -22,7 +22,8 @@ import { LoginPageComponent } from "app/pages/content-pages/login/login-page.com
 import { CustomerSelfVerificationComponent } from './external-page/customer-self-verification/customer-self-verification.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
-import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module"; 
+import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
+import { PagesComponent } from './pages/pages.component'; 
 
 export const customCurrencyMaskConfig = {     
     align: "left",     
@@ -61,7 +62,8 @@ export const customCurrencyMaskConfig = {
     ],
     declarations: [
         LoginPageComponent,
-        CustomerSelfVerificationComponent 
+        CustomerSelfVerificationComponent,
+        PagesComponent 
     ],
       entryComponents: [
         UclookupgenericComponent,
