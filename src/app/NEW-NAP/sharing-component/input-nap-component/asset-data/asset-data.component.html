@@ -62,7 +62,7 @@
               </div>
             </div>
 
-            <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Attribute'" [panel]="'assetData'">
+            <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Information'" [panel]="'assetData'">
             </lib-ucSubsection>
             <div id="assetData">
               <div class="form-group row">
@@ -199,7 +199,7 @@
               </div>
             </div>
             <div *ngIf="AppAssetAttrObj != null && isAssetAttrReady == 1">
-              <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Information'" [panel]="'assetAttr'">
+              <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
               </lib-ucSubsection>
               <div [id]="assetAttr">
                 <div formArrayName="AppAssetAttrObjs">

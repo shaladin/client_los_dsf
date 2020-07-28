@@ -98,15 +98,15 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     };
     this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
-        // console.log(response);
+        console.log(response);
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
         // console.log(this.ListResultRefundIncomeInfo);
         let totalListResultRefundIncomeInfoAmount = 0;
         for (var i = 0; i < this.ListResultRefundIncomeInfo.length; i++){
-          totalListResultRefundIncomeInfoAmount += this.ListResultRefundIncomeInfo[i].RefundAmount;
           this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom] = this.ListResultRefundIncomeInfo[i];
           if(this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
+          totalListResultRefundIncomeInfoAmount += this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount;
         }
         // console.log(this.DictMaxIncomeForm);
         this.isView = true;
@@ -125,6 +125,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         this.viewIncomeInfoObj.ExpenseAmount = response.ExpenseAmount;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
+        console.log(this.viewIncomeInfoObj);
       },
       (error) => {
         console.log(error);
