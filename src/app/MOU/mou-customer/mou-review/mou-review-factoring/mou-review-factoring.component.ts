@@ -47,7 +47,7 @@ export class MouReviewFactoringComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
