@@ -83,7 +83,7 @@
   "headerList": [
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "SLA",
       "name": "SlaColor"
     },
