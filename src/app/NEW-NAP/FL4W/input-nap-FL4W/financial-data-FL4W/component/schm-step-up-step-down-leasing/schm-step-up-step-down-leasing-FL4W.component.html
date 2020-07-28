@@ -97,16 +97,6 @@
             <div class="col-md-3 form-inline form-inline-right" style="visibility: hidden;">
               <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
-              <label>TDP Paid at MF</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt" (ngModelChange)="SetNeedReCalculate(true)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
           </div>
         </div>
       </div>
@@ -136,8 +126,7 @@
               <label>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="RateType" class="form-control full-width"
-              (change)="SetNeedReCalculate(true)">
+              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -148,9 +137,9 @@
               <label>Rounding</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="RoundingAmt" (ngModelChange)="SetNeedReCalculate(true)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.RoundingAmt.invalid}"
-                currencyMask>
+              <input type="" class="form-control full-width" formControlName="RoundingAmt"
+                (ngModelChange)="SetNeedReCalculate(true)"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.RoundingAmt.invalid}" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.RoundingAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -161,17 +150,29 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Effective Rate</label>
+              <label>Effective/Flat Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
-                (focusout)="EffectiveRatePrcntInput_FocusOut()"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
+              <div class="col-md-6">
+                <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
+                  [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
+                  (focusout)="EffectiveRatePrcntInput_FocusOut()"
+                  [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                  currencyMask>
+                <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+              <div class="col-md-6">
+                <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
+                  (ngModelChange)="SetNeedReCalculate(true)"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
+                  [readonly]="ParentForm.controls.RateType.value != 'FLT'"
+                  [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                  currencyMask>
+                <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
             </div>
             <div class="col-md-3 form-inline">
               <label>Standard Rate</label>
@@ -197,18 +198,6 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Flat Rate</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="FlatRatePrcnt" (ngModelChange)="SetNeedReCalculate(true)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
-                [readonly]="ParentForm.controls.RateType.value != 'FLT'"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-            <div class="col-md-3 form-inline">
               <label>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -231,7 +220,7 @@
       <!-- <div class="row">
         <div class="col-md-12">
           <div class="row"> -->
-            <!-- <div class="col-md-3 form-inline">
+      <!-- <div class="col-md-3 form-inline">
               <label>Installment Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -240,13 +229,13 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div> -->
-            <!-- <div class="col-md-3 form-inline">
+      <!-- <div class="col-md-3 form-inline">
               <label>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
             </div> -->
-            <!-- <div class="col-md-3 offset-md-6 form-inline">
+      <!-- <div class="col-md-3 offset-md-6 form-inline">
               <label>Diff Rate Amount (Commission Amount)</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -257,7 +246,7 @@
               <lib-uc-show-errors [control]="ParentForm.controls.DiffRateAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div> -->
-          <!-- </div>
+      <!-- </div>
         </div>
       </div> -->
 
@@ -268,14 +257,15 @@
               <label>Grace Period</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="GracePeriod" (change)="SetNeedReCalculate(true)"
+              <input type="number" class="form-control full-width" formControlName="GracePeriod"
+                (change)="SetNeedReCalculate(true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
             <div class="col-md-2 form-inline">
               <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
-              (change)="SetNeedReCalculate(true)">
+                (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -287,9 +277,8 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}" 
-                (keyup)="SetNeedReCalculate(true)"
-                currencyMask>
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
+                (keyup)="SetNeedReCalculate(true)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -303,7 +292,8 @@
               <label>Cummulative Tenor</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="CummulativeTenor" (change)="SetNeedReCalculate(true)"
+              <input type="number" class="form-control full-width" formControlName="CummulativeTenor"
+                (change)="SetNeedReCalculate(true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CummulativeTenor.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.CummulativeTenor" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -312,14 +302,15 @@
               <label>Num Of Step / Input Type</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="NumOfStep" (change)="SetNeedReCalculate(true)"
+              <input type="number" class="form-control full-width" formControlName="NumOfStep"
+                (change)="SetNeedReCalculate(true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.NumOfStep.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.NumOfStep" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
             <div class="col-md-2 form-inline">
               <select formControlName="StepUpStepDownInputType" class="form-control full-width"
-              (change)="InputTypeChanged()">
+                (change)="InputTypeChanged()">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of StepUpStepDownInputOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -390,7 +381,8 @@
       </button>
     </div>
     <div formArrayName="ListEntryInst">
-      <table *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="table table-responsive-md text-center table-hover">
+      <table *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0"
+        class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
             <th style="text-align: center;"><span class="thead-header" name="No" translate>
@@ -398,11 +390,11 @@
               </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="NoOfInst" translate>
-              # Of Installment  
+                # Of Installment
               </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="InstallmentAmt" translate>
-              Installment Amount
+                Installment Amount
               </span>
             </th>
           </tr>
@@ -415,27 +407,32 @@
             <td [formGroupName]="i" class="text-left">
               <div class="form-group-row">
                 <div class="col-md-12">
-                  <input type="number" class="form-control full-width" formControlName="NumOfInst" (change)="SetNeedReCalculate(true)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ListEntryInst.controls[i].controls.NumOfInst.invalid}">
-                  <lib-uc-show-errors [control]="ParentForm.controls.ListEntryInst.controls[i].controls.NumOfInst" [submit]="enjiForm.submitted">
+                  <input type="number" class="form-control full-width" formControlName="NumOfInst"
+                    (change)="SetNeedReCalculate(true)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ListEntryInst.controls[i].controls.NumOfInst.invalid}">
+                  <lib-uc-show-errors [control]="ParentForm.controls.ListEntryInst.controls[i].controls.NumOfInst"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-              </div>            
+              </div>
             </td>
             <td [formGroupName]="i" class="text-left">
               <div class="form-group-row">
                 <div class="col-md-12">
-                  <input type="" class="form-control full-width" formControlName="InstAmt" (ngModelChange)="SetNeedReCalculate(true)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ListEntryInst.controls[i].controls.InstAmt.invalid}" currencyMask>
-                  <lib-uc-show-errors [control]="ParentForm.controls.ListEntryInst.controls[i].controls.InstAmt" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>             
+                  <input type="" class="form-control full-width" formControlName="InstAmt"
+                    (ngModelChange)="SetNeedReCalculate(true)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ListEntryInst.controls[i].controls.InstAmt.invalid}"
+                    currencyMask>
+                  <lib-uc-show-errors [control]="ParentForm.controls.ListEntryInst.controls[i].controls.InstAmt"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>     
+    </div>
     <div *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
         (click)="CalculateAmortization()">
@@ -451,33 +448,33 @@
               </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
-              Installment Amount  
+                Installment Amount
               </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
-              Principal Amount
+                Principal Amount
               </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
-              Interest Amount
+                Interest Amount
               </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
-              Os Principal Amount
-            </span>
+                Os Principal Amount
+              </span>
             </th>
             <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
-              Os Interest Amount  
-            </span>
+                Os Interest Amount
+              </span>
             </th>
           </tr>
         </thead>
-        <tbody *ngIf = "listInstallment.length == 0">
+        <tbody *ngIf="listInstallment.length == 0">
           <tr>
             <td colspan="100%">No Data Available</td>
           </tr>
         </tbody>
-        <tbody *ngIf = "listInstallment.length > 0">
+        <tbody *ngIf="listInstallment.length > 0">
           <tr *ngFor="let item of listInstallment; let i = index">
             <td style="text-align: center;">{{item.InstSeqNo}}</td>
             <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>

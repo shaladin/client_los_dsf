@@ -20,8 +20,8 @@
                 </lib-uc-show-errors>
               </div>
               <div class="col-md-3 form-inline">
-                <label class=""><input type="checkbox" formControlName="IsCptlz"
-                    (change)="IsCapitalize_CheckedChange(ParentForm.controls[identifier].value[i].MrFeeTypeCode)">Capitalize
+                <label class=""><input type="checkbox" class="checkboxLabel" formControlName="IsCptlz"
+                  (change)="IsCapitalize_CheckedChange(ParentForm.controls[identifier].value[i].MrFeeTypeCode)"> {{ParentForm.controls[identifier].value[i].FeeTypeName}} Capitalize
                 </label>
               </div>
               <div class="col-md-3">
@@ -63,8 +63,8 @@
                   </div>
                   <div class="col-md-3 margin-b-5">
                     <select class="form-control" formControlName="FeeSource" (change)="CalcBase_OnChange($event);">
-                      <option value="NTF_WITHOUT_CAP" >NTF without capitalized Item</option>
-                      <option value="NTF_WITH_CAP" >NTF with capitalized item</option>
+                      <option value="NTF_WITHOUT_CAP" >OTR-DP</option>
+                      <option value="NTF_WITH_CAP" >OTR-DP + Ins Cptlz + Fee Cptlz(Excl. Provision)</option>
                     </select>
                   </div>
                   <div class="col-md-6"></div>
@@ -97,8 +97,8 @@
                     </lib-uc-show-errors>
                   </div>
                   <div class="col-md-3 form-inline margin-b-5">
-                    <label class=""><input type="checkbox" formControlName="IsCptlz"
-                        (change)="IsCapitalize_CheckedChange(ParentForm.controls[identifier].value[i].MrFeeTypeCode)">Capitalize
+                    <label class=""><input type="checkbox" class="checkboxLabel" formControlName="IsCptlz"
+                        (change)="IsCapitalize_CheckedChange(ParentForm.controls[identifier].value[i].MrFeeTypeCode)">{{ParentForm.controls[identifier].value[i].FeeTypeName}} Capitalize
                     </label>
                   </div>
                   <div class="col-md-3 margin-b-5">
