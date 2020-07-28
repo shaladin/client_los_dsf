@@ -58,7 +58,8 @@ export class CustCompanyFinancialDataComponent implements OnInit {
   }
 
   bindAppCustCompanyFinData(){
-    if(this.appCustCompanyFinDataObj != undefined){
+    console.log(this.appCustCompanyFinDataObj);
+    if(this.appCustCompanyFinDataObj.AppCustCompanyFinDataId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         DateAsOf: this.appCustCompanyFinDataObj.DateAsOf != undefined ? formatDate(this.appCustCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US') : ''
       });

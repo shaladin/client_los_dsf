@@ -128,6 +128,18 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsAdditionalService = false;
           this.IsAppCollateral = false;
         }
+        else if (bizTemplateCode == CommonConstant.CFNA) {
+          this.IsAsset = false;
+          this.IsLoanData = false;
+          this.IsInsuranceFL4W = false;
+          this.IsLifeInsurance = false;
+          this.IsFinancial = false;
+          this.IsTC = false;
+          this.IsReservedFund = false;
+          this.IsDeliveryOrder = false;
+          this.IsInvoiceData = false;
+          this.IsCollateral = false;
+        }
         this.IsReady = true;
       });
   }

@@ -34,6 +34,7 @@ export class MouReviewFactoringComponent implements OnInit {
   resultData: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: any;
+  ScoreResult: number;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -109,6 +110,12 @@ export class MouReviewFactoringComponent implements OnInit {
         });
       }
     );
+
+    this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+      (response) => {
+        this.ScoreResult = response["ScoreResult"];
+      }
+    );
   }
 
   MouReviewDataForm = this.fb.group({
@@ -123,7 +130,7 @@ export class MouReviewFactoringComponent implements OnInit {
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
+      (response) => {
       });
   }
 

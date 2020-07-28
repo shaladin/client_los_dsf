@@ -1,0 +1,105 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Asset Name",
+            "name": "FullAssetName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insured By",
+            "name": "InsuredBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Paid By",
+            "name": "PaidBy"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Insurance Company",
+            "name": "InscoName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Cover Period",
+            "name": "CoverPeriod"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Insurance Length",
+            "name": "InsLength"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Main Premi",
+            "name": "MainPremi"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Additional Premi",
+            "name": "AddPremi"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Fee",
+            "name": "Fee"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InsuredBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PaidBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CoverPeriod"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InsLength"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "MainPremi"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "AddPremi"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "Fee"
+        }
+    ]
+}

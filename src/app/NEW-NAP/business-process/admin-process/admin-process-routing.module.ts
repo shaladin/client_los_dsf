@@ -30,6 +30,8 @@ import { InvoiceVerifPagingComponent } from './invoice-verif/invoice-verif-pagin
 import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail.component';
 import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confirmation-paging/cust-confirmation-paging.component';
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
+import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-order.component';
+import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
 
 const routes: Routes = [
   {
@@ -54,6 +56,20 @@ const routes: Routes = [
         component: PurchaseOrderDetailComponent,
         data: {
           title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: "NewPurchaseOrder/Paging",
+        component: NewPurchaseOrderComponent,
+        data: {
+          title: "Purchase Order Paging"
+        }
+      },
+      {
+        path: "NewPurchaseOrder/Detail",
+        component: NewPurchaseOrderDetailComponent,
+        data: {
+          title: "Purchase Order Detail"
         }
       },
       {

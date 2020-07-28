@@ -18,6 +18,7 @@ export class AllAssetDataObj {
   AppCollateralAccessoryObjs: Array<AppCollateralAccessoryObj>;
   AppCollateralAttrObj: Array<AppCollateralAttrObj>;
   LOBCode: string;
+  AppAssetAttrObj: any;
   RowVersion: any;
 
   constructor() {

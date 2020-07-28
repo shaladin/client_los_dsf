@@ -71,6 +71,8 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   WfTaskListId: number;
   custStat: string;
+  mrCustTypeCode: string;
+  isReady: boolean = false;
 
 
   constructor(
@@ -94,253 +96,25 @@ export class FraudDetectionVerifComponent implements OnInit {
     if (this.WfTaskListId != null || this.WfTaskListId != undefined)
       this.claimTask();
 
+    this.getApp();
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.verfUser = context[CommonConstant.USER_NAME];
     this.verfDt = context[CommonConstant.BUSINESS_DT];
     this.verfCode = context[CommonConstant.EMP_NO];
-    await this.getApp();
-
   }
 
-  async getApp() {
-
-    //Get App Cust Data
-    this.appCustObj = new AppCustObj();
-    this.appCustPersonalObj = new AppCustPersonalObj();
-    this.appCustCompanyObj = new AppCustCompanyObj();
-    this.appAssetObj = new AppAssetObj();
-    this.appObj = new AppObj();
-    this.dukcapilObj = new FraudDukcapilObj();
-    this.leadObj = new LeadObj();
-
-    var appReqObj = { "AppId": this.appId };
-    this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
-      response => {
-        this.appObj = response;
-        console.log(this.appObj);
-        this.leadId = this.appObj.LeadId;
-        if (this.leadId != null) {
-          var leadReqObj = { "LeadId": this.leadId }
-          this.getLead(leadReqObj);
-        }
-      },
-      error => {
-        console.log("error")
-      }
-
-    );
-    this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
-      response => {
-        this.appCustObj = response["AppCustObj"];
-        this.appCustCompanyObj = response["AppCustCompanyObj"];
-        this.appCustPersonalObj = response["AppCustPersonalObj"];
-        this.idNo = this.appCustObj.IdNo;
-
-        console.log("appCustObj")
-        console.log(this.appCustObj)
-        console.log(this.appCustCompanyObj)
-
-        var fraudDukcapilReqObj = { "IdNo": this.idNo };
-
-        this.getFraudDukcapil(fraudDukcapilReqObj);
-
-        var requestDupCheck;
-        if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-          var requestDupCheckPersonal = {
-            "CustName": this.appCustObj.CustName,
-            "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
-            "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
-            "IdNo": this.appCustObj.IdNo,
-            "TaxIdNo": this.appCustObj.TaxIdNo,
-            "BirthDt": this.appCustPersonalObj.BirthDt,
-            "MotherMaidenName": this.appCustPersonalObj.MotherMaidenName,
-            "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,
-            "RowVersion": this.RowVersion
-          }
-          requestDupCheck = requestDupCheckPersonal;
-        } else {
-          var requestDupCheckCompany = {
-            "CustName": this.appCustObj.CustName,
-            "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
-            "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
-            "IdNo": this.appCustObj.IdNo,
-            "TaxIdNo": this.appCustObj.TaxIdNo,
-            "BirthDt": this.appCustCompanyObj.EstablishmentDt,
-            "MotherMaidenName": "-",
-            "MobilePhnNo1": "-",
-            "RowVersion": this.RowVersion
-          }
-          requestDupCheck = requestDupCheckCompany;
-        }
-
-        if (this.appCustObj.IsExistingCust == false) {
-          this.getAppDupCheckCust(requestDupCheck);
-        }
-
-        //List Negative Cust Duplicate Checking
-        this.http.post(this.GetNegativeCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
-          response => {
-            this.respNegativeCust = response;
-            this.ListNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
-            var idxSelected = this.ListNegativeCust.findIndex(x => x.CustNo == this.appCustObj.CustNo);
-            if (idxSelected > -1) {
-              this.ListNegativeCust[idxSelected].IsSelected = true;
-            }
-          },
-          error => {
-            console.log("error");
-          }
-        );
-      },
-      error => {
-        console.log("error")
+  getApp(){
+    var appObj = {
+      AppId: this.appId,
+    };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response) => {
+        this.mrCustTypeCode = response["MrCustTypeCode"];
+        this.isReady = true;
       }
     );
-
-    await this.getAssetNegative(appReqObj);
-  }
-
-
-
-  getLead(leadId) {
-    this.http.post<LeadObj>(this.getLeadByLeadId, leadId).subscribe(
-      response => {
-        this.leadObj = response;
-      },
-      error => {
-        console.log("error")
-      }
-    );
-
-  }
-
-  getAppDupCheckCust(appId) {
-    this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
-      response => {
-        this.respAppDupCheck = response;
-        this.listCustDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
-
-        var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
-        if (idxSelected > -1) {
-          this.listCustDuplicate[idxSelected].IsSelected = true;
-          this.custStat = CommonConstant.CustStatNew;
-        } else {
-          this.custStat = CommonConstant.CustStatExisting;
-        }
-      },
-      error => {
-        console.log("error")
-      }
-    );
-  }
-
-  async getAssetNegative(appId) {
-    await this.http.post<AppAssetObj>(this.getAppAssetByAppId, appId).toPromise().then(
-      response => {
-        this.appAssetObj = response;
-
-      },
-      error => {
-        console.log("error")
-      }
-    );
-
-    if (this.appAssetObj.AppAssetId != 0) {
-      await this.getNegativeAsset();
-    }
-
-    await this.getNegativeCollateral();
-    this.ListAssetNegative = this.ListAssetNegativeAsset.concat(this.ListAssetNegativeCollateral);
-  }
-
-  async getNegativeCollateral() {
-    var appCollateralObj = new AppCollateralObj();
-    var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
-    negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
-    appCollateralObj.AppId = this.appId;
-    var listAppCollateral = new Array<AppCollateralObj>();
-    await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
-      response => {
-        listAppCollateral = response[CommonConstant.ReturnObj];
-
-      },
-      error => {
-        console.log("error")
-      }
-    );
-
-    if (listAppCollateral != null) {
-      for (var i = 0; i < listAppCollateral.length; i++) {
-        var negativeAssetCheckObj = new NegativeAssetCheckObj();
-        negativeAssetCheckObj.AssetTypeCode = listAppCollateral[i].AssetTypeCode;
-        negativeAssetCheckObj.SerialNo1 = listAppCollateral[i].SerialNo1;
-        negativeAssetCheckObj.SerialNo2 = listAppCollateral[i].SerialNo2;
-        negativeAssetCheckObj.SerialNo3 = listAppCollateral[i].SerialNo3;
-        negativeAssetCheckObj.SerialNo4 = listAppCollateral[i].SerialNo4;
-        negativeAssetCheckObj.SerialNo5 = listAppCollateral[i].SerialNo5;
-        negativeAssetCheckForMultiAssetObj.RequestObj[i] = negativeAssetCheckObj;
-      }
-      await this.http.post(URLConstant.GetAssetNegativeDuplicateCheckByListOfAsset, negativeAssetCheckForMultiAssetObj).toPromise().then(
-        response => {
-          this.ListAssetNegativeCollateral = response[CommonConstant.ReturnObj];
-        });
-    }
-  }
-
-  getFraudDukcapil(idNo) {
-    this.http.post(this.getFraudDukcapilByIdNo, idNo).subscribe(
-      response => {
-        this.dukcapilObj = response;
-      },
-      error => {
-        console.log("error")
-      }
-    );
-  }
-
-  async getNegativeAsset() {
-    var negativeAssetObj = {
-      AssetCategoryCode: this.appAssetObj.AssetCategoryCode,
-      AssetTypeCode: this.appAssetObj.AssetTypeCode,
-      FullAssetCode: this.appAssetObj.FullAssetCode,
-      SerialNo1: this.appAssetObj.SerialNo1,
-      SerialNo2: this.appAssetObj.SerialNo2,
-      SerialNo3: this.appAssetObj.SerialNo3,
-      SerialNo4: this.appAssetObj.SerialNo4,
-      SerialNo5: this.appAssetObj.SerialNo5,
-    }
-    await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
-      response => {
-        this.respAssetNegative = response;
-        this.ListAssetNegativeAsset = response[CommonConstant.ReturnObj];
-      },
-      error => {
-        console.log("error")
-      }
-    );
-  }
-
-  open(content) {
-    //this.type = "Add";
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   cancel() {

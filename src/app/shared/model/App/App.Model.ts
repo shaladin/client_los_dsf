@@ -21,6 +21,7 @@ export class AppObj {
     NumOfInst: number;
     PayFreqCode: string;
     MrFirstInstTypeCode: string;
+    FirstInstTypeName: string;
     NumOfAsset: number;
     MrLcCalcMethodCode: string;
     LcInstRatePrml: number;
@@ -30,6 +31,7 @@ export class AppObj {
     SrvyOrderNo: string;
     ApvDt: Date;
     SalesOfficerNo: string;
+    SalesOfficerName: string;
     SalesNotes: string;
     SalesHeadNo: string;
     CreditAdminNo: string;

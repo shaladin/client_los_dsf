@@ -216,10 +216,16 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Diff Rate Amount</label>
+              <label>Subsidy Amount from Diff Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
+              <input type="" class="form-control full-width" formControlName="SubsidyAmtFromDiffRate"
+              [options]="{ allowNegative: false }"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SubsidyAmtFromDiffRate.invalid}" 
+              (focusout)="SubsidyAmtFromDiffRate_FocusOut($event)"
+              currencyMask>
+            <lib-uc-show-errors [control]="ParentForm.controls.SubsidyAmtFromDiffRate" [submit]="enjiForm.submitted">
+            </lib-uc-show-errors>
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Flat Rate To Supplier</label>
@@ -250,6 +256,18 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
+            <div class="col-md-3 form-inline">
+              <label>Commission Amount from Diff Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="" class="form-control full-width" formControlName="CommissionAmtFromDiffRate"
+              [options]="{ allowNegative: false }"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CommissionAmtFromDiffRate.invalid}" 
+              (focusout)="CommissionAmtFromDiffRate_FocusOut($event)"
+              currencyMask>
+            <lib-uc-show-errors [control]="ParentForm.controls.CommissionAmtFromDiffRate" [submit]="enjiForm.submitted">
+            </lib-uc-show-errors>
+            </div>
           </div>
         </div>
       </div>
@@ -275,6 +293,17 @@
                 <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Calculate Base</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <select formControlName="CalcBase" class="form-control full-width">
+                <option value="">--Select--</option>
+                <option *ngFor="let m of CalcBaseOptions" value={{m.Key}}>{{m.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.CalcBase" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -316,11 +345,8 @@
 
     <div class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-        (click)="CalcBaseOnRate()">
-        Calculate based on Rate
-      </button>
-      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalcBaseOnInst()">
-        Calculate based on Inst Amt
+        (click)="Calculate()">
+        Calculate
       </button>
     </div>
 
