@@ -29,7 +29,9 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-
+  showCancel: boolean = true;
+  IsLastStep: boolean = false;
+  ReturnHandlingHId: number = 0;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -57,12 +59,16 @@ export class NapAddDetailComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.showCancel = false;
+      }
     });
   }
 
   ngOnInit() {
     this.ClaimTask();
-    this.AppStepIndex = 0;
+    this.AppStepIndex = 1;
     this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewProdMainInfoObj.ddlEnvironments = [
@@ -81,30 +87,35 @@ export class NapAddDetailComponent implements OnInit {
     ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-          console.log(this.AppStepIndex);
-        } else {
-          this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
-          console.log(this.AppStepIndex);
-        }
-      }
-    );
-
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
     })
 
+    if (this.ReturnHandlingHId > 0) {
+      this.stepper.to(this.AppStepIndex);
+    }
+    else {
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.AppStepIndex = this.AppStep[response.AppCurrStep];
+            this.stepper.to(this.AppStepIndex);
+            console.log(this.AppStepIndex);
+          } else {
+            this.AppStepIndex = 0;
+            this.stepper.to(this.AppStepIndex);
+            console.log(this.AppStepIndex);
+          }
+        }
+      );
+    };
+
     this.MakeViewReturnInfoObj();
   }
 
   MakeViewReturnInfoObj() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
+    if (this.ReturnHandlingHId > 0) {
       var obj = {
         AppId: this.appId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
@@ -177,21 +188,30 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    if (AppStep == CommonConstant.AppStepTC)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
   }
 
   NextStep(Step) {
-    this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) => {
-        console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
-        this.ChangeTab(Step);
-        this.stepper.next();
-      },
-      (error) => {
-        console.error("Error when updating AppStep");
-        console.error(error);
-      }
-    )
+    if (this.ReturnHandlingHId > 0) {
+
+    }
+    else {
+      this.NapObj.AppCurrStep = Step;
+      this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+        (response) => {
+          console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);                  
+        },
+        (error) => {
+          console.error("Error when updating AppStep");
+          console.error(error);
+        }
+      )
+    }
+    this.ChangeTab(Step);
+    this.stepper.next();
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
@@ -207,7 +227,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Submit() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
+    if (this.ReturnHandlingHId > 0) {
       var obj = {
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
         ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
