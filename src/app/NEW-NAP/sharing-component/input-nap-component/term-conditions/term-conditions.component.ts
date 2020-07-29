@@ -9,7 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: 'app-term-conditions',
   templateUrl: './term-conditions.component.html',
-  styleUrls: [],
+  styleUrls: ['./term-conditions.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class TermConditionsComponent implements OnInit {

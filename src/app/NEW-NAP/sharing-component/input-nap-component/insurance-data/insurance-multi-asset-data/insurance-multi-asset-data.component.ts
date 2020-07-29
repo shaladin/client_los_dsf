@@ -30,7 +30,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-insurance-multi-asset-data',
-  templateUrl: './insurance-multi-asset-data.component.html'
+  templateUrl: './insurance-multi-asset-data.component.html',
+  styleUrls: ['./insurance-multi-asset-data.component.css']
+
 })
 export class InsuranceMultiAssetDataComponent implements OnInit {
   @Input() appId: number;

@@ -246,43 +246,66 @@ export class LoanObjectComponent implements OnInit {
       if(this.isCFNA){
       this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
+          this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+            (response) => {
+              this.modal.close();
+              this.toastr.successMessage(response["message"]);
+              enjiForm.reset();
+              this.loadDataTable();
+            },
+            (error) => {
+              console.log(error);
+            });
         },
         (error) => {
           console.log(error);
           return;
         });
+      }else{
+        this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+          (response) => {
+            this.modal.close();
+            this.toastr.successMessage(response["message"]);
+            enjiForm.reset();
+            this.loadDataTable();
+          },
+          (error) => {
+            console.log(error);
+          });
       }
-      this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-        (response) => {
-          this.modal.close();
-          this.toastr.successMessage(response["message"]);
-          enjiForm.reset();
-          this.loadDataTable();
-        },
-        (error) => {
-          console.log(error);
-        });
     }
     else {
       if(this.isCFNA){
       this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
+          console.log(response);
+          this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+            (response) => {
+              this.modal.close();
+              this.toastr.successMessage(response["message"]);
+              enjiForm.reset();
+              this.loadDataTable();
+            },
+            (error) => {
+              console.log(error);
+            });
         },
         (error) => {
           console.log(error);
           return;
         });
+      }else{
+        this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+          (response) => {
+            this.modal.close();
+            this.toastr.successMessage(response["message"]);
+            enjiForm.reset();
+            this.loadDataTable();
+          },
+          (error) => {
+            console.log(error);
+          });
       }
-      this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-        (response) => {
-          this.modal.close();
-          this.toastr.successMessage(response["message"]);
-          enjiForm.reset();
-          this.loadDataTable();
-        },
-        (error) => {
-          console.log(error);
-        });
     }
   }
 
@@ -319,11 +342,12 @@ export class LoanObjectComponent implements OnInit {
   CheckIsDisburseToCust() {
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
-      this.MainInfoForm.controls.lookupValueSupplier.clearValidators()
+      this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
+      console.log(this.MainInfoForm)
     } else {
       this.supplierInputLookupObj.isRequired = true;
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
     }
-    this.MainInfoForm.updateValueAndValidity();
+    this.MainInfoForm.controls.lookupValueSupplier["controls"].value.updateValueAndValidity();
   }
 }

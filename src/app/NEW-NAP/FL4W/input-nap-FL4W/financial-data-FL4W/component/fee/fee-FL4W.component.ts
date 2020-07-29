@@ -9,7 +9,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-fee-FL4W',
-  templateUrl: './fee-FL4W.component.html'
+  templateUrl: './fee-FL4W.component.html',
+  styleUrls: ['./fee-FL4W.component.css']
 })
 export class FeeFL4WComponent implements OnInit {
 
