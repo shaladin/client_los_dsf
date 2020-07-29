@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,6 +14,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 @Component({
   selector: 'app-guarantor-personal-FL4W',
   templateUrl: './guarantor-personal-FL4W.component.html',
@@ -48,6 +50,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   tempCustNo: string;
   isIdExpiredDateMandatory: boolean = false;
   businessDt: Date;
+  @Input() ListCustNoPersonal : any[];
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -102,7 +105,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
           })
           this.clearExpDt();
           this.PersonalForm.patchValue({
-            IdExpDt: this.resultData.AppGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.appGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
+            IdExpDt: this.resultData.AppGuarantorPersonalObj.IdExpDt != undefined ? formatDate(this.resultData.AppGuarantorPersonalObj.IdExpDt, 'yyyy-MM-dd', 'en-US') : '',
           });
           this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
           this.setAddrLegalObj();
@@ -113,7 +116,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       );
 
       if (this.resultData.AppGuarantorObj.CustNo != null) {
-        this.tempCustNo = this.resultData.appGuarantorObj.CustNo;
+        this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
         this.inputLookupObj.isReadonly = true;
         this.PersonalForm.controls["MobilePhnNo"].disable();
         this.PersonalForm.controls["MrMaritalStatCode"].disable();
@@ -126,7 +129,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         this.PersonalForm.controls["IdExpDt"].disable();
         this.PersonalForm.controls["MrIdTypeCode"].disable();
         this.PersonalForm.controls["TaxIdNo"].disable();
-        this.PersonalForm.controls["MrCustRelationshipCode"].disable();
+        // this.PersonalForm.controls["MrCustRelationshipCode"].disable();
         this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
         this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
         this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
@@ -257,15 +260,15 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorPersonalObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorPersonalObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorPersonalObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorPersonalObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorPersonalObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorPersonalObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorPersonalObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorPersonalObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorPersonalObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorPersonalObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorPersonalObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorPersonalObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorPersonalObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorPersonalObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorPersonalObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorPersonalObj.Zipcode };
   }
 
   setCountryName(countryCode) {
@@ -276,7 +279,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = response;
-        if (this.resultData.appGuarantorPersonalObj.MrNationalityCode == CommonConstant.NationalityLocal) {
+        if (this.resultData.AppGuarantorPersonalObj.MrNationalityCode == CommonConstant.NationalityLocal) {
           this.isLocal = true;
           this.selectedNationalityCountryName = response["CountryName"];
 
@@ -321,6 +324,16 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupCountry.json";
     this.inputLookupObj1.isRequired = false;
 
+    if(this.ListCustNoPersonal.length > 0){
+      var arrCopyLookupCrit = new Array();
+      var addCrit = new CriteriaObj();
+      addCrit.DataType = "text";
+      addCrit.propName = "A.CUST_NO";
+      addCrit.restriction = AdInsConstant.RestrictionNotIn;
+      addCrit.listValue = this.ListCustNoPersonal;
+      arrCopyLookupCrit.push(addCrit);
+      this.inputLookupObj.addCritInput = arrCopyLookupCrit;
+    }
   }
 
   initAddr() {
@@ -411,7 +424,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.PersonalForm.controls["IdExpDt"].disable();
     this.PersonalForm.controls["MrIdTypeCode"].disable();
     this.PersonalForm.controls["TaxIdNo"].disable();
-    this.PersonalForm.controls["MrCustRelationshipCode"].disable();
+    // this.PersonalForm.controls["MrCustRelationshipCode"].disable();
     this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
     this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
     this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();

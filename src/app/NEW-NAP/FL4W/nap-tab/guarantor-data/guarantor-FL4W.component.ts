@@ -20,6 +20,8 @@ export class GuarantorFL4WComponent implements OnInit {
   @Input() MrGuarantorTypeCode : any;
   @Input() showCancel: boolean = true;
   @Input() mode : any;
+  @Input() ListCustNoPersonal : any;
+  @Input() ListCustNoCompany : any;
   @Output() closeX: EventEmitter<any> = new EventEmitter();
   closeChk : boolean;
 

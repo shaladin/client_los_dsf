@@ -13,7 +13,7 @@
                   <div class="form-group row adins-required">
                     <label class="col-md-4 adInsLabel">Guarantor Name </label>
                     <div class="col-md-8">
-                      <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="PersonalForm"
+                      <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="PersonalForm" #LookupGuarantor
                         [enjiForm]="enjiForm" [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)">
                       </lib-uclookupgeneric>
                     </div>

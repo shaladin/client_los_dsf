@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +17,8 @@ import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCom
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-guarantor-company-FL4W',
@@ -31,6 +33,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Input() mode: any;
   @Output() close: EventEmitter<any> = new EventEmitter();
+  @Input() ListCustNoCompany : any[];
   param: any;
   key: any;
   criteria: CriteriaObj[] = [];
@@ -224,6 +227,17 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     this.inputLookupObj1.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.isRequired = false;
+
+    if(this.ListCustNoCompany.length > 0){
+      var arrCopyLookupCrit = new Array();
+      var addCrit = new CriteriaObj();
+      addCrit.DataType = "text";
+      addCrit.propName = "CUST_NO";
+      addCrit.restriction = AdInsConstant.RestrictionNotIn;
+      addCrit.listValue = this.ListCustNoCompany;
+      arrCopyLookupCrit.push(addCrit);
+      this.inputLookupObj.addCritInput = arrCopyLookupCrit;
+    }
   }
 
   initAddr() {
