@@ -6,14 +6,27 @@ export class UcPagingObj {
     apiQryPaging: string;
     deleteUrl: string;
     pagingJson: string;
-    ddlEnvironments: Array<EnviObj>;
+    arrCritObj: any;
     addCritInput: Array<CriteriaObj>;
+    ddlEnvironments: Array<EnviObj>;
     whereValue: Array<WhereValueObj>;
+    isHideSearch: boolean;
+    delay: number;
+    isSearched: boolean;
 
     constructor() {
-        this.ddlEnvironments = new Array<EnviObj>();
+        this._url = "";
+        this.enviromentUrl = "";
+        this.apiQryPaging = "";
+        this.deleteUrl = "";
+        this.pagingJson = "";
+        this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
+        this.ddlEnvironments = new Array<EnviObj>();
         this.whereValue = new Array<WhereValueObj>();
+        this.isHideSearch = false;
+        this.delay = 0;
+        this.isSearched = false;
     }
 }
 export class EnviObj {

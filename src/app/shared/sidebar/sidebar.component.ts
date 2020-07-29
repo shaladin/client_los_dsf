@@ -48,11 +48,11 @@ export class SidebarComponent implements OnInit {
         }
     }
 
-    genParam(params: [{ 'attr': string, 'value': string }]) {
+    genParam(params: [{ 'Attr': string, 'Value': string }]) {
         var arrList = {};
 
         for (var i = 0; i < params.length; i++) {
-            arrList[params[i].attr] = params[i].value;
+            arrList[params[i].Attr] = params[i].Value;
         }
         return arrList;
     }
@@ -64,6 +64,8 @@ export class SidebarComponent implements OnInit {
     }
     
     navigateSkipLocationChange(ev) {
+        //sementara Sementara begini dulu, belum ketemu solusi lain
+        //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu
         this.router.navigateByUrl("/dashboard/dash-board", { skipLocationChange: true }).then(() => {
             this.router.navigate([ev.Path], { queryParams: this.genParam(ev.Params) });
         });

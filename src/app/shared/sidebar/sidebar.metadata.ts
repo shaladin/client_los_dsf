@@ -8,5 +8,5 @@ export interface RouteInfo {
     BadgeClass: string;
     IsExternalLink: boolean;
     Submenu : RouteInfo[];
-    Params : {attr:string, value:string}[];
+    Params : {Attr:string, Value:string}[];
 }
