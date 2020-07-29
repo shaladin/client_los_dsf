@@ -306,8 +306,11 @@
                         *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index"
                         class="custom-control display-inline-block">
                         <div [formGroupName]="i">
-                          <mat-checkbox [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'" formControlName="Value">
-                            {{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox>
+                          <label [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'">
+                            <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{insAddCvgTypeRuleObj[i].Value}}
+                          </label>
+                          <!-- <mat-checkbox [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'" formControlName="Value">
+                            {{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox> -->
                         </div>
                       </label>
                     </div>
@@ -387,11 +390,11 @@
                           <td class="text-left">
                             <div formArrayName="AppInsAddCvgs">
                               <div [formGroupName]="j">
-                                <mat-checkbox
-                                  [disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value == 'Loading'"
-                                  formControlName="Value" (change)="IsAddCvgChanged($event)">
-                                  {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
-                                </mat-checkbox>
+                                <label class="">
+                                <input type="checkbox" class="checkboxLabel" [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value == 'Loading' ? true : null"
+                                formControlName="Value" (change)="IsAddCvgChanged($event)">                                
+                                {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
+                                </label>
                               </div>
                             </div>
                           </td>

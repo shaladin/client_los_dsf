@@ -118,7 +118,8 @@ export class CollateralDetailComponent implements OnInit {
       this.getAppCollData(this.AppId, 0);
     }
 
-    this.AddCollForm.controls.AssetTypeCode.disable();
+    // SEMENTARA DI COMMENT BUAT CFNA
+    // this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {
@@ -151,7 +152,8 @@ export class CollateralDetailComponent implements OnInit {
           this.AddCollForm.patchValue({
             AssetTypeCode: this.CollTypeList[0].Key
           });
-          this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
+          // SEMENTARA DI COMMENT BUAT CFNA
+          // this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
         }
       });
 
@@ -242,7 +244,8 @@ export class CollateralDetailComponent implements OnInit {
         this.AddCollForm.patchValue({
           AssetTypeCode: this.AssetTypeCode
         });
-        this.onItemChange(this.AssetTypeCode);
+        // SEMENTARA DI COMMENT BUAT CFNA
+        // this.onItemChange(this.AssetTypeCode);
         // Generate Collateral Doc
         this.getRefAssetDocList();
 
@@ -373,7 +376,8 @@ export class CollateralDetailComponent implements OnInit {
         }
 
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
-        this.onItemChange(this.appCollateralObj.AssetTypeCode);
+        // SEMENTARA DI COMMENT BUAT CFNA
+        // this.onItemChange(this.appCollateralObj.AssetTypeCode);
         this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
         this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
         this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
