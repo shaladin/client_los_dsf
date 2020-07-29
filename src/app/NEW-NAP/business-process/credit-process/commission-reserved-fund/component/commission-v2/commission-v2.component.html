@@ -27,10 +27,10 @@
                   <label>Total Commision Amount</label>
                 </div>
                 <div class="col-md-4 form-inline form-inline-right">
-                  <label *ngIf="Summary.TotalCommisionAmount <= RemainingAllocAmt"
+                  <label *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt"
                     style="text-align: right;">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
-                  <label *ngIf="Summary.TotalCommisionAmount > RemainingAllocAmt"
+                  <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
                     style="color: red; text-align: right;">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
                 </div>

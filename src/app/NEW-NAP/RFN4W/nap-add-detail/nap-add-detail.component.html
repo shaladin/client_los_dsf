@@ -3,10 +3,10 @@
     <lib-ucviewgeneric [viewGenericObj]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
+        <lib-ucSubsection *ngIf="ReturnHandlingHId > 0" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
           [panel]="'formReturnInfo'">
         </lib-ucSubsection>
-        <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
+        <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
           <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
             #enjiForm="ngForm">
             <div class="form-body">
@@ -114,19 +114,19 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              <app-customer-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              <app-guarantor-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-guarantor-paging>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              <app-referantor-data *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="'true'"
+              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel"
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
@@ -134,17 +134,17 @@
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId"
-                (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-insurance-data>
+                (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-insurance-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-financial-data>
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
           </div>
         </div>
@@ -152,16 +152,23 @@
     </div>
   </div>
 </div>
-
-<div class="form-actions pull-right">
-  <!-- <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
-    <i class="fa fa-check-square-o"></i> Back
-  </button> -->
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Back
-  </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit Return Handling
-  </button>
+<br>
+<div class="col-md-12">
+  <div class="form-action pull-right">
+  </div>
+  <div class="card" *ngIf="ReturnHandlingHId > 0">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+                  [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CFRFN4W'}" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
