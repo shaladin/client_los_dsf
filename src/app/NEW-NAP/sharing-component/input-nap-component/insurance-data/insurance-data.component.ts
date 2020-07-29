@@ -31,7 +31,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-insurance-data',
   templateUrl: './insurance-data.component.html',
-  styleUrls: []
+  styleUrls: ['./insurance-data.component.css']
 })
 
 export class InsuranceDataComponent implements OnInit {
