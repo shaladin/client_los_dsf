@@ -207,8 +207,12 @@ export class ReferantorDataComponent implements OnInit {
     } else {
       this.inputLookupObj.isRequired = true;
       this.inputLookupObj.isReady = true;
-      this.NapAppReferantorForm.controls.AccountBank.enable();      
-      this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+      this.NapAppReferantorForm.controls.AccountBank.enable();
+      if(this.bankItems.length > 0){      
+        this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+      }else{
+        this.NapAppReferantorForm.get("AccountBank").clearValidators();
+      }
       this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
     }
   }
@@ -261,6 +265,10 @@ export class ReferantorDataComponent implements OnInit {
         console.log(response);
         this.bankItems = response[CommonConstant.ReturnObj];
         console.log(this.bankItems);
+        if(this.bankItems.length == 0){
+          this.NapAppReferantorForm.get("AccountBank").clearValidators();
+          this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
+        }
       },
       (error) => {
         console.log(error);
