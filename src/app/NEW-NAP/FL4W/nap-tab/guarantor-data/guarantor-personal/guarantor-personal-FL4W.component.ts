@@ -15,7 +15,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+
 @Component({
   selector: 'app-guarantor-personal-FL4W',
   templateUrl: './guarantor-personal-FL4W.component.html',
@@ -23,15 +23,14 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
   providers: [NGXToastrService]
 })
 export class GuarantorPersonalFL4WComponent implements OnInit {
-
-  @Input() AppId: any;
-  @Input() AppGuarantorId: any;
+  @Input() AppId: number;
+  @Input() AppGuarantorId: number;
   @Input() showCancel: boolean = true;
-  @Input() mode: any;
+  @Input() mode: string;
   @Output() close: EventEmitter<any> = new EventEmitter();
   param: string;
   resultData: any;
-  inputLookupObj: any;
+  inputLookupObj: InputLookupObj;
   MrCustRelationshipCode: any;
   MrIdTypeCode: any;
   MrGenderCode: any;
@@ -40,11 +39,11 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   MrReligionCode: any;
   AddrObj: AddrObj;
   inputFieldObj: InputFieldObj;
-  inputLookupObj1: any;
+  inputLookupObj1: InputLookupObj;
   appGuarantorPersonalObj: AppGuarantorPersonalObj;
   guarantorPersonalObj: GuarantorPersonalObj;
-  AppGuarantorPersonalId: any;
-  selectedNationalityCountryCode: any;
+  AppGuarantorPersonalId: number;
+  selectedNationalityCountryCode: string;
   isLocal: boolean = false;
   countryCode: string;
   tempCustNo: string;
@@ -297,7 +296,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev) {
     if (this.PersonalForm.controls.MrNationalityCode.value == CommonConstant.NationalityLocal) {
-      console.log(this.MrNationalityCode);
       var idx = ev.target.selectedIndex - 1;
       this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
       this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
@@ -343,7 +341,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   // GuarantorName="";
   lookupGuarantor(event) {
-    console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
@@ -390,7 +387,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
          }).subscribe(
           (response) => {
-            console.log(response);
             this.resultData = response;
             this.AddrObj = new AddrObj();
             this.AddrObj.Addr = this.resultData.Addr;
@@ -424,21 +420,17 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.PersonalForm.controls["IdExpDt"].disable();
     this.PersonalForm.controls["MrIdTypeCode"].disable();
     this.PersonalForm.controls["TaxIdNo"].disable();
-    // this.PersonalForm.controls["MrCustRelationshipCode"].disable();
     this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
     this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
     this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
   }
 
-  // CountryCode="";
   lookupCountry(event) {
-    console.log(event);
     this.PersonalForm.patchValue(
       {
         CountryCode: event.CountryCode
       }
     );
-    console.log(this.PersonalForm);
   }
 
   Add() {
@@ -447,7 +439,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   }
 
   clearExpDt() {
-    // if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP") {
     if (this.PersonalForm.controls.MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.PersonalForm.patchValue({
         IdExpDt: '',
@@ -483,9 +474,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     let d3 = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.BirthDt);
     let d4 = new Date(this.Max17YO);
     if (d3 > d4) {
-      // this.toastr.errorMessage("Birth Date can not be more than " + this.Max17YO);
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
-      
       flag = false;
     }
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
@@ -511,7 +500,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   }
 
   SaveForm() {
-    console.log(this.PersonalForm);
     this.guarantorPersonalObj = new GuarantorPersonalObj();
     this.Add();
     if (this.mode == "edit") {
@@ -530,7 +518,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     } else {
       this.http.post(URLConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
         },
@@ -564,9 +551,5 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   cancel() {
     this.modalService.dismissAll();
-  }
-
-  test() {
-    console.log(this.PersonalForm);
   }
 }

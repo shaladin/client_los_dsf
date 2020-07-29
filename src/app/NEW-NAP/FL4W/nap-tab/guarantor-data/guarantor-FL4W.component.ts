@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -11,8 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 @Component({
   selector: 'app-guarantor-FL4W',
   templateUrl: './guarantor-FL4W.component.html',
-  styleUrls: [],
-  providers: [NGXToastrService]
+  styleUrls: []
 })
 export class GuarantorFL4WComponent implements OnInit {
   @Input() AppId : any;
@@ -28,13 +25,11 @@ export class GuarantorFL4WComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
     private route: ActivatedRoute) {
   }
 
   isReady: boolean = false;
   param : string;
-  key: any;
   criteria: CriteriaObj[] = [];
   CustTypeObj: any;
   refMasterObj = {
@@ -46,8 +41,7 @@ export class GuarantorFL4WComponent implements OnInit {
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
   });
 
-  // AppGuarantorId:any;
-  MrCustTypeCode:any;
+  MrCustTypeCode:string;
   ngOnInit() {
     console.log(this.isReady);
     if(this.AppGuarantorId != null){

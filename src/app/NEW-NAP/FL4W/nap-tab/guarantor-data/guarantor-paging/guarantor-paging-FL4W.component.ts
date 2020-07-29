@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
-import { WizardComponent } from 'angular-archwizard';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -18,21 +16,18 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
   styleUrls: []
 })
 export class GuarantorPagingFL4WComponent implements OnInit {
-
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-
-  inputGridObj: any;
+  inputGridObj: InputGridObj;
   result: any = new Array();
   ListCustNoPersonal : any = new Array();
   ListCustNoCompany : any = new Array();
-  resultData: any;
-  closeResult: any;
-  AppGuarantorId: any;
-  MrGuarantorTypeCode: any;
-  mode: any;
+  closeResult: string;
+  AppGuarantorId: number;
+  MrGuarantorTypeCode: string;
+  mode: string;
   appWizardObj: AppWizardObj;
   closeChk: any;
   MrCustRelationshipCode: any = new Array();
@@ -44,12 +39,10 @@ export class GuarantorPagingFL4WComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
-    console.log('test');
     var guarantorObj = new GuarantorObj();
     guarantorObj.AppId = this.AppId;
     this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
-        console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
@@ -66,7 +59,6 @@ export class GuarantorPagingFL4WComponent implements OnInit {
             this.ListCustNoCompany.push(this.result[i]['CustNo']);
           }
         }
-        console.log(this.result);
       },
       (error) => {
         console.log(error);
@@ -112,7 +104,6 @@ export class GuarantorPagingFL4WComponent implements OnInit {
       this.MrGuarantorTypeCode = ev.RowObj.MrGuarantorTypeCode;
       this.open(content);
     }
-
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var guarantorObj = new GuarantorObj();
@@ -146,7 +137,6 @@ export class GuarantorPagingFL4WComponent implements OnInit {
         );
       }
     }
-
   }
 
   loadGuarantorListData(appId: number) {
@@ -184,5 +174,4 @@ export class GuarantorPagingFL4WComponent implements OnInit {
       this.modalService.dismissAll();
     }
   }
-
 }
