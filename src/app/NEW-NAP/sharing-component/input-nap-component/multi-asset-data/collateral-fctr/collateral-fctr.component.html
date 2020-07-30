@@ -1,17 +1,17 @@
 <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
   (ngSubmit)="AddCollForm.valid && SaveForm()">
-  <lib-ucSubsection [id]="'AddCollDatasId'" [title]="'Additional Collateral'" [panel]="'AddCollDatas'">
+  <lib-ucSubsection [id]="'AddCollDatasId'" [title]="'Collateral'" [panel]="'AddCollDatas'">
   </lib-ucSubsection>
   <div [hidden]="HiddenState=='false'">
     <app-multi-collateral-paging (objOutput)="outputValue($event)"></app-multi-collateral-paging>
   </div>
   <div [hidden]="HiddenState=='false'">
     <div class="form-header">
-      <h4>Additional Collateral - {{type}}</h4>
+      <h4>Collateral - {{type}}</h4>
     </div>
     <div class="form-body">
       <div class="px-3">
-        <lib-ucSubsection [id]="'AdditionalCollId'" [title]="'Additional Collateral'" [panel]="'AdditionalColl'">
+        <lib-ucSubsection [id]="'AdditionalCollId'" [title]="'Collateral'" [panel]="'AdditionalColl'">
         </lib-ucSubsection>
         <div id="AdditionalColl">
           <div class="form-group row" id="ExistingCollateral">

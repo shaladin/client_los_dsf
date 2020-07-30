@@ -350,3 +350,10 @@ form.form-horizontal .form-group .label-control {
     text-align: left;
     padding-top: 10px;
 }
+
+.modal-sm{
+    max-width: 50%;
+    position: absolute;
+    left: 30%;
+    top: 30%;
+}
