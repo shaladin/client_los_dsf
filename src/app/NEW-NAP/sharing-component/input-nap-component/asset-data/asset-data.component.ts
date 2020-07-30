@@ -54,11 +54,11 @@ export class AssetDataComponent implements OnInit {
     AssetPriceAmt: ['', Validators.required],
     DownPaymentAmt: ['', Validators.required],
     DownPaymentPrctg: ['', Validators.max(100)],
-    AssetNotes: ['', [ Validators.maxLength(4000)]],
+    AssetNotes: ['', [Validators.required, Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
-    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
 
 
     /* AppAsset Value That required but not in form*/
@@ -815,7 +815,7 @@ export class AssetDataComponent implements OnInit {
       });
     }
   }
-  updateValueDownPaymentPrctg(event : any){
+  updateValueDownPaymentPrctg(){
     var DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
     if(DownPaymentPrctg > 100){
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
@@ -1010,6 +1010,7 @@ export class AssetDataComponent implements OnInit {
           this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
           this.GetProvDistrict();
           this.bindAccessories();
+          this.updateValueDownPaymentPrctg();
         }
 
         if (this.appAssetObj != null) {
@@ -1024,7 +1025,6 @@ export class AssetDataComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
 
 

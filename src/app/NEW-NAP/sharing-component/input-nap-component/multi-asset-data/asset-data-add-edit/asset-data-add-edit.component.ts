@@ -135,17 +135,17 @@ export class AssetDataAddEditComponent implements OnInit {
     FullAssetName: [''],
     AssetCategoryCode: [''],
     AssetTypeCode: [''],
-    MrDownPaymentTypeCode: [''],
+    MrDownPaymentTypeCode: ['', Validators.required],
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
-    DownPayment: [''],
+    DownPayment: ['',Validators.required],
     MrAssetConditionCode: [''],
     MrAssetConditionCodeView: [''],
     AssetUsage: [''],
     LicensePlate: [''],
     ChassisNo: [''],
-    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     EngineNo: [''],
-    Notes: [''],
+    Notes: ['', Validators.required],
 
     TaxIssueDt: [''],
     Color: [''],
@@ -501,7 +501,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ddd")
     console.log(this.AppAssetId)
     console.log(this.mode)
 
@@ -534,7 +533,7 @@ export class AssetDataAddEditComponent implements OnInit {
             TaxCityIssuer: this.returnAppAssetObj.TaxCityIssuer,
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
-
+          this.updateValueDownPaymentPrctg();
           if (this.returnAppAssetObj.MrAssetConditionCode == "USED") {
             this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
             this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
@@ -935,7 +934,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   }
 
-  updateValueDownPayment(event : any){
+  updateValueDownPayment(){
     var DownPayment = this.AssetDataForm.controls.AssetPrice.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
     if(DownPayment > this.AssetDataForm.controls.AssetPrice.value){
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
@@ -950,7 +949,7 @@ export class AssetDataAddEditComponent implements OnInit {
       });
     }
   }
-  updateValueDownPaymentPrctg(event : any){
+  updateValueDownPaymentPrctg(){
     var DownPaymentPrctg = this.AssetDataForm.controls.DownPayment.value / this.AssetDataForm.controls.AssetPrice.value * 100;
     if(DownPaymentPrctg > 100){
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
