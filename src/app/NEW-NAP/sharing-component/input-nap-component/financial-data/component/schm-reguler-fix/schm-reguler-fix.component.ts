@@ -88,6 +88,22 @@ export class SchmRegulerFixComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == false 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_STD_RATE);
+      return;  
+    }
+
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == true 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_STD_RATE);
+      return;  
+    }
+
     if (this.ValidateFee() == false) {
       return;
     }
@@ -127,7 +143,7 @@ export class SchmRegulerFixComponent implements OnInit {
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
 
-        if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnCommission){
+        if(this.ParentForm.controls.IsSubsidyRateExist.value == true){
           this.RefreshSubsidy.emit();
         }
       }
@@ -180,7 +196,9 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.get("CommissionAmtFromDiffRate").disable();
     }
     else{
-      this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
+      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
+      }
     }
   }
 
@@ -194,7 +212,9 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.patchValue({
         SubsidyAmtFromDiffRate: 0
       });
-      this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
     }
   }
 

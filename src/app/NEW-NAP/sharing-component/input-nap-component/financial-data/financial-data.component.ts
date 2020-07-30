@@ -92,6 +92,7 @@ export class FinancialDataComponent implements OnInit {
         DiffRateAmt: 0,
         SubsidyAmtFromDiffRate: {value: 0, disabled: true},
         CommissionAmtFromDiffRate: 0,
+        IsSubsidyRateExist: false,
 
         TotalInterestAmt: 0,
         TotalAR: 0,
@@ -220,9 +221,13 @@ export class FinancialDataComponent implements OnInit {
       if(subsidyRate != undefined){
         this.FinDataForm.patchValue({
           CommissionAmtFromDiffRate: 0,
+          IsSubsidyRateExist: true
         });
         this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
       }else{
+        this.FinDataForm.patchValue({
+          IsSubsidyRateExist: false
+        });
         this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
       }
     }  
