@@ -15,6 +15,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-schm-even-principal',
@@ -27,6 +28,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: any;
   responseCalc: any;
@@ -42,6 +44,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.LoadCalcBaseType();
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
@@ -71,6 +74,21 @@ export class SchmEvenPrincipalComponent implements OnInit {
     );
   }
 
+  LoadCalcBaseType() {
+    this.http.post(URLConstant.GetListActiveRefMaster, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
+      (response) => {
+        this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.ReserveField1.indexOf(CommonConstant.InstSchmEvenPrincipal) !== -1);
+
+        if(this.CalcBaseOptions.length == 1){
+          this.ParentForm.patchValue({
+            CalcBase: this.CalcBaseOptions[0].MasterCode
+          });
+        }
+      }
+    );
+  }
+
   SetInstallmentTable() {
     var ctrInstallment = this.ParentForm.get("InstallmentTable");
     if (!ctrInstallment) {
@@ -95,11 +113,16 @@ export class SchmEvenPrincipalComponent implements OnInit {
   }
 
 
-  CalculateInstallment() {
+  Calculate() {
+    if(this.ParentForm.getRawValue().CalcBase == ''){
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
+      return;
+    }
+
     if (this.ValidateFee() == false) {
       return;
     }
-    this.calcEvenPrincipleObj = this.ParentForm.value;
+    this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
 
 
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(

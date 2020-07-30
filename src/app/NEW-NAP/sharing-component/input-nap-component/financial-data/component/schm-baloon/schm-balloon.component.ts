@@ -11,6 +11,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-schm-balloon',
@@ -25,7 +26,7 @@ export class SchmBalloonComponent implements OnInit {
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  CalcBaseOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
   listInstallment: any;
   responseCalc: any;
@@ -65,9 +66,17 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   LoadCalcBaseType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.ReserveField1.indexOf(CommonConstant.InstSchmBalloon) !== -1);
+
+        if(this.CalcBaseOptions.length == 1){
+          this.ParentForm.patchValue({
+            CalcBase: this.CalcBaseOptions[0].MasterCode
+          });
+          this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+        }
       }
     );
   }
@@ -88,6 +97,21 @@ export class SchmBalloonComponent implements OnInit {
     if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0){
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
+    }
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == false 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_STD_RATE);
+      return;  
+    }
+
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == true 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_STD_RATE);
+      return;  
     }
     if(this.ValidateFee() == false){
       return;
@@ -133,7 +157,7 @@ export class SchmBalloonComponent implements OnInit {
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
 
-        if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnCommission){
+        if(this.ParentForm.controls.IsSubsidyRateExist.value == true){
           this.RefreshSubsidy.emit();
         }
       }
@@ -185,7 +209,9 @@ export class SchmBalloonComponent implements OnInit {
       });
       this.ParentForm.get("CommissionAmtFromDiffRate").disable();
     }else{
-      this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
+      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
+      }    
     }
   }
 
@@ -199,17 +225,25 @@ export class SchmBalloonComponent implements OnInit {
       this.ParentForm.patchValue({
         SubsidyAmtFromDiffRate: 0
       });
+      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
     }
   }
 
   CalcBaseChanged(event){
-    if(event.target.value == CommonConstant.FinDataCalcBaseOnRate){
+    this.SetEnableDisableInputByCalcBase(event.target.value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetEnableDisableInputByCalcBase(calcBase){
+    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
-    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnInst){    
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
-    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnCommission){
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
     }else{

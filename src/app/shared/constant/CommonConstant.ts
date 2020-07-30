@@ -282,7 +282,9 @@ export class CommonConstant {
     public static InstSchmBalloon = "BL";
     public static InstSchmStepUpStepDownNormal = "STNM";
     public static InstSchmStepUpStepDownLeasing = "STLS";
+    public static InstSchmStepUpStepDownCummulative = "STCM";
     public static InstSchmRegularFix = "RF";
+    public static InstSchmEvenPrincipal = "EP";
 
 
     //REF PROD COMPNT
