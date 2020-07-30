@@ -266,6 +266,8 @@ export class CommonConstant {
     // INSURANCE ADDITIONAL COVERAGE
     public static MrAddCvgTypeCodeLoading = 'LOADING';
     public static AddCvgTypeNameLoading = 'Loading';
+    public static MrAddCvgTypeCodeTpl = 'TPL';
+
 
     //INS PAID BY
     public static InsPaidByCustomer = "CU";
@@ -465,4 +467,7 @@ export class CommonConstant {
     
     // Rule Behaviour
     public static RuleBehaviourLock = "LOCK";
+
+    //Status Code
+    public static STATUS_CODE_USER_LOCKED = "002";
 }

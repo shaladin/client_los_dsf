@@ -73,27 +73,14 @@
             "label": "Mou Date To",
             "restriction": "lte",
             "datatype": "date"
-        },
+        },      
         {
-            "type": "dropdown",
-            "name": "WTL.CLAIM_STAT",
-            "id": "ActiveStatusId",
-            "label": "Task Claim Status",
+            "type": "textbox",
+            "name": "MOU.REF_NO",
+            "id": "RefNoId",
             "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": false,
-            "isSelectOne": false,
-            "items": [
-                {
-                    "key": "CLAIMED",
-                    "value": "Claimed"
-                },
-                {
-                    "key": "UNCLAIMED",
-                    "value": "Unclaimed"
-                }
-            ],
-            "itemsUrl": []
+            "label": "Reference No.",
+            "placeholder": "Placeholder"
         },
         {
             "type": "textbox",
