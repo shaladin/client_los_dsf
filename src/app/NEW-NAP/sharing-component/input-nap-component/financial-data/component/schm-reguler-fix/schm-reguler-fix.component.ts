@@ -11,6 +11,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-schm-reguler-fix',
@@ -24,7 +25,7 @@ export class SchmRegulerFixComponent implements OnInit {
 
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  CalcBaseOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   listInstallment: any;
@@ -64,9 +65,17 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   LoadCalcBaseType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMaster, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.ReserveField1.indexOf(CommonConstant.InstSchmRegularFix) !== -1);
+
+        if(this.CalcBaseOptions.length == 1){
+          this.ParentForm.patchValue({
+            CalcBase: this.CalcBaseOptions[0].MasterCode
+          });
+          this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+        }
       }
     );
   }
@@ -219,15 +228,20 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   CalcBaseChanged(event){
-    if(event.target.value == CommonConstant.FinDataCalcBaseOnRate){
+    this.SetEnableDisableInputByCalcBase(event.target.value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetEnableDisableInputByCalcBase(calcBase){
+    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
       this.ParentForm.get("RateType").enable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
-    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnInst){
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
-    }else if(event.target.value == CommonConstant.FinDataCalcBaseOnCommission){
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
