@@ -44,7 +44,7 @@ export class MouCustFeeComponent implements OnInit {
   }
 
   openModalAddFee() {
-    const modalMouFee = this.modalService.open(MouCustFeeDetailComponent);
+    const modalMouFee = this.modalService.open(MouCustFeeDetailComponent, {size: 'lg', windowClass: 'modal-sm'});
     modalMouFee.componentInstance.MouCustId = this.MouCustId;
     modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
     modalMouFee.result.then(
