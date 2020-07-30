@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 
@@ -38,7 +39,6 @@ export class ResetPasswordComponent implements OnInit {
     if (this.code != "") {
       this.getRefUser();
     }
-
   }
 
   SaveForm() {
@@ -61,7 +61,7 @@ export class ResetPasswordComponent implements OnInit {
       );
     }
     else {
-      this.toastr.warningMessage("Password Mismatch");
+      this.toastr.warningMessage(ExceptionConstant.INCORRECT_PASSWORD);
     }
   }
 
