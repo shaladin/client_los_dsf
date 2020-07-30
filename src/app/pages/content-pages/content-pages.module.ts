@@ -24,6 +24,8 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { PagesComponent } from './pages/pages.component'; 
+import { RequestNewPasswordComponent } from "./request-new-password/request-new-password.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 
 export const customCurrencyMaskConfig = {     
     align: "left",     
@@ -63,7 +65,9 @@ export const customCurrencyMaskConfig = {
     declarations: [
         LoginPageComponent,
         CustomerSelfVerificationComponent,
-        PagesComponent 
+        PagesComponent,
+        RequestNewPasswordComponent,
+        ResetPasswordComponent
     ],
       entryComponents: [
         UclookupgenericComponent,
