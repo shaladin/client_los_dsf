@@ -271,7 +271,7 @@
               </div>
 
               <div *ngIf="this.collateral == 'Exist'">
-                <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Additional Collateral'" [panel]="'AddCollInfo'">
+                <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral'" [panel]="'AddCollInfo'">
                 </lib-ucSubsection>
                 <div id="AddCollInfo">
                   <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
@@ -390,7 +390,7 @@
       <div class="px-3">
         <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
           (ngSubmit)="AddCollForm.valid && SaveForm()">
-          <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Additional Collateral - Add Existing'"
+          <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral - Add Existing'"
             [panel]="'AddCollInfo'">
           </lib-ucSubsection>
           <div id="AddCollInfo">

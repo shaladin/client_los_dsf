@@ -63,7 +63,7 @@
 <div *ngIf="type == 'AddEdit'" class="px-3">
   <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
     (ngSubmit)="AddCollForm.valid && SaveForm()">
-    <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Additional Collateral Info'" [panel]="'AddCollInfo'">
+    <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral Info'" [panel]="'AddCollInfo'">
     </lib-ucSubsection>
     <div id="AddCollInfo">
       <div class="form-group row">
@@ -133,7 +133,7 @@
       </div>
     </div>
 
-    <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Additional Collateral Owner'" [panel]="'AddCollOwner'">
+    <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
     <div id="AddCollOwner">
       <div class="form-group row">
@@ -221,7 +221,7 @@
 <div *ngIf="type == 'AddExisting'" class="px-3">
   <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
     (ngSubmit)="AddCollForm.valid && SaveForm()">
-    <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Additional Collateral - Add Existing'" [panel]="'AddCollInfo'">
+    <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral - Add Existing'" [panel]="'AddCollInfo'">
     </lib-ucSubsection>
     <div id="AddCollInfo">
       <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
