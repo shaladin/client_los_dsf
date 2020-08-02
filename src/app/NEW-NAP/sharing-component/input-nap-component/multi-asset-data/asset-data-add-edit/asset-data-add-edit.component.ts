@@ -263,6 +263,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
         this.inputFieldLocationAddrObj = new InputFieldObj();
         this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
 
@@ -507,6 +508,7 @@ export class AssetDataAddEditComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
 
     if (this.mode == 'editAsset') {
       // this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
@@ -682,6 +684,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
               this.inputFieldLocationAddrObj = new InputFieldObj();
               this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+              this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
               this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
               this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
             });
