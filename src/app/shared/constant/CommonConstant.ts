@@ -456,4 +456,7 @@ export class CommonConstant {
     
     // Rule Behaviour
     public static RuleBehaviourLock = "LOCK";
+
+    //Status Code
+    public static STATUS_CODE_USER_LOCKED = "002";
 }

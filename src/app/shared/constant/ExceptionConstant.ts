@@ -74,4 +74,5 @@ export class ExceptionConstant {
     public static COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET = "Please Complete Serial No. 1 and Serial No. 2 on all asset first.";
     public static MAX_DATA = "Maximum {50} Data";
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
+    public static INCORRECT_PASSWORD = "Password Mismatch";
 }

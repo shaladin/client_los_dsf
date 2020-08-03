@@ -3,61 +3,56 @@
   <lib-ucSubsection [id]="'MouCustTcFieldId'" [title]="'Term and Condition'" [panel]="'MouCustTcSection'"></lib-ucSubsection>
   <div id="MouCustTcSection">
     <div class="col-md-12" style="padding: 0; overflow-x: auto;">
-      <table class="table table-responsive-md text-center table-hover" style="width: 110%;">
+      <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th style="text-align: left; width: 5%;">
+            <th style="text-align: left;">
               <span class="thead-header" name='no' translate>NO.</span>
             </th>
-            <th style="text-align: left; width: 20%;">
+            <th style="text-align: left;">
               <span class="thead-header" name='documentName' translate>DOCUMENT NAME</span>
             </th>
-            <th style="text-align: center; width: 10%;">
+            <th style="text-align: center;">
               <span class="thead-header" name='checked' translate>CHECKED</span>
             </th>
-            <th style="text-align: center; width: 10%;">
+            <th style="text-align: center;">
               <span class="thead-header" name='mandatory' translate>MANDATORY</span>
             </th>
-            <th style="text-align: left; width: 15%;">
+            <th style="text-align: left;">
               <span class="thead-header" name='expiredDate' translate>EXPIRED DATE</span>
             </th>
-            <th style="text-align: left; width: 15%;">
+            <th style="text-align: left;">
               <span class="thead-header" name='promiseDate' translate>PROMISE DATE</span>
             </th>
-            <th style="text-align: left; width: 30%;">
+            <th style="text-align: left;">
               <span class="thead-header" name='notes' translate>NOTES</span>
             </th>
           </tr>
         </thead>
         <tbody formArrayName="MouCustTcList">
           <tr *ngFor="let item of MouCustTcForm.get('MouCustTcList').controls; index as i" [formGroupName]="i">
-            <td style="text-align: left;">
-              {{i+1}}
+            <td class="text-left">{{i+1}}</td>
+            <td class="text-left">{{MouCustTcForm.get('MouCustTcList').at(i).controls.TcName.value}}</td>
+            <td class="text-center"><input type="checkbox" class="border-primary" formControlName="IsChecked" (change)="checkedHandler($event, i)"/>
             </td>
-            <td style="text-align: left;">
-              {{MouCustTcForm.get('MouCustTcList').at(i).controls.TcName.value}}
-            </td>
-            <td style="text-align: center;">
-              <input type="checkbox" formControlName="IsChecked" (change)="checkedHandler($event, i)"/>
-            </td>
-            <td style="text-align: center;">
+            <td class="text-center">
               <!-- <input type="checkbox" formControlName="IsMandatory" (change)="mandatoryHandler($event, i)"/> -->
               {{MouCustTcForm.get('MouCustTcList').at(i).controls.IsMandatory.value == '1' ? 'Yes' : 'No'}}
             </td>
-            <td style="text-align: left;">
-              <input type="date" class="form-control adInsInput" formControlName="ExpiredDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
+            <td class="text-left">
+              <input type="date" class="form-control" formControlName="ExpiredDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? null : ''" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
-            <td style="text-align: left;">
-              <input type="date" class="form-control adInsInput" formControlName="PromisedDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
+            <td class="text-left">
+              <input type="date" class="form-control" formControlName="PromisedDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
                 [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
-            <td style="text-align: left;">
-              <textarea class="form-control adInsInput" formControlName="Notes"
+            <td class="text-left">
+              <textarea class="form-control" formControlName="Notes"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.Notes.invalid }">
               </textarea>
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.Notes" [submit]="formSubmitted"></lib-uc-show-errors>
