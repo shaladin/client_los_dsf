@@ -24,7 +24,7 @@ export class ReferantorDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-  inputLookupObj: InputLookupObj;
+  inputLookupObj: InputLookupObj = new InputLookupObj();
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
