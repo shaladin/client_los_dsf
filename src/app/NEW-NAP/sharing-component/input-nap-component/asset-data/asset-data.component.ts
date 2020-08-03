@@ -1343,7 +1343,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpList() {
-    this.http.post(URLConstant.GetListVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
         this.AdminHeadObj = this.EmpObj.filter(
