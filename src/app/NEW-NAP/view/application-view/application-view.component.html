@@ -1,6 +1,7 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
+
       <div class="card-body">
         <div class="card-header header-title" style="margin-bottom: 10px;">
           <div class="row">
@@ -12,9 +13,8 @@
           </div>
         </div>
         <div class="px-3">
-          <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
-
-          <mat-tab-group>
+          <ng-template #mainInfoContainerA></ng-template>
+          <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
                 <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>

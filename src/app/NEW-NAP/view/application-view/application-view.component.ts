@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from '../../../shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MatTabChangeEvent } from '@angular/material';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-application-view',
@@ -12,11 +13,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class ApplicationViewComponent implements OnInit {
   AppId: number;
-  
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
-
+  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
   IsCustomer : boolean = true;
   IsGuarantor : boolean = true;
   IsReferantor : boolean = true;
@@ -39,7 +39,7 @@ export class ApplicationViewComponent implements OnInit {
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { 
+  constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -49,6 +49,9 @@ export class ApplicationViewComponent implements OnInit {
     console.log("APP BESARAN")
     this.arrValue.push(this.AppId);
     this.GetApp();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.arrValue = this.arrValue;
   }
 
   GetApp() {
@@ -109,5 +112,13 @@ export class ApplicationViewComponent implements OnInit {
       }
     );
   }
-
+  tabChangeEvent( tabChangeEvent : MatTabChangeEvent){
+    if(tabChangeEvent.index == 0){
+      this.GetApp();
+    }
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.arrValue = this.arrValue;
+  }
 }
