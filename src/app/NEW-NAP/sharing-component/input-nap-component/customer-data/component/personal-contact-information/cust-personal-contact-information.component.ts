@@ -47,8 +47,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   };
   copyToContactPersonAddrObj: any = [
     {
-    Key: "LEGAL",
-    Value: "Legal"
+      Key: "LEGAL",
+      Value: "Legal"
     },
     {
       Key: "RESIDENCE",
@@ -90,17 +90,17 @@ export class CustPersonalContactInformationComponent implements OnInit {
     IsFamily: [false],
     Email: ['', Validators.maxLength(100)],
     CopyFromContactPerson: [''],
-    IsGuarantor:[false]
+    IsGuarantor: [false]
   });
 
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,
     private toastr: NGXToastrService,) {
 
-     }
+  }
 
   ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -113,9 +113,9 @@ export class CustPersonalContactInformationComponent implements OnInit {
     console.log(this.listContactPersonPersonal);
   }
 
-  SaveForm(){
+  SaveForm() {
     this.appCustPersonalContactPersonObj = new AppCustPersonalContactPersonObj();
-    if(this.listContactPersonPersonal == undefined){
+    if (this.listContactPersonPersonal == undefined) {
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
     var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -123,16 +123,16 @@ export class CustPersonalContactInformationComponent implements OnInit {
     var businessDt = new Date(businessDtStr);
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
 
-    if(birthDt > businessDt){
+    if (birthDt > businessDt) {
       this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + businessDtStr);
       return;
     }
 
     this.setAppCustPersonalContactPerson();
-    if(this.mode == "Add"){
+    if (this.mode == "Add") {
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
-    if(this.mode == "Edit"){
+    if (this.mode == "Edit") {
       this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
     }
     console.log(this.ContactInfoPersonalForm);
@@ -141,25 +141,25 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.clearForm();
   }
 
-  add(content){
+  add(content) {
     console.log(content);
     this.mode = "Add";
     this.clearForm();
     this.open(content);
   }
 
-  edit(i, content){
+  edit(i, content) {
     this.clearForm();
     this.mode = "Edit";
     this.currentEditedIndex = i;
     var birthDt;
-    if(this.listContactPersonPersonal[i].BirthDt != undefined){
-      if(this.listContactPersonPersonal[i].BirthDt.toString() != ''){
+    if (this.listContactPersonPersonal[i].BirthDt != undefined) {
+      if (this.listContactPersonPersonal[i].BirthDt.toString() != '') {
         birthDt = formatDate(this.listContactPersonPersonal[i].BirthDt, 'yyyy-MM-dd', 'en-US');
-      }else{
+      } else {
         birthDt = '';
       }
-    }else{
+    } else {
       birthDt = '';
     }
 
@@ -187,7 +187,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.open(content);
   }
 
-  setCustRelationShip(MrCustRelationshipCode: string){
+  setCustRelationShip(MrCustRelationshipCode: string) {
     console.log(this.CustRelationshipObj);
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
     console.log(selectedRelationship);
@@ -195,14 +195,14 @@ export class CustPersonalContactInformationComponent implements OnInit {
     console.log(this.selectedRelationshipName);
   }
 
-  delete(i){
+  delete(i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listContactPersonPersonal.splice(i, 1);
       this.callbackSubmit.emit(this.listContactPersonPersonal);
     }
   }
 
-  clearForm(){
+  clearForm() {
     this.ContactInfoPersonalForm = this.fb.group({
       ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
       MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
@@ -230,7 +230,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.CheckSpouse();
   }
 
-  setAppCustPersonalContactPerson(){
+  setAppCustPersonalContactPerson() {
     this.appCustPersonalContactPersonObj.ContactPersonName = this.ContactInfoPersonalForm.controls.ContactPersonName.value;
     this.appCustPersonalContactPersonObj.MrGenderCode = this.ContactInfoPersonalForm.controls.MrGenderCode.value;
     this.appCustPersonalContactPersonObj.MrIdTypeCode = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value;
@@ -256,52 +256,52 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.appCustPersonalContactPersonObj.IsGuarantor = this.ContactInfoPersonalForm.controls.IsGuarantor.value;
   }
 
-  GetProfession(event){
+  GetProfession(event) {
     this.selectedProfessionCode = event.ProfessionCode;
   }
 
-  GenderChanged(event){
+  GenderChanged(event) {
     this.selectedGenderName = event.target.options[event.target.options.selectedIndex].text;
   }
 
-  RelationshipChanged(event){
+  RelationshipChanged(event) {
     this.selectedRelationshipName = event.target.options[event.target.options.selectedIndex].text;
     this.CheckSpouse();
   }
 
-  copyFromChanged(){
+  copyFromChanged() {
     this.callbackCopyAddr.emit(this.copyFromContactPerson);
   }
 
-  setContactPersonAddr(appCustPersonalContactPerson){
-      this.contactPersonAddrObj = new AddrObj();
-      this.contactPersonAddrObj.Addr = appCustPersonalContactPerson.Addr;
-      this.contactPersonAddrObj.AreaCode1 = appCustPersonalContactPerson.AreaCode1;
-      this.contactPersonAddrObj.AreaCode2 = appCustPersonalContactPerson.AreaCode2;
-      this.contactPersonAddrObj.AreaCode3 = appCustPersonalContactPerson.AreaCode3;
-      this.contactPersonAddrObj.AreaCode4 = appCustPersonalContactPerson.AreaCode4;
-      this.contactPersonAddrObj.City = appCustPersonalContactPerson.City;
-      this.contactPersonAddrObj.Fax = appCustPersonalContactPerson.Fax;
-      this.contactPersonAddrObj.FaxArea = appCustPersonalContactPerson.FaxArea;
-      this.contactPersonAddrObj.Phn1 = appCustPersonalContactPerson.Phn1;
-      this.contactPersonAddrObj.Phn2 = appCustPersonalContactPerson.Phn2;
-      this.contactPersonAddrObj.PhnArea1 = appCustPersonalContactPerson.PhnArea1;
-      this.contactPersonAddrObj.PhnArea2 = appCustPersonalContactPerson.PhnArea2;
-      this.contactPersonAddrObj.PhnExt1 = appCustPersonalContactPerson.PhnExt1;
-      this.contactPersonAddrObj.PhnExt2 = appCustPersonalContactPerson.PhnExt2;
+  setContactPersonAddr(appCustPersonalContactPerson) {
+    this.contactPersonAddrObj = new AddrObj();
+    this.contactPersonAddrObj.Addr = appCustPersonalContactPerson.Addr;
+    this.contactPersonAddrObj.AreaCode1 = appCustPersonalContactPerson.AreaCode1;
+    this.contactPersonAddrObj.AreaCode2 = appCustPersonalContactPerson.AreaCode2;
+    this.contactPersonAddrObj.AreaCode3 = appCustPersonalContactPerson.AreaCode3;
+    this.contactPersonAddrObj.AreaCode4 = appCustPersonalContactPerson.AreaCode4;
+    this.contactPersonAddrObj.City = appCustPersonalContactPerson.City;
+    this.contactPersonAddrObj.Fax = appCustPersonalContactPerson.Fax;
+    this.contactPersonAddrObj.FaxArea = appCustPersonalContactPerson.FaxArea;
+    this.contactPersonAddrObj.Phn1 = appCustPersonalContactPerson.Phn1;
+    this.contactPersonAddrObj.Phn2 = appCustPersonalContactPerson.Phn2;
+    this.contactPersonAddrObj.PhnArea1 = appCustPersonalContactPerson.PhnArea1;
+    this.contactPersonAddrObj.PhnArea2 = appCustPersonalContactPerson.PhnArea2;
+    this.contactPersonAddrObj.PhnExt1 = appCustPersonalContactPerson.PhnExt1;
+    this.contactPersonAddrObj.PhnExt2 = appCustPersonalContactPerson.PhnExt2;
 
-      this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
-      this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = {Zipcode: appCustPersonalContactPerson.Zipcode};
-    
+    this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
+    this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: appCustPersonalContactPerson.Zipcode };
+
   }
 
-  setProfessionName(professionCode){
+  setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(this.getRefProfessionUrl, this.professionObj).subscribe(
       (response) => {
         console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-        this.InputLookupProfessionObj.jsonSelect = response;     
+        this.InputLookupProfessionObj.jsonSelect = response;
       },
       (error) => {
         console.log(error);
@@ -309,12 +309,13 @@ export class CustPersonalContactInformationComponent implements OnInit {
     );
   }
 
-  initContactPersonAddrObj(){
+  initContactPersonAddrObj() {
     this.inputFieldContactPersonObj = new InputFieldObj();
-    this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();    
+    this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldContactPersonObj.inputLookupObj.isRequired = false;
   }
 
-  initLookup(){
+  initLookup() {
     this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -324,30 +325,30 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.InputLookupProfessionObj.isRequired = false;
   }
 
-  initUrl(){
+  initUrl() {
     this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
     this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
   }
 
-  bindCopyFrom(){
+  bindCopyFrom() {
     this.ContactInfoPersonalForm.patchValue({
       CopyFromContactPerson: this.copyToContactPersonAddrObj[0].Key
-    }); 
+    });
   }
 
-  bindAllRefMasterObj(){
+  bindAllRefMasterObj() {
     this.bindGenderObj();
     this.bindIdTypeObj();
     this.bindCustRelationshipObj();
   }
 
-  bindGenderObj(){
+  bindGenderObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
-        if(this.GenderObj.length > 0){
+        if (this.GenderObj.length > 0) {
           this.defaultGender = this.GenderObj[0].Key;
           this.defaultGenderName = this.GenderObj[0].Value;
         }
@@ -355,24 +356,24 @@ export class CustPersonalContactInformationComponent implements OnInit {
     );
   }
 
-  bindIdTypeObj(){
+  bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
-        if(this.IdTypeObj.length > 0){
+        if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key;
         }
       }
     );
   }
 
-  bindCustRelationshipObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;  
+  bindCustRelationshipObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response[CommonConstant.ReturnObj];
-        if(this.CustRelationshipObj.length > 0){
+        if (this.CustRelationshipObj.length > 0) {
           this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
           this.defaultRelationshipName = this.CustRelationshipObj[0].Value;
         }
@@ -398,8 +399,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modalService.dismissAll();
   }
 
