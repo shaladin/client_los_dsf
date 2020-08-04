@@ -38,6 +38,7 @@ export class CommissionV2Component implements OnInit {
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: any = {};
+  @Input() BizTemplateCode: string;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
@@ -117,6 +118,12 @@ export class CommissionV2Component implements OnInit {
     // console.log(this.CommissionForm);
     console.log(this.DictMaxIncomeForm);
     await this.GetExistingAppCommData();
+    if(Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object){
+      if(this.BizTemplateCode == CommonConstant.CFNA){
+        console.log("ByPass Calculate...");
+        this.IsCalculated = true;
+      }
+    }
   }
 
   async GetContentData() {
@@ -213,11 +220,13 @@ export class CommissionV2Component implements OnInit {
       (response) => {
         // console.log("Cek Rule");
         // console.log(response);
-        for (var i = 0; i < response["length"]; i++) {
-          var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
-          // console.log(temp);
-          this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-          this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp){ // For CFNA
+          for (var i = 0; i < response["length"]; i++) {
+            var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
+            // console.log(temp);
+            this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+            this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+          }
         }
         if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
           this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);  

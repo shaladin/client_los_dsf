@@ -130,7 +130,7 @@ export class FraudDetectionVerifComponent implements OnInit {
       "Notes": this.verfNotes,
       "VerifyByCode": this.verfCode,
       "VerifyStat": "Verified",
-      "WFTaskId": this.WfTaskListId
+      "WfTaskId": this.WfTaskListId
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
