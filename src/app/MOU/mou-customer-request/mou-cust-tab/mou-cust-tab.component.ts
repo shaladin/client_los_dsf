@@ -1016,7 +1016,6 @@ export class MouCustTabComponent implements OnInit {
   }
 
   CopyCustomer(event) {
-    console.log("DISINIIIIIIIIIIIIIIIII")
     this.copyAddrFromLookup(event);
 
     if (event["CustPersonalContactPersonObjs"] != undefined) {

@@ -13,11 +13,11 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel" for="CustName" translate>Customer Name</label>
+              <!-- <label class="col-md-3 adInsLabel" for="CustName" translate>Customer Name</label>
               <div class="col-md-4" *ngIf="pageType == 'add'">
                 <lib-uclookupgeneric [lookupInput]="inputLookupCust" [parentForm]='MOUMainInfoForm' [enjiForm]='enjiForm' [identifier]="'CustLookup'"
                     (lookup)="getCustLookupResponse($event)"></lib-uclookupgeneric>
-              </div>
+              </div> -->
               <div class="col-md-9" *ngIf="pageType == 'edit' || pageType == 'return'"> 
                 <a href="javascript:void(0);" (click)="OpenView('cust')">{{MOUMainInfoForm.controls.CustName.value}}</a>
               </div>
