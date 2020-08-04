@@ -12,6 +12,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class TabApplicationComponent implements OnInit {
   @Input() appId;
+  @Input() BizTemplateCode: string = "";
   viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
@@ -21,7 +22,12 @@ export class TabApplicationComponent implements OnInit {
   ) { }
 
   initData() {
-    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
+    if (this.BizTemplateCode == CommonConstant.FCTR) {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringInfo.json";
+    }
+    else {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
+    }
     this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewProdMainInfoObj.ddlEnvironments = [
       {
