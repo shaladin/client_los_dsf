@@ -20,6 +20,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     @Input() AppSubsidyId: number;
     @Input() AppId: number;
     @Input() listAppFeeObj : Array<AppFeeObj>;
+    @Input() ParentForm : FormGroup;
     @Output() emitData = new EventEmitter();
 
     FormAppSubsidy: FormGroup;
@@ -155,6 +156,14 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
         (response) => {
           this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
+
+          if(this.ParentForm.get("VendorAtpmCode").value == null){
+            var atpmIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeAtpm);
+
+            if(atpmIndex != -1){
+              this.FromTypeCodeOptions.splice(atpmIndex, 1);
+            }
+          }
         }
       );
     }

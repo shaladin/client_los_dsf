@@ -36,7 +36,7 @@ export class SubsidyComponent implements OnInit {
   AddReason()
   {
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditComponent);
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.ParentForm = this.ParentForm;
@@ -49,7 +49,7 @@ export class SubsidyComponent implements OnInit {
 
   editSubsidy(obj){
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditComponent);
     modalRef.componentInstance.mode = "edit";
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.ParentForm = this.ParentForm;
