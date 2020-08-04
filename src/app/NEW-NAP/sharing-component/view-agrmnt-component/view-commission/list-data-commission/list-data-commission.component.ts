@@ -11,7 +11,6 @@ export class ListDataCommissionAgrmntComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // console.log(this.FormInputObj);
   }
 
 }

@@ -100,7 +100,6 @@ export class TabApplicationDataComponent implements OnInit {
     } else {
       this.InsuranceTitle = "Asset Insurance & Life Insurance"
     }
-    console.log(this.AssetInsuranceAndLifeInsuranceData);
   }
 
   async GetGuarantorData() {
@@ -112,7 +111,6 @@ export class TabApplicationDataComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetListAppGuarantorDetail, obj).toPromise().then(
       (response) => {
-        console.log(response);
         for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
           var tempResponse = response[CommonConstant.ReturnObj][i];
           var temp = {
@@ -135,11 +133,7 @@ export class TabApplicationDataComponent implements OnInit {
           }
           this.GuarantorData.push(temp);
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetReferantorData() {
@@ -149,15 +143,10 @@ export class TabApplicationDataComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ReferantorData.ReferantorName = response["ReferantorName"];
         this.ReferantorData.NumOfSales = response["NumOfSales"];
         this.ReferantorData.CooperationDate = response["CooperationDt"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetAppDetailData() {
@@ -167,7 +156,6 @@ export class TabApplicationDataComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
       (response) => {
-        console.log(response);
 
         this.AppDetailAssetData = {
           SalesName: response["SalesOfficerName"],
@@ -178,7 +166,6 @@ export class TabApplicationDataComponent implements OnInit {
           TotalLoss: 0,
           InAmount: 0,
         };
-        // console.log(this.AppDetailAssetData);
 
         this.AppDetailFinData = {
           InstScheme: response["MrInstSchemeCodeDesc"],
@@ -188,7 +175,6 @@ export class TabApplicationDataComponent implements OnInit {
           InstAmt: response["TotalInstAmt"],
           AssetName: response["FullAssetName"],
         };
-        // console.log(this.AppDetailFinData);
 
         this.AssetInsuranceAndLifeInsuranceData = {
           CoverBy: response["AssetCoverBy"],
@@ -197,12 +183,7 @@ export class TabApplicationDataComponent implements OnInit {
           IsLifeInsurance: response["IsLifeInsurance"],
           LifeInsuranceCompany: response["LifeInsuranceCompany"],
         }
-        // console.log(this.AssetInsuranceAndLifeInsuranceData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetDealerData() {
@@ -212,7 +193,6 @@ export class TabApplicationDataComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.DealerData = {
           DealerName: response["DealerName"],
           Address: response["Addr"],
@@ -230,11 +210,7 @@ export class TabApplicationDataComponent implements OnInit {
           TotalProfit: 0,
           TotalLoss: 0,
         };
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetCommData() {
@@ -244,7 +220,6 @@ export class TabApplicationDataComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           var tempObj = {
@@ -254,12 +229,7 @@ export class TabApplicationDataComponent implements OnInit {
           }
           this.CommData.push(tempObj);
         }
-        console.log(this.CommData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetAppTc() {
@@ -273,17 +243,12 @@ export class TabApplicationDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["AppTcs"]
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     this.IsGridTcReady = true;
   }
 

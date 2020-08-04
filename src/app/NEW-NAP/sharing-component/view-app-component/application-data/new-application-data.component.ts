@@ -120,11 +120,7 @@ export class NewApplicationDataComponent implements OnInit {
           this.AppLifeInsData["CoverLifeIns"] = "No";
           this.AppLifeInsData["LifeInscoBranchName"] = "-";
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     if (this.AssetInsuranceAndLifeInsuranceData.CoverBy == CommonConstant.InsuredByCompany) {
       this.InsuranceTitle = "Asset Insurance";
     } else {

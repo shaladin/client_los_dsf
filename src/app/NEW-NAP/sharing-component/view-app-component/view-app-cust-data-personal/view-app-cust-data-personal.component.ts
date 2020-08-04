@@ -72,18 +72,12 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
     var reqObj = { AppId: this.appId }
     await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.custModelCode = response["CustModelCode"];
         this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
-        console.log(this.appCustAddrForViewObjs);
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
         this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null ? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

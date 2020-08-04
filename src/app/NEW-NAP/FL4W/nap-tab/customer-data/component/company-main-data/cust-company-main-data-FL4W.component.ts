@@ -92,14 +92,9 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     var custObj = {CustId: event.CustId};
     this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
-        console.log(response);
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CopyCustomer(response){
@@ -153,19 +148,12 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   bindCustData(){
-    console.log("bind cust data");
-    console.log(this.custDataCompanyObj);
     if(this.custDataCompanyObj.AppCustObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
@@ -222,7 +210,6 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
           });
-          console.log("bind company type");
         }
       }
     );

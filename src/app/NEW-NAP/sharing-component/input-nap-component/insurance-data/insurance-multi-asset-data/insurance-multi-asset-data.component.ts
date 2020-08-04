@@ -202,11 +202,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           Count: "0"
         }
         this.gridAssetDataObj.resultData = DetailForGridAsset;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
@@ -235,11 +231,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         if (this.listAppCollateralObj[0].TotalCustPremiAmt != null)
           this.TotalPremiumToCust = this.listAppCollateralObj[0].TotalCustPremiAmt;
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetInsMultiData(): Promise<void> {
@@ -346,15 +338,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.setSaveObj(insuredBy);
     this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["Message"]);
         this.BindMultiInsGridData();
         this.PageState = 'Paging';
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   Cancel() {
@@ -629,10 +616,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.calcInsObj = response["Result"];
         this.subsidyRuleObj = response["ResultSubsidy"];
-        console.log(this.subsidyRuleObj);
         var custDiscAmt = 0;
         if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == CommonConstant.InsPaidByAtCost) {
           custDiscAmt = this.calcInsObj.TotalMainPremiAmt + this.calcInsObj.TotalAdditionalPremiAmt + this.calcInsObj.TotalFeeAmt;
@@ -760,7 +745,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     await this.http.post(URLConstant.ExecuteInsRateRule, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ruleObj = response["Result"];
         this.insRateAddCvgRuleTplObjs = response["InsRateAddCvgRuleTplObjs"];
         if (this.ruleObj.InsAssetCategory == "") {
@@ -1350,7 +1334,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     var reqObj = { AppId: this.appId, AppAssetId: this.AppAssetId, AppCollateralId: this.AppCollateralId }
     await this.http.post(URLConstant.GetInsDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.appObj = response["AppObj"];
         this.appAssetObj = response["AppAssetObj"];
         this.appAssetAccessoryObjs = response["AppAssetAccessoryObjs"];
@@ -1384,11 +1367,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         if (this.appInsObjObj != undefined) {
           this.appInsObjId = this.appInsObjObj.AppInsObjId;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async bindAppInsAndAppInsObj(insuredBy) {

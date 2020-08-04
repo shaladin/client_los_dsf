@@ -111,7 +111,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     } else {
       this.InsuranceTitle = "Asset Insurance & Life Insurance"
     }
-    console.log(this.AssetInsuranceAndLifeInsuranceData);
   }
 
   appAssetObj;
@@ -120,16 +119,9 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     this.appAssetObj.AppId = this.AppId
     await this.http.post(URLConstant.GetAppAssetListByAppId, this.appAssetObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ListAssetData = response[CommonConstant.ReturnObj];
 
-        // console.log("lisassetdata");
-        // console.log(this.ListAssetData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   appCollateralObj;
@@ -139,16 +131,9 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     this.appCollateralObj.AppId = this.AppId
     await this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ListCollateralData = response[CommonConstant.ReturnObj];
 
-        // console.log("listcolldata");
-        // console.log(this.ListCollateralData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   lifeInsObj;
@@ -158,16 +143,9 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     this.lifeInsObj.AppId = this.AppId
     await this.http.post(URLConstant.GetAppLifeInsHByAppId, this.lifeInsObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.LifeInsuranceData = response;
 
-        // console.log("lifeinsdata");
-        // console.log(this.LifeInsuranceData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetGuarantorData() {
@@ -179,7 +157,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetListAppGuarantorDetail, obj).toPromise().then(
       (response) => {
-        console.log(response);
         for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
           var tempResponse = response[CommonConstant.ReturnObj][i];
           var temp = {
@@ -202,11 +179,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
           }
           this.GuarantorData.push(temp);
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetReferantorData() {
@@ -216,15 +189,10 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ReferantorData.ReferantorName = response["ReferantorName"];
         this.ReferantorData.NumOfSales = response["NumOfSales"];
         this.ReferantorData.CooperationDate = response["CooperationDt"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetAppDetailData() {
@@ -234,7 +202,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
       (response) => {
-        console.log(response);
 
         this.AppDetailAssetData = {
           SalesName: response["SalesOfficerName"],
@@ -245,7 +212,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
           TotalLoss: 0,
           InAmount: 0,
         };
-        // console.log(this.AppDetailAssetData);
 
         this.AppDetailFinData = {
           InstScheme: response["MrInstSchemeCodeDesc"],
@@ -255,7 +221,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
           InstAmt: response["TotalInstAmt"],
           AssetName: response["FullAssetName"],
         };
-        // console.log(this.AppDetailFinData);
 
         this.AssetInsuranceAndLifeInsuranceData = {
           CoverBy: response["AssetCoverBy"],
@@ -264,12 +229,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
           IsLifeInsurance: response["IsLifeInsurance"],
           LifeInsuranceCompany: response["LifeInsuranceCompany"],
         }
-        // console.log(this.AssetInsuranceAndLifeInsuranceData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetDealerData() {
@@ -279,7 +239,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.DealerData = {
           DealerName: response["DealerName"],
           Address: response["Addr"],
@@ -297,11 +256,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
           TotalProfit: 0,
           TotalLoss: 0,
         };
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetAppTc() {
@@ -315,17 +270,12 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["AppTcs"]
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     this.IsGridTcReady = true;
   }
 
@@ -337,18 +287,11 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppAssetForDealerDataByAppAssetId, this.dealerAssetObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AssetDealerData = response;
 
-        // console.log("lisassetdata");
-        // console.log(this.AssetDealerData);
 
         this.open(content);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   open(content) {
@@ -380,7 +323,6 @@ export class ViewApplicationDataMultiComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           var tempObj = {
@@ -390,12 +332,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
           }
           this.CommData.push(tempObj);
         }
-        console.log(this.CommData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   sortGuarantorData(sort: Sort) {

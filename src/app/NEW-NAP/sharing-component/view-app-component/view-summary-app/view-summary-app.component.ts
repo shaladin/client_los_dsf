@@ -35,7 +35,6 @@ export class ViewSummaryAppComponent implements OnInit {
     this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryAppObj = response;
-        console.log(this.SummaryAppObj);
         if(this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs != null && this.SummaryAppObj.AppAssetObjs.length == 1){
           for(let i = 0; i < this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs.length; i++){
             var serialNoObj = new SerialNoObj();
@@ -44,11 +43,7 @@ export class ViewSummaryAppComponent implements OnInit {
             this.SerialNoObjs.push(serialNoObj);
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

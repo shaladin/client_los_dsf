@@ -161,7 +161,6 @@ export class MouRequestAddcollComponent implements OnInit {
     );
 
     var mouCustObj = { MouCustId: this.MouCustId }
-    console.log(mouCustObj);
     this.http.post(URLConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
@@ -327,30 +326,20 @@ export class MouRequestAddcollComponent implements OnInit {
 
       this.http.post(URLConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
-          console.log(response);
           this.AddCollForm.reset();
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
           this.ClearForm();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.http.post(URLConstant.EditMouCustCollateralData, custCollObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.type = 'Paging';
           this.collateralObj = null;
           this.ClearForm();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -620,9 +609,6 @@ export class MouRequestAddcollComponent implements OnInit {
         this.type = 'Paging';
         this.bindMouData();
         this.clearList();
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -644,14 +630,9 @@ export class MouRequestAddcollComponent implements OnInit {
       var custCollObj = { MouCustCollateralId: MouCustCollId };
       this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.bindMouData();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

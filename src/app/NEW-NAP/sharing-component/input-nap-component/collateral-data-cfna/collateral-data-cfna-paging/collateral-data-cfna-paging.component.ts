@@ -31,11 +31,7 @@ export class CollateralDataCfnaPagingComponent implements OnInit {
       (response) => {
         this.ListAppCollObj = response[CommonConstant.ReturnObj];
         this.list.emit(this.ListAppCollObj);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   editData(AppCollateralId: number){
@@ -48,11 +44,7 @@ export class CollateralDataCfnaPagingComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.GetListAppCollateralByAppId();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     }
   }
 

@@ -29,7 +29,6 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('assetdetail')
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { AppAssetId: this.AppAssetId });
     let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAgrmntId, { AgrmntId: this.AgrmntId });
@@ -39,10 +38,6 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
         this.appAssetSupplEmp = response[1];
         this.appCollateralRegistration = response[2];
 
-        // console.log("assetdetail")
-        // console.log(this.appAsset)
-        // console.log(this.appAssetSupplEmp.ReturnObject)
-        // console.log(this.appCollateralRegistration)
 
         for (const item of this.appAssetSupplEmp.ReturnObject) {
           if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
@@ -55,11 +50,7 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
             this.adminHeadName = item.SupplEmpName;
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

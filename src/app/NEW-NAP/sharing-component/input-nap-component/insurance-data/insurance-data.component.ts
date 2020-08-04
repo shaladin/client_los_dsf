@@ -195,26 +195,16 @@ export class InsuranceDataComponent implements OnInit {
     if (this.IsMultiAsset = "false") {
       this.http.post(URLConstant.AddEditInsuranceData, this.saveObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -484,10 +474,8 @@ export class InsuranceDataComponent implements OnInit {
 
     await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.calcInsObj = response["Result"];
         this.subsidyRuleObj = response["ResultSubsidy"];
-        console.log(this.subsidyRuleObj);
         var custDiscAmt = 0;
         if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "CO") {
           custDiscAmt = this.calcInsObj.TotalMainPremiAmt + this.calcInsObj.TotalAdditionalPremiAmt + this.calcInsObj.TotalFeeAmt;
@@ -614,7 +602,6 @@ export class InsuranceDataComponent implements OnInit {
 
     await this.http.post(URLConstant.ExecuteInsRateRule, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ruleObj = response["Result"];
         this.insRateAddCvgRuleTplObjs = response["InsRateAddCvgRuleTplObjs"];
         if (this.ruleObj.InsAssetCategory == "") {
@@ -1262,7 +1249,6 @@ export class InsuranceDataComponent implements OnInit {
     var reqObj = { AppId: this.appId }
     await this.http.post(URLConstant.GetInsuranceDataByAppId, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.appObj = response["AppObj"];
         this.appAssetObj = response["AppAssetObj"];
         this.appAssetAccessoryObjs = response["AppAssetAccessoryObjs"];
@@ -1295,11 +1281,7 @@ export class InsuranceDataComponent implements OnInit {
         if (this.appCollateralObj != undefined) {
           this.appCollateralId = this.appCollateralObj.AppCollateralId;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async bindAppInsAndAppInsObj(insuredBy) {
@@ -1516,7 +1498,6 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   test(){
-    console.log(this.InsuranceDataForm);
   }
 
   back() {

@@ -11,7 +11,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class ErrorDialogService {
     constructor(public dialog: MatDialog, private http: HttpClient) { }
     openDialog(data): void {
-        console.log(data)
         //Ini Logout jadi panggil Service untuk Call Logoutnya
         if (data.status == "001" && localStorage.getItem(CommonConstant.USER_NAME) != undefined) {
 
@@ -28,7 +27,6 @@ export class ErrorDialogService {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
             let animal;
             animal = result;
         });

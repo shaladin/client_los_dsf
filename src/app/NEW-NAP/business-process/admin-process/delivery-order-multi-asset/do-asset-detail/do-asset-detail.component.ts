@@ -148,13 +148,11 @@ export class DoAssetDetailComponent implements OnInit {
         for (const item of appCollateral) {
           var isMandatory = false;
           if(item.MrCollateralConditionCode == CommonConstant.AssetConditionNew){
-            console.log("New Collateral");
             if(item.IsMandatoryNew == true){
               isMandatory = true;
             }
           }
           else{
-            console.log("Used Collateral");
             if(item.IsMandatoryUsed == true){
               isMandatory = true;
             }
@@ -232,10 +230,6 @@ export class DoAssetDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.EditAppAssetDOMultiAsset, requestData).subscribe(
       (response) => {
         this.activeModalAsset.close(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

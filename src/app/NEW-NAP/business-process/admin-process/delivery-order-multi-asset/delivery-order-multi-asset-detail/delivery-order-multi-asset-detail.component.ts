@@ -76,12 +76,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { AgrmntId: this.agrmntId });
     forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
       (response) => {
-        // console.log("DO List: " + JSON.stringify(response[1]));
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
         this.custType = response[0]["MrCustTypeCode"];
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
         this.doList = response[1]["DeliveryOrderHObjs"];
-        console.log(this.doList);
         var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
 
         for (const item of this.doAssetList) {
@@ -108,7 +106,6 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         }
 
         this.isFinal = response[2]["IsFinal"];
-        console.log("Is Final : " + this.isFinal);
       }
     );
   }
@@ -116,7 +113,6 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    console.log(wfClaimObj);
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
@@ -173,16 +169,12 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             }
 
             this.isFinal = response[2]["IsFinal"];
-            console.log("Is Final : " + this.isFinal);
           }
         );
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -263,15 +255,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
           }
 
           this.isFinal = response[3]["IsFinal"];
-          console.log("Is Final : " + this.isFinal);
 
           this.spinner.hide();
           this.toastr.successMessage(deleteResponse["Message"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -287,11 +274,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.toastr.warningMessage(ExceptionConstant.ONE_DELIVERY_ORDER_NEEDED_TO_SAVE);
@@ -323,9 +306,6 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
             this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }

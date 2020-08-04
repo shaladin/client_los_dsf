@@ -64,14 +64,12 @@ export class CustBankAccountFL4WComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('bank fl4w')
     this.currentYear = new Date().getFullYear();
     this.initLookup();
     this.bindMonthObj();
   }
 
   SaveForm() {
-    console.log(this.CustBankAccountForm);
     this.appCustBankAccObj = new AppCustBankAccObj();
     if (this.listBankAcc == undefined) {
       this.listBankAcc = new Array<AppCustBankAccObj>();
@@ -192,20 +190,14 @@ export class CustBankAccountFL4WComponent implements OnInit {
     this.bankObj.BankCode = bankCode;
     this.http.post(environment.FoundationR3Url + URLConstant.GetRefBankByBankCodeAsync, this.bankObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupBankObj.nameSelect = response["BankName"];
         this.InputLookupBankObj.jsonSelect = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   addBankStmnt() {
     var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
     bankStmnObjs.push(this.addGroup(undefined));
-    console.log(this.CustBankAccountForm);
   }
 
   deleteBankStmnt(i) {

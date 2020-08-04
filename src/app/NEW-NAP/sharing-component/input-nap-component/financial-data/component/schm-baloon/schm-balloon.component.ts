@@ -47,11 +47,7 @@ export class SchmBalloonComponent implements OnInit {
         if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
           this.PriceLabel = "Financing Amount";
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   LoadDDLRateType() {

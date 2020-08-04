@@ -40,14 +40,9 @@ export class RequestNewPasswordComponent implements OnInit {
     };
     this.http.post(URLConstant.RequestNewPassword, requestObj).subscribe(
       (response) => {
-        console.log(response);
         this.censoredEmail = response["CensoredEmail"];
         this.isRequested = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   back() {

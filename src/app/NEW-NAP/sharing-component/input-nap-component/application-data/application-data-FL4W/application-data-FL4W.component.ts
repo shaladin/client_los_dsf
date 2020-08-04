@@ -109,7 +109,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    console.log('test app data refinanc');
     // this.makeLookUpObj();
     this.getAppModelInfo();
     
@@ -135,8 +134,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => { 
        this.CustNo = response["CustNo"];
-       console.log("asd")
-       console.log(this.CustNo);
 
         this.mouCustObj = new MouCustObj();
         this.mouCustObj.CustNo = this.CustNo;
@@ -147,8 +144,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
             
-              // console.log("resMouCustObj")
-              // console.log(this.resMouCustObj)
 
             // if(this.resMouCustObj.length > 0)
             // {
@@ -171,15 +166,9 @@ export class ApplicationDataFL4WComponent implements OnInit {
     };
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        // console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
-        // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getInterestTypeCode(){
@@ -191,17 +180,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
-        // console.log(response);   
         this.NapAppModelForm.patchValue({
           InterestType: response["CompntValue"],
           InterestTypeDesc: response["CompntValueDesc"],
         });
         this.ChangeInterestType();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   isFixedRate: boolean = false;
@@ -228,13 +212,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         for(var i = 0; i<this.resultCrossApp.length; i++){
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
-        console.log("resultCrossApp")
-        console.log(this.resultCrossApp)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   applicationDDLitems;
@@ -248,8 +226,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
-        console.log("testdata")
-        console.log(this.resultResponse)
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
@@ -308,11 +284,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     
     if(this.NapAppModelForm.controls.PayFreqCode.value == CommonConstant.PAY_FREQ_MONTHLY)
     {
@@ -328,13 +300,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
     this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
       (response) => {
-        console.log("GetListKvpActiveRefAppSrc Response : " + JSON.stringify(response));
         this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getPayFregData(){
@@ -344,17 +311,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
     this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
-        console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
 
-        // console.log("PayFreq")
-        // console.log(this.applicationDDLitems["Pay_Freq"])
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getRefMasterTypeCode(code) {
@@ -368,14 +328,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
 
-        console.log("testddl")
-        console.log(code)
-        console.log(objTemp)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getLookupEmployeeResponse(ev) {
@@ -452,12 +405,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
     {
       var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
-      console.log("Change Tenor result: " + total);
     }
     // if(!isNaN(temp)){
     //   var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
     //   this.PatchNumOfInstallment(total);      
-    //   console.log("Change Tenor result: " + total);
     // }
   }
 
@@ -474,7 +425,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   } 
 
   PatchNumOfInstallment(num){
-    console.log("NumOfInst: " + num);
     this.NapAppModelForm.patchValue({
       NumOfInst: num
     });
@@ -547,7 +497,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     var arr = [];
     for (var i = 0; i < this.resultCrossApp.length; i++) {
       // if (this.resultCrossApp[i].AppCrossId == 0) {
-        console.log(this.resultCrossApp[i]);
         var temp = new NapAppCrossObj();
         temp.AppId = this.AppId;
         temp.CrossAgrmntNo = this.resultCrossApp[i].CrossAgrmntNo;
@@ -570,7 +519,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   ClickSave(){
-    console.log("Save App Data Refinancing");
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
@@ -581,18 +529,11 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: this.resultResponse.RowVersion
     };
 
-    console.log("appcross")
-    console.log(obj)
 
     this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
-        console.log("response App Refinancing : " + JSON.stringify(response));
         this.outputTab.emit();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     
   }
 
@@ -619,8 +560,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   AddTemp(contentCrossApp){
-    //console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
-    //console.log("Is Form Valid : " + this.NapAppModelForm.valid);
     this.Open(contentCrossApp);
   }
 
@@ -636,7 +575,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
       this.resultCrossApp.push(tempCrossApp);
       this.ListCrossAppObj["result"].push(i.AgrmntNo);
     }
-    console.log(this.resultCrossApp);
   }
 
 
@@ -647,9 +585,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
         obj = this.resultCrossApp[idx];
         this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
           (response) =>{
-          },
-          (error) => {
-            console.log(error);
           }
         )
       }

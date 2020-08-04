@@ -36,11 +36,7 @@ export class MouCustFeeComponent implements OnInit {
         for (var i = 0; i < this.mouCustFeeList.length; i++) {
           this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   openModalAddFee() {
@@ -60,18 +56,12 @@ export class MouCustFeeComponent implements OnInit {
               this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
             }
             modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
-          },
-          (error) => {
-            console.log(error);
           }
         );
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -84,11 +74,7 @@ export class MouCustFeeComponent implements OnInit {
           this.mouCustFeeList.splice(idx, 1);
           this.refFeeIdList.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

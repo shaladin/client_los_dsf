@@ -72,7 +72,6 @@ export class CreditReviewMainComponent implements OnInit {
     this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
-    console.log(this.Arr);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
@@ -97,8 +96,6 @@ export class CreditReviewMainComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.appId);
     this.ClaimTask();
-    console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetAppNo();
@@ -114,21 +111,15 @@ export class CreditReviewMainComponent implements OnInit {
     var obj = { AppId: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
-        console.log(response);
         if (response != undefined)
           this.GetCreditScoring(response["AppNo"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetCreditScoring(appNo: string) {
     var obj = { ScoringResultH: { TrxSourceNo: appNo } };
     this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
-        console.log(response);
         if (response["ScoringResultHObj"] != null) {
           var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
           this.FormObj.patchValue({
@@ -139,11 +130,7 @@ export class CreditReviewMainComponent implements OnInit {
             CreditScoring: "-"
           });
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetAppCustData() {
@@ -154,20 +141,14 @@ export class CreditReviewMainComponent implements OnInit {
 
     await this.http.post(URLConstant.GetAppCustByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.CustTypeCode = response["MrCustTypeCode"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async BindCreditAnalysisItemFormObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdRvwAnalysisItem };
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
-        console.log(response);
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           var NewDataForm = this.fb.group({
@@ -177,35 +158,23 @@ export class CreditReviewMainComponent implements OnInit {
           }) as FormGroup;
           this.Arr.push(NewDataForm);
         }
-        console.log(this.FormObj);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async BindAppvAmt() {
     var Obj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.FormObj.patchValue({
           AppvAmt: response["ApvAmt"]
         });
-        console.log(this.FormObj);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetExistingCreditReviewData() {
     var Obj = { appCrdRvwHObj: { AppId: this.appId } };
     await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
         if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
           for (var i = 0; i < this.ResponseExistCreditReview.appCrdRvwDObjs.length; i++) {
@@ -215,59 +184,38 @@ export class CreditReviewMainComponent implements OnInit {
             });
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async BindDDLRecommendation() {
     var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.DDLRecommendation = response[CommonConstant.ReturnObj];
-        // console.log(this.DDLRecommendation);   
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async BindDDLReasonReturn() {
     var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.DDLReasonReturn = response[CommonConstant.ReturnObj];
-        console.log(this.DDLReasonReturn);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   onChangeReason(ev) {
-    // console.log(ev);
     this.FormObj.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
-    console.log(this.FormObj);
   }
 
   onChangeApprover(ev) {
-    console.log(ev);
     this.FormObj.patchValue({
       ApproverDesc: ev.target.selectedOptions[0].text
     });
-    console.log(this.FormObj);
   }
 
   EnterTab(AppStep) {
-    // console.log(AppStep);
     switch (AppStep) {
       case CommonConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
@@ -292,8 +240,6 @@ export class CreditReviewMainComponent implements OnInit {
 
   SaveForm() {
     var temp = this.FormObj.value;
-    // console.log(temp);
-    console.log(this.appId);
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
@@ -303,7 +249,6 @@ export class CreditReviewMainComponent implements OnInit {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
     }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
-    console.log(tempAppCrdRvwObj);
 
     if (this.isReturnOn)
       temp.Approver = 0;
@@ -318,21 +263,14 @@ export class CreditReviewMainComponent implements OnInit {
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData
     }
-    console.log(apiObj);
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
-        console.log(response);
         this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode, } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   BindAppCrdRvwDObj(objArr) {
     var AppCrdRvwDObjs = new Array();
-    // console.log(objArr);
     for (var i = 0; i < objArr.length; i++) {
       var temp = new AppCrdRvwDObj();
       temp.MrAnalysisItemCode = objArr[i].QuestionCode;
@@ -348,11 +286,9 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   CheckDeviationData() {
-    console.log(this.ManualDeviationData);
   }
 
   BindManualDeviationData(ev) {
-    // console.log(ev);
     this.ManualDeviationData = ev;
     this.isExistedManualDeviationData = true;
   }
@@ -364,7 +300,6 @@ export class CreditReviewMainComponent implements OnInit {
       ReasonDesc: "",
       Notes: ""
     });
-    console.log(this.FormObj);
 
     if (!this.isReturnOn) {
       this.isReturnOn = true;

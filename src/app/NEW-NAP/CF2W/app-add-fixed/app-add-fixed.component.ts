@@ -102,7 +102,6 @@ export class AppAddFixedComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
@@ -128,18 +127,13 @@ export class AppAddFixedComponent implements OnInit {
     this.http.post(URLConstant.GetListKvpActiveRefOfficeIdForPaging, this.refOfficeObj).subscribe(
       (response) => {
         this.returnRefOfficeObj = response[CommonConstant.ReturnObj];
-        console.log("bbb");
-        console.log(this.returnRefOfficeObj);
         for (let i = 0; i < this.returnRefOfficeObj.length; i++) {
           this.listRefOfficeId.push(this.returnRefOfficeObj[i].Key)
         }
-        console.log(this.listRefOfficeId);
       }
     );
 
     // Test Data
-    console.log(this.user);
-    console.log(this.NapAppForm);
 
   }
 
@@ -206,17 +200,12 @@ export class AppAddFixedComponent implements OnInit {
     var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
         this.officeItems = response[CommonConstant.ReturnObj];
         this.NapAppForm.patchValue({
           OriOfficeCode: this.officeItems[0].Key,
           OriOfficeName: this.officeItems[0].Value,
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CheckValue(obj) {
@@ -300,46 +289,12 @@ export class AppAddFixedComponent implements OnInit {
 
   }
 
-  // SaveForm() {
-  //   // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
-  //   var napAppObj = new NapAppModel();
-  //   napAppObj = this.NapAppForm.value;
-  //   napAppObj.AppCreatedDt = this.user.BusinessDt;
-  //   napAppObj.IsAppInitDone = false;
-  //   napAppObj.AppStat = AdInsConstant.AppStepNew;
-  //   napAppObj.AppCurrStep = AdInsConstant.AppStepNew;
-
-  //   napAppObj = this.CheckValue(napAppObj);
-  //   if (this.user.MrOfficeTypeCode == "HO") {
-  //     napAppObj.OriOfficeCode = this.user.OfficeCode;
-  //   } else if (this.user.MrOfficeTypeCode == "Center Group") {
-
-  //   }
-  //   console.log(napAppObj);
-
-  //   var url = environment.losUrl + AdInsConstant.AddApp;
-  //   this.http.post(url, napAppObj).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.toastr.successMessage(response["message"]);
-  //       //this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-
-  // }
-
   supplierCode;
   supplierName;
   SetSupplierBranch(event) {
     this.supplierCode = event.VendorCode;
     this.supplierName = event.VendorName;
 
-    console.log("test")
-    console.log(this.supplierCode)
-    console.log(this.supplierName)
   }
 
   assetCode;
@@ -384,11 +339,7 @@ export class AppAddFixedComponent implements OnInit {
       (response) => {
         this.returnDtFixedNAPObj = response;
         this.toastr.successMessage(response["message"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   returnFeeAndInsFixedNAP;
@@ -413,8 +364,6 @@ export class AppAddFixedComponent implements OnInit {
     this.http.post(URLConstant.DataTableFeeAndInsNAP, feeAndInsFixedNAP).subscribe(
       (response) => {
         this.returnFeeAndInsFixedNAP = response[CommonConstant.ReturnObj];
-        // console.log("vvv");
-        // console.log(this.returnFeeAndInsFixedNAP);
 
         this.allAppDataObj = new SaveAppDataCF2WObj();
         for (var i = 0; i < this.returnFeeAndInsFixedNAP.DtFeeFixedNAP.length; i++) {
@@ -467,30 +416,20 @@ export class AppAddFixedComponent implements OnInit {
         this.allAppDataObj.AppFixedObj.LifeInscoBranchCode = item.LifeInsco;
         this.allAppDataObj.AppFixedObj.LifeInsPaymentMethod = item.LifeInsPaymentMethod;
 
-        console.log(this.allAppDataObj)
 
         this.http.post(URLConstant.AddEditAppCF2W, this.allAppDataObj).subscribe(
           (response) => {
             this.returnAllAppDataObj = response;
-            console.log(this.returnAllAppDataObj)
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "AppId": response["AppId"], "LobCode": this.LobCode } });
-          },
-          (error) => {
-            console.log(error);
           }
         );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     //this.allAppDataObj.AppFixedFeeObj = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP;
     //this.allAppDataObj.AppFixedInsObj = this.returnFeeAndInsFixedNAP.DtInsFixedNAP;
   }
 
   getLookupAppResponseCopy(ev: any) {
-    // console.log(ev);
     this.NapAppForm.patchValue({
       ProdOfferingCode: ev.ProdOfferingCode,
       ProdOfferingName: ev.ProdOfferingName,
@@ -511,13 +450,11 @@ export class AppAddFixedComponent implements OnInit {
       MrCustNotifyOptCode: ev.MrCustNotifyOptCode,
       SalesOfficerNo: ev.SalesOfficerNo
     });
-    console.log(this.NapAppForm);
     this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
   }
 
   productOffering;
   getLookupProductOfferingName(ev: any) {
-    console.log(ev);
     var url = environment.FoundationR3Url + URLConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
@@ -528,7 +465,6 @@ export class AppAddFixedComponent implements OnInit {
     var tempRefProdTypeCode;
     this.http.post(url, obj).subscribe(
       (response) => {
-        // console.log(response);
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
@@ -540,7 +476,6 @@ export class AppAddFixedComponent implements OnInit {
           } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
-            console.log("Not");
           }
         }
         this.NapAppForm.patchValue({
@@ -553,21 +488,13 @@ export class AppAddFixedComponent implements OnInit {
           RefProdTypeCode: tempRefProdTypeCode
         });
         this.productOffering = ev.ProdOfferingName;
-        console.log("vvv")
-        console.log(ev)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ChangeValueOffice(ev: any) {
-    // console.log(ev);
     this.NapAppForm.patchValue({
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text
     });
-    // console.log(this.NapAppForm);
   }
 }

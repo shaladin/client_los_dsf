@@ -43,7 +43,6 @@ export class TabApplicationComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ListCrossAppData = response[CommonConstant.ReturnObj];
 
       }
@@ -61,11 +60,7 @@ export class TabApplicationComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["listResponseAppLoanPurpose"]
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.IsGridLoanReady = true;
   }

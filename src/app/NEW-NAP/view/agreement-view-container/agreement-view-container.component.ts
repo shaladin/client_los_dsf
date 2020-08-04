@@ -57,7 +57,6 @@ export class AgreementViewContainerComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log(this.AgrmntId);
     this.arrValue.push(this.AgrmntId);
     await this.GetAgrmnt();
     await this.GetAppAndAppCustDetailByAgrmntId();
@@ -67,13 +66,8 @@ export class AgreementViewContainerComponent implements OnInit {
     var obj = { agrmntId: this.AgrmntId };
     await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ResponseAppDetailData = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetAgrmnt() {

@@ -54,10 +54,6 @@ export class PurchaseOrderViewComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["ResponseAppAssetObj"]
         this.result = this.inputGridObj.resultData.Data;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

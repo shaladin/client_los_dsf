@@ -20,12 +20,10 @@ export class MultiAssetDataComponent implements OnInit {
   }
 
   ngOnInit() { 
-    console.log("Init Multi Asset");
     this.mode = "paging";
   }
 
   terimaValue(ev : any){
-    console.log(ev);
     this.mode = ev.mode; 
     //this.AppId =  ev.AppId;
     //this.type = "addAsset";
@@ -41,7 +39,6 @@ export class MultiAssetDataComponent implements OnInit {
   }
 
   terimaCollateral(ev : any){
-    console.log(ev);
     this.mode = ev.mode; 
     //this.AppId =  ev.AppId;
     this.AppCollateralId = ev.AppCollateralId;

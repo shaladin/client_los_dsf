@@ -41,7 +41,6 @@ export class ViewInsuranceComponent implements OnInit {
       var reqObj = { AppId: this.AppId };
       this.http.post(URLConstant.GetInsuranceDataByAppIdForView, reqObj).subscribe(
         (response) => {
-          console.log(response);
           this.appInsuranceObj = response["AppInsuranceObj"];
           this.appInsObjObj = response["AppInsObjObj"];
           if (response["AppAssetObj"] != null) {
@@ -58,17 +57,12 @@ export class ViewInsuranceComponent implements OnInit {
           }
 
           this.inputGridObj.resultData = detailForGridCoverage;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       var reqAssetObj = { AppAssetId: this.AppAssetId };
       this.http.post(URLConstant.GetInsuranceDataByAppIdForView, reqAssetObj).subscribe(
         (response) => {
-          console.log(response);
           this.appInsuranceObj = response["AppInsuranceObj"];
           this.appInsObjObj = response["AppInsObjObj"];
           if (response["AppAssetObj"] != null) {
@@ -85,11 +79,7 @@ export class ViewInsuranceComponent implements OnInit {
           }
 
           this.inputGridObj.resultData = detailForGridCoverage;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

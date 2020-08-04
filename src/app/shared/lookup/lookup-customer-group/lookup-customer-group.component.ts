@@ -61,8 +61,6 @@ export class LookupCustomerGroupComponent implements OnInit {
   }
 
   choose(id, name, item) {
-    console.log(id + " : " + name);
-    console.log(item);
     this.idSelect = id;
     this.nameSelect = name;
     this.jsonSelect = JSON.stringify(item);

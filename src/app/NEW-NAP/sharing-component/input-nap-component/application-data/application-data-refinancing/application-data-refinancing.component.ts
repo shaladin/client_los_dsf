@@ -105,7 +105,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    console.log('test app data refinanc');
     // this.makeLookUpObj();
     this.getAppModelInfo();
     
@@ -131,8 +130,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => { 
        this.CustNo = response["CustNo"];
-       console.log("asd")
-       console.log(this.CustNo);
 
         this.mouCustObj = new MouCustObj();
         this.mouCustObj.CustNo = this.CustNo;
@@ -141,9 +138,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-            
-              // console.log("resMouCustObj")
-              // console.log(this.resMouCustObj)
 
             // if(this.resMouCustObj.length > 0)
             // {
@@ -155,47 +149,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     
   }
 
-  // getDDLFromProdOffering(refProdCompntCode:string){
-  //   var obj = {
-  //     ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-  //     RefProdCompntCode: refProdCompntCode,
-  //     ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-  //   };
-  //   this.http.post(AdInsConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       var listCompntValue: Array<string> = response["CompntValue"].split(";");
-  //       var listCompntValueDesc: Array<string> = response["CompntValueDesc"].split(",");
-  //       console.log(listCompntValue);
-        
-  //       var listDDL = new Array;
-  //       var keyValueObj;
-  //       if(listCompntValue.length!=1){
-  //         for(var i=0;i<listCompntValue.length;i++){
-  //           var splitted=listCompntValue[i].split(":");
-  //           var splitted1=listCompntValueDesc[i].split(":");
-  //           keyValueObj={
-  //             Key: splitted[0],
-  //             Value: splitted1[0]
-  //           };
-  //           listDDL.push(keyValueObj);
-  //         }
-  //       }else{
-  //         keyValueObj={
-  //           Key: response["CompntValue"],
-  //           Value: response["CompntValueDesc"]
-  //         };
-  //         listDDL.push(keyValueObj);
-  //       }
-  //       console.log(listDDL);
-  //       this.applicationDDLitems[refProdCompntCode]=listDDL;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
   getDDLFromProdOffering(refProdCompntCode:string){
     var obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
@@ -204,15 +157,9 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     };
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        // console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
-        // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getInterestTypeCode(){
@@ -224,17 +171,12 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
-        // console.log(response);   
         this.NapAppModelForm.patchValue({
           InterestType: response["CompntValue"],
           InterestTypeDesc: response["CompntValueDesc"],
         });
         this.ChangeInterestType();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   isFixedRate: boolean = false;
@@ -261,13 +203,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         for(var i = 0; i<this.resultCrossApp.length; i++){
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
-        console.log("resultCrossApp")
-        console.log(this.resultCrossApp)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   applicationDDLitems;
@@ -281,8 +217,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
-        console.log("testdata")
-        console.log(this.resultResponse)
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
@@ -341,11 +275,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     
     if(this.NapAppModelForm.controls.PayFreqCode.value == "MONTHLY")
     {
@@ -361,13 +291,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
       (response) => {
-        console.log("GetListKvpActiveRefAppSrc Response : " + JSON.stringify(response));
         this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getPayFregData(){
@@ -377,17 +302,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
-        console.log("GetListActiveRefPayFreq Response : " + JSON.stringify(response));
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
 
-        // console.log("PayFreq")
-        // console.log(this.applicationDDLitems["Pay_Freq"])
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getRefMasterTypeCode(code) {
@@ -401,14 +319,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
 
-        console.log("testddl")
-        console.log(code)
-        console.log(objTemp)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getLookupEmployeeResponse(ev) {
@@ -485,12 +396,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     {
       var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);      
-      console.log("Change Tenor result: " + total);
     }
     // if(!isNaN(temp)){
     //   var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
     //   this.PatchNumOfInstallment(total);      
-    //   console.log("Change Tenor result: " + total);
     // }
   }
 
@@ -507,7 +416,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   } 
 
   PatchNumOfInstallment(num){
-    console.log("NumOfInst: " + num);
     this.NapAppModelForm.patchValue({
       NumOfInst: num
     });
@@ -594,7 +502,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   ClickSave(){
-    console.log("Save App Data Refinancing");
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
@@ -605,18 +512,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       RowVersion: ""
     };
 
-    console.log("appcross")
-    console.log(obj)
 
     this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
-        console.log("response App Refinancing : " + JSON.stringify(response));
         this.outputTab.emit();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     
   }
 
@@ -643,8 +543,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   AddTemp(contentCrossApp){
-    //console.log("App Data Refinancing Form: " + JSON.stringify(this.NapAppModelForm.value));
-    //console.log("Is Form Valid : " + this.NapAppModelForm.valid);
     this.Open(contentCrossApp);
   }
 
@@ -663,9 +561,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         obj = this.resultCrossApp[idx];
         this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
           (response) =>{
-          },
-          (error) => {
-            console.log(error);
           }
         )
       }

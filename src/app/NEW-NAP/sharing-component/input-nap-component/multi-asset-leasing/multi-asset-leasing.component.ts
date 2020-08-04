@@ -22,7 +22,6 @@ export class MultiAssetLeasingComponent implements OnInit {
   }
 
   terimaValue(ev : any){
-    console.log(ev);
     this.mode = ev.mode; 
     //this.AppId =  ev.AppId;
     //this.type = "addAsset";
@@ -31,7 +30,6 @@ export class MultiAssetLeasingComponent implements OnInit {
   }
 
   terimaCollateral(ev : any){
-    console.log(ev);
     this.mode = ev.mode; 
     //this.AppId =  ev.AppId;
     this.AppCollateralId = ev.AppCollateralId;

@@ -193,11 +193,9 @@ SetAsset(event) {
     AssetCategoryCode: event.AssetCategoryCode,
     AssetTypeCode: event.AssetTypeCode
   });
-  console.log(event);
 }
 
 GetListAddr() {
-  console.log("ccc")
   this.appObj.AppId = this.AppId;
   this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
     (response) => {
@@ -284,7 +282,6 @@ copyToLocationAddr() {
     this.http.post(this.getAppCustUrl, appObj).subscribe(
       (response) => {
         this.appCustObj = response;
-        console.log(response);
         this.AssetDataForm.patchValue({
           Username: this.appCustObj.CustName,
           UserRelationship: "SELF",
@@ -294,7 +291,6 @@ copyToLocationAddr() {
   }
 
   SelfUsageChange(event) {
-    console.log(event);
     if (event.checked == true) {
       this.GetAppCust();
       this.AssetDataForm.controls.Username.clearValidators();
@@ -334,9 +330,6 @@ copyToLocationAddr() {
   }
 
   ngOnInit() {
-    console.log("ddd")
-    console.log(this.AppAssetId)
-    console.log(this.mode)
     if(this.mode == 'editAsset'){
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
@@ -664,15 +657,10 @@ copyToLocationAddr() {
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           //this.router.navigate(["/Nap/AssetData/Paging"]);
           this.assetValue.emit({mode : 'paging'});
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else
     {
@@ -689,34 +677,10 @@ copyToLocationAddr() {
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           //this.router.navigate(["/Nap/AssetData/Paging"]);
           this.assetValue.emit({mode : 'paging'});
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
-
-  // editItem(custAddrObj: any) {
-  //   this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
-  // deleteItem(custAddrObj: any) {
-  //   var custAddr = new CustAddrObj();
-  //   custAddr.CustAddrId = custAddrObj.CustAddrId;
-  //   this.http.post(this.deleteCustAddr, custAddr).subscribe(
-  //     (response: any) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   //this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
 }

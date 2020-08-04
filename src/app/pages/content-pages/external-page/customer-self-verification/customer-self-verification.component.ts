@@ -56,7 +56,6 @@ export class CustomerSelfVerificationComponent implements OnInit {
     this.http.post(URLConstant.GetLeadByLeadId, this.leadObj).subscribe(
       (response) => { 
         this.LeadStep = response["LeadStep"];
-        console.log(this.LeadStep);
          if (this.LeadStep != CommonConstant.LeadStepSelfVerification){
           this.reason = "resubmit"; 
          }else{ 
@@ -95,7 +94,6 @@ export class CustomerSelfVerificationComponent implements OnInit {
   {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
-    console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });

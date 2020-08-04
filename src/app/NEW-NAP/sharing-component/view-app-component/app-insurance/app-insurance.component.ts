@@ -36,11 +36,7 @@ export class AppInsuranceComponent implements OnInit {
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   viewDetailLoanHandler(appAssetId){
@@ -48,9 +44,6 @@ export class AppInsuranceComponent implements OnInit {
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
     modalAssetDetail.componentInstance.AppId = this.AppId;
     modalAssetDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 
@@ -58,9 +51,6 @@ export class AppInsuranceComponent implements OnInit {
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 }

@@ -144,18 +144,13 @@ export class NapFromLeadDetailComponent implements OnInit {
 
     await this.http.post(URLConstant.GetLeadByLeadId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.leadObj = response as LeadObj;
         this.NapAppForm.patchValue({
           OriOfficeCode: this.leadObj.OriOfficeCode,
           OriOfficeName: this.leadObj.OriOfficeName,
           LeadId: this.leadObj.LeadId
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CheckValue(obj) {
@@ -192,7 +187,6 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj = this.CheckValue(napAppObj);
     this.http.post(URLConstant.AddAppFromLead, napAppObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
@@ -206,11 +200,7 @@ export class NapFromLeadDetailComponent implements OnInit {
         if (this.bizTemplateCode == CommonConstant.FCTR) {
           this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 
@@ -223,11 +213,9 @@ export class NapFromLeadDetailComponent implements OnInit {
     napAppObj.AppCurrStep = CommonConstant.AppStepNew;
 
     napAppObj = this.CheckValue(napAppObj);
-    console.log(napAppObj);
   }
 
   getLookupAppResponseName(ev: any) {
-    console.log(ev);
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode,
       ProdOfferingVersion: ev.ProdOfferingVersion,
@@ -238,7 +226,6 @@ export class NapFromLeadDetailComponent implements OnInit {
     var tempRefProdTypeCode;
     this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, obj).subscribe(
       (response) => {
-        console.log(response);
         var temp = response["ListProdOfferingDObj"];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
@@ -255,7 +242,6 @@ export class NapFromLeadDetailComponent implements OnInit {
           } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
-            // console.log("Not");
           }
         }
         this.NapAppForm.patchValue({
@@ -267,12 +253,7 @@ export class NapFromLeadDetailComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
-        console.log(this.NapAppForm);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

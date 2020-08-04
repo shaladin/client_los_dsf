@@ -90,7 +90,6 @@ export class GuarantorCompanyComponent implements OnInit {
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       await this.http.post(URLConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
         (response) => {
-          console.log(response);
           this.resultData = response;
           this.AppGuarantorCompanyId = this.resultData.AppGuarantorCompanyObj.AppGuarantorCompanyId;
           this.inputLookupObj.jsonSelect = { CustName: this.resultData.AppGuarantorObj.GuarantorName };
@@ -118,13 +117,8 @@ export class GuarantorCompanyComponent implements OnInit {
           this.setIndustryTypeName(this.resultData.AppGuarantorCompanyObj.IndustryTypeCode);
           this.setAddrLegalObj();
           this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
-          console.log(this.guarantorCompanyObj);
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.ClearForm();
       this.inputLookupObj1.isReady = true;
@@ -215,7 +209,6 @@ export class GuarantorCompanyComponent implements OnInit {
 
   // GuarantorName="";
   lookupGuarantor(event) {
-    console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
@@ -271,7 +264,6 @@ export class GuarantorCompanyComponent implements OnInit {
         );
         this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
           (response) => {
-            console.log(response);
             this.resultData = response;
             this.CompanyForm.patchValue({
               FaxArea: this.resultData.FaxArea,
@@ -298,12 +290,10 @@ export class GuarantorCompanyComponent implements OnInit {
         );
       }
     );
-    console.log(this.CompanyForm);
   }
 
   // IndustryTypeCode="";
   handleOutput1(event) {
-    console.log(event);
     this.CompanyForm.patchValue(
       {
         IndustryTypeCode: event.IndustryTypeCode
@@ -372,39 +362,27 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   getAppGuarantorLegalDoc(event) {
-    console.log(event);
     this.listLegalDoc = event;
   }
 
   SaveForm() {
-    console.log(this.CompanyForm);
     this.guarantorCompanyObj = new GuarantorCompanyObj();
     this.Add();
     if (this.mode == "edit") {
       this.guarantorCompanyObj.RowVersion = this.resultData.RowVersion;
       this.guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       this.guarantorCompanyObj.AppGuarantorCompanyObj.AppGuarantorCompanyId = this.AppGuarantorCompanyId;
-      console.log(this.guarantorCompanyObj);
       this.http.post(URLConstant.EditAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.http.post(URLConstant.AddAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -445,8 +423,6 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   cek() {
-    console.log(this.CompanyForm)
-    console.log(this.inputLookupObj1)
   }
 
   getDocType() {
@@ -508,11 +484,7 @@ export class GuarantorCompanyComponent implements OnInit {
         this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
         this.inputLookupObj1.jsonSelect = response;
         this.inputLookupObj1.isReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   cancel() {

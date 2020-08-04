@@ -65,7 +65,6 @@ export class MouReviewFactoringComponent implements OnInit {
     var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
     this.http.post(URLConstant.GetApprovedBy, apvObj).subscribe(
       (response) => {
-        console.log(apvObj);
         this.listApprover = response;
 
         this.MouReviewDataForm.patchValue({
@@ -88,7 +87,6 @@ export class MouReviewFactoringComponent implements OnInit {
           listRec.push(ApvRecommendation);
         }
         // this.ApvRecommendation = ApvRecommendation;
-        console.log(this.MouReviewDataForm);
       })
 
     var mouCustObj = { MouCustId: this.MouCustId };
@@ -98,7 +96,6 @@ export class MouReviewFactoringComponent implements OnInit {
       })
     this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
       (response) => {
-        console.log("awdawd");
         this.MrCustTypeCode = response['MrCustTypeCode'];
       });
 
@@ -128,7 +125,6 @@ export class MouReviewFactoringComponent implements OnInit {
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
@@ -179,11 +175,7 @@ export class MouReviewFactoringComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

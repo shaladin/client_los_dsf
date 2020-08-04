@@ -128,7 +128,6 @@ export class FinancialDataFctrComponent implements OnInit {
   LoadAppFinData() {
     this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataFctrByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
-        console.log(response);
         this.appFinDataObj = response;
 
         if (this.appFinDataObj.MrInstSchemeCode != 'RF') {
@@ -202,7 +201,6 @@ export class FinancialDataFctrComponent implements OnInit {
   
         this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["Message"]);
             this.outputTab.emit();
           }

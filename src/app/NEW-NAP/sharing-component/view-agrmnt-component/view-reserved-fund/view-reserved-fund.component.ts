@@ -40,7 +40,6 @@ export class ViewAgrmntReservedFundComponent implements OnInit {
   GetRsvFundData() {
     this.http.post(URLConstant.GetListAgrmntReservedFundByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        console.log(response);
         this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {
           for (let i = 0; i < this.RsvFundObj.length; i++) {

@@ -98,15 +98,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       this.setReturnHandlingD();
       this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
     }
   }
@@ -120,9 +115,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -143,7 +135,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
       (response) => {
 
-        console.log(response);
         this.AppObj = response;
       }
     );
@@ -158,11 +149,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -170,7 +157,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.http.post(this.getListAppCollateralUrl, this.appObj).subscribe(
       (response) => {
         this.appCollateralObj = response[CommonConstant.ReturnObj];
-        console.log(this.appCollateralObj);
       }
     );
   }
@@ -180,7 +166,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
     await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.returnHandlingDObj = response;
 
       }
@@ -192,14 +177,9 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       this.appCollObj.AppCollateralId = AppCollateralId;
       this.http.post(URLConstant.DeleteAppCollateral, this.appCollObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.GetAppCollateralData();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
 
   }

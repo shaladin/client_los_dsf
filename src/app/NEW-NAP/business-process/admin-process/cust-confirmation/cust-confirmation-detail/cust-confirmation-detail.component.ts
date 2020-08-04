@@ -97,9 +97,6 @@ export class CustConfirmationDetailComponent implements OnInit {
             this.AddNewVerfResult();
           }
         }
-      },
-      (error) => {
-        console.log(error);
       });
   }
 
@@ -121,16 +118,9 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.http.post(URLConstant.AddVerfResultAndVerfResultH, this.verfResultObj).subscribe(
           () => {
             this.GetVerfResult(true);
-          },
-          (error) => {
-            console.log(error);
           }
         );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   SaveForm() {
@@ -149,11 +139,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else if (this.CustCnfrmObj.IsSkip == true) {
       var CustCnfrmWFObj = {
@@ -166,11 +152,7 @@ export class CustConfirmationDetailComponent implements OnInit {
           this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
           // this.toastr.successMessage(response["message"]);
           // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
       // this.toastr.successMessage("Success !");
       // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
     }
@@ -192,11 +174,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

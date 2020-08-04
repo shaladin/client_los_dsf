@@ -79,11 +79,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
       (response) => {
         this.SubjectResponse = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
       (response) => {
@@ -91,11 +87,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.CustConfirm.patchValue({
           MrVerfResultHStatCode: this.RefStatusList[0].Key
         })
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.http.post(URLConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
@@ -103,11 +95,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.CustConfirm.patchValue({
           Phn: this.PhnList[0].Key
         })
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
       (response) => {
@@ -115,11 +103,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
           this.GenerateFormVerfQuestion();
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetData() {
@@ -130,24 +114,15 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
           (response) => {
             this.appObj = response;
-          },
-          (error) => {
-            console.log(error);
           });
 
         if (this.agrmntObj.LeadId != null) {
           this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
             (response) => {
-              console.log("retard");
-              console.log(response);
               this.leadObj = response;
             });
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).subscribe(
       (response) => {
@@ -158,11 +133,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.newVerfResultHObj.PhnType = "-";
         this.newVerfResultHObj.MrVerfObjectCode = "-";
         this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetListVerfResultH(id, code) {
@@ -173,11 +144,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
       (response) => {
         this.VerfResultHList = response["responseVerfResultHCustomObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   GenerateFormVerfQuestion() {
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
@@ -297,11 +264,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           formDirective.resetForm();
           this.clearform();
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   clearform() {
     this.CustConfirm.reset();

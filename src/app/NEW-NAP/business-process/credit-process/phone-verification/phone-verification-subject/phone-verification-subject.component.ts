@@ -126,24 +126,15 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/CreditProcess/PhoneVerification/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     if (this.isReturnHandling == true) {
       this.setReturnHandlingD();
       this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
     }
 
@@ -180,9 +171,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -191,7 +179,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
       (response) => {
 
-        console.log(response);
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
       }
@@ -207,11 +194,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -219,7 +202,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
       (response) => {
         this.phoneVerifObj = response;
-        console.log(this.phoneVerifObj);
         this.tempBlank = this.phoneVerifObj.filter(
           blank => blank.Result == '');
         this.tempScs = this.phoneVerifObj.filter(
@@ -236,7 +218,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async GetVerfResultData() {
     await this.http.post(this.getVerfResultUrl, this.verfResObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.verifResultObj = response;
 
       }
@@ -248,7 +229,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       var businessDt = new Date(value);
 
       var useraccess = localStorage.getItem(CommonConstant.USER_ACCESS);
-      console.log(useraccess);
       this.addVerifResultObj = new VerfResultObj();
 
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
@@ -262,7 +242,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
       await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
         (response) => {
-          console.log(response);
         }
       );
     }
@@ -272,7 +251,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
     await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.returnHandlingDObj = response;
 
       }

@@ -22,8 +22,6 @@ export class ViewPurchaseOrderComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    console.log("this view PO");
-    console.log(this.agrmntId);
     await this.BindPOData();
   }
 
@@ -34,17 +32,9 @@ export class ViewPurchaseOrderComponent implements OnInit {
     var obj = { AgrmntId: this.agrmntId };
     await this.http.post(URLConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];
         this.ResponseAppAssetData=response["ResponseAppAssetObj"];
         this.ResponsePurchaseOrderHData=response["ResponsePurchaseOrderHObj"];
-        // console.log(this.ResponseAgrmntFinDataData);
-        // console.log(this.ResponseAppAssetData);
-        // console.log(this.ResponsePurchaseOrderHData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );     
+      });     
   }
 }

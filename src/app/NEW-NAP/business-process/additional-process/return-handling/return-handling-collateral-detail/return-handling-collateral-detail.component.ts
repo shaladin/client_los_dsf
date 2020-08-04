@@ -219,14 +219,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.setAllCollateralObj();
     this.http.post(this.AddEditAllCollateralDataUrl, this.allCollateralDataObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit?AppId=" + this.AppId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 
@@ -310,14 +305,12 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       FullAssetName: event.FullAssetName,
       AssetCategoryCode: event.AssetCategoryCode
     });
-    console.log(event);
   }
 
 
 
 
   async SelfUsageChange(event) {
-    console.log(event);
     if (event.checked == true) {
       await this.GetAppCust();
       this.CollateralDataForm.patchValue({
@@ -366,9 +359,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     if (this.AppCollateralId != 0) {
       await this.http.post(this.GetAppCollateralUrl, this.appCollateralObj).subscribe(
         (response) => {
-          console.log(response);
           this.appCollateral = response;
-          console.log(response);
           if (this.appCollateral != "" && this.appCollateral != null) {
             this.CollateralDataForm.patchValue({
 
@@ -403,17 +394,11 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
             this.AssetTypeChanged(this.appCollateral.AssetTypeCode);
           }
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
       this.http.post(this.GetAppCollateralRegistUrl, this.appCollateralObj).subscribe(
         (response) => {
-          console.log(response);
           this.appCollateralRegist = response;
-          console.log(response);
           if (this.appCollateralRegist != "" && this.appCollateralRegist != null) {
             this.CollateralDataForm.patchValue({
 
@@ -447,11 +432,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
           }
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
 
   }
@@ -557,7 +538,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.appObj.AppId = this.AppId;
     this.http.post(this.getAppUrl, this.appObj).subscribe(
       (response) => {
-        console.log(response);
         this.AppObj = response;
       }
     );
@@ -567,8 +547,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   GetAssetMaster(assetMasterObj) {
     this.http.post(this.getAssetMasterTypeUrl, assetMasterObj).subscribe(
       (response) => {
-        console.log("awo");
-        console.log(response);
         this.AssetMasterObj = response;
         this.CollateralDataForm.patchValue({
           FullAssetCode: this.AssetMasterObj.FullAssetCode,
@@ -582,7 +560,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   async AssetTypeChanged(Code) {
-    console.log(Code);
     var assetTypeObj = {
       AssetTypeCode: Code
     };
@@ -788,9 +765,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   test() {
     this.allCollateralDataObj = new AllCollateralDataObj();
     this.setAllCollateralObj();
-    console.log(this.allCollateralDataObj);
-    console.log(this.CollateralDataForm);
-    console.log(this.AppCollateralId);
   }
   SetLocationAddrType(event) {
     this.copyFromAppCustAddrForLocation = event;
@@ -807,7 +781,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.http.post(this.getAppCustUrl, appObj).toPromise().then(
       (response) => {
         this.AppCustObj = response;
-        console.log(response);
         this.CollateralDataForm.patchValue({ 
           UserName: this.AppCustObj.CustName,
           MrUserRelationshipCode: CommonConstant.SelfCustomer,

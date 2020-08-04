@@ -25,7 +25,6 @@ export class ViewSummaryFl4wComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('summary')
     this.agrmntObj.AgrmntId = this.AgrmntId;
     this.GetAgrmntSummary();
 
@@ -34,7 +33,6 @@ export class ViewSummaryFl4wComponent implements OnInit {
   GetAgrmntSummary() {
     this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        console.log(response);
         this.SummaryObj = response;
         if (this.SummaryObj.AppIns != null) {
           this.totalInsPremi = this.SummaryObj.AppIns.TotalInscoMainPremiAmt + this.SummaryObj.AppIns.TotalInscoAddPremiAmt + this.SummaryObj.AppIns.InscoAdminFeeAmt;
