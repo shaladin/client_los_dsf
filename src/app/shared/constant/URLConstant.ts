@@ -265,6 +265,8 @@ export class URLConstant {
     public static GetCountRefUserByRefEmpId = "/UserManagement/GetCountRefUserByRefEmpId";
     public static ResetPassword = "/UserManagement/ResetPassword";
     public static GetRefUserByUsername = environment.FoundationR3Url + "/RefUser/GetRefUserByUsername";
+    public static GetRefUserByResetCode = environment.FoundationR3Url + "/RefUser/GetRefUserByResetCode";
+    public static ResetPasswordByUsername = environment.FoundationR3Url + "/RefUser/ResetPasswordByUsername";
 
     //REF-ROLE
     public static GetRefRolePaging = "/UserManagement/GetRefRolePaging";
@@ -490,6 +492,7 @@ export class URLConstant {
     public static GetVendorByVendorCode = environment.FoundationR3Url + "/Vendor/GetVendorByVendorCode";
     public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
     public static GetListVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";
+    public static GetListActiveVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListActiveVendorEmpByVendorIdAndPositionCodes";
     public static GetVendorEmpSupervisorByVendorEmpId = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
     public static GetVendorEmpByVendorIdVendorEmpNo = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
     public static GetListVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListVendorByCategoryCodeAndOfficeCode";
@@ -1091,4 +1094,7 @@ export class URLConstant {
     //APP SCORE GRADE
     public static GetAppScoreGradeByAppIdAndMrScoreTypeCode = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeByAppIdAndMrScoreTypeCode";
     public static GetAppScoreGradeDsrByAppId = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeDsrByAppId";
+
+    // Authentication
+    public static RequestNewPassword = environment.FoundationR3Url + "/Authenticate/RequestNewPassword";
 }

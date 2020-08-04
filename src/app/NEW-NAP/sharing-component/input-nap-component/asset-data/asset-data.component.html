@@ -62,7 +62,7 @@
               </div>
             </div>
 
-            <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Attribute'" [panel]="'assetData'">
+            <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Information'" [panel]="'assetData'">
             </lib-ucSubsection>
             <div id="assetData">
               <div class="form-group row">
@@ -88,20 +88,20 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Asset Price</label>
                 <div class="col-md-4">
-                  <input type="" currencyMask id="assetPriceAmt" class="form-control" formControlName="AssetPriceAmt"
+                  <input type="" currencyMask id="assetPriceAmt" class="form-control" formControlName="AssetPriceAmt" (focusout)="updateValueDownPaymentAmt($event)"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPriceAmt.invalid}">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.AssetPriceAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Down Payment (%/Amt)</label>
                 <div class="col-md-2" style="border-right: 1px solid grey">
-                  <input type="" currencyMask id="downPaymentPrctg" class="form-control" formControlName="DownPaymentPrctg"
+                  <input type="" currencyMask id="downPaymentPrctg" class="form-control" formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentPrctg.invalid}">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.DownPaymentPrctg" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
-                  <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt"
+                  <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt" (focusout)="updateValueDownPaymentPrctg($event)"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -157,7 +157,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
+                <label class="col-md-2 adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="ManufacturingYear"
                          (focusout)="ChangeManuYear()">
@@ -172,7 +172,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adins-required-label" translate>Color</label>
+                <label class="col-md-2" translate>Color</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="Color"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Color.invalid}">
@@ -189,7 +189,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adins-required-label" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="AssetNotes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetNotes.invalid }"></textarea>
@@ -199,7 +199,7 @@
               </div>
             </div>
             <div *ngIf="AppAssetAttrObj != null && isAssetAttrReady == 1">
-              <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Information'" [panel]="'assetAttr'">
+              <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
               </lib-ucSubsection>
               <div [id]="assetAttr">
                 <div formArrayName="AppAssetAttrObjs">
