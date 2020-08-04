@@ -67,6 +67,20 @@ import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-d
 import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { MouViewListedCustFactoringComponent } from './mou-customer/mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component';
+import { MouCustTabComponent } from './mou-customer-request/mou-cust-tab/mou-cust-tab.component';
+import { MouCustPersonalContactInfoComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-contact-info/mou-cust-personal-contact-info.component';
+import { MouCustPersonalFinancialComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-financial/mou-cust-personal-financial.component';
+import { MouCustBankAccComponent } from './mou-customer-request/mou-cust-tab/mou-cust-bank-acc/mou-cust-bank-acc.component';
+import { MouCustJobDataComponent } from './mou-customer-request/mou-cust-tab/mou-cust-job-data/mou-cust-job-data.component';
+import { MouCustSocmedComponent } from './mou-customer-request/mou-cust-tab/mou-cust-socmed/mou-cust-socmed.component';
+import { MouCustGrpMbrComponent } from './mou-customer-request/mou-cust-tab/mou-cust-grp-mbr/mou-cust-grp-mbr.component';
+import { MouCustPersonalMainComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-main/mou-cust-personal-main.component';
+import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
+import { MouCustCompanyContactInfoComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-contact-info/mou-cust-company-contact-info.component';
+import { MouCustCompanyFinancialComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-financial/mou-cust-company-financial.component';
+import { MouCustCompanyMainComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-main/mou-cust-company-main.component';
+import { MouCustLegalDocComponent } from './mou-customer-request/mou-cust-tab/mou-cust-legal-doc/mou-cust-legal-doc.component';
+import { MouCustMgmntShrholderComponent } from './mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mou-cust-mgmnt-shrholder.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -106,7 +120,10 @@ export const customCurrencyMaskConfig = {
     UcapprovalhistModule,
     UcuploadModule,
     UcaddtotempModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSelectModule,
   ],
   declarations: [
     DocSignerComponent,
@@ -162,7 +179,20 @@ export const customCurrencyMaskConfig = {
     MouOsTcPagingComponent,
     MouOsTcDetailComponent,
     UnauthorizedPageComponent,
-    MouViewListedCustFactoringComponent
+    MouViewListedCustFactoringComponent,
+    MouCustTabComponent,
+    MouCustPersonalContactInfoComponent,
+    MouCustPersonalFinancialComponent,
+    MouCustBankAccComponent,
+    MouCustJobDataComponent,
+    MouCustSocmedComponent,
+    MouCustGrpMbrComponent,
+    MouCustPersonalMainComponent,
+    MouCustCompanyContactInfoComponent,
+    MouCustCompanyFinancialComponent,
+    MouCustCompanyMainComponent,
+    MouCustLegalDocComponent,
+    MouCustMgmntShrholderComponent
   ],
   exports: [],
   providers: [NGXToastrService],
