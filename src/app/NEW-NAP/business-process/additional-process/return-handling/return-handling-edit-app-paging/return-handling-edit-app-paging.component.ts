@@ -70,6 +70,9 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
       if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
         this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
       }
+      if (this.BizTemplateCode == CommonConstant.CFNA) {
+        this.router.navigate(["Nap/CFNA/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });
+      }
     }
     if(ev.Key == "ViewProdOffering"){
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  

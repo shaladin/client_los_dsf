@@ -7,6 +7,7 @@ export class InsuranceDataObj {
     AppInsuranceObj: AppInsuranceObj;
     AppInsObjObj: AppInsObjObj;
     AppInsMainCvgObjs: Array<AppInsMainCvgObj>;
+    DefaultInsAssetRegion: string;
     RowVersion: string;
 
     constructor() {

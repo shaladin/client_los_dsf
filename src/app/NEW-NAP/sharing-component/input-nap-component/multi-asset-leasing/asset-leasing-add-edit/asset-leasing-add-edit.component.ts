@@ -224,6 +224,7 @@ copyToLocationAddr() {
 
         this.inputFieldLocationAddrObj = new InputFieldObj();
         this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCustAddrObj.Zipcode};
         
@@ -470,6 +471,7 @@ copyToLocationAddr() {
 
             this.inputFieldLocationAddrObj = new InputFieldObj();
             this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+            this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
             this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
             this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCollateralRegistObj.LocationZipcode};
           });
@@ -480,6 +482,7 @@ copyToLocationAddr() {
 
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
 
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";

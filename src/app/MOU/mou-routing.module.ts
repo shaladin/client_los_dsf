@@ -159,7 +159,7 @@ const routes: Routes = [
         path: 'Cust/RequestAddColl',
         component: MouRequestAddcollComponent,
         data: {
-          title: 'MOU Additional Collateral'
+          title: 'MOU Collateral'
         }
       },
       {

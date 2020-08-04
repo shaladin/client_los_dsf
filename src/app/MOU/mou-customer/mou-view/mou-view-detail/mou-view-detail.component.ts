@@ -43,7 +43,7 @@ export class MouViewDetailComponent implements OnInit {
   mouCust: any;
   mouCustClause: any;
   mouCustFctr: any;
-  listAssetData: any;
+  listAssetData: Array<any>;
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
 

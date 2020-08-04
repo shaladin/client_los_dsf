@@ -112,7 +112,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
                     if (event.body.StatusCode != undefined) {
-                        if (event.body.StatusCode != '200' && event.body.StatusCode != "001") {
+                      if (event.body.StatusCode != '200' && event.body.StatusCode != "001" && event.body.StatusCode != "002") {
                             
                             if (event.body.StatusCode == '400') {
                                 for (var i = 0; i < event.body.ErrorMessages.length; i++) {

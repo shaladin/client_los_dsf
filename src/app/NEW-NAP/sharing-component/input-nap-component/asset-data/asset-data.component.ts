@@ -786,7 +786,7 @@ export class AssetDataComponent implements OnInit {
       else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
         if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
           this.AssetDataForm.patchValue({
-            DownPaymentAmt: 0
+            DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
           });
         }
         else {
@@ -800,7 +800,36 @@ export class AssetDataComponent implements OnInit {
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
     }
   }
-
+  updateValueDownPaymentAmt(){
+    var DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
+    if(DownPaymentAmt > this.AssetDataForm.controls.AssetPriceAmt.value){
+      this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: 0,
+        DownPaymentPrctg: 0
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
+      });
+    }
+  }
+  updateValueDownPaymentPrctg(){
+    var DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
+    if(DownPaymentPrctg > 100){
+      this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: 0,
+        DownPaymentPrctg: 0
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
+      });
+    }
+  }
   //DPAmtChanged() {
   //  if (this.AssetDataForm.controls.AssetPriceAmt.value != 0) {
   //    this.AssetDataForm.patchValue({
@@ -981,6 +1010,7 @@ export class AssetDataComponent implements OnInit {
           this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
           this.GetProvDistrict();
           this.bindAccessories();
+          this.updateValueDownPaymentPrctg();
         }
 
         if (this.appAssetObj != null) {
@@ -995,7 +1025,6 @@ export class AssetDataComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
 
 
@@ -1314,7 +1343,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpList() {
-    this.http.post(URLConstant.GetListVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
         this.AdminHeadObj = this.EmpObj.filter(

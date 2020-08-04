@@ -270,7 +270,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
 
   initContactPersonAddrObj(){
     this.inputFieldContactPersonObj = new InputFieldObj();
-    this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();    
+    this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldContactPersonObj.inputLookupObj.isRequired = false;
   }
 
   initLookup(){

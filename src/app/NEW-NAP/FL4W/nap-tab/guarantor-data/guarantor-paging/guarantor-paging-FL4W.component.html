@@ -41,7 +41,6 @@
     <i class="far fa-check-square"></i> Save
   </button>
 </div>
-
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Guarantor</h4>
@@ -49,7 +48,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <app-guarantor-FL4W [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"
+  <app-guarantor-FL4W [AppGuarantorId]=AppGuarantorId [ListCustNoPersonal]=ListCustNoPersonal [ListCustNoCompany]=ListCustNoCompany [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"
     (closeX)="close($event)"></app-guarantor-FL4W>
 </ng-template>
 

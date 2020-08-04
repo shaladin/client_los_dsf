@@ -64,11 +64,11 @@
   <div class="ucSearch-Button-Right">
     <span class="mr-1">
       <button type="button" class="addButton" (click)="addColl()" translate>
-        <i class="ft-plus-circle"></i> Add Additional Collateral
+        <i class="ft-plus-circle"></i> Add Collateral
       </button>
     </span>
   </div>
-  <lib-ucSubsection [id]="'collateralId'" [title]="'Additional Collateral'" [panel]="'collateral'">
+  <lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
   </lib-ucSubsection>
   <div id="collateral">
     <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="eventColl($event)"></lib-ucgridview>

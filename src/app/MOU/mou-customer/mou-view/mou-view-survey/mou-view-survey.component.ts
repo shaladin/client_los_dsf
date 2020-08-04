@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-survey',
@@ -11,16 +12,16 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class MouViewSurveyComponent implements OnInit {
   @Input() MouCustId: number;
-  listSrvyOrder: any;
+  listSrvyOrder: Array<any>;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
     var mouObj = { MouCustId: this.MouCustId }
-    this.http.post(URLConstant.GetSrvyResultDataByTrxRefNo, mouObj).subscribe(
+    this.http.post<any>(URLConstant.GetSrvyResultDataByTrxRefNo, mouObj).subscribe(
       (response) => {
-        console.log(mouObj);
-        this.listSrvyOrder = response;
+        console.log(response);
+        this.listSrvyOrder = response[CommonConstant.ReturnObj];
       })
   }
 

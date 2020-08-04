@@ -2,9 +2,9 @@ import { AppAssetObj } from "./AppAssetObj.Model";
 import { AppCollateralObj } from "./AppCollateralObj.Model";
 import { AppAssetSupplEmpObj } from "./AppAssetSupplEmpObj.Model";
 import { AppCollateralRegistrationObj } from "./AppCollateralRegistrationObj.Model";
-import { AppCustPersonalFinDataObj } from "./AppCustPersonalFinDataObj.Model";
 import { AppCollateralAccessoryObj } from "./AppCollateralAccessoryObj.Model";
 import { AppCollateralAttrObj } from "./AppCollateralAttrObj.Model";
+import { AppAssetAttrObj } from "./AppAssetAttrObj.Model";
 
 
 export class AllAssetDataObj {
@@ -17,8 +17,8 @@ export class AllAssetDataObj {
   AppCollateralRegistrationObj: AppCollateralRegistrationObj;
   AppCollateralAccessoryObjs: Array<AppCollateralAccessoryObj>;
   AppCollateralAttrObj: Array<AppCollateralAttrObj>;
+  AppAssetAttrObj: Array<AppAssetAttrObj>;
   LOBCode: string;
-  AppAssetAttrObj: any;
   RowVersion: any;
 
   constructor() {
@@ -30,6 +30,7 @@ export class AllAssetDataObj {
     this.AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
     this.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
     this.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
+    this.AppAssetAttrObj = new Array<AppAssetAttrObj>();
     this.RowVersion = "";
     this.LOBCode = "";
   }

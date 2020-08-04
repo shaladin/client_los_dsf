@@ -24,7 +24,7 @@ export class ReferantorDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-  inputLookupObj: InputLookupObj;
+  inputLookupObj: InputLookupObj = new InputLookupObj();
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -100,7 +100,6 @@ export class ReferantorDataComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
     this.inputLookupObj.isRequired = false;
-    this.NapAppReferantorForm.controls.AccountBank.disable();
   }
   
   getAppReferantorData() {
@@ -203,13 +202,25 @@ export class ReferantorDataComponent implements OnInit {
     if (this.ReferantorOn == false) {
       this.inputLookupObj.isRequired = false;
       this.inputLookupObj.isReady = true;
-      this.NapAppReferantorForm.controls.AccountBank.disable();
+      this.NapAppReferantorForm.controls.ProductOfferingIdentifier["controls"].value.clearValidators();
+      this.NapAppReferantorForm.controls.AccountBank.clearValidators();
+      this.NapAppReferantorForm.controls.AccountBank.updateValueAndValidity();
+      //this.NapAppReferantorForm.controls.AccountBank.disable();
     } else {
       this.inputLookupObj.isRequired = true;
       this.inputLookupObj.isReady = true;
-      this.NapAppReferantorForm.controls.AccountBank.enable();      
-      this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
-      this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
+      //this.NapAppReferantorForm.controls.AccountBank.enable();      
+      this.NapAppReferantorForm.controls.AccountBank.setValidators(Validators.required);
+      this.NapAppReferantorForm.controls.AccountBank.updateValueAndValidity();
+      // this.inputLookupObj.isRequired = true;
+      // this.inputLookupObj.isReady = true;
+      // // this.NapAppReferantorForm.controls.AccountBank.enable();
+      // if(this.bankItems.length > 0){      
+      //   this.NapAppReferantorForm.get("AccountBank").setValidators(Validators.required);
+      // }else{
+      //   this.NapAppReferantorForm.get("AccountBank").clearValidators();
+      // }
+      // this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
     }
   }
 
@@ -261,6 +272,10 @@ export class ReferantorDataComponent implements OnInit {
         console.log(response);
         this.bankItems = response[CommonConstant.ReturnObj];
         console.log(this.bankItems);
+        // if(this.bankItems.length == 0){
+        //   this.NapAppReferantorForm.get("AccountBank").clearValidators();
+        //   this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
+        // }
       },
       (error) => {
         console.log(error);
