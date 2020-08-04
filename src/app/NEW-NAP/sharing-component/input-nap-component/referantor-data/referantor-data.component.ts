@@ -36,7 +36,7 @@ export class ReferantorDataComponent implements OnInit {
     CheckBoxAppReferantor: [false],
     ReferantorName: [''],
     ReferantorType: [''],
-    AccountBank: ['', Validators.required]
+    AccountBank: ['']
   });
 
   ReferantorOn = false;
