@@ -91,7 +91,7 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission-v2 *ngIf="StepIndex == 1 && isView" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm"
+          <app-commission-v2 *ngIf="StepIndex == 1 && isView" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
             (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission-v2>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">

@@ -1,33 +1,33 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UclookupgenericComponent } from '@adins/uclookupgeneric';
-import { HttpClient } from '@angular/common/http';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { formatDate } from '@angular/common';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
-import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
-import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { Component, OnInit, Output, ViewChild, Input, EventEmitter } from '@angular/core';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { Validators, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
+import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
+import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { formatDate } from '@angular/common';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-collateral-detail',
-  templateUrl: './collateral-detail.component.html'
+  selector: 'app-collateral-data-cfna-detail',
+  templateUrl: './collateral-data-cfna-detail.component.html',
+  styles: []
 })
-export class CollateralDetailComponent implements OnInit {
-
+export class CollateralDataCfnaDetailComponent implements OnInit {
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
   @Input() mode: string = "add";
   @Input() isSingleAsset = true;
@@ -100,7 +100,6 @@ export class CollateralDetailComponent implements OnInit {
   OwnerRelationList: Array<KeyValueObj> = new Array<KeyValueObj>();
   AssetTypeCode: string = "";
 
-
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
@@ -118,7 +117,8 @@ export class CollateralDetailComponent implements OnInit {
       this.getAppCollData(this.AppId, 0);
     }
 
-    this.AddCollForm.controls.AssetTypeCode.disable();
+    // SEMENTARA DI COMMENT BUAT CFNA
+    // this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {
@@ -151,7 +151,8 @@ export class CollateralDetailComponent implements OnInit {
           this.AddCollForm.patchValue({
             AssetTypeCode: this.CollTypeList[0].Key
           });
-          this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
+          // SEMENTARA DI COMMENT BUAT CFNA
+          // this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
         }
       });
 
@@ -242,7 +243,8 @@ export class CollateralDetailComponent implements OnInit {
         this.AddCollForm.patchValue({
           AssetTypeCode: this.AssetTypeCode
         });
-        this.onItemChange(this.AssetTypeCode);
+        // SEMENTARA DI COMMENT BUAT CFNA
+        // this.onItemChange(this.AssetTypeCode);
         // Generate Collateral Doc
         this.getRefAssetDocList();
 
@@ -252,7 +254,7 @@ export class CollateralDetailComponent implements OnInit {
         this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
         this.criteriaObj.value = this.AssetTypeCode;
         this.criteriaList.push(this.criteriaObj);
-        this.inputLookupExistColl.addCritInput = this.criteriaList;
+        // this.inputLookupExistColl.addCritInput = this.criteriaList;
         this.inputLookupExistColl.isReady = true;
       });
 
@@ -373,7 +375,8 @@ export class CollateralDetailComponent implements OnInit {
         }
 
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
-        this.onItemChange(this.appCollateralObj.AssetTypeCode);
+        // SEMENTARA DI COMMENT BUAT CFNA
+        // this.onItemChange(this.appCollateralObj.AssetTypeCode);
         this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
         this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
         this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
@@ -685,4 +688,5 @@ export class CollateralDetailComponent implements OnInit {
   setCollateralPercentage() {
     this.appCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
   }
+
 }

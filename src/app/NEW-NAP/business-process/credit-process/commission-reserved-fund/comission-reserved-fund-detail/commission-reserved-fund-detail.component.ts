@@ -31,6 +31,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   returnHandlingDObj: ReturnHandlingDObj;
   showCancel: boolean = true;
   OnFormReturnInfo: boolean = false;
+  BizTemplateCode: string;
 
   Step = {
     "COM": 1,
@@ -56,6 +57,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         this.ReturnHandlingHObj.ReturnHandlingHId = params["ReturnHandlingHId"];
         this.showCancel = false;
       }
+      this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     });
   }
 

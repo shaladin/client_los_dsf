@@ -71,6 +71,9 @@ import { GuarantorLegalDocComponent } from "./guarantor-data/guarantor-company/g
 import { LookupTaxCityIssuerComponent } from './multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { LookupCollateralComponent } from './multi-asset-data/collateral-add-edit/lookup-collateral/lookup-collateral.component';
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
+import { CollateralDataCfnaComponent } from './collateral-data-cfna/collateral-data-cfna.component';
+import { CollateralDataCfnaPagingComponent } from './collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging.component';
+import { CollateralDataCfnaDetailComponent } from './collateral-data-cfna/collateral-data-cfna-detail/collateral-data-cfna-detail.component';
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -143,7 +146,10 @@ export const customCurrencyMaskConfig = {
     CollateralDetailComponent,
     SingleCollDataComponent,
     MultiCollDataComponent,
-    ApplicationDataFL4WComponent
+    ApplicationDataFL4WComponent,
+    CollateralDataCfnaComponent,
+    CollateralDataCfnaPagingComponent,
+    CollateralDataCfnaDetailComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -219,7 +225,10 @@ export const customCurrencyMaskConfig = {
     MultiCollDataComponent,
     ApplicationDataFL4WComponent,
     LookupTaxCityIssuerComponent,
-    LookupCollateralComponent
+    LookupCollateralComponent,
+    CollateralDataCfnaComponent,
+    CollateralDataCfnaPagingComponent,
+    CollateralDataCfnaDetailComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,

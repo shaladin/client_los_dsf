@@ -130,8 +130,8 @@
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-multi-coll-data *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()">
-              </app-multi-coll-data>
+              <app-collateral-data-cfna *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()">
+              </app-collateral-data-cfna>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId"
