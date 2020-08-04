@@ -285,17 +285,18 @@
               </tbody>
             </table>
           </div>
-
-          <lib-ucSubsection [id]="'viewLifeInsuranceId'" [title]="'Life Insurance'" [panel]="'viewLifeInsuranceSection'">
-          </lib-ucSubsection>
-          <div class="form-body" id="viewLifeInsuranceSection">
-            <div class="row">
-              <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
-              <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme!=null"> {{AppLifeInsData.CoverLifeIns}} </label>
-            </div>
-            <div class="row">
-              <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
-              <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst!=null"> {{AppLifeInsData.LifeInscoBranchName}} </label>
+          <div *ngIf="IsLifeIns">
+            <lib-ucSubsection [id]="'viewLifeInsuranceId'" [title]="'Life Insurance'" [panel]="'viewLifeInsuranceSection'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewLifeInsuranceSection">
+              <div class="row">
+                <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
+                <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme!=null"> {{AppLifeInsData.CoverLifeIns}} </label>
+              </div>
+              <div class="row">
+                <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
+                <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst!=null"> {{AppLifeInsData.LifeInscoBranchName}} </label>
+              </div>
             </div>
           </div>
 
