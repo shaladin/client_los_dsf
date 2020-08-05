@@ -140,7 +140,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
                   ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
                   DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
                 }) as FormGroup;
-                if (response[CommonConstant.ReturnObj][i].IsValueNeeded == true) {
+                if (response[CommonConstant.ReturnObj][i].IsMandatoryNew == true) {
                   assetDocumentDetail.controls.DocNo.setValidators([Validators.required]);
                 }
                 this.items.push(assetDocumentDetail);
