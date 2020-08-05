@@ -178,7 +178,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
           this.inputLookupBranchEmpObj.addCritInput.push(crit1Obj);
           this.isSupplierExists = true;
         }
-        
+        console.log("this.inputLookupBranchEmpObj: " + JSON.stringify(this.inputLookupBranchEmpObj));
     
         var crit2Obj = new CriteriaObj();
         crit2Obj.propName = 'RM.REF_MASTER_TYPE_CODE';

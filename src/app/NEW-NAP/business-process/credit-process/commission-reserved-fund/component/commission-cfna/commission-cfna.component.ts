@@ -127,18 +127,18 @@ export class CommissionCfnaComponent implements OnInit {
       AppId: this.AppId,
       RowVersion: ""
     };
-    await this.http.post(URLConstant.GetAppLoanPurposeVendorAndVendorEmpByAppId, obj).toPromise().then(
-      (response) => {
-        console.log("GetContentData: " + JSON.stringify(response));
-        if (response["AppLoanPurposeVendorObjs"].length != 0) {
-          this.GetDDLContent(response["AppLoanPurposeVendorObjs"], CommonConstant.ContentSupplier);
-          // this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // await this.http.post(URLConstant.GetAppLoanPurposeVendorAndVendorEmpByAppId, obj).toPromise().then(
+    //   (response) => {
+    //     console.log("GetContentData: " + JSON.stringify(response));
+    //     if (response["AppLoanPurposeVendorObjs"].length != 0) {
+    //       this.GetDDLContent(response["AppLoanPurposeVendorObjs"], CommonConstant.ContentSupplier);
+    //       // this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
+    //     }
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
 
     obj = {
       AppId: this.AppId,
@@ -212,14 +212,14 @@ export class CommissionCfnaComponent implements OnInit {
       (response) => {
         console.log("Cek Rule");
         console.log(response);
-        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp){ // For CFNA
-          for (var i = 0; i < response["length"]; i++) {
-            var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
-            // console.log(temp);
-            this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-            this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
-          }
-        }
+        // if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp){ // For CFNA
+        //   for (var i = 0; i < response["length"]; i++) {
+        //     var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
+        //     // console.log(temp);
+        //     this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+        //     this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+        //   }
+        // }
         if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
           this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);  
         
@@ -373,8 +373,8 @@ export class CommissionCfnaComponent implements OnInit {
     var listVendorCode: Array<string> = new Array<string>();
     var listVendorEmpNo: Array<string> = new Array<string>();
     var listTrxAmt: Array<Array<number>> = new Array<Array<number>>();
-    if(this.GetCalcTaxData(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    if(this.GetCalcTaxData(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    // if(this.GetCalcTaxData(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    // if(this.GetCalcTaxData(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     if(this.GetCalcTaxData(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     // console.log(listVendorCode);
     // console.log(listVendorEmpNo);
@@ -398,11 +398,11 @@ export class CommissionCfnaComponent implements OnInit {
         (response) => {
           // console.log(response);
           let idxStart = 0;
-          let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
-          let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
+          // let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
+          // let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
           let totalReferantorData = this.CommissionForm.value[this.identifierReferantor].length;
-          idxStart = this.BindTaxData(this.identifierSupplier, response, idxStart, totalSupplData);
-          idxStart = this.BindTaxData(this.identifierSupplierEmp, response, idxStart, totalSupplEmpData);
+          // idxStart = this.BindTaxData(this.identifierSupplier, response, idxStart, totalSupplData);
+          // idxStart = this.BindTaxData(this.identifierSupplierEmp, response, idxStart, totalSupplEmpData);
           idxStart = this.BindTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
           // console.log(this.CommissionForm);
           // console.log(this.DictTotalIncomeForm);
@@ -527,8 +527,8 @@ export class CommissionCfnaComponent implements OnInit {
     if (this.CekMaxValueIncomeInfo()) return;
 
     let listAppCommissionHObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
-    this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHObj);
-    this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHObj);
+    // this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHObj);
+    // this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHObj);
     this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHObj);
     var obj = {
       AppId: this.AppId,

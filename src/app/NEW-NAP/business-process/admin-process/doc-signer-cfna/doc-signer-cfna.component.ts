@@ -26,10 +26,10 @@ export class DocSignerCfnaComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchDocSigner.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchNewDocSigner.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocSigner.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewDocSigner.json";
     var whereValueObj = new WhereValueObj();
     whereValueObj.property = "BizTemplateCode";
     whereValueObj.value = this.BizTemplateCode;
