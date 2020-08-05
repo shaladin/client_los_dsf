@@ -1,0 +1,121 @@
+<app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <form class="form form-horizontal" [formGroup]="ReturnHandlingForm"
+        (ngSubmit)="ReturnHandlingForm.valid && SaveForm()" #enjiForm="ngForm">
+        <div class="form-body">
+          <div *ngIf="returnHandlingDObj">
+            <lib-ucSubsection [id]="'returnInformationId'" [title]="'Credit Analysis'" [panel]="'returnInformation'">
+            </lib-ucSubsection>
+            <div id="returnInformation">
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Return Notes</label>
+                <label class="col-md-4  adinslabel" translate>{{this.returnHandlingDObj?.ReturnHandlingNotes}}</label>
+                <label class="col-md-2  adinslabel" translate>Return Execution Notes</label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="ExecNotes"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <app-app-tc [AppId]="appId"></app-app-tc>
+          <lib-ucSubsection [id]="'newTcId'" [title]="'New TC'" [panel]="'newTc'">
+          </lib-ucSubsection>
+          <div id="newTc">
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-primary" (click)="add(content)">
+                <i class="fa fa-check-square-o"></i> Add
+              </button>
+            </div>
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-left">No</th>
+                  <th class="text-left">Document Name</th>
+                  <th class="text-center">Expired Date</th>
+                  <th class="text-right">Notes</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listAddTc; let i = index">
+                  <td class="text-left">{{i}}</td>
+                  <td class="text-center">{{item.TcName}}</td>
+                  <td class="text-right">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-left">{{item.OwnerName}}</td>
+                  <td class="text-center">
+                    <a class="success p-0" (click)="edit(i, content)">
+                      <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+                    </a>
+                    <a class="danger p-0" (click)="delete(i)">
+                      <i class="ft-trash-2 font-medium-3 mr-2 px-2"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1"
+              [routerLink]="['/Nap/AddProcess/ReturnHandlingAddTc/Paging']"
+              [queryParams]="{BizTemplateCode: BizTemplateCode}">
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </form>
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title"> {{mode}} New TC</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form form-horizontal" [formGroup]="AddTcForm" #enjiForm="ngForm"
+            (ngSubmit)="AddTcForm.valid && AddNewTc()">
+            <div class="form-body">
+              <lib-ucSubsection [id]="'addNewTcId'" [title]=" mode + ' New TC'" [panel]="'addNewTc'">
+              </lib-ucSubsection>
+              <div id="addNewTc">
+                <div class="form-group row">
+                  <label class="col-md-6 adins-required-label" translate>Doc Tc</label>
+                  <div class="col-md-6">
+                    <select class="form-control" id="idType" formControlName="DocTc"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddTcForm.controls.DocTc.invalid }">
+                      <option *ngFor="let item of appTcObj.TcCode">
+                        {{item}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="AddTcForm.controls.DocTc"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-6 adins-required-label"translate>Notes</label>
+                  <div class="col-md-6">
+                    <textarea type="text" class="form-control adInsInput" formControlName="Notes"></textarea>
+                    <lib-uc-show-errors [control]="AddTcForm.controls.Notes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" translate>
+                  <i class="far fa-check-square"></i> Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

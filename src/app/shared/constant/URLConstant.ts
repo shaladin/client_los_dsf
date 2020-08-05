@@ -806,6 +806,7 @@ export class URLConstant {
     //REF TC
     public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
     public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
+    public static GetListActiveRefTc = environment.FoundationR3Url + "/RefTc/GetListActiveRefTc";
 
     //APP INSURANCE
     public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
