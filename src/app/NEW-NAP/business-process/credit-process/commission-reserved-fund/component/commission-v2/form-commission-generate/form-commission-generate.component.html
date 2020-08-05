@@ -68,7 +68,7 @@
                 (change)="ChangeBankAcc($event, i)">
                 <option value="">-Select One-</option>
                 <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}">
-                  {{it.value.Value}} </option>
+                  {{it.value.Value}} - {{it.value.Key}} ({{it.value.BankName}}) </option>
               </select>
               <lib-uc-show-errors [control]="item.controls.BankAccountNo" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
