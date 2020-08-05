@@ -41,9 +41,6 @@ export class CustSocmedFL4WComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.identifier);
-    console.log(this.parentForm);
-
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
 

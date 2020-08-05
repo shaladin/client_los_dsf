@@ -32,7 +32,6 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
         this.doList = response["DeliveryOrderHObjs"];
       });
     (error) => {
-      console.log('error');
     }
   }
 }

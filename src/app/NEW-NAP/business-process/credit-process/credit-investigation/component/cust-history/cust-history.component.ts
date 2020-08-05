@@ -30,20 +30,16 @@ export class CustHistoryComponent implements OnInit {
     this.http.post(URLConstant.GetCustDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.CustNo = response["AppCustObj"]["CustNo"];
-        console.log(this.CustNo);
         this.http.post(URLConstant.GetAgrmntByCustNo, { CustNo: this.CustNo }).subscribe(
           (response) => {
-            console.log(response);
             this.ExstAgrmnt = response;
           });
         this.http.post(URLConstant.GetAppByCustNoAndAppStat, { CustNo: this.CustNo,AppStat:"REJECT" }).subscribe(
           (response) => {
-            console.log(response);
             this.AppRjct = response;
           });
           this.http.post(URLConstant.GetAppByCustNoAndIsAppInitDone, { CustNo: this.CustNo,IsAppInitDone: false }).subscribe(
             (response) => {
-              console.log(response);
               this.AppPrcs = response;
             });
       });

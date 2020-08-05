@@ -151,11 +151,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
           };
         }
         this.getNegativeCustomer(this.requestDupCheck);
-      },
-      error => {
-        console.log("error")
-      }
-    );
+      });;
 
     this.getAppAsset();
     this.getAppDupCheckCust(appReqObj);
@@ -166,9 +162,6 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.http.post(this.getNegativeCustomerDuplicateCheckUrl, this.requestDupCheck).subscribe(
       response => {
         this.listNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
-      },
-      error => {
-        console.log("error");
       }
     );
   }
@@ -178,12 +171,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
           response => {
             this.dukcapilObj = response[CommonConstant.ReturnObj];
-            console.log(fraudDukcapilReqObj);
-          },
-          error => {
-            console.log("error")
-          }
-        );
+          });
   }
 
   getAppDupCheckCust(AppId) {
@@ -195,11 +183,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         } else {
           this.custStat = CommonConstant.CustStatNew
         }
-      },
-      error => {
-        console.log("error")
-      }
-    );
+      });;
   }
 
   getAppAsset() {
@@ -209,7 +193,6 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.appAssetObj.AppId = this.AppId;
     this.http.post(this.getAppAssetListByAppIdUrl, this.appAssetObj).subscribe(
       response => {
-        console.log(response);
         this.listAssetData = response[CommonConstant.ReturnObj];
 
         for (var i = 0; i < this.listAssetData.length; i++) {
@@ -221,18 +204,12 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
           this.negativeAssetCheckObj.SerialNo4 = this.listAssetData[i].SerialNo4;
           this.negativeAssetCheckObj.SerialNo5 = this.listAssetData[i].SerialNo5;
           this.negativeAssetCheckForMultiAssetObj.RequestObj[i] = this.negativeAssetCheckObj;
-          console.log(this.negativeAssetCheckForMultiAssetObj);
         }
         this.http.post(this.getAssetNegativeDuplicateCheckByListOfAssetUrl, this.negativeAssetCheckForMultiAssetObj).subscribe(
           response => {
-            console.log(this.negativeAssetCheckForMultiAssetObj);
             this.listAssetNegative = response[CommonConstant.ReturnObj];
           });
-      },
-      error => {
-        console.log("error")
-      }
-    );
+      });;
   }
 
   open(content) {
@@ -260,11 +237,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerfUrl, verfObj).subscribe(
       response => {
-        console.log("Success");
         this.router.navigate(["Nap/CreditProcess/FraudDetection/Paging"]);
-      },
-      error => {
-        console.log("error");
       }
     )
   }

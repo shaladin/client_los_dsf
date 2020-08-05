@@ -37,15 +37,11 @@ export class NotificationComponent implements OnInit {
 
     this.http.post(this.apiUrl, this.notificationObj).subscribe(
       (response) => {
-        console.log("Success");
-        console.log(response);
         this.toastr.successMessage(response['message']);
         this.router.navigateByUrl('/office', { skipLocationChange: true }).then(() =>
           this.router.navigateByUrl("/notification"));
       },
       (error) => {
-        console.log("Error");
-        console.log(error);
       }
     );
   }

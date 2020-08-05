@@ -56,11 +56,7 @@ export class MouViewComponent implements OnInit {
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
         this.IsResponseProcessed = true;
         this.IsReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetCallBack(event) {
@@ -69,11 +65,7 @@ export class MouViewComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

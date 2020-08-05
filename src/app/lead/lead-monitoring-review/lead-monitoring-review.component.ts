@@ -42,9 +42,6 @@ export class LeadMonitoringReviewComponent implements OnInit {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/Lead/ReviewMonitoring/Paging']);
       }); 
-      },
-      error => {
-        console.log(error);
       }
     );
   }

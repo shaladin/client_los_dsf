@@ -231,7 +231,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     };
     this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, ProdOfferingObj).subscribe(
       (response) => {
-        console.log(response);
         var temp = response["ListProdOfferingDObj"];
         var LobCode: string = "";
         for (var i = 0; i < temp.length; i++) {
@@ -475,12 +474,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.AppCustAddrObj = new AppCustAddrObj();
     this.http.post(URLConstant.GetCustDataByAppId, { "AppId": this.AppId }).subscribe(
       response => {
-        console.log(response);
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];        
-        console.log(this.AppCustAddrObj);
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -497,7 +491,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       var appObj = { "AppId": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
-          // console.log(response);
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
           this.AppCustAddrObj = response['AppCustAddrLegalObj'];
@@ -596,22 +589,14 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputValue.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputValue.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

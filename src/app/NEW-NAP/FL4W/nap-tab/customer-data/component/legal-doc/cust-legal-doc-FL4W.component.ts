@@ -55,7 +55,6 @@ export class CustLegalDocFL4WComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('legal doc')
     this.bindLegalDocTypeObj();
   }
 

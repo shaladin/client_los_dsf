@@ -32,17 +32,12 @@ export class AgrmntFinancialComponent implements OnInit {
     var reqObj = {AgrmntId: this.AgrmntId};
     this.http.post(URLConstant.GetFinancialDataByAgrmntIdForView, reqObj).subscribe(
       (response) => {
-        console.log(response);
         this.listSubsidy = response["AgrmntSubsidyObjs"];
         this.listAgrmntFeeObj = response["AgrmntFeeObjs"];
         this.agrmntFinDataObj = response["AgrmntFinDataObj"];
         this.agrmntObj = response["AgrmntObj"];
         this.listInstallment = response["InstallmentObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

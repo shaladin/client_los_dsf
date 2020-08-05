@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetDataDetailComponent } from '../app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 import { AppInsuranceDetailComponent } from './app-insurance-detail/app-insurance-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-insurance',
@@ -13,11 +14,13 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class AppInsuranceComponent implements OnInit {
   @Input() AppId: number;
+  @Input() BizTemplateCode : string = "";
   appInsObjs: any;
   appCollObjs: any;
   custTotalPremi: number;
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
+  isFCTR : boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -29,6 +32,9 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.BizTemplateCode == CommonConstant.FCTR){
+      this.isFCTR = true;
+    }
     this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { AppId: this.AppId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
@@ -36,11 +42,7 @@ export class AppInsuranceComponent implements OnInit {
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   viewDetailLoanHandler(appAssetId){
@@ -48,9 +50,6 @@ export class AppInsuranceComponent implements OnInit {
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
     modalAssetDetail.componentInstance.AppId = this.AppId;
     modalAssetDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 
@@ -58,9 +57,6 @@ export class AppInsuranceComponent implements OnInit {
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 }

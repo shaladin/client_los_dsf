@@ -58,27 +58,17 @@ export class ViewAssetDataComponent implements OnInit {
       this.initUrl();
 
     this.appObj.AppId = this.appId;
-    console.log(this.appId);
     await this.GetAllAssetData();
 
   }
 
   async GetAllAssetData() {
-    // console.log("thisappObj")
-    // console.log(this.appObj);
     await this.http.post(this.getAllAssetDataUrl, this.appObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AppAssetObj = response;
-        // console.log("responseappasset")
-        console.log(response);
         if(this.AppAssetObj.ResponseAppAssetAttrObjs != null)
           this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 

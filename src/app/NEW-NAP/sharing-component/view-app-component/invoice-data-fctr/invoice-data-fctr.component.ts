@@ -30,11 +30,7 @@ export class InvoiceDataFctrComponent implements OnInit {
         }
         
         this.gridObj.resultData = DetailDataForGrid;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

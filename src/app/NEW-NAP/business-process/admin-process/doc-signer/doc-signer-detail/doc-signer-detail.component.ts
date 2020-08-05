@@ -314,21 +314,13 @@ export class DocSignerDetailComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
   
@@ -340,16 +332,5 @@ export class DocSignerDetailComponent implements OnInit {
     {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
     }
-
-    // if(ev.Key == "prodOff"){
-    //   this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
-    //     response => {
-    //       window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    // }
   }
 }

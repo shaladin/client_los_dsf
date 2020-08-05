@@ -43,7 +43,6 @@ export class GuarantorFL4WComponent implements OnInit {
 
   MrCustTypeCode:string;
   ngOnInit() {
-    console.log(this.isReady);
     if(this.AppGuarantorId != null){
       this.mode = "edit";
       this.MrCustTypeCode = this.MrGuarantorTypeCode.toUpperCase();
@@ -60,8 +59,6 @@ export class GuarantorFL4WComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        console.log("Response");
-        console.log(response);
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
           if(MrCustTypeCode == undefined){

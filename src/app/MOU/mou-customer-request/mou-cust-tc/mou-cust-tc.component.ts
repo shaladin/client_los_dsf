@@ -34,7 +34,6 @@ export class MouCustTcComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.MouCustId);
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDate = new Date(context[CommonConstant.BUSINESS_DT]);
     var datePipe = new DatePipe("en-US");
@@ -160,11 +159,7 @@ export class MouCustTcComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.ResponseMouCustTc.emit(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

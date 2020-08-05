@@ -105,8 +105,6 @@ export class NapAddComponent implements OnInit {
     }
 
     // Test Data
-    console.log(this.user);
-    console.log(this.NapAppForm);
   }
 
   MakeLookUpObj() {
@@ -176,13 +174,8 @@ export class NapAddComponent implements OnInit {
     var url = URLConstant.GetListKvpActiveRefOfficeForPaging;
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
         this.officeItems = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CheckValue(obj) {
@@ -206,11 +199,7 @@ export class NapAddComponent implements OnInit {
   }
 
   testData() {
-    console.log(this.NapAppForm);
-    console.log(this.NapAppForm.valid);
     this.getFormValidationErrors();
-    console.log(this.inputLookupObjName);
-    console.log(this.inputLookupObjCopyProduct);
   }
 
   getFormValidationErrors() {
@@ -219,14 +208,11 @@ export class NapAddComponent implements OnInit {
     for (const name in controls) {
       if (controls[name].invalid) {
         invalid.push(name);
-        console.log(name);
       }
     }
-    console.log(invalid);
   }
 
   SaveForm() {
-    console.log("masuk save");
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;
@@ -242,14 +228,9 @@ export class NapAddComponent implements OnInit {
     var url = URLConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getLookupAppResponseCopy(ev: any) {
@@ -276,14 +257,12 @@ export class NapAddComponent implements OnInit {
     this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
       value: ev.ProdOfferingName
     });
-    console.log(this.NapAppForm);
     // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
     this.inputLookupObjName.isRequired = false;
     this.isCopyData = true;
   }
 
   getLookupAppResponseName(ev: any) {
-    console.log(ev);
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode,
       ProdOfferingVersion: ev.ProdOfferingVersion,
@@ -294,7 +273,6 @@ export class NapAddComponent implements OnInit {
     var tempRefProdTypeCode;
     this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, obj).subscribe(
       (response) => {
-        console.log(response);
         var temp = response["ListProdOfferingDObj"];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
@@ -311,7 +289,6 @@ export class NapAddComponent implements OnInit {
           } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
-            // console.log("Not");
           }
         }
         this.NapAppForm.patchValue({
@@ -323,16 +300,10 @@ export class NapAddComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
-        console.log(this.NapAppForm);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ChangeValueOffice(ev: any) {
-    console.log(ev);
     this.NapAppForm.patchValue({
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text

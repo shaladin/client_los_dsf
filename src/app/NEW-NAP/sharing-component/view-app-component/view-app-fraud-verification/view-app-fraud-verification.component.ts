@@ -82,11 +82,7 @@ export class ViewAppFraudVerificationComponent implements OnInit {
     ).subscribe(
       (response) => {
         this.negAssetList = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   showDukcapilDetail(content) {

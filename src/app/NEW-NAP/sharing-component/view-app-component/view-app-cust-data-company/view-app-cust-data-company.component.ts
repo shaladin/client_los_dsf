@@ -58,17 +58,12 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
     var reqObj = {AppId: this.appId}
     await this.http.post(URLConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.appCustAddrForViewObjs = response["AppCustAddrObjs"];
         this.appCustCompanyMgmntShrholderObjs = response["AppCustCompanyMgmntShrholderObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
         this.appCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

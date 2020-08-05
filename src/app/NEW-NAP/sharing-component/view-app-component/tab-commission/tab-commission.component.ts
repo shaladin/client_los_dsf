@@ -47,12 +47,9 @@ export class TabCommissionComponent implements OnInit {
 
     await this.http.post(url, obj).toPromise().then(
       (response) => {
-        console.log(response);
         var tempResponse = response[CommonConstant.ReturnObj];
-        // console.log(tempResponse);
         for (var i = 0; i < tempResponse.length; i++) {
           var tempObj = tempResponse[i];
-          // console.log(tempObj);
           tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
 
           if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier)
@@ -76,14 +73,6 @@ export class TabCommissionComponent implements OnInit {
         this.ReferantorData["title"] = CommonConstant.TitleReferantor;
         this.ReferantorData["content"] = CommonConstant.ContentReferantor;
         this.ReferantorData["listData"] = this.ListReferantorData;
-        // console.log(this.SummaryData); 
-        // console.log(this.SupplData);
-        // console.log(this.SupplEmpData);
-        // console.log(this.ReferantorData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+      })
   }
 }

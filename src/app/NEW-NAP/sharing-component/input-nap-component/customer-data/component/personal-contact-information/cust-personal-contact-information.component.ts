@@ -110,7 +110,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
-    console.log(this.listContactPersonPersonal);
   }
 
   SaveForm() {
@@ -135,14 +134,12 @@ export class CustPersonalContactInformationComponent implements OnInit {
     if (this.mode == "Edit") {
       this.listContactPersonPersonal[this.currentEditedIndex] = this.appCustPersonalContactPersonObj;
     }
-    console.log(this.ContactInfoPersonalForm);
     this.callbackSubmit.emit(this.listContactPersonPersonal);
     this.modalService.dismissAll();
     this.clearForm();
   }
 
   add(content) {
-    console.log(content);
     this.mode = "Add";
     this.clearForm();
     this.open(content);
@@ -188,11 +185,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   setCustRelationShip(MrCustRelationshipCode: string) {
-    console.log(this.CustRelationshipObj);
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
-    console.log(selectedRelationship);
     this.selectedRelationshipName = selectedRelationship.Value;
-    console.log(this.selectedRelationshipName);
   }
 
   delete(i) {
@@ -299,14 +293,9 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(this.getRefProfessionUrl, this.professionObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   initContactPersonAddrObj() {

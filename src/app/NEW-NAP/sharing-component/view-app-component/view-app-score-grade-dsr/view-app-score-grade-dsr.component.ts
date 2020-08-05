@@ -29,11 +29,7 @@ export class ViewAppScoreGradeDsrComponent implements OnInit {
     this.http.post<AppScoreGradeDsrObj>(URLConstant.GetAppScoreGradeDsrByAppId, reqObj).subscribe(
       (response) => {
         this.AppScoreGradeDsrObj = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

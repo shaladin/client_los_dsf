@@ -83,14 +83,9 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);       
         this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 

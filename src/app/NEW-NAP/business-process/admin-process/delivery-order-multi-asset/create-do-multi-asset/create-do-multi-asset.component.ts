@@ -55,18 +55,12 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ngOnInit() {
     // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     // this.businessDt = new Date(currentUserContext["BusinessDt"]);
-    // console.log("Current Business Dt : " + this.businessDt);
-    // console.log("Selected : " + JSON.stringify(this.SelectedDOAssetList));
     var datePipe = new DatePipe("en-US");
 
     this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
       (response) => {
         this.PODt = new Date(response["PurchaseOrderDt"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var rmRelation = new RefMasterObj();
@@ -78,11 +72,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
           this.DeliveryOrderForm.patchValue({
             MrCustRelationshipCode: this.relationshipList.ReturnObject[0].Key
           });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else if (this.Mode == "edit") {
       var reqDeliveryOrderH = { DeliveryOrderHId: this.DeliveryOrderHId };
@@ -104,11 +94,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
           this.DeliveryOrderForm.patchValue({
             ...deliveryOrderHData
           });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.DeliveryOrderForm.patchValue({
       AppId: this.AppId,
@@ -149,18 +135,12 @@ export class CreateDoMultiAssetComponent implements OnInit {
                 }
               }
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
         this.spinner.hide();
         this.toastr.successMessage(response["Message"]);
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -189,11 +169,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
     this.httpClient.post(url, DOData).subscribe(
       (response) => {
         this.activeModal.close(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

@@ -27,11 +27,7 @@ export class InvoiceVerifPagingComponent implements OnInit {
       this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
           window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

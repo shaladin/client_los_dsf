@@ -56,10 +56,6 @@ export class MouCustomerRequestComponent implements OnInit {
       (response) => { 
         custId = response['CustId'];
         AdInsHelper.OpenCustomerViewByCustId(custId);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

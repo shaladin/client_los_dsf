@@ -29,11 +29,7 @@ export class ViewAppScoreGradeDukcapilComponent implements OnInit {
     this.http.post<AppScoreGradeObj>(URLConstant.GetAppScoreGradeByAppIdAndMrScoreTypeCode, reqObj).subscribe(
       (response) => {
         this.AppScoreGradeObj = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

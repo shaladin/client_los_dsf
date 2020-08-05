@@ -143,11 +143,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
           }
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.ClearForm();
       this.inputLookupObj1.isReady = true;
@@ -440,21 +436,13 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.http.post(URLConstant.AddAppGuarantorCompany, this.guarantorCompanyObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -560,11 +548,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
         this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
         this.inputLookupObj1.jsonSelect = response;
         this.inputLookupObj1.isReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   cancel() {

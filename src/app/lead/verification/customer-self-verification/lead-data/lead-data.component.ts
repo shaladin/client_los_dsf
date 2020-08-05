@@ -121,8 +121,6 @@ export class LeadDataComponent implements OnInit {
     });
     this.assetTypeId = event.AssetTypeId;
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
-    console.log("aawd");
-    console.log(AssetTypeCode);
 
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
@@ -317,7 +315,6 @@ export class LeadDataComponent implements OnInit {
                         }
                       }
                     });
-                  console.log(response);
                 });
   
             });
@@ -452,7 +449,6 @@ export class LeadDataComponent implements OnInit {
                 this.resLeadAppObj = response;
                 this.assetConditionObj = new RefMasterObj();
                 this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode; 
-                console.log("tese");
                 this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
                   (response) => {
                     this.tempMrFirstInstTypeCode = response["Descr"]; 
@@ -529,9 +525,6 @@ export class LeadDataComponent implements OnInit {
             else{
               this.router.navigate(["/pages/Submit?reason=submit"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
         }
@@ -544,11 +537,7 @@ export class LeadDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/pages/Submit?reason=submit"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } 
   }
 
@@ -586,9 +575,6 @@ export class LeadDataComponent implements OnInit {
               // this.router.navigate(["/pages/Submit?reason=submit"]);
               this.outputPage.emit({ pageType: "submit"});
             }     
-          },
-          (error) => {
-            console.log(error);
           }
         );
       } 
@@ -602,11 +588,7 @@ export class LeadDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Lead/Lead/Paging"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.editLeadObj = new LeadObj();
     this.editLeadObj = this.returnLeadObj;

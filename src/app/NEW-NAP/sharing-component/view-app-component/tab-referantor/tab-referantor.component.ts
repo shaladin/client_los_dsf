@@ -41,7 +41,6 @@ export class TabReferantorComponent implements OnInit {
 
     await this.http.post(URLConstant.GetAppReferantorByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         if(response["AppReferantorId"] != 0){
           this.existData = true;
           this.ResponseReferantorData.Name = response["ReferantorName"];
@@ -58,10 +57,6 @@ export class TabReferantorComponent implements OnInit {
           this.ResponseReferantorData.TaxIdCity = response["TaxIdCity"];
           this.ResponseReferantorData.TaxIdZipcode = response["TaxIdZipcode"];
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+      })
   }
 }

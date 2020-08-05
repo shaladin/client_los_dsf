@@ -82,11 +82,7 @@ export class NapFromLeadPagingComponent implements OnInit {
         }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

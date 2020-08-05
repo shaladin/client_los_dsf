@@ -129,8 +129,6 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     
-    console.log(this.CopyAddrOwnerFromType);
-    console.log(this.CopyAddrLocationFromType);
     
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -361,7 +359,6 @@ export class AppComponent implements OnInit {
 
   }
   getLookupEmployeeResponse(ev) {
-    console.log(ev);
     this.appForm.patchValue({
       SalesOfficerNo: ev.SalesOfficerNo,
       SalesOfficerName: ev.SalesOfficerName,
@@ -369,13 +366,11 @@ export class AppComponent implements OnInit {
       SalesHeadName: ev.SalesHeadName
 
     });
-    console.log(this.appForm);
   }
 
   PayFreqVal;
   PayFreqTimeOfYear;
   ChangeNumOfInstallmentTenor() {
-    console.log("Change Num from tenor");
     var temp = this.appForm.controls.Tenor.value;
     if (!isNaN(temp)) {
       if (this.PayFreqTimeOfYear == null && this.PayFreqVal == null) {
@@ -388,13 +383,10 @@ export class AppComponent implements OnInit {
   }
 
   ChangeNumOfInstallmentPayFreq(ev) {
-    console.log(ev);
 
     var idx = ev.target.selectedIndex;
-    console.log(idx);
     var temp = this.appForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      console.log("isNUM");
       this.PayFreqVal = this.tempPayFreqCode[idx].PayFreqVal;
       this.PayFreqTimeOfYear = this.tempPayFreqCode[idx].TimeOfYear;
       var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
@@ -416,10 +408,8 @@ export class AppComponent implements OnInit {
   async GetListAddr() {
     this.appCustAddrObj = new AppCustAddrObj();
     this.appCustAddrObj.AppId = this.AppId;
-    console.log(this.AppId);
     this.http.post(this.getAppCustAddrUrl, this.appCustAddrObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
@@ -432,7 +422,6 @@ export class AppComponent implements OnInit {
   }
 
   copyToOwnerAddr() {
-    console.log(this.appForm.controls.CopyAddrLocationFrom.value);
     if (this.CopyAddrOwnerFromType == CommonConstant.AddrTypeLegal) {
 
       this.ownerAddrObj = new AddrObj();
@@ -570,7 +559,6 @@ export class AppComponent implements OnInit {
   }
   SetEffectiveRateType(event){
     this.EffectiveRateType = event; 
-    console.log(this.EffectiveRateType);
 
     if(this.EffectiveRateType == CommonConstant.RateTypeFlat){
       this.appForm.controls.EffectiveRatePrcnt.disable();

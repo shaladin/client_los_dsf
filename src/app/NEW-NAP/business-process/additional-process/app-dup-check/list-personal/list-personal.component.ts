@@ -84,27 +84,15 @@ export class ListPersonalComponent implements OnInit {
           response => {
             this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
-          },
-          error => {
-            console.log("error");
-          }
-        );
+          });
             
 
         //List App Cust Duplicate Checking
         this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListAppCustDuplicate = response[CommonConstant.ReturnObj];
-          },
-          error => {
-            console.log("error");
-          }
-        );
-      },
-      error => {
-        console.log("error");
-      }
-    )
+          });
+      });
 
   }
 
@@ -114,9 +102,6 @@ export class ListPersonalComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
-      },
-      error => {
-        console.log("error");
       });
   }
 
@@ -126,9 +111,6 @@ export class ListPersonalComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
-      },
-      (error) => {
-        console.log("error");
       });
   }
 

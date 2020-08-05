@@ -60,7 +60,6 @@ export class TabDeviationComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         var temp = response["deviationResultObjs"];
         this.DDLDeviationCriteriaData = response["DeviationCategory"];
         this.DDLApproveAtData = response["ApproveAt"];
@@ -86,15 +85,10 @@ export class TabDeviationComponent implements OnInit {
         if(this.ManualDeviationData.length > 0)
           this.ManualDeviationData.sort((a,b) => a.SeqNo - b.SeqNo);
         this.PassData();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   BindManualDeviationData(objData){
-    console.log(objData);
     var temp = new DeviationResultObj();
     temp.DeviationResultId = objData.DeviationResultId;
     temp.SeqNo = objData.SeqNo;
@@ -111,7 +105,6 @@ export class TabDeviationComponent implements OnInit {
     temp.RowVersion = objData.RowVersion;
 
     this.ManualDeviationData.push(temp);
-    // console.log(this.ManualDeviationData);
 
     this.BindTempDDLData(objData.DeviationCategory);
   }
@@ -167,15 +160,12 @@ export class TabDeviationComponent implements OnInit {
 
   BindTempDDLData(data){
     var idx = this.DDLDeviationCriteriaData.indexOf(data);
-    // console.log(idx);
     var temp = {
       DDLDeviationCriteriaData: this.DDLDeviationCriteriaData[idx],
       DDLApproveAtData: this.DDLApproveAtData[idx],
     };
-    // console.log(temp);
     
     this.tempDDLData.push(temp);
-    // console.log(this.tempDDLData);
 
     this.ClearFormObj();
 
@@ -192,7 +182,6 @@ export class TabDeviationComponent implements OnInit {
   }
   
   DeleteFromManualDeviationData(idxData){
-    console.log(idxData);
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.BindDDLDataFromTempDDLData(this.ManualDeviationData[idxData].DeviationCategory);
       this.ManualDeviationData.splice(idxData, 1);
@@ -202,7 +191,6 @@ export class TabDeviationComponent implements OnInit {
   }
 
   onChange(ev){
-    console.log(ev);
     var idx = ev.target.selectedIndex;
     this.FormObjManualDeviationData.patchValue({
       ApvAt: this.DDLApproveAtData[idx],
@@ -228,7 +216,6 @@ export class TabDeviationComponent implements OnInit {
     temp.RowVersion = "";
 
     this.ManualDeviationData.push(temp);
-    // console.log(this.ManualDeviationData);
 
     this.BindTempDDLData(this.FormObjManualDeviationData.value.DeviationCrit);
     this.PassData();

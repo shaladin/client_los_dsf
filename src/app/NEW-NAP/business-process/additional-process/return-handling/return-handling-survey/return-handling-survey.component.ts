@@ -60,7 +60,6 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   }
 
   event(ev){
-    console.log(ev);
     this.TrxNo = ev.RowObj.AppNo;
     window.location.href = environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token;
   }

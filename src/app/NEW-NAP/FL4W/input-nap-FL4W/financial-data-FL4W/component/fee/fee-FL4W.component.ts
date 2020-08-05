@@ -186,7 +186,6 @@ export class FeeFL4WComponent implements OnInit {
       MrProvisionFeeCalcMethodCode : fb_provision.get("FeeSource").value
     })
 
-    console.log(this.ParentForm.value);
   }
 
 
@@ -268,7 +267,6 @@ export class FeeFL4WComponent implements OnInit {
 
 
   xxx(){
-    console.log(this.ParentForm);
   }
 
 }

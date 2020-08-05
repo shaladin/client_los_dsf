@@ -18,8 +18,8 @@
 
           <!-- <app-insurance-data (outputTab)="getValue($event)"></app-insurance-data> -->
 
-          <form [hidden]="PageState != 'EditInsurance'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
-            (ngSubmit)="InsuranceDataForm.valid && SaveForm()" #enjiForm="ngForm">
+          <form [hidden]="PageState != 'EditInsurance'" class="form form-horizontal" [formGroup]="InsuranceDataForm" #formDirective="ngForm"
+            (ngSubmit)="InsuranceDataForm.valid && SaveForm(formDirective)" #enjiForm="ngForm">
             <div class="form-body">
               <lib-ucSubsection [id]="'collateralDataId'" [title]="'Insurance Object'" [panel]="'collateralData'">
               </lib-ucSubsection>

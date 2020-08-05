@@ -222,9 +222,6 @@ export class CollateralAddEditComponent implements OnInit {
         });
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -246,14 +243,9 @@ export class CollateralAddEditComponent implements OnInit {
 
           if (listCollateralNo.length > 0)
             this.BindExistingCollateralSavedData(listCollateralNo);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
 
-    console.log(this.collateral);
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
@@ -278,8 +270,6 @@ export class CollateralAddEditComponent implements OnInit {
     criteriaList.push(criteriaObj);
     this.inputLookupObj.addCritInput = criteriaList;
     this.inputLookupObj.isReady = true;
-    console.log("Asset Type Code : " + this.AddCollForm.controls["AssetTypeCode"].value);
-    console.log("ColTypeHandler InputLookup : " + JSON.stringify(this.inputLookupObj));
     this.AddCollForm.patchValue({
       FullAssetCode: "",
       FullAssetName: "",
@@ -335,7 +325,6 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
     this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
       (response) => {
-        console.log("Collateral Location : " + JSON.stringify(response));
         this.returnAppCustAddrObj = response;
 
         this.locationAddrObj = new AppCustAddrObj();
@@ -377,8 +366,6 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.mode)
-    console.log(this.AppCollateralId)
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -544,13 +531,7 @@ export class CollateralAddEditComponent implements OnInit {
           this.InputLookupCityIssuerObj.addCritInput = disCrit;
           this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
           this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
-          console.log("Name Select Issuer : " + this.InputLookupCityIssuerObj.nameSelect);
-          console.log("InputLookupCityIssuerObj : " + JSON.stringify(this.InputLookupCityIssuerObj));
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.GetListAddr();
 
@@ -594,7 +575,6 @@ export class CollateralAddEditComponent implements OnInit {
     this.http.post(this.getListAssetTypeByCode, this.collTypeObj).subscribe(
       (response) => {
         this.returnCollTypeObj = response[CommonConstant.ReturnObj];
-        console.log(this.returnCollTypeObj);
         this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
 
         this.inputLookupObj = new InputLookupObj();
@@ -651,9 +631,6 @@ export class CollateralAddEditComponent implements OnInit {
         });
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -675,8 +652,6 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = CommonConstant.AssetUsageNonComm;
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
     this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
-    // console.log("SetCollateralInfo : " + JSON.stringify(this.appCollateralDataObj.AppCollateralObj));
-    // console.log("Asset Category Code Final : " + this.AddCollForm.controls["AssetCategoryCode"].value);
     // this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = "MOBIL1000";
   }
 
@@ -780,16 +755,11 @@ export class CollateralAddEditComponent implements OnInit {
         this.setCollateralAttribute();
         this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
         this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
-        // console.log("Request New Collateral : " + JSON.stringify(this.appCollateralDataObj));
         this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             this.collValue.emit({ mode: 'paging' });
             this.clearList();
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -807,16 +777,11 @@ export class CollateralAddEditComponent implements OnInit {
         this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
         this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralId = this.returnAppCollateralRegistObj.AppCollateralId;
         this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
-        // console.log("Request New Collateral : " + JSON.stringify(this.appCollateralDataObj));
         this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             //this.router.navigate(["/Nap/AssetData/Paging"]);
             this.collValue.emit({ mode: 'paging' });
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -855,9 +820,6 @@ export class CollateralAddEditComponent implements OnInit {
         this.toastr.successMessage(response['message']);
         this.collValue.emit({ mode: 'paging' });
         this.clearList();
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -865,22 +827,4 @@ export class CollateralAddEditComponent implements OnInit {
   SaveForm() {
     this.clearList();
   }
-
-  // delete(MouCustCollId) {
-  //   var custCollObj = { MouCustCollateralId: MouCustCollId };
-  //   this.http.post(AdInsConstant.DeleteMouCustCollateral, custCollObj).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
-  // editItem(custAddrObj: any) {
-  //   this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
 }

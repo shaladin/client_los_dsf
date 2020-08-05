@@ -43,7 +43,6 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   GetAgrmntSigner() {
     this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        console.log(response);
         this.AgrmntSignerObj = response;
       }
     );
@@ -52,7 +51,6 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   GetAgrmntDoc() {
     this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        console.log(response);
         this.AgrmntDocObj = response;
       }
     );

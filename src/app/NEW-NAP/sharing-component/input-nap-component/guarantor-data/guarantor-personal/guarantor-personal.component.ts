@@ -80,8 +80,6 @@ export class GuarantorPersonalComponent implements OnInit {
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       await this.http.post(URLConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
         (response) => {
-          console.log("response: ");
-          console.log(response);
           this.resultData = response;
           this.AppGuarantorPersonalId = this.resultData.AppGuarantorPersonalObj.AppGuarantorPersonalId;
           this.inputLookupObj.jsonSelect = { CustName: this.resultData.AppGuarantorObj.GuarantorName };
@@ -104,11 +102,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.setAddrLegalObj();
           this.clearExpDt();
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
       await this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
     }
     else {
@@ -181,7 +175,6 @@ export class GuarantorPersonalComponent implements OnInit {
     var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.MrNationalityCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           if (this.MrNationalityCode.length > 0) {
@@ -233,7 +226,6 @@ export class GuarantorPersonalComponent implements OnInit {
 
     await this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = response;
         if (countryCode == "LOCAL") {
@@ -242,17 +234,12 @@ export class GuarantorPersonalComponent implements OnInit {
         } else {
           this.isLocal = false
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev) {
     if (this.PersonalForm.controls.MrNationalityCode.value == "LOCAL") {
-      console.log(this.MrNationalityCode);
       var idx = ev.target.selectedIndex - 1;
       this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
       this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
@@ -300,7 +287,6 @@ export class GuarantorPersonalComponent implements OnInit {
 
   // GuarantorName="";
   lookupGuarantor(event) {
-    console.log(event);
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
@@ -319,7 +305,6 @@ export class GuarantorPersonalComponent implements OnInit {
       });
     this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
       (response) => {
-        console.log(response);
         this.resultData = response;
         this.AddrObj = new AddrObj();
         this.AddrObj.Addr = this.resultData.Addr;
@@ -364,18 +349,15 @@ export class GuarantorPersonalComponent implements OnInit {
           }
         );
       });
-    console.log(this.PersonalForm);
   }
 
   // CountryCode="";
   lookupCountry(event) {
-    console.log(event);
     this.PersonalForm.patchValue(
       {
         CountryCode: event.CountryCode
       }
     );
-    console.log(this.PersonalForm);
   }
 
   Add() {
@@ -455,7 +437,6 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   SaveForm() {
-    console.log(this.PersonalForm);
     this.guarantorPersonalObj = new GuarantorPersonalObj();
     if (!this.Add()) return;
     if (this.mode == "edit") {
@@ -466,22 +447,13 @@ export class GuarantorPersonalComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.http.post(URLConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -511,7 +483,6 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   test() {
-    console.log(this.PersonalForm);
   }
   ChangeIdType() {
     if (this.PersonalForm.controls.MrIdTypeCode.value == "EKTP" || this.PersonalForm.controls.MrIdTypeCode.value == "NPWP") {

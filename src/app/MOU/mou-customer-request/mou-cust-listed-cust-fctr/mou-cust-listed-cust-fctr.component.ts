@@ -42,11 +42,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
       (response) => {
         this.listedCusts = response["mouCustListedCustFctrObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   openModalAddCustFctr() {
@@ -60,18 +56,12 @@ export class MouCustListedCustFctrComponent implements OnInit {
         this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
           (response) => {
             this.listedCusts = response["mouCustListedCustFctrObjs"];
-          },
-          (error) => {
-            console.log(error);
           }
         );
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -81,11 +71,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   deleteCustFctr(custFctrId, idx) {
@@ -97,9 +83,6 @@ export class MouCustListedCustFctrComponent implements OnInit {
           (response: any) => {
             this.listedCusts.splice(idx, 1);
             this.toastr.successMessage(response["Message"]);
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }

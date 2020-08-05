@@ -31,36 +31,16 @@ export class GuarantorComponent implements OnInit {
     this.setValue();
   }
 
-  setValue(){ 
-    // this.http.post(AdInsConstant.GetListAppGuarantor, {AppId:this.AppId}).subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     this.listAppGuarantor = response[CommonConstant.ReturnObj];
-    //     console.log(this.listAppGuarantor);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );    
+  setValue(){    
     this.http.post(URLConstant.GetListAppGuarantorPersonalForView, {AppId:this.AppId}).subscribe(
       (response) => {
-        console.log(response);
         this.listAppGuarantorPersonal = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.http.post(URLConstant.GetListAppGuarantorCompanyForView, {AppId:this.AppId}).subscribe(
       (response) => {
-        console.log(response);
         this.listAppGuarantorCompany = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
 
 

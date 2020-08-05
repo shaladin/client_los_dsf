@@ -28,7 +28,6 @@ export class AgrmntLifeInsuranceComponent implements OnInit {
   GetAgrmntLifeInsData() {
     this.http.post(URLConstant.GetAgrmntLifeInsDataByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        console.log(response);
         this.AgrmntLifeInsObj = response;
       }
     );

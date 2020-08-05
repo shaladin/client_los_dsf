@@ -112,14 +112,9 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     var custObj = { CustId: event.CustId };
     this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
       (response) => {
-        console.log(response);
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CopyCustomer(response) {
@@ -200,7 +195,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
     this.http.post(this.getCountryUrl, this.countryObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;
         if (countryCode == "LOCAL") {
@@ -209,11 +203,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
         } else {
           this.isLocal = false
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 
@@ -353,7 +343,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.NationalityObj = response[CommonConstant.ReturnObj];
         if (this.NationalityObj.length > 0) {
           this.parentForm.controls[this.identifier].patchValue({
@@ -408,10 +397,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev) {
     if (this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL") {
-      console.log(this.parentForm);
-      console.log(this.identifier);
-      console.log(this.NationalityObj);
-      console.log(ev);
       var idx = ev.target.selectedIndex - 1;
       this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
       this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;

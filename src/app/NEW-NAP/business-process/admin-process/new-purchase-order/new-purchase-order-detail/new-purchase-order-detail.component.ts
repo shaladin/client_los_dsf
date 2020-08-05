@@ -59,11 +59,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.POList = response["PurchaseOrderForNewPOObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async claimTask() {
@@ -92,7 +88,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           }
         ).catch(
           (error) => {
-            console.log(error);
           }
         );
         this.spinner.hide();
@@ -100,9 +95,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       }
     ).catch(
       (error) => {
-        if (error != 0) {
-          console.log(error);
-        }
       }
     );
   }
