@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
@@ -303,7 +303,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   // Insurance Methods
-  SaveForm() {
+  SaveForm(formDirective: FormGroupDirective) {
     var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
     if (insuredBy == CommonConstant.InsuredByCompany || insuredBy == CommonConstant.InsuredByCustomerCompany) {
@@ -348,7 +348,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       (response) => {
         console.log(response);
         this.toastr.successMessage(response["Message"]);
-        this.BindMultiInsGridData();
+        this.BindMultiInsGridData();   
+        formDirective.resetForm();
         this.PageState = 'Paging';
       },
       (error) => {
