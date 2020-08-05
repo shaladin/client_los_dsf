@@ -125,7 +125,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
       } 
     );
-    await this.http.post<Array<object>>(URLConstant.GetListVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
+    await this.http.post<Array<object>>(URLConstant.GetListActiveVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
       (response) => {
         this.LifeInscoBranchName = response;
       }
