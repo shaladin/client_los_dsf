@@ -83,7 +83,7 @@
           <app-mou-cust-personal-financial [MouCustPersonalFinDataObj]="custDataPersonalObj.MouCustPersonalFinDataObj"
             [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'" [isMarried]="isMarried">
           </app-mou-cust-personal-financial>
-          <app-mou-cust-bank-acc (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="listMouCustBankAcc">
+          <app-mou-cust-bank-acc (callbackSubmit)="getMouCustBankAcc($event)" [listBankAcc]="listMouCustBankAcc">
           </app-mou-cust-bank-acc>
           <app-mou-cust-job-data [custModelCode]="defCustModelCode"
             [MouCustPersonalJobDataObj]="custDataPersonalObj.MouCustPersonalJobDataObj" [enjiForm]="enjiForm"
@@ -111,7 +111,7 @@
         <div *ngIf="isBindDataDone == true">
           <app-mou-cust-company-main (callbackCopyCust)="CopyCustomerCompany($event)"
             [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
-            [identifier]="'companyMainData'"></app-mou-cust-company-main>
+            [identifier]="'companyMainData'" [MouCustId]="MouCustId"></app-mou-cust-company-main>
           <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm"
             [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [default]="legalAddrCompanyObj"
             [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress>
@@ -141,16 +141,16 @@
               [identifier]="'mailingAddrCompany'" [default]="mailingAddrCompanyObj"
               [inputField]="inputFieldMailingCompanyObj" [showPhn3]="false"></lib-ucaddress>
           </div>
-          <app-mou-cust-mgmnt-shrholder (callbackSubmit)="getAppCustShareholder($event)" [listShareholder]="listShareholder">
+          <app-mou-cust-mgmnt-shrholder (callbackSubmit)="getMouCustShareholder($event)" [listShareholder]="listShareholder">
           </app-mou-cust-mgmnt-shrholder>
-          <app-mou-cust-company-contact-info (callbackSubmit)="getAppCustCompanyContactPerson($event)"
+          <app-mou-cust-company-contact-info (callbackSubmit)="getMouCustCompanyContactPerson($event)"
             [listContactPersonCompany]="listContactPersonCompany"></app-mou-cust-company-contact-info>
           <app-mou-cust-company-financial [MouCustCompanyFinDataObj]="custDataCompanyObj.MouCustCompanyFinDataObj"
             [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'">
           </app-mou-cust-company-financial>
-          <app-mou-cust-bank-acc (callbackSubmit)="getAppCustBankAccCompany($event)"
+          <app-mou-cust-bank-acc (callbackSubmit)="getMouCustBankAccCompany($event)"
             [listBankAcc]="listMouCustBankAccCompany"></app-mou-cust-bank-acc>
-          <app-mou-cust-legal-doc (callbackSubmit)="getAppCustLegalDoc($event)" [listLegalDoc]="listLegalDoc">
+          <app-mou-cust-legal-doc (callbackSubmit)="getMouCustLegalDoc($event)" [listLegalDoc]="listLegalDoc">
           </app-mou-cust-legal-doc>
           <app-mou-cust-grp-mbr [MouCustGrpObjs]="custDataCompanyObj.MouCustGrpObjs" [enjiForm]="enjiFormCompany"
             [parentForm]="CustDataCompanyForm" [identifier]="'custGrpMemberCompany'"></app-mou-cust-grp-mbr>

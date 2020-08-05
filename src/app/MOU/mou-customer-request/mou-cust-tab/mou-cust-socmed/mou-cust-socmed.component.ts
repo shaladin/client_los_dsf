@@ -40,14 +40,11 @@ export class MouCustSocmedComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.identifier);
-    console.log(this.parentForm);
-
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
 
     this.bindSocmedTypeObj();
-    this.bindAppSocmed();
+    this.bindMouSocmed();
   }
 
   addCustSocmed(){
@@ -62,7 +59,7 @@ export class MouCustSocmedComponent implements OnInit {
     }
   }
 
-  bindAppSocmed(){
+  bindMouSocmed(){
     var listCustSocmed = this.parentForm.controls[this.identifier] as FormArray;
     if(this.MouCustSocmedObjs != undefined){
       for(let i = 0; i < this.MouCustSocmedObjs.length; i++){

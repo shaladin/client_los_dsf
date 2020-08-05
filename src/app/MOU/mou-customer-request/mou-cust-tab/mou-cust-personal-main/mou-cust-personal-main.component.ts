@@ -65,6 +65,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
+      CustNo: [''],
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -93,7 +94,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.initUrl();
     this.initLookup();
     this.bindAllRefMasterObj();
-    //this.bindCustData();
+    this.bindCustData();
   }
 
   CopyCustomerEvent(event) {
@@ -103,7 +104,6 @@ export class MouCustPersonalMainComponent implements OnInit {
     var custObj = {CustId: event.CustId};
     this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
       (response) => {
-        console.log(response);
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
       },
@@ -117,13 +117,14 @@ export class MouCustPersonalMainComponent implements OnInit {
   CopyCustomer(response){
     if(response["CustObj"] != undefined){
       this.parentForm.controls[this.identifier].patchValue({
+        CustNo: response["CustObj"].CustNo,
+        CustName: response["CustObj"].CustName,
         MrIdTypeCode: response["CustObj"].MrIdTypeCode,
         IdNo: response["CustObj"].IdNo,
         IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
         TaxIdNo: response["CustObj"].TaxIdNo,
         IsVip: response["CustObj"].IsVip,
       });
-      this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
       this.selectedCustNo = response["CustObj"].CustNo;
       this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
@@ -184,9 +185,7 @@ export class MouCustPersonalMainComponent implements OnInit {
 
     this.http.post(this.getCountryUrl, this.countryObj).subscribe(
       (response) => {
-        console.log(response);
-        this.InputLookupCountryObj.nameSelect = response["CountryName"];
-        this.InputLookupCountryObj.jsonSelect = response;
+        this.InputLookupCountryObj.jsonSelect = {CountryName: response["CountryName"]};
       },
       (error) => {
         console.log(error);
@@ -198,13 +197,14 @@ export class MouCustPersonalMainComponent implements OnInit {
   bindCustData(){
     if(this.custDataPersonalObj.MouCustObj.MouCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
+        CustNo: this.custDataPersonalObj.MouCustObj.CustNo,
+        CustName: this.custDataPersonalObj.MouCustObj.CustName,
         MrIdTypeCode: this.custDataPersonalObj.MouCustObj.MrIdTypeCode,
         IdNo: this.custDataPersonalObj.MouCustObj.IdNo,
         IdExpiredDt: this.custDataPersonalObj.MouCustObj.IdExpiredDt != undefined ? formatDate(this.custDataPersonalObj.MouCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
         TaxIdNo: this.custDataPersonalObj.MouCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.MouCustObj.IsVip,
       });
-      this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.MouCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataPersonalObj.MouCustObj.CustName};
       this.selectedCustNo = this.custDataPersonalObj.MouCustObj.CustNo;
       if(this.custDataPersonalObj.MouCustObj.CustNo != undefined && this.custDataPersonalObj.MouCustObj.CustNo != ""){
@@ -214,7 +214,6 @@ export class MouCustPersonalMainComponent implements OnInit {
     }
     
     if(this.custDataPersonalObj.MouCustPersonalObj.MouCustId != 0){
-      console.log(this.custDataPersonalObj.MouCustPersonalObj);
       this.parentForm.controls[this.identifier].patchValue({
         CustFullName: this.custDataPersonalObj.MouCustPersonalObj.CustFullName,
         MrGenderCode: this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode,		
@@ -353,7 +352,6 @@ export class MouCustPersonalMainComponent implements OnInit {
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
-    console.log(idExpiredDate);
     if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeSIM) {
       idExpiredDate.setValidators([Validators.required]);
     }else{

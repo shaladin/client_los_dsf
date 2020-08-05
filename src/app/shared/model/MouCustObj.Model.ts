@@ -23,6 +23,9 @@ export class MouCustObj {
     IsVip: boolean;
     MrIdTypeCode: string;
     TaxIdNo: string;
+    IsExistingCust: boolean;
+    CustModelCode: string;
+    ApplicantNo: string;
     RowVersion: any;
     constructor(){ this.MouCustId = 0; this.RowVersion = ''}
 }

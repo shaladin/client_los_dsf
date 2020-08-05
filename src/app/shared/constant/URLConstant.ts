@@ -546,6 +546,10 @@ export class URLConstant {
     public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
     public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
 
+    public static AddEditMouCustPersonalData = environment.losUrl + "/MouCust/AddEditMouCustPersonalData";
+    public static AddEditMouCustCompanyData = environment.losUrl + "/MouCust/AddEditMouCustCompanyData";
+    public static GetMouCustByMouCustId = environment.losUrl + "/MouCust/GetMouCustByMouCustId";
+
     // MOU CUST FCTR
     public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
     public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";

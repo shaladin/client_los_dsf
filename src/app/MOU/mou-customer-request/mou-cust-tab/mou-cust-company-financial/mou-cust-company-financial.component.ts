@@ -54,7 +54,6 @@ export class MouCustCompanyFinancialComponent implements OnInit {
   }
 
   bindAppCustCompanyFinData(){
-    console.log(this.MouCustCompanyFinDataObj);
     if(this.MouCustCompanyFinDataObj.MouCustCompanyFinDataId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         DateAsOf: this.MouCustCompanyFinDataObj.DateAsOf != undefined ? formatDate(this.MouCustCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US') : ''

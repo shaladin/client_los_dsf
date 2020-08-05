@@ -58,7 +58,6 @@ export class MouCustPersonalFinancialComponent implements OnInit {
   }
 
   bindAppCustPersonalFinData(){
-    console.log(this.MouCustPersonalFinDataObj);
     if(this.MouCustPersonalFinDataObj.MouCustPersonalId!= 0){
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.MouCustPersonalFinDataObj.MonthlyIncomeAmt,

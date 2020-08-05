@@ -23,7 +23,7 @@ import { MouCustCompanyDataObj } from 'app/shared/model/MouCustCompanyDataObj.Mo
 
 export class MouCustCompanyMainComponent implements OnInit {
 
-  @Input() appId;
+  @Input() MouCustId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
@@ -31,7 +31,6 @@ export class MouCustCompanyMainComponent implements OnInit {
   @Input() custType: any;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
-  AppId: number;
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -61,17 +60,17 @@ export class MouCustCompanyMainComponent implements OnInit {
     private toastr: NGXToastrService,
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      this.AppId = params['AppId'];
+      this.MouCustId = params['mouCustId'];
     });
   }
 
   ngOnInit() {
-
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustNo: [''],
+      CustName: [''],
       IndustryTypeCode: [''],
       CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
       CompanyBrandName: ['', Validators.maxLength(100)],
@@ -98,7 +97,6 @@ export class MouCustCompanyMainComponent implements OnInit {
     var custObj = { CustId: event.CustId };
     this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
-        console.log(response);
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
       },
@@ -112,6 +110,7 @@ export class MouCustCompanyMainComponent implements OnInit {
     if (response["CustObj"] != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: response["CustObj"].CustNo,
+        CustName: response["CustObj"].CustName,
         CustModelCode: response["CustObj"].MrCustModelCode,
         TaxIdNo: response["CustObj"].TaxIdNo,
         IsVip: response["CustObj"].IsVip
@@ -160,7 +159,6 @@ export class MouCustCompanyMainComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
       },
@@ -172,12 +170,11 @@ export class MouCustCompanyMainComponent implements OnInit {
   }
 
   bindCustData() {
-    console.log("bind cust data");
-    console.log(this.custDataCompanyObj);
     if (this.custDataCompanyObj.MouCustObj.MouCustId != 0) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.MouCustObj.CustNo,
-        //CustModelCode: this.custDataCompanyObj.MouCustObj.CustModelCode,
+        CustName: this.custDataCompanyObj.MouCustObj.CustName,
+        CustModelCode: this.custDataCompanyObj.MouCustObj.CustModelCode,
         TaxIdNo: this.custDataCompanyObj.MouCustObj.TaxIdNo,
         IsVip: this.custDataCompanyObj.MouCustObj.IsVip
       });
@@ -208,6 +205,8 @@ export class MouCustCompanyMainComponent implements OnInit {
     this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+    this.InputLookupCustomerObj.isReady = true;
+    this.InputLookupCustomerObj.isReadonly = false;
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
@@ -216,22 +215,6 @@ export class MouCustCompanyMainComponent implements OnInit {
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
-
-    var AppObj = { AppId: this.AppId };
-    this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
-      (response) => {
-        this.AppObj = response;
-        
-        if (this.AppObj.BizTemplateCode != CommonConstant.FCTR) {
-          this.InputLookupCustomerObj.isReadonly = false;
-        }
-
-        this.InputLookupCustomerObj.isReady = true;
-      }, 
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   bindAllRefMasterObj() {
@@ -247,7 +230,6 @@ export class MouCustCompanyMainComponent implements OnInit {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
           });
-          console.log("bind company type");
         }
       }
     );
@@ -265,8 +247,5 @@ export class MouCustCompanyMainComponent implements OnInit {
         }
       }
     );
-  }
-  test() {
-    console.log(this.parentForm);
   }
 }

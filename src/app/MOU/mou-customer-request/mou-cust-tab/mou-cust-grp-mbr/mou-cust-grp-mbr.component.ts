@@ -54,16 +54,13 @@ export class MouCustGrpMbrComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
-    console.log(this.identifier);
-    console.log(this.parentForm);
-
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.CustRelationshipObjs.splice(0, 1);
 
     await this.bindCustRelationshipPersonalObj();
     await this.bindCustRelationshipCompanyObj();
-    await this.bindAppGrp();
+    await this.bindMouGrp();
   }
 
   addCustGrp(){
@@ -139,12 +136,9 @@ export class MouCustGrpMbrComponent implements OnInit {
         MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
       });
     }
-    
-
-    // console.log(this.CustRelationshipObjs);
   }
 
-  async bindAppGrp(){
+  async bindMouGrp(){
     if(this.MouCustGrpObjs != undefined){
       for(let i = 0; i < this.MouCustGrpObjs.length; i++){
         var listCustGrp = this.parentForm.controls[this.identifier] as FormArray;
@@ -166,7 +160,7 @@ export class MouCustGrpMbrComponent implements OnInit {
     }
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
-    this.bindAppGrp();
+    this.bindMouGrp();
   }
 
   addGroup(MouCustGrpObj : MouCustGrpObj, i){
@@ -195,7 +189,6 @@ export class MouCustGrpMbrComponent implements OnInit {
     this.custObj.CustNo = custNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.custObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.custMasterObj = response;
         this.dictLookup[i].nameSelect = response["CustName"];
         this.dictLookup[i].jsonSelect = response;

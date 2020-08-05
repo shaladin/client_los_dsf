@@ -129,14 +129,12 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     if(this.mode == "Edit"){
       this.listContactPersonPersonal[this.currentEditedIndex] = this.MouCustPersonalContactPersonObj;
     }
-    console.log(this.ContactInfoPersonalForm);
     this.callbackSubmit.emit(this.listContactPersonPersonal);
     this.modalService.dismissAll();
     this.clearForm();
   }
 
   add(content){
-    console.log(content);
     this.mode = "Add";
     this.clearForm();
     this.open(content);
@@ -182,11 +180,8 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   setCustRelationShip(MrCustRelationshipCode: string){
-    console.log(this.CustRelationshipObj);
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
-    console.log(selectedRelationship);
     this.selectedRelationshipName = selectedRelationship.Value;
-    console.log(this.selectedRelationshipName);
   }
 
   delete(i){
@@ -293,7 +288,6 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(this.getRefProfessionUrl, this.professionObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;     
       },

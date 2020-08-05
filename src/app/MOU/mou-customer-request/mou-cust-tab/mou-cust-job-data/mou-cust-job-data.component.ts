@@ -70,10 +70,6 @@ export class MouCustJobDataComponent implements OnInit {
    MaxDate: Date;
    UserAccess: any;
    ngOnInit() {
-    console.log(this.testing);
-    console.log(this.parentForm);
-    // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
@@ -98,7 +94,7 @@ export class MouCustJobDataComponent implements OnInit {
     this.initLookup();
     this.bindCustModelObj();
     this.bindAllRefMasterObj();
-    this.bindAppCustPersonalJobData();
+    this.bindMouCustPersonalJobData();
   }
 
   CriteriaAddLookUpProfessionName(){
@@ -113,7 +109,6 @@ export class MouCustJobDataComponent implements OnInit {
   }
 
   CustModelChanged(){
-    console.log(this.parentForm);
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     this.CriteriaAddLookUpProfessionName();
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
@@ -145,7 +140,6 @@ export class MouCustJobDataComponent implements OnInit {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;     
       },
@@ -159,7 +153,6 @@ export class MouCustJobDataComponent implements OnInit {
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;     
       },
@@ -211,10 +204,7 @@ export class MouCustJobDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
   }
 
-  bindAppCustPersonalJobData(){
-    console.log("bind")
-    console.log(this.custModelCode);
-    console.log(this.MouCustPersonalJobDataObj);
+  bindMouCustPersonalJobData(){
     if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
     if(this.MouCustPersonalJobDataObj.MouCustPersonalId != 0){
@@ -231,6 +221,7 @@ export class MouCustJobDataComponent implements OnInit {
         MrJobStatCode: this.MouCustPersonalJobDataObj.MrJobStatCode,
         MrInvestmentTypeCode: this.MouCustPersonalJobDataObj.MrInvestmentTypeCode
       });
+
       this.selectedProfessionCode = this.MouCustPersonalJobDataObj.MrProfessionCode;
       this.setProfessionName(this.MouCustPersonalJobDataObj.MrProfessionCode);
       this.selectedIndustryTypeCode = this.MouCustPersonalJobDataObj.IndustryTypeCode;
@@ -253,7 +244,6 @@ export class MouCustJobDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
-        console.log("job position");
         if(this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrJobPositionCode: this.JobPositionObj[0].Key
