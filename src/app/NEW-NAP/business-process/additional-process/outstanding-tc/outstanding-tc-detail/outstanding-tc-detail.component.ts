@@ -72,9 +72,6 @@ export class OutstandingTcDetailComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AddProcess/OutstandingTC/Paging"]);
-      },
-      error => {
-        console.log(error);
       }
     );
   }

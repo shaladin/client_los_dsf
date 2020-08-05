@@ -42,7 +42,6 @@ export class MouViewApprovalHistoryComponent implements OnInit {
       (response) => {
         this.MouCustNo = response["MouCustNo"];
         this.MrMouTypeCode = response["MrMouTypeCode"];
-        console.log(response);
         this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.MouCustNo }).subscribe(
           (response) => {
             this.result = response;
@@ -66,16 +65,9 @@ export class MouViewApprovalHistoryComponent implements OnInit {
                 this.count1++;
               }
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
         this.IsApvReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

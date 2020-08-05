@@ -44,7 +44,6 @@ export class ViewInsuranceDetailComponent implements OnInit {
     var reqAssetObj = { AppAssetId: this.AppAssetId };
     this.http.post(URLConstant.GetInsuranceDataByAppAssetIdForView, reqAssetObj).subscribe(
       (response) => {
-        console.log(response);
         this.appInsuranceObj = response["AppInsuranceObj"];
         this.appInsObjObj = response["AppInsObjObj"];
         if (response["AppAssetObj"] != null) {
@@ -61,10 +60,6 @@ export class ViewInsuranceDetailComponent implements OnInit {
         }
 
         this.inputGridObj.resultData = detailForGridCoverage;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

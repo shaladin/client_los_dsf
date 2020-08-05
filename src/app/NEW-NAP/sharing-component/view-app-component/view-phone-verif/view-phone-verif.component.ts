@@ -50,13 +50,11 @@ export class ViewPhoneVerifComponent implements OnInit {
     this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
       (response) => {
         this.phoneVerifObj = response;
-        console.log(this.phoneVerifObj);
       }
     );
   }
 
   View(VerifResultHid, SubjectName) {
-    console.log(this.phoneVerifObj);
     window.open("/Nap/PhoneVerif/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
 }

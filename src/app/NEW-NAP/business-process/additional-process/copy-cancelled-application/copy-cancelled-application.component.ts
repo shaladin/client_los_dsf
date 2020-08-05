@@ -49,22 +49,14 @@ export class CopyCancelledApplicationComponent implements OnInit {
         response => {
           this.link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'];
           window.open(this.link, '_blank');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }else if(ev.Key == "copy"){
       if (confirm("Are you sure to copy this application?")) {
         this.http.post(URLConstant.CopyCancelledApp, { AppId: ev.RowObj.AppId }).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
             this.paging.searchPagination(1);
-          },
-          error => {
-            console.log(error);
-          }
-        );
+          });
       }
     }
   }

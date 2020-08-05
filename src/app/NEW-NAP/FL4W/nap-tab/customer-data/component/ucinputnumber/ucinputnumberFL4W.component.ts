@@ -20,7 +20,6 @@ export class UcinputnumberFL4WComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    console.log("ucinputnumber");
     this.parentForm.addControl(this.identifier, this.fb.control(''));
     this.ucNumber = this.ucNumber.toString();
     this.ucNumber = this.ucNumber.replace(/\D/g, "")

@@ -108,7 +108,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
-        console.log(response);
         this.appAssetObj = response;
         this.AppAssetId = this.appAssetObj.AppAssetId;
         this.MrAssetConditionCode = this.appAssetObj.MrAssetConditionCode;
@@ -141,7 +140,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
                   ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
                   DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
                 }) as FormGroup;
-                if (response[CommonConstant.ReturnObj][i].IsValueNeeded == true) {
+                if (response[CommonConstant.ReturnObj][i].IsMandatoryNew == true) {
                   assetDocumentDetail.controls.DocNo.setValidators([Validators.required]);
                 }
                 this.items.push(assetDocumentDetail);
@@ -248,15 +247,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdminProcess/DeliveryOrder/Paging"]);
-      },
-      error => {
-        console.log(error);
       }
     );
   }
 
   async claimTask() {
-    console.log("Claim");
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;

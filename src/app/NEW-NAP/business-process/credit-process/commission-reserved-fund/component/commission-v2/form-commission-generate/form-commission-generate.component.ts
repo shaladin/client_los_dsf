@@ -40,9 +40,6 @@ export class FormCommissionGenerateComponent implements OnInit {
   initData() {
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.arr = this.parentForm.get(this.identifier) as FormArray;
-    // console.log(this.arr);
-    // console.log(this.parentForm);
-    // console.log(this.identifier);
     this.GetDDLContentName();
   }
 
@@ -63,7 +60,6 @@ export class FormCommissionGenerateComponent implements OnInit {
 
   NewAutoData(){
     let idxDDLContent = 0;
-    // console.log(this.DDLContentName[idxDDLContent]);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     var obj;
     var code;
@@ -86,7 +82,6 @@ export class FormCommissionGenerateComponent implements OnInit {
     }
 
     var temp = this.GetTempRuleObj(code, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-    console.log(temp);
     if (temp == undefined || temp == null) {
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
         ContentName: "",
@@ -137,7 +132,6 @@ export class FormCommissionGenerateComponent implements OnInit {
       DropDownList: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
-    // console.log(this.parentForm);
     this.lenDDLContentName--;
     // if(this.FormInputObj["isAutoGenerate"]){
     // }
@@ -145,15 +139,12 @@ export class FormCommissionGenerateComponent implements OnInit {
 
   GetDDLContentName() {
     this.DDLContentName = this.FormInputObj["contentObj"];
-    // console.log("DDL Content " + this.FormInputObj["content"]);
-    // console.log(this.DDLContentName);
     this.tempDDLContentName = new Array();
     this.lenDDLContentName = this.DDLContentName.length;
     this.totalDDLContentData = this.DDLContentName.length;
   }
 
   ChooseContentName(ev, indexFormObj) {
-    // console.log(ev);
     var idx = ev.target.selectedIndex - 1;
 
     var obj;
@@ -175,14 +166,12 @@ export class FormCommissionGenerateComponent implements OnInit {
       code = this.DDLContentName[idx].Key;
 
     }
-    // console.log(code);
     
     // var idxTemp: number = idx;
     // if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
       //   idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == ev.target.selectedOptions[0].value));
       // }
     var temp = this.GetTempRuleObj(code, this.DDLContentName[idx].MrSupplEmpPositionCode);
-    // console.log(temp);
     if (temp == undefined || temp == null) {
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
         ContentName: "",
@@ -204,22 +193,17 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.SetRule(code, indexFormObj, this.DDLContentName[idx].MrSupplEmpPositionCode);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idx, 1);
-    // console.log(this.tempDDLContentName);
-    // console.log(this.DDLContentName);
-    // console.log(this.parentForm);
     this.PassData();
   }
 
   SetRule(supplCode: string, formIdx: number, role: string) {
     var ruleObj = this.GetTempRuleObj(supplCode, role);
     var TotalCommisionAmount: number = 0;
-    // console.log(ruleObj);
     for (var i = 0; i < ruleObj.length; i++) {
 
       let behaviour: string = ruleObj[i].AllocationBehaviour;
       let maxAllocAmt: number = ruleObj[i].MaxAllocationAmount;
       let allocAmt: number = ruleObj[i].AllocationAmount;
-      // console.log(this.DictMaxIncomeForm[temp[i].AllocationFrom]);
       if (this.DictMaxIncomeForm[ruleObj[i].AllocationFrom] != undefined && this.DictMaxIncomeForm[ruleObj[i].AllocationFrom] != null && this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount > 0) {
         if(ruleObj[i].MaxAllocationAmount > this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)
           maxAllocAmt = this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount;
@@ -236,7 +220,6 @@ export class FormCommissionGenerateComponent implements OnInit {
           allocAmt = 0;
 
       } else {
-        console.log("No Rule Data or DictMaxAmt <= 0");
         behaviour = CommonConstant.RuleBehaviourLock;
         maxAllocAmt = 0;
         allocAmt = 0;
@@ -286,8 +269,6 @@ export class FormCommissionGenerateComponent implements OnInit {
 
   GetDDLBankAccount(code, idx) {
     var content = this.FormInputObj["content"];
-    // console.log("Obj Code");
-    // console.log(code);
     let idxDefault = 0;
     var obj;
     if (content == CommonConstant.ContentSupplier) {
@@ -297,8 +278,6 @@ export class FormCommissionGenerateComponent implements OnInit {
       };
       this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
         (response) => {
-          // console.log("response bank");
-          // console.log(response);
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
             if (response["ReturnObject"][i].IsDefault == true) idxDefault = i;
@@ -313,12 +292,7 @@ export class FormCommissionGenerateComponent implements OnInit {
           }
           if (len == 1) idxDefault = 0;
           this.SetDefaultDDLBankAcc(idx, idxDefault);
-          // console.log(this.FormObj);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else if (content == CommonConstant.ContentSupplierEmp) {
       obj = {
         VendorEmpNo: code,
@@ -326,8 +300,6 @@ export class FormCommissionGenerateComponent implements OnInit {
       };
       this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
         (response) => {
-          // console.log("response bank");
-          // console.log(response);
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
             if (response["ReturnObject"][i].IsDefault == true) idxDefault = i;
@@ -342,12 +314,7 @@ export class FormCommissionGenerateComponent implements OnInit {
           }
           if (len == 1) idxDefault = 0;
           this.SetDefaultDDLBankAcc(idx, idxDefault);
-          // console.log(this.FormObj);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else if (content == CommonConstant.ContentReferantor) {
       var eachDDLDetail = this.fb.group({
         Key: this.FormInputObj["BankData"].BankAccNo,
@@ -357,7 +324,6 @@ export class FormCommissionGenerateComponent implements OnInit {
         BankBranch: this.FormInputObj["BankData"].BankBranch
       }) as FormGroup;
       this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
-      // console.log(this.FormObj);
       this.SetDefaultDDLBankAcc(idx, idxDefault);
     }
   }
@@ -375,7 +341,6 @@ export class FormCommissionGenerateComponent implements OnInit {
   }
 
   DeleteDataForm(idx) {
-    // console.log(idx);
     if (confirm('Are you sure to delete this record?')) {
       this.FormInputObj["isCalculated"] = false;
       if (this.parentForm.controls[this.identifier]["controls"][idx].controls.AppCommissionHId.value != 0)
@@ -387,8 +352,6 @@ export class FormCommissionGenerateComponent implements OnInit {
         this.tempDDLContentName.splice(i, 1);
       }
       this.lenDDLContentName++;
-      // console.log(this.tempDDLContentName);
-      // console.log(this.DDLContentName);
       if (this.totalDDLContentData == this.lenDDLContentName)
         this.FormInputObj["isDataInputed"] = false;
       this.arr.removeAt(idx);
@@ -400,20 +363,13 @@ export class FormCommissionGenerateComponent implements OnInit {
     var obj = { AppCommissionHId: AppCommissionHId };
     this.http.post(URLConstant.DeleteAppCommissionData, obj).subscribe(
       (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ChangeBankAcc(ev, i) {
     if (ev.target.selectedIndex == 0) return;
-    // console.log(ev);
     var idxDDL = ev.target.selectedIndex - 1;
     var ddlObj = this.parentForm.controls[this.identifier]["controls"][i].controls.DropDownList.value[idxDDL];
-    // console.log(ddlObj);
 
     this.parentForm.controls[this.identifier]["controls"][i].patchValue({
       BankAccountNo: ddlObj.Key,
@@ -425,7 +381,6 @@ export class FormCommissionGenerateComponent implements OnInit {
   }
   
   ChangeDataLabel(indexFormObj) {
-    // console.log(indexFormObj);
     this.FormInputObj["isCalculated"] = false;
     var len = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls.length;
     var tempTotal = 0;
@@ -440,11 +395,9 @@ export class FormCommissionGenerateComponent implements OnInit {
   }
 
   PatchDataExisting(appCommObj: any) {
-    console.log(appCommObj);
     this.AddNewDataForm();
     
     let idxDDLContent = this.DDLContentName.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
-    // console.log(this.DDLContentName[idxDDLContent]);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     var obj;
     var code;
@@ -466,7 +419,6 @@ export class FormCommissionGenerateComponent implements OnInit {
 
     }
     var temp = this.GetTempRuleObj(code, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-    console.log(temp);
     if (temp == undefined || temp == null) {
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
         ContentName: "",
@@ -501,13 +453,10 @@ export class FormCommissionGenerateComponent implements OnInit {
       });
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-    // console.log(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated);
     
     for (var i = 0; i < appCommObj.AppCommissionD.length; i++) {
       let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionD[i].MrCommissionSourceCode);
-      // console.log(idxFromRuleObj);
       if (idxFromRuleObj >= 0) {
-        // console.log(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][idxFromRuleObj]);
         var allocAmt = 0;
         if (this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["value"][idxFromRuleObj].AllocationBehaviour != "LOCK") {
           allocAmt = appCommObj.AppCommissionD[i].CommissionAmt;

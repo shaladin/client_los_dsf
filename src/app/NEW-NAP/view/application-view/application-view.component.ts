@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from '../../../shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MatTabChangeEvent } from '@angular/material';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-application-view',
@@ -12,11 +13,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class ApplicationViewComponent implements OnInit {
   AppId: number;
-  
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
-
+  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
   IsCustomer : boolean = true;
   IsGuarantor : boolean = true;
   IsReferantor : boolean = true;
@@ -38,17 +38,19 @@ export class ApplicationViewComponent implements OnInit {
   IsMultiCollateral : boolean = true;
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
-
-  constructor(private route: ActivatedRoute, private http: HttpClient) { 
+  bizTemplateCode : string = "";
+  constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
   }
 
   ngOnInit() {
-    console.log("APP BESARAN")
     this.arrValue.push(this.AppId);
     this.GetApp();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.arrValue = this.arrValue;
   }
 
   GetApp() {
@@ -57,10 +59,10 @@ export class ApplicationViewComponent implements OnInit {
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
-        var bizTemplateCode = response["BizTemplateCode"];
+        this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
 
-        if(bizTemplateCode == CommonConstant.FCTR)
+        if(this.bizTemplateCode == CommonConstant.FCTR)
         {
           this.IsCollateral = false;
           this.IsGuarantor = false;
@@ -74,7 +76,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInsurance = false;
       
         }
-        else if(bizTemplateCode == CommonConstant.CFRFN4W){
+        else if(this.bizTemplateCode == CommonConstant.CFRFN4W){
           this.IsAsset = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -82,7 +84,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(bizTemplateCode == CommonConstant.CF4W){
+        else if(this.bizTemplateCode == CommonConstant.CF4W){
           this.IsCollateral = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -90,7 +92,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(bizTemplateCode == CommonConstant.FL4W)
+        else if(this.bizTemplateCode == CommonConstant.FL4W)
         {
           this.IsAsset = false;
           this.IsCollateral = false;
@@ -98,7 +100,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsInsurance = false;
         }
-        else if(bizTemplateCode == CommonConstant.CFNA){
+        else if(this.bizTemplateCode == CommonConstant.CFNA){
           this.IsAsset = false;
           this.IsInvoice = false;
           this.IsMultiAsset = false;
@@ -109,5 +111,13 @@ export class ApplicationViewComponent implements OnInit {
       }
     );
   }
-
+  tabChangeEvent( tabChangeEvent : MatTabChangeEvent){
+    if(tabChangeEvent.index == 0){
+      this.GetApp();
+    }
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.arrValue = this.arrValue;
+  }
 }

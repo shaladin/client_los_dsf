@@ -35,16 +35,12 @@ export class ApprovalHistComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.AppNo = response["AppNo"];
-        console.log(this.AppNo);
         this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
           (response) => {
-            console.log(response);
             this.result = response;
             this.ListRfaLogObj = response["ListRfaLogObj"];
-            console.log(this.ListRfaLogObj);
             for (let i = 0; i < this.ListRfaLogObj.length; i++) {
               if (this.ListRfaLogObj[i]["ApvCategory"] == CommonConstant.ApvCategoryCreditApproval) {
-                console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listCreditApprvObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
@@ -53,7 +49,6 @@ export class ApprovalHistComponent implements OnInit {
                 };
                 this.count1++;
               } else if (this.ListRfaLogObj[i]["ApvCategory"] == CommonConstant.ApvCategoryPackageValidityChecking) {
-                console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listPckgValObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
@@ -62,7 +57,6 @@ export class ApprovalHistComponent implements OnInit {
                 };
                 this.count2++;
               } else if (this.ListRfaLogObj[i]["ApvCategory"] == CommonConstant.ApvCategoryPreGoLive) {
-                console.log(this.ListRfaLogObj[i]["RfaNo"])
                 this.listPreGoObj[i] = {
                   approvalBaseUrl: environment.ApprovalR3Url,
                   type: 'task',
@@ -73,15 +67,8 @@ export class ApprovalHistComponent implements OnInit {
               }
             }
             this.IsApvReady = true;
-          },
-          (error) => {
-            console.log(error);
           }
         );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

@@ -62,9 +62,6 @@ export class LegalReviewPagingComponent implements OnInit {
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-          },
-          (error) => {
-            console.log(error);
           }
         );
     }

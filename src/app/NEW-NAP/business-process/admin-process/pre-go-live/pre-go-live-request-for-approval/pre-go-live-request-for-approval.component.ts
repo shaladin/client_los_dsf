@@ -109,10 +109,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
 
     this.http.post(URLConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
       this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
-    },
-      (error) => {
-        console.log(error);
-      });
+    });
   }
 
   Cancel() {

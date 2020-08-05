@@ -92,7 +92,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   ngOnInit() {
     this.isInputLookupObj = false;
-    console.log("Rey test");
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
   }
@@ -131,9 +130,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
           });
         }
         this.SetPayFreq(MouCustId);
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterIntrstType).subscribe(
@@ -144,9 +140,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             InterestType: this.allIntrstType[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
       this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
@@ -157,9 +150,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
               TopBased: this.allTopBased[0].Key
             });
           }
-        },
-        (error) => {
-          console.log(error);
         });
 
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
@@ -170,9 +160,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrInstSchemeCode: this.allInScheme[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
@@ -184,9 +171,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             SalesOfficerName:this.allInSalesOffice[0].EmpName,
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
@@ -197,9 +181,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrInstTypeCode: this.allInType[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
@@ -210,9 +191,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrSalesRecommendCode: this.allSlsRecom[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       })
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
@@ -223,9 +201,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrWopCode: this.allWOP[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
@@ -236,9 +211,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrAppSourceCode: this.allAppSource[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterCalcMethod).subscribe(
@@ -249,9 +221,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrSingleInstCalcMthdCode: this.allCalcMethod[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterAppPaidBy).subscribe(
@@ -262,9 +231,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             PaidBy: this.allPaidby[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
@@ -276,9 +242,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             RecourseType: this.allRecourseType[0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
       });
 
       this.CheckInstType();
@@ -307,13 +270,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 PayFreqCode: PayFreqCode
               });
             }
-          },
-          (error) => {
-            console.log(error);
           });
-      },
-      (error) => {
-        console.log(error);
       });
   }
 
@@ -463,11 +420,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           });
          } 
          this.makeNewLookupCriteria();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   SaveForm(): void {
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
@@ -488,9 +441,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
         });
     } else {
       this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
@@ -500,9 +450,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
         });
     }
 

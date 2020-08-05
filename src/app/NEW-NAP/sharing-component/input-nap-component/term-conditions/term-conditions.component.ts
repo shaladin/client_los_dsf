@@ -120,17 +120,10 @@ export class TermConditionsComponent implements OnInit {
 
               this.ReconstructForm();
               this.OutputMode.emit("add");
-            },
-            (error) => {
-              console.log(error);
             }
           );
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ReconstructForm() {

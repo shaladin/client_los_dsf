@@ -50,23 +50,17 @@ export class MouCustAssetComponent implements OnInit {
           });
         }
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ngOnInit() {
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.IsAssetSelected = false;
-    console.log(this.IsAssetSelected)
     var mouAsset = new MouCustAssetObj();
     mouAsset.MouCustId = this.MouCustId;
 
     this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
       (response: any) => {
-        console.log(this.IsAssetSelected);
 
         this.IsAssetSelected = false;
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {
@@ -137,13 +131,9 @@ export class MouCustAssetComponent implements OnInit {
 
         }
         this.index++;
-        console.log(this.index);
 
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -160,25 +150,6 @@ export class MouCustAssetComponent implements OnInit {
         this.IsAssetSelected = false;
       }
     }
-    // this.httpClient.post(AdInsConstant.DeleteMouCustAsset, mouAsset).subscribe(
-    //   (response: any) => { 
-    //       this.IsAssetSelected = false; 
-    //     for(const value of this.mouAssetList){
-    //       if(value["MouCustAssetId"] == mouCustAssetId){
-    //         var idxExclude = this.listExclude.indexOf(value["FullAssetCode"]);
-    //         this.listExclude.splice(idxExclude, 1);
-    //         break;
-    //       }
-    //     }
-    //     this.mouAssetList.splice(idx, 1);
-    //     this.toastr.successMessage(response["message"]);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
-
-
   }
 
 }

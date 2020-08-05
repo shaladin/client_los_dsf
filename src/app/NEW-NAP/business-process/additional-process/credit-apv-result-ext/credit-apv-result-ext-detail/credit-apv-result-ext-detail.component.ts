@@ -49,9 +49,6 @@ export class CreditApvResultExtDetailComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(['/Nap/AddProcess/CreditApprovalResultExt/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -73,9 +70,6 @@ export class CreditApvResultExtDetailComponent implements OnInit {
           this.MinDate = ExpDt;
         }
 
-      },
-      error => {
-        console.log(error);
       }
     );
   }

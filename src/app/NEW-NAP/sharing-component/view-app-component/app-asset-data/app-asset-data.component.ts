@@ -29,24 +29,14 @@ export class AppAssetDataComponent implements OnInit {
       (response) => {
         this.appAssetList = response[0][CommonConstant.ReturnObj];
         this.appCollateralList = response[1]["AppCollateralObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   viewDetailHandler(appAssetId){
-    // console.log("assethandler")
-    // console.log(appAssetId)
-    // console.log(this.AppId)
     const modalAssetDetail = this.modalService.open(AppAssetDataDetailComponent);
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
     modalAssetDetail.componentInstance.AppId = this.AppId;
     modalAssetDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 

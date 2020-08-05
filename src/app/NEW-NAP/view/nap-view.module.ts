@@ -15,6 +15,7 @@ import { ViewSharingComponentModule } from "../sharing-component/view-app-compon
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
 import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order-view.component";
 import { UcgridviewModule } from "@adins/ucgridview";
+import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
 
 @NgModule({
   exports: [
@@ -39,5 +40,8 @@ import { UcgridviewModule } from "@adins/ucgridview";
     ApplicationViewComponent,
     PurchaseOrderViewComponent
   ],
+  entryComponents: [
+    AppMainInfoComponent,
+  ]
 })
 export class NapViewModule { }

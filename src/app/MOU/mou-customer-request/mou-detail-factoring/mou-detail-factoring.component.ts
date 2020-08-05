@@ -126,11 +126,7 @@ export class MouDetailFactoringComponent implements OnInit {
         }
         this.instTypeHandler();
         this.shouldComponentLoad = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   instTypeHandler(){
@@ -170,7 +166,6 @@ export class MouDetailFactoringComponent implements OnInit {
     }
 
     if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
-      console.log("Tenor Invalid");
       this.isTenorInvalid = true;
       this.tenorInvalidMsg = "Invalid Tenor Range";
       return false;
@@ -182,7 +177,6 @@ export class MouDetailFactoringComponent implements OnInit {
       if(formData.TenorTo == ""){
         formData.TenorTo = 0;
       }
-      console.log("Tenor Valid");
       this.isTenorInvalid = false;
       this.tenorInvalidMsg = "";
     }
@@ -197,11 +191,7 @@ export class MouDetailFactoringComponent implements OnInit {
     this.httpClient.post(url, formData).subscribe(
       (response) => {
         this.ResponseMouCustFactoring.emit(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   // back(){

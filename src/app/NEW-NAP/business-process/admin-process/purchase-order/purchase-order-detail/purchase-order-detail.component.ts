@@ -58,7 +58,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ini po");
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
 
@@ -76,7 +75,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
     }
     this.http.post(poUrl, appAssetObj).subscribe(
       (response) => {
-        console.log(response);
         this.AssetObj = response[CommonConstant.ReturnObj];
         this.ProportionalValue = this.AssetObj["ProportionalValue"];
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
@@ -101,45 +99,30 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.purchaseOrderHObj.BankAccNo = this.AssetObj["VendorBankAccObj"].BankAccountNo;
         this.purchaseOrderHObj.BankAccName = this.AssetObj["VendorBankAccObj"].BankAccountName;
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetFromRefMaster() {
     var tempRefMasterObj: Array<RefMasterObj> = new Array();
     await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, { refMasterTypeCodes: [CommonConstant.RefMasterTypeCodePoItemCode] }).toPromise().then(
       (response) => {
-        // console.log(response);
         tempRefMasterObj = response["ReturnObject"];
-        // console.log(tempRefMasterObj);
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     return tempRefMasterObj;
   }
 
   GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj) {
-    // console.log(this.AssetObj["AgrmntFinDataObj"]);
     var TempListPurchaseOrderD = new Array();
     for (var i = 0; i < ListPORefMasterObj.length; i++) {
       if (ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2NonFee) {
-        // console.log(this.ListPORefMasterObj[i]);
-        // console.log(this.AssetObj["AgrmntFinDataObj"][this.ListPORefMasterObj[i].ReserveField3]);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MasterCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].ReserveField3] : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
       if (ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2Fee) {
-        // console.log(this.ListPORefMasterObj[i]);
         let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].ReserveField3);
-        // console.log(tempAgrmntFeeObj);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MasterCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
@@ -162,15 +145,10 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
-    // console.log(POObj);
     this.http.post(URLConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/PO"], { queryParams: { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

@@ -25,9 +25,6 @@ export class ViewSurveyTaskListComponent implements OnInit {
     this.http.post(URLConstant.GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode, reqObj).subscribe(
       response => {
         this.listSrvy = (response[CommonConstant.ReturnObj]);
-      },
-      error => {
-        console.log("error");
       }
     );
   }

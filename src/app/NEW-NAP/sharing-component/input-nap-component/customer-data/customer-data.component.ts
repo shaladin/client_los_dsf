@@ -133,8 +133,6 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("show cancel");
-    console.log(this.showCancel);
     this.initUrl();
     await this.bindCustTypeObj();
     this.initAddrObj();
@@ -149,7 +147,6 @@ export class CustomerDataComponent implements OnInit {
       if (this.isSpouseOk) {
         this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
           (response) => {
-            console.log(response);
             if (response["StatusCode"] == 200) {
               this.toastr.successMessage(response["message"]);
               this.EmitToMainComp();
@@ -159,9 +156,6 @@ export class CustomerDataComponent implements OnInit {
                 this.toastr.errorMessage(message["Message"]);
               });
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -188,14 +182,9 @@ export class CustomerDataComponent implements OnInit {
       if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.EmitToMainComp();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -778,12 +767,9 @@ export class CustomerDataComponent implements OnInit {
 
 
   test() {
-    console.log(this.mainDataComponent);
-    console.log(this.CustDataForm);
   }
 
   testCompany() {
-    console.log(this.CustDataCompanyForm);
   }
 
   async getCustData() {
@@ -791,7 +777,6 @@ export class CustomerDataComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
       (response) => {
-        console.log(response);
         if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.custDataPersonalObj = new CustDataPersonalObj();
@@ -857,7 +842,6 @@ export class CustomerDataComponent implements OnInit {
         this.isBindDataDone = true;
       },
       (error) => {
-        console.log(error);
         this.isBindDataDone = true;
       }
     );
@@ -1032,7 +1016,6 @@ export class CustomerDataComponent implements OnInit {
   }
 
   CopyCustomer(event) {
-    console.log(event);
     this.copyAddrFromLookup(event);
 
     if (event["CustPersonalContactPersonObjs"] != undefined) {
@@ -1071,7 +1054,6 @@ export class CustomerDataComponent implements OnInit {
   }
 
   CopyCustomerCompany(event) {
-    console.log(event);
     this.copyAddrCompanyFromLookup(event);
 
     if (event["CustCompanyContactPersonObjs"] != undefined) {
@@ -1232,7 +1214,6 @@ export class CustomerDataComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
       (response) => {
-        // console.log(response);
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         // if (this.CustTypeObj.length > 0) {
         //   this.MrCustTypeCode = this.CustTypeObj[0].Key;
@@ -1242,12 +1223,10 @@ export class CustomerDataComponent implements OnInit {
   }
 
   EmitToMainComp(){
-    console.log(this.MrCustTypeCode);
     this.outputTab.emit(this.MrCustTypeCode);
   }
 
   GenderChanged(event) {
-    console.log(event);
     if (event.IsSpouseDelete == true) {
       for (let i = 0; i < this.listAppCustPersonalContactInformation.length; i++) {
         if (this.listAppCustPersonalContactInformation[i].MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse) {

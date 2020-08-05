@@ -55,7 +55,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("tes")
     this.ClaimTask();
     await this.bindData();
     await this.processData();
@@ -81,9 +80,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-          },
-          (error) => {
-            console.log(error);
           }
         );
 
@@ -106,9 +102,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListAppGuarantorDuplicate = response['ReturnObject'];
-          },
-          () => {
-            console.log("error")
           }
         );
 
@@ -116,18 +109,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListAppShareholderDuplicate = response['ReturnObject'];
-            console.log(this.ListAppShareholderDuplicate[0]);
-          },
-          () => {
-            console.log("error")
-          }
-        );
-      },
-      () => {
-        console.log("error")
-      }
-    )
-
+          });
+      });
   }
 
   SelectAllGuarantor(condition) {
@@ -198,9 +181,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"]);
-      },
-      (error) => {
-        console.log(error);
       });
   }
 
@@ -222,11 +202,11 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
   }
 
-  OpenView(key: string, value: number){
-    if(key == "app"){
+  OpenView(key: string, value: number) {
+    if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(value);
-    }else if( key == "cust"){
-        AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+    } else if (key == "cust") {
+      AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
     }
   }
 }

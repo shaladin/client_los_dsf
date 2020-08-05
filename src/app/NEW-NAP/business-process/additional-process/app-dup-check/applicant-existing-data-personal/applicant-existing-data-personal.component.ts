@@ -77,9 +77,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             this.cust = response;
-          },
-          (error) => {
-            console.log(error);
           }
         );
 
@@ -102,36 +99,19 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListAppGuarantorDuplicate = response['ReturnObject'];
-          },
-          error => {
-            console.log("error")
-          }
-        );
+          });
         //List Spouse Duplicate Checking
         this.http.post(this.GetSpouseDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListSpouseDuplicate = response['ReturnObject'];
-            console.log(response);
-          },
-          error => {
-            console.log("error")
-          }
-        );
+          });
 
         //List App Shareholder Duplicate Checking
         this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListAppShareholderDuplicate = response['ReturnObject'];
-          },
-          error => {
-            console.log("error")
-          }
-        );
-      },
-      error => {
-        console.log("error")
-      }
-    )
+          });
+      });
 
   }
 
@@ -232,9 +212,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"]);
-      },
-      (error) => {
-        console.log(error);
       });
 
   }

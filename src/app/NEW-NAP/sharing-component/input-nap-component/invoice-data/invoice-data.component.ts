@@ -74,11 +74,7 @@ export class InvoiceDataComponent implements OnInit {
        // this.MouCustLookupObj.isReady = true;
 
         this.GetListAppInvoiceFctr();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   Cancel(){
@@ -104,11 +100,7 @@ export class InvoiceDataComponent implements OnInit {
         } else {
           this.IsDisableCustFctr = false;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetLookupMouCust(ev) {
@@ -144,9 +136,6 @@ export class InvoiceDataComponent implements OnInit {
         this.InvoiceForm.reset();
         enjiForm.resetForm();
         this.InvoiceForm.controls.InvoiceAmt.patchValue(0);
-      },
-      (error) => {
-        console.log(error);
       });
     }
   }
@@ -160,9 +149,6 @@ export class InvoiceDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();
-        },
-        (error) => {
-          console.log(error);
         });
     }
   }

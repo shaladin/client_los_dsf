@@ -58,8 +58,6 @@ export class CustGrpMemberComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
-    console.log(this.identifier);
-    console.log(this.parentForm);
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
@@ -145,7 +143,6 @@ export class CustGrpMemberComponent implements OnInit {
     }
     
 
-    // console.log(this.CustRelationshipObjs);
   }
 
   async bindAppGrp(){
@@ -199,7 +196,6 @@ export class CustGrpMemberComponent implements OnInit {
     this.custObj.CustNo = custNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.custObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.custMasterObj = response;
         this.dictLookup[i].nameSelect = response["CustName"];
         this.dictLookup[i].jsonSelect = response;
@@ -217,11 +213,7 @@ export class CustGrpMemberComponent implements OnInit {
           CustNo: custNo,
           CustName: response["CustName"]
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   
 

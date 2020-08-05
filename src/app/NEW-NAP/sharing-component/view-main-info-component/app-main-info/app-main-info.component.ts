@@ -23,7 +23,6 @@ export class AppMainInfoComponent implements OnInit {
   ngOnInit() {
     this.http.post(URLConstant.GetAppById, { AppId: this.arrValue[0] }).subscribe(
       (response) => {
-        console.log(response);
         this.AppObj = response;
         if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";

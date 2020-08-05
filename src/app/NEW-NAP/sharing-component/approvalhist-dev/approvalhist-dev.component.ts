@@ -15,7 +15,6 @@ export class ApprovalhistDevComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    console.log(this.inputObj);
     if (this.inputObj[0].type == 'instance') {
       await this.LoadApprovalInstanceHist();
       this.IsReady = true;
@@ -31,7 +30,6 @@ export class ApprovalhistDevComponent implements OnInit {
     for (let i = 0; i < this.inputObj.length; i++) {
       await this.http.post(this.inputObj[i].approvalBaseUrl + "/api/ApprovalInstanceWeb/GetInstanceTaskHistory", { instanceId: this.inputObj[i].refId }).subscribe(
         (response) => {
-          console.log(response);
           var resp: any = response;
           if (resp.length > 0) {
             this.ListApprovalHist.push(response[0]);
@@ -51,7 +49,6 @@ export class ApprovalhistDevComponent implements OnInit {
     for (let i = 0; i < this.inputObj.length; i++) {
       await this.http.post(this.inputObj[i].approvalBaseUrl + "/api/ApprovalInstanceWeb/GetRFATaskHistory", { rfaId: this.inputObj[i].refId }).subscribe(
         (response) => {
-          console.log(response);
           var resp: any = response;
           if (resp.length > 0) {
             this.ListApprovalHist.push(response[0]);

@@ -98,14 +98,10 @@ export class CustShareholderComponent implements OnInit {
   MaxDate: Date;
   Max17YO: Date;
   ngOnInit() {
-    // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
     this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
-    // console.log(this.MaxDate);
-    // console.log(this.Max17YO);
 
     this.initLookup();
     this.bindAllRefMasterObj();
@@ -315,7 +311,6 @@ export class CustShareholderComponent implements OnInit {
 
     this.http.post(url, custObj).subscribe(
       (response) => {
-        console.log(response);
 
         if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
           if(response["CustObj"] != undefined){
@@ -380,11 +375,7 @@ export class CustShareholderComponent implements OnInit {
           this.CustShareholderForm.controls.TaxIdNo.disable();
           this.isCust = true;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   setAppCustCompanyMgmntShrholder(){
@@ -447,15 +438,10 @@ export class CustShareholderComponent implements OnInit {
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.industryTypeName = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   setValidator(custType){

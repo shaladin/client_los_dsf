@@ -94,7 +94,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           }
         ).catch(
           (error) => {
-            console.log(error);
           }
         );
         this.spinner.hide();
@@ -102,9 +101,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       }
     ).catch(
       (error) => {
-        if (error != 0) {
-          console.log(error);
-        }
       }
     );
   }

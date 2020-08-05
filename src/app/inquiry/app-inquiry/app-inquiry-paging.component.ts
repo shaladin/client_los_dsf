@@ -60,17 +60,11 @@ export class AppInquiryPagingComponent implements OnInit {
   }
 
   getEvent(event) {
-    // console.log("productlink")
-    // console.log(event)
-    
     if(event.Key == "customer"){
         var custObj = { CustNo: event.RowObj.custNo };
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-          },
-          (error) => {
-            console.log(error);
           }
         );
     }

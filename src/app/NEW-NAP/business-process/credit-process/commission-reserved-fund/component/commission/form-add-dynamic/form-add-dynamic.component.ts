@@ -37,25 +37,17 @@ export class FormAddDynamicComponent implements OnInit {
   DDLBankAccount = new Array();
   UserAccess;
   ngOnInit() {
-    // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.arr = this.FormObj.get('arr') as FormArray;
-    // console.log(this.FormInputObj);
     this.GetDDLContentName();
-    // console.log(this.FormInputObj["ruleObj"]);
-    // console.log(this.DictMaxIncomeForm);
     this.GenerateAutoAtStart();
   }
 
   GenerateAutoAtStart() {
     if (this.FormInputObj["isAutoGenerate"]) {
       this.FormInputObj["isDataInputed"] = true;
-      console.log("Auto Genereate");
       var len = this.DDLContentName.length;
-      // console.log(len);
       for (var i = len - 1; i >= 0; i--) {
-        // console.log("Genereate");
         var j = len - i - 1;
         this.AddNewDataForm();
         this.GenerateContentName(i, j);
@@ -70,8 +62,6 @@ export class FormAddDynamicComponent implements OnInit {
   tempDDLContentName;
   GetDDLContentName() {
     this.DDLContentName = this.FormInputObj["contentObj"];
-    // console.log("DDL Content " + this.FormInputObj["content"]);
-    // console.log(this.DDLContentName);
     this.tempDDLContentName = new Array();
     this.lenDDLContentName = this.DDLContentName.length;
     this.totalDDLContentData = this.DDLContentName.length;
@@ -79,8 +69,6 @@ export class FormAddDynamicComponent implements OnInit {
 
   GetDDLBankAccount(code, idx) {
     var content = this.FormInputObj["content"];
-    // console.log("Obj Code");
-    // console.log(code);
     var obj;
     if (content == CommonConstant.ContentSupplier) {
       obj = {
@@ -89,8 +77,6 @@ export class FormAddDynamicComponent implements OnInit {
       };
       this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
         (response) => {
-          // console.log("response bank");
-          // console.log(response);
           var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {
             var eachDDLDetail = this.fb.group({
@@ -102,12 +88,7 @@ export class FormAddDynamicComponent implements OnInit {
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
-          // console.log(this.FormObj);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else if (content == CommonConstant.ContentSupplierEmp) {
       obj = {
         VendorEmpNo: code,
@@ -115,8 +96,6 @@ export class FormAddDynamicComponent implements OnInit {
       };
       this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
         (response) => {
-          // console.log("response bank");
-          // console.log(response);
           var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {
             var eachDDLDetail = this.fb.group({
@@ -128,12 +107,7 @@ export class FormAddDynamicComponent implements OnInit {
             }) as FormGroup;
             this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
-          // console.log(this.FormObj);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else if (content == CommonConstant.ContentReferantor) {
       var eachDDLDetail = this.fb.group({
         Key: this.FormInputObj["BankData"].BankAccNo,
@@ -143,7 +117,6 @@ export class FormAddDynamicComponent implements OnInit {
         BankBranch: this.FormInputObj["BankData"].BankBranch
       }) as FormGroup;
       this.FormObj.controls.arr["controls"][idx].controls.DropDownList.push(eachDDLDetail);
-      // console.log(this.FormObj);
     }
   }
 
@@ -174,7 +147,6 @@ export class FormAddDynamicComponent implements OnInit {
       DropDownList: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
-    // console.log(this.FormObj);
     this.lenDDLContentName--;
     // if(this.FormInputObj["isAutoGenerate"]){
     // }
@@ -188,16 +160,10 @@ export class FormAddDynamicComponent implements OnInit {
     };
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   DeleteDataForm(idx) {
-    // console.log(idx);
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.FormInputObj["isCalculated"] = false;
       if (this.FormObj.controls.arr["controls"][idx].controls.AppCommissionHId.value != 0)
@@ -209,8 +175,6 @@ export class FormAddDynamicComponent implements OnInit {
         this.tempDDLContentName.splice(i, 1);
       }
       this.lenDDLContentName++;
-      // console.log(this.tempDDLContentName);
-      // console.log(this.DDLContentName);
       if (this.totalDDLContentData == this.lenDDLContentName)
         this.FormInputObj["isDataInputed"] = false;
       this.arr.removeAt(idx);
@@ -220,9 +184,6 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   CheckData() {
-    console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
-    console.log(this.FormObj);
   }
 
   CalculateTax(CurrCode, AppNo, OriOfficeCode, AppId) {
@@ -242,7 +203,6 @@ export class FormAddDynamicComponent implements OnInit {
           totalCommAmt += this.arr.controls[i].controls.ListAllocated.controls[j].controls.AllocationAmount.value;
           tempTrxAmt.push(this.arr.controls[i].controls.ListAllocated.controls[j].controls.AllocationAmount.value);
         }
-        // console.log(totalCommAmt);
         if (totalCommAmt == 0) {
           this.FormInputObj["isCalculated"] = false;
           return this.toastr.warningMessage("Please Allocate at least 1 item for " + this.arr.controls[i].controls.ContentName.value);
@@ -279,18 +239,12 @@ export class FormAddDynamicComponent implements OnInit {
         IsSave: false,
         Content: this.FormInputObj["content"],
       };
-      // console.log(obj);
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTax, obj).subscribe(
         (response) => {
-          // console.log("response Tax");
-          // console.log(this.FormInputObj["content"]);
-          // console.log(response);
           len = this.arr.controls.length;
           if (response.ResponseTaxObjs.length == len) {
             for (var i = 0; i < response.ResponseTaxObjs.length; i++) {
-              // console.log(len - i - 1);
               var data: ResponseTaxObj = response.ResponseTaxObjs[i];
-              // console.log(data);
               var totalTaxAmount = 0;
               var totalVATAmount = 0;
               var totalExpenseAmount = 0;
@@ -309,8 +263,6 @@ export class FormAddDynamicComponent implements OnInit {
                 totalDisburseAmount += data.ReturnObject[j].DisburseAmt;
                 totalPenaltyAmt += data.ReturnObject[j].PenaltyAmt;
                 var TaxTrxDObjData: Array<TaxTrxDObj> = data.ReturnObject[j].TaxTrxD;
-                // console.log(data.ReturnObject[j].ExpenseAmt);
-                // console.log(TaxTrxDObjData);
                 for (var k = 0; k < TaxTrxDObjData.length; k++) {
                   totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
                   if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
@@ -343,16 +295,11 @@ export class FormAddDynamicComponent implements OnInit {
           }
           this.CheckData();
           this.PassData(CommonConstant.MessageCalculate);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
   PassData(message: string) {
-    // console.log("change data");
     var tempObj = {
       formObj: this.FormObj,
       message: message
@@ -361,7 +308,6 @@ export class FormAddDynamicComponent implements OnInit {
   }
 
   ChooseContentName(ev, indexFormObj) {
-    // console.log(ev);
     this.FormInputObj["isCalculated"] = false;
     var idx = ev.target.selectedIndex - 1;
 
@@ -411,14 +357,10 @@ export class FormAddDynamicComponent implements OnInit {
     this.SetRule(indexFormObj, code, idxTemp);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idx, 1);
-    // console.log(this.tempDDLContentName);
-    // console.log(this.DDLContentName);
-    // console.log(this.FormObj);
     this.PassData("ADD");
   }
 
   GenerateContentName(indexFormObj, idx) {
-    // console.log(idx);
     var obj;
     var code;
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
@@ -440,7 +382,6 @@ export class FormAddDynamicComponent implements OnInit {
 
     var idxTemp: number = indexFormObj;
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
-      // console.log(this.FormInputObj["contentObj"]);
       idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == this.DDLContentName[indexFormObj].Key));
     }
     var temp = this.GetTempRuleObj(code, idxTemp);
@@ -462,12 +403,9 @@ export class FormAddDynamicComponent implements OnInit {
     this.SetRule(idx, code, idxTemp);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(indexFormObj, 1);
-    // console.log(this.tempDDLContentName);
-    // console.log(this.DDLContentName);
   }
 
   async GenerateExistingContentName(objExist, idx) {
-    // console.log(objExist);
     var idxDDLContent = this.DDLContentName.indexOf(this.DDLContentName.find(x => x.Key == objExist.CommissionRecipientRefNo));
 
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
@@ -525,7 +463,6 @@ export class FormAddDynamicComponent implements OnInit {
     var TotalCommisionAmount: number = 0;
     // patch value from existing commD
     for (var i = 0; i < this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls.length; i++) {
-      // console.log(this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i]);
       var objFound = objExist.AppCommissionD.find(x => x.MrCommissionSourceCode == this.FormObj.controls.arr["controls"][idx].controls.ListAllocated.controls[i].value.AllocationFrom);
 
       if (objFound != undefined || objFound != null) {
@@ -548,7 +485,6 @@ export class FormAddDynamicComponent implements OnInit {
 
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
-    // console.log(this.DDLContentName);
     this.PassData(CommonConstant.MessagePassData);
   }
 
@@ -584,32 +520,23 @@ export class FormAddDynamicComponent implements OnInit {
     var temp;
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplier) {
       temp = this.FormInputObj["ruleObj"][code];
-      // console.log("Rule Suppl");   
     } else if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
-      // console.log(idx);
       var behaviour = this.FormInputObj["contentObj"][idx].MrSupplEmpPositionCode;
-      // console.log("behaviour");
-      // console.log(behaviour);
-      // console.log(code);
       temp = this.FormInputObj["ruleObj"][code][behaviour];
-      // console.log("Rule Suppl Emp");
     } else if (this.FormInputObj["content"] == CommonConstant.ContentReferantor) {
       temp = this.FormInputObj["ruleObj"][0];
-      // console.log("Rule Referantor");
     }
     return temp;
   }
 
   SetRule(indexFormObj, code, idx) {
     var temp = this.GetTempRuleObj(code, idx);
-    // console.log(temp);
     var TotalCommisionAmount = 0;
     for (var i = 0; i < temp.length; i++) {
 
       let behaviour: string = temp[i].AllocationBehaviour;
       let maxAllocAmt: number = temp[i].MaxAllocationAmount;
       let allocAmt: number = temp[i].AllocationAmount;
-      // console.log(this.DictMaxIncomeForm[temp[i].AllocationFrom]);
       if (this.DictMaxIncomeForm[temp[i].AllocationFrom] != undefined && this.DictMaxIncomeForm[temp[i].AllocationFrom] != null && this.DictMaxIncomeForm[temp[i].AllocationFrom].RefundAmount > 0) {
         if (maxAllocAmt <= 0) {
           behaviour = "LOCK";
@@ -650,11 +577,9 @@ export class FormAddDynamicComponent implements OnInit {
     this.FormObj.controls.arr["controls"][indexFormObj].patchValue({
       TotalCommisionAmount: TotalCommisionAmount,
     });
-    // console.log(this.FormObj);
   }
 
   ChangeDataLabel(indexFormObj) {
-    // console.log(indexFormObj);
     this.FormInputObj["isCalculated"] = false;
     var len = this.FormObj.controls.arr["controls"][indexFormObj].controls.ListAllocated.controls.length;
     var tempTotal = 0;
@@ -670,10 +595,8 @@ export class FormAddDynamicComponent implements OnInit {
 
   ChangeBankAcc(ev, i) {
     if (ev.target.selectedIndex == 0) return;
-    // console.log(ev);
     var idxDDL = ev.target.selectedIndex - 1;
     var ddlObj = this.FormObj.controls.arr["controls"][i].controls.DropDownList.value[idxDDL];
-    // console.log(ddlObj);
 
     this.FormObj.controls.arr["controls"][i].patchValue({
       BankAccountNo: ddlObj.Key,

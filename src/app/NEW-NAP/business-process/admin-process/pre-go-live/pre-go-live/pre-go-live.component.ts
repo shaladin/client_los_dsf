@@ -77,7 +77,6 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Shinano');
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
@@ -95,11 +94,7 @@ export class PreGoLiveComponent implements OnInit {
           }
         }
         this.IsApvReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -132,11 +127,7 @@ export class PreGoLiveComponent implements OnInit {
         })
         this.AgrmntId = this.result.AgrmntId;
         this.AppId = this.result.AppId;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetCallBack(ev) {
@@ -146,7 +137,6 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   ReceiveIsChecked(ev) {
-    console.log("for debug");
     if (this.ListRfaLogObj.length != 0) {
       if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal") {
         this.IsCheckedAll = false;
@@ -162,7 +152,6 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    console.log("asdasd");
     var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     this.ListAppTCObj = new ListAppTCObj();
     this.ListAppTCObj["ListAppTcObj"] = new Array();
@@ -199,9 +188,6 @@ export class PreGoLiveComponent implements OnInit {
         this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
         this.toastr.successMessage(response['message']);
 
-      },
-      (error) => {
-        console.log(error);
       });
 
   }
@@ -263,9 +249,6 @@ export class PreGoLiveComponent implements OnInit {
         this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
         this.toastr.successMessage(response['message']);
 
-      },
-      (error) => {
-        console.log(error);
       });
 
   }

@@ -33,7 +33,6 @@ export class CurrentUserContextService {
   getCurrentUserContext(): Object {
     let values : string; 
     values = localStorage.getItem(location) || "";
-    console.log(values);
     return values;
   }
 

@@ -103,7 +103,6 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
-          console.log(response);
           if (response) {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
@@ -113,11 +112,7 @@ export class NapAddDetailComponent implements OnInit {
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.MakeViewReturnInfoObj();
 
@@ -196,11 +191,7 @@ export class NapAddDetailComponent implements OnInit {
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });
           this.OnFormReturnInfo = true;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -225,13 +216,8 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
-        console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
         this.ChooseStep(this.AppStepIndex);
-      },
-      (error) => {
-        console.error("Error when updating AppStep");
-        console.error(error);
       }
     )
   }
@@ -243,14 +229,9 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/FinanceLeasing/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } })
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+        })
     }
   }
 
@@ -312,12 +293,8 @@ export class NapAddDetailComponent implements OnInit {
 
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } })
-          },
-          (error) => {
-            console.log(error);
           }
         )
       }

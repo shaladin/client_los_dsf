@@ -100,7 +100,6 @@ export class SubsidyAddEditComponent implements OnInit {
       this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
         (response) => {
           this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
-          console.log(this.subsidyMaxRuleObj);
         }
       );
     }
@@ -130,7 +129,6 @@ export class SubsidyAddEditComponent implements OnInit {
       if(this.mode == "add"){
         this.http.post(URLConstant.AddAppSubsidy, subdObj ).subscribe(
           (response) => {
-            console.log(response);
             var x = response[CommonConstant.ReturnObj];
             this.emitData.emit(x);
             this.activeModal.close();
@@ -142,7 +140,6 @@ export class SubsidyAddEditComponent implements OnInit {
         
         this.http.post(URLConstant.EditAppSubsidy, subdObj ).subscribe(
           (response) => {
-            console.log(response);
             var x = response[CommonConstant.ReturnObj];
             this.emitData.emit(x);
             this.activeModal.close();
@@ -194,7 +191,6 @@ export class SubsidyAddEditComponent implements OnInit {
 
           if(this.ValueTypeOptions.length == 1)
           {
-            console.log(this.SourceCodeOptions)
           }
 
         }

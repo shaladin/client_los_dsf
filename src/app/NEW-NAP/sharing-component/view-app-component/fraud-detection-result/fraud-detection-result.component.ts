@@ -91,7 +91,6 @@ export class FraudDetectionResultComponent implements OnInit {
       }
     ).catch(
       (error) => {
-        console.log(error);
       }
     );
   }
@@ -142,9 +141,6 @@ export class FraudDetectionResultComponent implements OnInit {
         if(this.appCustObj.IsExistingCust == false){
           this.getAppDupCheckCust(this.requestDupCheck);
         }
-      },
-      () => {
-        console.log("error")
       }
     );
 
@@ -159,11 +155,7 @@ export class FraudDetectionResultComponent implements OnInit {
         this.trxRefNo = this.appObj.AppNo;
         this.mrSrvySourceCode = "APP";
         this.isDataAlreadyLoaded = true;
-      },
-      error => {
-        console.log("error")
       }
-
     );
   }
 
@@ -171,16 +163,11 @@ export class FraudDetectionResultComponent implements OnInit {
     //List Negative Cust Duplicate Checking
     this.http.post(this.getNegativeCustomerDuplicateCheckUrl, reqObj).subscribe(
       (response) => {
-        console.log(response);
         this.listNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
-        console.log(this.listNegativeCust);
         var idxSelected=this.listNegativeCust.findIndex(x=>x.CustNo==this.appCustObj.CustNo);
         if(idxSelected > -1)
           this.listNegativeCust[idxSelected].IsSelected=true;
 
-      },
-      () => {
-        console.log("error");
       }
     );
   }
@@ -190,9 +177,6 @@ export class FraudDetectionResultComponent implements OnInit {
       (response) => {
         if(response["StatusCode"]==200)
           this.dukcapilObj = response[CommonConstant.ReturnObj];
-      },
-      () => {
-        console.log("error")
       }
     );
   }
@@ -209,9 +193,6 @@ export class FraudDetectionResultComponent implements OnInit {
           this.listCustDuplicate[idxSelected].IsSelected = true;
         }
 
-      },
-      () => {
-        console.log("error")
       }
     );
   }
@@ -221,11 +202,7 @@ export class FraudDetectionResultComponent implements OnInit {
       response => {
         this.appAssetObj = response;
 
-      },
-      error => {
-        console.log("error")
-      }
-    );
+      });;
 
     if(this.appAssetObj.AppAssetId != 0){
       await this.getNegativeAsset();
@@ -245,9 +222,6 @@ export class FraudDetectionResultComponent implements OnInit {
   //     response => {
   //       listAppCollateral = response[CommonConstant.ReturnObj];
         
-  //     },
-  //     error => {
-  //       console.log("error")
   //     }
   //   );
     
@@ -283,11 +257,7 @@ export class FraudDetectionResultComponent implements OnInit {
     await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
       response => {
         this.listNegativeAppAsset = response[CommonConstant.ReturnObj];
-      },
-      error => {
-        console.log("error")
-      }
-    );
+      });;
   }
 
   open(content) {

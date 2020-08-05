@@ -397,12 +397,7 @@ export class AssetDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
-
-        }
-      );
+        });
     }
 
 
@@ -428,7 +423,6 @@ export class AssetDataComponent implements OnInit {
         this.CheckValidationObj = response;
       },
       (error) => {
-        console.log(error);
         this.isValidOk = false;
       }
     );
@@ -467,11 +461,7 @@ export class AssetDataComponent implements OnInit {
           }
         }
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   SetMinManuYear() {
@@ -486,11 +476,7 @@ export class AssetDataComponent implements OnInit {
         this.AssetDataForm.patchValue({
           ManufacturingYear: this.SetManuYearObj.MinManufYear
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ChangeManuYear() {
@@ -1020,11 +1006,7 @@ export class AssetDataComponent implements OnInit {
             }
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 
@@ -1343,7 +1325,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpList() {
-    this.http.post(URLConstant.GetListVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
         this.AdminHeadObj = this.EmpObj.filter(
@@ -1481,11 +1463,7 @@ export class AssetDataComponent implements OnInit {
         this.dictSuppLookup[i].jsonSelect = response;
         this.InputLookupSupplObjs[i].jsonSelect = response;
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   setAppAccessory(i, AssetAccessoryCode) {
@@ -1496,11 +1474,7 @@ export class AssetDataComponent implements OnInit {
         this.dictAccLookup[i].jsonSelect = response;
         this.InputLookupAcceObjs[i].jsonSelect = response;
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   addGroup(appAssetAccessoriesObj, i) {
@@ -1743,13 +1717,8 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
         this.AppAssetAttrObj = response[CommonConstant.ReturnObj];
-        console.log(this.AppAssetAttrObj);
         this.GenerateAppAssetAttrForm();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GenerateAppAssetAttrForm() {
@@ -1779,9 +1748,7 @@ export class AssetDataComponent implements OnInit {
         var listAppRsvFunds = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;        
         listAppRsvFunds.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
       }
-      console.log(this.AssetDataForm);
       this.isAssetAttrReady = true;
-      console.log(this.ListAttrAnswer);
     }
     
   }

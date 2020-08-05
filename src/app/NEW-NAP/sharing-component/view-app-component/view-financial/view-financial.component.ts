@@ -35,17 +35,12 @@ export class ViewFinancialComponent implements OnInit {
     var reqObj = { AppId: this.AppId };
     this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).subscribe(
       (response) => {
-        console.log(response);
         this.listSubsidy = response["AppSubsidyObjs"];
         this.listAppFeeObj = response["AppFeeObjs"];
         this.appFinDataObj = response["AppFinDataObj"];
         this.appObj = response["AppObj"];
         this.listInstallment = response["InstallmentObjs"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

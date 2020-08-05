@@ -68,32 +68,10 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
     this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Nap/AddProcess/ReturnHandling/Paging"], { queryParams: { BizTemplateCode: this.lobCode } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
-
-  // Test(){
-  //   var reqObj = new ReturnHandlingHObj();
-  //   reqObj.WfTaskListId = this.wfTaskListId;
-  //   reqObj.ReturnHandlingHId = this.returnHandlingHId;
-
-  //   this.http.post(AdInsConstant.Test, reqObj).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.toastr.successMessage(response["message"]);
-  //       this.router.navigate(["../ReturnHandling/Paging"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
 
   AddTask(){
     var reqObj = new ReturnHandlingDObj();
@@ -104,14 +82,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddReturnHandlingD, reqObj).subscribe(
       (response) => {
-        console.log(response);
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
         this.toastr.successMessage(response["message"]); 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   Submit(item, i){
@@ -126,14 +99,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
       this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
-          console.log(response);
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
           this.toastr.successMessage(response["message"]); 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -145,14 +113,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
       this.http.post(URLConstant.DeleteReturnHandlingD, reqObj).subscribe(
         (response) => {
-          console.log(response);
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
           this.toastr.successMessage(response["message"]); 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -161,7 +124,6 @@ export class ReturnHandlingDetailComponent implements OnInit {
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.returnHandlingHObj = response["ReturnHandlingHObj"];
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
         if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.TrxTypeCodePhn) {
@@ -170,11 +132,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
           });
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async bindTaskObj(){

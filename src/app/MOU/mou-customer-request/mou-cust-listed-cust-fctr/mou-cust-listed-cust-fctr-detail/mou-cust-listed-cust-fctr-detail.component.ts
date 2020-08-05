@@ -64,11 +64,7 @@ export class MouCustListedCustFctrDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.AddMouCustListedCustFctr, formData).subscribe(
       (response) => {
         this.activeModal.close(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

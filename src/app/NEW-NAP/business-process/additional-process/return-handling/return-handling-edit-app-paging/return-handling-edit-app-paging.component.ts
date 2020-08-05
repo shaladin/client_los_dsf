@@ -59,7 +59,6 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   }
 
   GetCallback(ev) {
-    console.log(ev);
     if (ev.Key == "Edit") {
       if (this.BizTemplateCode == CommonConstant.CF4W) {
         this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId } });

@@ -300,7 +300,6 @@ export class CustShareholderFL4WComponent implements OnInit {
 
     this.http.post(url, custObj).subscribe(
       (response) => {
-        console.log(response);
 
         if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
           if(response["CustObj"] != undefined){
@@ -365,11 +364,7 @@ export class CustShareholderFL4WComponent implements OnInit {
           this.CustShareholderForm.controls.TaxIdNo.disable();
           this.isCust = true;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   setAppCustCompanyMgmntShrholder(){
@@ -414,15 +409,10 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.industryTypeName = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   initLookup(){
@@ -457,8 +447,6 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
-        console.log("bind cust type");
-        console.log(this.CustTypeObj);
         if(this.CustTypeObj.length > 0){
           this.defaultCustType = this.CustTypeObj[0].Key;
           this.defaultCustTypeName = this.CustTypeObj[0].Value;

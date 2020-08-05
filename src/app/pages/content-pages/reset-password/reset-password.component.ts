@@ -51,14 +51,9 @@ export class ResetPasswordComponent implements OnInit {
       };
       this.http.post(URLConstant.ResetPasswordByUsername, requestObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.isCompleted = true;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.toastr.warningMessage(ExceptionConstant.INCORRECT_PASSWORD);
@@ -72,17 +67,12 @@ export class ResetPasswordComponent implements OnInit {
     };
     this.http.post(URLConstant.GetRefUserByResetCode, requestObj).subscribe(
       (response) => {
-        console.log(response);
         this.RefUserObj = response;
         if (this.RefUserObj.RefUserId != 0) {
           this.isValidated = true;
         }
         this.isLoaded = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   back() {

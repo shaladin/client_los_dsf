@@ -16,7 +16,7 @@ export class MouCustAssetDetailComponent implements OnInit {
   @Input() ListExcludeFullAssetCode: Array<string>;
   @Input() AssetTypeCode: string;
   @Input() MouCustId: number;
-  inputLookupObj: InputLookupObj; 
+  inputLookupObj: InputLookupObj;
   MOUCustAssetForm = this.fb.group({
     MouCustAssetId: [0],
     MouCustId: [0],
@@ -65,25 +65,17 @@ export class MouCustAssetDetailComponent implements OnInit {
     });
   }
 
-  getLookupResponse(e){
+  getLookupResponse(e) {
     this.MOUCustAssetForm.patchValue({
       FullAssetCode: e.fullAssetCode,
       FullAssetName: e.fullAssetName,
     });
   }
 
-  Save(enjiForm){
+  Save(enjiForm) {
     var formData = this.MOUCustAssetForm.value;
 
-    this.activeModal.close(formData); 
-    // this.httpClient.post(AdInsConstant.AddMouCustAsset, formData).subscribe(
-    //   (response) => {
-    //     this.activeModal.close(response);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+    this.activeModal.close(formData);
   }
 
 }

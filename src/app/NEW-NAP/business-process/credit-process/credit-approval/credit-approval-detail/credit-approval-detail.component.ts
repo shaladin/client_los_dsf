@@ -76,11 +76,7 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.AppObj = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   onAvailableNextTask() {
 
@@ -101,11 +97,7 @@ export class CreditApprovalDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage("Success");
           this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
     } else {
       this.toastr.successMessage("Success");

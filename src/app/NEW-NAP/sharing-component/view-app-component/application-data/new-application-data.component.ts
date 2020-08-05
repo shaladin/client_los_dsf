@@ -26,6 +26,7 @@ export class NewApplicationDataComponent implements OnInit {
   LoanObjectData: Array<Object>;
   AppCollateralInsData: Array<Object>;
   AppLifeInsData: Object;
+  IsLifeIns : boolean = false ;
 
   constructor(
     private http: HttpClient
@@ -119,11 +120,7 @@ export class NewApplicationDataComponent implements OnInit {
           this.AppLifeInsData["CoverLifeIns"] = "No";
           this.AppLifeInsData["LifeInscoBranchName"] = "-";
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     if (this.AssetInsuranceAndLifeInsuranceData.CoverBy == CommonConstant.InsuredByCompany) {
       this.InsuranceTitle = "Asset Insurance";
     } else {
@@ -181,14 +178,17 @@ export class NewApplicationDataComponent implements OnInit {
       InstAmt: appData["TotalInstAmt"],
       AssetName: appData["FullAssetName"],
     };
-        
-    this.AssetInsuranceAndLifeInsuranceData = {
-      CoverBy: appData["AssetCoverBy"],
-      AssetInsuranceCompany: appData["AssetInsuranceCompany"],
-      AssetInsuranceCustomer: appData["AssetInsuranceCustomer"],
-      IsLifeInsurance: appData["IsLifeInsurance"],
-      LifeInsuranceCompany: appData["LifeInsuranceCompany"],
+    if(appData["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+      this.IsLifeIns = true;
+      this.AssetInsuranceAndLifeInsuranceData = {
+        CoverBy: appData["AssetCoverBy"],
+        AssetInsuranceCompany: appData["AssetInsuranceCompany"],
+        AssetInsuranceCustomer: appData["AssetInsuranceCustomer"],
+        IsLifeInsurance: appData["IsLifeInsurance"],
+        LifeInsuranceCompany: appData["LifeInsuranceCompany"],
+      }
     }
+
   }
 
   GetCommData(commissionData) {

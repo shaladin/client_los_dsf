@@ -91,7 +91,6 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
       (response) => {
 
-        console.log(response);
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
       }
@@ -101,7 +100,6 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   async GetVerfResultData() {
     await this.http.post(this.getVerfResultUrl, this.verfResObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.verifResultObj = response;
         this.verfResHObj.VerfResultId = this.verifResultObj.VerfResultId;
       }
@@ -111,7 +109,6 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   async GetVerfResultHData() {
     await this.http.post(this.getVerfResulHtUrl, this.verfResHObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
       }
@@ -121,7 +118,6 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   async GetListVerfResulHtData(verfResHObj) {
     await this.http.post(this.getListVerfResulHtUrl, verfResHObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
       }
     );
@@ -134,9 +130,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
     this.verfResDObj.VerfResultHId = VerfResultHId;
     this.http.post(this.getVerfResultDUrl, this.verfResDObj).subscribe(
       (response) => {
-        console.log(response);
         this.listVerifResultDObj = response[CommonConstant.ReturnObj];
-        console.log(this.listVerifResultDObj);
       }
     );
   }
@@ -146,6 +140,5 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   }
 
   test(item) {
-    console.log(item);
   }
 }

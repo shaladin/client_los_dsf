@@ -36,9 +36,7 @@ export class SearchCrossAppComponent implements OnInit {
   }
 
   getListTemp(ev) {
-    console.log(ev);
     this.tempData=ev.TempListObj;
-    console.log(this.tempData);
   }
   addCritAppId;
   MakeAddToTempObj(){
@@ -56,8 +54,6 @@ export class SearchCrossAppComponent implements OnInit {
       addCrit.propName = "ag.AGRMNT_NO";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.ListCrossAppObjInput["result"];
-      // console.log(addCrit);
-      // console.log(this.arrAddCrit);
       this.arrAddCrit.push(addCrit);
     }
     

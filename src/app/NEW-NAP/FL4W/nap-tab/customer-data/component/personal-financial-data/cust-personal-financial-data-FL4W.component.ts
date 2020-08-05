@@ -42,8 +42,6 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.identifier);
-    console.log(this.parentForm);
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -101,7 +99,6 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
 
   CalculateFinData(){
     var formGroup = this.parentForm.controls[this.identifier] as FormGroup;
-    console.log("Monthly Income : " + formGroup.controls["MonthlyIncomeAmt"].value);
     this.totalMonthlyIncome = formGroup.controls["MonthlyIncomeAmt"].value + formGroup.controls["SpouseMonthlyIncomeAmt"].value;
     this.totalMonthlyExpense = formGroup.controls["MonthlyExpenseAmt"].value + formGroup.controls["MonthlyInstallmentAmt"].value;
     this.nettMonthlyIncome = this.totalMonthlyIncome - this.totalMonthlyExpense;
