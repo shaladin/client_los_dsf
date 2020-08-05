@@ -32,7 +32,7 @@ export class SubsidyComponent implements OnInit {
   AddReason()
   {
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'lg' });
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
