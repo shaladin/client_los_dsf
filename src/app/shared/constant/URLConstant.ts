@@ -38,6 +38,7 @@ export class URLConstant {
     public static DeleteAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/DeleteAppLoanPurpose"
     public static CheckFinAmtAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/CheckFinAmtAppLoanPurpose"
     public static GetAppLoanPurposeByAppIdSupplCode = environment.losUrl + "/AppLoanPurpose/GetAppLoanPurposeByAppIdSupplCode";
+    public static GetAppLoanPurposeVendorAndVendorEmpByAppId = environment.losUrl + "/AppLoanPurpose/GetAppLoanPurposeVendorAndVendorEmpByAppId";
 
     // App Collateral
     public static GetAppCollateralRegistrationByAppId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
@@ -661,6 +662,7 @@ export class URLConstant {
     public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderListForNewPOByAppId";
     public static GetPurchaseOrderHByPurchaseOrderHId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHByPurchaseOrderHId";
     public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
+    public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
 
     // LEAD
     public static AddEditLeadCustPersonal = environment.losUrl + "/LeadCust/AddEditLeadCustPersonal";
