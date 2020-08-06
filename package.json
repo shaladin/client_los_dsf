@@ -7,6 +7,7 @@
     "start": "ng serve",
     "build": "ng build --prod --base-href /LOSR3/",
     "sit": "ng build --configuration=sit --base-href /LOS_SIT/",
+    "demo": "ng build --configuration=demo_env --base-href /LOS_DEMO/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
@@ -133,7 +134,7 @@
     "karma-jasmine-html-reporter": "1.3.1",
     "ng2-completer": "2.0.8",
     "protractor": "5.4.1",
-    "rxjs-compat": "^6.6.0",
+    "rxjs-compat": "^6.6.2",
     "ts-node": "7.0.1",
     "tslint": "5.11.0",
     "typescript": "3.2.4"

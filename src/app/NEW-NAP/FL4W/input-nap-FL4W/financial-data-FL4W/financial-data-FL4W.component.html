@@ -1,12 +1,12 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && SaveAndContinue()" #enjiForm="ngForm">
-  <app-subsidy-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm"></app-subsidy-FL4W>
+  <app-subsidy-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" (emitData)="CheckSubsidyRate($event)"></app-subsidy-FL4W>
   <app-fee-FL4W *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-FL4W>
-  <app-schm-reguler-fix-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-FL4W>
+  <app-schm-reguler-fix-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm" (RefreshSubsidy)="RefreshSubsidy($event)"></app-schm-reguler-fix-FL4W>
   <app-schm-irregular-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [ParentForm]="FinDataForm" [NumOfInst]="NumOfInst"> </app-schm-irregular-FL4W>
   <app-schm-step-up-step-down-normal-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal-FL4W>
   <app-schm-step-up-step-down-leasing-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing-FL4W>
   <app-schm-step-up-step-down-cummulative-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative-FL4W>
-  <app-schm-balloon-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-balloon-FL4W>
+  <app-schm-balloon-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [ParentForm]="FinDataForm" (RefreshSubsidy)="RefreshSubsidy($event)"></app-schm-balloon-FL4W>
   <app-schm-even-principal-FL4W *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-FL4W>
 
   <!-- <lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
