@@ -52,7 +52,6 @@ export class PhoneVerificationPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
   GetCallBack(ev: any){
-    console.log(ev);
     if(ev.Key == "ViewProdOffering"){ 
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }

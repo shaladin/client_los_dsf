@@ -51,11 +51,7 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
         if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
           this.PriceLabel = "Financing Amount";
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   LoadDDLRateType() {
@@ -169,7 +165,6 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
     var isValidGracePeriod = this.ValidateGracePeriode();
 
     if (isValidGrossYield && isValidGracePeriod) {
-      console.log("GROSSSS");
     }
   }
 
@@ -246,7 +241,5 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   }
 
   test() {
-    console.log(this.ParentForm)
-    console.log(this.ParentForm.value);
   }
 }

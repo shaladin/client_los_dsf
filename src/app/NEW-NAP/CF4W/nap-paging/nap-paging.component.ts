@@ -37,8 +37,6 @@ export class NapPagingComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
@@ -67,11 +65,7 @@ export class NapPagingComponent implements OnInit {
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetCallBack(ev: any) {

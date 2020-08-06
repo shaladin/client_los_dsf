@@ -26,17 +26,12 @@ export class AppTcComponent implements OnInit {
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).subscribe(
       (response) => {
-        console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["AppTcs"]
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

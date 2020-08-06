@@ -101,11 +101,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           }
         }
         this.IsApvReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     var Obj = {
       AgrmntNo: this.TrxNo,
@@ -135,9 +131,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
-            console.log("response");
-            console.log(response);
-
           }
         );
 
@@ -240,11 +233,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
             listTC.push(TCDetail);
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
 
   }
@@ -290,11 +279,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId (response["CustId"])
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }else if(key == 'prod'){
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion); 
     }
@@ -318,10 +303,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

@@ -158,7 +158,6 @@ export class LoanObjectComponent implements OnInit {
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if(this.AppObj.LobCode == CommonConstant.CFNA){
           this.isCFNA = true;
-          console.log(this.isCFNA);
         }
       }
     );
@@ -252,13 +251,9 @@ export class LoanObjectComponent implements OnInit {
               this.toastr.successMessage(response["message"]);
               enjiForm.reset();
               this.loadDataTable();
-            },
-            (error) => {
-              console.log(error);
             });
         },
         (error) => {
-          console.log(error);
           return;
         });
       }else{
@@ -268,9 +263,6 @@ export class LoanObjectComponent implements OnInit {
             this.toastr.successMessage(response["message"]);
             enjiForm.reset();
             this.loadDataTable();
-          },
-          (error) => {
-            console.log(error);
           });
       }
     }
@@ -278,20 +270,15 @@ export class LoanObjectComponent implements OnInit {
       if(this.isCFNA){
       this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
         (response) => {
-          console.log(response);
           this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
             (response) => {
               this.modal.close();
               this.toastr.successMessage(response["message"]);
               enjiForm.reset();
               this.loadDataTable();
-            },
-            (error) => {
-              console.log(error);
             });
         },
         (error) => {
-          console.log(error);
           return;
         });
       }else{
@@ -301,9 +288,6 @@ export class LoanObjectComponent implements OnInit {
             this.toastr.successMessage(response["message"]);
             enjiForm.reset();
             this.loadDataTable();
-          },
-          (error) => {
-            console.log(error);
           });
       }
     }
@@ -318,10 +302,7 @@ export class LoanObjectComponent implements OnInit {
       this.http.post(URLConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
         this.toastr.successMessage(response["Message"]);
         this.loadDataTable();
-      },
-        error => {
-          console.log(error);
-        });
+      });
     }
   }
 
@@ -332,18 +313,13 @@ export class LoanObjectComponent implements OnInit {
     this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
       (response) => {
         this.resultData = response["listResponseAppLoanPurpose"];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CheckIsDisburseToCust() {
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
       this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
-      console.log(this.MainInfoForm)
     } else {
       this.supplierInputLookupObj.isRequired = true;
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)

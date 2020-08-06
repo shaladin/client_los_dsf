@@ -53,13 +53,10 @@ addColl() {
 }
 
 event(ev){
-  console.log("test");
-  console.log(ev);
   this.AppAssetId = ev.RowObj.AppAssetId;
   this.AppId = ev.RowObj.AppId;
   this.editAsset = ev.RowObj.editAsset;
   this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
-  console.log("CHECK EVENT");
 }
 
 eventColl(ev){
@@ -70,7 +67,6 @@ eventColl(ev){
     this.editColl = ev.RowObj.editColl;
     this.AppAssetId = ev.RowObj.AppAssetId;
     this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
-    console.log("CHECK EVENT");
   }
 
   if(ev.Key == "delete")
@@ -78,8 +74,6 @@ eventColl(ev){
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var collateralObj = new AppCollateralObj();
       collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
-      console.log("qwe")
-      console.log(collateralObj.AppCollateralId)
       this.http.post(URLConstant.DeleteAppCollateral, collateralObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -92,11 +86,7 @@ eventColl(ev){
 
           this.gridAppCollateralObj.resultData = DetailForGridCollateral;
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }
@@ -117,11 +107,7 @@ eventColl(ev){
           }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
@@ -139,29 +125,10 @@ eventColl(ev){
           }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   editItem(custAddrObj: any) {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
-
-  // deleteItem(custAddrObj: any) {
-  //   var custAddr = new CustAddrObj();
-  //   custAddr.CustAddrId = custAddrObj.CustAddrId;
-  //   this.http.post(this.deleteCustAddr, custAddr).subscribe(
-  //     (response: any) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   //this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
 }

@@ -46,19 +46,13 @@ export class GuarantorPagingComponent implements OnInit {
     guarantorObj.AppId = this.AppId;
     this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
       (response) => {
-        console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.result = this.inputGridObj.resultData.Data;
-        console.log(this.result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     this.loadGuarantorListData(this.AppId);
   }
 
@@ -114,9 +108,6 @@ export class GuarantorPagingComponent implements OnInit {
             this.inputGridObj.resultData["Data"] = new Array();
             this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
             this.result = this.inputGridObj.resultData.Data;
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -134,11 +125,7 @@ export class GuarantorPagingComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
         this.result = this.inputGridObj.resultData.Data;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   close(event) {

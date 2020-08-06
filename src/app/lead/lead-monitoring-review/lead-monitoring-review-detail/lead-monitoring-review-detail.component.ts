@@ -89,9 +89,6 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(["/Lead/ReviewMonitoring/Paging"]);
-      },
-      error => {
-        console.log(error);
       }
     );
   }

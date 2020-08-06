@@ -59,11 +59,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
             this.ListCustNoCompany.push(this.result[i]['CustNo']);
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     this.loadGuarantorListData(this.AppId);
   }
 
@@ -130,9 +126,6 @@ export class GuarantorPagingFL4WComponent implements OnInit {
                 this.ListCustNoCompany.push(this.result[i]['CustNo']);
               }
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -160,11 +153,7 @@ export class GuarantorPagingFL4WComponent implements OnInit {
             this.ListCustNoCompany.push(this.result[i]['CustNo']);
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   close(event) {

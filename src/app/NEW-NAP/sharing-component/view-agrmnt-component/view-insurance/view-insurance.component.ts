@@ -41,7 +41,6 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Masuk');
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
@@ -49,7 +48,6 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
-        console.log(this.listAppAssetObj);
 
         this.inputGridObj.resultData = {
           Data: ""
@@ -57,7 +55,6 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.result = this.inputGridObj.resultData.Data;
-        console.log(this.result);
 
         this.PaidAmtByCust = 0;
         this.InsCpltzAmt = 0;
@@ -77,11 +74,7 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
           if (this.listAppAssetObj[i].TotalCustPremiAmt != null)
             this.TotalPremiumToCust += this.listAppAssetObj[i].TotalCustPremiAmt;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getEvent(event){

@@ -127,7 +127,6 @@ export class FinancialDataFL4WComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    console.log("Load App Fin Data Started...");
     this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
@@ -196,7 +195,6 @@ export class FinancialDataFL4WComponent implements OnInit {
       this.SetDiffRateAmt();
       this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
         }
@@ -341,7 +339,5 @@ export class FinancialDataFL4WComponent implements OnInit {
   // }
 
   test() {
-    console.log(this.FinDataForm)
-    console.log(this.FinDataForm.value);
   }
 }

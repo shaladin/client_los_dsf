@@ -20,7 +20,6 @@ export class MouViewSurveyComponent implements OnInit {
     var mouObj = { MouCustId: this.MouCustId }
     this.http.post<any>(URLConstant.GetSrvyResultDataByTrxRefNo, mouObj).subscribe(
       (response) => {
-        console.log(response);
         this.listSrvyOrder = response[CommonConstant.ReturnObj];
       })
   }

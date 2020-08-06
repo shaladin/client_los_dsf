@@ -183,8 +183,6 @@ export class CustomerDataComponent implements OnInit {
               this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
                 (response) => {
                     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-                    console.log("aaa")
-                    console.log(this.resLeadCustSocmedObj)
                     this.CustomerDataForm.patchValue({
                       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
                       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
@@ -553,16 +551,12 @@ export class CustomerDataComponent implements OnInit {
               addCrit.value = this.CustModelKey;
               arrAddCrit.push(addCrit);
               this.professionLookUpObj.addCritInput = arrAddCrit;
-              console.log("ggg");
-              console.log(this.CustModelKey);
   
               this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
               this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
               this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
                 (response) => {
                     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-                    console.log("aaa")
-                    console.log(this.resLeadCustSocmedObj)
                     this.CustomerDataForm.patchValue({
                       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
                       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
@@ -847,17 +841,14 @@ export class CustomerDataComponent implements OnInit {
         this.setLeadCustPersonalFinData();
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             // this.router.navigate(
             //   ["/Customer/CustomerPersonal/Address"], 
             //   { queryParams: { "IdCust": this.IdCust }}
             //   );
-            // console.log(response);
             this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
-            console.log(error);
           }
         );
       } else {
@@ -871,17 +862,14 @@ export class CustomerDataComponent implements OnInit {
         this.setLeadCustPersonalFinData();
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             // this.router.navigate(
             //   ["/Customer/CustomerPersonal/Address"], 
             //   { queryParams: { "IdCust": this.IdCust }}
             //   );
-            // console.log(response);
             this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
-            console.log(error);
           }
         );
       }
@@ -898,17 +886,14 @@ export class CustomerDataComponent implements OnInit {
 
       this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           // this.router.navigate(
           //   ["/Customer/CustomerPersonal/Address"], 
           //   { queryParams: { "IdCust": this.IdCust }}
           //   );
-          // console.log(response);
           this.outputTab.emit({ stepMode: "next"});
         },
         (error) => {
-          console.log(error);
         }
       );
     }

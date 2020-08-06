@@ -278,7 +278,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   SelectAll(condition) {
     this.checkboxAll = condition;
-    console.log(condition);
     if (condition) {
       for (let i = 0; i < this.resultData.Data.length; i++) {
         if (this.listSelectedId.indexOf(this.resultData.Data[i].CollateralId) < 0) {
@@ -292,11 +291,8 @@ export class CollateralLeasingAddEditComponent implements OnInit {
         if (index > -1) {
           this.listSelectedId.splice(index, 1);
         }
-        console.log(this.resultData.Data[i]);
       }
     }
-    console.log(this.checkboxAll);
-    console.log(this.listSelectedId);
   }
 
   addToTemp() {
@@ -430,9 +426,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   }
   
   ngOnInit() {
-    console.log("ccc")
-    console.log(this.mode)
-    console.log(this.AppCollateralId)
     if(this.mode == 'editColl'){
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
@@ -551,8 +544,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.http.post(this.getListAssetTypeByCode, this.collTypeObj).subscribe(
       (response) => {
         this.returnCollTypeObj = response[CommonConstant.ReturnObj];
-        console.log("aaa");
-        console.log(this.returnCollTypeObj);
         this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
@@ -695,15 +686,10 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     //this.setCollateralAttribute();
     this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         //this.router.navigate(["/Nap/AssetData/Paging"]);
         this.collValue.emit({mode : 'paging'});
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   SaveExistingCollateral()
@@ -713,7 +699,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.appCollateralObj.ListCollateralId =  new Array();
 
     for (let index = 0; index < this.tempData.length; index++) {
-      console.log(this.tempData);
       var appColtr = {
         CollateralId: this.tempData[index].CollateralId
       }
@@ -730,9 +715,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
         this.toastr.successMessage(response['message']);
         //this.router.navigate(["/Nap/AssetData/Paging"]);
         this.collValue.emit({mode : 'paging'});
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -741,22 +723,4 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   {
 
   }
-
-  // delete(MouCustCollId) {
-  //   var custCollObj = { MouCustCollateralId: MouCustCollId };
-  //   this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
-  // editItem(custAddrObj: any) {
-  //   this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
 }

@@ -51,11 +51,8 @@ export class MouViewDetailComponent implements OnInit {
 
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId}
-    console.log(mouCustObj);
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
-        // console.log("cekmoudetail")
-        // console.log(response)
         this.mouCust = response["MouCustObj"];
         this.MouCustId = this.mouCust.MouCustId;
         this.CurrCode = this.mouCust.CurrCode;

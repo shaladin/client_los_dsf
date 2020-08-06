@@ -108,11 +108,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
           });
           this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
           this.setAddrLegalObj();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
       if (this.resultData.AppGuarantorObj.CustNo != null) {
         this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
@@ -203,7 +199,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality]};
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.MrNationalityCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           if (this.MrNationalityCode.length > 0) {
@@ -275,7 +270,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
       (response) => {
-        console.log(response);
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = response;
         if (this.resultData.AppGuarantorPersonalObj.MrNationalityCode == CommonConstant.NationalityLocal) {
@@ -286,11 +280,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
           this.isLocal = false
           this.countryCode = countryCode;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
   selectedNationalityCountryName: string = "";
@@ -510,21 +500,13 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.http.post(URLConstant.AddAppGuarantorPersonal, this.guarantorPersonalObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.close.emit(1);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

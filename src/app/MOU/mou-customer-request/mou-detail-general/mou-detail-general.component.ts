@@ -89,7 +89,6 @@ export class MouDetailGeneralComponent implements OnInit {
     let getMouCustClause = this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause]).subscribe(
       (response) => {
-        console.log("aaa");
         this.currencyList = response[0];
         this.intrstTypeList = response[1];
         this.instSchmList = response[2];
@@ -113,15 +112,10 @@ export class MouDetailGeneralComponent implements OnInit {
           });
         }
         this.isReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ngOnInit() {
-    console.log('debug');
   }
 
   Save(enjiForm) {
@@ -133,11 +127,7 @@ export class MouDetailGeneralComponent implements OnInit {
         (response) => {
           this.tempMouCustClause = response;
           this.getData();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.saveMouCustAssetDetail();
@@ -155,7 +145,6 @@ export class MouDetailGeneralComponent implements OnInit {
       this.tempMouCustAsset.RequestMouCustAssetObj[i].FullAssetCode = this.AssetForm.controls.Asset["controls"][i]["controls"]["FullAssetCode"].value;
     }
     this.tempMouCustAsset.MouCustId = this.MouCustId;
-    console.log(this.tempMouCustAsset);
     this.httpClient.post(URLConstant.AddMouCustAsset, this.tempMouCustAsset).subscribe(
       (response) => {
       }
@@ -174,54 +163,39 @@ export class MouDetailGeneralComponent implements OnInit {
     this.url = "";
 
     if (this.mouCustClause.DownPaymentFromPrcnt >= this.mouCustClause.DownPaymentToPrcnt) {
-      console.log("DP Invalid");
       this.isDPInvalid = true;
       this.dpInvalidMsg = "Invalid Down Payment Range";
       return false;
     }
     else {
-      console.log("DP Valid");
       this.isDPInvalid = false;
       this.dpInvalidMsg = "";
     }
 
     if (this.mouCustClause.TenorFrom >= this.mouCustClause.TenorTo) {
-      console.log("Tenor Invalid");
       this.isTenorInvalid = true;
       this.tenorInvalidMsg = "Invalid Tenor Range";
       return false;
     }
     else {
-      console.log("Tenor Valid");
       this.isTenorInvalid = false;
       this.tenorInvalidMsg = "";
     }
 
-    // console.log("Continue Submit...");
 
     if (this.mode == "add" && this.Mode != "edit") {
-      console.log(this.Mode);
       this.url = URLConstant.AddMouCustClause;
 
-      // console.log( this.url);
     }
     else if (this.mode == "edit" || this.Mode == "edit") {
-      console.log(this.Mode);
-      console.log("awdwad");
       this.url = URLConstant.EditMouCustClause;
-      // console.log( this.url);
     }
 
     this.httpClient.post(this.url, this.mouCustClause).subscribe(
       (response) => {
-        // console.log(response);
         this.toastr.successMessage(response["Message"]);
         this.ResponseMouDetailGeneral.emit(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   // back(){

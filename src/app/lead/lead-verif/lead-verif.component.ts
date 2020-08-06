@@ -62,9 +62,6 @@ export class LeadVerifComponent implements OnInit {
     this.http.post(URLConstant.AddRangeLeadVerf, {LeadVerfObjs: this.arrLeadVerf}).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
-      },
-      error => {
-        console.log(error);
       }
     );
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

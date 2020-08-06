@@ -18,7 +18,6 @@ export class RolePickService {
         private currentUserContextService: CurrentUserContextService,
         private router: Router) { }
     openDialog(data, type = ""): void {
-        console.log("Get User Title Role");
         if (type == "modal") {
             var loginByRole = environment.FoundationR3Url + URLConstant.LoginByToken;
             var roleObject2 = {
@@ -29,7 +28,6 @@ export class RolePickService {
             };
             this.http.post(loginByRole, roleObject2).subscribe(
                 (response) => {
-                    console.log(response);
                     const object = {
                         response: response["ReturnObject"]
                     };
@@ -44,11 +42,7 @@ export class RolePickService {
                     });
 
                     dialogRef.afterClosed().subscribe(result => {
-                        console.log('The dialog was closed');
                     });
-                },
-                (error) => {
-                    console.log(error);
                 }
             );
 
@@ -84,9 +78,6 @@ export class RolePickService {
                         // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
                         // this.currentUserContextService.addCurrentUserContext(currentUserContext);
                         this.router.navigate(['dashboard/dash-board']);
-                    },
-                    (error) => {
-                        console.log(error);
                     }
                 )
             }
@@ -102,7 +93,6 @@ export class RolePickService {
                 });
 
                 dialogRef.afterClosed().subscribe(result => {
-                    console.log('The dialog was closed');
                 });
             }
         }

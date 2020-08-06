@@ -44,7 +44,6 @@ export class ViewAgrmntComponent implements OnInit {
     this.http.post(URLConstant.GetAgrmntByAgrmntId, AgrmntObj).subscribe(
       (response) => {
         this.AppId = response["AppId"];
-        console.log(this.AppId);
 
         var AppObj = {
           AppId: this.AppId
@@ -52,7 +51,6 @@ export class ViewAgrmntComponent implements OnInit {
         this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
           (response) => {
             this.MrCustTypeCode = response["MrCustTypeCode"];
-            console.log(this.MrCustTypeCode);
           });
       }
     );

@@ -88,7 +88,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         animation: true
       });
       this.stepperGeneral.to(this.currentStepIndex);
-      console.log(this.stepperGeneral);
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.stepperFactoring = new Stepper(document.querySelector('#stepperFactoring'), {
@@ -96,7 +95,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         animation: true
       });
       this.stepperFactoring.to(this.currentStepIndex);
-      console.log(this.stepperFactoring);
     }
   }
 
@@ -119,8 +117,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   getModeDetail(e) {
     if (e != null) {
       this.mode = e.mode;
-      console.log(e);
-      console.log(this.mode);
     }
   }
 
@@ -197,11 +193,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
           else {
             this.router.navigate(['/Mou/Request/Paging']);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.toastr.warningMessage("Please follow the steps first");
@@ -263,11 +255,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

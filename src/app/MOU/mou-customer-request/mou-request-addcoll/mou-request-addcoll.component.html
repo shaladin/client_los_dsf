@@ -76,8 +76,6 @@
           <lib-uc-show-errors [control]="AddCollForm.controls.AssetTypeCode" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
-      </div>
-      <div class="form-group row">
         <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
         <div class="col-md-4">
           <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
@@ -85,6 +83,7 @@
           </lib-uclookupgeneric>
         </div>
       </div>
+
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Collateral Condition</label>
         <div class="col-md-4">
@@ -94,6 +93,11 @@
           </select>
           <lib-uc-show-errors [control]="AddCollForm.controls.MrCollateralConditionCode" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
+        </div>
+        <label class="col-md-2 adins-label" translate>Notes</label>
+        <div class="col-md-4">
+          <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
         </div>
       </div>
       <div formArrayName="items">
@@ -115,20 +119,11 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Collateral Price</label>
         <div class="col-md-4">
-          <input type="text" currencyMask class="form-control adInsInput text-right" formControlName="CollateralValueAmt"
+          <input type="text" currencyMask class="form-control adInsInput text-right"
+            formControlName="CollateralValueAmt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
           <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
-
-          <!-- <lib-ucinputnumber [parentForm]="AddCollForm" [identifier]="'CollateralValueAmt'" [enjiForm]="enjiForm"
-            [isRequired]="false" ucNumber="AddCollForm.controls.CollateralValueAmt.value"></lib-ucinputnumber> -->
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-2 adins-label" translate>Notes</label>
-        <div class="col-md-4">
-          <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
         </div>
       </div>
     </div>

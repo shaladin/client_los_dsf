@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-157",
+  "version": "1.0.0-161",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -16,7 +16,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "^1.0.0",
     "@adins/uc-subsection": "^1.0.4",
-    "@adins/ucaddress": "^1.0.14",
+    "@adins/ucaddress": "^1.0.15",
     "@adins/ucaddtotemp": "^1.0.11",
     "@adins/ucapproval": "^1.0.7",
     "@adins/ucapprovalhist": "^1.0.14",
@@ -60,12 +60,12 @@
     "@types/chartist": "0.9.43",
     "@types/d3-shape": "1.2.4",
     "@types/dragula": "2.1.33",
-    "@types/jquery": "^3.5.0",
+    "@types/jquery": "^3.5.1",
     "angular-archwizard": "^5.0.1",
     "angular-calendar": "0.26.3",
     "angular-file-uploader": "^5.0.2",
     "angular-webstorage-service": "^1.0.2",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.5.1",
     "bs-stepper": "^1.7.0",
     "chartist": "0.11.0",
     "classlist.js": "1.1.20150312",

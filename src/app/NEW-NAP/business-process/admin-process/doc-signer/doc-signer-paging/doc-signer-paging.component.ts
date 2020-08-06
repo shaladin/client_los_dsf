@@ -44,11 +44,7 @@ export class DocSignerPagingComponent implements OnInit {
       this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
         response => {
           AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }else if(ev.Key == "agrmnt"){
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }

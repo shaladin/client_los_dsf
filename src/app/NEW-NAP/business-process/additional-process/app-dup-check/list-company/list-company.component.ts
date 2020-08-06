@@ -78,34 +78,19 @@ export class ListCompanyComponent implements OnInit {
           "RowVersion": this.RowVersion,
           "AppId": this.AppId
         }
-        console.log(requestDupCheck);
         //List Cust And Negative Cust Dup Check
         this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
-          },
-          error => {
-            console.log("error");
-          }
-        );
+          });
 
         //List App Cust Duplicate Checking
         this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
           response => {
             this.ListAppCustDuplicate = response[CommonConstant.ReturnObj];
-          },
-          error => {
-            console.log("error");
-          }
-        );
-
-      },
-      error => {
-        console.log("error");
-      }
-
-    )
+          });
+      });
 
   }
 
@@ -120,9 +105,6 @@ export class ListCompanyComponent implements OnInit {
   //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
   //     response => {
   //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
-  //     },
-  //     error => {
-  //       console.log("error");
   //     });
   // }
 
@@ -137,9 +119,6 @@ export class ListCompanyComponent implements OnInit {
   //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
   //     response => {
   //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
-  //     },
-  //     error => {
-  //       console.log("error");
   //     });
   // }
 
@@ -149,9 +128,6 @@ export class ListCompanyComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
-      },
-      error => {
-        console.log("error");
       });
   }
 
@@ -161,9 +137,6 @@ export class ListCompanyComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
         this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
-      },
-      (error) => {
-        console.log(error);
       });
   }
 

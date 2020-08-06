@@ -110,7 +110,6 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
-          console.log(response);
           if (response) {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
@@ -120,11 +119,7 @@ export class NapAddDetailComponent implements OnInit {
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.MakeViewReturnInfoObj();
   }
@@ -151,7 +146,6 @@ export class NapAddDetailComponent implements OnInit {
         "FIN": 8,
         "TC": 9,
       };
-      // console.log(this.stepperPersonal);  
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
         linear: false,
@@ -172,7 +166,6 @@ export class NapAddDetailComponent implements OnInit {
         "FIN": 7,
         "TC": 8,
       };
-      // console.log(this.stepperCompany);  
     }
   }
 
@@ -197,11 +190,7 @@ export class NapAddDetailComponent implements OnInit {
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });
           this.OnFormReturnInfo = true;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -218,15 +207,10 @@ export class NapAddDetailComponent implements OnInit {
         }
         else
           this.IsMultiAsset = 'False';
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+      })
   }
 
   ChangeTab(AppStep) {
-    console.log(AppStep);
     this.IsSavedTC = false;
     switch (AppStep) {
       case CommonConstant.AppStepCust:
@@ -288,11 +272,6 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
-        console.log("Step Change to, Curr Step : " + response.AppCurrStep + ", Last Step : " + response.AppLastStep);
-      },
-      (error) => {
-        console.error("Error when updating AppStep");
-        console.error(error);
       }
     )
   }
@@ -304,14 +283,9 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+        })
     }
   }
 
@@ -336,12 +310,8 @@ export class NapAddDetailComponent implements OnInit {
 
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })
-          },
-          (error) => {
-            console.log(error);
           }
         )
       }

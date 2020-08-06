@@ -47,11 +47,8 @@ export class TcDataComponent implements OnInit {
 
   ngOnInit() {
     this.AppIdObj.AppId = this.AppId;
-    console.log(this.AppIdObj);
     // this.http.post(AdInsConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
     //   (response) => {
-    //     console.log("check");
-    //     console.log(response);
     //     this.listAppTcObj = response["AppTcs"];
     //     if (this.listAppTcObj.length > 0) {
     //       this.mode = "edit";
@@ -65,7 +62,6 @@ export class TcDataComponent implements OnInit {
     //       this.http.post(AdInsConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
     //         (response) => {
     //           this.listAppTcObj = response["AppTcs"];
-    //           console.log(this.result);
     //           // this.listAppTcObj = this.result;
     //           for (let i = 0; i < this.listAppTcObj.length; i++) {
     //             var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
@@ -73,9 +69,6 @@ export class TcDataComponent implements OnInit {
     //           }
 
     //           this.ReconstructForm();
-    //         },
-    //         (error) => {
-    //           console.log(error);
     //         }
     //       );
     //     }
@@ -84,7 +77,6 @@ export class TcDataComponent implements OnInit {
   }
 
   AddTcControl(obj: AppTCObj) {
-    console.log(obj);
     return this.fb.group({
       TcName: obj.TcName,
       TcCode: obj.TcCode,
@@ -144,8 +136,6 @@ export class TcDataComponent implements OnInit {
   }
 
   Test(){
-    console.log(this.AppTcForm);
-    console.log(this.AppTcForm.invalid);
     this.getFormValidationErrors();
   }
 
@@ -155,10 +145,8 @@ export class TcDataComponent implements OnInit {
     for (const name in controls) {
         if (controls[name].invalid) {
             invalid.push(name);
-            console.log(name);
         }
     }
-    console.log(invalid);
   }
 
   SaveData() {
@@ -229,25 +217,15 @@ export class TcDataComponent implements OnInit {
     if (this.mode == "edit") {
       this.http.post(URLConstant.EditAppTc, this.ReqTCObj).subscribe(
         (response) => {
-          console.log(response);
           // this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     } else {
       this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
         (response) => {
-          console.log(response);
           // this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
     }
   }

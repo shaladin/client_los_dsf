@@ -39,7 +39,6 @@ export class MainInfoComponent implements OnInit {
 
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
-    console.log(mouCustObj);
     this.http.post(URLConstant.GetMouCustById, mouCustObj).pipe(
       map((response) => {
         return response;

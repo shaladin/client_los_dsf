@@ -63,7 +63,6 @@ export class TeleVerifDetailComponent implements OnInit {
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-        console.log(response);
       });
   }
 

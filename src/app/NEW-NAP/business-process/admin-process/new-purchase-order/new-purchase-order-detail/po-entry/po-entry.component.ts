@@ -82,9 +82,6 @@ export class PoEntryComponent implements OnInit {
           });
         }
       ).catch(
-        (error) => {
-          console.log(error);
-        }
       );
     }
     else{
@@ -100,9 +97,6 @@ export class PoEntryComponent implements OnInit {
           });
         }
       ).catch(
-        (error) => {
-          console.log(error);
-        }
       );
     }
   }
@@ -166,7 +160,6 @@ export class PoEntryComponent implements OnInit {
       }
     ).catch(
       (error) => {
-        console.log(error);
       }
     );
     

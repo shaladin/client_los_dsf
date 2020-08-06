@@ -29,7 +29,6 @@ export class AppInsuranceFl4wComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('insurance')
     this.httpClient.post(URLConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.AgrmntId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
@@ -37,20 +36,13 @@ export class AppInsuranceFl4wComponent implements OnInit {
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   viewDetailCollateralHandler(appInsObjId){
     const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 }

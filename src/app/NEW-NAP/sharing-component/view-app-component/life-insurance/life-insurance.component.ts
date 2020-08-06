@@ -32,17 +32,12 @@ export class LifeInsuranceComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppLifeInsHByAppId, AppObj).subscribe(
       (response) => {
-        console.log(response);
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["ListAppLifeInsD"]
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
 }

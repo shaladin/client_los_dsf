@@ -115,11 +115,7 @@ export class DocumentViewComponent implements OnInit {
     this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
         this.AgrmntDocObj = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   SaveAgrmntDocPrint(agrmntDocId) {
@@ -132,9 +128,6 @@ export class DocumentViewComponent implements OnInit {
     this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(
       () => {
         this.GetListAgrmntDocByAgrmntId();
-      },
-      (error) => {
-        console.log(error);
       });
   }
 
@@ -164,9 +157,6 @@ export class DocumentViewComponent implements OnInit {
         } else {
           this.toastr.errorMessage(response['message']);
         }
-      },
-      (error) => {
-        console.log(error);
       });
   }
 

@@ -85,8 +85,6 @@ export class ReservedFundComponent implements OnInit {
     // this.GetMaxAllocAmt(appObj);
     this.GetAppFee(appObj);
     this.GetAppCust(appObj);
-    console.log(this.DictMaxIncomeForm);
-    console.log(this.maxAllocAmt);
   }
 
   SaveForm() {
@@ -106,7 +104,8 @@ export class ReservedFundComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
       }
       else {
-        var lobCode = localStorage.getItem(CommonConstant.USER_ACCESS);
+        // var lobCode = localStorage.getItem(CommonConstant.USER_ACCESS);
+        var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.setAppReservedFundData();
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
@@ -116,9 +115,6 @@ export class ReservedFundComponent implements OnInit {
             } else {
               this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -147,7 +143,6 @@ export class ReservedFundComponent implements OnInit {
   GetAppFinData(appObj) {
     this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
       (response) => {
-        console.log(response);
         this.uppingRate = response["DiffRateAmt"];
         this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
         this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
@@ -188,7 +183,6 @@ export class ReservedFundComponent implements OnInit {
   // GetMaxAllocAmt(appObj) {
   //   this.http.post(this.getMaxAllocAmtRsvFundUrl, appObj).subscribe(
   //     (response) => {
-  //       console.log(response);
   //       this.maxAllocatedAmt = response["MaxRefundAmount"];
   //     }
   //   );
@@ -198,7 +192,6 @@ export class ReservedFundComponent implements OnInit {
     this.http.post(this.getAppRsvFundRuleUrl, appObj).subscribe(
       (response) => {
         this.ruleObj = response;
-        console.log(this.ruleObj);
         this.appReservedFundObjs = new Array<AppReservedFundObj>();
         for (let i = 0; i < this.ruleObj.length; i++) {
           var appReservedFundObj = new AppReservedFundObj();
@@ -217,7 +210,6 @@ export class ReservedFundComponent implements OnInit {
           var listAppRsvFunds = this.RsvForm.controls["ReservedFundObjs"] as FormArray;
           let maxAmt = 0;
           let allocAmt = 0;
-          console.log(this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode]);
           if (this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode] != undefined) {
             if (this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount > 0){
               maxAmt = this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount;
@@ -286,8 +278,6 @@ export class ReservedFundComponent implements OnInit {
 
   test() {
     this.setAppReservedFundData();
-    console.log(this.RsvForm);
-    console.log(this.allAppReservedFundObj);
   }
 
   InputChanged() {

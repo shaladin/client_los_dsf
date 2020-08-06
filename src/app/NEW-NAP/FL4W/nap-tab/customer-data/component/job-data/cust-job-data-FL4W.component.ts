@@ -73,8 +73,6 @@ export class CustJobDataFL4WComponent implements OnInit {
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    console.log(this.identifier);
-    console.log(this.parentForm);
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -101,7 +99,6 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   CustModelChanged(){
-    console.log(this.parentForm);
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelNonProfessional){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
@@ -141,28 +138,18 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   setIndustryTypeName(industryTypeCode){
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   setAddrJobDataObj(){
@@ -217,8 +204,6 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindAppCustPersonalJobData(){
-    console.log("bind")
-    console.log(this.custModelCode);
     if(this.appCustPersonalJobDataObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
@@ -255,7 +240,6 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
-        console.log("job position");
         if(this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")){
           this.parentForm.controls[this.identifier].patchValue({
             MrJobPositionCode: this.JobPositionObj[0].Key
@@ -314,9 +298,7 @@ export class CustJobDataFL4WComponent implements OnInit {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0 && this.custModelCode == undefined){
           this.custModelCode = this.CustModelObj[0].Key;
-          console.log("aawdawdwda" + this.custModelCode)
           this.setLookupProfessionCriteria();
-          console.log("aaaaa" + this.custModelCode)
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });

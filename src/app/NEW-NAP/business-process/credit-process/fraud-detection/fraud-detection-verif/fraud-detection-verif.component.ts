@@ -130,17 +130,13 @@ export class FraudDetectionVerifComponent implements OnInit {
       "Notes": this.verfNotes,
       "VerifyByCode": this.verfCode,
       "VerifyStat": "Verified",
-      "WFTaskId": this.WfTaskListId
+      "WfTaskId": this.WfTaskListId
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
         var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
         this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
-      },
-      error => {
-        console.log("error");
-      }
-    )
+      });
   }
 
   async claimTask() {
@@ -150,7 +146,6 @@ export class FraudDetectionVerifComponent implements OnInit {
       pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
-    console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });

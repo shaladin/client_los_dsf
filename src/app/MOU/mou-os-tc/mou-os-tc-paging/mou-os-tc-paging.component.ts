@@ -33,7 +33,6 @@ export class MouOsTcPagingComponent implements OnInit {
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
       this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-      console.log(URLConstant.GetPagingObjectBySQL);
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
 
       this.inputPagingObj.ddlEnvironments = [
@@ -52,9 +51,6 @@ export class MouOsTcPagingComponent implements OnInit {
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-          },
-          (error) => {
-            console.log(error);
           }
         );
     }

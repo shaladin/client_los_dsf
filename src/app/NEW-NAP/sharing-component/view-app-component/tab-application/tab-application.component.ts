@@ -12,6 +12,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class TabApplicationComponent implements OnInit {
   @Input() appId;
+  @Input() BizTemplateCode: string = "";
   viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
@@ -21,7 +22,12 @@ export class TabApplicationComponent implements OnInit {
   ) { }
 
   initData() {
-    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
+    if (this.BizTemplateCode == CommonConstant.FCTR) {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringInfo.json";
+    }
+    else {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
+    }
     this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewProdMainInfoObj.ddlEnvironments = [
       {
@@ -43,7 +49,6 @@ export class TabApplicationComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.ListCrossAppData = response[CommonConstant.ReturnObj];
 
       }
@@ -61,11 +66,7 @@ export class TabApplicationComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["listResponseAppLoanPurpose"]
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.IsGridLoanReady = true;
   }

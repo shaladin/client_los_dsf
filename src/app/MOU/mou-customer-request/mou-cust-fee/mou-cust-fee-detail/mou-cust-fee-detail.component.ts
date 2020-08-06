@@ -54,11 +54,7 @@ export class MouCustFeeDetailComponent implements OnInit {
           this.MouCustFeeForm.controls['FeeAmt'].clearValidators();
           this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
    }
 
   ngOnInit() {
@@ -115,10 +111,6 @@ export class MouCustFeeDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.AddMouCustFee, formData).subscribe(
       (response) => {
         this.activeModal.close(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

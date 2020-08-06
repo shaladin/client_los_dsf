@@ -101,7 +101,6 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    console.log('cust personal contact information')
     this.bindCopyFrom();
     this.initLookup();
     this.initUrl();
@@ -258,14 +257,9 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(this.getRefProfessionUrl, this.professionObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;     
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   initContactPersonAddrObj(){

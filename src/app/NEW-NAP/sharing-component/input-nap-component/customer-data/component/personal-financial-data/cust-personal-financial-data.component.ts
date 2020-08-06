@@ -39,8 +39,6 @@ export class CustPersonalFinancialDataComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.identifier);
-    console.log(this.parentForm);
 
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -71,7 +69,6 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   }
 
   bindAppCustPersonalFinData(){
-    console.log(this.appCustPersonalFinDataObj);
     if(this.appCustPersonalFinDataObj.AppCustPersonalId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
@@ -104,7 +101,6 @@ export class CustPersonalFinancialDataComponent implements OnInit {
   }
 
   ChangeTotalMonthly(){
-    console.log("Calc Total");
     let TotalMonthlyIncome = this.parentForm.controls[this.identifier].get("MonthlyIncomeAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value;
     let TotalMonthlyExpense = this.parentForm.controls[this.identifier].get("MonthlyExpenseAmt").value + this.parentForm.controls[this.identifier].get("MonthlyInstallmentAmt").value;
     this.parentForm.controls[this.identifier].patchValue({

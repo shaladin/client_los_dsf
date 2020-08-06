@@ -175,7 +175,6 @@ export class TypeaheadComponent {
           for (num = 0; num < response["returnObject"].data.length; num++) {
             this.userData.push(response["returnObject"].data[num].bankName + ' ' + response["returnObject"].data[num].bankCode)
           }
-          console.log(this.userData);
           return this.userData;
         })
       );

@@ -79,10 +79,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
       this.router.navigateByUrl("/Nap/AdminProcess/AgreementCancellation/Paging");
-    },
-      (error) => {
-        console.log(error);
-      });
+    });
   }
 
   GetCallBack(ev: any) {

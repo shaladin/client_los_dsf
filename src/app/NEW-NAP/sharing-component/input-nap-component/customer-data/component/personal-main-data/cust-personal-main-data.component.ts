@@ -67,14 +67,9 @@ export class CustPersonalMainDataComponent implements OnInit {
      }
 
   async ngOnInit() : Promise<void> {
-    console.log("User Access");
-    console.log(JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS)));
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
-    console.log(this.MaxDate);
-    console.log(this.identifier);
-    console.log(this.parentForm);
 
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
@@ -115,14 +110,9 @@ export class CustPersonalMainDataComponent implements OnInit {
     var custObj = {CustId: event.CustId};
     this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
       (response) => {
-        console.log(response);
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 
@@ -196,20 +186,14 @@ export class CustPersonalMainDataComponent implements OnInit {
 
     this.http.post(this.getCountryUrl, this.countryObj).subscribe(
       (response) => {
-        console.log(response);
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 
   bindCustData(){
     if(this.custDataPersonalObj.AppCustObj.AppCustId != 0){
-      console.log(this.custDataPersonalObj.AppCustObj);
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.AppCustObj.MrIdTypeCode,
         IdNo: this.custDataPersonalObj.AppCustObj.IdNo,
@@ -227,7 +211,6 @@ export class CustPersonalMainDataComponent implements OnInit {
     }
     
     if(this.custDataPersonalObj.AppCustPersonalObj.AppCustId != 0){
-      console.log(this.custDataPersonalObj.AppCustPersonalObj);
       this.parentForm.controls[this.identifier].patchValue({
         CustFullName: this.custDataPersonalObj.AppCustPersonalObj.CustFullName,
         MrGenderCode: this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode,		
@@ -305,7 +288,6 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
-    console.log(idExpiredDate);
     if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeSIM) {
       idExpiredDate.setValidators([Validators.required]);
     }else{
@@ -319,7 +301,6 @@ export class CustPersonalMainDataComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
-        console.log(this.IdTypeObj);
         if(this.IdTypeObj.length > 0){
           var idxDefault = this.IdTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
           this.parentForm.controls[this.identifier].patchValue({
@@ -366,7 +347,6 @@ export class CustPersonalMainDataComponent implements OnInit {
     // var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.NationalityObj = response["RefMasterObjs"];
         if(this.NationalityObj.length > 0){
           var idxDefault = this.NationalityObj.findIndex(x => x.ReserveField3 == CommonConstant.DEFAULT);

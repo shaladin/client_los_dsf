@@ -41,7 +41,6 @@ export class ViewDeliveryOrderComponent implements OnInit {
   GetDeliveryOrderData() {
     this.http.post(URLConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        console.log(response);
         this.DeliverOrderData = response;
         this.DeliveryDt = formatDate(this.DeliverOrderData.DeliveryOrderH.DeliveryDt, 'yyyy-MM-dd', 'en-US');
       }
