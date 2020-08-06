@@ -49,6 +49,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   InsSeqNo: number = 0;
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
+  BizTemplateCode: string = "";
 
   appObj: NapAppModel;
   appAssetObj: AppAssetObj = new AppAssetObj();
@@ -191,6 +192,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       TotalCustDiscAmt: 0,
       InsCpltzAmt: 0,
     });
+
+    var appObj = { AppId: this.appId }
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response) => {
+        this.BizTemplateCode = response["BizTemplateCode"];
+      });
 
     this.appAssetObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
