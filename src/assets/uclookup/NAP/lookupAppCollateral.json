@@ -45,7 +45,7 @@
           "type": "sort",
           "position": "left",
           "label": "Collateral Owner",
-          "name": "AC..OWNER_NAME"
+          "name": "ACR.OWNER_NAME"
         },
         {
           "type": "sort",
