@@ -63,14 +63,14 @@ export class InvoiceDataComponent implements OnInit {
           this.InvoiceForm.controls.CustomerFactoringName.clearValidators();
           this.InvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
         }
-        // this.arrAddCrit = new Array();
-        // var addCrit = new CriteriaObj();
-        // addCrit.DataType = "numeric";
-        // addCrit.propName = "A.APP_ID";
-        // addCrit.restriction = AdInsConstant.RestrictionIn;
-        // addCrit.listValue = [this.AppFactoringObj.AppId];
-        // this.arrAddCrit.push(addCrit);
-        // this.MouCustLookupObj.addCritInput = this.arrAddCrit;
+        this.arrAddCrit = new Array();
+        var addCrit = new CriteriaObj();
+        addCrit.DataType = "numeric";
+        addCrit.propName = "A.APP_ID";
+        addCrit.restriction = AdInsConstant.RestrictionIn;
+        addCrit.listValue = [this.AppFactoringObj.AppId];
+        this.arrAddCrit.push(addCrit);
+        this.MouCustLookupObj.addCritInput = this.arrAddCrit;
         // this.MouCustLookupObj.isReady = true;
 
         this.GetListAppInvoiceFctr();
