@@ -10,8 +10,8 @@
           </div>
         </div>
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="InvoiceForm" (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)"
-            #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm"
+            (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'" [panel]="'InvoiceData'">
             </lib-ucSubsection>
 

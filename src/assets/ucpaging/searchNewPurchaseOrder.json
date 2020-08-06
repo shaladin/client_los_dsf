@@ -190,7 +190,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Nap/AdminProcess/PurchaseOrder/PO",
+          "path": "/Nap/AdminProcess/NewPurchaseOrder/Detail",
           "param": [
             {
               "type": "AgrmntId",
