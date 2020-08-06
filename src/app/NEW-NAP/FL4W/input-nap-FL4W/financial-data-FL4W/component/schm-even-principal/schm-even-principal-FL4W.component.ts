@@ -15,6 +15,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-schm-even-principal-FL4W',
@@ -26,6 +27,7 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   @Input() ParentForm: FormGroup;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: any;
@@ -42,6 +44,7 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.LoadCalcBaseType();
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
@@ -63,6 +66,21 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  LoadCalcBaseType() {
+    this.http.post(URLConstant.GetListActiveRefMaster, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
+      (response) => {
+        this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.ReserveField1.indexOf(CommonConstant.InstSchmEvenPrincipal) !== -1);
+
+        if(this.CalcBaseOptions.length == 1){
+          this.ParentForm.patchValue({
+            CalcBase: this.CalcBaseOptions[0].MasterCode
+          });
+        }
       }
     );
   }
@@ -91,11 +109,16 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   }
 
 
-  CalculateInstallment() {
+  Calculate() {
+    if(this.ParentForm.getRawValue().CalcBase == ''){
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
+      return;
+    }
+
     if (this.ValidateFee() == false) {
       return;
     }
-    this.calcEvenPrincipleObj = this.ParentForm.value;
+    this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
 
 
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(

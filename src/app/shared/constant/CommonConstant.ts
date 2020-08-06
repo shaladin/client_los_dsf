@@ -282,6 +282,10 @@ export class CommonConstant {
     public static InstSchmBalloon = "BL";
     public static InstSchmStepUpStepDownNormal = "STNM";
     public static InstSchmStepUpStepDownLeasing = "STLS";
+    public static InstSchmStepUpStepDownCummulative = "STCM";
+    public static InstSchmRegularFix = "RF";
+    public static InstSchmEvenPrincipal = "EP";
+
 
     //REF PROD COMPNT
     public static RefProdCompntAssetType = "ASSETTYPE";
@@ -434,10 +438,19 @@ export class CommonConstant {
     public static RateTypeEffective = "EFCTV";
 
     //FIN DATA CALC BASE ON
+    public static FinDataCalcBaseOnRate = "CALC_BASE_ON_RATE";
     public static FinDataCalcBaseOnInst = "CALC_BASE_ON_INST";
+    public static FinDataCalcBaseOnCommission = "CALC_BASE_ON_COMM";
 
     //LIFE INS CUST TYPE
     public static LifeInsCustTypeCustomer = "CUSTOMER";
+
+    //SUBSIDY ALLOC
+    public static SubsidyAllocSubsidyRate = "SUBRATE";
+
+    //SUBSIDY FROM TYPE
+    public static SubsidyFromTypeAtpm = "ATPM";
+
     
     //SCORE TYPE
     public static ScoreTypeScoring = "SCORING";
