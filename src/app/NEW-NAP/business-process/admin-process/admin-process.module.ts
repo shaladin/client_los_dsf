@@ -46,6 +46,8 @@ import { UcaddtotempModule } from "@adins/ucaddtotemp";
 import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-order.component';
 import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
 import { PoEntryComponent } from './new-purchase-order/new-purchase-order-detail/po-entry/po-entry.component';
+import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
+import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -103,7 +105,9 @@ export const customCurrencyMaskConfig = {
     InvoiceVerifDetailComponent,
     NewPurchaseOrderComponent,
     NewPurchaseOrderDetailComponent,
-    PoEntryComponent
+    PoEntryComponent,
+    DocSignerCfnaComponent,
+    DocSignerCfnaDetailComponent
   ],
   providers: [
     NGXToastrService
