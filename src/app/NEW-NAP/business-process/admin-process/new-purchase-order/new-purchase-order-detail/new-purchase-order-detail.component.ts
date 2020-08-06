@@ -8,6 +8,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PoEntryComponent } from './po-entry/po-entry.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -59,7 +60,12 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.POList = response["PurchaseOrderForNewPOObjs"];
-      });
+        console.log("POList: " + JSON.stringify(this.POList));
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   async claimTask() {
@@ -114,8 +120,20 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       this.toastr.errorMessage("Please Resolve All Purchase Order");
     }
     else{
-      this.toastr.successMessage("Success");
-      this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
+      var workflowModel = new WorkflowApiObj();
+      workflowModel.TaskListId = this.TaskListId;
+      workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
+      this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
+        (response) => {
+          this.toastr.successMessage("Success");
+          this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+      
     }
   }
 }

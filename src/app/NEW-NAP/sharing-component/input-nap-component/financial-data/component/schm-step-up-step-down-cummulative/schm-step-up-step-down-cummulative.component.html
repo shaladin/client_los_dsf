@@ -235,6 +235,16 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
+            <div class="col-md-3 form-inline">
+              <label>Cummulative Tenor</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="number" class="form-control full-width" formControlName="CummulativeTenor"
+                (change)="SetNeedReCalculate(true)"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CummulativeTenor.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.CummulativeTenor" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
           </div>
         </div>
       </div>
@@ -262,13 +272,15 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Cummulative Tenor</label>
+              <label>Calculate Base</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="CummulativeTenor"
-                (change)="SetNeedReCalculate(true)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CummulativeTenor.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.CummulativeTenor" [submit]="enjiForm.submitted">
+            <div class="col-md-3 form-inline">
+              <select formControlName="CalcBase" class="form-control full-width"
+              (change)="CalcBaseChanged($event)">
+                <option value="">--Select--</option>
+                <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.CalcBase" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -316,11 +328,8 @@
 
     <div class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-        (click)="CalcBaseOnRate()">
-        Calculate based on Rate
-      </button>
-      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalcBaseOnInst()">
-        Calculate based on Inst Amt
+        (click)="Calculate()">
+        Calculate
       </button>
     </div>
 

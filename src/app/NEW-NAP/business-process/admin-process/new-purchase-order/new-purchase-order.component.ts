@@ -33,10 +33,10 @@ export class NewPurchaseOrderComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseOrder.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchNewPurchaseOrder.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseOrder.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewPurchaseOrder.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "A.ORI_OFFICE_CODE",
