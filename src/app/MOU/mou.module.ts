@@ -81,6 +81,9 @@ import { MouCustCompanyFinancialComponent } from './mou-customer-request/mou-cus
 import { MouCustCompanyMainComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-main/mou-cust-company-main.component';
 import { MouCustLegalDocComponent } from './mou-customer-request/mou-cust-tab/mou-cust-legal-doc/mou-cust-legal-doc.component';
 import { MouCustMgmntShrholderComponent } from './mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mou-cust-mgmnt-shrholder.component';
+import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-personal-data/similar-mou-personal-data.component';
+import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-company-data/similar-mou-company-data.component';
+import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -192,7 +195,10 @@ export const customCurrencyMaskConfig = {
     MouCustCompanyFinancialComponent,
     MouCustCompanyMainComponent,
     MouCustLegalDocComponent,
-    MouCustMgmntShrholderComponent
+    MouCustMgmntShrholderComponent,
+    SimilarMouPersonalDataComponent,
+    SimilarMouCompanyDataComponent,
+    MouDupCheckPagingComponent
   ],
   exports: [],
   providers: [NGXToastrService],

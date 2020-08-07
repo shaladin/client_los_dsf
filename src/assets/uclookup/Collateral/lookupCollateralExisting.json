@@ -61,13 +61,13 @@
         "type": "sort",
         "position": "center",
         "label": "COLLATERAL NO",
-        "name": "CollateralNo"
+        "name": "MCC.COLLATERAL_NO"
       },
         {
           "type": "sort",
           "position": "center",
           "label": "COLLATERAL CODE",
-          "name": "FullAssetCode"
+          "name": "MCC.FULL_ASSET_CODE"
         },
         {
           "type": "sort",

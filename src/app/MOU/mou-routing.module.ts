@@ -196,6 +196,13 @@ const routes: Routes = [
         data: {
           title: "Unauthorized Page"
         }
+      },
+      {
+        path: "DuplicateCheck",
+        component: UnauthorizedPageComponent,
+        data: {
+          title: "Unauthorized Page"
+        }
       }
     ]
   }
