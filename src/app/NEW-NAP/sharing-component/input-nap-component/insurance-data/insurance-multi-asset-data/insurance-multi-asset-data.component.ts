@@ -38,6 +38,7 @@ import { InsRateAddCvgRuleObj } from 'app/shared/model/InsRateAddCvgRuleObj.Mode
 export class InsuranceMultiAssetDataComponent implements OnInit {
   @Input() appId: number;
   @Input() showCancel: boolean = true;
+  @Input() BLCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -49,6 +50,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   InsSeqNo: number = 0;
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
+  BizTemplateCode: string = "";
 
   appObj: NapAppModel;
   appAssetObj: AppAssetObj = new AppAssetObj();
@@ -192,6 +194,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       InsCpltzAmt: 0,
     });
 
+    var appObj = { AppId: this.appId }
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response) => {
+        this.BizTemplateCode = response["BizTemplateCode"];
+      });
+
     this.appAssetObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
@@ -206,6 +214,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
+        // console.log(response);
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
         var DetailForGridCollateral = {

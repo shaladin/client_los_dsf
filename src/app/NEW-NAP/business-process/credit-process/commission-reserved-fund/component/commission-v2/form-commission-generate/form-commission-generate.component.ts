@@ -253,7 +253,11 @@ export class FormCommissionGenerateComponent implements OnInit {
 
   GetTempRuleObj(supplCode: string, role: string) {
     var tempObj;
+    console.log("GetTempRuleObj: " + this.FormInputObj['content']);
+    console.log(this.FormInputObj);
     if (this.FormInputObj['content'] == CommonConstant.ContentSupplier) {
+      console.log("Is Supplier Commission..");
+      console.log(supplCode);
       tempObj = this.FormInputObj['ruleObj'][supplCode];
     } else if (this.FormInputObj['content'] == CommonConstant.ContentSupplierEmp) {
       tempObj = this.FormInputObj['ruleObj'][supplCode][role];

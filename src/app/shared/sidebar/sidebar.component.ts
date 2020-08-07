@@ -16,14 +16,14 @@ declare var $: any;
 
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
-    public menu:any[];
-    private url:string;
-    version : string;
+    public menu: any[];
+    private url: string;
+    version: string;
     @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
     constructor(private router: Router,
         private route: ActivatedRoute, public translate: TranslateService, private http: HttpClient) {
-            this.version = localStorage.getItem("Version");
+        this.version = localStorage.getItem("Version");
 
     }
 
@@ -39,13 +39,13 @@ export class SidebarComponent implements OnInit {
         //         this.menuItems = data;
         //     }
         //     );
-        if(environment.production==false){
-            this.menuItems = ROUTES.filter(menuItem => menuItem);
-        }
-        else
-        {
-            this.menuItems = JSON.parse(localStorage.getItem("Menu"));
-        }
+        this.menuItems = ROUTES.filter(menuItem => menuItem);
+        // if (environment.production == false) {
+        //     this.menuItems = ROUTES.filter(menuItem => menuItem);
+        // }
+        // else {
+        //     this.menuItems = JSON.parse(localStorage.getItem("Menu"));
+        // }
     }
 
     genParam(params: [{ 'Attr': string, 'Value': string }]) {
@@ -56,13 +56,13 @@ export class SidebarComponent implements OnInit {
         }
         return arrList;
     }
-    
+
     //NGX Wizard - skip url change
     ngxWizardFunction(path: string) {
         if (path.indexOf('forms/ngx') != -1)
             this.router.navigate(['forms/ngx/wizard'], { skipLocationChange: false });
     }
-    
+
     navigateSkipLocationChange(ev) {
         //sementara Sementara begini dulu, belum ketemu solusi lain
         //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu

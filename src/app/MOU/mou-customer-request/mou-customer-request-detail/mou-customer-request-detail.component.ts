@@ -32,7 +32,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MouCustId: [0, [Validators.required]],
     MouCustNo: [''],
     MouCustDt: ['', [Validators.required]],
-    TopupMouCustId: [],
+    TopupMouCustId: [0],
+    CustNo: ['', [Validators.required]],
+    CustName: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
     RefNo: [''],
@@ -45,7 +47,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     Notes: [''],
     SrvyOrderNo: [''],
     MrCustTypeCode: [''],
-    RowVersion: ['']
+    RowVersion: [''],
+    CustModelCode: [''],
+    IdNo: [''],
+    MrIdTypeCode: ['']
   });
 
   constructor(

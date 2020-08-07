@@ -18,7 +18,7 @@
         </th>
         <th><span class="thead-header" name='CollateralPrcnt' translate>Collateral Percentage</span>
         </th>
-        <th>Edit</th>
+        <th *ngIf="BLCode==''">Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -30,7 +30,7 @@
         <td>{{item.OwnerName}}</td>
         <td>{{item.CollateralStat}}</td>
         <td>{{item.CollateralPrcnt}}</td>
-        <td>
+        <td *ngIf="BLCode==''">
           <a class="success p-0" (click)="editData(item.AppCollateralId)">
             <i class="ft-edit-2 font-medium-3 mr-2"></i>
           </a>

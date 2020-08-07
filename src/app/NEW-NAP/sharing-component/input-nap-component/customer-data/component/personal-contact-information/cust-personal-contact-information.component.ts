@@ -117,6 +117,11 @@ export class CustPersonalContactInformationComponent implements OnInit {
     if (this.listContactPersonPersonal == undefined) {
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
+    var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
+    if(selectedRelationship==undefined){ 
+      this.toastr.errorMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP) ;
+      return;
+    } 
     var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var businessDtStr = formatDate(userAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var businessDt = new Date(businessDtStr);
@@ -186,7 +191,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   setCustRelationShip(MrCustRelationshipCode: string) {
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
-    this.selectedRelationshipName = selectedRelationship.Value;
+    if(selectedRelationship!=undefined){
+      this.selectedRelationshipName = selectedRelationship.Value;
+    }
+   
   }
 
   delete(i) {
@@ -224,10 +232,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.CheckSpouse();
   }
 
-  setAppCustPersonalContactPerson() {
+  setAppCustPersonalContactPerson() { 
     this.appCustPersonalContactPersonObj.ContactPersonName = this.ContactInfoPersonalForm.controls.ContactPersonName.value;
     this.appCustPersonalContactPersonObj.MrGenderCode = this.ContactInfoPersonalForm.controls.MrGenderCode.value;
-    this.appCustPersonalContactPersonObj.MrIdTypeCode = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value;
+    this.appCustPersonalContactPersonObj.MrIdTypeCode = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value; 
     this.appCustPersonalContactPersonObj.MrCustRelationshipCode = this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value;
     this.appCustPersonalContactPersonObj.IdNo = this.ContactInfoPersonalForm.controls.IdNo.value;
     this.appCustPersonalContactPersonObj.MrJobProfessionCode = this.selectedProfessionCode;
