@@ -63,7 +63,7 @@
               </div>
 
               <div id="collateral-data-tab" class="content" role="tabpanel" aria-labelledby="collateral-data-tab-trigger">
-                <app-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [MouType]="mouType" (ResponseMouAddColl)="stepHandlerGeneral($event)" (modeDetail)="getModeDetail($event)"></app-mou-request-addcoll>
+                <app-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" (ResponseMouAddColl)="stepHandlerGeneral($event)" (modeDetail)="getModeDetail($event)"></app-mou-request-addcoll>
               </div>
 
               <div id="tc-data-tab" class="content" role="tabpanel" aria-labelledby="tc-data-tab-trigger">
@@ -142,7 +142,7 @@
               </div>
 
               <div id="collateral-data-tab" class="content" role="tabpanel" aria-labelledby="collateral-data-tab-trigger">
-                <app-mou-request-addcoll *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId" [MouType]="mouType" (ResponseMouAddColl)="stepHandlerFactoring($event)"></app-mou-request-addcoll>
+                <app-mou-request-addcoll *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId" (ResponseMouAddColl)="stepHandlerFactoring($event)"></app-mou-request-addcoll>
               </div>
 
               <div id="tc-data-tab" class="content" role="tabpanel" aria-labelledby="tc-data-tab-trigger">
