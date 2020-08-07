@@ -37,10 +37,10 @@ export class CreditApprovalCfnaPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchCreditApproval.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchCreditApprovalCFNA.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApproval.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApprovalCFNA.json";
 
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -81,7 +81,7 @@ export class CreditApprovalCfnaPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        this.router.navigate(["/Nap/CreditProcess/CreditApproval/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode } });
+        this.router.navigate(["/Nap/CreditProcess/CreditApprovalCfna/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode } });
       }
     }
     else if (ev.Key == "HoldTask") {
