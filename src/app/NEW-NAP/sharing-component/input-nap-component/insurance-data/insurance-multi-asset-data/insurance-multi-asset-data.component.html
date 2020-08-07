@@ -4,7 +4,7 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm" (ngSubmit)="InsuranceDataForm.valid"
           #enjiForm="ngForm">
-          <div [hidden]="PageState != 'Paging'" id="assetData">
+          <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR'" id="assetData">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
             <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
@@ -18,8 +18,8 @@
 
           <!-- <app-insurance-data (outputTab)="getValue($event)"></app-insurance-data> -->
 
-          <form [hidden]="PageState != 'EditInsurance'" class="form form-horizontal" [formGroup]="InsuranceDataForm" #formDirective="ngForm"
-            (ngSubmit)="InsuranceDataForm.valid && SaveForm(formDirective)" #enjiForm="ngForm">
+          <form [hidden]="PageState != 'EditInsurance'" class="form form-horizontal" [formGroup]="InsuranceDataForm"
+            #formDirective="ngForm" (ngSubmit)="InsuranceDataForm.valid && SaveForm(formDirective)" #enjiForm="ngForm">
             <div class="form-body">
               <lib-ucSubsection [id]="'collateralDataId'" [title]="'Insurance Object'" [panel]="'collateralData'">
               </lib-ucSubsection>
@@ -306,7 +306,8 @@
                         class="custom-control display-inline-block">
                         <div [formGroupName]="i">
                           <label [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'">
-                            <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{insAddCvgTypeRuleObj[i].Value}}
+                            <input type="checkbox" class="checkboxLabel" formControlName="Value">
+                            {{insAddCvgTypeRuleObj[i].Value}}
                           </label>
                           <!-- <mat-checkbox [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'" formControlName="Value">
                             {{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox> -->
@@ -324,8 +325,10 @@
                       <thead>
                         <tr>
                           <th class="text-center width-5-per"><span translate class="thead-header">Year Num</span></th>
-                          <th class="text-center width-5-per"><span translate class="thead-header"># of Month</span></th>
-                          <th class="text-center width-5-per"><span translate class="thead-header">Sum Insured (%)</span></th>
+                          <th class="text-center width-5-per"><span translate class="thead-header"># of Month</span>
+                          </th>
+                          <th class="text-center width-5-per"><span translate class="thead-header">Sum Insured
+                              (%)</span></th>
                           <th class="text-left"><span translate class="thead-header">Main Coverage Type</span></th>
                           <th class="text-center"><span translate class="thead-header"></span></th>
                           <th class="text-right"><span translate class="thead-header">Rate</span></th>
@@ -393,9 +396,10 @@
                             <div formArrayName="AppInsAddCvgs">
                               <div [formGroupName]="j">
                                 <label class="">
-                                <input type="checkbox" class="checkboxLabel" [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value == 'Loading' ? true : null"
-                                formControlName="Value" (change)="IsAddCvgChanged($event)">                                
-                                {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
+                                  <input type="checkbox" class="checkboxLabel"
+                                    [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value == 'Loading' ? true : null"
+                                    formControlName="Value" (change)="IsAddCvgChanged($event)">
+                                  {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
                                 </label>
                               </div>
                             </div>
@@ -404,8 +408,8 @@
                             <div formArrayName="AppInsAddCvgs" class="form-group-row">
                               <div [formGroupName]="j">
                                 <select class="form-control" formControlName="SumInsuredAmt"
-                                (change)="SumInsuredAmtAddCvgChanged($event, i, j)"                   
-                                [hidden]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value != 'TPL'
+                                  (change)="SumInsuredAmtAddCvgChanged($event, i, j)"
+                                  [hidden]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value != 'TPL'
                                             || InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.Value.value == false">
                                   <option *ngFor="let item of sumInsuredAmtObj" [value]="item">
                                     {{item | number:'.2':'en-US'}}
@@ -472,8 +476,8 @@
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" for="discAmt" translate>Discount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="discAmt" style="float: right;" class="form-control width-75-per" formControlName="TotalCustDiscAmt"
-                        [options]="{ allowNegative: false }"
+                      <input type="" currencyMask id="discAmt" style="float: right;" class="form-control width-75-per"
+                        formControlName="TotalCustDiscAmt" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.TotalCustDiscAmt"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -489,7 +493,8 @@
                     <label class="col-md-4" style="font-size: 90%" for="insCpltzAmt" translate>Capitalize
                       Amount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="insCpltzAmt" style="float: right;" class="form-control width-75-per" formControlName="InsCpltzAmt"
+                      <input type="" currencyMask id="insCpltzAmt" style="float: right;"
+                        class="form-control width-75-per" formControlName="InsCpltzAmt"
                         [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsCpltzAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsCpltzAmt"
