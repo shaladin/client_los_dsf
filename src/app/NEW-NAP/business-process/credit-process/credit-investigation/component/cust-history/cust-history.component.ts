@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-cust-history',
@@ -30,6 +31,17 @@ export class CustHistoryComponent implements OnInit {
     this.http.post(URLConstant.GetCustDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.CustNo = response["AppCustObj"]["CustNo"];
+        this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+          (response: AppObj) => {
+            this.http.post(URLConstant.GetAppByCustNoAndIsAppInitDone, { CustNo: this.CustNo,IsAppInitDone: response.IsAppInitDone }).subscribe(
+              (response) => {
+                this.AppPrcs = response;
+              });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
         this.http.post(URLConstant.GetAgrmntByCustNo, { CustNo: this.CustNo }).subscribe(
           (response) => {
             this.ExstAgrmnt = response;
@@ -38,10 +50,6 @@ export class CustHistoryComponent implements OnInit {
           (response) => {
             this.AppRjct = response;
           });
-          this.http.post(URLConstant.GetAppByCustNoAndIsAppInitDone, { CustNo: this.CustNo,IsAppInitDone: false }).subscribe(
-            (response) => {
-              this.AppPrcs = response;
-            });
       });
   }
 
