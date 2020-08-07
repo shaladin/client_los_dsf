@@ -717,6 +717,8 @@ export class URLConstant {
 
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
+    public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
+    public static DeleteAppTc = environment.losUrl + "/AppTc/DeleteAppTc";
 
     // App Asset
     public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
@@ -812,6 +814,8 @@ export class URLConstant {
     public static GetRefTcByCode = environment.FoundationR3Url + "/RefTc/GetRefTcByCode";
     public static GetListRefTcByTcCode = environment.FoundationR3Url + "/RefTc/GetListRefTcByTcCode";
     public static GetListActiveRefTc = environment.FoundationR3Url + "/RefTc/GetListActiveRefTc";
+    public static GetListRefTcCompany = environment.FoundationR3Url + "/RefTc/GetListRefTcCompany";
+    public static GetListRefTcPersonal = environment.FoundationR3Url + "/RefTc/GetListRefTcPersonal";
 
     //APP INSURANCE
     public static GetInsuranceDataByAppId = environment.losUrl + "/AppIns/GetInsDataByAppId";
