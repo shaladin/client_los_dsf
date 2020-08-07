@@ -50,6 +50,7 @@ import { CreditReviewCfnaComponent } from './credit-review-cfna/credit-review-cf
 import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
 import { CreditApprovalCfnaComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna.component';
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
+import { CommissionCfnaComponent } from './commission-reserved-fund/component/commission-cfna/commission-cfna.component';
 
 
 
@@ -126,7 +127,8 @@ export const customCurrencyMaskConfig = {
     CreditReviewCfnaComponent,
     CreditReviewCfnaPagingComponent,
     CreditApprovalCfnaComponent,
-    CreditApprovalCfnaPagingComponent
+    CreditApprovalCfnaPagingComponent,
+    CommissionCfnaComponent
   ],
   providers: [
     NGXToastrService

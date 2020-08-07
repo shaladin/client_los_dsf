@@ -210,29 +210,6 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Diff Rate Amount</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
-            </div>
-            <!-- <div class="col-md-3 form-inline">
-              <label>Flat Rate To Supplier</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="SupplFlatRatePrcnt" (ngModelChange)="SetNeedReCalculate(true)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SupplFlatRatePrcnt.invalid}"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.SupplFlatRatePrcnt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
               <label>Installment Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -289,13 +266,7 @@
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 offset-md-6 form-inline">
+            <div class="col-md-3 form-inline">
               <label>Cummulative Tenor</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -303,6 +274,28 @@
                 (change)="SetNeedReCalculate(true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CummulativeTenor.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.CummulativeTenor" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+            </div>
+            <div class="col-md-3 form-inline">
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Calculate Base</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <select formControlName="CalcBase" class="form-control full-width"
+              (change)="CalcBaseChanged($event)">
+                <option value="">--Select--</option>
+                <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.CalcBase" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -350,11 +343,8 @@
 
     <div class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-        (click)="CalcBaseOnRate()">
-        Calculate based on Rate
-      </button>
-      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalcBaseOnInst()">
-        Calculate based on Inst Amt
+        (click)="Calculate()">
+        Calculate
       </button>
     </div>
 

@@ -34,6 +34,8 @@ export class ExceptionConstant {
     public static CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN = "Capitalize Amount can't be higher than ";
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";
     public static TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN = "Total Reserved Fund Amount Must be Less Than ";
+    public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
+    public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";

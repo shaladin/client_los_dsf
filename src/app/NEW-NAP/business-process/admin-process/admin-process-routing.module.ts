@@ -32,6 +32,8 @@ import { CustConfirmationPagingComponent } from './cust-confirmation/cust-confir
 import { CustConfirmationSubjDetailComponent } from './cust-confirmation/cust-confirmation-subj-detail/cust-confirmation-subj-detail.component';
 import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-order.component';
 import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
+import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
+import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
 
 const routes: Routes = [
   {
@@ -201,6 +203,20 @@ const routes: Routes = [
       {
         path: 'DocumentSigner/Detail',
         component: DocSignerDetailComponent,
+        data: {
+          title: 'Document Signer Detail'
+        }
+      },
+      {
+        path: 'NewDocumentSigner/Paging',
+        component: DocSignerCfnaComponent,
+        data: {
+          title: 'Document Signer Paging'
+        }
+      },
+      {
+        path: 'NewDocumentSigner/Detail',
+        component: DocSignerCfnaDetailComponent,
         data: {
           title: 'Document Signer Detail'
         }

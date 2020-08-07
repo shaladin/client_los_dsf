@@ -267,6 +267,17 @@
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
+            <div class="col-md-3 form-inline">
+              <label>Calculate Base</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <select formControlName="CalcBase" class="form-control full-width">
+                <option value="">--Select--</option>
+                <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.CalcBase" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
           </div>
         </div>
       </div>
@@ -311,8 +322,8 @@
     </div>
     <div class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-        (click)="CalculateInstallment()">
-        Calculate Installment
+        (click)="Calculate()">
+        Calculate
       </button>
     </div>
     <div *ngIf="listInstallment">

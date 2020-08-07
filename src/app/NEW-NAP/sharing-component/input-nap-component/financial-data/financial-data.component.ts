@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -11,6 +11,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
+import { SubsidyComponent } from './component/subsidy/subsidy.component';
 
 
 @Component({
@@ -23,6 +25,9 @@ export class FinancialDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild(SubsidyComponent) subsidyComponent;
+
+
   //AppId : number;
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -33,6 +38,9 @@ export class FinancialDataComponent implements OnInit {
   responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
+
+  listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
+
 
   constructor(
     private fb: FormBuilder,
@@ -82,8 +90,9 @@ export class FinancialDataComponent implements OnInit {
         SupplFlatRatePrcnt: 0,
 
         DiffRateAmt: 0,
-        SubsidyAmtFromDiffRate: 0,
+        SubsidyAmtFromDiffRate: {value: 0, disabled: true},
         CommissionAmtFromDiffRate: 0,
+        IsSubsidyRateExist: false,
 
         TotalInterestAmt: 0,
         TotalAR: 0,
@@ -112,6 +121,7 @@ export class FinancialDataComponent implements OnInit {
 
         ApvAmt: 0,
         TotalDpAmt: 0,
+        VendorAtpmCode: '',
 
         CalcBase: '',
         NeedReCalculate: true
@@ -125,7 +135,7 @@ export class FinancialDataComponent implements OnInit {
       (response) => {
         this.appFinDataObj = response;
 
-        if (this.appFinDataObj.MrInstSchemeCode != 'RF') {
+        if (this.appFinDataObj.MrInstSchemeCode != CommonConstant.InstSchmRegularFix) {
           this.FinDataForm.get("RateType").disable();
         }
 
@@ -165,7 +175,8 @@ export class FinancialDataComponent implements OnInit {
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
           SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
-          TotalDpAmt: this.appFinDataObj.TotalDpAmt
+          TotalDpAmt: this.appFinDataObj.TotalDpAmt,
+          VendorAtpmCode: this.appFinDataObj.VendorAtpmCode
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
@@ -186,7 +197,7 @@ export class FinancialDataComponent implements OnInit {
     }
     if (isValidGrossYield && isValidGracePeriod) {
       this.SetDiffRateAmt();
-      this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.value).subscribe(
+      this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
@@ -199,15 +210,64 @@ export class FinancialDataComponent implements OnInit {
     this.outputCancel.emit();
   }
 
+  CheckSubsidyRate(event){
+    if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix || this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmBalloon) {
+      var listSubsidy: Array<AppSubsidyObj> = event;
+
+      var subsidyRate = listSubsidy.find(x => x.MrSubsidyAllocCode == CommonConstant.SubsidyAllocSubsidyRate);
+  
+      if(subsidyRate != undefined){
+        this.FinDataForm.patchValue({
+          CommissionAmtFromDiffRate: 0,
+          IsSubsidyRateExist: true
+        });
+        this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
+      }else{
+        this.FinDataForm.patchValue({
+          IsSubsidyRateExist: false
+        });
+        this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
+      }
+    }  
+  }
+
+  SetInputByCalcBase(calcBase){
+    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
+      if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
+        this.FinDataForm.get("RateType").enable();
+      }      
+      this.FinDataForm.get("EffectiveRatePrcnt").enable();
+      this.FinDataForm.get("InstAmt").disable();
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){      
+      this.FinDataForm.get("RateType").disable();
+      this.FinDataForm.get("EffectiveRatePrcnt").disable();
+      this.FinDataForm.get("InstAmt").enable();
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+      this.FinDataForm.get("RateType").disable();
+      this.FinDataForm.get("EffectiveRatePrcnt").disable();
+      this.FinDataForm.get("InstAmt").disable();
+    }else{
+      if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
+        this.FinDataForm.get("RateType").enable();
+      }      
+      this.FinDataForm.get("EffectiveRatePrcnt").enable();
+      this.FinDataForm.get("InstAmt").enable();
+    }
+  }
+
+  RefreshSubsidy(event){
+    this.subsidyComponent.LoadSubsidyData();
+  }
+
   SetDiffRateAmt(){
-    if(this.FinDataForm.value.SubsidyAmtFromDiffRate > 0){
+    if(this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate > 0){
       this.FinDataForm.patchValue({
-        DiffRateAmt: this.FinDataForm.value.SubsidyAmtFromDiffRate * -1
+        DiffRateAmt: this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate * -1
       });
     }
-    if(this.FinDataForm.value.CommissionAmtFromDiffRate > 0){
+    if(this.FinDataForm.getRawValue().CommissionAmtFromDiffRate > 0){
       this.FinDataForm.patchValue({
-        DiffRateAmt: this.FinDataForm.value.CommissionAmtFromDiffRate
+        DiffRateAmt: this.FinDataForm.getRawValue().CommissionAmtFromDiffRate
       });
     }
   }
@@ -262,5 +322,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   // test() {
+  //   console.log(this.FinDataForm)
+  //   console.log(this.FinDataForm.getRawValue());
   // }
 }
