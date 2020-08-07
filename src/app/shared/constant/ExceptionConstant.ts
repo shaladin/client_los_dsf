@@ -57,6 +57,7 @@ export class ExceptionConstant {
     public static CHOOSE_PAID_BY = "Please choose Paid By.";
     public static CHOOSE_REGION = "Please choose Region.";
     public static CHOOSE_COVER_PERIOD = "Please choose Cover Period.";
+    public static CHOOSE_CUST_RELATIONSHIP= "Please Choose Cust Relationship.";
     public static INPUT_INSURANCE_LENGTH = "Please input Insurance Length.";
     public static CHOOSE_CALCULATE_BASE = "Please choose Calculate Base.";
     public static SAVE_TC_DATA = "Please Save TC Data First!";
