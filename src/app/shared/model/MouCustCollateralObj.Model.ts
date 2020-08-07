@@ -16,6 +16,7 @@ export class MouCustCollateralObj{
     SerialNo4: any;
     SerialNo5: any;
     CollateralValueAmt: any;
+    CollateralPrcnt: number;
     AssetTaxDate: any;
     CollateralNotes: any;
     ManufacturingYear: any;
