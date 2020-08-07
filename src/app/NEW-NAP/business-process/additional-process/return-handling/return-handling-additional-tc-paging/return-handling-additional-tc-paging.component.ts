@@ -52,7 +52,7 @@ export class ReturnHandlingAdditionalTcPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "ADD_PHN_VERF_" + this.BizTemplateCode;
+    critObj.value = "ADD_TC_" + this.BizTemplateCode;
     critObjs.push(critObj);
 
     return critObjs;

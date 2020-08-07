@@ -353,6 +353,7 @@ export class CommonConstant {
     public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
     public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
     public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
+    public static ReturnHandlingAddTc = "RTN_ADD_TC";
     public static ReturnStatNew = "NEW";
     public static ReturnStatRequest = "REQ";
 

@@ -11,6 +11,8 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -47,7 +49,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   };
 
   AddTcForm = this.fb.group({
-    DocTc: ['', [Validators.required, Validators.maxLength(50)]],
+    TcName: ['', [Validators.required, Validators.maxLength(50)]],
     Notes: ['', [Validators.required, Validators.maxLength(50)]]
   });
 
@@ -59,6 +61,9 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   listAddTc : Array<AppTCObj> = new Array<AppTCObj>();
   appTcObj : Array<AppTCObj> = new Array<AppTCObj>();
   listTcCode : Array<AppTCObj> = new Array<AppTCObj>();
+
+  inputGridObj: InputGridObj;
+  ReqTCObj = new ReqTCObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router,
     private modalService: NgbModal,) {
@@ -83,6 +88,25 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
+  initExistingTc(){
+    this.inputGridObj = new InputGridObj();
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
+
+    
+    var AppObj = {
+      AppId: this.appId
+    }
+
+    this.http.post(URLConstant.GetListTCbyAppId, AppObj).subscribe(
+      (response) => {
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = response["AppTcs"]
+      });
+  }
+
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
@@ -90,11 +114,11 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.initUrl();
     this.appObj.AppId = this.appId;
     this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.initExistingTc();
     await this.GetAppData();
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
     }
-    this.bindRefTcObj();
   }
 
   SaveForm() {
@@ -102,12 +126,13 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
     }
     if (this.isReturnHandling == true) {
+      this.setAddTc();
       this.setReturnHandlingD();
       this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
         });
 
     }
@@ -125,6 +150,17 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.ReturnHandlingDData.RowVersion = this.returnHandlingDObj.RowVersion;
   }
 
+  setAddTc(){
+    for(var i = 0; i < this.listAddTc.length;i++){
+      this.listAddTc[i].IsMandatory = true ;
+      this.listAddTc[i].AppId = this.appId;
+    }
+    this.ReqTCObj.ListAppTcObj = this.listAddTc;
+    this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
+      (response) => {
+      });
+  }
+
   async GetAppData() {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
       (response) => {
@@ -138,7 +174,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     if (this.returnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingAddColtr
+        MrReturnTaskCode: CommonConstant.ReturnHandlingAddTc
       }
       this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
@@ -151,21 +187,27 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   bindRefTcObj() {
     this.http.post(URLConstant.GetListTCbyAppId, {appId : this.appId}).subscribe(
       (response) => {
-        var result : any;
         this.listTcCode = response["AppTcs"]
         this.http.post(URLConstant.GetListActiveRefTc, {}).subscribe(
           (response) => {
             var result : any;
             result = response[CommonConstant.ReturnObj];
-            for(var i =0;i<result.length;i++){
-              for(var j = 0; j<this.listTcCode.length; j ++){
-                if(!result[i]["TcCode"].some(x => x == this.listTcCode[j]["TcCode"])){
-                  this.appTcObj = result;
-                }
+            var listTcCodes = new Array();
+            for(var i = 0 ; i<this.listTcCode.length; i ++){
+              listTcCodes.push(this.listTcCode[i]["TcCode"]);
+            }
+            var curr =this.listAddedTc();
+            console.log(curr);
+            for(var j = 0 ; j<result.length; j ++){
+              if(!listTcCodes.includes(result[j].TcCode) && !curr.includes(result[j].TcName)){
+                this.appTcObj.push(result[j]);
               }
             }
+            this.AddTcForm.patchValue({
+              TcName: this.appTcObj[0].TcName,
+            });
             if (this.appTcObj.length > 0) {
-              this.defaultDocType = this.appObj[0]["TcCode"].Value;
+              this.defaultDocType = this.appTcObj[0].TcCode;
             }
           }
         );
@@ -173,13 +215,26 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     );
   }
 
+  listAddedTc(){
+    var listAddedTc = new Array();
+    for(var x = 0; x< this.listAddTc.length; x++){
+      listAddedTc.push(this.listAddTc[x]["TcName"])
+    }
+    return listAddedTc;
+  }
+
   AddNewTc() {
     var appTcObj = new AppTCObj();
     if (this.listAddTc == undefined) {
       this.listAddTc = new Array<AppTCObj>();
     }
+    appTcObj.TcName = this.AddTcForm.controls.TcName.value;
+    appTcObj.Notes = this.AddTcForm.controls.Notes.value;
+    appTcObj.TcCode = this.appTcObj.find(i => i["TcName"] == this.AddTcForm.controls.TcName.value)["TcCode"];
+  
     if (this.mode == "Add") {
       this.listAddTc.push(appTcObj);
+      console.log(this.listAddTc);
     }
     if (this.mode == "Edit") {
       this.listAddTc[this.currentEditedIndex] = appTcObj;
@@ -189,8 +244,10 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   add(content) {
-    this.mode= "add"
+    this.mode= "Add"
     this.open(content);
+    this.appTcObj = new Array<AppTCObj>();
+    this.bindRefTcObj();
   }
 
   edit(i, content) {
@@ -198,7 +255,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.mode = "Edit";
     this.currentEditedIndex = i;
     this.AddTcForm.patchValue({
-      DocTc: this.listAddTc[i].TcName,
+      TcName: this.listAddTc[i].TcName,
       Notes: this.listAddTc[i].Notes,
     });
     this.open(content);
@@ -231,17 +288,9 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   clearForm() {
     this.AddTcForm = this.fb.group({
-      DocTc: [this.defaultDocType, [Validators.required, Validators.maxLength(50)]],
-      DocNo: ['', [Validators.required, Validators.maxLength(50)]],
+      TcName: ['', [Validators.required, Validators.maxLength(50)]],
+      Notes: ['', [Validators.required, Validators.maxLength(50)]],
     });
-  }
-
-  AddEdit(AppCollateralId) {
-    if (this.isReturnHandling == false) {
-    }
-    if (this.isReturnHandling == true) {
-      this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail?AppId=" + this.appId + "&AppCollateralId=" + AppCollateralId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
-    }
   }
 
   ClaimTask() {
@@ -253,5 +302,9 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
+  }
+
+  cancel() {
+    this.modal.close();
   }
 }
