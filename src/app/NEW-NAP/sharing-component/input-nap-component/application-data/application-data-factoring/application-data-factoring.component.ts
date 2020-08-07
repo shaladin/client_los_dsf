@@ -39,10 +39,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
     SalesOfficerNo: ['', Validators.required],
     SalesHeadNo: [''],
     SalesHeadName: [''],
-    SalesOfficerName:[''],
+    SalesOfficerName: [''],
     MrInstTypeCode: ['', Validators.required],
-    TopDays: ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
-    Tenor: ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
+    TopDays: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    Tenor: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     NumOfInst: ['', Validators.required],
     MrInstSchemeCode: ['', Validators.required],
     IsDisclosed: [false, Validators.required],
@@ -118,13 +118,13 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.allMouCust = response;
         var MouCustId;
         if (this.mode == 'edit') {
-          MouCustId = this.resultData.MouCustId          
+          MouCustId = this.resultData.MouCustId
           this.SalesAppInfoForm.patchValue({
             MouCustId: MouCustId
           });
         }
-        if (MouCustId == null){
-          MouCustId = this.allMouCust[0].MouCustId;          
+        if (MouCustId == null) {
+          MouCustId = this.allMouCust[0].MouCustId;
           this.SalesAppInfoForm.patchValue({
             MouCustId: MouCustId
           });
@@ -142,15 +142,15 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
       });
 
-      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
-        (response) => {
-          this.allTopBased = response[CommonConstant.ReturnObj];
-          if (this.mode != 'edit') {
-            this.SalesAppInfoForm.patchValue({
-              TopBased: this.allTopBased[0].Key
-            });
-          }
-        });
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
+      (response) => {
+        this.allTopBased = response[CommonConstant.ReturnObj];
+        if (this.mode != 'edit') {
+          this.SalesAppInfoForm.patchValue({
+            TopBased: this.allTopBased[0].Key
+          });
+        }
+      });
 
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
       (response) => {
@@ -168,7 +168,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             SalesOfficerNo: this.allInSalesOffice[0].EmpNo,
-            SalesOfficerName:this.allInSalesOffice[0].EmpName,
+            SalesOfficerName: this.allInSalesOffice[0].EmpName,
           });
         }
       });
@@ -244,11 +244,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
       });
 
-      this.CheckInstType();
+    this.CheckInstType();
   }
 
   SetPayFreq(MouCustId: number) {
-    var MouObj={
+    var MouObj = {
       MouCustId: MouCustId
     }
     this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
@@ -264,7 +264,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 PayFreqCode: PayFreqCode
               });
             }
-            if (PayFreqCode == null){
+            if (PayFreqCode == null) {
               PayFreqCode = "MONTHLY"
               this.SalesAppInfoForm.patchValue({
                 PayFreqCode: PayFreqCode
@@ -272,8 +272,16 @@ export class ApplicationDataFactoringComponent implements OnInit {
             }
           });
       });
+    for (let i = 0; i < this.allMouCust.length; i++) {
+      if(this.allMouCust[i].MouCustId == MouCustId){
+        this.SalesAppInfoForm.patchValue({
+          MrInstTypeCode : this.allMouCust[i].MrInstTypeCode
+        }) 
+      }
+    }
+    this.SalesAppInfoForm.controls.MrInstTypeCode.disable();
+    this.CheckInstType();
   }
-
   CalculateNumOfInst() {
     var numOfInst;
     numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
@@ -282,6 +290,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   CheckInstType() {
+
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE") {
       this.SalesAppInfoForm.controls.Tenor.enable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.enable();
@@ -291,7 +300,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls.Tenor.patchValue(1);
       this.SalesAppInfoForm.controls.TopBased.enable();
-      this.SalesAppInfoForm.controls.TopDays.setValidators([Validators.required,Validators.pattern("^[0-9]+$")]);
+      this.SalesAppInfoForm.controls.TopDays.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
       this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
     }
@@ -308,7 +317,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     });
   }
-  makeLookUpObj(){
+  makeLookUpObj() {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -338,7 +347,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     addCrit2.restriction = AdInsConstant.RestrictionEq;
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
-    
+
     var addCrit3 = new CriteriaObj();
     addCrit3.DataType = "text";
     addCrit3.propName = "rbt.JOB_TITLE_CODE";
@@ -352,7 +361,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultData.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
-    
+
     //this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.makeLookUpObj();
   }
@@ -378,12 +387,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
-            SalesOfficerName:this.resultData.SalesOfficerName,
+            SalesOfficerName: this.resultData.SalesOfficerName,
             SalesHeadName: this.resultData.SalesHeadName,
             SalesHeadNo: this.resultData.SalesHeadNo,
             MrInstTypeCode: this.resultData.MrInstTypeCode,
             TopDays: this.resultData.TopDays,
-            TopBased : this.resultData.TopBased,
+            TopBased: this.resultData.TopBased,
             Tenor: this.resultData.Tenor,
             NumOfInst: this.resultData.NumOfInst,
             IsDisclosed: this.resultData.IsDisclosed,
@@ -400,12 +409,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
-            SalesOfficerName:this.resultData.SalesOfficerName,
+            SalesOfficerName: this.resultData.SalesOfficerName,
             SalesHeadName: this.resultData.SalesHeadName,
             SalesHeadNo: this.resultData.SalesHeadNo,
             MrInstTypeCode: this.resultData.MrInstTypeCode,
             TopDays: this.resultData.TopDays,
-            TopBased : this.resultData.TopBased,
+            TopBased: this.resultData.TopBased,
             Tenor: this.resultData.Tenor,
             NumOfInst: this.resultData.NumOfInst,
             MrInstSchemeCode: this.resultData.MrInstSchemeCode,
@@ -418,8 +427,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
             InterestType: this.resultData.InterestType
           });
-         } 
-         this.makeNewLookupCriteria();
+        }
+        this.makeNewLookupCriteria();
       });
   }
   SaveForm(): void {
@@ -435,7 +444,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
     }
-    
+
     if (this.mode == "add") {
       this.http.post(URLConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
         (response) => {

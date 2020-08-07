@@ -5,12 +5,12 @@
   <div class="card-body">
     <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
     <mat-tab-group>
-      <mat-tab label="Summary">
+      <!-- <mat-tab label="Summary">
         <ng-template matTabContent>
           <view-summary-app [AppId] = "appId">
           </view-summary-app>
         </ng-template>
-      </mat-tab>
+      </mat-tab> -->
       <mat-tab label="Customer Data">
         <ng-template matTabContent>
           <app-view-app-cust-data-personal [appId]="appId" *ngIf="mrCustTypeCode=='PERSONAL'">

@@ -10,6 +10,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class MultiCollDataComponent implements OnInit {
 
   @Input() AppId: number;
+  @Input() BLCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
   AppCollateralId: number = 0;
   mode: string = "add";
@@ -19,10 +20,14 @@ export class MultiCollDataComponent implements OnInit {
 
   constructor(private toastr : NGXToastrService) { }
 
+  isMultiCollPaging: boolean = false;
   ngOnInit() {
+    console.log(this.BLCode);
+    this.isMultiCollPaging = true;
   }
   GetList(ev) {
     this.AppCollateral = ev;
+    console.log(this.AppCollateral);
   }
 
   Cancel(){
