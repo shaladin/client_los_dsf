@@ -235,6 +235,20 @@ export class MouRequestAddcollComponent implements OnInit {
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
     }else{
+      var arrMemberList = new Array();
+          for (let index = 0; index < this.listCollateralData.length; index++) {
+            arrMemberList.push(this.listCollateralData[index].CollateralNo)
+          }
+  
+          if (arrMemberList.length != 0) {
+            var addCritListCollateralNo = new CriteriaObj();
+            addCritListCollateralNo.DataType = "numeric";
+            addCritListCollateralNo.propName = "MCC.COLLATERAL_NO";
+            addCritListCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
+            addCritListCollateralNo.listValue = arrMemberList;
+            this.criteriaList.push(addCritListCollateralNo);
+          }
+
       this.criteriaObj = new CriteriaObj();
       this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
       this.criteriaObj.propName = 'MCC.ASSET_TYPE_CODE';
