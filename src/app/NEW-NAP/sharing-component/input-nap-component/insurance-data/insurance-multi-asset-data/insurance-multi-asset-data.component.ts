@@ -247,9 +247,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   GetExistingAppCollateralWithInsurance() {
-    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListExistingAppCollateralWithInsurance, { AppId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListExistingAppCollateralWithInsurance, { AppId: this.appId }).subscribe(
       (response) => {
-        this.existingListAppColl = response;
+        this.existingListAppColl = response["AppCollateralObjs"];
         console.log(response);
       });
   }
@@ -275,10 +275,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     if (this.BLCode == CommonConstant.FCTR && this.existingListAppColl.length != 0) {
       for (let i = 0; i < this.existingListAppColl.length; i++) {
         if (this.existingListAppColl[i].CollateralNo == this.appCollateralObj.CollateralNo) {
-
           this.InsuranceDataForm.patchValue({
             InsAssetCoveredBy: "OFF"
           });
+          this.setValidator(this.InsuranceDataForm.get("InsAssetCoveredBy").value);
           this.InsuranceDataForm.controls.InsAssetCoveredBy.disable();
           break;
         }
