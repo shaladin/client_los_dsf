@@ -26,7 +26,7 @@
         <td>{{i+1}}</td>
         <td>{{item.FullAssetName}}</td>
         <td>{{item.AssetTypeCode}}</td>
-        <td>{{item.CollateralValueAmt}}</td>
+        <td>{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
         <td>{{item.OwnerName}}</td>
         <td>{{item.CollateralStat}}</td>
         <td>{{item.CollateralPrcnt}}</td>
