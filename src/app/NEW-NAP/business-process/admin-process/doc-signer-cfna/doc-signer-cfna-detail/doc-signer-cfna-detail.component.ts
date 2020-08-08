@@ -166,7 +166,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         // crit1Obj.restriction = AdInsConstant.RestrictionEq;
         // crit1Obj.value = this.SupplCode;
         // this.inputLookupBranchEmpObj.addCritInput.push(crit1Obj);
-        if(response["listResponseAppLoanPurpose"].length > 0){
+        if(response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0){
           var arrValue = new Array<string>();
           for (const item of response["listResponseAppLoanPurpose"]) {
             arrValue.push(item["SupplCode"]);

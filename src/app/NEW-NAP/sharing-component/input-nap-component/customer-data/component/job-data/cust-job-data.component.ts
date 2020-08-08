@@ -53,7 +53,8 @@ export class CustJobDataComponent implements OnInit {
   selectedProfessionCode: any;
   InputLookupIndustryTypeObj: any;
   selectedIndustryTypeCode: any;
-
+  IsInitJobData : boolean = true;
+  IsCopy : boolean = false;
   JobPositionObj: any;
   JobStatObj: any;
   CompanyScaleObj: any;
@@ -112,6 +113,12 @@ export class CustJobDataComponent implements OnInit {
   }
 
   CustModelChanged(){
+    if(this.IsInitJobData == false){ 
+      this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = ""; 
+        this.selectedProfessionCode =  "";
+    }
+
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     this.CriteriaAddLookUpProfessionName();
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
@@ -200,9 +207,11 @@ export class CustJobDataComponent implements OnInit {
   }
 
   bindAppCustPersonalJobData(){
-    if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
+    this.IsInitJobData = true;
+    
+    if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != ""  )
       this.CriteriaAddLookUpProfessionName();
-    if(this.appCustPersonalJobDataObj.AppCustPersonalId != 0){
+    if(this.appCustPersonalJobDataObj.AppCustPersonalId != 0 || this.IsCopy == true){
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.appCustPersonalJobDataObj.ProfessionalNo,
@@ -216,12 +225,15 @@ export class CustJobDataComponent implements OnInit {
         MrJobStatCode: this.appCustPersonalJobDataObj.MrJobStatCode,
         MrInvestmentTypeCode: this.appCustPersonalJobDataObj.MrInvestmentTypeCode
       });
+     
       this.selectedProfessionCode = this.appCustPersonalJobDataObj.MrProfessionCode;
       this.setProfessionName(this.appCustPersonalJobDataObj.MrProfessionCode);
       this.selectedIndustryTypeCode = this.appCustPersonalJobDataObj.IndustryTypeCode;
       this.setIndustryTypeName(this.appCustPersonalJobDataObj.IndustryTypeCode);
       this.CustModelChanged();
       this.setAddrJobDataObj();
+      this.IsInitJobData = false
+      this.IsCopy = false
     }
   }
 

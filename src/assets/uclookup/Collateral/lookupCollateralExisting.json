@@ -1,0 +1,169 @@
+{
+    "title": "Lookup Collateral Type",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "MCC.FULL_ASSET_CODE",
+        "id": "FullAssetCode",
+        "value": "",
+        "label": "Full Asset Code",
+        "placeholder": "Full Asset Code"
+      },
+      {
+        "type": "textbox",
+        "name": "MCC.FULL_ASSET_NAME",
+        "id": "FullAssetName",
+        "value": "",
+        "label": "Collateral Name",
+        "placeholder": "Collateral Name"
+      },
+      {
+        "type": "textbox",
+        "name": "MCC.MANUFACTURING_YEAR",
+        "id": "ManufacturingYear",
+        "value": "",
+        "label": "Manufacturing Year",
+        "placeholder": "Manufacturing Year"
+      },
+      {
+        "type": "textbox",
+        "name": "MCC.SERIAL_NO_1",
+        "id": "SerialNo1",
+        "value": "",
+        "label": "Serial No 1",
+        "placeholder": "Serial No 1"
+      },
+      {
+        "type": "textbox",
+        "name": "MCC.SERIAL_NO_2",
+        "id": "SerialNo2",
+        "value": "",
+        "label": "Serial No 2",
+        "placeholder": "Serial No 2"
+      },
+      {
+        "type": "textbox",
+        "name": "MCC.SERIAL_NO_3",
+        "id": "SerialNo3",
+        "value": "",
+        "label": "Serial No 3",
+        "placeholder": "Serial No 3"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT MCC.COLLATERAL_NO AS CollateralNo, MCC.FULL_ASSET_CODE AS FullAssetCode, MCC.FULL_ASSET_NAME AS FullAssetName, MCC.MANUFACTURING_YEAR AS ManufacturingYear, MCC.SERIAL_NO_1 AS SerialNo1, MCC.SERIAL_NO_2 AS SerialNo2, MCC.SERIAL_NO_3 AS SerialNo3, SUM(MCC.COLLATERAL_PRCNT) AS SumCollateralPrcnt",
+      "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) INNER JOIN dbo.MOU_CUST_COLLATERAL AS MCC WITH(NOLOCK) ON MC.MOU_CUST_ID = MCC.MOU_CUST_ID",
+      "where": "WHERE MC.MOU_STAT IN ( N'NEW', N'RJC', N'CAN', N'EXP')",
+      "groupby": "GROUP BY MCC.COLLATERAL_NO, MCC.FULL_ASSET_CODE, MCC.FULL_ASSET_NAME, MCC.MANUFACTURING_YEAR, MCC.SERIAL_NO_1, MCC.SERIAL_NO_2, MCC.SERIAL_NO_3 HAVING SUM(MCC.COLLATERAL_PRCNT) < 100"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "COLLATERAL NO",
+        "name": "CollateralNo"
+      },
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "COLLATERAL CODE",
+          "name": "FullAssetCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "COLLATERAL NAME",
+          "name": "FullAssetName"
+        },
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "MANUFACTURING YEAR",
+          "name": "ManufacturingYear"
+        },
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "SERIAL NO 1",
+          "name": "SerialNo1"
+        },
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "SERIAL NO 2",
+          "name": "SerialNo2"
+        },
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "SERIAL NO 3",
+          "name": "SerialNo3"
+        },
+        {
+          "type": "sort",
+          "position": "right",
+          "label": "COLLATERAL USED PERCENTAGE",
+          "name": "SumCollateralPrcnt"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CollateralNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "FullAssetCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ManufacturingYear"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "SerialNo1"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "SerialNo2"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "SerialNo3"
+      },
+      {
+        "type": "decimal",
+        "position": "right",
+        "property": "SumCollateralPrcnt"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "CollateralNo"
+          }
+        ]
+      }
+    ],
+    "propertyId": "CollateralNo",
+    "propertyName": "FullAssetName"
+  }
+  
