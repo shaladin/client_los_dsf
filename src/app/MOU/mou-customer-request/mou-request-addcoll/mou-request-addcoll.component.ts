@@ -384,6 +384,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
           this.maxPrcnt = 100 - e.SumCollateralPrcnt;
           this.AddCollForm.controls.CollateralPrcnt.setValidators([Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)]);
+          this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity();
 
           if (this.collateralObj.MrCollateralConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
@@ -765,14 +766,13 @@ export class MouRequestAddcollComponent implements OnInit {
 
   ClearForm()
   {
-    this.maxPrcnt = 100;
     this.AddCollForm = this.fb.group({
       MouCustCollateralId: [''],
       MouCustCollateralRegistrationId: [''],
       CopyFromLegal: [''],
       AssetTypeCode: ['', [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
-      CollateralPrcnt: [0, [(Validators.required, Validators.min(0), Validators.max(this.maxPrcnt))]],
+      CollateralPrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       FullAssetCode: [''],
       AssetCategoryCode: [''],
       OwnerName: ['', [Validators.required]],
@@ -791,6 +791,8 @@ export class MouRequestAddcollComponent implements OnInit {
       MrCollateralConditionCode: [''],
       ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]]
     })
+    this.AddCollForm.updateValueAndValidity();
+    
     this.inputFieldLocationObj.inputLookupObj.nameSelect = '';
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: ''}
     this.inputFieldLegalObj.inputLookupObj.nameSelect = '';
@@ -814,6 +816,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.toastr.successMessage(response['message']);
         this.type = 'Paging';
         this.bindMouData();
+        this.ClearForm();
       }
     );
   }

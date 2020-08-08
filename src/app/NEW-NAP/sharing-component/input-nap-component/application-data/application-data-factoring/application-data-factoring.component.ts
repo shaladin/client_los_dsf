@@ -94,6 +94,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.isInputLookupObj = false;
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
+    this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.disable();
   }
 
   setDropdown() {
@@ -473,6 +474,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.salesAppInfoObj = this.SalesAppInfoForm.value;
     this.salesAppInfoObj.AppId = this.AppId;
     this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
+    this.salesAppInfoObj.MrSingleInstCalcMthdCode = this.SalesAppInfoForm.getRawValue().MrSingleInstCalcMthdCode;
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP"; 
