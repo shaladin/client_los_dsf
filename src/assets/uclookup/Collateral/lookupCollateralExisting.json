@@ -51,59 +51,65 @@
       }
     ],
     "querystring": {
-      "select": "SELECT MCC.COLLATERAL_NO AS CollateralNo, MCC.FULL_ASSET_CODE AS FullAssetCode, MCC.FULL_ASSET_NAME AS FullAssetName, MCC.MANUFACTURING_YEAR AS ManufacturingYear, MCC.SERIAL_NO_1 AS SerialNo1, MCC.SERIAL_NO_2 AS SerialNo2, MCC.SERIAL_NO_3 AS SerialNo3, SUM(MCC.COLLATERAL_PRCNT) AS SumCollateralPrcnt",
+      "select": "SELECT MCC.COLLATERAL_NO AS CollateralNo, MIN(MCC.FULL_ASSET_CODE) AS FullAssetCode, MIN(MCC.FULL_ASSET_NAME) AS FullAssetName, MIN(MCC.MANUFACTURING_YEAR) AS ManufacturingYear, MIN(MCC.SERIAL_NO_1) AS SerialNo1, MIN(MCC.SERIAL_NO_2) AS SerialNo2, MIN(MCC.SERIAL_NO_3) AS SerialNo3, MIN(MCC.COLLATERAL_VALUE_AMT) AS CollateralPrice, SUM(MCC.COLLATERAL_PRCNT) AS SumCollateralPrcnt",
       "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) INNER JOIN dbo.MOU_CUST_COLLATERAL AS MCC WITH(NOLOCK) ON MC.MOU_CUST_ID = MCC.MOU_CUST_ID",
       "where": "WHERE MC.MOU_STAT IN ( N'NEW', N'RJC', N'CAN', N'EXP')",
-      "groupby": "GROUP BY MCC.COLLATERAL_NO, MCC.FULL_ASSET_CODE, MCC.FULL_ASSET_NAME, MCC.MANUFACTURING_YEAR, MCC.SERIAL_NO_1, MCC.SERIAL_NO_2, MCC.SERIAL_NO_3 HAVING SUM(MCC.COLLATERAL_PRCNT) < 100"
+      "groupby": "GROUP BY MCC.COLLATERAL_NO HAVING SUM(MCC.COLLATERAL_PRCNT) < 100 AND SUM(MCC.COLLATERAL_PRCNT) > 0"
     },
     "headerList": [
       {
         "type": "sort",
         "position": "center",
         "label": "COLLATERAL NO",
-        "name": "CollateralNo"
+        "name": "MCC.COLLATERAL_NO"
       },
         {
           "type": "sort",
           "position": "center",
           "label": "COLLATERAL CODE",
-          "name": "FullAssetCode"
+          "name": "MCC.FULL_ASSET_CODE"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "COLLATERAL NAME",
-          "name": "FullAssetName"
+          "name": "MCC.FULL_ASSET_NAME"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "MANUFACTURING YEAR",
-          "name": "ManufacturingYear"
+          "name": "MCC.MANUFACTURING_YEAR"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "SERIAL NO 1",
-          "name": "SerialNo1"
+          "name": "MCC.SERIAL_NO_1"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "SERIAL NO 2",
-          "name": "SerialNo2"
+          "name": "MCC.SERIAL_NO_2"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "SERIAL NO 3",
-          "name": "SerialNo3"
+          "name": "MCC.SERIAL_NO_3"
+        },
+        {
+          "type": "sort",
+          "position": "right",
+          "label": "Collateral Price",
+          "name": "MCC.COLLATERAL_VALUE_AMT"
         },
         {
           "type": "sort",
           "position": "right",
           "label": "COLLATERAL USED PERCENTAGE",
-          "name": "SumCollateralPrcnt"
+          "name": "SUM(MCC.COLLATERAL_PRCNT)"
         },
         {
           "type": "label",
@@ -146,6 +152,11 @@
         "type": "text",
         "position": "center",
         "property": "SerialNo3"
+      },
+      {
+        "type": "decimal",
+        "position": "center",
+        "property": "CollateralPrice"
       },
       {
         "type": "decimal",
