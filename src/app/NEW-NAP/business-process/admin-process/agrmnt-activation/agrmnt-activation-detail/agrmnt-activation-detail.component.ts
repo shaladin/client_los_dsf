@@ -129,8 +129,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
         IsEnd: this.IsEnd
       }
       this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
-        let link = environment.losR3Web + "/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode;
-        this.router.navigate([]).then(result => { window.open(link, '_self'); });
+        this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode]);
       });
     }
   }
