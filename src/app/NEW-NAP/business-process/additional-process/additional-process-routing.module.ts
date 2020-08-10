@@ -20,6 +20,8 @@ import { AssetInquiryComponent } from './credit-apv-result-ext/asset-inquiry/ass
 import { CreditApvResultExtDetailComponent } from './credit-apv-result-ext/credit-apv-result-ext-detail/credit-apv-result-ext-detail.component';
 import { CreditApvResultExtPagingComponent } from './credit-apv-result-ext/credit-apv-result-ext-paging/credit-apv-result-ext-paging.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ReturnHandlingAdditionalTcPagingComponent } from './return-handling/return-handling-additional-tc-paging/return-handling-additional-tc-paging.component';
+import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/return-handling-additional-tc-detail/return-handling-additional-tc-detail.component';
 
 const routes: Routes = [
   {
@@ -163,6 +165,20 @@ const routes: Routes = [
         component: CopyCancelledApplicationComponent,
         data: {
           title: 'Copy From Cancelled Application'
+        }
+      },
+      {
+        path: 'ReturnHandlingAddTc/Paging',
+        component: ReturnHandlingAdditionalTcPagingComponent,
+        data: {
+          title: 'Return Handling Additional Tc Paging'
+        }
+      },
+      {
+        path: 'ReturnHandlingAddTc/Detail',
+        component: ReturnHandlingAdditionalTcDetailComponent,
+        data: {
+          title: 'Return Handling Additional Tc Detail'
         }
       }
     ]
