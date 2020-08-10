@@ -223,7 +223,6 @@ export class ReservedFundComponent implements OnInit {
           listAppRsvFunds.push(this.addGroup(this.appReservedFundObjs[j], j, maxAmt, allocAmt));
         }
       }
-
     );
   }
 
@@ -232,7 +231,7 @@ export class ReservedFundComponent implements OnInit {
       No: [i],
       MrReservedFundSourceCode: [appReservedFundObjs.MrReservedFundSourceCode],
       MrReservedFundCode: [appReservedFundObjs.MrReservedFundCode],
-      ReservedFundAmt: [allocAmt, [Validators.required, Validators.max(maxAmt)]],
+      ReservedFundAmt: [appReservedFundObjs.ReservedFundAmt, [Validators.required, Validators.max(maxAmt)]],
       MaxAmt: [maxAmt],
       StdReservedFundAmt: [appReservedFundObjs.StdReservedFundAmt],
       Behaviour: [appReservedFundObjs.Behaviour],
