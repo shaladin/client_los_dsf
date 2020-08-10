@@ -29,6 +29,9 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { CreditApvResultExtDetailComponent } from "./credit-apv-result-ext/credit-apv-result-ext-detail/credit-apv-result-ext-detail.component";
 import { CreditApvResultExtPagingComponent } from "./credit-apv-result-ext/credit-apv-result-ext-paging/credit-apv-result-ext-paging.component";
 import { AssetInquiryComponent } from "./credit-apv-result-ext/asset-inquiry/asset-inquiry.component";
+import { ReturnHandlingAdditionalTcPagingComponent } from './return-handling/return-handling-additional-tc-paging/return-handling-additional-tc-paging.component';
+import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/return-handling-additional-tc-detail/return-handling-additional-tc-detail.component';
+import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -50,7 +53,8 @@ export const customCurrencyMaskConfig = {
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
     MatCheckboxModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    ViewAppComponentModule
 
   ],
   declarations: [
@@ -75,7 +79,9 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingCollateralPagingComponent,
     ReturnHandlingCollateralEditComponent,
     ReturnHandlingCollateralDetailComponent,
-    CopyCancelledApplicationComponent
+    CopyCancelledApplicationComponent,
+    ReturnHandlingAdditionalTcPagingComponent,
+    ReturnHandlingAdditionalTcDetailComponent
   ],
   providers: [
     NGXToastrService
