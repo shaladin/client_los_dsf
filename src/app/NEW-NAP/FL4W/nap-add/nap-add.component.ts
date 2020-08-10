@@ -169,7 +169,7 @@ export class NapAddComponent implements OnInit {
     var obj = {
       RowVersion: ""
     };
-    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
+    var url = URLConstant.GetListKvpActiveRefOfficeForPaging;
     this.http.post(url, obj).subscribe(
       (response) => {
         this.officeItems = response[CommonConstant.ReturnObj];
