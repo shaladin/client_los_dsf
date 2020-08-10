@@ -75,6 +75,7 @@ export class MouRequestAddcollComponent implements OnInit {
   returnMouCust: MouCustObj = new MouCustObj();
   collateralUsedPrcnt: number;
   maxPrcnt: number = 100;
+
   AddCollDataForm = this.fb.group({
   })
 
@@ -178,7 +179,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
         });
-        this.updateUcLookup(this.CollTypeList[0].Value, true);
+        this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
       })
 
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType };
@@ -213,28 +214,49 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputLookupObj.isReady = true;
   }
 
-  updateUcLookup(value, firstBind) {
+  updateUcLookup(value, firstBind, type) {
     this.criteriaList = new Array();
-    this.criteriaObj = new CriteriaObj();
-    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    this.criteriaObj.propName = 'A.IS_ACTIVE';
-    this.criteriaObj.value = "1";
-    this.criteriaList.push(this.criteriaObj);
-
-    this.criteriaObj = new CriteriaObj();
-    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    this.criteriaObj.propName = 'A.IS_FINAL';
-    this.criteriaObj.value = "1";
-    this.criteriaList.push(this.criteriaObj);
-
-    if (value != null) {
+    if(value != null && type != "AddExisting"){
+      this.criteriaObj = new CriteriaObj();
+      this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+      this.criteriaObj.propName = 'A.IS_ACTIVE';
+      this.criteriaObj.value = "1";
+      this.criteriaList.push(this.criteriaObj);
+  
+      this.criteriaObj = new CriteriaObj();
+      this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+      this.criteriaObj.propName = 'A.IS_FINAL';
+      this.criteriaObj.value = "1";
+      this.criteriaList.push(this.criteriaObj);
+      
       this.criteriaObj = new CriteriaObj();
       this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
       this.criteriaObj.propName = 'B.ASSET_TYPE_CODE';
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
+    }else{
+      var arrMemberList = new Array();
+          for (let index = 0; index < this.listCollateralData.length; index++) {
+            arrMemberList.push(this.listCollateralData[index].CollateralNo)
+          }
+  
+          if (arrMemberList.length != 0) {
+            var addCritListCollateralNo = new CriteriaObj();
+            addCritListCollateralNo.DataType = "numeric";
+            addCritListCollateralNo.propName = "MCC.COLLATERAL_NO";
+            addCritListCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
+            addCritListCollateralNo.listValue = arrMemberList;
+            this.criteriaList.push(addCritListCollateralNo);
+          }
+
+      this.criteriaObj = new CriteriaObj();
+      this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+      this.criteriaObj.propName = 'MCC.ASSET_TYPE_CODE';
+      this.criteriaObj.value = value;
+      this.criteriaList.push(this.criteriaObj);
     }
 
+    this.inputLookupObj.nameSelect = "";
     this.inputLookupObj.addCritInput = this.criteriaList;
     if (!firstBind) this.ucLookupCollateral.setAddCritInput();
   }
@@ -257,7 +279,6 @@ export class MouRequestAddcollComponent implements OnInit {
       //   this.BindExistingCollateralSavedData(listCollateralNo);
       this.bindUcLookupExisting();
       this.AddCollForm.controls.CopyFromLegal.disable();
-      this.AddCollForm.controls.AssetTypeCode.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.CollateralPrcnt.enable();
       this.AddCollForm.controls.FullAssetCode.disable();
@@ -274,9 +295,10 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.SerialNo5.disable();
       this.AddCollForm.controls.MrCollateralConditionCode.disable();
       this.AddCollForm.controls.ManufacturingYear.disable();
+      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
     }else{
       this.bindUcLookup();
-      this.updateUcLookup(this.CollTypeList[0].Value, true);
+      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
       this.AddCollForm.controls.CopyFromLegal.enable();
       this.AddCollForm.controls.AssetTypeCode.enable();
       this.AddCollForm.controls.CollateralValueAmt.enable();
@@ -360,8 +382,9 @@ export class MouRequestAddcollComponent implements OnInit {
           this.collateralObj = response['MouCustCollateral'];
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
-          this.maxPrcnt = 100 - this.collateralObj.CollateralPrcnt;
+          this.maxPrcnt = 100 - e.SumCollateralPrcnt;
           this.AddCollForm.controls.CollateralPrcnt.setValidators([Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)]);
+          this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity();
 
           if (this.collateralObj.MrCollateralConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
@@ -477,7 +500,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   onItemChange(value) {
-    this.updateUcLookup(value, false);
+    this.updateUcLookup(value, false, this.type );
   }
 
   radioChange(event) {
@@ -743,14 +766,13 @@ export class MouRequestAddcollComponent implements OnInit {
 
   ClearForm()
   {
-    this.maxPrcnt = 100;
     this.AddCollForm = this.fb.group({
       MouCustCollateralId: [''],
       MouCustCollateralRegistrationId: [''],
       CopyFromLegal: [''],
       AssetTypeCode: ['', [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
-      CollateralPrcnt: [0, [(Validators.required, Validators.min(0), Validators.max(this.maxPrcnt))]],
+      CollateralPrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       FullAssetCode: [''],
       AssetCategoryCode: [''],
       OwnerName: ['', [Validators.required]],
@@ -769,6 +791,8 @@ export class MouRequestAddcollComponent implements OnInit {
       MrCollateralConditionCode: [''],
       ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]]
     })
+    this.AddCollForm.updateValueAndValidity();
+    
     this.inputFieldLocationObj.inputLookupObj.nameSelect = '';
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: ''}
     this.inputFieldLegalObj.inputLookupObj.nameSelect = '';
@@ -787,13 +811,12 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.CollateralNo = this.collateralObj.CollateralNo;
     this.mouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
 
-
     this.http.post(URLConstant.AddExistingCustCollateralData, this.mouCustCollateralObj).subscribe(
       response => {
         this.toastr.successMessage(response['message']);
         this.type = 'Paging';
         this.bindMouData();
-        // this.clearList();
+        this.ClearForm();
       }
     );
   }

@@ -94,6 +94,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.isInputLookupObj = false;
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
+    this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.disable();
   }
 
   setDropdown() {
@@ -245,8 +246,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
 
     this.CheckInstType();
-  }
-
+  } 
   SetPayFreq(MouCustId: number) {
     var MouObj = {
       MouCustId: MouCustId
@@ -254,6 +254,32 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
       (response) => {
         this.mouCustFctrObj = response;
+        if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) { 
+          this.SalesAppInfoForm.patchValue({  
+            MrInstTypeCode: this.mouCustFctrObj.MrInstTypeCode,  
+            MrInstSchemeCode: this.mouCustFctrObj.MrInstSchmCode,
+            IsDisclosed: this.mouCustFctrObj.IsDisclosed,
+            PaidBy: this.mouCustFctrObj.MrPaidByCode,
+            RecourseType: this.mouCustFctrObj.MrRecourseTypeCode , 
+            MrWopCode: this.mouCustFctrObj.WopCode,  
+            PayFreqCode: this.mouCustFctrObj.PayFreqCode, 
+          });
+        } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) { 
+          this.SalesAppInfoForm.patchValue({  
+            MrInstTypeCode: this.mouCustFctrObj.MrInstTypeCode,
+            TopDays: this.mouCustFctrObj.TopDays,  
+            MrInstSchemeCode: this.mouCustFctrObj.MrInstSchmCode,
+            IsDisclosed: this.mouCustFctrObj.IsDisclosed,
+            PaidBy: this.mouCustFctrObj.MrPaidByCode,
+            RecourseType: this.mouCustFctrObj.MrRecourseTypeCode , 
+            MrWopCode: this.mouCustFctrObj.WopCode, 
+            MrSingleInstCalcMthdCode: this.mouCustFctrObj.SingleInstCalcMthd,
+            PayFreqCode: this.mouCustFctrObj.PayFreqCode, 
+            TopBased: this.allTopBased[0].Key
+          });
+        }
+
+       
         this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
           (response) => {
             this.allPayFreq = response;
@@ -283,26 +309,37 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.CheckInstType();
   }
   CalculateNumOfInst() {
+    
     var numOfInst;
-    numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
-    this.SalesAppInfoForm.controls.NumOfInst.patchValue(numOfInst);
-    this.salesAppInfoObj.NumOfInst = numOfInst;
+    if(this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple){
+      numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
+      this.SalesAppInfoForm.controls.NumOfInst.patchValue(numOfInst);
+      this.salesAppInfoObj.NumOfInst = numOfInst;
+    }else{
+      this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
+    }
+
   }
 
   CheckInstType() {
 
-    if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "MULTIPLE") {
-      this.SalesAppInfoForm.controls.Tenor.enable();
-      this.SalesAppInfoForm.controls.MrInstSchemeCode.enable();
-      this.SalesAppInfoForm.controls.TopBased.disable();
+    if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {  
       this.SalesAppInfoForm.controls.TopDays.clearValidators();
-    } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == "SINGLE") {
-      this.SalesAppInfoForm.controls.Tenor.disable();
-      this.SalesAppInfoForm.controls.Tenor.patchValue(1);
+      this.SalesAppInfoForm.controls.TopBased.disable();  
+      this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();  
+      this.SalesAppInfoForm.controls.PaidBy.disable(); 
+      this.SalesAppInfoForm.controls.MrWopCode.disable(); 
+      this.SalesAppInfoForm.controls.RecourseType.disable();  
+      this.SalesAppInfoForm.controls.IsDisclosed.disable();  
+    } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) { 
       this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls.TopDays.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
-      this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
+      this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();  
+      this.SalesAppInfoForm.controls.PaidBy.disable(); 
+      this.SalesAppInfoForm.controls.MrWopCode.disable(); 
+      this.SalesAppInfoForm.controls.RecourseType.disable();  
+      this.SalesAppInfoForm.controls.TopDays.disable();   
+      this.SalesAppInfoForm.controls.IsDisclosed.disable();   
     }
 
     this.SalesAppInfoForm.controls.TopDays.updateValueAndValidity();
@@ -430,16 +467,16 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
         this.makeNewLookupCriteria();
       });
+
+      this.CalculateNumOfInst();
   }
   SaveForm(): void {
-    this.salesAppInfoObj = this.SalesAppInfoForm.value;
+    this.salesAppInfoObj = this.SalesAppInfoForm.getRawValue();
     this.salesAppInfoObj.AppId = this.AppId;
     this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
-      this.salesAppInfoObj.MrInstSchemeCode = "EP";
-      this.salesAppInfoObj.Tenor = 1;
-      this.salesAppInfoObj.NumOfInst = 1;
+      this.salesAppInfoObj.MrInstSchemeCode = "EP"; 
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
