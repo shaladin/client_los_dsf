@@ -41,6 +41,7 @@ import { ViewSummaryAppComponent } from "./view-summary-app/view-summary-app.com
 import { ViewAppScoreGradeScoringComponent } from "./view-app-score-grade-scoring/view-app-score-grade-scoring.component";
 import { ViewAppScoreGradeDsrComponent } from "./view-app-score-grade-dsr/view-app-score-grade-dsr.component";
 import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukcapil/view-app-score-grade-dukcapil.component";
+import { ViewSummaryAppCfnaComponent } from './view-summary-app-cfna/view-summary-app-cfna.component';
 
 @NgModule({
   exports: [
@@ -77,7 +78,8 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
     FraudDetectionResultComponent,
-    NewApplicationDataComponent
+    NewApplicationDataComponent,
+    ViewSummaryAppCfnaComponent
   ],
   imports: [
     CommonModule,
@@ -122,7 +124,8 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
     ViewAppScoreGradeDsrComponent,
-    ViewAppScoreGradeDukcapilComponent
+    ViewAppScoreGradeDukcapilComponent,
+    ViewSummaryAppCfnaComponent
   ],
   providers: [
     NGXToastrService
