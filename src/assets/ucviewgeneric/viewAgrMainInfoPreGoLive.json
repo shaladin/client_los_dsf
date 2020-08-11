@@ -25,6 +25,7 @@
           "label": "Lead No",
           "property": "LeadNo",
           "name": "LeadNo",
+          "isHide": true,
           "path": "/Lead/View",
           "target": "_blank",
           "param": [
@@ -51,8 +52,10 @@
         {
           "type": "link",
           "label": "Mou No",
+          "isHide": true,
           "property": "MouCustNo",
           "name": "MouCustNo",
+          
           "path": "/Mou/Cust/View",
           "target": "_blank",
           "param": [

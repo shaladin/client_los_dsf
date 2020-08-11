@@ -25,6 +25,7 @@
           "label": "Mou No",
           "property": "MouCustNo",
           "name": "MouCustNo",
+          "isHide": true,
           "path": "/Mou/Cust/View",
           "target": "_blank",
           "param": [
