@@ -38,12 +38,12 @@
             "property": "FullAssetName"
         },
         {
-            "type": "boolean",
+            "type": "decimal",
             "position": "right",
             "property": "CollateralValueAmt"
         },
         {
-            "type": "date",
+            "type": "text",
             "position": "right",
             "property": "CollateralPrcnt"
         }
