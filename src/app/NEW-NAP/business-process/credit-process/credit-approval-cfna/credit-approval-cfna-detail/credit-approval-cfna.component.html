@@ -11,6 +11,12 @@
           </view-summary-app>
         </ng-template>
       </mat-tab> -->
+      <mat-tab label="Summary">
+        <ng-template matTabContent>
+          <app-view-summary-app-cfna [AppId] = "appId">
+          </app-view-summary-app-cfna>
+        </ng-template>
+      </mat-tab>
       <mat-tab label="Customer Data">
         <ng-template matTabContent>
           <app-view-app-cust-data-personal [appId]="appId" *ngIf="mrCustTypeCode=='PERSONAL'">
