@@ -36,7 +36,7 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 import { ViewAppFraudVerificationComponent } from "app/NEW-NAP/sharing-component/view-app-component/view-app-fraud-verification/view-app-fraud-verification.component";
@@ -63,7 +63,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",
   suffix: "",
   thousands: ",",
-  nullable: false
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({

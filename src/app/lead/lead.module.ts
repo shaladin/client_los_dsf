@@ -37,7 +37,7 @@ import { TeleVerifDetailComponent } from './tele-verif/tele-verif-detail/tele-ve
 import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/lead-input-lead-data.component";
 import { MatRadioModule } from "@angular/material";
 import { LeadUpdateComponent } from "./lead-update/lead-update.component";
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
@@ -54,7 +54,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",     
   suffix: "",     
   thousands: ",",     
-  nullable: false };
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL };
 
 @NgModule({
   imports: [

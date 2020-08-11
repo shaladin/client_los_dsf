@@ -38,7 +38,7 @@ import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/sc
 import { SchmRegulerFixComponent } from "./financial-data/component/schm-reguler-fix/schm-reguler-fix.component";
 import { SchmStepUpStepDownLeasingComponent } from "./financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing.component";
 import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative.component";
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
 import { SchmBalloonComponent } from "./financial-data/component/schm-baloon/schm-balloon.component";
 
@@ -84,7 +84,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",     
   suffix: "",     
   thousands: ",",     
-  nullable: false };
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL };
 
 @NgModule({
   exports: [

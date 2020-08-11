@@ -20,7 +20,7 @@ import { MatRadioModule } from "@angular/material";
 import { ContentPagesRoutingModule } from "app/pages/content-pages/content-pages-routing.module";
 import { LoginPageComponent } from "app/pages/content-pages/login/login-page.component";
 import { CustomerSelfVerificationComponent } from './external-page/customer-self-verification/customer-self-verification.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { PagesComponent } from './pages/pages.component'; 
@@ -36,7 +36,8 @@ export const customCurrencyMaskConfig = {
     prefix: "",     
     suffix: "",     
     thousands: ",",     
-    nullable: false };
+    nullable: false,
+    inputMode: CurrencyMaskInputMode.NATURAL };
 
 @NgModule({
     imports: [

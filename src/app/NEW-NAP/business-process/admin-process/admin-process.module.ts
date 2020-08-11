@@ -41,7 +41,7 @@ import { InvoiceVerifDetailComponent } from './invoice-verif/invoice-verif-detai
 import { SharingModule } from "app/shared/sharing.module";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovalhistModule } from "@adins/ucapprovalhist";
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { UcaddtotempModule } from "@adins/ucaddtotemp";
 import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-order.component';
 import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
@@ -58,7 +58,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",     
   suffix: "",     
   thousands: ",",     
-  nullable: false };
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL };
 
 @NgModule({
   imports: [
