@@ -30,7 +30,6 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
   }
 
   async ngOnInit(){
-    console.log('viewmultidetail')
     this.GetListAppAssetByDOHId = URLConstant.GetListAppAssetByDOHId;
     this.GetDeliveryOrderHByDeliveryOrderHId = URLConstant.GetDeliveryOrderHByDeliveryOrderHId;
     var doObj = new DeliveryOrderHObj();
@@ -55,9 +54,6 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
         // this.spinner.hide();
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 }

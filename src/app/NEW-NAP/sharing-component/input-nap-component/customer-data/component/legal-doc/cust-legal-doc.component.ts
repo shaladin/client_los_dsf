@@ -60,12 +60,9 @@ export class CustLegalDocComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
   ngOnInit() {
-    // console.log("User Access");
-    // console.log(JSON.parse(localStorage.getItem("UserAccess")));
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.bindLegalDocTypeObj();
-    console.log(this.listLegalDoc);
   }
 
   SaveForm(){
@@ -74,7 +71,6 @@ export class CustLegalDocComponent implements OnInit {
       this.listLegalDoc = new Array<AppCustCompanyLegalDocObj>();
     }
     if(this.setAppCustCompanyLegalDoc()==false) return;
-    console.log(this.appCustCompanyLegalDocObj);
     if(this.mode == "Add"){
       this.listLegalDoc.push(this.appCustCompanyLegalDocObj);
     }
@@ -147,15 +143,11 @@ export class CustLegalDocComponent implements OnInit {
     let d1 = new Date(this.MaxDate);
     let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
     let d3 = new Date(this.appCustCompanyLegalDocObj.DocExpiredDt);
-    console.log(d1);
-    console.log(d2);
-    console.log(d3);
     if (d1 > d3 && d1 != d3) {
       this.toastr.warningMessage( ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxDate);
       flag = false;
     }
     d1.setDate(d1.getDate()+1);
-    console.log(d1);
     if (d1 < d2 && d1 != d2) {
       this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxDate);
       flag = false;
@@ -187,7 +179,6 @@ export class CustLegalDocComponent implements OnInit {
   }
 
   changeLegalDocType(ev){
-    console.log(ev);
     var idx = ev.target.selectedIndex;
     this.selectedLegalDocName=this.LegalDocTypeObj[idx].Value;
   }

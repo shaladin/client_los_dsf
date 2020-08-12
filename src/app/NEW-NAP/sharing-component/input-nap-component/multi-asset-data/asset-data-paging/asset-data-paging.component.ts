@@ -57,13 +57,10 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   event(ev) {
-    console.log("test");
-    console.log(ev);
     if (ev.Key == "edit") {
       this.AppAssetId = ev.RowObj.AppAssetId;
       this.editAsset = ev.RowObj.editAsset;
       this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
-      console.log("CHECK EVENT");
     }
 
     if (ev.Key == "delete") {
@@ -90,9 +87,6 @@ export class AssetDataPagingComponent implements OnInit {
             }
 
             this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -105,7 +99,6 @@ export class AssetDataPagingComponent implements OnInit {
       this.editColl = ev.RowObj.editColl;
       this.AppAssetId = ev.RowObj.AppAssetId;
       this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
-      console.log("CHECK EVENT");
     }
 
     if (ev.Key == "delete") {
@@ -113,10 +106,8 @@ export class AssetDataPagingComponent implements OnInit {
         var collateralObj = new AppCollateralObj();
         collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
         collateralObj.AppId = this.AppId;
-        console.log(collateralObj.AppCollateralId)
         this.http.post(URLConstant.DeleteAppCollateral, collateralObj).subscribe(
           (response) => {
-            console.log(response);
             this.toastr.successMessage(response["message"]);
             this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
@@ -126,9 +117,6 @@ export class AssetDataPagingComponent implements OnInit {
             }
 
             this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -136,7 +124,6 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("AppId: " + this.AppId);
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
     this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;
@@ -146,7 +133,6 @@ export class AssetDataPagingComponent implements OnInit {
     this.appAssetObj.AppId = this.AppId;
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
-        console.log("Response Asset : " + JSON.stringify(response));
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
         var DetailForGridAsset = {
@@ -155,11 +141,7 @@ export class AssetDataPagingComponent implements OnInit {
         }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
@@ -169,7 +151,6 @@ export class AssetDataPagingComponent implements OnInit {
     this.appCollateralObj.AppId = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
-        console.log("Collateral : " + JSON.stringify(response));
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
         var DetailForGridCollateral = {
@@ -178,11 +159,7 @@ export class AssetDataPagingComponent implements OnInit {
         }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getGridCollateral() {
@@ -202,11 +179,7 @@ export class AssetDataPagingComponent implements OnInit {
         }
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   editItem(custAddrObj: any) {
@@ -223,19 +196,4 @@ export class AssetDataPagingComponent implements OnInit {
       this.outputValue.emit({ mode: 'submit' });
     }
   }
-
-  // deleteItem(custAddrObj: any) {
-  //   var custAddr = new CustAddrObj();
-  //   custAddr.CustAddrId = custAddrObj.CustAddrId;
-  //   this.http.post(this.deleteCustAddr, custAddr).subscribe(
-  //     (response: any) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   //this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
 }

@@ -52,7 +52,7 @@ export class InvoiceDataComponent implements OnInit {
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
 
 
- 
+
     var obj = {
       AppId: this.AppId,
     }
@@ -71,17 +71,13 @@ export class InvoiceDataComponent implements OnInit {
         addCrit.listValue = [this.AppFactoringObj.AppId];
         this.arrAddCrit.push(addCrit);
         this.MouCustLookupObj.addCritInput = this.arrAddCrit;
-       // this.MouCustLookupObj.isReady = true;
+        // this.MouCustLookupObj.isReady = true;
 
         this.GetListAppInvoiceFctr();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -104,11 +100,7 @@ export class InvoiceDataComponent implements OnInit {
         } else {
           this.IsDisableCustFctr = false;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetLookupMouCust(ev) {
@@ -119,35 +111,32 @@ export class InvoiceDataComponent implements OnInit {
   }
 
   SaveForm(enjiForm: NgForm) {
-    if(this.InvoiceForm.controls.InvoiceAmt.value == 0){
+    if (this.InvoiceForm.controls.InvoiceAmt.value == 0) {
       this.toastr.warningMessage(ExceptionConstant.INVOICE_AMOUNT_CANNOT_ZERO);
     }
-    else if(this.InvoiceForm.controls.InvoiceAmt.value < 0){
-      this.toastr.warningMessage(ExceptionConstant.INVOICE_AMOUNT_CANNOT_LESS_THAN +"zero (0).");
+    else if (this.InvoiceForm.controls.InvoiceAmt.value < 0) {
+      this.toastr.warningMessage(ExceptionConstant.INVOICE_AMOUNT_CANNOT_LESS_THAN + "zero (0).");
     }
-    else{
-    this.invoiceObj = new AppInvoiceFctrObj();
-    this.invoiceObj.CustomerFactoringNo = this.InvoiceForm.controls.CustomerFactoringNo.value;
-    this.invoiceObj.CustomerFactoringName = this.InvoiceForm.controls.CustomerFactoringName.value;
-    this.invoiceObj.InvoiceNo = this.InvoiceForm.controls.InvoiceNo.value;
-    this.invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
-    this.invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;
-    this.invoiceObj.InvoiceStat = "NEW";
-    this.invoiceObj.IsApproved = true;
-    this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
-    this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
+    else {
+      this.invoiceObj = new AppInvoiceFctrObj();
+      this.invoiceObj.CustomerFactoringNo = this.InvoiceForm.controls.CustomerFactoringNo.value;
+      this.invoiceObj.CustomerFactoringName = this.InvoiceForm.controls.CustomerFactoringName.value;
+      this.invoiceObj.InvoiceNo = this.InvoiceForm.controls.InvoiceNo.value;
+      this.invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
+      this.invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;
+      this.invoiceObj.InvoiceStat = "NEW";
+      this.invoiceObj.IsApproved = true;
+      this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
+      this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
 
-    this.httpClient.post(URLConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.GetListAppInvoiceFctr();
-        this.InvoiceForm.reset();
-        enjiForm.resetForm();
-        this.InvoiceForm.controls.InvoiceAmt.patchValue(0);
-      },
-      (error) => {
-        console.log(error);
-      });
+      this.httpClient.post(URLConstant.AddAppInvoiceFctr, this.invoiceObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.GetListAppInvoiceFctr();
+          this.InvoiceForm.reset();
+          enjiForm.resetForm();
+          this.InvoiceForm.controls.InvoiceAmt.patchValue(0);
+        });
     }
   }
 
@@ -160,20 +149,15 @@ export class InvoiceDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();
-        },
-        (error) => {
-          console.log(error);
         });
     }
   }
 
-  SaveContinue(){
-    if(this.dataobj["TotalInvoiceAmt"] <= 0)
-    {
+  SaveContinue() {
+    if (this.dataobj["TotalInvoiceAmt"] <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_INVOICE);
     }
-    else
-    {
+    else {
       this.outputTab.emit();
     }
   }

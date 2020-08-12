@@ -22,7 +22,6 @@ export class MouViewAddcollComponent implements OnInit {
 
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
-    console.log(mouCustObj);
     this.http.post(URLConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];

@@ -345,8 +345,6 @@ export class LeadInputLeadDataComponent implements OnInit {
                         }
                       }
                     });
-                  console.log(response);
-
                 });
             });
         });
@@ -388,7 +386,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
             });
 
-            if (this.resLeadAssetObj.MrDownPaymentTypeCode ==  CommonConstant.DownPaymentTypeAmt) {
+            if (this.resLeadAssetObj.MrDownPaymentTypeCode == CommonConstant.DownPaymentTypeAmt) {
               this.LeadDataForm.controls.DownPaymentPercent.disable();
               this.LeadDataForm.controls.DownPaymentAmount.enable();
             }
@@ -583,11 +581,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     });
   }
 
-  // test()
-  // {
-  //   console.log(this.LeadDataForm)
-  // }
-
   DPPrcntChange() {
     this.Calculate = false;
     this.DPPercentage = this.LeadDataForm.controls["DownPaymentPercent"].value;
@@ -615,8 +608,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         DownPaymentPercent: this.DPPercentage,
       });
     }
-    else
-    {
+    else {
       this.DPAmount = this.AssetPrice * this.DPPercentage / 100;
 
       this.LeadDataForm.patchValue({
@@ -705,7 +697,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
-      
+
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
@@ -755,9 +747,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           });
       }
       else {
@@ -777,9 +766,6 @@ export class LeadInputLeadDataComponent implements OnInit {
               else {
                 this.router.navigate(["/Lead/Lead/Paging"]);
               }
-            },
-            (error) => {
-              console.log(error);
             }
           );
         }
@@ -803,9 +789,6 @@ export class LeadInputLeadDataComponent implements OnInit {
               else {
                 this.router.navigate(["/Lead/Lead/Paging"]);
               }
-            },
-            (error) => {
-              console.log(error);
             }
           );
         }
@@ -828,9 +811,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -850,18 +830,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
     }
   }
-
-  // test(){
-  //   console.log(this.LeadDataForm)
-  // }
 
   SaveForm() {
     if (this.Calculate == false) {
@@ -890,9 +863,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -914,9 +884,6 @@ export class LeadInputLeadDataComponent implements OnInit {
               else {
                 this.router.navigate(["/Lead/Lead/Paging"]);
               }
-            },
-            (error) => {
-              console.log(error);
             }
           );
         }
@@ -941,9 +908,6 @@ export class LeadInputLeadDataComponent implements OnInit {
               else {
                 this.router.navigate(["/Lead/Lead/Paging"]);
               }
-            },
-            (error) => {
-              console.log(error);
             }
           );
         }
@@ -967,9 +931,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -990,9 +951,6 @@ export class LeadInputLeadDataComponent implements OnInit {
             else {
               this.router.navigate(["/Lead/Lead/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input , Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -10,6 +10,7 @@ import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-schm-balloon-FL4W',
@@ -19,8 +20,11 @@ export class SchmBalloonFL4WComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Output() RefreshSubsidy = new EventEmitter();
+
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
   listInstallment: any;
@@ -35,6 +39,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.LoadCalcBaseType();
   }
 
   LoadDDLRateType() {
@@ -53,61 +58,54 @@ export class SchmBalloonFL4WComponent implements OnInit {
     );
   }
 
-  CalcBaseOnRate() {
-    if(this.ValidateFee() == false){
-      return;
-    }
-    if(this.ParentForm.get("BalloonValueAmt").value < 1){
-      this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
-      return;
-    }
-    this.calcBalloonObj = this.ParentForm.value;
-    this.calcBalloonObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
+  LoadCalcBaseType() {
+    this.http.post(URLConstant.GetListActiveRefMaster, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn  }).subscribe(
       (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+        this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.ReserveField1.indexOf(CommonConstant.InstSchmBalloon) !== -1);
 
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt,
-          ApvAmt: response.ApvAmt,
-
-          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-
-          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-          DownPaymentNettAmt: response.DownPaymentNettAmt
-
-        })
-
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
+        if(this.CalcBaseOptions.length == 1){
+          this.ParentForm.patchValue({
+            CalcBase: this.CalcBaseOptions[0].MasterCode
+          });
+          this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+        }
       }
     );
   }
 
-  CalcBaseOnInst() {
+  Calculate() {
+    if(this.ParentForm.getRawValue().CalcBase == ''){
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
+      return;
+    }
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0){
+      this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
+      return;
+    }
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == false 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_STD_RATE);
+      return;  
+    }
+
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == true 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_STD_RATE);
+      return;  
+    }
     if(this.ValidateFee() == false){
       return;
-    }    
+    }
     if(this.ParentForm.get("BalloonValueAmt").value < 1){
       this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
       return;
     }
-    
-    this.calcBalloonObj = this.ParentForm.value;
-    this.calcBalloonObj["IsRecalculate"] = true;
+    this.calcBalloonObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
@@ -132,12 +130,21 @@ export class SchmBalloonFL4WComponent implements OnInit {
           LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
           DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-          DownPaymentNettAmt: response.DownPaymentNettAmt
+          DownPaymentNettAmt: response.DownPaymentNettAmt,
 
-        });
+          SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
+          SupplEffectiveRatePrcnt: response.SupplEffectiveRatePrcnt          
 
+        })
+        this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+        this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
+
+        if(this.ParentForm.controls.IsSubsidyRateExist.value == true){
+          this.RefreshSubsidy.emit();
+        }
       }
     );
   }
@@ -166,28 +173,68 @@ export class SchmBalloonFL4WComponent implements OnInit {
   }
 
   EffectiveRatePrcntInput_FocusOut() {
-    // var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
-    // var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
-    // var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
-    // var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
-
-    // var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-    // if (diffRate < DiffRateAmtStd) {
-    //   this.ParentForm.patchValue({
-    //     DiffRateAmt: 0
-    //   });
-    // }
-    // else {
-    //   this.ParentForm.patchValue({
-    //     DiffRateAmt: DiffRateAmtStd
-    //   });
-    // }
-
     this.ParentForm.patchValue({
-          DiffRateAmt: 0
-        });
-
+      SubsidyAmtFromDiffRate: 0,
+      CommissionAmtFromDiffRate: 0
+    });
+    this.SetSubsidyAmtFromDiffRateInput(0);
+    this.SetCommissionAmtFromDiffRateInput(0);
     this.SetNeedReCalculate(true);
+  }
+
+  SubsidyAmtFromDiffRate_FocusOut(event) {
+    this.SetSubsidyAmtFromDiffRateInput(event.target.value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate){
+    if(subsidyAmtFromDiffRate > 0){
+      this.ParentForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }else{
+      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
+      }    
+    }
+  }
+
+  CommissionAmtFromDiffRate_FocusOut(event){
+    this.SetCommissionAmtFromDiffRateInput(event.target.value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate){
+    if(commissionAmtFromDiffRate > 0){
+      this.ParentForm.patchValue({
+        SubsidyAmtFromDiffRate: 0
+      });
+      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
+    }
+  }
+
+  CalcBaseChanged(event){
+    this.SetEnableDisableInputByCalcBase(event.target.value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetEnableDisableInputByCalcBase(calcBase){
+    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+      this.ParentForm.get("InstAmt").disable();
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+      this.ParentForm.get("InstAmt").enable();
+    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+      this.ParentForm.get("InstAmt").disable();
+    }else{
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+      this.ParentForm.get("InstAmt").enable();
+    }
   }
 
   SetNeedReCalculate(value) {

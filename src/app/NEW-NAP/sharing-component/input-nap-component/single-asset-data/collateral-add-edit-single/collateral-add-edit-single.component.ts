@@ -414,15 +414,10 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.http.post(getListUrl, obj).subscribe(
       (response) => {
         this.listCollExisting = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getLookupCollateralTypeResponse(e) {
-    console.log(e);
     this.AddCollForm.patchValue({
       FullAssetCode: e.FullAssetCode,
       FullAssetName: e.FullAssetName,
@@ -440,7 +435,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.criteriaList.push(this.criteriaObj);
 
     this.changeSerialNoValidators(value);
-    console.log(this.AddCollForm.controls.MrCollateralConditionCode.value);
   }
 
   changeSerialNoValidators(value) {
@@ -488,11 +482,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.http.post(URLConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
@@ -500,11 +490,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
           this.toastr.successMessage(response["message"]);
           this.modalService.dismissAll();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.bindAppData();
     this.outputTab.emit({ StatusCode: "200" });

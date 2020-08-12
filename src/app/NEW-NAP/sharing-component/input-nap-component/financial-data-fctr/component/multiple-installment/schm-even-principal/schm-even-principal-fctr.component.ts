@@ -76,9 +76,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
       return;
     }
 
-    this.calcEvenPrincipleObj = this.ParentForm.value;
-
-    console.log(this.calcEvenPrincipleObj);
+    this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipalFctr, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;

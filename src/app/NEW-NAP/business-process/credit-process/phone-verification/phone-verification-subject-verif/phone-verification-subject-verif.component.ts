@@ -178,7 +178,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.setPhoneVerifData();
       this.http.post(this.saveVerfResultHDetailUrl, this.PhoneDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           if (activeButton == "save") {
             if (this.isReturnHandling == false) {
@@ -195,11 +194,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             formDirective.resetForm();
             this.clearform();
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -250,7 +245,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetAppData() {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
         //this.PhoneDataForm.patchValue({
@@ -263,9 +257,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetAppCust() {
     await this.http.post(this.getAppCustUrl, this.appObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AppCustObj = response;
-        console.log("aaaa");
         //this.PhoneDataForm.patchValue({
         //  CustNo: this.AppCustObj.CustNo,
         //  CustName: this.AppCustObj.CustName,
@@ -285,7 +277,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetQuestionList(VerfQAObj) {
     await this.http.post(this.getQuestionUrl, VerfQAObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.QuestionObj = response[CommonConstant.ReturnObj];
         if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
           this.verfSchemeHId = this.QuestionObj.VerfSchemeHId
@@ -362,7 +353,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           }
           ResultGrp.push(QuestionResultGrp);
         }
-        console.log(this.PhoneDataForm);
         this.ChangeResult();
       }
     }
@@ -371,7 +361,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetPhoneNumber(phnObj) {
     await this.http.post(this.getPhnNumberUrl, phnObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.PhoneNumberObj = response[CommonConstant.ReturnObj];
         if (this.PhoneNumberObj.length > 0) {
           this.PhoneDataForm.patchValue({
@@ -386,7 +375,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetVerfResultData() {
     await this.http.post(this.getVerfResultUrl, this.verfResObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.verifResultObj = response;
         this.verfResHObj.VerfResultId = this.verifResultObj.VerfResultId;
       }
@@ -396,7 +384,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetVerfResultHData() {
     await this.http.post(this.getVerfResulHtUrl, this.verfResHObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
       }
@@ -406,7 +393,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetListVerfResulHtData(verfResHObj) {
     await this.http.post(this.getListVerfResulHtUrl, verfResHObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
       }
     );
@@ -526,8 +512,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   test() {
     this.setPhoneVerifData();
-    console.log(this.PhoneDataForm);
-    console.log(this.PhoneDataObj);
     //if (this.isReturnHandling == false) {
     //  this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId);
     //}

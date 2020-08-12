@@ -38,7 +38,7 @@ export class ApplicationViewComponent implements OnInit {
   IsMultiCollateral : boolean = true;
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
-
+  bizTemplateCode : string = "";
   constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -46,7 +46,6 @@ export class ApplicationViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("APP BESARAN")
     this.arrValue.push(this.AppId);
     this.GetApp();
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
@@ -60,10 +59,10 @@ export class ApplicationViewComponent implements OnInit {
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
-        var bizTemplateCode = response["BizTemplateCode"];
+        this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
 
-        if(bizTemplateCode == CommonConstant.FCTR)
+        if(this.bizTemplateCode == CommonConstant.FCTR)
         {
           this.IsCollateral = false;
           this.IsGuarantor = false;
@@ -77,7 +76,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInsurance = false;
       
         }
-        else if(bizTemplateCode == CommonConstant.CFRFN4W){
+        else if(this.bizTemplateCode == CommonConstant.CFRFN4W){
           this.IsAsset = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -85,7 +84,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(bizTemplateCode == CommonConstant.CF4W){
+        else if(this.bizTemplateCode == CommonConstant.CF4W){
           this.IsCollateral = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -93,7 +92,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(bizTemplateCode == CommonConstant.FL4W)
+        else if(this.bizTemplateCode == CommonConstant.FL4W)
         {
           this.IsAsset = false;
           this.IsCollateral = false;
@@ -101,7 +100,7 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsInsurance = false;
         }
-        else if(bizTemplateCode == CommonConstant.CFNA){
+        else if(this.bizTemplateCode == CommonConstant.CFNA){
           this.IsAsset = false;
           this.IsInvoice = false;
           this.IsMultiAsset = false;

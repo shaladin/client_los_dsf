@@ -33,29 +33,19 @@ export class TabAnalysisResultComponent implements OnInit {
     var obj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppCrdInvstgByAppId, obj).toPromise().then(
       (response) => {
-        // console.log(response);
         this.ResponseCreditInvestigationData = response;
         if (response["AppCrdInvstgHId"] != 0)
           this.isFormOnCreditInvestigation = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   async GetCreditReviewData() {
     var obj = { AppCrdRvwHObj: { AppId: this.appId } };
     await this.http.post(URLConstant.GetAppCrdRvwById, obj).toPromise().then(
       (response) => {
-        // console.log(response);
         this.ResponseCreditReviewData = response["appCrdRvwHObj"];
         if (this.ResponseCreditReviewData.AppCrdRvwHId != 0)
           this.isFormOnCreditReview = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }

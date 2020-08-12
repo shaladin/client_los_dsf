@@ -151,7 +151,6 @@ export class DocSignerDetailComponent implements OnInit {
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
@@ -279,11 +278,7 @@ export class DocSignerDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["/Mou/DocSigner/Paging"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   GetCallBack(event) {
     if (event.Key == "customer") {
@@ -291,11 +286,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

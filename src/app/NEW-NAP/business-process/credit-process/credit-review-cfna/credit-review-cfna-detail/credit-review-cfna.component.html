@@ -4,10 +4,17 @@
 
     <mat-tab-group mat-align-tabs="center">
 
-      <mat-tab label="Summary">
+      <!-- <mat-tab label="Summary">
         <ng-template matTabContent>
           <view-summary-app [AppId] = "appId">
           </view-summary-app>
+        </ng-template>
+      </mat-tab> -->
+
+      <mat-tab label="Summary">
+        <ng-template matTabContent>
+          <app-view-summary-app-cfna [AppId] = "appId">
+          </app-view-summary-app-cfna>
         </ng-template>
       </mat-tab>
       

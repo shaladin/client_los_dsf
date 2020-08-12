@@ -34,6 +34,9 @@ export class ExceptionConstant {
     public static CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN = "Capitalize Amount can't be higher than ";
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";
     public static TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN = "Total Reserved Fund Amount Must be Less Than ";
+    public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
+    public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
+    public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";
@@ -55,6 +58,7 @@ export class ExceptionConstant {
     public static CHOOSE_PAID_BY = "Please choose Paid By.";
     public static CHOOSE_REGION = "Please choose Region.";
     public static CHOOSE_COVER_PERIOD = "Please choose Cover Period.";
+    public static CHOOSE_CUST_RELATIONSHIP= "Please Choose Cust Relationship.";
     public static INPUT_INSURANCE_LENGTH = "Please input Insurance Length.";
     public static CHOOSE_CALCULATE_BASE = "Please choose Calculate Base.";
     public static SAVE_TC_DATA = "Please Save TC Data First!";

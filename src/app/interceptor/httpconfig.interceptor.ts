@@ -173,9 +173,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (this.count == 0) {
                     this.spinner.hide();
                 }
-                if (this.count == 1) {
-                    console.log("last one");
-                }
             })
         );
     }

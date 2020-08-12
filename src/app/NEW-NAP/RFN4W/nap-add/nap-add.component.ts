@@ -103,8 +103,6 @@ export class NapAddComponent implements OnInit {
     }
 
     // Test Data
-    console.log(this.user);
-    console.log(this.NapAppForm);
   }
 
   MakeLookUpObj() {
@@ -169,16 +167,11 @@ export class NapAddComponent implements OnInit {
     var obj = {
       RowVersion: ""
     };
-    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
+    var url = URLConstant.GetListKvpActiveRefOfficeForPaging;
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
         this.officeItems = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CheckValue(obj) {
@@ -217,14 +210,9 @@ export class NapAddComponent implements OnInit {
     var url = URLConstant.AddApp;
     this.http.post(url, napAppObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
         this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getLookupAppResponseCopy(ev: any) {
@@ -252,7 +240,6 @@ export class NapAddComponent implements OnInit {
   }
 
   getLookupAppResponseName(ev: any) {
-    console.log(ev);
     var url = URLConstant.GetListProdOfferingDByProdOfferingCode;
     var obj = {
       ProdOfferingCode: ev.ProdOfferingCode
@@ -263,7 +250,6 @@ export class NapAddComponent implements OnInit {
     var tempRefProdTypeCode;
     this.http.post(url, obj).subscribe(
       (response) => {
-        // console.log(response);
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == "LOB") {
@@ -280,7 +266,6 @@ export class NapAddComponent implements OnInit {
           } else if (temp[i].RefProdCompntCode == "PROD_TYPE") {
             tempRefProdTypeCode = temp[i].CompntValue;
           } else {
-            console.log("Not");
           }
         }
         this.NapAppForm.patchValue({
@@ -292,15 +277,10 @@ export class NapAddComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   ChangeValueOffice(ev: any) {
-    // console.log(ev);
     this.NapAppForm.patchValue({
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text

@@ -85,16 +85,12 @@ export class FraudDetectionPagingComponent implements OnInit {
               else
                 this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }else{
         var appObj = {AppId: event.RowObj.AppId};
         this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
-            console.log("Response Fraud Error : " + JSON.stringify(response));
             var dupCheckErrorMessage = response["DupCheckErrorMessage"];
             var surveyErrorMessage = response["SurveyErrorMessage"];
             var fraudDetectionErrorMessage = response["FraudDetectionErrorMessage"];
@@ -119,9 +115,6 @@ export class FraudDetectionPagingComponent implements OnInit {
               else
                 this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       //   if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)

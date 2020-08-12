@@ -452,7 +452,6 @@ export class CollateralFctrComponent implements OnInit {
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
 
     if (this.type == 'Add') {
-      console.log(this.appCollateralDataObj)
       this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
     
@@ -462,11 +461,7 @@ export class CollateralFctrComponent implements OnInit {
           this.AddCollForm.patchValue({
             CollateralValueAmt: 0
           })
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
@@ -478,11 +473,7 @@ export class CollateralFctrComponent implements OnInit {
           this.AddCollForm.patchValue({
             CollateralValueAmt: 0
           })
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     this.bindAppData();
     this.type = "Add";
@@ -653,13 +644,8 @@ export class CollateralFctrComponent implements OnInit {
     var appCollObj = { AppCollateralId: AppCustCollId };
     this.http.post(URLConstant.DeleteAppCollateral, appCollObj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage(response["message"]);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   outputValue(event){

@@ -36,7 +36,6 @@ export class CustUcaddressFL4WComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {
   }
   ngOnInit() {
-    console.log("UcAddressForm");
 
     this.identifierZipcode = this.identifier + "Zipcode";
 
@@ -104,7 +103,6 @@ export class CustUcaddressFL4WComponent implements OnInit {
   }
 
   getLookup(event) {
-    console.log(event);
     this.UCAddrForm.controls[this.identifier].patchValue(
       {
         AreaCode2: event.AreaCode2,

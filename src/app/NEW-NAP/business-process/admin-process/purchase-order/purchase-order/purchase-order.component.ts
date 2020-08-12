@@ -59,20 +59,13 @@ export class PurchaseOrderComponent implements OnInit {
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   testData() {
-    console.log(this.tcForm);
-    console.log(this.tcForm.value);
   }
 
   SaveForm() {
-    console.log("Save");
     var IsSave = false;
     if (this.AppAssetList.length != 0) {
       for (let i = 0; i < this.AppAssetList.length; i++) {
@@ -99,11 +92,7 @@ export class PurchaseOrderComponent implements OnInit {
           this.AppAssetList = response[CommonConstant.ReturnObj];
           this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
           this.toastr.successMessage(response["message"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
   async claimTask() {

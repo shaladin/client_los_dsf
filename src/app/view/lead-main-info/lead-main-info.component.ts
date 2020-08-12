@@ -29,7 +29,6 @@ export class LeadMainInfoComponent implements OnInit {
 
   ngOnInit() {
     var leadObj = { LeadId: this.LeadId }
-    console.log(leadObj);
     this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
       (response) => {
         this.LeadNo = response['LeadNo'];

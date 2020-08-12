@@ -66,7 +66,6 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     var agrmntObj = {
       AgrmntId: this.AgrmntId
     };
-    console.log(agrmntObj);
     this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         this.AgrmntObj = response;
@@ -77,9 +76,6 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
           (response) => {
             this.AppObj = response;
-          },
-          (error) => {
-            console.log(error);
           });
         if (this.AgrmntObj.LeadId != null) {
           this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.AgrmntObj.LeadId }).subscribe(
@@ -87,11 +83,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
               this.LeadObj = response;
             });
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     var verfResultHObj = {
       VerfResultHId: this.VerfResultHId
@@ -106,9 +98,6 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         this.http.post<VerfResultObj>(URLConstant.GetVerfResultById, verfResultObj).subscribe(
           (response) => {
             this.VerfResultObj = response;
-          },
-          (error) => {
-            console.log(error);
           }
         );
 
@@ -119,16 +108,9 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
           (response) => {
             this.VerfResultHList = response["responseVerfResultHCustomObjs"];
-          },
-          (error) => {
-            console.log(error);
           }
         );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetDetailVerf(TempVerfResultHId) {
@@ -138,11 +120,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, verfResultHObj).subscribe(
       (response) => {
         this.VerfResultHObjDetail = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     var verfResultDObj = {
       VerfResultHId: TempVerfResultHId
@@ -151,11 +129,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
       (response) => {
         this.VerfResultDListObj = response[CommonConstant.ReturnObj];
         this.IsVerfDetail = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   BackVerfDetail() {
@@ -174,11 +148,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, {CustNo: this.AgrmntObj.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

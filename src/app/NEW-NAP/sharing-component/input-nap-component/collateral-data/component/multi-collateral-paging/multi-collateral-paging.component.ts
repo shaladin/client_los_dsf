@@ -13,6 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class MultiCollateralPagingComponent implements OnInit {
   @Input() AppId: number;
+  @Input() BLCode: string = "";
   @Output() select: EventEmitter<number> = new EventEmitter<any>();
   @Output() list: EventEmitter<any> = new EventEmitter<any>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
@@ -21,7 +22,7 @@ export class MultiCollateralPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.GetListAppCollateralByAppId()
+    this.GetListAppCollateralByAppId();
   }
 
   GetListAppCollateralByAppId() {
@@ -32,11 +33,7 @@ export class MultiCollateralPagingComponent implements OnInit {
       (response) => {
         this.ListAppCollObj = response[CommonConstant.ReturnObj];
         this.list.emit(this.ListAppCollObj);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   editData(AppCollateralId: number){
@@ -49,11 +46,7 @@ export class MultiCollateralPagingComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.GetListAppCollateralByAppId();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
     }
   }
 }

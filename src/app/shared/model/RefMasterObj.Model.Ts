@@ -1,17 +1,17 @@
 export class RefMasterObj {
-    RefMasterId: any;
-    MasterCode: any;
-    Descr: any;
-    RefMasterTypeCode: any;
-    SeqNo: any;
-    ReserveField1 : any;
-    ReserveField2 : any;
-    ReserveField3 : any;
-    ReserveField4 : any;
-    ReserveField5 : any;
-    IsDeletable: any;
-    isSystem: any;
-    IsActive: any;
-    RowVersion: any;
+    RefMasterId: number;
+    MasterCode: string;
+    Descr: string;
+    RefMasterTypeCode: string;
+    SeqNo: number;
+    ReserveField1 : string;
+    ReserveField2 : string;
+    ReserveField3 : string;
+    ReserveField4 : string;
+    ReserveField5 : string;
+    IsDeletable: boolean;
+    isSystem: boolean;
+    IsActive: boolean;
+    RowVersion: string;
     constructor() { this.RefMasterId = 0; this.RowVersion = '' }
 }

@@ -29,17 +29,11 @@ export class InvoiceViewComponent implements OnInit {
     var getListUrl = URLConstant.GetListAppInvoiceFctrByAppId;
     this.http.post(getListUrl, obj).subscribe(
       (response) => {
-        console.log(response);
         this.invoiceDataList = response['AppInvoiceFctrObjs'];
 
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
   ToDetail(ev) {
-    console.log(ev);
     this.router.navigate(["/Nap/AdminProcess/Invoice/Detail"], { queryParams: { "AppInvoiceFctrId": ev } });
   }
 }

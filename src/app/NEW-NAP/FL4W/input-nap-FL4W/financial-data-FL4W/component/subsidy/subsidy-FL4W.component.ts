@@ -18,6 +18,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class SubsidyFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm : FormGroup;
+  @Output() emitData = new EventEmitter();
+
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -34,9 +36,10 @@ export class SubsidyFL4WComponent implements OnInit {
   AddReason()
   {
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditFL4WComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditFL4WComponent);
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
@@ -46,10 +49,11 @@ export class SubsidyFL4WComponent implements OnInit {
 
   editSubsidy(obj){
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditFL4WComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditFL4WComponent);
     modalRef.componentInstance.mode = "edit";
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.AppSubsidyId = obj.AppSubsidyId;
+    modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
@@ -60,14 +64,10 @@ export class SubsidyFL4WComponent implements OnInit {
   deleteSubsidy(obj)
   {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        console.log(obj)
         this.http.post(URLConstant.DeleteSubsidy, { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -78,6 +78,7 @@ export class SubsidyFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
+        this.emitData.emit(this.listSubsidy);
       }
     );
   }
@@ -87,6 +88,7 @@ export class SubsidyFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
+        this.emitData.emit(this.listSubsidy);
       }
     );
   }

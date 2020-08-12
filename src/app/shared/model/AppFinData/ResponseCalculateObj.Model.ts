@@ -28,6 +28,7 @@ export class ResponseCalculateObj {
     DownPaymentNettAmt: number;
     SubsidyAmtFromDiffRate: number;
     CommissionAmtFromDiffRate: number;
+    SupplEffectiveRatePrcnt: number;
     constructor() {
     }
 }

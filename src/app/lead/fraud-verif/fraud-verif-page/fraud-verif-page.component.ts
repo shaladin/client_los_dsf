@@ -112,7 +112,6 @@ export class FraudVerifPageComponent implements OnInit {
     this.leadAssetObj.LeadId = this.LeadId;
     this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
       (response) => {
-        console.log(response);
         this.tempLeadAsset = response;
         this.leadAssetObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
         this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
@@ -133,7 +132,6 @@ export class FraudVerifPageComponent implements OnInit {
             this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
               (response) => {
                 this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
-                console.log(response);
               });
           });
       });

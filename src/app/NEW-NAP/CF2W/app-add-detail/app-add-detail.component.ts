@@ -97,11 +97,7 @@ export class AppAddDetailComponent implements OnInit {
         else {
           this.AppStepIndex = 0;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -127,11 +123,7 @@ export class AppAddDetailComponent implements OnInit {
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });
           this.OnFormReturnInfo = true;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -148,15 +140,10 @@ export class AppAddDetailComponent implements OnInit {
         }
         else
           this.IsMultiAsset = 'False';
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+      })
   }
 
   ChangeTab(AppStep) {
-    // console.log(AppStep);
     switch (AppStep) {
       case CommonConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
@@ -195,13 +182,8 @@ export class AppAddDetailComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) =>{
-        console.log("Step Change to, Curr Step : "+response.AppCurrStep+", Last Step : "+response.AppLastStep);
         this.ChangeTab(Step);
         this.stepper.next();
-      },
-      (error)=>{
-        console.error("Error when updating AppStep");
-        console.error(error);
       }
     )
   }
@@ -210,13 +192,8 @@ export class AppAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        console.log(response);
         this.router.navigate(["/Nap/CF2W/Paging"], { queryParams: { LobCode: "CF2W" } })
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+      })
   }
 
   Submit() {
@@ -230,12 +207,7 @@ export class AppAddDetailComponent implements OnInit {
 
       this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+        })
     }
   }
 

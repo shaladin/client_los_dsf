@@ -130,7 +130,6 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   getLookUpCmoName(event) {
     this.tempCmoUsername = event.Username;
-    console.log(this.tempCmoUsername);
   }
 
   getLookUpSurveyorName(event) {
@@ -211,7 +210,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('test');
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -228,9 +226,6 @@ export class LeadInputMainInfoComponent implements OnInit {
           LobCode: response[CommonConstant.ReturnObj][0]['Key'],
           LobName: response[CommonConstant.ReturnObj][0]['Value']
         });
-      },
-      (error) => {
-        console.log(error);
       });
 
     this.leadSource = new RefMasterObj();
@@ -380,7 +375,6 @@ GetOfficeDDL(){
   this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
     (response) => {
       this.listRefOffice = response[CommonConstant.ReturnObj];
-      console.log(this.listRefOffice)
       // this.MainInfoForm.patchValue({
       //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
       //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
@@ -402,9 +396,6 @@ GetOfficeDDL(){
           OfficeName : this.user.OfficeName
         });
       }
-    },
-    (error) => {
-      console.log(error);
     });
 }
 
@@ -443,9 +434,6 @@ GetOfficeDDL(){
             else{
               this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       } else {
@@ -457,9 +445,6 @@ GetOfficeDDL(){
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -482,9 +467,6 @@ GetOfficeDDL(){
             else{
               this.router.navigate(["/Lead/LeadUpdate/Paging"]);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       } else {
@@ -496,9 +478,6 @@ GetOfficeDDL(){
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
             this.router.navigate(["/Lead/Lead/Paging"]);
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -508,7 +487,6 @@ GetOfficeDDL(){
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });

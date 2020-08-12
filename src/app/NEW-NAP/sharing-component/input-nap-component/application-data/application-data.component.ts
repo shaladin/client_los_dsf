@@ -124,9 +124,7 @@ export class ApplicationDataComponent implements OnInit {
     };
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
-        console.log(response);
         var listDDL = response["DDLRefProdComptCode"];
-        // console.log(listDDL);
         this.applicationDDLitems[refProdCompntCode]=listDDL;
         if(refProdCompntCode == CommonConstant.RefProdCompFirstInstType){
           this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
@@ -134,11 +132,7 @@ export class ApplicationDataComponent implements OnInit {
             MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
           });
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getInterestTypeCode(){
@@ -150,17 +144,12 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
-        // console.log(response);   
         this.NapAppModelForm.patchValue({
           InterestType: response["CompntValue"],
           InterestTypeDesc: response["CompntValueDesc"],
         });
         this.ChangeInterestType();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   GetCrossInfoData(){
@@ -170,17 +159,11 @@ export class ApplicationDataComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
       (response) => {
-        console.log(response);
         this.resultCrossApp = response[CommonConstant.ReturnObj];
-        console.log(this.resultCrossApp);
         for (var i = 0; i < this.resultCrossApp.length; i++) {
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   applicationDDLitems;
@@ -194,7 +177,6 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -255,11 +237,7 @@ export class ApplicationDataComponent implements OnInit {
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
         this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
         this.getPayFregData();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getAppSrcData() {
@@ -271,11 +249,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   DictRefPayFreq: any = {};
@@ -285,7 +259,6 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
         var objTemp = response[CommonConstant.ReturnObj];
 
         for(var i=0;i<objTemp.length;i++){
@@ -299,11 +272,7 @@ export class ApplicationDataComponent implements OnInit {
         }
 
         this.ChangeNumOfInstallmentTenor();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getRefMasterTypeCode(code) {
@@ -317,11 +286,7 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   getLookupEmployeeResponse(ev) {
@@ -465,7 +430,6 @@ export class ApplicationDataComponent implements OnInit {
   GetListAppCrossValue() {
     var arr = [];
     for (var i = 0; i < this.resultCrossApp.length; i++) {
-        console.log(this.resultCrossApp[i]);
         var temp = new NapAppCrossObj();
         temp.AppId = this.appId;
         temp.CrossAgrmntNo = this.resultCrossApp[i].CrossAgrmntNo;
@@ -489,7 +453,6 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ClickSave() {
-    console.log(this.NapAppModelForm);
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
@@ -500,18 +463,11 @@ export class ApplicationDataComponent implements OnInit {
       appFinData: tempAppFindDataObj,
       RowVersion: ""
     };
-    console.log(obj);
-    console.log("test");
     this.http.post(url, obj).subscribe(
       (response) => {
-        console.log(response);
         this.toastr.successMessage('Save Application Data');
         this.outputTab.emit();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
   }
 
@@ -557,7 +513,6 @@ export class ApplicationDataComponent implements OnInit {
       this.resultCrossApp.push(tempCrossApp);
       this.ListCrossAppObj["result"].push(i.AgrmntNo);
     }
-    console.log(this.resultCrossApp);
   }
 
   DeleteCrossApp(idx) {
@@ -568,9 +523,6 @@ export class ApplicationDataComponent implements OnInit {
         obj = this.resultCrossApp[idx];
         this.http.post(url, obj).subscribe(
           (response) => {
-          },
-          (error) => {
-            console.log(error);
           }
         )
       }
@@ -592,6 +544,5 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   test(){
-    console.log(this.NapAppModelForm);
   }
 }

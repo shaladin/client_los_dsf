@@ -23,6 +23,10 @@ import { CustPersonalFinancialDataFL4WComponent } from './component/personal-fin
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -76,12 +80,12 @@ export class CustomerDataFL4WComponent implements OnInit {
   inputFieldMailingCompanyObj: InputFieldObj;
   copyFromMailingCompany: any;
   appCustPersonalId: any;
-  listAppCustPersonalContactInformation: any;
-  listAppCustBankAcc: any;
-  listAppCustBankAccCompany: any;
-  listShareholder: any;
-  listContactPersonCompany: any;
-  listLegalDoc: any;
+  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();;
+  listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
+  listContactPersonCompany: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
@@ -128,7 +132,6 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log('Shinano');
     this.cancel = this.showCancel;
     this.initUrl();
     this.bindCustTypeObj();
@@ -152,7 +155,6 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
-          console.log(response);
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
             this.EmitToMainComp();
@@ -162,11 +164,7 @@ export class CustomerDataFL4WComponent implements OnInit {
               this.toastr.warningMessage(message["Message"]);
             });
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -186,14 +184,9 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setCustCompanyObjForSave();
       this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           this.EmitToMainComp();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 
@@ -730,12 +723,9 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   test() {
-    console.log(this.mainDataComponent);
-    console.log(this.CustDataForm);
   }
 
   testCompany() {
-    console.log(this.CustDataCompanyForm);
   }
 
   async getCustData() {
@@ -803,7 +793,6 @@ export class CustomerDataFL4WComponent implements OnInit {
         this.isBindDataDone = true;
       },
       (error) => {
-        console.log(error);
         this.isBindDataDone = true;
       }
     );
@@ -978,7 +967,6 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   CopyCustomer(event) {
-    console.log(event);
     this.copyAddrFromLookup(event);
 
     if (event["CustPersonalContactPersonObjs"] != undefined) {
@@ -1026,7 +1014,6 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   CopyCustomerCompany(event) {
-    console.log(event);
     this.copyAddrCompanyFromLookup(event);
 
     if (event["CustCompanyContactPersonObjs"] != undefined) {
@@ -1184,7 +1171,6 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   EmitToMainComp() {
-    console.log(this.MrCustTypeCode);
     this.outputTab.emit(this.MrCustTypeCode);
   }
 }

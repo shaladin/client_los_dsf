@@ -236,7 +236,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   GetListAddr() {
-    console.log("ccc")
     this.appObj.AppId = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
@@ -332,7 +331,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.http.post(this.getAppCustUrl, appObj).subscribe(
       (response) => {
         this.appCustObj = response;
-        console.log(response);
         this.AssetDataForm.patchValue({
           Username: this.appCustObj.CustName,
           UserRelationship: "SELF",
@@ -401,7 +399,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   SelfUsageChange(event) {
-    console.log(event);
     if (event.checked == true) {
       this.GetAppCust();
       this.AssetDataForm.controls.Username.clearValidators();
@@ -456,7 +453,6 @@ export class AssetDataAddEditComponent implements OnInit {
     getAssetValidationRule.subscribe(
       (response) => {
         var assetValidationRule = response;
-        console.log("AssetValidationRule: " + JSON.stringify(response));
         this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
         if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypePrcnt) {
           if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
@@ -477,11 +473,7 @@ export class AssetDataAddEditComponent implements OnInit {
             this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
           }
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   downPaymentChange() {
@@ -502,8 +494,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.AppAssetId)
-    console.log(this.mode)
 
     var datePipe = new DatePipe("en-US");
     this.inputFieldLocationAddrObj = new InputFieldObj();
@@ -592,13 +582,7 @@ export class AssetDataAddEditComponent implements OnInit {
                         BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
                         BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
                       });
-                    },
-                    (error) => {
-                      console.log(error);
                     });
-                },
-                (error) => {
-                  console.log(error);
                 });
 
               this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
@@ -649,8 +633,6 @@ export class AssetDataAddEditComponent implements OnInit {
       this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
-          console.log("backcoll")
-          console.log(this.returnAppCollateralObj)
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
@@ -766,11 +748,7 @@ export class AssetDataAddEditComponent implements OnInit {
         arrCritAsset.push(critObjAsset);
         this.InputLookupAssetObj.addCritInput = arrCritAsset;
         this.InputLookupAssetObj.isReady = true;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
@@ -831,7 +809,6 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
   checkForm(){
-    console.log(this.AssetDataForm);
   }
   showModalTaxCityIssuer() {
     const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
@@ -842,9 +819,6 @@ export class AssetDataAddEditComponent implements OnInit {
         });
       }
     ).catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 
@@ -968,8 +942,6 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
   setAssetUser() {
-    console.log("Username : " + this.AssetDataForm.controls["Username"].value);
-    console.log("UserRelationship : " + this.AssetDataForm.controls["UserRelationship"].value);
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls["Username"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls["UserRelationship"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.AssetDataForm.controls["OwnerName"].value;
@@ -1021,8 +993,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   SaveForm() {
-    console.log("coba")
-    console.log(this.AssetDataForm.controls["BranchManagerName"].value)
     if (this.mode == 'addAsset') {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setSupplierInfo();
@@ -1041,15 +1011,10 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           //this.router.navigate(["/Nap/AssetData/Paging"]);
           this.assetValue.emit({ mode: 'paging' });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.allAssetDataObj = new AllAssetDataObj();
@@ -1074,34 +1039,10 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.successMessage(response["message"]);
           //this.router.navigate(["/Nap/AssetData/Paging"]);
           this.assetValue.emit({ mode: 'paging' });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
-
-  // editItem(custAddrObj: any) {
-  //   this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
-  // deleteItem(custAddrObj: any) {
-  //   var custAddr = new CustAddrObj();
-  //   custAddr.CustAddrId = custAddrObj.CustAddrId;
-  //   this.http.post(this.deleteCustAddr, custAddr).subscribe(
-  //     (response: any) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  //   //this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
-  // }
-
 }

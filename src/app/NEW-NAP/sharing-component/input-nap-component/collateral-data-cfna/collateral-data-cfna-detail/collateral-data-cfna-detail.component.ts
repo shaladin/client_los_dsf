@@ -21,6 +21,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { environment } from 'environments/environment';
+import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -99,6 +100,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   IdTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
   OwnerRelationList: Array<KeyValueObj> = new Array<KeyValueObj>();
   AssetTypeCode: string = "";
+  AppData: AppObj;
+  AppCustData: AppCustObj;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -111,22 +114,22 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.getAppData();
 
     if (this.mode == "edit") {
-      this.getAppCollData(0, this.AppCollateralId);
+      this.getAppCollData(0, this.AppCollateralId, false, false, new Object());
     }
-    if (this.isSingleAsset) {
-      this.getAppCollData(this.AppId, 0);
-    }
+    // if (this.isSingleAsset) {
+    //   this.getAppCollData(this.AppId, 0);
+    // }
 
     // SEMENTARA DI COMMENT BUAT CFNA
     // this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {
-    this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupExistColl.urlEnviPaging = environment.losUrl;
-    this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
-    this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
+    this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
 
     this.inputLookupColl.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
@@ -219,7 +222,25 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   getAppData() {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
-      (response) => {
+      (response: AppObj) => {
+        this.AppData = response;
+        this.http.post(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
+          (response: AppCustObj) => {
+            this.AppCustData = response;
+            this.criteriaList = new Array();
+            this.criteriaObj = new CriteriaObj();
+            this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+            this.criteriaObj.propName = 'CU.CUST_NO';
+            this.criteriaObj.value = this.AppCustData.CustNo;
+            this.criteriaList.push(this.criteriaObj);
+            this.inputLookupExistColl.addCritInput = this.criteriaList;
+            this.inputLookupExistColl.isReady = true;
+          }
+        ).catch(
+          (error) => {
+            console.log(error);
+          }
+        );
         this.getProdOffering(response.ProdOfferingCode, response.ProdOfferingVersion);
       });
   }
@@ -231,7 +252,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     };
     this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, ProdOfferingObj).subscribe(
       (response) => {
-        console.log(response);
         var temp = response["ListProdOfferingDObj"];
         var LobCode: string = "";
         for (var i = 0; i < temp.length; i++) {
@@ -240,22 +260,13 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
           }
         }
         this.AssetTypeCode = LobCode;
-        this.AddCollForm.patchValue({
-          AssetTypeCode: this.AssetTypeCode
-        });
+        // this.AddCollForm.patchValue({
+        //   AssetTypeCode: this.AssetTypeCode
+        // });
         // SEMENTARA DI COMMENT BUAT CFNA
         // this.onItemChange(this.AssetTypeCode);
         // Generate Collateral Doc
         this.getRefAssetDocList();
-
-        this.criteriaList = new Array();
-        this.criteriaObj = new CriteriaObj();
-        this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-        this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
-        this.criteriaObj.value = this.AssetTypeCode;
-        this.criteriaList.push(this.criteriaObj);
-        // this.inputLookupExistColl.addCritInput = this.criteriaList;
-        this.inputLookupExistColl.isReady = true;
       });
 
   }
@@ -302,109 +313,247 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       });
   }
 
-  getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false) {
-    this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).subscribe(
-      (response) => {
-        this.appCollateralObj = response['AppCollateral'];
-        this.collateralRegistrationObj = response['AppCollateralRegistration'];
-        if (!IsExisting) {
-          if (this.appCollateralObj.AppCollateralId != 0) {
-            this.mode = "edit";
-            // if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
-            //   this.AddCollForm.controls.UserName.disable();
-            //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
-            // }
-          } else {
-            if (this.mode = "add") {
-              this.editAppCollateralObj = response['AppCollateral'];
-              this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
-              this.AddCollForm.patchValue({
-                CollateralStat: "NEW"
-              });
-            }
-            return true;
-          }
-          this.editAppCollateralObj = response['AppCollateral'];
-          this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
-          this.AddCollForm.patchValue({
-            CollateralStat: this.editAppCollateralObj.CollateralStat
-          });
-        } else {
-          this.AddCollForm.patchValue({
-            CollateralStat: "EXISTING"
-          });
-        }
+  // getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false) {
+  //   this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).subscribe(
+  //     (response) => {
+  //       this.appCollateralObj = response['AppCollateral'];
+  //       this.collateralRegistrationObj = response['AppCollateralRegistration'];
+  //       if (!IsExisting) {
+  //         if (this.appCollateralObj.AppCollateralId != 0) {
+  //           this.mode = "edit";
+  //           // if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
+  //           //   this.AddCollForm.controls.UserName.disable();
+  //           //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
+  //           // }
+  //         } else {
+  //           if (this.mode = "add") {
+  //             this.editAppCollateralObj = response['AppCollateral'];
+  //             this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
+  //             this.AddCollForm.patchValue({
+  //               CollateralStat: "NEW"
+  //             });
+  //           }
+  //           return true;
+  //         }
+  //         this.editAppCollateralObj = response['AppCollateral'];
+  //         this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
+  //         this.AddCollForm.patchValue({
+  //           CollateralStat: this.editAppCollateralObj.CollateralStat
+  //         });
+  //       } else {
+  //         this.AddCollForm.patchValue({
+  //           CollateralStat: "EXISTING"
+  //         });
+  //       }
 
-        if (this.appCollateralObj.AppCollateralId == 0) {
-          return true;
-        } else {
-          if (this.isSingleAsset) {
-            this.mode = "edit";
-          }
-        }
+  //       if (this.appCollateralObj.AppCollateralId == 0) {
+  //         return true;
+  //       } else {
+  //         if (this.isSingleAsset) {
+  //           this.mode = "edit";
+  //         }
+  //       }
 
+  //       this.AddCollForm.patchValue({
+  //         AssetTypeCode: this.appCollateralObj.AssetTypeCode,
+  //         FullAssetCode: this.appCollateralObj.FullAssetCode,
+  //         AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
+  //         MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
+  //         MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
+  //         CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
+  //         CollateralNotes: this.appCollateralObj.CollateralNotes,
+  //         AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
+  //         CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
+  //         IsMainCollateral: this.appCollateralObj.IsMainCollateral,
+  //         ManufacturingYear: this.appCollateralObj.ManufacturingYear,
+  //         RowVersionCollateral: this.appCollateralObj.RowVersion,
+
+  //         AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
+  //         OwnerName: this.collateralRegistrationObj.OwnerName,
+  //         OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
+  //         MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
+  //         OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
+  //         MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
+  //         UserName: this.collateralRegistrationObj.UserName,
+  //         MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
+  //         RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
+  //       });
+
+  //       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
+  //         this.AddCollForm.patchValue({
+  //           SelfUsage: true
+  //         })
+  //       }
+
+  //       this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
+  //       // SEMENTARA DI COMMENT BUAT CFNA
+  //       // this.onItemChange(this.appCollateralObj.AssetTypeCode);
+  //       this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
+  //       this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
+  //       this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
+  //       this.inputLookupColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
+  //       // set data Location Address
+  //       this.LocationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
+  //       this.LocationAddrObj.AreaCode1 = this.collateralRegistrationObj.LocationAreaCode1;
+  //       this.LocationAddrObj.AreaCode2 = this.collateralRegistrationObj.LocationAreaCode2;
+  //       this.LocationAddrObj.AreaCode3 = this.collateralRegistrationObj.LocationAreaCode3;
+  //       this.LocationAddrObj.AreaCode4 = this.collateralRegistrationObj.LocationAreaCode4;
+  //       this.LocationAddrObj.City = this.collateralRegistrationObj.LocationCity;
+  //       this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.LocationZipcode;
+  //       this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.LocationZipcode };
+
+  //       // set data Owner Address
+  //       this.OwnerAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
+  //       this.OwnerAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
+  //       this.OwnerAddrObj.AreaCode2 = this.collateralRegistrationObj.OwnerAreaCode2;
+  //       this.OwnerAddrObj.AreaCode3 = this.collateralRegistrationObj.OwnerAreaCode3;
+  //       this.OwnerAddrObj.AreaCode4 = this.collateralRegistrationObj.OwnerAreaCode4;
+  //       this.OwnerAddrObj.City = this.collateralRegistrationObj.OwnerCity;
+  //       this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
+  //       this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
+  //     })
+  // }
+
+  getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean, response: object) {
+    if(IsFromLookup){
+      this.AddCollForm.patchValue({
+        AssetTypeCode: response["AssetTypeCode"],
+        FullAssetCode: response["FullAssetCode"],
+        AssetCategoryCode: response["AssetCategoryCode"],
+        MrCollateralConditionCode: response["MrCollateralConditionCode"],
+        MrCollateralUsageCode: response["MrCollateralUsageCode"],
+        CollateralValueAmt: response["CollateralPriceAmt"],
+        CollateralNotes: response["Notes"],
+        AssetTaxDt: formatDate(response["AssetTaxDt"], 'yyyy-MM-dd', 'en-US'),
+        // CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
+        // IsMainCollateral: this.appCollateralObj.IsMainCollateral,
+        // ManufacturingYear: this.appCollateralObj.ManufacturingYear,
+        // RowVersionCollateral: this.appCollateralObj.RowVersion,
+  
+        // AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
+        OwnerName: response["OwnerName"],
+        OwnerIdNo: response["OwnerIdNo"],
+        MrIdTypeCode: response["MrIdTypeCode"],
+        OwnerMobilePhnNo: response["OwnerMobilePhnNo"],
+        MrOwnerRelationshipCode: response["MrOwnerRelationshipCode"],
+        UserName: response["Username"],
+        MrUserRelationshipCode: response["MrUserRelationshipCode"],
+        // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
+      });
+  
+      if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
         this.AddCollForm.patchValue({
-          AssetTypeCode: this.appCollateralObj.AssetTypeCode,
-          FullAssetCode: this.appCollateralObj.FullAssetCode,
-          AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
-          MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
-          MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
-          CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
-          CollateralNotes: this.appCollateralObj.CollateralNotes,
-          AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
-          CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
-          IsMainCollateral: this.appCollateralObj.IsMainCollateral,
-          ManufacturingYear: this.appCollateralObj.ManufacturingYear,
-          RowVersionCollateral: this.appCollateralObj.RowVersion,
+          SelfUsage: true
+        })
+      }// bookmark
+  
+      // this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
+      this.changeSerialNoValidators(response["MrCollateralConditionCode"]);
+      this.inputLookupExistColl.nameSelect = response["FullAssetName"];
+      this.inputLookupExistColl.jsonSelect = { FullAssetName: response["FullAssetName"] };
+      this.inputLookupColl.nameSelect = response["FullAssetName"];
+      this.inputLookupColl.jsonSelect = { FullAssetName: response["FullAssetName"] };
+      // set data Location Address
+      this.LocationAddrObj.Addr = response["LocationAddr"];
+      this.LocationAddrObj.AreaCode1 = response["LocationAreaCode1"];
+      this.LocationAddrObj.AreaCode2 = response["LocationAreaCode2"];
+      this.LocationAddrObj.AreaCode3 = response["LocationAreaCode3"];
+      this.LocationAddrObj.AreaCode4 = response["LocationAreaCode4"];
+      this.LocationAddrObj.City = response["LocationCity"];
+      this.inputFieldLocationObj.inputLookupObj.nameSelect = response["LocationZipcode"];
+      this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: response["LocationZipcode"] };
+  
+      // set data Owner Address
+      this.OwnerAddrObj.Addr = response["OwnerAddr"];
+      this.OwnerAddrObj.AreaCode1 = response["OwnerAreaCode1"];
+      this.OwnerAddrObj.AreaCode2 = response["OwnerAreaCode2"];
+      this.OwnerAddrObj.AreaCode3 = response["OwnerAreaCode3"];
+      this.OwnerAddrObj.AreaCode4 = response["OwnerAreaCode4"];
+      this.OwnerAddrObj.City = response["OwnerCity"];
+      this.inputFieldLegalObj.inputLookupObj.nameSelect = response["OwnerZipcode"];
+      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: response["OwnerZipcode"] };
+    }
+    else{
+      if(this.mode == "edit"){
+        this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).subscribe(
+          (response) => {
+            this.appCollateralObj = response['AppCollateral'];
+            console.log("appCollateralObj: " + JSON.stringify(this.appCollateralObj));
+            this.collateralRegistrationObj = response['AppCollateralRegistration'];
+            this.editAppCollateralObj = response['AppCollateral'];
+            this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
+            this.AddCollForm.patchValue({
+              CollateralStat: this.editAppCollateralObj.CollateralStat
+            }); 
+            this.AddCollForm.patchValue({
+              AppCollateralId: this.appCollateralObj.AppCollateralId,
+              AssetTypeCode: this.appCollateralObj.AssetTypeCode,
+              FullAssetCode: this.appCollateralObj.FullAssetCode,
+              AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
+              MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
+              MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
+              CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
+              CollateralNotes: this.appCollateralObj.CollateralNotes,
+              AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
+              CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
+              IsMainCollateral: this.appCollateralObj.IsMainCollateral,
+              ManufacturingYear: this.appCollateralObj.ManufacturingYear,
+              RowVersionCollateral: this.appCollateralObj.RowVersion,
+        
+              AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
+              OwnerName: this.collateralRegistrationObj.OwnerName,
+              OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
+              MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
+              OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
+              MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
+              UserName: this.collateralRegistrationObj.UserName,
+              MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
+              RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
+            });
+        
+            if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
+              this.AddCollForm.patchValue({
+                SelfUsage: true
+              })
+            }
+        
+            this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
+            this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
+            this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
+            this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
+            this.inputLookupColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
+            // set data Location Address
+            this.LocationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
+            this.LocationAddrObj.AreaCode1 = this.collateralRegistrationObj.LocationAreaCode1;
+            this.LocationAddrObj.AreaCode2 = this.collateralRegistrationObj.LocationAreaCode2;
+            this.LocationAddrObj.AreaCode3 = this.collateralRegistrationObj.LocationAreaCode3;
+            this.LocationAddrObj.AreaCode4 = this.collateralRegistrationObj.LocationAreaCode4;
+            this.LocationAddrObj.City = this.collateralRegistrationObj.LocationCity;
+            this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.LocationZipcode;
+            this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.LocationZipcode };
+        
+            // set data Owner Address
+            this.OwnerAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
+            this.OwnerAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
+            this.OwnerAddrObj.AreaCode2 = this.collateralRegistrationObj.OwnerAreaCode2;
+            this.OwnerAddrObj.AreaCode3 = this.collateralRegistrationObj.OwnerAreaCode3;
+            this.OwnerAddrObj.AreaCode4 = this.collateralRegistrationObj.OwnerAreaCode4;
+            this.OwnerAddrObj.City = this.collateralRegistrationObj.OwnerCity;
+            this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
+            this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
 
-          AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
-          OwnerName: this.collateralRegistrationObj.OwnerName,
-          OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
-          MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
-          OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
-          MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
-          UserName: this.collateralRegistrationObj.UserName,
-          MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
-          RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
-        });
-
-        if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
-          this.AddCollForm.patchValue({
-            SelfUsage: true
-          })
-        }
-
-        this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
-        // SEMENTARA DI COMMENT BUAT CFNA
-        // this.onItemChange(this.appCollateralObj.AssetTypeCode);
-        this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
-        this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
-        this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
-        this.inputLookupColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
-        // set data Location Address
-        this.LocationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
-        this.LocationAddrObj.AreaCode1 = this.collateralRegistrationObj.LocationAreaCode1;
-        this.LocationAddrObj.AreaCode2 = this.collateralRegistrationObj.LocationAreaCode2;
-        this.LocationAddrObj.AreaCode3 = this.collateralRegistrationObj.LocationAreaCode3;
-        this.LocationAddrObj.AreaCode4 = this.collateralRegistrationObj.LocationAreaCode4;
-        this.LocationAddrObj.City = this.collateralRegistrationObj.LocationCity;
-        this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.LocationZipcode;
-        this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.LocationZipcode };
-
-        // set data Owner Address
-        this.OwnerAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
-        this.OwnerAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
-        this.OwnerAddrObj.AreaCode2 = this.collateralRegistrationObj.OwnerAreaCode2;
-        this.OwnerAddrObj.AreaCode3 = this.collateralRegistrationObj.OwnerAreaCode3;
-        this.OwnerAddrObj.AreaCode4 = this.collateralRegistrationObj.OwnerAreaCode4;
-        this.OwnerAddrObj.City = this.collateralRegistrationObj.OwnerCity;
-        this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
-        this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
-      })
+            this.onItemChange(this.appCollateralObj.AssetTypeCode);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    }
   }
 
   getExistingColl(event) {
-    this.getAppCollData(0, event.AppCollateralId, true);
+    this.getAppCollData(0, this.AppCollateralId, true, true, event);
   }
 
   getLookupCollateral(e) {
@@ -475,12 +624,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.AppCustAddrObj = new AppCustAddrObj();
     this.http.post(URLConstant.GetCustDataByAppId, { "AppId": this.AppId }).subscribe(
       response => {
-        console.log(response);
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];        
-        console.log(this.AppCustAddrObj);
-      },
-      error => {
-        console.log(error);
       }
     );
   }
@@ -497,7 +641,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       var appObj = { "AppId": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
-          // console.log(response);
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
           this.AppCustAddrObj = response['AppCustAddrLegalObj'];
@@ -596,22 +739,14 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputValue.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else {
       this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputValue.emit();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

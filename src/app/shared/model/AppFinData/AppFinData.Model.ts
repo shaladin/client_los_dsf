@@ -76,6 +76,7 @@ export class AppFinDataObj {
     TotalDpAmt: number;
     ExpenseAmount: number;
     ResultRefundRsvFundObjs: Array<ResultRefundObj>;
+    VendorAtpmCode: string;
     
     constructor() {
     }

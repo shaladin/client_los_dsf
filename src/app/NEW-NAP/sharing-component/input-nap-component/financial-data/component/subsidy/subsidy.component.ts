@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -12,10 +12,13 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-subsidy',
   templateUrl: './subsidy.component.html',
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class SubsidyComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm : FormGroup;
+  @Output() emitData = new EventEmitter();
+
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -26,15 +29,17 @@ export class SubsidyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("on init");
     this.LoadSubsidyData();
   }
 
   AddReason()
   {
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditComponent);
     modalRef.componentInstance.mode = "add";
     modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
@@ -44,9 +49,10 @@ export class SubsidyComponent implements OnInit {
 
   editSubsidy(obj){
     this.listAppFeeObj = this.ParentForm.get("AppFee").value;
-    const modalRef = this.modalService.open(SubsidyAddEditComponent, { size:'sm' });
+    const modalRef = this.modalService.open(SubsidyAddEditComponent);
     modalRef.componentInstance.mode = "edit";
     modalRef.componentInstance.AppId = this.AppId;
+    modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.AppSubsidyId = obj.AppSubsidyId;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.emitData.subscribe(($e) => {
@@ -58,14 +64,10 @@ export class SubsidyComponent implements OnInit {
   deleteSubsidy(obj)
   {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        console.log(obj)
         this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -76,6 +78,7 @@ export class SubsidyComponent implements OnInit {
     this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
+        this.emitData.emit(this.listSubsidy);
       }
     );
   }
@@ -85,6 +88,7 @@ export class SubsidyComponent implements OnInit {
     this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
+        this.emitData.emit(this.listSubsidy);
       }
     );
   }

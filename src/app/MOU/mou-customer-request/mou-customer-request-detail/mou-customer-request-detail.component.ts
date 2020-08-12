@@ -33,7 +33,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MouCustId: [0, [Validators.required]],
     MouCustNo: [''],
     MouCustDt: ['', [Validators.required]],
-    TopupMouCustId: [],
+    TopupMouCustId: [0],
     CustNo: ['', [Validators.required]],
     CustName: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
@@ -48,7 +48,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     Notes: [''],
     SrvyOrderNo: [''],
     MrCustTypeCode: [''],
-    RowVersion: ['']
+    RowVersion: [''],
+    CustModelCode: [''],
+    IdNo: [''],
+    MrIdTypeCode: ['']
   });
 
   constructor(
@@ -74,7 +77,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log('Shinano');
 
     if (this.WfTaskListId > 0)
       this.claimTask();
@@ -104,11 +106,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
       (response: any) => {
         this.refOfficeId = response.RefOfficeId;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
 
     if(this.pageType == "edit" || this.pageType == "return"){
       var mouCust = new MouCustObj();
@@ -127,11 +125,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
               this.custId = response['CustId'];
             });
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else{
       this.MOUMainInfoForm.patchValue({
@@ -144,7 +138,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME]};
-    console.log(wfClaimObj);
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
@@ -171,11 +164,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response["MouCustId"];
           this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustId }});
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
     else if(this.pageType == "edit" || this.pageType == "return"){
       this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
@@ -187,11 +176,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           else{
             this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 

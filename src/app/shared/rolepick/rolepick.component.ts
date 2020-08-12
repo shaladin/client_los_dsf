@@ -18,7 +18,6 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    console.log("Role Pick");
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -27,7 +26,6 @@ export class RolepickComponent implements OnInit, AfterViewInit {
   }
 
   chooseRole(item) {
-    console.log(item);
     var roleUrl = environment.FoundationR3Url + URLConstant.LoginByRole;
     var roleObject = {
       UserName: this.data.user,
@@ -53,11 +51,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
             this.router.navigateByUrl(currPath);
             this.dialog.closeAll();
           });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
 
     }
     else {
@@ -68,11 +62,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           AdInsHelper.CreateUserAccess(response);
           this.router.navigate(["/dashboard/dash-board"]);
           this.dialog.closeAll();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
 
     // this.http.post(url, roleObject).subscribe(
@@ -92,29 +82,21 @@ export class RolepickComponent implements OnInit, AfterViewInit {
     //         localStorage.setItem("FullName", item.fullName);
     //         this.currentUserContextService.addCurrentUserContext(currentUserContext);
     //         localStorage.setItem("RoleId", item.refRoleId);
-    //         console.log(response);
     //         sessionStorage.setItem("UserAccess", JSON.stringify(response["returnObject"]));
     //         if (window.location.pathname == "/pages/login") {
     //           this.router.navigate(['dashboard/dash-board']);
     //         } else {
     //           window.location.reload();
     //         }
-    //       },
-    //       (error) => {
-    //         console.log(error);
     //       }
     //     )
 
-    //   },
-    //   (error) => {
-    //     console.log(error);
     //   }
     // )
 
   }
 
   ngOnInit() {
-    console.log("Role Pick");
   }
 
 }

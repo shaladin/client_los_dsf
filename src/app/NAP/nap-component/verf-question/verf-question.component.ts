@@ -108,7 +108,6 @@ export class VerfQuestionComponent implements OnInit {
         }
       }
     }
-    console.log(this.ParentForm.get("VerfResultDForm"));
   }
 
   GetHistoryList() {
@@ -124,20 +123,12 @@ export class VerfQuestionComponent implements OnInit {
         this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
           (response) => {
             this.VerfResultHList = response["responseVerfResultHCustomObjs"];
-          },
-          (error) => {
-            console.log(error);
           }
         );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   CheckValue() {
-    console.log(this.ParentForm)
   }
 
 }

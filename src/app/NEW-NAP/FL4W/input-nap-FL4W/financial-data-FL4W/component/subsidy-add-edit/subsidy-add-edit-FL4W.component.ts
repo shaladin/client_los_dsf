@@ -20,6 +20,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     @Input() AppSubsidyId: number;
     @Input() AppId: number;
     @Input() listAppFeeObj : Array<AppFeeObj>;
+    @Input() ParentForm : FormGroup;
     @Output() emitData = new EventEmitter();
 
     FormAppSubsidy: FormGroup;
@@ -100,7 +101,6 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
         (response) => {
           this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
-          console.log(this.subsidyMaxRuleObj);
         }
       );
     }
@@ -130,7 +130,6 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       if(this.mode == "add"){
         this.http.post(URLConstant.AddAppSubsidy, subdObj ).subscribe(
           (response) => {
-            console.log(response);
             var x = response[CommonConstant.ReturnObj];
             this.emitData.emit(x);
             this.activeModal.close();
@@ -142,7 +141,6 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
         
         this.http.post(URLConstant.EditAppSubsidy, subdObj ).subscribe(
           (response) => {
-            console.log(response);
             var x = response[CommonConstant.ReturnObj];
             this.emitData.emit(x);
             this.activeModal.close();
@@ -155,6 +153,14 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
         (response) => {
           this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
+
+          if(this.ParentForm.get("VendorAtpmCode").value == null){
+            var atpmIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeAtpm);
+
+            if(atpmIndex != -1){
+              this.FromTypeCodeOptions.splice(atpmIndex, 1);
+            }
+          }
         }
       );
     }
@@ -194,7 +200,6 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
 
           if(this.ValueTypeOptions.length == 1)
           {
-            console.log(this.SourceCodeOptions)
           }
 
         }

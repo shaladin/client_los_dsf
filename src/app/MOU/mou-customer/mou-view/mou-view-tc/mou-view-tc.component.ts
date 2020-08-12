@@ -20,7 +20,6 @@ export class MouViewTcComponent implements OnInit {
 
   ngOnInit() {
     var mouCustObj = { MouCustId: this.MouCustId }
-    console.log(mouCustObj);
     this.http.post(URLConstant.GetCustMouTcByCustMouId, mouCustObj).subscribe(
       (response) => {
         this.listTCData = response['ReturnObject'];

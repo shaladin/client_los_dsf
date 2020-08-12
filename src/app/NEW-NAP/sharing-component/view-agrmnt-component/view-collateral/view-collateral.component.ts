@@ -25,7 +25,6 @@ export class ViewCollateralComponent implements OnInit {
     this.http.post<Array<AppAssetObj>>(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, AgrmntObj).subscribe(
       (response) => {
         this.appAssetList = response[CommonConstant.ReturnObj];
-        console.log(this.appAssetList);
       });
   }
 
@@ -34,9 +33,6 @@ export class ViewCollateralComponent implements OnInit {
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
     modalAssetDetail.componentInstance.AgrmntId = this.agrmntId;
     modalAssetDetail.result.then().catch((error) => {
-      if (error != 0) {
-        console.log(error);
-      }
     });
   }
 }

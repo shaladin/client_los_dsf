@@ -26,11 +26,7 @@ export class AppAssetDataFl4wComponent implements OnInit {
     this.httpClient.post(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, request).subscribe(
       (response) => {
         this.appAssetList = response[CommonConstant.ReturnObj];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 
   viewDetailHandler(appAssetId){
@@ -38,9 +34,6 @@ export class AppAssetDataFl4wComponent implements OnInit {
     modalAssetDetail.componentInstance.AppAssetId = appAssetId;
     modalAssetDetail.componentInstance.AgrmntId = this.AgrmntId;
     modalAssetDetail.result.then().catch((error) => {
-      if(error != 0){
-        console.log(error);
-      }
     });
   }
 

@@ -99,9 +99,6 @@ export class LegalReviewDetailComponent implements OnInit {
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
-          },
-          (error) => {
-            console.log(error);
           }
         );
       }
@@ -113,7 +110,6 @@ export class LegalReviewDetailComponent implements OnInit {
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    console.log(wfClaimObj);
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
@@ -153,11 +149,7 @@ export class LegalReviewDetailComponent implements OnInit {
         response => {
           this.toastr.successMessage(response['message']);
           this.router.navigate(["/Mou/CustomerLegalReview/Paging"]);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        });
       this.mouTc.Save();
     }
 
@@ -169,11 +161,7 @@ export class LegalReviewDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        });
     }
   }
 }

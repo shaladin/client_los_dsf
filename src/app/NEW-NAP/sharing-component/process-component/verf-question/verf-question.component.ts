@@ -107,11 +107,9 @@ export class VerfQuestionComponent implements OnInit {
         }
       }
     }
-    console.log(this.ParentForm);
   }
 
   CheckValue() {
-    console.log(this.ParentForm)
   }
 
 }
