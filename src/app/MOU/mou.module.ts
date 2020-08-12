@@ -84,6 +84,8 @@ import { MouCustMgmntShrholderComponent } from './mou-customer-request/mou-cust-
 import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-personal-data/similar-mou-personal-data.component';
 import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-company-data/similar-mou-company-data.component';
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
+import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
+import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -198,7 +200,9 @@ export const customCurrencyMaskConfig = {
     MouCustMgmntShrholderComponent,
     SimilarMouPersonalDataComponent,
     SimilarMouCompanyDataComponent,
-    MouDupCheckPagingComponent
+    MouDupCheckPagingComponent,
+    ExistingMouCompanyComponent,
+    ExistingMouPersonalComponent
   ],
   exports: [],
   providers: [NGXToastrService],
