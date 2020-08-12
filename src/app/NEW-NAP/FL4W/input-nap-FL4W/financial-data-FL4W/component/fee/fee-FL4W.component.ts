@@ -21,7 +21,7 @@ export class FeeFL4WComponent implements OnInit {
   appFeeObj : AppFeeObj = new AppFeeObj();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted : boolean;
-
+  TempProvisionSource : any;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -40,6 +40,15 @@ export class FeeFL4WComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
+    var RefMasterTypeCodeProvisionSource = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionSource
+    }
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, RefMasterTypeCodeProvisionSource).subscribe(
+      (response) => {
+        this.TempProvisionSource = response[CommonConstant.ReturnObj];
+      });
+
+
     await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response[CommonConstant.ReturnObj];

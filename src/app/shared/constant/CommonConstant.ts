@@ -433,6 +433,7 @@ export class CommonConstant {
     public static RefMasterReservedField2Fee = "FEE";
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";
+    public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
     
     //RATE TYPE
     public static RateTypeFlat = "FLT";

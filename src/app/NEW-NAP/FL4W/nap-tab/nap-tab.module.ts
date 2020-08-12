@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/tc-sharing-component.module";
 import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { SubsidyAddEditComponent } from "app/NEW-NAP/sharing-component/input-nap-component/financial-data/component/subsidy-add-edit/subsidy-add-edit.component";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service"; 
 import { CustUcaddressFL4WComponent } from "./customer-data/component/address/ucaddressFL4W.component";
@@ -37,7 +37,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",     
   suffix: "",     
   thousands: ",",     
-  nullable: false };
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL };
 
 @NgModule({
   exports: [

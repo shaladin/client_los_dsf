@@ -62,9 +62,8 @@
                     <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Calculation Base</label>
                   </div>
                   <div class="col-md-3 margin-b-5">
-                    <select class="form-control" formControlName="FeeSource" (change)="CalcBase_OnChange($event);">
-                      <option value="NTF_WITHOUT_CAP" >OTR-DP</option>
-                      <option value="NTF_WITH_CAP" >OTR-DP + Ins Cptlz + Fee Cptlz(Excl. Provision)</option>
+                    <select class="form-control adInsInput" style="width: auto" formControlName="FeeSource" [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls[identifier].value[i].FeeSource.invalid }" (change)="CalcBase_OnChange($event);">
+                      <option *ngFor="let it of TempProvisionSource" value="{{it.Key}}">{{it.Value}}</option>
                     </select>
                   </div>
                   <div class="col-md-6"></div>
