@@ -19,30 +19,24 @@ export class MouDupCheckPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchAppDupCheck.json";
+    this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouDupCheck.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouDupCheck.json";
   }
 
   NextScreen(event) {
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      this.router.navigate(["/Mou/DuplicateCheck/SimilarPersonal"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      this.router.navigate(["/Mou/DuplicateCheck/ExistingPersonal"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      this.router.navigate(["/Mou/DuplicateCheck/SimilarCompany"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      this.router.navigate(["/Mou/DuplicateCheck/ExistingCompany"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
   }
 }

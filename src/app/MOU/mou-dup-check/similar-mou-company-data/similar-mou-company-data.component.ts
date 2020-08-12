@@ -4,7 +4,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustCompanyObj } from 'app/shared/model/MouCustCompanyObj.Model';
 import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
@@ -23,9 +22,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
   GetCustomerDuplicateCheckUrl = URLConstant.GetCustomerAndNegativeCustDuplicateCheck;
   GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
   GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
-  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
-  GetMouCustDuplicateCheckUrl = "";
   MouCustObj: MouCustObj; 
   MouCustCompanyObj: MouCustCompanyObj;
   MouCustAddrObj: MouCustAddrObj;
@@ -41,8 +38,8 @@ export class SimilarMouCompanyDataComponent implements OnInit {
     private router: Router,
   ) { 
     this.route.queryParams.subscribe(params => {
-      if (params['mouCustId'] != null) {
-        this.MouCustId = params['mouCustId'];
+      if (params['MouCustId'] != null) {
+        this.MouCustId = params['MouCustId'];
       }
       if (params['WfTaskListId'] != null) {
         this.WfTaskListId = params['WfTaskListId'];
@@ -51,19 +48,17 @@ export class SimilarMouCompanyDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ClaimTask();
-    //Get App Cust Data
+    //Get Mou Cust Data
     this.MouCustObj = new MouCustObj();
     this.MouCustCompanyObj = new MouCustCompanyObj();
     this.MouCustAddrObj = new MouCustAddrObj();
 
-    var appObj = { "MouCustId": this.MouCustId };
-    this.http.post(this.GetCustDataByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetMouCustByMouCustId, { "MouCustId": this.MouCustId }).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         this.RowVersion = response['MouCustObj'].RowVersion;
         this.MouCustCompanyObj = response['MouCustCompanyObj'];
-        this.MouCustAddrObj = response['AppCustAddrLegalObj'];
+        this.MouCustAddrObj = response['MouCustAddrLegalObj'];
 
         var requestDupCheck = {
           "CustName": this.MouCustObj.CustName,
@@ -92,7 +87,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
           });
 
         //List Mou Cust Duplicate Checking
-        this.http.post(this.GetMouCustDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListMouCustDuplicate = response[CommonConstant.ReturnObj];
           });
@@ -100,66 +95,23 @@ export class SimilarMouCompanyDataComponent implements OnInit {
 
   }
 
-  // SelectCust(item) {
-  //   var AppDupCheckObj = {"AppId": this.AppId, 
-  //   "CustNo":item.CustNo, "CustName" : item.CustName,
-  //   "Npwp":item.TaxIdNo, "MrIdType" : item.MrIdTypeCode, 
-  //   "IdNo":item.IdNo, "BirthDt":item.BirthDt, "MobilePhnNo":item.MobilePhnNo1,
-  //    "MotherMaidenName":item.MotherMaidenName, "DuplicateItem":item.DuplicateItem,
-  //    "IsSelected":true
-  // }
-  //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
-  //     response => {
-  //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
-  //     });
-  // }
-
-  // SelectCust(item) {
-  //   var AppDupCheckObj = {"AppId": this.AppId, 
-  //   "CustNo":item.CustNo, "CustName" : item.CustName,
-  //   "Npwp":item.TaxIdNo, "MrIdType" : item.MrIdTypeCode, 
-  //   "IdNo":item.IdNo, "BirthDt":item.BirthDt, "MobilePhnNo":item.MobilePhnNo1,
-  //    "MotherMaidenName":item.MotherMaidenName, "DuplicateItem":item.DuplicateItem,
-  //    "IsSelected":true
-  // }
-  //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
-  //     response => {
-  //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
-  //     });
-  // }
-
   SelectCust(item) {
-    var AppDupCheckObj = {"MouCustId": this.MouCustId, 
-    "CustNo":item.CustNo};
-    this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.http.post(URLConstant.EditCustNoMouCust, {"MouCustId": this.MouCustId, 
+    "CustNo":item.CustNo , "ApplicantNo":item.ApplicantNo}).subscribe(
       response => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId } });
+        this.router.navigate(["/Mou/DuplicateCheck/ExistingCompany"], { queryParams: { "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId } });
       });
   }
 
   NewCustomer(){
-    var AppDupCheckObj = {"MouCustId": this.MouCustId, 
-    "CustNo": this.MouCustObj.CustNo, RowVersion: ""};
-    this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.http.post(URLConstant.EditCustNoMouCust, {"MouCustId": this.MouCustId, 
+    "CustNo":this.MouCustObj.ApplicantNo, "ApplicantNo":this.MouCustObj.ApplicantNo, RowVersion: ""}).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId } });
-      });
-  }
-
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-    
+        this.router.navigate(["/Mou/DuplicateCheck/ExistingCompany"], { queryParams: { "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId } });
       });
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    this.router.navigate(["/Mou/DuplicateCheck/Paging"]);
   }
 }
