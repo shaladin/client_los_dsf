@@ -6,11 +6,15 @@
             <div class="form-body">
               <div class="form-group row">
                 <label class="col-md-2 adins-required" translate>Collateral Type</label>
-                <div class="col-md-3">
-                  <select class="form-control" formControlName="Collateral" (change)="CollChange()">
-                    <option value="New">New Collateral</option>
-                    <option value="Exist">Existing Collateral</option>
-                  </select>
+                <div class="col-md-3"> 
+
+                  <select class="form-control" formControlName="Collateral"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Collateral.invalid }">
+                  <option *ngFor="let item of returnAssetCondition" [value]="item.Key">
+                    {{item.Value}}
+                  </option>
+                </select>
+
                 </div>
               </div>
               <div id="addColl" *ngIf="this.collateral == 'New'">

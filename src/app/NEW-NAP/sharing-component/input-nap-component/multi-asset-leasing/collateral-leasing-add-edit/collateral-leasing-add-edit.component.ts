@@ -112,7 +112,8 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   resAssetMasterObj: any;
   appCollateralRegistObj: any;
   returnAppCollateralRegistObj: any;
-
+  assetConditionObj : RefMasterObj;
+  returnAssetCondition : any;
   appObj = {
     AppId: 0,
   };
@@ -539,7 +540,16 @@ export class CollateralLeasingAddEditComponent implements OnInit {
         this.AddCollForm.patchValue({ AssetRegion: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
-    
+     
+    this.assetConditionObj = new RefMasterObj();
+    this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
+    this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
+      (response) => {
+        this.returnAssetCondition = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({ Collateral: response[CommonConstant.ReturnObj][0]['Key'] });
+      }
+    );
+
     this.collTypeObj = new AssetTypeObj();
     this.http.post(this.getListAssetTypeByCode, this.collTypeObj).subscribe(
       (response) => {
