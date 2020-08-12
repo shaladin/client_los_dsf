@@ -25,7 +25,7 @@ import { ReturnHandlingCollateralPagingComponent } from "./return-handling/retur
 import { MatCheckboxModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { CreditApvResultExtDetailComponent } from "./credit-apv-result-ext/credit-apv-result-ext-detail/credit-apv-result-ext-detail.component";
 import { CreditApvResultExtPagingComponent } from "./credit-apv-result-ext/credit-apv-result-ext-paging/credit-apv-result-ext-paging.component";
 import { AssetInquiryComponent } from "./credit-apv-result-ext/asset-inquiry/asset-inquiry.component";
@@ -42,7 +42,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",
   suffix: "",
   thousands: ",",
-  nullable: false
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({

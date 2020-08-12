@@ -58,7 +58,7 @@ import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/l
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { UcapprovalhistModule } from "@adins/ucapprovalhist";
 import { MouCancelComponent } from "./mou-cancel/mou-cancel.component";
@@ -77,7 +77,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",     
   suffix: "",     
   thousands: ",",     
-  nullable: false 
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({
