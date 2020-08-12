@@ -61,6 +61,7 @@
             "label": "Lead No.",
             "property": "LeadNo",
             "name": "LeadNo",
+            "isHide": true,
             "position": "left",
             "path": "/Lead/View",
             "target": "_blank",
