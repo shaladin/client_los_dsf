@@ -1,0 +1,172 @@
+<div *ngIf="!isFCTR">
+  <lib-ucSubsection [id]="'LoanObjectId'" [title]="'Loan Object'" [panel]="'LoanObjectSection'"></lib-ucSubsection>
+  <div id="LoanObjectSection">
+    <div class="col-md-12">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: left;">
+              <span class="thead-header" name='assetName' translate>Asset Name</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='insuredBy' translate>Insured By</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='paidBy' translate>Paid By</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='insuranceCompany' translate>Insurance Company</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='coverPeriod' translate>Cover Period</span>
+            </th>
+            <th style="text-align: center;">
+              <span class="thead-header" name='insuranceLength' translate>Insurance Length</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='mainPremi' translate>Main Premi</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='addPremi' translate>Additional Premi</span>
+            </th>
+            <th style="text-align: center;">
+              <span class="thead-header" name='fee' translate>Fee</span>
+            </th>
+            <th style="text-align: center;">
+              <span class="thead-header" name='viewDetail' translate>View Detail</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of appInsObjs; index as i">
+            <td style="text-align: left;">
+              {{item.InsObjName}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InsAssetCoveredBy}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InsAssetPaidBy}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoBranchName}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InsAssetCoverPeriod}}
+            </td>
+            <td style="text-align: center;">
+              {{item.InsLength}}
+            </td>
+            <td style="text-align: right;">
+              {{item.TotalCustMainPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.TotalCustAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.CustAdminFeeAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: center;">
+              <a (click)="viewDetailLoanHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<lib-ucSubsection [id]="'CollateralId'" [title]="'Collateral'" [panel]="'CollateralSection'"></lib-ucSubsection>
+<div id="CollateralSection">
+  <div class="col-md-12">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='assetName' translate>Asset Name</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='insuredBy' translate>Insured By</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='paidBy' translate>Paid By</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='insuranceCompany' translate>Insurance Company</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='coverPeriod' translate>Cover Period</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='insuranceLength' translate>Insurance Length</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='mainPremi' translate>Main Premi</span>
+          </th>
+          <th style="text-align: right;">
+            <span class="thead-header" name='addPremi' translate>Additional Premi</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='fee' translate>Fee</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='viewDetail' translate>View Detail</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of appCollObjs; index as i">
+          <td style="text-align: left;">
+            {{item.InsObjName}}
+          </td>
+          <td style="text-align: left;">
+            {{item.InsAssetCoveredBy}}
+          </td>
+          <td style="text-align: left;">
+            {{item.InsAssetPaidBy}}
+          </td>
+          <td style="text-align: left;">
+            {{item.InscoBranchName}}
+          </td>
+          <td style="text-align: left;">
+            {{item.InsAssetCoverPeriod}}
+          </td>
+          <td style="text-align: center;">
+            {{item.InsLength}}
+          </td>
+          <td style="text-align: right;">
+            {{item.TotalCustMainPremiAmt | number:'.2':'en-US'}}
+          </td>
+          <td style="text-align: right;">
+            {{item.TotalCustAddPremiAmt | number:'.2':'en-US'}}
+          </td>
+          <td style="text-align: right;">
+            {{item.CustAdminFeeAmt | number:'.2':'en-US'}}
+          </td>
+          <td style="text-align: center;">
+            <a (click)="viewDetailCollateralHandler(item.AppInsObjId)"><i class="fas fa-pencil-alt"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="SummarySection" style="margin-top: 20px;">
+  <div class="col-md-12">
+    <div class="col-md-12" style="padding: 0;">
+      <div class="col-md-6" style="margin-bottom: 5px;">
+        <label class="col-md-6 adInsLabel" translate>Total Premi to Customer</label>
+        <label class="col-md-6 adInsLabel" translate>{{custTotalPremi | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="col-md-6" style="margin-bottom: 5px;">
+        <label class="col-md-6 adInsLabel" translate>Paid Amount by Customer</label>
+        <label class="col-md-6 adInsLabel" translate>{{totalCustPaidAmt | number:'.2':'en-US'}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0;">
+      <div class="col-md-6" style="margin-bottom: 5px;">
+        <label class="col-md-6 adInsLabel" translate>Capitalized Amount</label>
+        <label class="col-md-6 adInsLabel" translate>{{totalCapitalizedAmt | number:'.2':'en-US'}} </label>
+      </div>
+    </div>
+  </div>
+</div>

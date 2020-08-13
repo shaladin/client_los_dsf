@@ -99,7 +99,7 @@ export class AdInsHelper {
 
   public static OpenAppViewByAppId(AppId) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + AppId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + "/View/AppView?AppId=" + AppId + "&Token=" + token, "_blank");
   }
 
   public static OpenProdOfferingViewByCodeAndVersion(Code, Version) {
@@ -115,7 +115,7 @@ export class AdInsHelper {
 
   public static OpenAgrmntViewByAgrmntId(AgrmntId){
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + "/View/AgrmntView?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
   }
 
   public static OpenMOUCustViewByMouCustId(MouCustId){

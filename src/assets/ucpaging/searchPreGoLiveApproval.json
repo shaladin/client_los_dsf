@@ -160,7 +160,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target": "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -183,7 +183,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -206,7 +206,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -229,7 +229,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",

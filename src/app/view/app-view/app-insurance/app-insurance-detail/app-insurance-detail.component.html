@@ -1,0 +1,421 @@
+<div class="modal-header">
+  <h4 class="modal-title">Insurance Object : {{appInsObj?.InsObjName}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="col-md-12" *ngIf="appInsObj?.InsAssetCoveredByCode == 'CU'">
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insured By</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
+      </div>
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Policy No</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyNo}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insco Branch Name</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoBranchName}}</label>
+      </div>
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Policy Name</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyName}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Coverage Amount</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.CvgAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Start Date</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.StartDt}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Notes</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.Notes}}</label>
+      </div>
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>End Date</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.EndDt}}</label>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="appInsObj?.InsAssetCoveredByCode == 'CO'">
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insured By</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Company</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoBranchName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Cover Period</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoverPeriod}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Coverage Amount</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.CvgAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Length</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsLength}}</label>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Admin Fee Amount</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Notes</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.Notes}}</label>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'CoverageCompanyId'" [title]="'Coverage'" [panel]="'CoverageCompanySection'"></lib-ucSubsection>
+    <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span class="thead-header" name='yearNo' translate>Year No</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='mainCoverage' translate>Main Coverage</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='addCoverage' translate>Additional Coverage</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of appInsCvgsFinal;">
+            <td style="text-align: center;">
+              {{item.YearNo}}
+            </td>
+            <td style="text-align: left;">
+              {{item.MrMainCvgTypeCode}}
+            </td>
+            <td style="text-align: left;">
+              {{item.MrAddCvgTypeCode}}
+            </td>
+            <td style="text-align: right;">
+              {{item.CustMainPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.CustAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <lib-ucSubsection [id]="'SummaryCompanyId'" [title]="'Summary'" [panel]="'SummaryCompanySection'"></lib-ucSubsection>
+    <div id="SummaryCompanySection">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Main Premi to Customer</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Main Premi from Insco</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoMainPremiAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Additional Premi to Customer</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustAddPremiAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Additional Premi from Insco</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoAddPremiAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Fee to Customer</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.CustAdminFeeAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Fee from Insco</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt + appInsObj.TotalCustAddPremiAmt + appInsObj.CustAdminFeeAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Premi from Insco</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoMainPremiAmt + appInsObj.TotalInscoAddPremiAmt + appInsObj.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Discount Amount</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustDiscAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Total Premi to Customer After Discount</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt + appInsObj.TotalCustAddPremiAmt - appInsObj.TotalCustDiscAmt + appInsObj.CustAdminFeeAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Capitalize Amount</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsCpltzAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="appInsObj?.InsAssetCoveredByCode == 'CUCO'">
+    <div id="CUCO_Customer">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insured By</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Policy No</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyNo}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insco Branch Name</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoBranchName}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Policy Name</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyName}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Coverage Amount</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.CvgAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Start Date</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.StartDt}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Notes</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.Notes}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>End Date</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.EndDt}}</label>
+        </div>
+      </div>
+    </div>
+    <div id="CUCO_Company" style="margin-top: 20px;">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insured By</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Company</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoBranchName}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Cover Period</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoverPeriod}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Coverage Amount</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.CvgAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Length</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsLength}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Admin Fee Amount</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Notes</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.Notes}}</label>
+        </div>
+      </div>
+      <lib-ucSubsection [id]="'CoverageCompanyId'" [title]="'Coverage'" [panel]="'CoverageCompanySection'"></lib-ucSubsection>
+      <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th style="text-align: center;">
+                <span class="thead-header" name='yearNo' translate>Year No</span>
+              </th>
+              <th style="text-align: left;">
+                <span class="thead-header" name='mainCoverage' translate>Main Coverage</span>
+              </th>
+              <th style="text-align: left;">
+                <span class="thead-header" name='addCoverage' translate>Additional Coverage</span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of appInsCvgsFinal;">
+              <td style="text-align: center;">
+                {{item.YearNo}}
+              </td>
+              <td style="text-align: left;">
+                {{item.MrMainCvgTypeCode}}
+              </td>
+              <td style="text-align: left;">
+                {{item.MrAddCvgTypeCode}}
+              </td>
+              <td style="text-align: left;">
+                {{item.CustMainPremiAmt | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
+                {{item.CustAddPremiAmt | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
+                {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
+                {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <lib-ucSubsection [id]="'SummaryCompanyId'" [title]="'Summary'" [panel]="'SummaryCompanySection'"></lib-ucSubsection>
+      <div id="SummaryCompanySection">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Main Premi to Customer</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt | number:'.2':'en-US'}}</label>
+          </div>
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Main Premi from Insco</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoMainPremiAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Additional Premi to Customer</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustAddPremiAmt | number:'.2':'en-US'}}</label>
+          </div>
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Additional Premi from Insco</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoAddPremiAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Fee to Customer</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.CustAdminFeeAmt | number:'.2':'en-US'}}</label>
+          </div>
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Fee from Insco</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt + appInsObj.TotalCustAddPremiAmt | number:'.2':'en-US'}}</label>
+          </div>
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Premi from Insco</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoMainPremiAmt + appInsObj.TotalInscoAddPremiAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Discount Amount</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustDiscAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Total Premi to Customer After Discount</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt + appInsObj.TotalCustAddPremiAmt - appInsObj.TotalCustDiscAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+            <label class="col-md-3 adInsLabel" translate>Capitalize Amount</label>
+            <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsCpltzAmt | number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="appInsObj?.InsAssetCoveredByCode == 'OFF'">
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insured By</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+</div>

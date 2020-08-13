@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <div *ngIf="isMulti">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
+      </div>
+      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
+      <div *ngIf="this.AppCollateralDocs?.length">
+        <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+        </lib-ucSubsection>
+        <div class="form-body" id="AddCollDocument">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">Document</span></th>
+                <th><span translate class="thead-header">Received</span></th>
+                <th><span translate class="thead-header">Document No</span></th>
+                <th><span translate class="thead-header">Expired Date</span></th>
+                <th><span translate class="thead-header">Document Notes</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of this.AppCollateralDocs">
+                <td>
+                  {{item.DocCode}}
+                </td>
+                <td *ngIf="item.IsReceived == true">
+                  Yes
+                </td>
+                <td *ngIf="item.IsReceived == false">
+                  No
+                </td>
+                <td>
+                  {{item.DocNo}}
+                </td>
+                <td>
+                  {{item.ExpiredDt | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                  {{item.DocNotes}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
+    </div>
+  </div>
+</div>
