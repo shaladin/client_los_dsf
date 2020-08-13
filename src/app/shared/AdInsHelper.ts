@@ -110,7 +110,7 @@ export class AdInsHelper {
   public static OpenLeadViewByLeadId(LeadId)
   {
     var token = localStorage.getItem("Token");
-      window.open(environment.losR3Web + '/Lead/View?LeadId=' + LeadId  + "&Token=" + token, "_blank");
+      window.open(environment.losR3Web + '/View/Lead?LeadId=' + LeadId  + "&Token=" + token, "_blank");
   }
 
   public static OpenAgrmntViewByAgrmntId(AgrmntId){
@@ -120,7 +120,7 @@ export class AdInsHelper {
 
   public static OpenMOUCustViewByMouCustId(MouCustId){
     var token = localStorage.getItem("Token");
-    window.open( environment.losR3Web + "/Mou/Cust/View?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
+    window.open( environment.losR3Web + "/View/Mou/CustView?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
   }
 
   public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId){

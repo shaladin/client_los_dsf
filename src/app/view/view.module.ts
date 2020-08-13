@@ -76,6 +76,19 @@ import { ViewInsuranceDetailComponent } from "./agr-view/view-insurance-detail/v
 import { ViewAppCollateralSingleComponent } from "./agr-view/view-app-collateral-single/view-app-collateral-single.component";
 import { ViewAppCollateralMultiComponent } from "./agr-view/view-app-collateral-multi/view-app-collateral-multi.component";
 import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order-view.component";
+import { ViewCustomerDataComponent } from "./lead-view/view-customer-data/view-customer-data.component";
+import { ViewLeadDataComponent } from "./lead-view/view-lead-data/view-lead-data.component";
+import { LeadViewComponent } from "./lead-view/lead-view.component";
+import { MouViewAddcollComponent } from "./mou-view/mou-view-addcoll/mou-view-addcoll.component";
+import { MouViewDetailComponent } from "./mou-view/mou-view-detail/mou-view-detail.component";
+import { MouViewDocComponent } from "./mou-view/mou-view-doc/mou-view-doc.component";
+import { MouViewFeeComponent } from "./mou-view/mou-view-fee/mou-view-fee.component";
+import { MouViewLegalComponent } from "./mou-view/mou-view-legal/mou-view-legal.component";
+import { MouViewListedCustFactoringComponent } from "./mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component";
+import { MouViewSurveyComponent } from "./mou-view/mou-view-survey/mou-view-survey.component";
+import { MouViewTcComponent } from "./mou-view/mou-view-tc/mou-view-tc.component";
+import { MouViewComponent } from "./mou-view/mou-view.component";
+import { MouViewApprovalHistoryComponent } from "./mou-view/mou-view-approval-history/mou-view-approval-history.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -160,7 +173,22 @@ import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order
     ViewInsuranceDetailComponent,
     ViewAppCollateralSingleComponent,
     ViewAppCollateralMultiComponent,
-    PurchaseOrderViewComponent
+    PurchaseOrderViewComponent,
+    //lead
+    ViewCustomerDataComponent,
+    ViewLeadDataComponent,
+    LeadViewComponent,
+    //mou
+    MouViewAddcollComponent,
+    MouViewDetailComponent,
+    MouViewDocComponent,
+    MouViewFeeComponent,
+    MouViewLegalComponent,
+    MouViewListedCustFactoringComponent,
+    MouViewSurveyComponent,
+    MouViewTcComponent,
+    MouViewComponent,
+    MouViewApprovalHistoryComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

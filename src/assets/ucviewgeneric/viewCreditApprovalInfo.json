@@ -57,7 +57,7 @@
             "type": "link",
             "label": "Lead No",
             "property": "LeadNo",
-            "path": "/Lead/View",
+            "path": "/View/Lead",
             "param": [
               {
                 "type": "LeadId",

@@ -240,7 +240,7 @@ export class DocSignerDetailComponent implements OnInit {
             }
           );
         }
-        this.mouUrl = environment.losR3Web + "/Mou/Cust/View?MouCustId=" + this.MouCustId;
+        this.mouUrl = environment.losR3Web + "/View/Mou/CustView?MouCustId=" + this.MouCustId;
         var addCustomerCrit: CriteriaObj = new CriteriaObj();
         addCustomerCrit.DataType = "text";
         addCustomerCrit.propName = "C.CUST_NO";

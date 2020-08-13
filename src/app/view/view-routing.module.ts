@@ -7,6 +7,8 @@ import { AppViewComponent } from './app-view/app-view.component';
 import { AgreementViewContainerComponent } from './agr-view/agreement-view-container.component';
 import { PurchaseOrderViewComponent } from './purchase-order-view/purchase-order-view.component';
 import { ViewCollateralDataComponent } from './app-view/view-collateral-data/view-collateral-data.component';
+import { LeadViewComponent } from './lead-view/lead-view.component';
+import { MouViewComponent } from './mou-view/mou-view.component';
 const routes: Routes = [
   {
     path: '',
@@ -43,21 +45,35 @@ const routes: Routes = [
         path: 'AgrmntView',
         component: AgreementViewContainerComponent,
         data: {
-          title: 'Application View'
+          title: 'Agreement View'
         }
       },
       {
         path: 'POView',
         component: PurchaseOrderViewComponent,
         data: {
-          title: 'Application View'
+          title: 'PO View'
         }
       },
       {
         path: 'AppView/CollateralDataView',
         component: ViewCollateralDataComponent,
         data: {
-          title: 'Document'
+          title: 'Collateral Data View'
+        }
+      },
+      {
+        path: 'Lead',
+        component: LeadViewComponent,
+        data: {
+          title: 'Lead View'
+        }
+      },
+      {
+        path: 'Mou/CustView',
+        component: MouViewComponent,
+        data: {
+          title: 'Mou View'
         }
       },
     ]

@@ -26,7 +26,7 @@
           "property": "LeadNo",
           "name": "LeadNo",
           "isHide": true,
-          "path": "/Lead/View",
+          "path": "/View/Lead",
           "target": "_blank",
           "param": [
             {
@@ -56,7 +56,7 @@
           "property": "MouCustNo",
           "name": "MouCustNo",
           
-          "path": "/Mou/Cust/View",
+          "path": "/View/Mou/CustView",
           "target": "_blank",
           "param": [
             {
