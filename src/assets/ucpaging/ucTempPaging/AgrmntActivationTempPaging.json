@@ -17,13 +17,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "right",
             "label": "Asset Price Amount",
             "name": "ASSET_PRICE_AMT"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "right",
             "label": "Down Payment Amount",
             "name": "DOWN_PAYMENT_AMT"
         },
@@ -53,13 +53,13 @@
             "property": "FullAssetName"
         },
         {
-            "type": "text",
-            "position": "center",
+            "type": "decimal",
+            "position": "right",
             "property": "AssetPriceAmt"
         },
         {
-            "type": "text",
-            "position": "center",
+            "type": "decimal",
+            "position": "right",
             "property": "DownPaymentAmt"
         },
         {
