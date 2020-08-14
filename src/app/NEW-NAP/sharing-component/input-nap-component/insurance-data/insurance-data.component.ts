@@ -1372,12 +1372,12 @@ export class InsuranceDataComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insuredByObj = response[CommonConstant.ReturnObj];
-        if(this.insuredByObj.length > 0){
-          this.InsuranceDataForm.patchValue({
-            InsAssetCoveredBy: this.insuredByObj[0].Key
-          });
-          this.setValidator(this.insuredByObj[0].Key);
-        }
+        // if(this.insuredByObj.length > 0){
+        //   this.InsuranceDataForm.patchValue({
+        //     InsAssetCoveredBy: this.insuredByObj[0].Key
+        //   });
+        //   this.setValidator(this.insuredByObj[0].Key);
+        // }
       }
     );
   }
