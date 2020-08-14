@@ -24,6 +24,7 @@ export class AppFinDataObj {
     InterestType: string;
     StdEffectiveRatePrcnt: number;
     EffectiveRatePrcnt: number;
+    EffectiveRateBhv: string;
     FlatRatePrcnt: number;
     SupplEffectiveRatePrcnt: number;
     SupplFlatRatePrcnt: number;

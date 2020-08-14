@@ -74,6 +74,7 @@ export class FinancialDataFL4WComponent implements OnInit {
         NtfAmt: 0,
         RateType: "EFCTV",
         EffectiveRatePrcnt: 0, //eff rate to cust
+        EffectiveRateBhv: "",
         StdEffectiveRatePrcnt: 0, //base eff rate to cust
         FlatRatePrcnt: 0, //flat rate to cust
         InstAmt: 0,
@@ -148,6 +149,7 @@ export class FinancialDataFL4WComponent implements OnInit {
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
+          EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
 
           NumOfInst: this.appFinDataObj.NumOfInst,
