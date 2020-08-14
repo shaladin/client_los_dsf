@@ -114,6 +114,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         else
           this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt;
 
+        if (this.viewIncomeInfoObj.MaxAllocatedAmount < 0) this.viewIncomeInfoObj.MaxAllocatedAmount = 0;
+
         this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
           this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
           this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
