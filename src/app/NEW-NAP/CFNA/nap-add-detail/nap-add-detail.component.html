@@ -153,7 +153,7 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-financial-data>
+              <app-financial-data-cfna *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-financial-data-cfna>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
