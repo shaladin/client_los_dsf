@@ -1,0 +1,135 @@
+<div class="px-3">
+  <lib-ucSubsection [id]="'AssetListId'" [title]="'ASSET LIST'" [panel]="'AssetListSection'"></lib-ucSubsection>
+  <div id="AssetListSection">
+    <div class="col-md-12">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span class="thead-header" name='no' translate>No.</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='assetName' translate>Asset Name</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='supplierBranch' translate>Supplier Branch</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='serialNo1' translate>Serial No. 1</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='serialNo2' translate>Serial No. 2</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='serialNo3' translate>Serial No. 3</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='serialNo4' translate>Serial No. 4</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='serialNo5' translate>Serial No. 5</span>
+            </th>
+            <th style="text-align: center;">
+              <span class="thead-header" name='viewDetail' translate>View Detail</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of appAssetList; index as i">
+            <td style="text-align: center;">
+              {{i+1}}
+            </td>
+            <td style="text-align: left;">
+              {{item.FullAssetName}}
+            </td>
+            <td style="text-align: left;">
+              {{item.SupplName}}
+            </td>
+            <td style="text-align: left;">
+              {{item.SerialNo1}}
+            </td>
+            <td style="text-align: left;">
+              {{item.SerialNo3}}
+            </td>
+            <td style="text-align: left;">
+              {{item.SerialNo3}}
+            </td>
+            <td style="text-align: left;">
+              {{item.SerialNo4}}
+            </td>
+            <td style="text-align: left;">
+              {{item.SerialNo5}}
+            </td>
+            <td style="text-align: center;">
+              <a (click)="viewDetailHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'AdditionalCollateralId'" [title]="'COLLATERAL'"
+    [panel]="'AdditionalCollateralSection'"></lib-ucSubsection>
+  <div id="AdditionalCollateralSection">
+    <div class="col-md-12">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span class="thead-header" name='no' translate>No.</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='collateralName' translate>Collateral Name</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='collateralType' translate>Collateral Type</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='collateralPrice' translate>Collateral Price</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='licensePlateNo' translate>License Plate No.</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='chassisNo' translate>Chassis No.</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='engineNo' translate>Engine No.</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='ownerName' translate>Owner Name</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coll of appCollateralList; index as i">
+            <td style="text-align: center;">
+              {{i+1}}
+            </td>
+            <td style="text-align: left;">
+              {{coll.FullAssetName}}
+            </td>
+            <td style="text-align: left;">
+              {{coll.AssetTypeName}}
+            </td>
+            <td style="text-align: right;">
+              {{coll.CollateralValueAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{coll[coll.LicensePlateNo]}}
+            </td>
+            <td style="text-align: left;">
+              {{coll[coll.ChassisNo]}}
+            </td>
+            <td style="text-align: left;">
+              {{coll[coll.EngineNo]}}
+            </td>
+            <td style="text-align: left;">
+              {{coll.OwnerName}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

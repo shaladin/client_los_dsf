@@ -1,0 +1,347 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+
+          <lib-ucSubsection [id]="'viewGuarantorInfoId'" [title]="'Guarantor'" [panel]="'viewGuarantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewGuarantorInfo">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortGuarantorData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" mat-sort-header="GuarantorName">Guarantor Name</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="GuarantorType">Guarantor Type</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Relationship">Relationship</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="IdNo">ID no</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Address">Address</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="MobilePhone">Mobile Phone</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "GuarantorData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of GuarantorData">
+                  <td *ngIf="item.GuarantorName!=null">{{item.GuarantorName}}</td>
+                  <td *ngIf="item.GuarantorName==null"> - </td>
+                  <td *ngIf="item.GuarantorType!=null">{{item.GuarantorType}}</td>
+                  <td *ngIf="item.GuarantorType==null"> - </td>
+                  <td *ngIf="item.Relationship!=null">{{item.Relationship}}</td>
+                  <td *ngIf="item.Relationship==null"> - </td>
+                  <td *ngIf="item.IdNo!=null">{{item.IdNo}}</td>
+                  <td *ngIf="item.IdNo==null"> - </td>
+                  <td *ngIf="item.Address!=null">{{item.Address}}</td>
+                  <td *ngIf="item.Address==null"> - </td>
+                  <td *ngIf="item.MobilePhone!=null">{{item.MobilePhone}}</td>
+                  <td *ngIf="item.MobilePhone!=null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewReferantorInfoId'" [title]="'Referantor'" [panel]="'viewReferantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewReferantorInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Referantor Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.ReferantorName!=null"> {{ReferantorData.ReferantorName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.ReferantorName==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Num Of Sales </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfSales!=null"> {{ReferantorData.NumOfSales}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfSales==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Sales Amount </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalSalesAmount!=null"> {{ReferantorData.TotalSalesAmount | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalSalesAmount==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalProfit!=null"> {{ReferantorData.TotalProfit}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalProfit==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cooperation Date </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.CooperationDate!=null"> {{ReferantorData.CooperationDate | date: 'dd-MMMM-yyyy'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.CooperationDate==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num Of Application) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfApplication!=null"> {{ReferantorData.NumOfApplication}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfApplication==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.InAmount!=null"> {{ReferantorData.InAmount | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.InAmount==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalLoss!=null"> {{ReferantorData.TotalLoss}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalLoss==null"> - </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewSalesInfoId'" [title]="'Sales'" [panel]="'viewSalesInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewSalesInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Sales Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SalesName!=null"> {{AppDetailAssetData.SalesName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SalesName==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Join Date </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.AppDetailAssetData!=null"> {{AppDetailAssetData.JoinDt | date: 'dd-MMMM-yyyy'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.AppDetailAssetData==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.NumOfApplication!=null"> {{AppDetailAssetData.NumOfApplication}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.NumOfApplication==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.InAmount!=null"> {{AppDetailAssetData.InAmount | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.InAmount==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Supervisor Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SpvName!=null"> {{AppDetailAssetData.SpvName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SpvName==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalProfit!=null"> {{AppDetailAssetData.TotalProfit}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalProfit==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalLoss!=null"> {{AppDetailAssetData.TotalLoss}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalLoss==null"> - </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewLoanObjectId'" [title]="'Loan Object'" [panel]="'viewLoanObjectSection'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewLoanObjectSection">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">Loan Purpose</span>
+                  </th>
+                  <th><span translate class="thead-header">Supplier</span>
+                  </th>
+                  <th><span translate class="thead-header">Disburse To</span>
+                  </th>
+                  <th><span translate class="thead-header">Budget Plan Amount</span>
+                  </th>
+                  <th><span translate class="thead-header">Self Financing</span>
+                  </th>
+                  <th><span translate class="thead-header">Financing Amount</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="LoanObjectData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of LoanObjectData">
+                  <td *ngIf="item.MrLoanPurposeDescr != null">{{item.MrLoanPurposeDescr}}</td>
+                  <td *ngIf="item.MrLoanPurposeDescr == null"> - </td>
+                  <td *ngIf="item.SupplName != null">{{item.SupplName}}</td>
+                  <td *ngIf="item.SupplName == null"> - </td>
+                  <td *ngIf="item.IsDisburseToCust != null">{{item.IsDisburseToCust ? 'Yes' : 'No'}}</td>
+                  <td *ngIf="item.IsDisburseToCust == null"> - </td>
+                  <td *ngIf="item.BudgetPlanAmt != null">{{item.BudgetPlanAmt | currency : "USD" : ""}}</td>
+                  <td *ngIf="item.BudgetPlanAmt == null"> - </td>
+                  <td *ngIf="item.SelfFinancingAmt != null">{{item.SelfFinancingAmt | currency : "USD" : ""}}</td>
+                  <td *ngIf="item.SelfFinancingAmt == null"> - </td>
+                  <td *ngIf="item.FinancingAmt != null">{{item.FinancingAmt | currency : "USD" : ""}}</td>
+                  <td *ngIf="item.FinancingAmt != null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewAppsFinInfoId'" [title]="'Application'" [panel]="'viewAppsFinInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppsFinInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Installment Scheme </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme!=null"> {{AppDetailFinData.InstScheme}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Num Of Installment </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst!=null"> {{AppDetailFinData.NumOfInst}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Installment Amount </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstAmt!=null"> {{AppDetailFinData.InstAmt | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstAmt==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Payment Frequency </label>
+                  <label class="col-md-6 adInsLabel"*ngIf="AppDetailFinData.PayFreqDesc!=null"> {{AppDetailFinData.PayFreqDesc}} </label>
+                  <label class="col-md-6 adInsLabel"*ngIf="AppDetailFinData.PayFreqDesc==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Interest Type </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InterestTypeDesc!=null"> {{AppDetailFinData.InterestTypeDesc}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InterestTypeDesc==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.AssetName!=null"> {{AppDetailFinData.AssetName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.AssetName==null"> - </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewCollateralInsuranceId'" [title]="'Collateral Insurance'" [panel]="'viewCollateralInsuranceSection'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewCollateralInsuranceSection">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">Asset Name</span>
+                  </th>
+                  <th><span translate class="thead-header">Insured By</span>
+                  </th>
+                  <th><span translate class="thead-header">Paid By</span>
+                  </th>
+                  <th><span translate class="thead-header">Insurance Company</span>
+                  </th>
+                  <th><span translate class="thead-header">Cover Period</span>
+                  </th>
+                  <th><span translate class="thead-header">Insurance Length</span>
+                  </th>
+                  <th><span translate class="thead-header">Main Premi</span>
+                  </th>
+                  <th><span translate class="thead-header">Additional Premi</span>
+                  </th>
+                  <th><span translate class="thead-header">Fee</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="AppCollateralInsData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of AppCollateralInsData">
+                  <td *ngIf="item.AssetName != null">{{item.AssetName}}</td>
+                  <td *ngIf="item.AssetName == null"> - </td>
+                  <td *ngIf="item.InsuredBy != null">{{item.InsuredBy}}</td>
+                  <td *ngIf="item.InsuredBy == null"> - </td>
+                  <td *ngIf="item.PaidBy != null">{{item.PaidBy}}</td>
+                  <td *ngIf="item.PaidBy == null"> - </td>
+                  <td *ngIf="item.InsuranceCompany != null">{{item.InsuranceCompany}}</td>
+                  <td *ngIf="item.InsuranceCompany == null"> - </td>
+                  <td *ngIf="item.CoverPeriod != null">{{item.CoverPeriod}}</td>
+                  <td *ngIf="item.CoverPeriod == null"> - </td>
+                  <td *ngIf="item.InsuranceLength != null">{{item.InsuranceLength}}</td>
+                  <td *ngIf="item.InsuranceLength != null"> - </td>
+                  <td *ngIf="item.MainPremi != null">{{item.MainPremi}}</td>
+                  <td *ngIf="item.MainPremi != null"> - </td>
+                  <td *ngIf="item.AddPremi != null">{{item.AddPremi}}</td>
+                  <td *ngIf="item.AddPremi != null"> - </td>
+                  <td *ngIf="item.Fee != null">{{item.Fee | currency : "USD" : ""}}</td>
+                  <td *ngIf="item.Fee != null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="IsLifeIns">
+            <lib-ucSubsection [id]="'viewLifeInsuranceId'" [title]="'Life Insurance'" [panel]="'viewLifeInsuranceSection'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewLifeInsuranceSection">
+              <div class="row">
+                <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
+                <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme!=null"> {{AppLifeInsData.CoverLifeIns}} </label>
+              </div>
+              <div class="row">
+                <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
+                <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst!=null"> {{AppLifeInsData.LifeInscoBranchName}} </label>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewAppTcId'" [title]="'Term & Condition'" [panel]="'viewAppTcInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppTcInfo">
+              <lib-ucgridview *ngIf="IsGridTcReady" [gridInput]="inputGridObj"></lib-ucgridview>
+          </div>
+
+          <lib-ucSubsection [id]="'viewCommissionInfoId'" [title]="'Commission'" [panel]="'viewCommissionInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewCommissionInfo">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" > No </span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Subject">Subject</span>
+                  </th>
+                  <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="Name">Name</span>
+                  </th>
+                  <th style="text-align: right;"><span translate class="thead-header" mat-sort-header="TotalCommAmt">Total Commission</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "CommData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of CommData; let idx = index">
+                  <td>{{idx + 1}}</td>
+                  <td *ngIf="item.Subject!=null">{{item.Subject}}</td>
+                  <td *ngIf="item.Subject==null"> - </td>
+                  <td style="text-align: left;" *ngIf="item.Name!=null">{{item.Name}}</td>
+                  <td style="text-align: left;" *ngIf="item.Name==null"> - </td>
+                  <td style="text-align: right;" *ngIf="item.TotalCommAmt!=null">{{item.TotalCommAmt | number:'.2':'en-US'}}</td>
+                  <td style="text-align: right;" *ngIf="item.TotalCommAmt==null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

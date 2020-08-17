@@ -11,7 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "name": "AppNo",
-          "path": "/Nap/View/AppView",
+          "path": "/View/AppView",
           "target": "_blank",
           "param": [
             {
@@ -26,7 +26,7 @@
           "property": "LeadNo",
           "name": "LeadNo",
           "isHide": true,
-          "path": "/Lead/View",
+          "path": "/View/Lead",
           "target": "_blank",
           "param": [
             {
@@ -40,7 +40,7 @@
           "label": "Agreement No",
           "property": "AgrmntNo",
           "name": "AgrmntNo",
-          "path": "/Nap/View/AgrmntView",
+          "path": "/View/AgrmntView",
           "target" : "_blank",
           "param": [
             {

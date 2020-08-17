@@ -136,7 +136,7 @@
             "position" : "center",
             "property" : "LeadNo",
             "target" : "_blank",
-            "path" : "/Lead/View",
+            "path" : "/View/Lead",
             "param" : [
                 {
                     "type" : "LeadId",

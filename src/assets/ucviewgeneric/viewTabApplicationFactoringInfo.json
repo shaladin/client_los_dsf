@@ -92,7 +92,7 @@
           "type": "link",
           "label": "Mou No",
           "property": "MouCustNo",
-          "path": "/Mou/Cust/View",
+          "path": "/View/Mou/CustView",
           "target": "_blank",
           "param": [
             {
