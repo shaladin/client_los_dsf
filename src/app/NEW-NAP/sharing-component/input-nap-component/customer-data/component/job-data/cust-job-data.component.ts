@@ -112,13 +112,16 @@ export class CustJobDataComponent implements OnInit {
     this.InputLookupProfessionObj.addCritInput = arrCopyLookupCrit;
   }
 
-  CustModelChanged(){
+  CustModelChanged(IsChanged : boolean){
+    
+    if(IsChanged == true){
+      this.IsInitJobData = false;
+    }
     if(this.IsInitJobData == false){ 
       this.InputLookupProfessionObj.nameSelect = "";
         this.InputLookupProfessionObj.jsonSelect = ""; 
         this.selectedProfessionCode =  "";
     }
-
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     this.CriteriaAddLookUpProfessionName();
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
@@ -230,7 +233,7 @@ export class CustJobDataComponent implements OnInit {
       this.setProfessionName(this.appCustPersonalJobDataObj.MrProfessionCode);
       this.selectedIndustryTypeCode = this.appCustPersonalJobDataObj.IndustryTypeCode;
       this.setIndustryTypeName(this.appCustPersonalJobDataObj.IndustryTypeCode);
-      this.CustModelChanged();
+      this.CustModelChanged(false);
       this.setAddrJobDataObj();
       this.IsInitJobData = false
       this.IsCopy = false

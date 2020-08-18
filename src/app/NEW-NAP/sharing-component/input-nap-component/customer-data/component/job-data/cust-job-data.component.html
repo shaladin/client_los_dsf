@@ -5,7 +5,7 @@
       <div class="form-group row">
         <label class="col-md-2" for="custModel" translate>Customer Model</label>
         <div class="col-md-4">
-          <select class="form-control" id="custModel" formControlName="CustModelCode" (change)="CustModelChanged()"
+          <select class="form-control" id="custModel" formControlName="CustModelCode" (change)="CustModelChanged(true)"
           [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustModelCode.invalid }">
             <option *ngFor="let item of CustModelObj" [value]="item.Key">
               {{item.Value}}
