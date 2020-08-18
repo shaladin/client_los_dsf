@@ -138,7 +138,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/Nap/View/AppView",
+      "path": "/View/AppView",
       "param": [{
         "type": "AppId",
         "property": "AppId"

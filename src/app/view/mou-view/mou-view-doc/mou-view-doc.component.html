@@ -1,0 +1,9 @@
+<form class="form form-horizontal" [formGroup]="MouDocForm" (ngSubmit)="MouDocForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'MouDocId'" [title]="'Upload Document'" [panel]="'MouDoc'">
+  </lib-ucSubsection>
+  <div class="col-md-2">
+    <button class="btn btn-primary btn-raised">
+      <i class="fa fa-file-download"></i> View Document
+    </button>
+  </div>
+</form>

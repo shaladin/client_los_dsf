@@ -1,0 +1,56 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <lib-ucSubsection *ngIf="isFormOnCreditInvestigation" [id]="'formCreditInvestigationId'" [title]="'Credit Investigation Analysis'" [panel]="'formCreditInvestigation'">
+    </lib-ucSubsection>
+    <div *ngIf="isFormOnCreditInvestigation" class="form-body" [id]="'formCreditInvestigation'">
+      <div class="form-body">
+
+        <div class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel">Analysis By</label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{ResponseCreditInvestigationData?.CrdRiskEmpNoDesc}} </label>
+          </div>
+        </div>
+
+        <div *ngFor="let item of ResponseCreditInvestigationData?.AppCrdInvstgDObjs" class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{item.AnalysisResult}} </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <lib-ucSubsection *ngIf="isFormOnCreditReview" [id]="'formCreditReviewId'" [title]="'Credit Review Analysis'" [panel]="'formCreditReview'">
+    </lib-ucSubsection>
+    <div *ngIf="isFormOnCreditReview" class="form-body" [id]="'formCreditReview'">
+      <div class="form-body">
+
+        <div class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> Analysis By </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{ResponseCreditReviewData?.CrdAnalystEmpNoDesc}} </label>
+          </div>
+        </div>
+
+        <div *ngFor="let item of ResponseCreditReviewData?.appCrdRvwDObjs" class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{item.AnalysisResult}} </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

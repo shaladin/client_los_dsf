@@ -38,7 +38,7 @@ export class LeadMainInfoComponent implements OnInit {
         this.MrLeadSourceCode = response['MrLeadSourceCode'];
         this.AgencyName = response['AgencyName'];
       })
-      this.leadUrl = '/Lead/View?LeadId=' + this.LeadId;
+      this.leadUrl = '/View/Lead?LeadId=' + this.LeadId;
   }
 
   MainInfoForm = this.fb.group({

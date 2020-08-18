@@ -43,10 +43,10 @@ export const Full_ROUTES: Routes = [
     path: 'Inquiry',
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
-  {
-    path: 'View',
-    loadChildren: './view/view.module#ViewModule'
-  },
+  // {
+  //   path: 'View',
+  //   loadChildren: './view/view.module#ViewModule'
+  // },
   {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
