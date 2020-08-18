@@ -310,8 +310,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
-  async SaveForm() {
-    console.log("aaa")
+  async SaveForm() { 
     if (this.setValue() == false) return; // ada validasi dr rule
     this.isCoverCheck();
     if (this.IsChecked) {
