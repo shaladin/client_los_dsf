@@ -28,7 +28,7 @@ export class URLConstant {
     public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";
     public static CopyCancelledApp = environment.losUrl + "/Application/CopyCancelledApp";
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
- 
+    public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
 
     //App Loan Purpose
     public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -544,9 +544,9 @@ export class URLConstant {
     public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
     public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
     public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
-
     public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
     public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
+    public static UpdateMouCust = environment.losUrl + "/MouCust/UpdateMouCust";
 
     // MOU CUST FCTR
     public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";

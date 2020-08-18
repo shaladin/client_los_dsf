@@ -67,6 +67,8 @@ import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-d
 import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { MouViewListedCustFactoringComponent } from './mou-customer/mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component';
+import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
+import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -163,7 +165,9 @@ export const customCurrencyMaskConfig = {
     MouOsTcPagingComponent,
     MouOsTcDetailComponent,
     UnauthorizedPageComponent,
-    MouViewListedCustFactoringComponent
+    MouViewListedCustFactoringComponent,
+    MouExecutionPagingComponent,
+    MouExecutionDetailComponent
   ],
   exports: [],
   providers: [NGXToastrService],

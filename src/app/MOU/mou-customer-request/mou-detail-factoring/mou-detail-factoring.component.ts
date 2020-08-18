@@ -31,6 +31,7 @@ export class MouDetailFactoringComponent implements OnInit {
   isTenorInvalid: boolean;
   tenorInvalidMsg: string;
   private mode: string = "add";
+  IsSingleIns: boolean = true;
 
   MouDetailFactoringForm = this.fb.group({
     MouCustFctrId: [0, [Validators.required]],
@@ -124,6 +125,7 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
         this.instTypeHandler();
         this.shouldComponentLoad = true;
       });
@@ -132,6 +134,7 @@ export class MouDetailFactoringComponent implements OnInit {
   instTypeHandler(){
     var value = this.MouDetailFactoringForm.controls["MrInstTypeCode"].value;
     if(value == CommonConstant.SINGLE_INST_TYPE){
+      this.IsSingleIns = true;
       this.MouDetailFactoringForm.patchValue({
         PayFreqCode: CommonConstant.PAY_FREQ_MONTHLY,
         MrInstSchmCode: CommonConstant.INST_SCHM_REGULAR_FIXED
@@ -144,6 +147,7 @@ export class MouDetailFactoringComponent implements OnInit {
       });
     }
     else if(value == CommonConstant.MULTIPLE_INST_TYPE){
+      this.IsSingleIns = false;
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].disable();
@@ -165,21 +169,25 @@ export class MouDetailFactoringComponent implements OnInit {
       }
     }
 
-    if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
-      this.isTenorInvalid = true;
-      this.tenorInvalidMsg = "Invalid Tenor Range";
-      return false;
-    }
-    else{
-      if(formData.TenorFrom == ""){
-        formData.TenorFrom = 0;
+    if(this.IsSingleIns){
+    }else{
+      if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
+        this.isTenorInvalid = true;
+        this.tenorInvalidMsg = "Invalid Tenor Range";
+        return false;
       }
-      if(formData.TenorTo == ""){
-        formData.TenorTo = 0;
+      else{
+        if(formData.TenorFrom == ""){
+          formData.TenorFrom = 0;
+        }
+        if(formData.TenorTo == ""){
+          formData.TenorTo = 0;
+        }
+        this.isTenorInvalid = false;
+        this.tenorInvalidMsg = "";
       }
-      this.isTenorInvalid = false;
-      this.tenorInvalidMsg = "";
     }
+    
 
     if(this.mode == "add"){
       url = URLConstant.AddMouCustFctr;
@@ -198,4 +206,14 @@ export class MouDetailFactoringComponent implements OnInit {
   //   this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
   // }
 
+  CheckPaidBy(value: string){
+    if(value == CommonConstant.PAID_BY_CUST_FCTR){
+      this.MouDetailFactoringForm.controls.IsDisclosed.disable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
+    }else if(value == CommonConstant.PAID_BY_CUST){
+      this.MouDetailFactoringForm.controls.IsDisclosed.enable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
+    }
+    this.MouDetailFactoringForm.updateValueAndValidity();
+  }
 }

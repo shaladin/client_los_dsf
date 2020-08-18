@@ -6,6 +6,8 @@ import { SharingPageRoutingModule } from "./sharing-page-routing.module";
 import { ArchwizardModule } from "angular-archwizard";
 import { NapFromLeadPagingComponent } from "./nap-from-lead/paging/nap-from-lead-paging.component";
 import { NapFromLeadDetailComponent } from "./nap-from-lead/detail/nap-from-lead-detail.component";
+import { NapFromMouPagingComponent } from './nap-from-mou/nap-from-mou-paging/nap-from-mou-paging.component';
+import { NapFromMouDetailComponent } from './nap-from-mou/nap-from-mou-detail/nap-from-mou-detail.component';
 
 @NgModule({
   imports: [
@@ -16,7 +18,9 @@ import { NapFromLeadDetailComponent } from "./nap-from-lead/detail/nap-from-lead
   ],
   declarations: [
     NapFromLeadPagingComponent,
-    NapFromLeadDetailComponent
+    NapFromLeadDetailComponent,
+    NapFromMouPagingComponent,
+    NapFromMouDetailComponent
   ],
   providers: [
     NGXToastrService
