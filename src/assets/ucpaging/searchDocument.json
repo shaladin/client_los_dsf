@@ -76,7 +76,7 @@
             "position": "center",
             "property": "ApplicationNo",
             "target" : "_blank",
-            "path": "/Nap/View/AppView",
+            "path": "/View/AppView",
             "param": [
                 {
                 "type": "AppId",
@@ -104,7 +104,7 @@
                         "position": "center",
                         "property": "AggrementNo",
                         "target": "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -127,7 +127,7 @@
                         "position": "center",
                         "property": "AggrementNo",
                         "target" : "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -150,7 +150,7 @@
                         "position": "center",
                         "property": "AggrementNo",
                         "target" : "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -173,7 +173,7 @@
                         "position": "center",
                         "property": "AggrementNo",
                         "target" : "_blank",
-                        "path": "/Nap/View/AgrmntView",
+                        "path": "/View/AgrmntView",
                         "param": [
                         {
                             "type": "AgrmntId",

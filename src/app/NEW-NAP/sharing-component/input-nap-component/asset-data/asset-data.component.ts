@@ -54,7 +54,7 @@ export class AssetDataComponent implements OnInit {
     AssetPriceAmt: ['', Validators.required],
     DownPaymentAmt: ['', Validators.required],
     DownPaymentPrctg: ['', Validators.max(100)],
-    AssetNotes: ['', [Validators.required, Validators.maxLength(4000)]],
+    AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],

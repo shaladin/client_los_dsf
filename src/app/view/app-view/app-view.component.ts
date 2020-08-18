@@ -1,0 +1,125 @@
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { MatTabChangeEvent } from '@angular/material';
+
+@Component({
+  selector: 'app-app-view',
+  templateUrl: './app-view.component.html',
+  styleUrls: ['./app-view.component.scss']
+})
+export class AppViewComponent implements OnInit {
+
+  AppId: number;
+  arrValue = [];
+  CustType: string = "";
+  AppCustObj: any;
+  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  IsCustomer : boolean = true;
+  IsGuarantor : boolean = true;
+  IsReferantor : boolean = true;
+  IsApplication : boolean = true;
+  IsInvoice : boolean = true;
+  IsAsset : boolean = true;
+  IsMultiAsset : boolean = true;
+  IsInsurance : boolean = true;
+  IsMultiInsurance : boolean = true;
+  IsLifeInsurance : boolean = true;
+  IsFinancial : boolean = true;
+  IsTC : boolean = true;
+  IsCommission : boolean = true;
+  IsReservedFund : boolean = true;
+  IsPhoneVerification : boolean = true;
+  IsFraudDetectionResult : boolean = true;
+  IsAnalysisResult : boolean = true;
+  IsCollateral : boolean = true;
+  IsMultiCollateral : boolean = true;
+  IsApprovalHist: boolean = true;
+  IsFraudDetectionMulti: boolean = true;
+  bizTemplateCode : string = "";
+  constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
+    this.route.queryParams.subscribe(params => {
+      this.AppId = params["AppId"];
+    })
+  }
+
+  ngOnInit() {
+    this.arrValue.push(this.AppId);
+    this.GetApp();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.arrValue = this.arrValue;
+  }
+
+  GetApp() {
+    var appObj = {
+      AppId: this.AppId,
+    };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response) => {
+        this.bizTemplateCode = response["BizTemplateCode"];
+        this.CustType = response["MrCustTypeCode"];
+
+        if(this.bizTemplateCode == CommonConstant.FCTR)
+        {
+          this.IsCollateral = false;
+          this.IsGuarantor = false;
+          this.IsReferantor = false;
+          this.IsCommission = false;
+          this.IsReservedFund = false;
+          this.IsPhoneVerification = false;
+          this.IsAsset = false;
+          this.IsMultiAsset = false;
+          this.IsFraudDetectionMulti = false;
+          this.IsInsurance = false;
+      
+        }
+        else if(this.bizTemplateCode == CommonConstant.CFRFN4W){
+          this.IsAsset = false;
+          this.IsMultiCollateral = false;
+          this.IsInvoice = false;
+          this.IsMultiAsset = false;
+          this.IsMultiInsurance = false;
+          this.IsFraudDetectionMulti = false;
+        }
+        else if(this.bizTemplateCode == CommonConstant.CF4W){
+          this.IsCollateral = false;
+          this.IsMultiCollateral = false;
+          this.IsInvoice = false;
+          this.IsMultiAsset = false;
+          this.IsMultiInsurance = false;
+          this.IsFraudDetectionMulti = false;
+        }
+        else if(this.bizTemplateCode == CommonConstant.FL4W)
+        {
+          this.IsAsset = false;
+          this.IsCollateral = false;
+          this.IsMultiCollateral = false;
+          this.IsInvoice = false;
+          this.IsInsurance = false;
+        }
+        else if(this.bizTemplateCode == CommonConstant.CFNA){
+          this.IsAsset = false;
+          this.IsInvoice = false;
+          this.IsMultiAsset = false;
+          this.IsMultiInsurance = false;
+          this.IsFraudDetectionMulti = false;
+          this.IsCollateral = false;
+        }
+      }
+    );
+  }
+  tabChangeEvent( tabChangeEvent : MatTabChangeEvent){
+    if(tabChangeEvent.index == 0){
+      this.GetApp();
+    }
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.arrValue = this.arrValue;
+  }
+
+}

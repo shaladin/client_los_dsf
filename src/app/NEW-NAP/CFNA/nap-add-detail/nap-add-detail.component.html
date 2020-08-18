@@ -1,5 +1,13 @@
 <div class="col-md-12 text-left">
   <div class="card">
+    <div class="px-3">
+      <div class="form-action pull-right">
+        <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
+        [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
+        <i class="fa fa-check-square-o"></i> Back   
+      </button>
+      </div>
+    </div>
     <lib-ucviewgeneric [viewGenericObj]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
@@ -145,7 +153,7 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-financial-data>
+              <app-financial-data-cfna *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-financial-data-cfna>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
@@ -161,10 +169,7 @@
   <!-- <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button> -->
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Back
-  </button>
+
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
     <i class="fa fa-check-square-o"></i> Submit Return Handling
   </button>

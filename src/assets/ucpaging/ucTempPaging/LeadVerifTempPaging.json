@@ -167,7 +167,7 @@
             "type": "link",
             "position": "center",
             "property": "LeadNo",
-            "path": "/Lead/View",
+            "path": "/View/Lead",
             "target": "_blank",
             "param": [
                 {
@@ -205,7 +205,7 @@
             "type": "link",
             "position": "center",
             "property": "DuplicateLeadNo",
-            "path": "/Lead/View",
+            "path": "/View/Lead",
             "target": "_blank",
             "param": [
                 {

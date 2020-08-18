@@ -10,7 +10,7 @@
           "type": "link",
           "label": "Application No",
           "property": "AppNo",
-          "path": "/Nap/View/AppView",
+          "path": "/View/AppView",
           "target" : "_blank",
           "param": [
             {
@@ -58,7 +58,7 @@
           "type": "link",
           "label": "Lead No",
           "property": "LeadNo",
-          "path": "/Lead/View",
+          "path": "/View/Lead",
           "param": [
             {
               "type": "LeadId",

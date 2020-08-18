@@ -1,0 +1,40 @@
+<div class="col-md-12 text-left">
+    <div class="card">
+        <div class="card-body">
+            <lib-ucviewgeneric [viewGenericObj]="POInfo"></lib-ucviewgeneric>
+            <div class="px-3">
+                <lib-ucSubsection [id]="'viewSupplInfoId'" [title]="'Supplier Information'" [panel]="'viewSupplInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" id="viewSupplInfo">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Supplier Name </label>
+                                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplName}} </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Address </label>
+                                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplAddr}} </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 adInsLabel"> Supplier Bank Account </label>
+                                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.BankName }} -
+                                    {{ ResponsePurchaseOrderHData?.BankAccName }} -
+                                    {{ ResponsePurchaseOrderHData?.BankAccNo}} </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <lib-ucSubsection [id]="'viewAssetListId'" [title]="'Asset List'" [panel]="'viewAssetList'">
+                </lib-ucSubsection>
+                <div id="viewAssetList">
+                    <div *ngIf="result.length > 0">
+                        <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+                    </div>
+                </div>
+            </div>
+            <lib-ucviewgeneric [viewGenericObj]="ADFinancialInfo" *ngIf="MrFirstInstTypeCode=='AD'"></lib-ucviewgeneric>
+            <lib-ucviewgeneric [viewGenericObj]="ARFinancialInfo" *ngIf="MrFirstInstTypeCode=='AR'"></lib-ucviewgeneric>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && SaveAndContinue()" #enjiForm="ngForm">
+  <app-subsidy-cfna *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" (emitData)="CheckSubsidyRate($event)"></app-subsidy-cfna>
+  <app-fee-cfna *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-cfna>
+  <app-schm-reguler-fix-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [ParentForm]="FinDataForm" (RefreshSubsidy)="RefreshSubsidy($event)"></app-schm-reguler-fix-cfna>
+  <app-schm-irregular-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [ParentForm]="FinDataForm" [NumOfInst]="NumOfInst"> </app-schm-irregular-cfna>
+  <app-schm-step-up-step-down-normal-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-normal-cfna>
+  <app-schm-step-up-step-down-leasing-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-leasing-cfna>
+  <app-schm-step-up-step-down-cummulative-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-step-up-step-down-cummulative-cfna>
+  <app-schm-balloon-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [ParentForm]="FinDataForm" (RefreshSubsidy)="RefreshSubsidy($event)"></app-schm-balloon-cfna>
+  <app-schm-even-principal-cfna *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-cfna>
+
+  <div class="form-inline-right">
+    <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+      <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" translate>
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+    
+</form>
+
+ <!-- <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="test()">
+  Test
+</button> -->

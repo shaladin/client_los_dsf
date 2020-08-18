@@ -78,6 +78,7 @@ export class FinancialDataComponent implements OnInit {
         NtfAmt: 0,
         RateType: "EFCTV",
         EffectiveRatePrcnt: 0, //eff rate to cust
+        EffectiveRateBhv: "",
         StdEffectiveRatePrcnt: 0, //base eff rate to cust
         FlatRatePrcnt: 0, //flat rate to cust
         InstAmt: 0,
@@ -156,6 +157,7 @@ export class FinancialDataComponent implements OnInit {
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
+          EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
           SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,

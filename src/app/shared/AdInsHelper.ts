@@ -94,43 +94,43 @@ export class AdInsHelper {
   
   public static OpenCustomerViewByCustId(CustId){
     var token = localStorage.getItem("Token");
-      window.open(environment.FoundationR3Web + "/Customer/CustomerView/Page?CustId=" + CustId + "&Token=" + token, "_blank");
+      window.open(environment.FoundationR3Web + "/View/Customer?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
   public static OpenAppViewByAppId(AppId) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + "/Nap/View/AppView?AppId=" + AppId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + "/View/AppView?AppId=" + AppId + "&Token=" + token, "_blank");
   }
 
   public static OpenProdOfferingViewByCodeAndVersion(Code, Version) {
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
+    window.open(environment.FoundationR3Web + "/View/Offering?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }
   
   public static OpenLeadViewByLeadId(LeadId)
   {
     var token = localStorage.getItem("Token");
-      window.open(environment.losR3Web + '/Lead/View?LeadId=' + LeadId  + "&Token=" + token, "_blank");
+      window.open(environment.losR3Web + '/View/Lead?LeadId=' + LeadId  + "&Token=" + token, "_blank");
   }
 
   public static OpenAgrmntViewByAgrmntId(AgrmntId){
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + "/Nap/View/AgrmntView?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + "/View/AgrmntView?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
   }
 
   public static OpenMOUCustViewByMouCustId(MouCustId){
     var token = localStorage.getItem("Token");
-    window.open( environment.losR3Web + "/Mou/Cust/View?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
+    window.open( environment.losR3Web + "/View/Mou/CustView?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
   }
 
   public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId){
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
+    window.open(environment.FoundationR3Web + "/View/Offering?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
   }
 
   public static OpenVendorBranchViewByVendorId(VendorId){
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + "/Vendor/Branch/View?VendorId=" + VendorId + "&Token=" + token, '_blank');
+    window.open(environment.FoundationR3Web + "/View/VendorBranch?VendorId=" + VendorId + "&Token=" + token, '_blank');
   }
 
 
