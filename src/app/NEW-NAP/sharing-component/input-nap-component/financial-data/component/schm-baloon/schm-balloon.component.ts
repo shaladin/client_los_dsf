@@ -2,10 +2,8 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { environment } from 'environments/environment';
 import { CalcBalloonObj } from 'app/shared/model/AppFinData/CalcBalloonObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -191,6 +189,28 @@ export class SchmBalloonComponent implements OnInit {
     this.SetSubsidyAmtFromDiffRateInput(0);
     this.SetCommissionAmtFromDiffRateInput(0);
     this.SetNeedReCalculate(true);
+  }
+
+  Rate_Keyup(event: KeyboardEvent){
+    this.SetNeedReCalculate(true);
+    if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
+      this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
+  }
+
+  Rate_Paste(event: ClipboardEvent){
+    this.SetNeedReCalculate(true);
+    this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
+  }
+
+  InstallmentAmount_Keyup(event: KeyboardEvent){
+    this.SetNeedReCalculate(true);
+    if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
+      this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
+  }
+
+  InstallmentAmount_Paste(event: ClipboardEvent){
+    this.SetNeedReCalculate(true);
+    this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
   SubsidyAmtFromDiffRate_FocusOut(event) {
