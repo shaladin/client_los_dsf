@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { MouCustBankAccObj } from 'app/shared/model/MouCustBankAccObj.Model';
 
 @Component({
   selector: 'app-mou-cust-bank-acc',
@@ -20,7 +20,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class MouCustBankAccComponent implements OnInit {
 
-  @Input() listBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
+  @Input() listBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
   mode: any;
@@ -28,7 +28,7 @@ export class MouCustBankAccComponent implements OnInit {
   selectedBankCode: any;
 
   closeResult: any;
-  appCustBankAccObj: AppCustBankAccObj;
+  MouCustBankAccObj: MouCustBankAccObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
@@ -67,9 +67,9 @@ export class MouCustBankAccComponent implements OnInit {
   }
 
   SaveForm() {
-    this.appCustBankAccObj = new AppCustBankAccObj();
+    this.MouCustBankAccObj = new MouCustBankAccObj();
     if (this.listBankAcc == undefined) {
-      this.listBankAcc = new Array<AppCustBankAccObj>();
+      this.listBankAcc = new Array<MouCustBankAccObj>();
     }
     this.setAppCustBankAcc();
     if (this.mode == "add") {
@@ -82,7 +82,7 @@ export class MouCustBankAccComponent implements OnInit {
         }
       }
 
-      this.listBankAcc.push(this.appCustBankAccObj);
+      this.listBankAcc.push(this.MouCustBankAccObj);
     }
     if (this.mode == "edit") {
       if (this.CustBankAccountForm.controls.IsDefault.value == true && this.listBankAcc[this.currentEditedIndex].IsDefault == false) {
@@ -93,7 +93,7 @@ export class MouCustBankAccComponent implements OnInit {
           return;
         }
       }
-      this.listBankAcc[this.currentEditedIndex] = this.appCustBankAccObj;
+      this.listBankAcc[this.currentEditedIndex] = this.MouCustBankAccObj;
     }
     this.callbackSubmit.emit(this.listBankAcc);
     this.modalService.dismissAll();
@@ -117,10 +117,10 @@ export class MouCustBankAccComponent implements OnInit {
       IsDefault: this.listBankAcc[i].IsDefault
     });
 
-    if (this.listBankAcc[i].AppCustBankStmntObjs != undefined) {
-      for (let j = 0; j < this.listBankAcc[i].AppCustBankStmntObjs.length; j++) {
+    if (this.listBankAcc[i].MouCustBankStmntObjs != undefined) {
+      for (let j = 0; j < this.listBankAcc[i].MouCustBankStmntObjs.length; j++) {
         var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
-        bankStmnObjs.push(this.addGroup(this.listBankAcc[i].AppCustBankStmntObjs[j]));
+        bankStmnObjs.push(this.addGroup(this.listBankAcc[i].MouCustBankStmntObjs[j]));
       }
     }
 
@@ -153,14 +153,14 @@ export class MouCustBankAccComponent implements OnInit {
   }
 
   setAppCustBankAcc() {
-    this.appCustBankAccObj.BankCode = this.selectedBankCode;
-    this.appCustBankAccObj.BankName = this.selectedBankName;
-    this.appCustBankAccObj.BankBranch = this.CustBankAccountForm.controls.BankBranch.value;
-    this.appCustBankAccObj.BankAccName = this.CustBankAccountForm.controls.BankAccName.value;
-    this.appCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
-    this.appCustBankAccObj.BalanceAmt = 0;
-    this.appCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
-    this.appCustBankAccObj.AppCustBankStmntObjs = new Array<AppCustBankStmntObj>();
+    this.MouCustBankAccObj.BankCode = this.selectedBankCode;
+    this.MouCustBankAccObj.BankName = this.selectedBankName;
+    this.MouCustBankAccObj.BankBranch = this.CustBankAccountForm.controls.BankBranch.value;
+    this.MouCustBankAccObj.BankAccName = this.CustBankAccountForm.controls.BankAccName.value;
+    this.MouCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
+    this.MouCustBankAccObj.BalanceAmt = 0;
+    this.MouCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
+    this.MouCustBankAccObj.MouCustBankStmntObjs = new Array<AppCustBankStmntObj>();
     for (let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++) {
       var appCustBankStmntObj = new AppCustBankStmntObj();
       appCustBankStmntObj.Month = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].Month;
@@ -168,13 +168,13 @@ export class MouCustBankAccComponent implements OnInit {
       appCustBankStmntObj.DebitAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].DebitAmt;
       appCustBankStmntObj.CreditAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].CreditAmt;
       appCustBankStmntObj.BalanceAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].BalanceAmt;
-      this.appCustBankAccObj.AppCustBankStmntObjs.push(appCustBankStmntObj);
+      this.MouCustBankAccObj.MouCustBankStmntObjs.push(appCustBankStmntObj);
     }
 
-    if (this.appCustBankAccObj.AppCustBankStmntObjs.length > 0) {
-      this.appCustBankAccObj.IsBankStmnt = true;
+    if (this.MouCustBankAccObj.MouCustBankStmntObjs.length > 0) {
+      this.MouCustBankAccObj.IsBankStmnt = true;
     } else {
-      this.appCustBankAccObj.IsBankStmnt = false;
+      this.MouCustBankAccObj.IsBankStmnt = false;
     }
   }
 
