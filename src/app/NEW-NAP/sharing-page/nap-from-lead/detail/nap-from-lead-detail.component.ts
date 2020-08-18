@@ -106,7 +106,7 @@ export class NapFromLeadDetailComponent implements OnInit {
   }
 
   openView() {
-    window.open(environment.losR3Web + "/Lead/View?LeadId=" + this.leadId, "_blank");
+    window.open(environment.losR3Web + "/View/Lead?LeadId=" + this.leadId, "_blank");
   }
 
   arrAddCrit;

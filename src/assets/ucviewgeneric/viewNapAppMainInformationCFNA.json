@@ -12,7 +12,7 @@
             "property": "AppNo",
             "name": "AppNo",
             "position": "left",
-            "path": "/Nap/View/AppView",
+            "path": "/View/AppView",
             "target": "_blank",
             "param": [
               { 
@@ -27,7 +27,7 @@
             "property": "MouCustNo",
             "name": "MouCustNo",
             "isHide": true,
-            "path": "/Mou/Cust/View",
+            "path": "/View/Mou/CustView",
             "target": "_blank",
             "param": [
               {
@@ -64,7 +64,7 @@
             "name": "LeadNo",
             "isHide": true,
             "position": "left",
-            "path": "/Lead/View",
+            "path": "/View/Lead",
             "target": "_blank",
             "param": [
               { 

@@ -68,7 +68,7 @@ export class LeadCancelConfirmComponent implements OnInit {
         });
       }
     );
-    this.leadUrl = environment.losR3Web + '/Lead/View?LeadId=';
+    this.leadUrl = environment.losR3Web + '/View/Lead?LeadId=';
   }
 
   deleteFromTemp(leadId) {

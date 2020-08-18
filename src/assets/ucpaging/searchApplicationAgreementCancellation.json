@@ -77,7 +77,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/Nap/View/AppView",
+      "path": "/View/AppView",
       "param": [
         {
           "type": "AppId",
@@ -90,7 +90,7 @@
       "position": "center",
       "property": "AgrmntNo",
       "target": "_blank",
-      "path": "/Nap/View/AgrmntView",
+      "path": "/View/AgrmntView",
       "param": [
         {
           "type": "AgrmntId",
