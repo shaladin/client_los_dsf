@@ -1,0 +1,76 @@
+<div formGroupName="{{identifier}}">
+  <lib-ucSubsection [id]="'custCompanyMainDataId'" [title]="'Customer Company Main Data'" [panel]="'CustCompanyMainData'">
+  </lib-ucSubsection>
+  <div id="CustCompanyMainData">
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" for="custName" translate>Customer Name</label>
+      <div class="col-md-4" *ngIf="InputLookupCustomerObj.isReady">
+        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="parentForm" [identifier]="'lookupCustomerCompany'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
+      </div>
+      <label class="col-md-2 adins-required-label" for="custModel" translate>Customer Model</label>
+      <div class="col-md-4">
+        <select class="form-control adInsInput" style="width: auto" formControlName="CustModelCode">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of CustModelObj" value="{{item.Key}}">
+            {{item.Value}} 
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="companyBrandName" translate>Company Brand Name</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="CompanyBrandName" id="companyBrandName"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CompanyBrandName.invalid}">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CompanyBrandName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+      <label class="col-md-2 adins-required-label" translate>Industry Type</label>
+      <div class="col-md-4">
+        <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="parentForm" [identifier]="'lookupIndustryTypeCompany'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" for="companyType" translate>Company Type</label>
+      <div class="col-md-4">
+        <select class="form-control adInsInput" id="companyType" formControlName="MrCompanyTypeCode"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrCompanyTypeCode.invalid }">
+          <option *ngFor="let item of CompanyTypeObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrCompanyTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+      <label class="col-md-2" for="motherMaidenName" translate>Number of Employee</label>
+      <div class="col-md-4">
+        <input type="number" class="form-control" id="numOfEmp" formControlName="NumOfEmp"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].NumOfEmp.invalid }">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].NumOfEmp" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" for="npwp" translate>NPWP</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" id="npwp" formControlName="TaxIdNo"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].TaxIdNo.invalid }">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].TaxIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+      </div>
+      <label class="col-md-2" for="affiliation" translate>Affiliation MF</label>
+      <div class="col-md-4">
+        <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsAffiliated" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" for="establishmentDt" translate>Establishment Date</label>
+      <div class="col-md-4">
+        <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].EstablishmentDt.invalid }">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].EstablishmentDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>     
+      </div>
+      <label class="col-md-2" for="vip" translate>VIP</label>
+      <div class="col-md-4">
+        <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsVip" />
+      </div>
+    </div>
+  </div>
+</div>
