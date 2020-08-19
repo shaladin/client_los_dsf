@@ -59,14 +59,14 @@ export class NapFromMouPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critObj.value = this.BizTemplateCode;
+    critObj.value = CommonConstant.FCTR;//this.BizTemplateCode;
     this.arrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'MOU_STAT';
-    critObj.value = 'RAPP';
+    critObj.value = 'ACT';
     this.arrCrit.push(critObj);
   }
 
