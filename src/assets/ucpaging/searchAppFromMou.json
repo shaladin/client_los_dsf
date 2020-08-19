@@ -1,0 +1,130 @@
+{
+    "title": "Mou PAGING",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "MC.MOU_CUST_NO",
+      "id": "MouCustNoId",
+      "value": "",
+      "label": "LEAD NO",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "MC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "CUSTOMER NAME",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "name": "MC.MOU_CUST_DT",
+      "id": "MouCustDtId",
+      "value": "",
+      "label": "MOU DATE >=",
+      "restriction": "gte",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "MC.MR_MOU_TYPE_CODE",
+      "id": "MouTypeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefMaster/GetListKeyValueActiveByCode",
+      "label": "MOU TYPE",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropValue": "MOU_TYPE"
+    },
+    {
+      "type": "datepicker",
+      "name": "MC.MOU_CUST_DT",
+      "id": "MouCustDtId",
+      "value": "",
+      "label": "MOU DATE <=",
+      "restriction": "lte",
+      "placeholder": "Placeholder"
+    }
+  ],
+    "querystring": {
+        "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt, RM.DESCR AS MouTypeDescr, MC.MOU_STAT AS MouStat, MC.MOU_CUST_ID AS MouCustId",
+        "from": "FROM DBO.MOU_CUST MC WITH(NOLOCK) JOIN V_REF_MASTER RM WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM.MASTER_CODE AND RM.REF_MASTER_TYPE_CODE = 'MOU_TYPE'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Mou Cust No",
+            "name": "MC.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "MC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Mou Cust Date",
+            "name": "MC.MOU_CUST_DT"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Mou Type",
+            "name": "RM.DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type" : "link",
+            "position" : "center",
+            "property" : "MouCustNo",
+            "target" : "_blank",
+            "path" : "/Mou/Cust/View?",
+            "param" : [
+                {
+                    "type" : "MouCustId",
+                    "property" : "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MouCustDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MouTypeDescr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback"
+                }
+            ]
+        }
+    ]
+}

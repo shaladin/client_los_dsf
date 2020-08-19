@@ -1,0 +1,53 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'Main Information'" [panel]="'MOUMainInfoSection'">
+      </lib-ucSubsection>
+      <div id="MOUMainInfoSection">
+        <form class="form form-horizontal" [formGroup]="MouExecutionForm" #enjiForm="ngForm" novalidate
+          (ngSubmit)="enjiForm.form.valid && SaveForm(enjiForm)">
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel adins-required-label" for="MouCustDt" translate>Mou Date</label>
+            <div class="col-md-2">
+              <input type="date" class="form-control adInsInput" formControlName="MouCustDt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.MouCustDt.invalid }"
+                [min]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" />
+              <lib-uc-show-errors [control]="MouExecutionForm.controls.MouCustDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel adins-required-label" for="StartDtEndDt" translate>Start Date - End
+              Date</label>
+            <div class="col-md-2">
+              <input type="date" class="form-control adInsInput" formControlName="StartDt"
+                [min]="this.MouExecutionForm.controls.MouCustDt.value | date: 'yyyy-MM-dd'" onkeypress="return false;" />
+              <lib-uc-show-errors [control]="MouExecutionForm.controls.StartDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div style="text-align: center;">
+              <i class="fas fa-slash" style="transform: rotate(142.5deg); margin-top: 50%;"></i>
+            </div>
+            <div class="col-md-2">
+              <input type="date" class="form-control adInsInput" formControlName="EndDt"
+                [min]="this.MouExecutionForm.controls.MouCustDt.value | date: 'yyyy-MM-dd'"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.EndDt.invalid }"
+                onkeypress="return false;" />
+              <lib-uc-show-errors [control]="MouExecutionForm.controls.EndDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="button" (click)="Back()" class="btn btn-raised btn-warning mr-1">
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class=" fa fa-arrow-circle-right"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

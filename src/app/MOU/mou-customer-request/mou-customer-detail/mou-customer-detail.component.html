@@ -101,7 +101,10 @@
               </div>
 
               <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
-                <div *ngIf="currentStepIndex == 4" class="col-md-12" style="padding: 0; text-align: right;">
+                <div *ngIf="currentStepIndex == 5" class="col-md-12" style="padding: 0;">
+                  <div class="col-md-12">
+                    <iframe [src]="link | safe" style="width: inherit; height: 800px;" title="DMS Lite"></iframe>
+                  </div>
                   <button type="button" class="btn btn-raised btn-warning mr-1" (click)="mouDocumentBack()" translate>
                     <i class="fa fa-arrow-left"></i> Back
                   </button>

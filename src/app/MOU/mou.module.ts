@@ -1,23 +1,6 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpModule } from "@angular/http";
-import { UCSearchModule } from "@adins/ucsearch";
-import { UcpagingModule } from "@adins/ucpaging";
-import { UcShowErrorsModule } from '@adins/uc-show-errors';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
-import { UcSubsectionModule } from "@adins/uc-subsection";
-import { UclookupgenericModule } from '@adins/uclookupgeneric';
-import { UcviewgenericModule } from '@adins/ucviewgeneric';
-import { UcaddressModule } from "@adins/ucaddress";
-import { UCSearchComponent } from '@adins/ucsearch';
-import { UcapprovalModule } from '@adins/ucapproval';
-import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
-import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
-import { UcuploadModule } from '@adins/ucupload';
 import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
@@ -56,17 +39,20 @@ import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-
 import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { TestUploadComponent } from './test-upload/test-upload.component';
-import { UcapprovalhistModule } from "@adins/ucapprovalhist";
 import { MouCancelComponent } from "./mou-cancel/mou-cancel.component";
 import { MouOsTcPagingComponent } from './mou-os-tc/mou-os-tc-paging/mou-os-tc-paging.component';
 import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-detail.component';
 import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
-import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { MouViewListedCustFactoringComponent } from './mou-customer/mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component';
+import { AdInsModule } from "app/components/adins-module/adins.module";
+import { MatTabsModule } from "@angular/material";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { RouterModule } from "@angular/router";
+import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
+import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
 import { MouCustTabComponent } from './mou-customer-request/mou-cust-tab/mou-cust-tab.component';
 import { MouCustPersonalContactInfoComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-contact-info/mou-cust-personal-contact-info.component';
 import { MouCustPersonalFinancialComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-financial/mou-cust-personal-financial.component';
@@ -86,6 +72,8 @@ import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-comp
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
 import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
+import { ReactiveFormsModule } from "@angular/forms";
+import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -102,31 +90,16 @@ export const customCurrencyMaskConfig = {
 
 @NgModule({
   imports: [
-    MouRoutingModule,
-    CommonModule,
-    FormsModule,
-    HttpModule,
-    UCSearchModule,
-    UcgridfooterModule,
-    UcpagingModule,
     NgbModule,
+    RouterModule,
+    AdInsModule,
+    MouRoutingModule,
     SharingModule,
     ArchwizardModule,
-    ReactiveFormsModule,
-    UcaddressModule,
-    UcSubsectionModule,
-    SharingComponentModule, 
-    UcviewgenericModule,
-    UcShowErrorsModule,
-    UclookupgenericModule,
-    UcviewgenericModule,
-    SharingComponentModule,
-    UcinputnumberModule,
-    UcapprovalModule,
-    UcapprovalhistModule,
-    UcuploadModule,
-    UcaddtotempModule,
+    MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    ReactiveFormsModule,
+    SharingComponentModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
@@ -186,6 +159,8 @@ export const customCurrencyMaskConfig = {
     MouOsTcDetailComponent,
     UnauthorizedPageComponent,
     MouViewListedCustFactoringComponent,
+    MouExecutionPagingComponent,
+    MouExecutionDetailComponent,
     MouCustTabComponent,
     MouCustPersonalContactInfoComponent,
     MouCustPersonalFinancialComponent,

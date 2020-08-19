@@ -1,8 +1,8 @@
 import { formatDate } from "@angular/common";
 import { AdInsConstant } from "app/shared/AdInstConstant";
-import { CurrentUserContext } from "./model/CurrentUserContext.model";
 import { environment } from "environments/environment";
 import { CommonConstant } from "./constant/CommonConstant";
+declare const CryptoJS : any;
 
 export class AdInsHelper {
   //Function
@@ -90,7 +90,6 @@ export class AdInsHelper {
     }
     return "0";
   }
-
   
   public static OpenCustomerViewByCustId(CustId){
     var token = localStorage.getItem("Token");
@@ -133,7 +132,6 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + "/View/VendorBranch?VendorId=" + VendorId + "&Token=" + token, '_blank');
   }
 
-
   public static CreateUserAccess(response) {
     // var currentUserContext = new CurrentUserContext;
     // currentUserContext.UserName = response["Identity"].UserName;
@@ -161,7 +159,6 @@ export class AdInsHelper {
     }
   }
 
-
   public static transformAmount(element: any) {
     var formattedAmount = "";
     if (element.target.value != "") {
@@ -186,5 +183,19 @@ export class AdInsHelper {
       }
     }
     return parsedValue;
+  }
+
+  public static Encrypt128CBC(plain: string, k: string, i: string) {
+    var key = CryptoJS.enc.Utf8.parse(k);
+    var iv = CryptoJS.enc.Utf8.parse(i);
+
+    var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plain), key,
+        {
+            keySize: 128 / 8,
+            iv: iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+    return encrypted
   }
 }

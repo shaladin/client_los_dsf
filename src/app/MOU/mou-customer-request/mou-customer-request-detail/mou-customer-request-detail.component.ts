@@ -11,6 +11,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -24,14 +25,15 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   pageType: string = "add";
   mouCustId: number;
   refOfficeId: number;
-  businessDtMin: Date;
+  businessDt: Date;
   mouCustUrl: string;
   custId : number;
   custUrl : string;
+  RevolvingTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
+
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [''],
-    MouCustDt: ['', [Validators.required]],
     TopupMouCustId: [0],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
@@ -48,7 +50,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     RowVersion: [''],
     CustModelCode: [''],
     IdNo: [''],
-    MrIdTypeCode: ['']
+    MrIdTypeCode: [''],
+    MrRevolvingTypeCode: ['']
   });
 
   constructor(
@@ -57,7 +60,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private location: Location,
     private httpClient: HttpClient,
     private fb: FormBuilder,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private http: HttpClient
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -74,16 +78,27 @@ export class MouCustomerRequestDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.MOU_REVOLVING_TYPE}).subscribe(
+      (response) => {
+        this.RevolvingTypeList = response[CommonConstant.ReturnObj];
+        if (this.pageType != "edit") {
+          this.MOUMainInfoForm.patchValue({
+            MrRevolvingTypeCode: this.RevolvingTypeList[0].Key
+          });
+        }
+      });
 
     if (this.WfTaskListId > 0)
       this.claimTask();
 
     var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    this.businessDtMin = new Date(context[CommonConstant.USER_ACCESS]);
-    this.businessDtMin.setDate(this.businessDtMin.getDate());
-    
+    if (currentUserContext != null && currentUserContext != undefined)
+      {
+        this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+        this.businessDt.setDate(this.businessDt.getDate() - 1);
+      }
+
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -110,7 +125,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(URLConstant.GetMouCustById, mouCust).subscribe(
         (response: any) => { 
-          response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
           response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
@@ -121,7 +135,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
             (response: any) => { 
               this.custId = response['CustId'];
             });
-
         });
     }
     else{

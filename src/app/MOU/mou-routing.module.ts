@@ -24,6 +24,8 @@ import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
 import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
+import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
+import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
 import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-company-data/similar-mou-company-data.component';
 import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-personal-data/similar-mou-personal-data.component';
@@ -200,6 +202,20 @@ const routes: Routes = [
         component: UnauthorizedPageComponent,
         data: {
           title: "Unauthorized Page"
+        }
+      },
+      {
+        path: "Execution/Paging",
+        component: MouExecutionPagingComponent,
+        data: {
+          title: "Mou Execution Paging"
+        }
+      },
+      {
+        path: "Execution/Detail",
+        component: MouExecutionDetailComponent,
+        data: {
+          title: "Mou Execution Detail"
         }
       },
       {
