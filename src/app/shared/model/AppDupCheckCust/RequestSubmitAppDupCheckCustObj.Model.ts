@@ -1,4 +1,3 @@
-
 export class RequestSubmitAppDupCheckCustObj {
     AppGuarantorIds: Array<number>;
     AppCustPersonalContactPersonIds: Array<number>;

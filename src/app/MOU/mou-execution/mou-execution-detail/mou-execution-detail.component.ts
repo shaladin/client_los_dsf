@@ -72,7 +72,7 @@ export class MouExecutionDetailComponent implements OnInit {
 
   SaveForm() {
     var request = this.MouExecutionForm.value;
-    this.httpClient.post(URLConstant.UpdateMouCust, request).subscribe(
+    this.httpClient.post(URLConstant.MouCustExecutionActivity, request).subscribe(
       (response: any) => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(['/Mou/Execution/Paging']);

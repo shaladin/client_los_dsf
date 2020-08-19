@@ -26,6 +26,11 @@ import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
 import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
 import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
 import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
+import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
+import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-company-data/similar-mou-company-data.component';
+import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-personal-data/similar-mou-personal-data.component';
+import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
+import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
 
 const routes: Routes = [
   {
@@ -211,6 +216,41 @@ const routes: Routes = [
         component: MouExecutionDetailComponent,
         data: {
           title: "Mou Execution Detail"
+        }
+      },
+      {
+        path: "DuplicateCheck/Paging",
+        component: MouDupCheckPagingComponent,
+        data: {
+          title: "Mou Duplicate Checking Page"
+        }
+      },
+      {
+        path: "DuplicateCheck/SimilarCompany",
+        component: SimilarMouCompanyDataComponent,
+        data: {
+          title: "Mou Similar Company Data Page"
+        }
+      },
+      {
+        path: "DuplicateCheck/SimilarPersonal",
+        component: SimilarMouPersonalDataComponent,
+        data: {
+          title: "Mou Similar Personal Data Page"
+        }
+      },
+      {
+        path: "DuplicateCheck/ExistingPersonal",
+        component: ExistingMouPersonalComponent,
+        data: {
+          title: "Mou Existing Personal Data Page"
+        }
+      },
+      {
+        path: "DuplicateCheck/ExistingCompany",
+        component: ExistingMouCompanyComponent,
+        data: {
+          title: "Mou Existing Company Data Page"
         }
       }
     ]
