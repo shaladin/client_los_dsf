@@ -54,7 +54,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         this.pageType = params['mode'];
       }
     });
-    this.currentStepIndex = 1;
+    this.currentStepIndex = 5; //buat DMS Test sementara
   }
 
   ngOnInit() {
