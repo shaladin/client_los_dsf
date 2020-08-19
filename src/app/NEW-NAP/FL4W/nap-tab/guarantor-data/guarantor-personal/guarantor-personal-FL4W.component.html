@@ -7,6 +7,12 @@
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
+              <div *ngIf="tempCustNo!= null">
+                <div class="form-group row">
+                  <label class="col-md-2">Customer No</label>
+                  <label class="col-md-4">{{this.tempCustNo}}</label>
+                </div>
+              </div>
               <div class="row" id="mainData">
                 <div class="col-md-6 ">
                   <div class="form-group row adins-required">

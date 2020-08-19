@@ -86,6 +86,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.addControl("LegalDocForm", this.fb.array([]));
 
     if (this.mode == "edit") {
+      this.isReady = true;
       var guarantorCompanyObj = new GuarantorCompanyObj();
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       await this.http.post(URLConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
@@ -119,6 +120,29 @@ export class GuarantorCompanyComponent implements OnInit {
           this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
         });
+        if (this.resultData.AppGuarantorObj.CustNo != null) {
+          this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
+          this.inputLookupObj.isReadonly = true;
+          this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+          this.CompanyForm.controls["TaxIdNo"].disable();
+          this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+          this.CompanyForm.controls["ContactName"].disable();
+          this.CompanyForm.controls["MrJobPositionCode"].disable();
+          this.CompanyForm.controls["MobilePhnNo1"].disable();
+          this.CompanyForm.controls["ContactEmail"].disable();
+          this.CompanyForm.controls["MobilePhnNo2"].disable();
+          this.CompanyForm.controls["FaxArea"].disable();
+          this.CompanyForm.controls["Fax"].disable();
+          this.CompanyForm.controls["PhnArea1"].disable();
+          this.CompanyForm.controls["Phn1"].disable();
+          this.CompanyForm.controls["PhnExt1"].disable();
+          this.CompanyForm.controls["PhnArea2"].disable();
+          this.CompanyForm.controls["Phn2"].disable();
+          this.CompanyForm.controls["PhnExt2"].disable();
+          this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+          this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+          this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+        }
     } else {
       this.ClearForm();
       this.inputLookupObj1.isReady = true;
@@ -289,7 +313,27 @@ export class GuarantorCompanyComponent implements OnInit {
           }
         );
       }
-    );
+    ); 
+
+    this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+    this.CompanyForm.controls["TaxIdNo"].disable();
+    this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+    this.CompanyForm.controls["ContactName"].disable();
+    this.CompanyForm.controls["MrJobPositionCode"].disable();
+    this.CompanyForm.controls["MobilePhnNo1"].disable();
+    this.CompanyForm.controls["ContactEmail"].disable();
+    this.CompanyForm.controls["MobilePhnNo2"].disable();
+    this.CompanyForm.controls["FaxArea"].disable();
+    this.CompanyForm.controls["Fax"].disable();
+    this.CompanyForm.controls["PhnArea1"].disable();
+    this.CompanyForm.controls["Phn1"].disable();
+    this.CompanyForm.controls["PhnExt1"].disable();
+    this.CompanyForm.controls["PhnArea2"].disable();
+    this.CompanyForm.controls["Phn2"].disable();
+    this.CompanyForm.controls["PhnExt2"].disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
   }
 
   // IndustryTypeCode="";

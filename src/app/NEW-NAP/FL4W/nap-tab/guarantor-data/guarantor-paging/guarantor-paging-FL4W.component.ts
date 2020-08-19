@@ -52,11 +52,11 @@ export class GuarantorPagingFL4WComponent implements OnInit {
         for(let i=0;i<this.result.length;i++){
           var tempGuarantor = this.result[i]['MrGuarantorTypeCode'];
           var tempCustNo = this.result[i]['CustNo'];
-          if(tempGuarantor == CommonConstant.CustTypePersonal && this.ListCustNoPersonal.includes(tempCustNo) == false){
-            this.ListCustNoPersonal.push(this.result[i]['CustNo']);
+          if(tempGuarantor == CommonConstant.CustTypePersonal && this.ListCustNoPersonal.includes(tempCustNo) == false && tempCustNo!=null) {
+            this.ListCustNoPersonal.push(tempCustNo);
           }
-          else if(tempGuarantor == CommonConstant.CustTypeCompany && this.ListCustNoCompany.includes(tempCustNo)  == false){
-            this.ListCustNoCompany.push(this.result[i]['CustNo']);
+          else if(tempGuarantor == CommonConstant.CustTypeCompany && this.ListCustNoCompany.includes(tempCustNo)  == false && tempCustNo !=null){
+            this.ListCustNoCompany.push(tempCustNo);
           }
         }
       });
@@ -119,10 +119,10 @@ export class GuarantorPagingFL4WComponent implements OnInit {
             for(let i=0;i<this.result.length;i++){
               var tempGuarantor = this.result[i]['MrGuarantorTypeCode'];
               var tempCustNo = this.result[i]['CustNo'];
-              if(tempGuarantor == CommonConstant.CustTypePersonal && this.ListCustNoPersonal.includes(tempCustNo) == false){
+              if(tempGuarantor == CommonConstant.CustTypePersonal && this.ListCustNoPersonal.includes(tempCustNo) == false && tempCustNo!=null){
                 this.ListCustNoPersonal.push(this.result[i]['CustNo']);
               }
-              else if(tempGuarantor == CommonConstant.CustTypeCompany && this.ListCustNoCompany.includes(tempCustNo)  == false){
+              else if(tempGuarantor == CommonConstant.CustTypeCompany && this.ListCustNoCompany.includes(tempCustNo)  == false && tempCustNo!=null){
                 this.ListCustNoCompany.push(this.result[i]['CustNo']);
               }
             }
@@ -146,10 +146,10 @@ export class GuarantorPagingFL4WComponent implements OnInit {
         for(let i=0;i<this.result.length;i++){
           var tempGuarantor = this.result[i]['MrGuarantorTypeCode'];
           var tempCustNo = this.result[i]['CustNo'];
-          if(tempGuarantor == CommonConstant.CustTypePersonal && this.ListCustNoPersonal.includes(tempCustNo) == false){
+          if(tempGuarantor == CommonConstant.CustTypePersonal && this.ListCustNoPersonal.includes(tempCustNo) == false && tempCustNo!=null){
             this.ListCustNoPersonal.push(this.result[i]['CustNo']);
           }
-          else if(tempGuarantor == CommonConstant.CustTypeCompany && this.ListCustNoCompany.includes(tempCustNo)  == false){
+          else if(tempGuarantor == CommonConstant.CustTypeCompany && this.ListCustNoCompany.includes(tempCustNo)  == false && tempCustNo!=null){
             this.ListCustNoCompany.push(this.result[i]['CustNo']);
           }
         }

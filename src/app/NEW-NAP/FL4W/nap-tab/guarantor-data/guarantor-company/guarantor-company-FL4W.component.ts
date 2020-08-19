@@ -211,7 +211,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.isRequired = false;
 
-    if(this.ListCustNoCompany.length > 0){
+    if(this.ListCustNoCompany.length > 0 ){   
       var arrCopyLookupCrit = new Array();
       var addCrit = new CriteriaObj();
       addCrit.DataType = "text";
@@ -337,15 +337,15 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorCompanyObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorCompanyObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorCompanyObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorCompanyObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorCompanyObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorCompanyObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorCompanyObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorCompanyObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorCompanyObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorCompanyObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorCompanyObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorCompanyObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorCompanyObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorCompanyObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
   }
 
   Add() {
