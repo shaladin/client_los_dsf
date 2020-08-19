@@ -42,7 +42,7 @@
             <td class="text-left">
               <input type="date" class="form-control" formControlName="ExpiredDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
-                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? null : ''" />
+                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true && MouCustTcForm.get('MouCustTcList').at(i).controls.IsExpiredDt.value == true ? null : ''" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
             <td class="text-left">

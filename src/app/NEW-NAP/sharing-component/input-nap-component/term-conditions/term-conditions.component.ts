@@ -60,6 +60,7 @@ export class TermConditionsComponent implements OnInit {
               CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
               Notes: this.AppTcList[i].Notes,
               IsAdditional: this.AppTcList[i].IsAdditional,
+              IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
               RowVersion: this.AppTcList[i].RowVersion
             }) as FormGroup;
 
@@ -73,6 +74,10 @@ export class TermConditionsComponent implements OnInit {
               TCDetail.controls.ExpiredDt.disable();
             } else {
               TCDetail.controls.PromisedDt.disable();
+
+              if(!this.AppTcList[i].IsExpDtMandatory){
+                TCDetail.controls.ExpiredDt.disable();
+              }
             }
 
             listTC.push(TCDetail);
@@ -100,6 +105,7 @@ export class TermConditionsComponent implements OnInit {
                   CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
                   Notes: this.AppTcList[i].Notes,
                   IsAdditional: this.AppTcList[i].IsAdditional,
+                  IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
                   RowVersion: this.AppTcList[i].RowVersion
                 }) as FormGroup;
 
@@ -113,6 +119,10 @@ export class TermConditionsComponent implements OnInit {
                   TCDetail.controls.ExpiredDt.disable();
                 } else {
                   TCDetail.controls.PromisedDt.disable();
+
+                  if(!this.AppTcList[i].IsExpDtMandatory){
+                    TCDetail.controls.ExpiredDt.disable();
+                  }
                 }
                 listTC.push(TCDetail);
                 this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
@@ -135,10 +145,14 @@ export class TermConditionsComponent implements OnInit {
       var item = listTC.at(i);
       var isMandatory: Boolean = item.get("IsMandatory").value;
       var isChecked: Boolean = item.get("IsChecked").value;
+      var isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
 
       if (isMandatory) {
         if (isChecked) {
-          item.get("ExpiredDt").enable();
+          if(isExpDtMandatory){
+            item.get("ExpiredDt").enable();
+          }
+          
           item.get("PromisedDt").disable();
           item.patchValue({
             PromisedDt: null
@@ -158,7 +172,10 @@ export class TermConditionsComponent implements OnInit {
         }
       } else {
         if (isChecked) {
-          item.get("ExpiredDt").enable();
+          if(isExpDtMandatory){
+            item.get("ExpiredDt").enable();
+          }
+          
           item.get("PromisedDt").disable();
           item.patchValue({
             PromisedDt: null

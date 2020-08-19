@@ -70,7 +70,7 @@ export class MouCustTcComponent implements OnInit {
           if (item.IsMandatory) {
             if (item.IsChecked) {
               promiseDtValidation = [];
-              expiredDtValidation = [Validators.required];
+              expiredDtValidation = item.IsExpiredDt ? [Validators.required] : [];
             }
             else {
               promiseDtValidation = [Validators.required];
@@ -90,9 +90,10 @@ export class MouCustTcComponent implements OnInit {
             IsMandatory: [item.IsMandatory],
             PromisedDt: [item.IsFromRule ? '' : datePipe.transform(item.PromisedDt, "yyyy-MM-dd"), promiseDtValidation],
             CheckedDt: [item.IsFromRule ? '' : datePipe.transform(item.CheckedDt, "yyyy-MM-dd")],
-            ExpiredDt: [item.IsFromRule ? '' : datePipe.transform(item.ExpiredDt, "yyyy-MM-dd"), expiredDtValidation],
+            ExpiredDt: [item.IsFromRule || !item.IsExpiredDt ? '' : datePipe.transform(item.ExpiredDt, "yyyy-MM-dd"), expiredDtValidation],
             Notes: [item.IsFromRule ? '' : item.Notes],
             PriorTo: [item.PriorTo],
+            IsExpiredDt: [item.IsExpiredDt],
             RowVersion: ['']
           });
           formArray.push(formGroup);
@@ -105,9 +106,14 @@ export class MouCustTcComponent implements OnInit {
     var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
     if (e.target.checked == true) {
       var mandatory = formArray.at(i).get("IsMandatory").value;
-      if (mandatory == true) {
+      var isExpiredDt = formArray.at(i).get("IsExpiredDt").value;
+      if (mandatory == true && isExpiredDt == true) {
         formArray.at(i).get("ExpiredDt").setValidators([Validators.required]);
         formArray.at(i).get("ExpiredDt").updateValueAndValidity();
+        formArray.at(i).get("PromisedDt").clearValidators();
+        formArray.at(i).get("PromisedDt").updateValueAndValidity();
+      }
+      else{
         formArray.at(i).get("PromisedDt").clearValidators();
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
       }
