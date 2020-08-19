@@ -135,12 +135,12 @@ export class InsuranceDataComponent implements OnInit {
     await this.getInsuranceData();
     await this.bindInsMainCvgTypeObj();
     await this.bindInsAddCvgTypeObj();
-    this.bindInsuredByObj();
-    this.bindPaidByObj();
-    this.bindInsAssetCoverPeriodObj();
-    this.bindInsAssetRegionObj();
-    this.bindInscoBranchObj();
-    this.bindPayPeriodToInscoObj();
+    await this.bindInsuredByObj();
+    await this.bindPaidByObj();
+    await this.bindInsAssetCoverPeriodObj();
+    await this.bindInsAssetRegionObj();
+    await this.bindInscoBranchObj();
+    await this.bindPayPeriodToInscoObj();
     if (this.appInsObjObj != null) {
       await this.bindAppInsAndAppInsObj(this.appInsObjObj.InsAssetCoveredBy);
     }else{
@@ -1367,9 +1367,9 @@ export class InsuranceDataComponent implements OnInit {
     }
   }
 
-  bindInsuredByObj() {
+  async bindInsuredByObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsuredBy };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insuredByObj = response[CommonConstant.ReturnObj];
         // if(this.insuredByObj.length > 0){
@@ -1382,9 +1382,9 @@ export class InsuranceDataComponent implements OnInit {
     );
   }
 
-  bindPaidByObj() {
+  async bindPaidByObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsPaidBy };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.paidByObj = response[CommonConstant.ReturnObj];
         // if(this.paidByObj.length > 0){
@@ -1437,25 +1437,26 @@ export class InsuranceDataComponent implements OnInit {
     });
   }
 
-  bindInsAssetCoverPeriodObj() {
+  async bindInsAssetCoverPeriodObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insAssetCoverPeriodObj = response[CommonConstant.ReturnObj];
-        // if(this.insAssetCoverPeriodObj.length > 0){
-        //   this.InsuranceDataForm.patchValue({
-        //     InsAssetCoverPeriod: this.insAssetCoverPeriodObj[0].Key
-        //   });
+        if (this.insAssetCoverPeriodObj.length > 0) {
+          let idxTemp = this.insAssetCoverPeriodObj.findIndex(x => x.Key == CommonConstant.CoverPeriodFullTenor);
+          this.InsuranceDataForm.patchValue({
+            InsAssetCoverPeriod: this.insAssetCoverPeriodObj[idxTemp].Key
+          });
 
-        //   this.setInsLengthDefaultValue(this.insAssetCoverPeriodObj[0].Key);
-        // }
+          this.setInsLengthDefaultValue(this.insAssetCoverPeriodObj[idxTemp].Key);
+        }
       }
     );
   }
 
-  bindInsAssetRegionObj() {
+  async bindInsAssetRegionObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetInsRegion };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insAssetRegionObj = response[CommonConstant.ReturnObj];
         // if(this.insAssetRegionObj.length > 0){
@@ -1467,32 +1468,31 @@ export class InsuranceDataComponent implements OnInit {
     );
   }
 
-  bindInscoBranchObj() {
+  async bindInscoBranchObj() {
     var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
-    this.http.post(URLConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
+    await this.http.post(URLConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).toPromise().then(
       (response) => {
         this.inscoBranchObj = response[CommonConstant.ReturnObj];
-        // if(this.inscoBranchObj.length > 0){
-        //   this.InsuranceDataForm.patchValue({
-        //     InscoBranchCode: this.inscoBranchObj[0].Key,
-        //     InscoBranchName: this.inscoBranchObj[0].Value
-        //   });
-        // }
+        if(this.inscoBranchObj.length > 0 && this.inscoBranchObj.length == 1){
+          this.InsuranceDataForm.patchValue({
+            InscoBranchCode: this.inscoBranchObj[0].Key,
+            InscoBranchName: this.inscoBranchObj[0].Value
+          });
+        }
       }
     );
   }
 
-  bindPayPeriodToInscoObj() {
+  async bindPayPeriodToInscoObj() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePayPeriodToInsco };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.payPeriodToInscoObj = response[CommonConstant.ReturnObj];
-        // if(this.insuredByObj.length > 0){
-        //   this.InsuranceDataForm.patchValue({
-        //     InsAssetCoveredBy: this.insuredByObj[0].Key
-        //   });
-        //   this.setValidator(this.insuredByObj[0].Key);
-        // }
+        if(this.payPeriodToInscoObj.length > 0){
+          this.InsuranceDataForm.patchValue({
+            PayPeriodToInsco: this.payPeriodToInscoObj[0].Key
+          });
+        }
       }
     );
   }
