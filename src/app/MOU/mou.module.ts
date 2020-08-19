@@ -51,6 +51,29 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { MatTabsModule } from "@angular/material";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { RouterModule } from "@angular/router";
+import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
+import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
+import { MouCustTabComponent } from './mou-customer-request/mou-cust-tab/mou-cust-tab.component';
+import { MouCustPersonalContactInfoComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-contact-info/mou-cust-personal-contact-info.component';
+import { MouCustPersonalFinancialComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-financial/mou-cust-personal-financial.component';
+import { MouCustBankAccComponent } from './mou-customer-request/mou-cust-tab/mou-cust-bank-acc/mou-cust-bank-acc.component';
+import { MouCustJobDataComponent } from './mou-customer-request/mou-cust-tab/mou-cust-job-data/mou-cust-job-data.component';
+import { MouCustSocmedComponent } from './mou-customer-request/mou-cust-tab/mou-cust-socmed/mou-cust-socmed.component';
+import { MouCustGrpMbrComponent } from './mou-customer-request/mou-cust-tab/mou-cust-grp-mbr/mou-cust-grp-mbr.component';
+import { MouCustPersonalMainComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-main/mou-cust-personal-main.component';
+import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
+import { MouCustCompanyContactInfoComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-contact-info/mou-cust-company-contact-info.component';
+import { MouCustCompanyFinancialComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-financial/mou-cust-company-financial.component';
+import { MouCustCompanyMainComponent } from './mou-customer-request/mou-cust-tab/mou-cust-company-main/mou-cust-company-main.component';
+import { MouCustLegalDocComponent } from './mou-customer-request/mou-cust-tab/mou-cust-legal-doc/mou-cust-legal-doc.component';
+import { MouCustMgmntShrholderComponent } from './mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mou-cust-mgmnt-shrholder.component';
+import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-personal-data/similar-mou-personal-data.component';
+import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-company-data/similar-mou-company-data.component';
+import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
+import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
+import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
+import { ReactiveFormsModule } from "@angular/forms";
+import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -74,7 +97,12 @@ export const customCurrencyMaskConfig = {
     SharingModule,
     ArchwizardModule,
     MatTabsModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    ReactiveFormsModule,
+    SharingComponentModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSelectModule,
   ],
   declarations: [
     DocSignerComponent,
@@ -130,7 +158,27 @@ export const customCurrencyMaskConfig = {
     MouOsTcPagingComponent,
     MouOsTcDetailComponent,
     UnauthorizedPageComponent,
-    MouViewListedCustFactoringComponent
+    MouViewListedCustFactoringComponent,
+    MouExecutionPagingComponent,
+    MouExecutionDetailComponent,
+    MouCustTabComponent,
+    MouCustPersonalContactInfoComponent,
+    MouCustPersonalFinancialComponent,
+    MouCustBankAccComponent,
+    MouCustJobDataComponent,
+    MouCustSocmedComponent,
+    MouCustGrpMbrComponent,
+    MouCustPersonalMainComponent,
+    MouCustCompanyContactInfoComponent,
+    MouCustCompanyFinancialComponent,
+    MouCustCompanyMainComponent,
+    MouCustLegalDocComponent,
+    MouCustMgmntShrholderComponent,
+    SimilarMouPersonalDataComponent,
+    SimilarMouCompanyDataComponent,
+    MouDupCheckPagingComponent,
+    ExistingMouCompanyComponent,
+    ExistingMouPersonalComponent
   ],
   exports: [],
   providers: [NGXToastrService],
