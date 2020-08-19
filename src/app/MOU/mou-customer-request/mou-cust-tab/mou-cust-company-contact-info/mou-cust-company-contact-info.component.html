@@ -1,0 +1,124 @@
+<lib-ucSubsection [id]="'contactInfomationCompanyId'" [title]="'Contact Information'" [panel]="'contactInformationCompany'">
+</lib-ucSubsection>
+<div id="contactInformationCompany">
+  <div class="form-actions right">
+    <button type="button" (click)="add(content)" class="btn btn-raised btn-primary" translate>
+      <i class="fa fa-check-square-o"></i> Add
+    </button>
+  </div>
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th style="text-align: center;"><span class="thead-header" translate>Name
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Job Position
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Mobile Phone
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Email
+        </span>
+        </th>
+        <th><span translate class="thead-header" name='action'>Action</span></th>
+      </tr>
+    </thead>
+    <tbody *ngIf = "listContactPersonCompany?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="listContactPersonCompany?.length > 0">
+      <tr *ngFor="let item of listContactPersonCompany; let i = index">
+        <td style="text-align: left;">{{item.ContactPersonName}}</td>
+        <td style="text-align: center;">{{item.JobPositionName}}</td>
+        <td style="text-align: center;">{{item.MobilePhnNo1}}</td>
+        <td style="text-align: center;">{{item.Email1}}</td>
+        <td>
+          <a class="success p-0" (click)="edit(i, content)">
+            <i class="ft-edit-2 font-medium-3 mr-2"></i>
+          </a>
+          <a class="warning p-0" (click)="delete(i)">
+            <i class="ft-trash-2 font-medium-3 mr-2"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Contact Information</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="ContactInfoCompanyForm" #enjiForm="ngForm" 
+          (ngSubmit)="ContactInfoCompanyForm.valid && SaveForm()">
+          <div class="form-body">
+            <lib-ucSubsection [id]="'addContactInfomationCompanyId'" [title]=" mode + ' Contact Information'"
+              [panel]="'addContactInfomationCompany'">
+            </lib-ucSubsection>
+            <div id="addContactInfomationCompany">
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" for="ContactPersonName" translate>Name</label>
+                <div class="col-md-4">
+                  <input type="text" id="ContactPersonName" class="form-control" formControlName="ContactPersonName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.ContactPersonName.invalid }">
+                  <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+                <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+                <div class="col-md-4">
+                  <select class="form-control" id="jobPosition" formControlName="MrJobPositionCode" (change)="JobPositionChanged($event)"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MrJobPositionCode.invalid }">
+                    <option *ngFor="let item of JobPositionObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" for="mobilePhone" translate>Mobile Phone 1</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" id="mobilePhone" formControlName="MobilePhnNo1"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MobilePhnNo1.invalid }">
+                  <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+                <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+                <div class="col-md-4">
+                  <input type="text" id="JobTitleName" class="form-control" formControlName="JobTitleName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.JobTitleName.invalid }">
+                  <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.JobTitleName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="mobilePhone2" translate>Mobile Phone 2</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.MobilePhnNo2.invalid }">
+                  <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.MobilePhnNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+                <label class="col-md-2" for="email" translate>Email</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" id="email" formControlName="Email1"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.Email1.invalid }">
+                  <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.Email1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -207,7 +207,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Mou/EditMouCustomer/Paging', Title: 'MOU Return', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: '/Mou/Cust/OutstandingTC/Paging', Title: 'MOU Oustanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: '/Mou/Cust/Inquiry', Title: 'MOU Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: '/Mou/Cust/Cancel', Title: 'MOU Cancel', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
+      { Path: '/Mou/Cust/Cancel', Title: 'MOU Cancel', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: '/Mou/DuplicateCheck/Paging', Title: 'MOU Duplicate Check', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
   // {

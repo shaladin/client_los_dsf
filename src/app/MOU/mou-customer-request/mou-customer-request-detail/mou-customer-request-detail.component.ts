@@ -26,7 +26,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   refOfficeId: number;
   businessDtMin: Date;
   mouCustUrl: string;
-  CustNo : string;
   custId : number;
   custUrl : string;
   MOUMainInfoForm = this.fb.group({
@@ -34,8 +33,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MouCustNo: [''],
     MouCustDt: ['', [Validators.required]],
     TopupMouCustId: [0],
-    CustNo: ['', [Validators.required]],
-    CustName: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
     RefNo: [''],
@@ -145,14 +142,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   Back(): void {
     this.location.back();
-  }
-
-  getCustLookupResponse(e){
-    this.MOUMainInfoForm.patchValue({
-      CustNo: e.custNo,
-      CustName: e.custName,
-      MrCustTypeCode: e.mrCustTypeCode
-    });
   }
 
   Save(){

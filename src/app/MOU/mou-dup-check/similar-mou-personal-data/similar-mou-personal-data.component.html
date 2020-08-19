@@ -1,0 +1,411 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-body">
+        <div class="px-3">
+
+          <!-- Main Info -->
+          <div class="form-body">
+            <lib-ucSubsection [id]="'custMainId'" [title]="'Customer Main Info'" [panel]="'custMain'">
+            </lib-ucSubsection>
+            <div id="custMain">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustNo != ''">{{MouCustObj?.CustNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustNo == ''">- </label>
+                <label class="col-md-3 adInsLabel">Applicant No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.ApplicantNo != ''">{{MouCustObj?.ApplicantNo}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustName != ''">{{MouCustObj?.CustName}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustName == ''">- </label>
+                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.TaxIdNo != ''">{{MouCustObj?.TaxIdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.TaxIdNo == ''">- </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">ID No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.IdNo != ''">{{MouCustObj?.IdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.IdNo == ''">- </label>
+                <label class="col-md-3 adInsLabel">Gender</label>
+                <label class="col-md-3 adInsLabel"
+                  *ngIf="MouCustPersonalObj?.MrGenderCode != ''">{{MouCustPersonalObj?.MrGenderCode}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustPersonalObj?.MrGenderCode == ''">- </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Birth Place / Date</label>
+                <label class="col-md-3 adInsLabel">{{MouCustPersonalObj?.BirthPlace}} /
+                  {{MouCustPersonalObj?.BirthDt | date: 'dd-MM-yyyy'}} </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'addrId'" [title]="'Address'" [panel]="'addr'">
+            </lib-ucSubsection>
+            <div id="addr">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Address</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Addr != ''">{{MouCustAddrObj?.Addr}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Addr == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">RT / RW</label>
+                <label class="col-md-3 adInsLabel">{{MouCustAddrObj?.AreaCode4}} / {{MouCustAddrObj?.AreaCode3}}
+                </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Zipcode</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Zipcode != ''">{{MouCustAddrObj?.Zipcode}}
+                </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Zipcode == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Kelurahan</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode2 != ''">{{MouCustAddrObj?.AreaCode2}}
+                </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode2 == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Kecamatan</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode1 != ''">{{MouCustAddrObj?.AreaCode1}}
+                </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode1 == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">City </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.City != ''">{{MouCustAddrObj?.City}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.City == ''">- </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="NewCustomer()" translate>
+              New Customer
+            </button>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simExistId'" [title]="'Match/Similar Existing Customer'" [panel]="'simExist'">
+            </lib-ucSubsection>
+            <div id="simExist">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListCustomerDuplicate?.length == 0">
+                    <td align="center" colspan="10">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListCustomerDuplicate">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdType}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simNegId'" [title]="'Match/Similar Negative Customer'" [panel]="'simNeg'">
+            </lib-ucSubsection>
+            <div id="simNeg">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='negativeStat' translate>
+                        Negative
+                        Status
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='negativeSrc' translate>
+                        Negative
+                        Source
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListNegativeCust?.length == 0">
+                    <td align="center" colspan="12">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListNegativeCust">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCode}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.NegativeStat}}</td>
+                    <td>{{item.NegativeSrc}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simMouId'" [title]="'Match/Similar In Progress Application'" [panel]="'simApp'">
+            </lib-ucSubsection>
+            <div id="simApp">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListAppCustDuplicate?.length == 0">
+                    <td align="center" colspan="10">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListAppCustDuplicate">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCode}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simMouId'" [title]="'Match/Similar In Progress Mou Request'" [panel]="'simApp'">
+            </lib-ucSubsection>
+            <div id="simMou">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListMouCustDuplicate?.length == 0">
+                    <td align="center" colspan="10">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListMouCustDuplicate">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCode}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="pull-right">
+      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="back()">
+        <i class="ft-x"></i> Cancel
+      </button>
+    </div>
+  </div>
+</div>
