@@ -67,6 +67,8 @@ import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-d
 import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { MouViewListedCustFactoringComponent } from './mou-customer/mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component';
+import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
+import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
 import { MouCustTabComponent } from './mou-customer-request/mou-cust-tab/mou-cust-tab.component';
 import { MouCustPersonalContactInfoComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-contact-info/mou-cust-personal-contact-info.component';
 import { MouCustPersonalFinancialComponent } from './mou-customer-request/mou-cust-tab/mou-cust-personal-financial/mou-cust-personal-financial.component';
@@ -186,6 +188,8 @@ export const customCurrencyMaskConfig = {
     MouOsTcDetailComponent,
     UnauthorizedPageComponent,
     MouViewListedCustFactoringComponent,
+    MouExecutionPagingComponent,
+    MouExecutionDetailComponent,
     MouCustTabComponent,
     MouCustPersonalContactInfoComponent,
     MouCustPersonalFinancialComponent,

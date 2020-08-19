@@ -1,0 +1,154 @@
+{
+    "title": "MOU Request Execution",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MOU.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MOU.MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode , MOU.CUST_NO AS CustNo",
+        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN(SELECT MOU_CUST_ID, COUNT(1) AS OS_CHECKED FROM dbo.MOU_CUST_TC WITH(NOLOCK) WHERE IS_MANDATORY = 1 AND IS_CHECKED = 0 GROUP BY MOU_CUST_ID) OS_TC ON OS_TC.MOU_CUST_ID = MOU.MOU_CUST_ID",
+        "where": "WHERE MOU.MOU_STAT NOT IN (N'NEW',N'RJC',N'CAN',N'EXP',N'ACT')"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU DATE",
+            "name": "MouCustDt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "EXPIRED DATE",
+            "name": "EndDt"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "PLAFOND AMOUNT",
+            "name": "PlafondAmt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REVOLVING",
+            "name": "IsRevolving"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU TYPE",
+            "name": "MrMouTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MouCustDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "EndDt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "PlafondAmt"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsRevolving"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrMouTypeCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Mou/Execution/Detail",
+                    "param": [
+                        {
+                            "type": "MouCustId",
+                            "property": "MouCustId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
