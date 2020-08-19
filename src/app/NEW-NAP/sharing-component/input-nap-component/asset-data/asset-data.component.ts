@@ -777,8 +777,6 @@ export class AssetDataComponent implements OnInit {
         this.AssetDataForm.patchValue({
           DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
         });
-        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
-        this.AssetDataForm.controls["DownPaymentAmt"].enable();
       }
       else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
         if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
@@ -791,8 +789,6 @@ export class AssetDataComponent implements OnInit {
             DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
           });
         }
-        this.AssetDataForm.controls["DownPaymentAmt"].disable();
-        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
       };
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
     }

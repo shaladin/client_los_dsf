@@ -11,6 +11,7 @@ export class AppTCObj{
     Notes: any;
     ExpiredDt: any;
     IsAdditional: any;
+    IsExpDtMandatory: any;
     RowVersion: any;
     constructor() { }
 }

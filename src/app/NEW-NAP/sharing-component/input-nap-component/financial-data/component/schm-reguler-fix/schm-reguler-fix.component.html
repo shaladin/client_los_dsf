@@ -169,7 +169,9 @@
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
-                    (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)"
+                    (focusout)="EffectiveRatePrcntInput_FocusOut()"
+                    (keyup)="Rate_Keyup($event)"
+                    (paste)="Rate_Paste($event)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
@@ -178,7 +180,9 @@
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
+                    [readonly]="ParentForm.controls.RateType.value != 'FLT'"
+                    (keyup)="Rate_Keyup($event)"
+                    (paste)="Rate_Paste($event)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
@@ -187,10 +191,10 @@
               </div>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Standard Rate</label>
+              <label>Supplier Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.StdEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+              <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
@@ -216,7 +220,8 @@
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="InstAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.InstAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
+                (keyup)="InstallmentAmount_Keyup($event)"
+                (paste)="InstallmentAmount_Paste($event)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

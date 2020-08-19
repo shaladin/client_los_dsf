@@ -63,6 +63,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   businessDt: Date = new Date();
   inputAddressObjForJobData: InputAddressObj;
 
+  IsInitJobData : boolean;
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
@@ -104,7 +105,16 @@ export class CustJobDataFL4WComponent implements OnInit {
     this.bindAppCustPersonalJobData();
   }
 
-  CustModelChanged(){
+  CustModelChanged(IsChanged : boolean){ 
+    if(IsChanged == true){
+      this.IsInitJobData = false;
+    }
+    if(this.IsInitJobData == false){ 
+      this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = ""; 
+        this.selectedProfessionCode =  "";
+    }
+
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelNonProfessional){
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
@@ -212,6 +222,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindAppCustPersonalJobData(){
+    this.IsInitJobData = true;
     if(this.appCustPersonalJobDataObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
@@ -230,7 +241,8 @@ export class CustJobDataFL4WComponent implements OnInit {
       this.setProfessionName(this.appCustPersonalJobDataObj.MrProfessionCode);
       this.selectedIndustryTypeCode = this.appCustPersonalJobDataObj.IndustryTypeCode;
       this.setIndustryTypeName(this.appCustPersonalJobDataObj.IndustryTypeCode);
-      this.CustModelChanged();
+      this.CustModelChanged(false);
+      this.IsInitJobData = false;
       this.setAddrJobDataObj();
     }
   }
