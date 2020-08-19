@@ -19,6 +19,7 @@ import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model'
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -148,6 +149,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
   appObj = {
     AppId: 0,
   };
+  inputAddressObjForLoc: InputAddressObj;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
@@ -225,7 +227,8 @@ copyToLocationAddr() {
         this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCustAddrObj.Zipcode};
-        
+        this.inputAddressObjForLoc.default = this.locationAddrObj;
+        this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     });
 }
 
@@ -330,6 +333,13 @@ copyToLocationAddr() {
   }
 
   ngOnInit() {
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.isRequired = false;
+    this.inputAddressObjForLoc.title = "Asset Location";
+    this.inputAddressObjForLoc.showAllPhn = false;
+    this.inputAddressObjForLoc.showOwnership = false;
+                        
     if(this.mode == 'editAsset'){
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
@@ -467,6 +477,8 @@ copyToLocationAddr() {
             this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
             this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
             this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCollateralRegistObj.LocationZipcode};
+            this.inputAddressObjForLoc.default = this.locationAddrObj;
+            this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
           });
         });
     }

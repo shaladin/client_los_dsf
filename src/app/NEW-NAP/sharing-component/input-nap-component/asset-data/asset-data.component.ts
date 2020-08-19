@@ -20,6 +20,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
 import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 
 @Component({
@@ -250,6 +251,8 @@ export class AssetDataComponent implements OnInit {
   dictSuppLookup: { [key: string]: any; } = {};
   isOnlookup: boolean = false;
   ListAttrAnswer = [];
+  inputAddressObjForOwner: InputAddressObj;
+  inputAddressObjForLoc: InputAddressObj;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -261,6 +264,14 @@ export class AssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.inputAddressObjForOwner = new InputAddressObj();
+    this.inputAddressObjForOwner.showSubsection = false;
+    this.inputAddressObjForOwner.showAllPhn = false;
+
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.showAllPhn = false;
+
     this.items = this.AssetDataForm.get('items') as FormArray;
     this.isOnlookup = false;
     await this.GetAppData();
@@ -876,7 +887,8 @@ export class AssetDataComponent implements OnInit {
       this.ownerAddrObj.City = this.AddrLegalObj[0].City;
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
-
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
 
       this.AssetDataForm.controls.UserName.clearValidators();
       this.AssetDataForm.controls.UserName.updateValueAndValidity();
@@ -1370,7 +1382,6 @@ export class AssetDataComponent implements OnInit {
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
 
-
     this.ownerAddrObj = new AddrObj();
     this.ownerAddrObj.Addr = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr;
     this.ownerAddrObj.AreaCode1 = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1;
@@ -1382,7 +1393,8 @@ export class AssetDataComponent implements OnInit {
 
     this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode;
     this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode };
-
+    this.inputAddressObjForOwner.default = this.ownerAddrObj;
+    this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
   }
 
   setAddrLocationObj() {
@@ -1401,7 +1413,8 @@ export class AssetDataComponent implements OnInit {
 
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode };
-
+    this.inputAddressObjForLoc.default = this.locationAddrObj;
+    this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
   }
 
   addAccessories() {
@@ -1593,6 +1606,8 @@ export class AssetDataComponent implements OnInit {
       this.ownerAddrObj.City = this.AddrObj[0].City;
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.OwnerZipcode.value;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.OwnerZipcode.value };
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     }
   }
 
@@ -1620,6 +1635,8 @@ export class AssetDataComponent implements OnInit {
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.LocationZipcode.value;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.LocationZipcode.value };
+      this.inputAddressObjForLoc.default = this.locationAddrObj;
+      this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     }
   }
 

@@ -22,9 +22,12 @@
           <app-cust-personal-main-data (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)" (isMarried)="MaritalChanged($event)" [appId]="appId" [IsSpouseExist]="IsSpouseExist"
             [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
             [identifier]="'personalMainData'"></app-cust-personal-main-data>
-          <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
+          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
+          [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
+        </lib-ucaddress>
+          <!-- <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
             [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showAllPhn]="false">
-          </lib-ucaddress>
+          </lib-ucaddress> -->
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
           </lib-ucSubsection>
           <div id="residenceAddr">
@@ -47,9 +50,11 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForResidence" [enjiForm]="enjiForm"
+              [identifier]="'residenceAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
               [identifier]="'residenceAddr'" [default]="residenceAddrObj" [inputField]="inputFieldResidenceObj"
-              [showPhn3]="false" [showOwnership]="true"></lib-ucaddress>
+              [showPhn3]="false" [showOwnership]="true"></lib-ucaddress> -->
           </div>
           <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
           </lib-ucSubsection>
@@ -73,9 +78,11 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing"  [enjiForm]="enjiForm"
+              [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
               [identifier]="'mailingAddr'" [default]="mailingAddrObj" [inputField]="inputFieldMailingObj"
-              [showPhn3]="false"></lib-ucaddress>
+              [showPhn3]="false"></lib-ucaddress> -->
           </div>
           <app-cust-personal-contact-information (callbackCopyAddr)="copyToContactPersonAddr($event)"
             (callbackSubmit)="getCustContactInformation($event)" [isMarried]="isMarried" [spouseGender]="spouseGender"
@@ -115,9 +122,11 @@
           <app-cust-company-main-data (callbackCopyCust)="CopyCustomerCompany($event)"
             [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
             [identifier]="'companyMainData'"></app-cust-company-main-data>
-          <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm"
+          <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy"
+          [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+          <!-- <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm"
             [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [default]="legalAddrCompanyObj"
-            [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress>
+            [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress> -->
           <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'" [panel]="'mailingAddrCompany'">
           </lib-ucSubsection>
           <div id="mailingAddrCompany">
@@ -140,9 +149,11 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress [showSubsection]="false" [UCAddrForm]="CustDataCompanyForm" [enjiForm]="enjiFormCompany"
+            <lib-ucaddress [addressObj]="inputAddressObjForMailingCoy" [enjiForm]="enjiFormCompany"
+            [identifier]="'mailingAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+            <!-- <lib-ucaddress [showSubsection]="false" [UCAddrForm]="CustDataCompanyForm" [enjiForm]="enjiFormCompany"
               [identifier]="'mailingAddrCompany'" [default]="mailingAddrCompanyObj"
-              [inputField]="inputFieldMailingCompanyObj" [showPhn3]="false"></lib-ucaddress>
+              [inputField]="inputFieldMailingCompanyObj" [showPhn3]="false"></lib-ucaddress> -->
           </div>
           <app-cust-shareholder (callbackSubmit)="getAppCustShareholder($event)" [listShareholder]="listShareholder">
           </app-cust-shareholder>

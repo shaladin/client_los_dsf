@@ -188,9 +188,10 @@
           </lib-uc-show-errors>
         </div>
       </div>
-      <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm" [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+      <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
         [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false">
-      </lib-ucaddress>
+      </lib-ucaddress> -->
     </div>
 
     <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
@@ -215,9 +216,10 @@
           </div>
         </div>
       </div>
-      <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLocAddr" [enjiForm]="enjiForm" [identifier]="'locationAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+      <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
         [identifier]="'locationAddr'" [default]="locationAddrObj" [inputField]="inputFieldLocationObj"
-        [showPhn3]="false"></lib-ucaddress>
+        [showPhn3]="false"></lib-ucaddress> -->
     </div>
 
     <div class="form-actions right">
@@ -358,17 +360,19 @@
         </lib-uc-show-errors>
       </div>
     </div>
-    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+    <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm" [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+    <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
       [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showPhn3]="false">
-    </lib-ucaddress>
+    </lib-ucaddress> -->
   </div>
 
   <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
   </lib-ucSubsection>
   <div id="AddCollLocation">
-    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+    <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLocAddr" [enjiForm]="enjiForm" [identifier]="'locationAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+    <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
       [identifier]="'locationAddr'" [default]="locationAddrObj" [inputField]="inputFieldLocationObj"
-      [showPhn3]="false"></lib-ucaddress>
+      [showPhn3]="false"></lib-ucaddress> -->
   </div>
 
   <div class="form-actions right">

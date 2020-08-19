@@ -21,6 +21,7 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -99,11 +100,21 @@ export class CollateralDetailComponent implements OnInit {
   IdTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
   OwnerRelationList: Array<KeyValueObj> = new Array<KeyValueObj>();
   AssetTypeCode: string = "";
+  inputAddressObjForLegal: InputAddressObj;
+  inputAddressObjForLoc: InputAddressObj;
 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    this.inputAddressObjForLegal = new InputAddressObj();
+    this.inputAddressObjForLegal.showSubsection = false;
+    this.inputAddressObjForLegal.showAllPhn = false;
+    
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.showAllPhn = false;
+    
     this.items = this.AddCollForm.get('items') as FormArray;
 
     this.GetLegalAddr();
@@ -386,7 +397,8 @@ export class CollateralDetailComponent implements OnInit {
         this.LocationAddrObj.City = this.collateralRegistrationObj.LocationCity;
         this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.LocationZipcode;
         this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.LocationZipcode };
-
+        this.inputAddressObjForLoc.default = this.LocationAddrObj;
+        this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
         // set data Owner Address
         this.OwnerAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
         this.OwnerAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
@@ -396,6 +408,8 @@ export class CollateralDetailComponent implements OnInit {
         this.OwnerAddrObj.City = this.collateralRegistrationObj.OwnerCity;
         this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
         this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
+        this.inputAddressObjForLegal.default = this.OwnerAddrObj;
+        this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
       })
   }
 
@@ -507,7 +521,8 @@ export class CollateralDetailComponent implements OnInit {
           this.OwnerAddrObj.City = this.AppCustAddrObj.City
           this.inputFieldLegalObj.inputLookupObj.nameSelect = this.AppCustAddrObj.Zipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj.Zipcode };
-
+          this.inputAddressObjForLegal.default = this.OwnerAddrObj;
+          this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
           if (this.AppCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             this.AddCollForm.patchValue({
               MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
@@ -556,6 +571,8 @@ export class CollateralDetailComponent implements OnInit {
 
     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
+    this.inputAddressObjForLoc.default = this.LocationAddrObj;
+    this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
   }
 
   SaveForm() {

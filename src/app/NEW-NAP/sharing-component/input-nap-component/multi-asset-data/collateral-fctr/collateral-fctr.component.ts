@@ -19,6 +19,7 @@ import { formatDate } from '@angular/common';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-collateral-fctr',
@@ -27,7 +28,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class CollateralFctrComponent implements OnInit {
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
   @Input() AppId: number;
-  
+
   AppCollateralId: number;
   viewObj: any;
   appCollateralObj: AppCollateralObj;
@@ -108,6 +109,8 @@ export class CollateralFctrComponent implements OnInit {
   listRefAppAttr: any;
 
   HiddenState: string = "true";
+  inputAddressObjForLegal: InputAddressObj;
+  inputAddressObjForLoc: any;
 
   constructor(private modalService: NgbModal, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
@@ -118,6 +121,20 @@ export class CollateralFctrComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.inputAddressObjForLegal = new InputAddressObj();
+    this.inputAddressObjForLegal.showSubsection = false;
+    this.inputAddressObjForLegal.showPhn1 = false;
+    this.inputAddressObjForLegal.showPhn2 = false;
+    this.inputAddressObjForLegal.showPhn3 = false;
+    this.inputAddressObjForLegal.showFax = false;
+
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.showPhn1 = false;
+    this.inputAddressObjForLoc.showPhn2 = false;
+    this.inputAddressObjForLoc.showPhn3 = false;
+    this.inputAddressObjForLoc.showFax = false;
+
     this.type = "Add";
     this.bindUcLookup();
     this.initAddrObj();
@@ -280,7 +297,7 @@ export class CollateralFctrComponent implements OnInit {
 
     if (this.collateralObj == undefined) {
       this.inputLookupObj.jsonSelect = { FullAssetName: "" }
-    }else{
+    } else {
       this.inputLookupObj.jsonSelect = { FullAssetName: this.collateralObj.FullAssetName }
       this.onItemChange(this.collateralObj.AssetTypeCode);
     }
@@ -387,6 +404,8 @@ export class CollateralFctrComponent implements OnInit {
         this.locationAddrObj.City = AppCollateralRegistration.LocationCity;
         this.inputFieldLocationObj.inputLookupObj.nameSelect = AppCollateralRegistration.LocationZipcode;
         this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: AppCollateralRegistration.LocationZipcode };
+        this.inputAddressObjForLoc.default = this.locationAddrObj;
+        this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
 
         this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, AppCollateralIdObj).subscribe(
           (response) => {
@@ -414,6 +433,8 @@ export class CollateralFctrComponent implements OnInit {
 
         this.inputFieldLegalObj.inputLookupObj.nameSelect = AppCollateralRegistration.OwnerZipcode;
         this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: AppCollateralRegistration.OwnerZipcode };
+        this.inputAddressObjForLegal.default = this.ownerAddrObj;
+        this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
       });
 
   }
@@ -454,7 +475,7 @@ export class CollateralFctrComponent implements OnInit {
     if (this.type == 'Add') {
       this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
-    
+
           this.HiddenState = "true";
           this.toastr.successMessage(response["message"]);
           enjiForm.resetForm();
@@ -466,7 +487,7 @@ export class CollateralFctrComponent implements OnInit {
     else {
       this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
         (response) => {
-    
+
           this.HiddenState = "true";
           this.toastr.successMessage(response["message"]);
           enjiForm.resetForm();
@@ -566,6 +587,8 @@ export class CollateralFctrComponent implements OnInit {
 
     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["ownerAddrObjZipcode"]["controls"].value.value;
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["ownerAddrObjZipcode"]["controls"].value.value };
+    this.inputAddressObjForLoc.default = this.locationAddrObj;
+    this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
   }
 
   async editData(AppCollateralId) {
@@ -620,7 +643,8 @@ export class CollateralFctrComponent implements OnInit {
         this.locationAddrObj.City = this.collateralRegistrationObj.LocationCity;
         this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.LocationZipcode;
         this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.LocationZipcode };
-
+        this.inputAddressObjForLoc.default = this.locationAddrObj;
+        this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
         this.ownerAddrObj = new AddrObj();
         this.ownerAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
         this.ownerAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
@@ -630,7 +654,8 @@ export class CollateralFctrComponent implements OnInit {
         this.ownerAddrObj.City = this.collateralRegistrationObj.OwnerCity;
         this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
         this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
-
+        this.inputAddressObjForLegal.default = this.ownerAddrObj;
+        this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
         this.bindUcLookup();
       })
   }
@@ -648,10 +673,10 @@ export class CollateralFctrComponent implements OnInit {
       });
   }
 
-  outputValue(event){
-    if(event == "false"){
+  outputValue(event) {
+    if (event == "false") {
       this.HiddenState = "false";
-    }else{
+    } else {
       this.editData(event)
     }
   }

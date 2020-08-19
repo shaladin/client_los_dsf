@@ -15,6 +15,7 @@ import { AllCollateralDataObj } from '../../../../../shared/model/AllCollateralD
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 
 @Component({
@@ -152,6 +153,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   appCollateralObj = {
     AppCollateralId: 0,
   };
+  inputAddressObjForOwner: InputAddressObj;
+  inputAddressObjForLoc: InputAddressObj;
 
 
   //AllAssetObjs: [{
@@ -181,6 +184,14 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     //this.appCollateralObj = {
     //  AppCollateralId = 0,
     //}
+    this.inputAddressObjForOwner = new InputAddressObj();
+    this.inputAddressObjForOwner.showSubsection = false;
+    this.inputAddressObjForOwner.showAllPhn = false;
+
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.showAllPhn = false;
+
     this.appCollateralObj.AppCollateralId = this.AppCollateralId;
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -334,7 +345,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.ownerAddrObj.City = this.AddrLegalObj[0].City;
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
-
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
 
       this.CollateralDataForm.controls.UserName.clearValidators();
       this.CollateralDataForm.controls.UserName.updateValueAndValidity();
@@ -554,7 +566,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
         });
         this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
         this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
-        
+
       }
     );
   }
@@ -675,10 +687,10 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.ownerAddrObj.AreaCode4 = this.appCollateralRegist.OwnerAreaCode4;
     this.ownerAddrObj.City = this.appCollateralRegist.OwnerCity;
 
-
     this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.appCollateralRegist.OwnerZipcode;
     this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appCollateralRegist.OwnerZipcode };
-
+    this.inputAddressObjForOwner.default = this.ownerAddrObj;
+    this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
   }
 
   setAddrLocationObj() {
@@ -694,10 +706,10 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.locationAddrObj.AreaCode4 = this.appCollateralRegist.LocationAreaCode4;
     this.locationAddrObj.City = this.appCollateralRegist.LocationCity;
 
-
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.appCollateralRegist.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appCollateralRegist.LocationZipcode };
-
+    this.inputAddressObjForLoc.default = this.locationAddrObj;
+    this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
   }
 
   async GetListAddr() {
@@ -734,6 +746,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.ownerAddrObj.City = this.AddrObj[0].City;
     this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.CollateralDataForm.controls.OwnerZipcode.value;
     this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.CollateralDataForm.controls.OwnerZipcode.value };
+    this.inputAddressObjForOwner.default = this.ownerAddrObj;
+    this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
   }
 
   copyToLocationAddr() {
@@ -759,7 +773,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.CollateralDataForm.controls.LocationZipcode.value;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.CollateralDataForm.controls.LocationZipcode.value };
-
+    this.inputAddressObjForLoc.default = this.locationAddrObj;
+    this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
   }
 
   test() {
@@ -781,7 +796,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.http.post(this.getAppCustUrl, appObj).toPromise().then(
       (response) => {
         this.AppCustObj = response;
-        this.CollateralDataForm.patchValue({ 
+        this.CollateralDataForm.patchValue({
           UserName: this.AppCustObj.CustName,
           MrUserRelationshipCode: CommonConstant.SelfCustomer,
           OwnerName: this.AppCustObj.CustName,

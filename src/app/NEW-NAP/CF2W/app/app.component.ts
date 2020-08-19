@@ -11,12 +11,15 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-app',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+  inputAddressObjForOwner: InputAddressObj;
+  inputAddressObjForLoc: InputAddressObj;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
     this.getRefMasterListKeyValueActiveByCodeUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -127,9 +130,18 @@ export class AppComponent implements OnInit {
 
   });
   async ngOnInit(): Promise<void> {
+    this.inputAddressObjForOwner = new InputAddressObj();
+    this.inputAddressObjForOwner.showSubsection = false;
+    this.inputAddressObjForOwner.title = "Customer Address";
+    this.inputAddressObjForOwner.showAllPhn = false;
+    this.inputAddressObjForOwner.showFax = false;
+    
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.title = "Customer Address";
+    this.inputAddressObjForLoc.showAllPhn = false;
+    this.inputAddressObjForLoc.showFax = false;
 
-    
-    
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj = new InputFieldObj();
@@ -433,7 +445,8 @@ export class AppComponent implements OnInit {
       this.ownerAddrObj.City = this.AddrLegalObj[0].City;
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
-
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     }
 
     if (this.CopyAddrOwnerFromType == CommonConstant.AddrTypeResidence) {
@@ -457,6 +470,8 @@ export class AppComponent implements OnInit {
 
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrResidenceObj[0].Zipcode;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrResidenceObj[0].Zipcode };
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     }
 
     if (this.CopyAddrOwnerFromType == CommonConstant.AddrTypeMailing) {
@@ -480,6 +495,8 @@ export class AppComponent implements OnInit {
 
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrMailingObj[0].Zipcode;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrMailingObj[0].Zipcode };
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     }
   }
 
@@ -506,7 +523,8 @@ export class AppComponent implements OnInit {
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
-
+      this.inputAddressObjForLoc.default = this.locationAddrObj;
+      this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     }
 
     if (this.CopyAddrLocationFromType == CommonConstant.AddrTypeResidence) {
@@ -530,6 +548,8 @@ export class AppComponent implements OnInit {
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AddrResidenceObj[0].Zipcode;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrResidenceObj[0].Zipcode };
+      this.inputAddressObjForLoc.default = this.locationAddrObj;
+      this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     }
 
     if (this.CopyAddrLocationFromType == CommonConstant.AddrTypeMailing) {
@@ -552,6 +572,8 @@ export class AppComponent implements OnInit {
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AddrMailingObj[0].Zipcode;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrMailingObj[0].Zipcode };
+      this.inputAddressObjForLoc.default = this.locationAddrObj;
+      this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     }
   }
   SetLocationAddrType(event) {

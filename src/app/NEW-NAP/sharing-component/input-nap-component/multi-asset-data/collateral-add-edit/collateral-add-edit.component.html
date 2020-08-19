@@ -160,9 +160,11 @@
                   </span>
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Collateral Owner'" [UCAddrForm]="AddCollForm"
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForColl"
+              [enjiForm]="enjiForm" [identifier]="'collOwnerAddress'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Collateral Owner'" [UCAddrForm]="AddCollForm"
                 [enjiForm]="enjiForm" [identifier]="'collOwnerAddress'" [default]="collOwnerAddrObj"
-                [inputField]="inputFieldCollOwnerObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress>
+                [inputField]="inputFieldCollOwnerObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress> -->
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Mobile Phone</label>
                 <div class="col-md-3">
@@ -265,9 +267,11 @@
                   </span>
                 </div>
               </div><!-- collLocationAddrObj -->
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"
+                [identifier]="'collLocationAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+                <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
                 [identifier]="'collLocationAddr'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj"
-                [showAllPhn]="false"></lib-ucaddress>
+                [showAllPhn]="false"></lib-ucaddress> -->
             </div>
 
             <lib-ucSubsection [id]="'collPercentId'" [title]="'Collateral Percentage'" [panel]="'collPercentage'">

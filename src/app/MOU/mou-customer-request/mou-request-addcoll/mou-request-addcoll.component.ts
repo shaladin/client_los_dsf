@@ -19,6 +19,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -104,10 +105,20 @@ export class MouRequestAddcollComponent implements OnInit {
     MrCollateralConditionCode: [''],
     ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]]
   })
+  inputAddressObjForLegalAddr: InputAddressObj;
+  inputAddressObjForLocAddr: InputAddressObj;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { this.type = 'Paging'; }
 
   ngOnInit() {
+  this.inputAddressObjForLegalAddr = new InputAddressObj();
+  this.inputAddressObjForLegalAddr.showSubsection = false;
+  this.inputAddressObjForLegalAddr.showPhn3 = false;
+
+  this.inputAddressObjForLocAddr = new InputAddressObj();
+  this.inputAddressObjForLocAddr.showSubsection = false;
+  this.inputAddressObjForLocAddr.showPhn3 = false;
+  
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
     this.initAddrObj();
@@ -481,7 +492,10 @@ export class MouRequestAddcollComponent implements OnInit {
   
           this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
-  
+          
+          this.inputAddressObjForLegalAddr.default = this.legalAddrObj;
+          this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+
           this.locationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
           this.locationAddrObj.City = this.collateralRegistrationObj.LocationCity;
           this.locationAddrObj.AreaCode1 = this.collateralRegistrationObj.LocationAreaCode1;
@@ -495,6 +509,9 @@ export class MouRequestAddcollComponent implements OnInit {
   
           this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
           this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
+
+          this.inputAddressObjForLocAddr.default = this.locationAddrObj;
+          this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
         })
     }
   }
@@ -607,6 +624,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralRegistrationObj.LocationAreaCode2 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode2.value;
     this.mouCustCollateralRegistrationObj.LocationAreaCode3 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode3.value;
     this.mouCustCollateralRegistrationObj.LocationAreaCode4 = this.AddCollForm.controls["locationAddr"]["controls"].AreaCode4.value;
+    
   }
 
   copyToLocation() {
@@ -628,6 +646,9 @@ export class MouRequestAddcollComponent implements OnInit {
 
     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value;
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value };
+
+    this.inputAddressObjForLocAddr.default = this.locationAddrObj;
+    this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
   }
 
   editData(MouCustCollId) {
@@ -742,6 +763,9 @@ export class MouRequestAddcollComponent implements OnInit {
         this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
         this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
 
+        this.inputAddressObjForLegalAddr.default = this.legalAddrObj;
+        this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+
         this.locationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
         this.locationAddrObj.City = this.collateralRegistrationObj.LocationCity;
         this.locationAddrObj.AreaCode1 = this.collateralRegistrationObj.LocationAreaCode1;
@@ -755,6 +779,9 @@ export class MouRequestAddcollComponent implements OnInit {
 
         this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
         this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
+
+        this.inputAddressObjForLocAddr.default = this.locationAddrObj;
+        this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
       })
   }
 
