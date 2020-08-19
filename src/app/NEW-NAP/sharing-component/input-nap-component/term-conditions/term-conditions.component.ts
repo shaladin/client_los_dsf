@@ -140,12 +140,18 @@ export class TermConditionsComponent implements OnInit {
         if (isChecked) {
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
+          item.patchValue({
+            PromisedDt: null
+          });
           // item.get("ExpiredDt").setValidators([Validators.required]);
           item.get("ExpiredDt").updateValueAndValidity();
           this.totalCheckAll++;
         } else {
           item.get("ExpiredDt").disable();
           item.get("PromisedDt").enable();
+          item.patchValue({
+            ExpiredDt: null
+          });
           item.get("PromisedDt").setValidators([Validators.required]);
           item.get("PromisedDt").updateValueAndValidity();
           this.IsCheckedAll = false;
@@ -154,11 +160,17 @@ export class TermConditionsComponent implements OnInit {
         if (isChecked) {
           item.get("ExpiredDt").enable();
           item.get("PromisedDt").disable();
+          item.patchValue({
+            PromisedDt: null
+          });
           // item.get("ExpiredDt").setValidators([Validators.required]);
           item.get("ExpiredDt").updateValueAndValidity();
         } else {
           item.get("ExpiredDt").disable();
           item.get("PromisedDt").enable();
+          item.patchValue({
+            ExpiredDt: null
+          });
         }
       }
     }

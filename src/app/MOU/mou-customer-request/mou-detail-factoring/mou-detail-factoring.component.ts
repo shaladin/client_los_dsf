@@ -9,6 +9,7 @@ import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
 
 @Component({
   selector: 'app-mou-detail-factoring',
@@ -200,6 +201,12 @@ export class MouDetailFactoringComponent implements OnInit {
       (response) => {
         this.ResponseMouCustFactoring.emit(response);
       });
+
+    if (this.listedCusts.length > 0 && formData.IsListedCust)
+      this.httpClient.post(URLConstant.AddorEditListMouCustListedCustFctr, { ListMouCustListedCustFctrs: this.listedCusts }).subscribe(
+        (response) => {
+          console.log(response);
+        });
   }
 
   // back(){
@@ -215,5 +222,12 @@ export class MouDetailFactoringComponent implements OnInit {
       this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
     }
     this.MouDetailFactoringForm.updateValueAndValidity();
+  }
+  
+  listedCusts: Array<MouCustListedCustFctrObj> = new Array<MouCustListedCustFctrObj>();
+  GetDataListCustFctr(ev) {
+    // console.log(ev);
+    this.listedCusts = ev;
+    console.log(this.listedCusts);
   }
 }

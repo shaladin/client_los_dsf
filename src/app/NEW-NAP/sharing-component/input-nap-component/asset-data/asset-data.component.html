@@ -95,14 +95,18 @@
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Down Payment (%/Amt)</label>
                 <div class="col-md-2" style="border-right: 1px solid grey">
-                  <input type="" currencyMask id="downPaymentPrctg" class="form-control" formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentPrctg.invalid}">
+                  <input type="" currencyMask id="downPaymentPrctg" class="form-control" formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)" [options]="{min: 0, max:100, suffix:' %'}"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentPrctg.invalid}" *ngIf="AssetDataForm.controls.selectedDpType.value == 'PRCTG'">
+                  <input type="" currencyMask id="downPaymentPrctg" class="form-control" formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)" readonly [options]="{min: 0, max:100, suffix:' %'}"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentPrctg.invalid}" *ngIf="AssetDataForm.controls.selectedDpType.value != 'PRCTG'">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.DownPaymentPrctg" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
                   <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt" (focusout)="updateValueDownPaymentPrctg($event)"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}" *ngIf="AssetDataForm.controls.selectedDpType.value == 'AMT'">
+                  <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt" (focusout)="updateValueDownPaymentPrctg($event)" readonly
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.DownPaymentAmt.invalid}" *ngIf="AssetDataForm.controls.selectedDpType.value != 'AMT'">
                   <lib-uc-show-errors [control]="AssetDataForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>

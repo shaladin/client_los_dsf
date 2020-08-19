@@ -551,6 +551,7 @@ export class URLConstant {
     // MOU CUST FCTR
     public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
     public static EditMouCustFctr = environment.losUrl + "/MouCustFctr/EditMouCustFctr";
+    public static AddorEditListMouCustListedCustFctr = environment.losUrl + "/MouCustListedCustFctr/AddorEditListMouCustListedCustFctr";
     public static GetMouCustFctrByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrByMouCustId";
     public static GetMouCustFctrForMouViewByMouCustId = environment.losUrl + "/MouCustFctr/GetMouCustFctrForMouViewByMouCustId";
 
