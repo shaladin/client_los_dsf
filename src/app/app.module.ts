@@ -23,7 +23,6 @@ import { StorageServiceModule } from 'angular-webstorage-service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatDialogModule } from '@angular/material';
 
-import * as $ from 'jquery';
 import { HttpModule } from '@angular/http';
 import { HttpConfigInterceptor } from 'app/interceptor/httpconfig.interceptor';
 import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
@@ -32,6 +31,8 @@ import { RolepickComponent } from 'app/shared/rolepick/rolepick.component';
 import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { GrowlModule } from 'primeng/primeng';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
+import { BackdoorComponent } from './backdoor/backdoor.component';
+import { SafePipe } from './shared/pipe/safepipe';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -42,7 +43,9 @@ export function createTranslateLoader(http: HttpClient) {
         FullLayoutComponent,
         ContentLayoutComponent,
         ErrorDialogComponent,
-        RolepickComponent
+        RolepickComponent,
+        SafePipe,
+        BackdoorComponent
         ],
     
     imports: [

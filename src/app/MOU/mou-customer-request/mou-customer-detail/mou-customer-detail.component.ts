@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Location } from '@angular/common';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustTcComponent } from '../mou-cust-tc/mou-cust-tc.component';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -13,6 +10,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -32,14 +32,13 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   pageTitle: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
-  resultData: any;
+  resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     private httpClient: HttpClient,
-    private fb: FormBuilder,
     private toastr: NGXToastrService
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -56,6 +55,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       }
     });
     this.currentStepIndex = 1;
+    // this.currentStepIndex = 5; //buat DMS Test sementara
   }
 
   ngOnInit() {
@@ -71,6 +71,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.link = this.DMSIntegrationURL(response);
         if (this.resultData.MrMouTypeCode == CommonConstant.GENERAL) {
           this.pageTitle = "MOU General";
         }
@@ -95,6 +96,25 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         animation: true
       });
       this.stepperFactoring.to(this.currentStepIndex);
+    }
+  }
+
+  DMSIntegrationURL(mouCustObj : MouCustObj) {
+    if(mouCustObj != undefined){
+      let k = "PYVPWOJGKS8A0URB";
+      let iv = "1234567891234567";
+      let  Obj :DMSObj = new DMSObj();
+      Obj.User = "Admin";
+      Obj.Role = "SUPUSR";
+      Obj.ViewCode = "ConfinsMou";
+      Obj.MetadataParent.push(new DMSLabelValueObj("No Customer", mouCustObj.CustNo));
+      Obj.MetadataObject.push(new DMSLabelValueObj("Mou Id", mouCustObj.MouCustNo));
+      let ObjFinalForm = "js="+JSON.stringify(Obj)+"&cftsv="+formatDate(new Date(),'dd-MM-yyyy HH:mm', 'en-US').toString();
+      let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, k, iv);
+      prm = encodeURIComponent(prm);
+      console.log("Final Form : "+ObjFinalForm);
+      console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm="+prm);
+      return "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm="+prm;
     }
   }
 
@@ -185,7 +205,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex == 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex == 5)) {
       var mouObj = { MouCustId: this.mouCustId }
       this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
-        (response: any) => {
+        () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
             this.router.navigate(['/Mou/EditMouCustomer/Paging']);

@@ -1,0 +1,49 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <!-- Main Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Mou No </label>
+                <label class="col-md-9 adInsLabel"><a href="javascript: void(0);" (click)="openView()">{{MouCustObj?.MouCustNo}}</a></label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Office </label>
+                <label class="col-md-9 adInsLabel">{{NapAppForm.controls.OriOfficeName.value}} </label>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel">Product Offering Name </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
+                    (lookup)="getLookupAppResponseName($event)">
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row adins">
+                <label class="col-md-3 adInsLabel">Currency </label>
+                <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode: bizTemplateCode}" translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square"></i> Next
+              </button>
+              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                <i class="fa fa-check-square-o"></i> test
+              </button> -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
