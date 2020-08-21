@@ -16,15 +16,19 @@ export class BackdoorComponent implements OnInit {
   noParamGiven: boolean = true;
   link: string;
   mouCustObj: MouCustObj = new MouCustObj();
+  k: string;
+  iv: string;
 
   constructor(
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(
       (param: ParamMap) => {
-        if (param["MOU_NO"] != undefined && param["CUST_NO"] != undefined) {
+        if (param["MOU_NO"] != undefined && param["CUST_NO"] != undefined && param["KEY"] != undefined && param["IV"] != undefined) {
           this.noParamGiven = false;
           this.mouCustObj.CustNo = param["CUST_NO"];
           this.mouCustObj.MouCustNo = param["MOU_NO"];
+          this.k = param["KEY"];
+          this.iv = param["IV"];
         }
       }
     )
@@ -37,8 +41,6 @@ export class BackdoorComponent implements OnInit {
 
   DMSIntegrationURL(mouCustObj: MouCustObj) {
     if (mouCustObj != undefined) {
-      let k = "PYVPWOJGKS8A0URB";
-      let iv = "1234567891234567";
       let Obj: DMSObj = new DMSObj();
       Obj.User = "Admin";
       Obj.Role = "SUPUSR";
@@ -46,7 +48,7 @@ export class BackdoorComponent implements OnInit {
       Obj.MetadataParent.push(new DMSLabelValueObj("No Customer", mouCustObj.CustNo));
       Obj.MetadataObject.push(new DMSLabelValueObj("Mou Id", mouCustObj.MouCustNo));
       let ObjFinalForm = "js=" + JSON.stringify(Obj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
-      let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, k, iv);
+      let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
       prm = encodeURIComponent(prm);
       console.log("Final Form : " + ObjFinalForm);
       console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
