@@ -199,6 +199,7 @@ export class TcDataComponent implements OnInit {
       appTC.CheckedDt = this.AppTcForm.value.TCList[i].CheckedDt;
       appTC.Notes = this.AppTcForm.value.TCList[i].Notes;
       appTC.IsAdditional = this.AppTcForm.value.TCList[i].IsAdditional;
+      appTC.IsExpDtMandatory = this.AppTcForm.value.TCList[i].IsExpDtMandatory;
 
       var prmsDt = new Date(appTC.PromisedDt);
       var prmsDtForm = this.AppTcForm.value.TCList[i].PromisedDt;

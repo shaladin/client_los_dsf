@@ -20,8 +20,14 @@ import { UcaddressModule } from '@adins/ucaddress';
 import { MatCheckboxModule } from '@angular/material';
 import { UcuploadModule } from '@adins/ucupload';
 import { UcapprovalhistModule } from '@adins/ucapprovalhist';
+import { SafePipe } from 'app/shared/pipe/safepipe';
+import { UcaddtotempModule } from '@adins/ucaddtotemp';
+import { UcthingstodoModule } from '@adins/ucthingstodo';
 
 @NgModule({
+    declarations:[
+        SafePipe
+    ],
     exports: [
         FormsModule,
         ReactiveFormsModule,
@@ -40,7 +46,10 @@ import { UcapprovalhistModule } from '@adins/ucapprovalhist';
         UcapprovebyModule,
         MatCheckboxModule,
         UcuploadModule,
-        UcapprovalhistModule
+        UcapprovalhistModule,
+        UcaddtotempModule,
+        UcthingstodoModule,
+        SafePipe
       //  UcapprovalModule
     ],
     imports: [
@@ -64,9 +73,9 @@ import { UcapprovalhistModule } from '@adins/ucapprovalhist';
         UcinputnumberModule,
         UcapprovebyModule,
         MatCheckboxModule,
-        UcuploadModule
-    ],
-    declarations: [
+        UcuploadModule,
+        UcaddtotempModule,
+        UcthingstodoModule
     ]
 })
 

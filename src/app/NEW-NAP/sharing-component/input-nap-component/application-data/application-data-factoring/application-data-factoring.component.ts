@@ -91,6 +91,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("APP DATA FCTRING")
     this.isInputLookupObj = false;
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
@@ -308,8 +309,14 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.SalesAppInfoForm.controls.MrInstTypeCode.disable();
     this.CheckInstType();
   }
-  CalculateNumOfInst() {
-    
+
+  CalculateNumOfInst(IsFirstBind: boolean, tenor: number) {
+    if(!IsFirstBind && tenor > this.mouCustFctrObj.TenorTo || tenor < this.mouCustFctrObj.TenorFrom){
+        this.toastr.warningMessage("Tenor must be between " + this.mouCustFctrObj.TenorFrom + " and " + this.mouCustFctrObj.TenorTo);
+        this.SalesAppInfoForm.controls.Tenor.invalid;
+        return;
+    }
+
     var numOfInst;
     if(this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple){
       numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
@@ -331,6 +338,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.MrWopCode.disable(); 
       this.SalesAppInfoForm.controls.RecourseType.disable();  
       this.SalesAppInfoForm.controls.IsDisclosed.disable();  
+      this.SalesAppInfoForm.controls.Tenor.enable();  
+      this.SalesAppInfoForm.controls.Tenor.setValue("");  
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) { 
       this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls.TopDays.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
@@ -340,9 +349,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.RecourseType.disable();  
       this.SalesAppInfoForm.controls.TopDays.disable();   
       this.SalesAppInfoForm.controls.IsDisclosed.disable();   
+      this.SalesAppInfoForm.controls.Tenor.disable();  
+      if(this.mode != "edit"){
+        this.SalesAppInfoForm.controls.Tenor.setValue(1);  
+      }
     }
-
-    this.SalesAppInfoForm.controls.TopDays.updateValueAndValidity();
+    this.SalesAppInfoForm.updateValueAndValidity();
   }
 
   getLookupEmployeeResponse(ev) {
@@ -468,7 +480,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.makeNewLookupCriteria();
       });
 
-      this.CalculateNumOfInst();
+      this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
   }
   SaveForm(): void {
     this.salesAppInfoObj = this.SalesAppInfoForm.getRawValue();
@@ -477,6 +489,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP"; 
+      this.salesAppInfoObj.Tenor = 1;
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
