@@ -1,4 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
+import { BackdoorComponent } from 'app/backdoor/backdoor.component';
 
 //Route for content layout with sidebar, navbar and footer.
 
@@ -50,5 +51,12 @@ export const Full_ROUTES: Routes = [
   {
     path: 'Lead',
     loadChildren: './lead/lead.module#LeadModule'
+  },
+  {
+    path: 'Backdoor',
+    component: BackdoorComponent,
+    data: {
+      title: 'Backdoor Component'
+    }
   }
 ];
