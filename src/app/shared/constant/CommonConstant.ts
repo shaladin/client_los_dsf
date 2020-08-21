@@ -119,7 +119,7 @@ export class CommonConstant {
     public static CFNEWCAR = "CFNEWCAR";
     public static CFNA = "CFNA";
     public static CENTER_GROUP_CODE = "CG";
-
+    public static ROS = "ROS";
     //OFFICE TYPE
     public static HeadOffice = "HO"; 
     public static CenterGroup = "Center Group"

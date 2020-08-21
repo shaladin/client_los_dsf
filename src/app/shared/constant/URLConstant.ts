@@ -494,7 +494,7 @@ export class URLConstant {
     public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
     public static GetListVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";
     public static GetListActiveVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListActiveVendorEmpByVendorIdAndPositionCodes";
-    public static GetVendorEmpSupervisorByVendorEmpId = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpSupervisorByVendorEmpId";
+    public static GetVendorEmpSupervisorByVendorEmpNo = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpSupervisorByVendorEmpNo";
     public static GetVendorEmpByVendorIdVendorEmpNo = environment.FoundationR3Url + "/VendorEmp/GetVendorEmpByVendorIdVendorEmpNo";
     public static GetListVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListVendorByCategoryCodeAndOfficeCode";
     public static GetListActiveVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListActiveVendorByCategoryCodeAndOfficeCode";

@@ -2,15 +2,15 @@
   <div class="card">
     <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
 
-    <mat-tab-group mat-align-tabs="center">
+    <mat-tab-group mat-align-tabs="center" *ngIf="BizTemplateCode != 'ROS'">
 
       <mat-tab label="Summary">
         <ng-template matTabContent>
-          <view-summary-app [AppId] = "appId">
+          <view-summary-app [AppId]="appId">
           </view-summary-app>
         </ng-template>
       </mat-tab>
-      
+
       <mat-tab label="Customer Data">
         <ng-template matTabContent>
           <app-view-app-cust-data-company *ngIf="CustTypeCode == 'COMPANY'" [appId]=appId>
@@ -33,26 +33,43 @@
       </mat-tab>
 
       <mat-tab label="Fraud Detection Data">
-        <ng-template matTabContent>        
+        <ng-template matTabContent>
           <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-fraud-detection-result>
         </ng-template>
       </mat-tab>
 
       <!-- <mat-tab label="Fraud Detection Data">
-        <ng-template matTabContent>        
-          <app-view-app-fraud-verification [AppId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-app-fraud-verification>
-        </ng-template>
-      </mat-tab> -->
+      <ng-template matTabContent>
+        <app-view-app-fraud-verification [AppId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-app-fraud-verification>
+      </ng-template>
+    </mat-tab> -->
 
       <mat-tab label="Deviation Data">
-        <ng-template matTabContent>        
+        <ng-template matTabContent>
           <app-tab-deviation [AppId]=appId (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
         </ng-template>
       </mat-tab>
 
       <mat-tab label="Customer History Data">
-        <ng-template matTabContent>        
+        <ng-template matTabContent>
           <app-cust-history [AppId]=appId></app-cust-history>
+        </ng-template>
+      </mat-tab>
+
+    </mat-tab-group>
+
+    <mat-tab-group mat-align-tabs="center" *ngIf="BizTemplateCode == 'ROS'">
+
+      <mat-tab label="Summary">
+        <ng-template matTabContent>
+          <view-summary-app-ros [AppId]="appId">
+          </view-summary-app-ros>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Deviation Data">
+        <ng-template matTabContent>
+          <app-tab-deviation [AppId]=appId (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
         </ng-template>
       </mat-tab>
 
@@ -62,7 +79,7 @@
       <div class="px-3">
 
         <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
-          #enjiForm="ngForm">
+              #enjiForm="ngForm">
           <div class="form-body">
 
             <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
@@ -87,7 +104,7 @@
             </div>
 
             <lib-ucSubsection *ngIf="!isReturnOn" [id]="'formRequestForAppvId'" [title]="'Request For Approval'"
-              [panel]="'formRequestForAppv'">
+                              [panel]="'formRequestForAppv'">
             </lib-ucSubsection>
             <div *ngIf="!isReturnOn" class="form-body" [id]="'formRequestForAppv'">
 
@@ -113,11 +130,12 @@
                 </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                    (change)="onChangeReason($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
+                          (change)="onChangeReason($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of DDLRecommendation" value="{{it.Key}}">
-                      {{it.Value}} </option>
+                      {{it.Value}}
+                    </option>
                   </select>
                   <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -127,8 +145,8 @@
                 </div>
                 <div class="col-md-4">
                   <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
-                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'"
-                    (onChange)="onChangeApprover($event)">
+                                   [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'"
+                                   (onChange)="onChangeApprover($event)">
                   </lib-ucapproveby>
                   <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -140,7 +158,7 @@
                 </div>
                 <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
                   <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
 
@@ -149,7 +167,7 @@
             </div>
 
             <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
-              [panel]="'formReturnCreditReview'">
+                              [panel]="'formReturnCreditReview'">
             </lib-ucSubsection>
             <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
               <div class="form-group row adins-required">
@@ -158,11 +176,12 @@
                 </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                    (change)="onChangeReason($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
+                          (change)="onChangeReason($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
-                      {{it.Value}} </option>
+                      {{it.Value}}
+                    </option>
                   </select>
                   <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -175,7 +194,7 @@
                 </div>
                 <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
                   <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
 
@@ -190,12 +209,12 @@
               <i *ngIf="isReturnOn" class="ft-x"> Cancel Return</i>
             </button>
             <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
+                    [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
               <i class="fa fa-arrow-left"></i> Cancel
             </button>
             <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square-o"></i> Check
-            </button> -->
+            <i class="fa fa-check-square-o"></i> Check
+          </button> -->
             <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
             </button>
