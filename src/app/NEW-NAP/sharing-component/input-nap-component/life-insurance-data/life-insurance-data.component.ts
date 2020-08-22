@@ -38,6 +38,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   minInsLength: number = 1;
   maxInsLength: number = 99;
   appLifeInsRuleObj: AppLifeInsRuleObj = new AppLifeInsRuleObj();
+  CustAdminFeeAmtPatched: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -88,6 +89,7 @@ export class LifeInsuranceDataComponent implements OnInit {
             NewCoverNotes: this.result.NewCoverNotes,
             CustAdminFeeAmt: this.result.CustAdminFeeAmt
           });
+          this.CustAdminFeeAmtPatched = true;
           this.LifeInsObj.InscoAdminFeeAmt = this.result.InscoAdminFeeAmt;
           this.checked();
         }
@@ -266,10 +268,11 @@ export class LifeInsuranceDataComponent implements OnInit {
         this.appLifeInsRuleObj = response;
         this.LifeInsObj.InscoAdminFeeAmt = this.appLifeInsRuleObj.ResultLifeInsFeeObj.AdminFeeFromInscoBranch;
 
-        this.LifeInsForm.patchValue({
-          CustAdminFeeAmt: this.appLifeInsRuleObj.ResultLifeInsFeeObj.AdminFeeToCust
-        });
-
+        if(!this.CustAdminFeeAmtPatched){
+          this.LifeInsForm.patchValue({
+            CustAdminFeeAmt: this.appLifeInsRuleObj.ResultLifeInsFeeObj.AdminFeeToCust
+          });
+        }
       }
     );
   }
