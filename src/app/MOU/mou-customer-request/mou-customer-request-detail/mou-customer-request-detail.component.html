@@ -1,74 +1,92 @@
-<lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'MOU Main Information'" [panel]="'MOUMainInfoSection'"></lib-ucSubsection>
-<div id="MOUMainInfoSection" class="col-md-12">
-  <div class="card">
-    <div class="card-body">
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" translate> Mou Request Detail </h4>
+          </div>
+        </div>
+      </div>
       <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="MOUMainInfoForm" #enjiForm="ngForm" novalidate
-          (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
-          <div class="form-body">
-            <div class="form-group row" *ngIf="pageType == 'edit' || pageType == 'return'">
-              <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>
-              <div class="col-md-9">
-                <a href="javascript:void(0);" (click)="OpenView('mou')">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
+        <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'MOU Main Information'" [panel]="'MOUMainInfoSection'">
+        </lib-ucSubsection>
+        <div id="MOUMainInfoSection" class="col-md-12">
+          <form class="form form-horizontal" [formGroup]="MOUMainInfoForm" #enjiForm="ngForm" novalidate
+            (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+            <div class="form-body">
+              <div class="form-group row" *ngIf="pageType == 'edit' || pageType == 'return'">
+                <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>
+                <div class="col-md-9">
+                  <a href="javascript:void(0);"
+                    (click)="OpenView('mou')">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" for="CustName" translate>Customer Name</label>
+              <!-- <div class="form-group row">
+                <label class="col-md-3 adInsLabel" for="CustName" translate>Customer Name</label>
               <div class="col-md-4" *ngIf="pageType == 'add'">
                 <lib-uclookupgeneric [lookupInput]="inputLookupCust" [parentForm]='MOUMainInfoForm' [enjiForm]='enjiForm' [identifier]="'CustLookup'"
                     (lookup)="getCustLookupResponse($event)"></lib-uclookupgeneric>
+              </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel adins-required-label" for="StartDtEndDt" translate>Start Date -
+                  End Date</label>
+                <div class="col-md-3">
+                  <input type="date" class="form-control adInsInput" formControlName="StartDt"
+                    [max]="businessDt | date: 'yyyy-MM-dd'"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.StartDt.invalid }"
+                    onkeypress="return false;" />
+                  <lib-uc-show-errors [control]="MOUMainInfoForm.controls.StartDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-1" style="text-align: center;">
+                  <i class="fas fa-slash" style="transform: rotate(142.5deg); margin-top: 12%;"></i>
+                </div>
+                <div class="col-md-3">
+                  <input type="date" class="form-control adInsInput" formControlName="EndDt"
+                    [min]="this.MOUMainInfoForm.controls.StartDt.value | date: 'yyyy-MM-dd'"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }"
+                    onkeypress="return false;" />
+                  <lib-uc-show-errors [control]="MOUMainInfoForm.controls.EndDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
               </div>
-              <div class="col-md-9" *ngIf="pageType == 'edit' || pageType == 'return'"> 
-                <a href="javascript:void(0);" (click)="OpenView('cust')">{{MOUMainInfoForm.controls.CustName.value}}</a>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="MouCustDt" translate>Mou Date</label>
-              <div class="col-md-4">
-                <input type="date" class="form-control adInsInput" formControlName="MouCustDt" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.MouCustDt.invalid }" [max]="businessDtMin | date: 'yyyy-MM-dd'" onkeypress="return false;" />
-                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.MouCustDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="StartDtEndDt" translate>Start Date - End Date</label>
-              <div class="col-md-3">
-                <input type="date" class="form-control adInsInput" formControlName="StartDt" [max]="businessDtMin | date: 'yyyy-MM-dd'"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.StartDt.invalid }" onkeypress="return false;" />
-                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.StartDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-              <div class="col-md-1" style="text-align: center;">
-                <i class="fas fa-slash" style="transform: rotate(142.5deg); margin-top: 12%;"></i>
-              </div>
-              <div class="col-md-3">
-                <input type="date" class="form-control adInsInput" formControlName="EndDt" [min]="businessDtMin | date: 'yyyy-MM-dd'"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }" onkeypress="return false;" />
-                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.EndDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel" for="RefNo" translate>Reference No.</label>
-              <div class="col-md-4">
-                <input type="text" class="form-control adInsInput" formControlName="RefNo" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.RefNo.invalid }" />
-                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.RefNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" for="RefNo" translate>Reference No.</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control adInsInput" formControlName="RefNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.RefNo.invalid }" />
+                  <lib-uc-show-errors [control]="MOUMainInfoForm.controls.RefNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 adInsLabel" for="IsRevolving" translate>Revolving</label>
               <div class="col-md-4">
-                <input type="checkbox" formControlName="IsRevolving" />
+                <input type="checkbox" class="border-primary" formControlName="IsRevolving">
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="MOUMainInfoForm.controls.IsRevolving.value">
+              <label class="col-md-3 adInsLabel" for="MrRevolvingTypeCode" translate>Revolving Type</label>
+              <div class="col-md-2">
+                <select type="text" class="form-control adInsInput" formControlName="MrRevolvingTypeCode"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.MrRevolvingTypeCode.invalid }">
+                  <option *ngFor="let item of RevolvingTypeList" [value]="item.Key">{{item.Value}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="PlafondAmt" translate>Plafond Amount</label>
+              <label class="col-md-3 adInsLabel adins-required-label" for="PlafondAmt" translate>Plafond
+                Amount</label>
               <div class="col-md-4">
-                <input type="" currencyMask class="form-control adInsInput"  min="0"  formControlName="PlafondAmt" 
+                <input type="" currencyMask class="form-control adInsInput" min="0" formControlName="PlafondAmt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.PlafondAmt.invalid }" />
-                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.PlafondAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
+                <lib-uc-show-errors [control]="MOUMainInfoForm.controls.PlafondAmt" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
                 <!-- <lib-ucinputnumber   [parentForm]="MOUMainInfoForm" [identifier]="'PlafondAmt'"
-                [enjiForm]="enjiForm" [isRequired]="false"
-                ucNumber="MOUMainInfoForm.controls.PlafondAmt.value"></lib-ucinputnumber>  -->
+              [enjiForm]="enjiForm" [isRequired]="false"
+              ucNumber="MOUMainInfoForm.controls.PlafondAmt.value"></lib-ucinputnumber>  -->
               </div>
             </div>
             <div class="form-group row">
@@ -83,16 +101,16 @@
                 {{MOUMainInfoForm.controls.MrMouTypeCode.value}}
               </div>
             </div>
-          </div>
-          <div class="form-actions right">
-            <button type="button" (click)="Back()" class="btn btn-raised btn-warning mr-1">
-              <i class="ft-x"></i> Cancel
-            </button>
-            <button type="submit" class="btn btn-raised btn-primary">
-              <i class=" fa fa-arrow-circle-right"></i> Save
-            </button>
-          </div>
-        </form>
+            <div class="form-actions right">
+              <button type="button" (click)="Back()" class="btn btn-raised btn-warning mr-1">
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class=" fa fa-arrow-circle-right"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

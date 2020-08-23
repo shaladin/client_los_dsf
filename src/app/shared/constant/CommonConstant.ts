@@ -122,6 +122,7 @@ export class CommonConstant {
 
     //OFFICE TYPE
     public static HeadOffice = "HO"; 
+    public static HeadOfficeName = "Head Office"; 
     public static CenterGroup = "Center Group"
 
 
@@ -474,4 +475,13 @@ export class CommonConstant {
 
     //Status Code
     public static STATUS_CODE_USER_LOCKED = "002";
+
+    //Paid By
+    public static PAID_BY_CUST = "CUST";
+    public static PAID_BY_CUST_FCTR = "CUST_FCTR";
+    
+    //Mou Revolving Type
+    public static MOU_REVOLVING_TYPE = "MOU_REVOLVING_TYPE";
+    public static MRT_ON_PAYMENT = "ON_PAYMENT";
+    public static MRT_ON_FIN_CON = "ON_FIN_CON";
 }

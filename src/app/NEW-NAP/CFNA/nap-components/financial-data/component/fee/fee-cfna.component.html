@@ -104,7 +104,7 @@
                   <div class="col-md-3 margin-b-5">
                     <input class="form-control" formControlName="FeeCapitalizeAmt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.FeeCapitalizeAmt.invalid}"
-                      [readonly]="!ParentForm.controls[identifier].value[i].IsCptlz" currencyMask>
+                      [readonly]="!ParentForm.controls[identifier].value[i].IsCptlz" (focusout)="FeeCapitalizeAmt_OnChange()" currencyMask>
                     <lib-uc-show-errors [control]="appfees.controls.FeeCapitalizeAmt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>

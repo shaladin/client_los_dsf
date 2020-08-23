@@ -84,7 +84,7 @@ export class LifeInsuranceDataComponent implements OnInit {
             IsChecked: true,
             LifeInscoBranchName: this.result.LifeInscoBranchCode,
             MrLifeInsPaidMethodCode: this.result.MrLifeInsPaidMethodCode,
-            PaidInAdvPrcnt: 100-this.result.PaidInAdvPrcnt,
+            PaidInAdvPrcnt: 100 - this.result.PaidInAdvPrcnt,
             NewCoverNotes: this.result.NewCoverNotes,
             CustAdminFeeAmt: this.result.CustAdminFeeAmt
           });
@@ -123,7 +123,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
-      } 
+      }
     );
     await this.http.post<Array<object>>(URLConstant.GetListActiveVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
       (response) => {
@@ -142,8 +142,8 @@ export class LifeInsuranceDataComponent implements OnInit {
         this.ListObj = new Array<LifeInsDObj>();
         this.ListObj = response["ListAppLifeInsD"];
 
-        for(let i = 0; i < this.ListObj.length; i++){
-          if(this.ListObj[i].IsChecked == true){
+        for (let i = 0; i < this.ListObj.length; i++) {
+          if (this.ListObj[i].IsChecked == true) {
             var LifeInsD = new LifeInsDObj();
             LifeInsD.InsuredName = this.ListObj[i].InsuredName;
             LifeInsD.Age = this.ListObj[i].Age;
@@ -206,25 +206,25 @@ export class LifeInsuranceDataComponent implements OnInit {
       this.LifeInsObj.AppId = this.AppId;
 
       //pindahin subject customer ke seq no paling pertama
-      if(this.LifeInsObj.ListAppLifeInsD.length > 0){
+      if (this.LifeInsObj.ListAppLifeInsD.length > 0) {
         var custIndex = this.LifeInsObj.ListAppLifeInsD.findIndex(x => x.MrCustTypeCode == CommonConstant.LifeInsCustTypeCustomer);
 
-        if(custIndex != -1){
+        if (custIndex != -1) {
           this.LifeInsObj.ListAppLifeInsD.splice(0, 0, this.LifeInsObj.ListAppLifeInsD.splice(custIndex, 1)[0]);
         }
       }
 
-      for(let i = 0; i < this.LifeInsObj.ListAppLifeInsD.length; i++){
+      for (let i = 0; i < this.LifeInsObj.ListAppLifeInsD.length; i++) {
         this.LifeInsObj.ListAppLifeInsD[i].SeqNo = i + 1;
 
         var sumInsRateObj = this.appLifeInsRuleObj.SumInsRateObjs.find(x => this.LifeInsObj.ListAppLifeInsD[i].Age >= x.MinAge && this.LifeInsObj.ListAppLifeInsD[i].Age <= x.MaxAge);
-      
-        if(sumInsRateObj != undefined){
+
+        if (sumInsRateObj != undefined) {
           this.LifeInsObj.ListAppLifeInsD[i].BaseRate = sumInsRateObj.BaseRate;
           this.LifeInsObj.ListAppLifeInsD[i].CustRate = sumInsRateObj.CustRate;
           this.LifeInsObj.ListAppLifeInsD[i].InscoRate = sumInsRateObj.InscoRate;
           this.LifeInsObj.ListAppLifeInsD[i].SumInsured = sumInsRateObj.SumInsured;
-        }else{
+        } else {
           this.LifeInsObj.ListAppLifeInsD[i].BaseRate = 0;
           this.LifeInsObj.ListAppLifeInsD[i].CustRate = 0;
           this.LifeInsObj.ListAppLifeInsD[i].InscoRate = 0;
@@ -232,17 +232,17 @@ export class LifeInsuranceDataComponent implements OnInit {
         }
         var discRateObj = this.appLifeInsRuleObj.DiscRateObjs.find(x => this.LifeInsObj.ListAppLifeInsD[i].SeqNo == x.Person);
 
-        if(discRateObj != undefined){
+        if (discRateObj != undefined) {
           this.LifeInsObj.ListAppLifeInsD[i].DiscRate = discRateObj.DiscountRateToCust;
           this.LifeInsObj.ListAppLifeInsD[i].DiscRateToInsco = discRateObj.DiscountRateToInsco;
-        }else{
+        } else {
           this.LifeInsObj.ListAppLifeInsD[i].DiscRate = 0;
           this.LifeInsObj.ListAppLifeInsD[i].DiscRateToInsco = 0;
         }
 
         var validationObj = this.appLifeInsRuleObj.ValidationObjs.find(x => this.LifeInsObj.ListAppLifeInsD[i].Age >= x.AgeMin && this.LifeInsObj.ListAppLifeInsD[i].Age <= x.AgeMax);
 
-        if(validationObj != undefined){
+        if (validationObj != undefined) {
           this.toastr.warningMessage(validationObj.Validation);
           return false;
         }
@@ -252,7 +252,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   }
 
-   InscoBranchChanged(ev) {
+  InscoBranchChanged(ev) {
     this.GetRule(ev.target.value);
   }
 
@@ -263,13 +263,13 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
     this.http.post<AppLifeInsRuleObj>(URLConstant.GetRuleRateV2, object).subscribe(
       response => {
-        this.appLifeInsRuleObj = response;   
+        this.appLifeInsRuleObj = response;
         this.LifeInsObj.InscoAdminFeeAmt = this.appLifeInsRuleObj.ResultLifeInsFeeObj.AdminFeeFromInscoBranch;
 
         this.LifeInsForm.patchValue({
           CustAdminFeeAmt: this.appLifeInsRuleObj.ResultLifeInsFeeObj.AdminFeeToCust
         });
-        
+
       }
     );
   }
@@ -285,10 +285,23 @@ export class LifeInsuranceDataComponent implements OnInit {
       if (this.LifeInsObj.ListAppLifeInsD[i].MrCustTypeCode == "GUARANTOR") {
         this.LifeInsObj.IsGuarantorCover = true;
       }
-    }
+    } 
   }
 
   checkSubject() {
+    let res = [];
+    for (let i = 0; i < this.LifeInsObj.ListAppLifeInsD.length; i++) {
+
+      var existItem = res.find(x => x == this.LifeInsObj.ListAppLifeInsD[i].InsuredName)
+
+      if (existItem) {
+        this.toastr.warningMessage(ExceptionConstant.CANNOT_INSURE_SAME_PERSON);
+        return false;
+      } else {
+        res.push(this.LifeInsObj.ListAppLifeInsD[i].InsuredName);
+      }
+
+    }
     if (this.LifeInsObj.ListAppLifeInsD.length == 0) {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_SUBJECT);
       return false;
@@ -297,8 +310,8 @@ export class LifeInsuranceDataComponent implements OnInit {
     }
   }
 
-  async SaveForm() {
-    if(this.setValue() == false) return; // ada validasi dr rule
+  async SaveForm() { 
+    if (this.setValue() == false) return; // ada validasi dr rule
     this.isCoverCheck();
     if (this.IsChecked) {
       if (this.checkSubject() == false) return;
@@ -357,7 +370,7 @@ export class LifeInsuranceDataComponent implements OnInit {
 
   PremiMethodChanged(event) {
     if (event.target.value == CommonConstant.LifeInsPayMethodFullPaidInAdvance
-      ) {
+    ) {
       this.LifeInsForm.patchValue({
         PaidInAdvPrcnt: 0
 

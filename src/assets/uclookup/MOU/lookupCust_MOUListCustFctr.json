@@ -36,7 +36,7 @@
         }
     ],
     "querystring": {
-        "select": "SELECT A.CUST_NO AS custNo, A.CUST_NAME AS custName, A.MR_CUST_TYPE_CODE AS mrCustTypeCode, B.DESCR AS custTypeView, A.CUST_ID AS custId",
+        "select": "SELECT A.CUST_NO AS CustNo, A.CUST_NAME AS CustName, A.MR_CUST_TYPE_CODE AS MrCustTypeCode, B.DESCR AS CustTypeView, A.CUST_ID AS CustId",
         "from": "FROM CUST AS A WITH(NOLOCK) INNER JOIN REF_MASTER AS B WITH(NOLOCK) ON A.MR_CUST_TYPE_CODE = B.MASTER_CODE AND B.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
     },
     "headerList": [
@@ -68,17 +68,17 @@
         {
             "type": "text",
             "position": "left",
-            "property": "custNo"
+            "property": "CustNo"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "custName"
+            "property": "CustName"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "custTypeView"
+            "property": "CustTypeView"
         },
         {
             "type": "action",
@@ -86,11 +86,11 @@
             "action": [
                 {
                     "type": "select",
-                    "property": "custId"
+                    "property": "CustNo"
                 }
             ]
         }
     ],
-    "propertyId": "custId",
-    "propertyName": "custName"
+    "propertyId": "CustNo",
+    "propertyName": "CustNo"
 }

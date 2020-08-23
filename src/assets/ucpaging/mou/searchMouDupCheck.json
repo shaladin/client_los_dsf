@@ -1,0 +1,75 @@
+{
+    "title": "Mou Duplicate Checking Paging",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou Cust No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Mou Cust No",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CUST_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT MR_CUST_TYPE_CODE as CustTypeCode, MOU_CUST_NO AS MouCustNo, CUST_NAME AS CustName , IS_EXISTING_CUST AS IsExistingCust, MOU_CUST_ID AS MouCustId, APPLICANT_NO AS ApplicantNo",
+        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
+        "where": "WHERE IS_MOU_CUST_CHECKED = 0 AND APPLICANT_NO IS NOT NULL"
+    },
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "target": "_blank",
+            "path": "/",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "select"
+                }
+              ]
+        }
+    ]
+}

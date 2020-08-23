@@ -65,6 +65,8 @@ export class ExceptionConstant {
     public static SELECT_ONE_DATA_ON_LEAD = "Please select at least one Available Lead";
     public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';
     public static NO_LEAD_DATA_AVAILABLE = 'No Lead Available to Cancel';
+    public static CANNOT_INSURE_SAME_PERSON = "Cannot insure same person";
+
 
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";
@@ -80,3 +82,4 @@ export class ExceptionConstant {
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
     public static INCORRECT_PASSWORD = "Password Mismatch";
 }
+

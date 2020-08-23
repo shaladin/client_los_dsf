@@ -135,7 +135,7 @@
                         <label class="col-md-3 adins-required-label" translate>Tenor</label>
                         <div class="col-md-9">
                           <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor"
-                            (change)="CalculateNumOfInst()"
+                            (change)="CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value)"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.Tenor.invalid }">
                           <lib-uc-show-errors [control]="SalesAppInfoForm.controls.Tenor" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>

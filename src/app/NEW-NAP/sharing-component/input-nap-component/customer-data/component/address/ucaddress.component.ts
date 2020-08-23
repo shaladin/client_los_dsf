@@ -6,6 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-ucaddress',
@@ -94,7 +95,7 @@ export class CustUcaddressComponent implements OnInit {
     
     this.inputField.inputLookupObj.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputField.inputLookupObj.urlEnviPaging = "http://r3app-server.ad-ins.com/FOUNDATION_R3";
+    this.inputField.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputField.inputLookupObj.pagingJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.genericJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.isRequired = this.isRequired;

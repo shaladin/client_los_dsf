@@ -1,0 +1,506 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <!-- Main Info -->
+          <div class="form-body">
+            <lib-ucSubsection [id]="'custMainId'" [title]="'Customer Main Info'" [panel]="'custMain'">
+            </lib-ucSubsection>
+            <div id="custMain">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer No</label>
+                <a href="javascript:void(0);" (click)="OpenView('cust', MouCustObj.CustNo)" class="label-control col-md-3" *ngIf="MouCustObj?.CustNo != ''">{{MouCustObj.CustNo}}</a>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustNo == ''">- </label>
+                <label class="col-md-3 adInsLabel">Applicant No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.ApplicantNo != ''">{{MouCustObj.ApplicantNo}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustName != ''">{{MouCustObj?.CustName}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustName == ''">- </label>
+                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.TaxIdNo != ''">{{MouCustObj?.TaxIdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.TaxIdNo == ''">- </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">ID No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.IdNo != ''">{{MouCustObj?.IdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.IdNo == ''">- </label>
+                <label class="col-md-3 adInsLabel">Gender</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustPersonalObj?.MrGenderCode != ''">{{CustPersonalObj?.MrGenderCode}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustPersonalObj?.MrGenderCode == ''">- </label>
+              </div>
+              <div class="form-group row"> <label class="col-md-3 adInsLabel">Birth Place / Date</label>
+                <label class="col-md-3 adInsLabel">{{CustPersonalObj?.BirthPlace}} / {{CustPersonalObj?.BirthDt | date: 'dd-MM-yyyy'}} </label>
+              </div> 
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'appGuaId'" [title]="'Applicant As Guarantor'" [panel]="'appGua'">
+            </lib-ucSubsection>
+            <div id="appGua">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllGuarantor" (change)="SelectAllGuarantor($event.target.checked)" id="checkAll"
+                             name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='appNo' translate>Application No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListDuplicateAppGuarantor?.length == 0">
+                    <td align="center" colspan="9">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListDuplicateAppGuarantor; let i = index">
+                    <td>
+                      <div *ngIf="ListSelectedIdAppGuarantor?.indexOf(item.AppGuarantorId) >- 1">
+                        <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
+                               (change)="Checked('AppGuarantor', item.AppGuarantorId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="ListSelectedIdAppGuarantor?.indexOf(item.AppGuarantorId) < 0">
+                        <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
+                               (change)="Checked('AppGuarantor', item.AppGuarantorId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCodeDesc}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'appSpouseId'" [title]="'Applicant As Spouse'" [panel]="'appSpouse'">
+            </lib-ucSubsection>
+            <div id="appSpouse">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllSpouse" (change)="SelectAllSpouse($event.target.checked)" id="checkAll"
+                             name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='appNo' translate>Application No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListDuplicateAppSpouse?.length == 0">
+                    <td align="center" colspan="8">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListDuplicateAppSpouse; let i = index">
+                    <td>
+                      <div *ngIf="ListSelectedIdAppSpouse?.indexOf(item.AppCustPersonalConstactPersonId) >- 1">
+                        <input type="checkbox" id="checkSameSpouse" name="itemSameSpouse"
+                               (change)="Checked('AppSpouse', item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="ListSelectedIdAppSpouse?.indexOf(item.AppCustPersonalConstactPersonId) < 0">
+                        <input type="checkbox" id="checkDiffSpouse" name="itemDiffSpouse"
+                               (change)="Checked('AppSpouse', item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.IdType}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'appShareId'" [title]="'Applicant As Management / Shareholder'" [panel]="'appShare'">
+            </lib-ucSubsection>
+            <div id="appShare">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllShareholder" (change)="SelectAllShareholder($event.target.checked)" id="checkAll"
+                             name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='appNo' translate>Application No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListDuplicateAppShareholder?.length == 0">
+                    <td align="center" colspan="9">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListDuplicateAppShareholder;let i = index">
+                    <td>
+                      <div *ngIf="ListSelectedIdAppShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
+                        <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
+                               (change)="Checked('AppShareholder', item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="ListSelectedIdAppShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) < 0">
+                        <input type="checkbox" id="checkDiffShareholder" name="itemDiffShareholder"
+                               (change)="Checked('AppShareholder', item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.IdType}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'MouGuaId'" [title]="'Applicant As Mou Guarantor'" [panel]="'MouGua'">
+            </lib-ucSubsection>
+            <div id="MouGua">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllMouGuarantor" (change)="SelectAllMouGuarantor($event.target.checked)" id="checkAll"
+                             name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListDuplicateMouGuarantor?.length == 0">
+                    <td align="center" colspan="9">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListDuplicateMouGuarantor; let i = index">
+                    <td>
+                      <div *ngIf="ListSelectedIdMouGuarantor?.indexOf(item.MouGuarantorId) >- 1">
+                        <input type="checkbox" id="checkSameMouGuarantor" name="itemSameMouGuarantor"
+                               (change)="Checked('MouGuarantor',item.MouGuarantorId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="ListSelectedIdMouGuarantor?.indexOf(item.MouGuarantorId) < 0">
+                        <input type="checkbox" id="checkDiffMouGuarantor" name="itemDiffMouGuarantor"
+                               (change)="Checked('MouGuarantor',item.MouGuarantorId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCodeDesc}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'MouSpouseId'" [title]="'Applicant As Mou Spouse'" [panel]="'MouSpouse'">
+            </lib-ucSubsection>
+            <div id="MouSpouse">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllMouSpouse" (change)="SelectAllMouSpouse($event.target.checked)" id="checkAll"
+                             name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListDuplicateMouSpouse?.length == 0">
+                    <td align="center" colspan="8">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListDuplicateMouSpouse; let i = index">
+                    <td>
+                      <div *ngIf="ListSelectedIdMouSpouse?.indexOf(item.MouCustPersonalConstactPersonId) >- 1">
+                        <input type="checkbox" id="checkSameMouSpouse" name="itemSameMouSpouse"
+                               (change)="Checked('MouSpouse',item.MouCustPersonalContactPersonId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="ListSelectedIdMouSpouse?.indexOf(item.MouCustPersonalConstactPersonId) < 0">
+                        <input type="checkbox" id="checkDiffMouSpouse" name="itemDiffMouSpouse"
+                               (change)="Checked('MouSpouse',item.MouCustPersonalContactPersonId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.IdType}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'MouShareId'" [title]="'Applicant As Mou Management / Shareholder'" [panel]="'MouShare'">
+            </lib-ucSubsection>
+            <div id="MouShare">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllMouShareholder" (change)="SelectAllMouShareholder($event.target.checked)" id="checkAll"
+                             name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th><span class="thead-header" (click)="searchSort($event)" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" (click)="searchSort($event)" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListDuplicateMouShareholder?.length == 0">
+                    <td align="center" colspan="9">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListDuplicateMouShareholder;let i = index">
+                    <td>
+                      <div *ngIf="ListSelectedIdMouShareholder?.indexOf(item.MouCustCompanyMgmntShrholderId) >- 1">
+                        <input type="checkbox" id="checkSameMouShareholder" name="itemSameMouShareholder"
+                               (change)="Checked('MouShareholder', item.MouCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="ListSelectedIdMouShareholder?.indexOf(item.MouCustCompanyMgmntShrholderId) < 0">
+                        <input type="checkbox" id="checkDiffMouShareholder" name="itemDiffMouShareholder"
+                               (change)="Checked('MouShareholder', item.MouCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.IdType}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

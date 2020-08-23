@@ -28,11 +28,11 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Customer Factoring </label>
                 <div class="col-md-9">
-                  <lib-uclookupgeneric *ngIf="AppFactoringObj.IsCustListed && !IsDisableCustFctr"
+                  <lib-uclookupgeneric *ngIf="!IsDisableCustFctr"
                     [lookupInput]="MouCustLookupObj" [parentForm]="InvoiceForm" [enjiForm]="enjiForm"
                     [identifier]="'LookupCustomerFactoringName'" (lookup)=GetLookupMouCust($event)>
                   </lib-uclookupgeneric>
-                  <span *ngIf="!AppFactoringObj.IsCustListed || IsDisableCustFctr">
+                  <span *ngIf="IsDisableCustFctr">
                     <input type="text" class="form-control" formControlName="CustomerFactoringName"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CustomerFactoringName.invalid }">
                     <lib-uc-show-errors [control]="InvoiceForm.controls.CustomerFactoringName"

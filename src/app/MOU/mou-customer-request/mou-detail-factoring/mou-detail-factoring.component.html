@@ -5,7 +5,7 @@
     <div class="form-body">
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="CurrCode" translate>Currency</label>
-        <div class="col-md-9">
+        <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="CurrCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.CurrCode.invalid }">
             <option *ngFor="let item of currencyList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -15,7 +15,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="MrRecourseTypeCode" translate>Recourse Type</label>
-        <div class="col-md-9">
+        <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrRecourseTypeCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrRecourseTypeCode.invalid }">
             <option *ngFor="let item of recourseTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -23,14 +23,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="IsDisclosed" translate>Is Disclosed</label>
-        <div class="col-md-9">
-          <input type="checkbox" formControlName="IsDisclosed" />
-        </div>
-      </div>
-      <div class="form-group row">
         <label class="col-md-3 adInsLabel adins-required-label" for="WopCode" translate>WoP</label>
-        <div class="col-md-9">
+        <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="WopCode" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.WopCode.invalid }">
             <option *ngFor="let item of wopList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -39,48 +33,53 @@
       </div>
       <div class="form-group row">
         <label class="col-md-3 adInsLabel adins-required-label" for="MrPaidByCode" translate>Paid By</label>
-        <div class="col-md-9">
-          <select class="form-control adInsInput" formControlName="MrPaidByCode" 
+        <div class="col-md-4">
+          <select class="form-control adInsInput" formControlName="MrPaidByCode" (change)="CheckPaidBy($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrPaidByCode.invalid }">
             <option *ngFor="let item of paidByList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="MrInstTypeCode_SingleInstCalcMthd" translate>Installment Type / Calculate Method</label>
-        <div class="col-md-2">
-          <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode" (change)="instTypeHandler()"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
-            <option *ngFor="let item of instTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
-          </select>
-        </div>
-        <div class="col-md-1" style="text-align: center; padding: 0;">
-          <i class="fas fa-slash" style="transform: rotate(80deg); margin-top: 12%;"></i>
-        </div>
-        <div class="col-md-2">
-          <select type="text" class="form-control adInsInput" formControlName="SingleInstCalcMthd" 
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
-            <option *ngFor="let item of singleInstCalcMthdList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
-          </select>
+        <label class="col-md-3 adInsLabel" for="IsDisclosed" translate>Is Disclosed</label>
+        <div class="col-md-4">
+          <input type="checkbox" formControlName="IsDisclosed" />
         </div>
       </div>
       <div class="form-group row">
+        <label class="col-md-3 adInsLabel" for="MrInstTypeCode_SingleInstCalcMthd" translate>Installment Type / Calculate Method</label>
+        <div class="col-md-6">
+          <div class="col-md-2">
+            <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode" (change)="instTypeHandler()"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
+              <option *ngFor="let item of instTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            </select>
+          </div>
+          <div *ngIf="IsSingleIns"  class="col-md-2" style="border-left: 1px solid grey">
+            <select type="text" class="form-control adInsInput" formControlName="SingleInstCalcMthd" 
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
+              <option *ngFor="let item of singleInstCalcMthdList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="IsSingleIns" class="form-group row">
         <label class="col-md-3 adInsLabel" for="TopDays" translate>Term of Payment (in Days)</label>
-        <div class="col-md-9">
+        <div class="col-md-3">
           <input type="number" class="form-control adInsInput" formControlName="TopDays" min="0"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TopDays.invalid }" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.TopDays" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
-      <div class="form-group row">
+      <div *ngIf="!IsSingleIns" class="form-group row">
         <label class="col-md-3 adInsLabel" for="TenorFromTo" translate>Tenor From - Tenor To</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorFrom" 
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TenorFrom.invalid }" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.TenorFrom" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
-        <div class="col-md-1" style="padding: 0; text-align: center;">
-          <i class="fas fa-slash" style="transform: rotate(142.5deg); margin-top: 12%;"></i>
+        <div style="text-align: center;">
+          <i class="fas fa-slash" style="transform: rotate(142.5deg); margin-top: 50%;"></i>
         </div>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorTo" 
@@ -93,16 +92,16 @@
       </div>
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="PayFreqCode" translate>Payment Frequency</label>
-        <div class="col-md-9">
+        <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="PayFreqCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.PayFreqCode.invalid }">
             <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.PayFreqCode">{{item.Descr}}</option>
           </select>
         </div>
       </div>
-      <div class="form-group row">
+      <div *ngIf="!IsSingleIns" class="form-group row">
         <label class="col-md-3 adInsLabel" for="MrInstSchmCode" translate>Installment Scheme</label>
-        <div class="col-md-9">
+        <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrInstSchmCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstSchmCode.invalid }">
             <option *ngFor="let item of instSchmList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -129,7 +128,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="Notes" translate>Notes</label>
-        <div class="col-md-9">
+        <div class="col-md-3">
           <textarea class="form-control adInsInput" formControlName="Notes"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.Notes.invalid }">
           </textarea>
@@ -137,7 +136,7 @@
       </div>
     </div> 
 </div>
-<app-mou-cust-listed-cust-fctr *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr"></app-mou-cust-listed-cust-fctr>
+<app-mou-cust-listed-cust-fctr *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr" (OutputData)="GetDataListCustFctr($event)"></app-mou-cust-listed-cust-fctr>
 <div class="col-md-12" style="padding: 0; text-align: right;">
   <div class="form-actions right">
     <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>

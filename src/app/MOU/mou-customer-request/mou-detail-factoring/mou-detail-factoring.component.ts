@@ -9,6 +9,7 @@ import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
 
 @Component({
   selector: 'app-mou-detail-factoring',
@@ -31,6 +32,7 @@ export class MouDetailFactoringComponent implements OnInit {
   isTenorInvalid: boolean;
   tenorInvalidMsg: string;
   private mode: string = "add";
+  IsSingleIns: boolean = true;
 
   MouDetailFactoringForm = this.fb.group({
     MouCustFctrId: [0, [Validators.required]],
@@ -124,6 +126,7 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
         this.instTypeHandler();
         this.shouldComponentLoad = true;
       });
@@ -132,6 +135,7 @@ export class MouDetailFactoringComponent implements OnInit {
   instTypeHandler(){
     var value = this.MouDetailFactoringForm.controls["MrInstTypeCode"].value;
     if(value == CommonConstant.SINGLE_INST_TYPE){
+      this.IsSingleIns = true;
       this.MouDetailFactoringForm.patchValue({
         PayFreqCode: CommonConstant.PAY_FREQ_MONTHLY,
         MrInstSchmCode: CommonConstant.INST_SCHM_REGULAR_FIXED
@@ -144,6 +148,7 @@ export class MouDetailFactoringComponent implements OnInit {
       });
     }
     else if(value == CommonConstant.MULTIPLE_INST_TYPE){
+      this.IsSingleIns = false;
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].disable();
@@ -165,21 +170,25 @@ export class MouDetailFactoringComponent implements OnInit {
       }
     }
 
-    if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
-      this.isTenorInvalid = true;
-      this.tenorInvalidMsg = "Invalid Tenor Range";
-      return false;
-    }
-    else{
-      if(formData.TenorFrom == ""){
-        formData.TenorFrom = 0;
+    if(this.IsSingleIns){
+    }else{
+      if((formData.TenorFrom != "" || formData.TenorTo != "") && formData.TenorFrom > formData.TenorTo){
+        this.isTenorInvalid = true;
+        this.tenorInvalidMsg = "Invalid Tenor Range";
+        return false;
       }
-      if(formData.TenorTo == ""){
-        formData.TenorTo = 0;
+      else{
+        if(formData.TenorFrom == ""){
+          formData.TenorFrom = 0;
+        }
+        if(formData.TenorTo == ""){
+          formData.TenorTo = 0;
+        }
+        this.isTenorInvalid = false;
+        this.tenorInvalidMsg = "";
       }
-      this.isTenorInvalid = false;
-      this.tenorInvalidMsg = "";
     }
+    
 
     if(this.mode == "add"){
       url = URLConstant.AddMouCustFctr;
@@ -192,10 +201,33 @@ export class MouDetailFactoringComponent implements OnInit {
       (response) => {
         this.ResponseMouCustFactoring.emit(response);
       });
+
+    if (this.listedCusts.length > 0 && formData.IsListedCust)
+      this.httpClient.post(URLConstant.AddorEditListMouCustListedCustFctr, { ListMouCustListedCustFctrs: this.listedCusts }).subscribe(
+        (response) => {
+          console.log(response);
+        });
   }
 
   // back(){
   //   this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
   // }
 
+  CheckPaidBy(value: string){
+    if(value == CommonConstant.PAID_BY_CUST_FCTR){
+      this.MouDetailFactoringForm.controls.IsDisclosed.disable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
+    }else if(value == CommonConstant.PAID_BY_CUST){
+      this.MouDetailFactoringForm.controls.IsDisclosed.enable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
+    }
+    this.MouDetailFactoringForm.updateValueAndValidity();
+  }
+  
+  listedCusts: Array<MouCustListedCustFctrObj> = new Array<MouCustListedCustFctrObj>();
+  GetDataListCustFctr(ev) {
+    // console.log(ev);
+    this.listedCusts = ev;
+    console.log(this.listedCusts);
+  }
 }
