@@ -229,7 +229,8 @@
                       </div>
                     </div>
                   </div>
-                  <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="ContactInfoPersonalForm" [enjiForm]="enjiForm" [identifier]="'contactPersonAddr'" [isRequired]="false" [default]="contactPersonAddrObj" [inputField]="inputFieldContactPersonObj" [showAllPhn]="false"></lib-ucaddress>
+                  <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForCP" [enjiForm]="enjiForm" [identifier]="'contactPersonAddr'" [UCAddrForm]="ContactInfoPersonalForm" ></lib-ucaddress>
+                  <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="ContactInfoPersonalForm" [enjiForm]="enjiForm" [identifier]="'contactPersonAddr'" [isRequired]="false" [default]="contactPersonAddrObj" [inputField]="inputFieldContactPersonObj" [showAllPhn]="false"></lib-ucaddress> -->
                 </div>
               </div>
             <div class="form-actions right">

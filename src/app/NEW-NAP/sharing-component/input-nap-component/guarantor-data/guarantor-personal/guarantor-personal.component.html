@@ -199,9 +199,10 @@
                   </div>
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
-                [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
-              </lib-ucaddress>
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForPersonal" [enjiForm]="enjiForm" [identifier]="'AddrObj'" [UCAddrForm]="PersonalForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
+                             [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
+              </lib-ucaddress> -->
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel

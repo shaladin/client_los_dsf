@@ -290,10 +290,13 @@
                   </div>
                 </div>
               </div>
-              <lib-ucaddress [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+              <lib-ucaddress [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm"
+                [identifier]="'OwnerAddrObj'" [UCAddrForm]="AddCollForm">
+              </lib-ucaddress>
+              <!-- <lib-ucaddress [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
                 [identifier]="'OwnerAddrObj'" [default]="OwnerAddrObj" [inputField]="inputFieldLegalObj"
                 [showAllPhn]="false">
-              </lib-ucaddress>
+              </lib-ucaddress> -->
             </div>
             <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
             </lib-ucSubsection>
@@ -315,10 +318,13 @@
                   </div>
                 </div>
               </div>
-              <lib-ucaddress [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
+              <lib-ucaddress [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"
+                [identifier]="'LocationAddrObj'" [UCAddrForm]="AddCollForm">
+              </lib-ucaddress>
+              <!-- <lib-ucaddress [showSubsection]="false" [UCAddrForm]="AddCollForm" [enjiForm]="enjiForm"
                 [identifier]="'LocationAddrObj'" [default]="LocationAddrObj" [inputField]="inputFieldLocationObj"
                 [showAllPhn]="false">
-              </lib-ucaddress>
+              </lib-ucaddress> -->
             </div>
             <div class="form-actions right">
               <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1" translate>

@@ -26,6 +26,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -159,6 +160,8 @@ export class CollateralAddEditComponent implements OnInit {
 
     CollPercentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
   });
+  inputAddressObjForColl: any;
+  inputAddressObjForLoc: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, private modalService: NgbModal) {
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
@@ -339,6 +342,8 @@ export class CollateralAddEditComponent implements OnInit {
         this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
+        this.inputAddressObjForLoc.default = this.locationAddrObj;
+        this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
       });
   }
 
@@ -361,11 +366,22 @@ export class CollateralAddEditComponent implements OnInit {
         this.inputFieldCollOwnerObj.inputLookupObj = new InputLookupObj();
         this.inputFieldCollOwnerObj.inputLookupObj.nameSelect = this.returnCollOwnerObj.Zipcode;
         this.inputFieldCollOwnerObj.inputLookupObj.jsonSelect = { Zipcode: this.returnCollOwnerObj.Zipcode };
-
+        this.inputAddressObjForColl.default = this.collOwnerAddrObj;
+        this.inputAddressObjForColl.inputField = this.inputFieldCollOwnerObj;
       });
   }
 
   ngOnInit() {
+    this.inputAddressObjForColl = new InputAddressObj();
+    this.inputAddressObjForColl.title = "Collateral Owner";
+    this.inputAddressObjForColl.showAllPhn = false;
+    this.inputAddressObjForColl.showOwnership = false;
+    this.inputAddressObjForColl.showSubsection = false;
+
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.showSubsection = false;
+    this.inputAddressObjForLoc.showAllPhn = false;
+    
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -439,7 +455,8 @@ export class CollateralAddEditComponent implements OnInit {
           this.inputFieldCollOwnerObj.inputLookupObj = new InputLookupObj();
           this.inputFieldCollOwnerObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.OwnerZipcode;
           this.inputFieldCollOwnerObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.OwnerZipcode };
-
+          this.inputAddressObjForColl.default = this.collOwnerAddrObj;
+          this.inputAddressObjForColl.inputField = this.inputFieldCollOwnerObj;
           // this.collLocationAddrObj = new AppCustAddrObj();
           // this.collLocationAddrObj.Addr = this.returnAppCollateralRegistObj.LocationAddr;
           // this.collLocationAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.LocationAreaCode3;
@@ -465,6 +482,8 @@ export class CollateralAddEditComponent implements OnInit {
           this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
           this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
           this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
+          this.inputAddressObjForLoc.default = this.locationAddrObj;
+          this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
         });
 
       this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { AppCollateralId: this.AppCollateralId }).subscribe(

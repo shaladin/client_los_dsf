@@ -13,6 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -92,6 +93,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     CopyFromContactPerson: [''],
     IsGuarantor: [false]
   });
+  inputAddressObjForCP: InputAddressObj;
 
 
   constructor(
@@ -103,6 +105,11 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.inputAddressObjForCP = new InputAddressObj();
+    this.inputAddressObjForCP.showSubsection = false;
+    this.inputAddressObjForCP.isRequired = false;
+    this.inputAddressObjForCP.showAllPhn = false;
+
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
@@ -294,6 +301,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
     this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
     this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: appCustPersonalContactPerson.Zipcode };
+    this.inputAddressObjForCP.default = this.contactPersonAddrObj;
+    this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
 
   }
 
