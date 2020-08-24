@@ -6,7 +6,7 @@
       "name": "MC.MOU_CUST_NO",
       "id": "MouCustNoId",
       "value": "",
-      "label": "LEAD NO",
+      "label": "Mou Cust No",
       "placeholder": "Placeholder"
     },
     {
@@ -14,7 +14,7 @@
       "name": "MC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder"
     },
     {
@@ -22,7 +22,7 @@
       "name": "MC.MOU_CUST_DT",
       "id": "MouCustDtId",
       "value": "",
-      "label": "MOU DATE >=",
+      "label": "Mou Date >=",
       "restriction": "gte",
       "placeholder": "Placeholder"
     },
@@ -37,7 +37,7 @@
       "isSelectOne": false,
       "url": "",
       "path": "/RefMaster/GetListKeyValueActiveByCode",
-      "label": "MOU TYPE",
+      "label": "Mou Type",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "RefMasterTypeCode",
@@ -48,14 +48,15 @@
       "name": "MC.MOU_CUST_DT",
       "id": "MouCustDtId",
       "value": "",
-      "label": "MOU DATE <=",
+      "label": "Mou Date <=",
       "restriction": "lte",
       "placeholder": "Placeholder"
     }
   ],
     "querystring": {
         "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt, RM.DESCR AS MouTypeDescr, MC.MOU_STAT AS MouStat, MC.MOU_CUST_ID AS MouCustId",
-        "from": "FROM DBO.MOU_CUST MC WITH(NOLOCK) JOIN V_REF_MASTER RM WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM.MASTER_CODE AND RM.REF_MASTER_TYPE_CODE = 'MOU_TYPE'"
+        "from": "FROM DBO.MOU_CUST MC WITH(NOLOCK) JOIN V_REF_MASTER RM WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM.MASTER_CODE AND RM.REF_MASTER_TYPE_CODE = 'MOU_TYPE'",
+        "where": "WHERE MC.MOU_STAT = N'ACT'"
     },
     "headerList": [
         {
