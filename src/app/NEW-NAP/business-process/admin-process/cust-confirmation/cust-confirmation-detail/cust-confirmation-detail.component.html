@@ -48,9 +48,12 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12">
-          <input type="checkbox" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip" name="IsSkip"><label>
-            Skip</label>
+        <!-- <div class="col-md-12">
+          <input type="checkbox" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip" name="IsSkip">Skip
+        </div> -->
+        <div class="col-md-1">
+          <mat-checkbox color="primary" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip"></mat-checkbox>
+          <label>Skip</label>
         </div>
       </div>
       <div class="row" *ngIf="CustCnfrmObj.IsSkip">

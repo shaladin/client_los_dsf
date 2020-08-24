@@ -82,6 +82,7 @@ export class GuarantorPersonalComponent implements OnInit {
     this.initLookup();
     this.initAddr();
     if (this.mode == "edit") {
+      this.isReady = true;
       var guarantorPersonalObj = new GuarantorPersonalObj();
       guarantorPersonalObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       await this.http.post(URLConstant.GetAppGuarantorPersonalByAppGuarantorId, guarantorPersonalObj).toPromise().then(
@@ -106,10 +107,29 @@ export class GuarantorPersonalComponent implements OnInit {
           });
           this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
           this.setAddrLegalObj();
-          this.clearExpDt();
-
-        });
+          this.clearExpDt();      
+        });  
+   
       await this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
+    
+      if (this.resultData.AppGuarantorObj.CustNo != null) {
+        this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
+        this.inputLookupObj.isReadonly = true;
+        this.PersonalForm.controls["MobilePhnNo"].disable();
+        this.PersonalForm.controls["MrMaritalStatCode"].disable();
+        this.PersonalForm.controls["MrNationalityCode"].disable();
+        this.PersonalForm.controls["MrReligionCode"].disable();
+        this.PersonalForm.controls["MrGenderCode"].disable();
+        this.PersonalForm.controls["BirthPlace"].disable();
+        this.PersonalForm.controls["BirthDt"].disable();
+        this.PersonalForm.controls["IdNo"].disable();
+        this.PersonalForm.controls["IdExpDt"].disable();
+        this.PersonalForm.controls["MrIdTypeCode"].disable();
+        this.PersonalForm.controls["TaxIdNo"].disable();
+        this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
+        this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+        this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+      } 
     }
     else {
       this.ClearForm();
@@ -359,6 +379,21 @@ export class GuarantorPersonalComponent implements OnInit {
           }
         );
       });
+
+      this.PersonalForm.controls["MobilePhnNo"].disable();
+      this.PersonalForm.controls["MrMaritalStatCode"].disable();
+      this.PersonalForm.controls["MrNationalityCode"].disable();
+      this.PersonalForm.controls["MrReligionCode"].disable();
+      this.PersonalForm.controls["MrGenderCode"].disable();
+      this.PersonalForm.controls["BirthPlace"].disable();
+      this.PersonalForm.controls["BirthDt"].disable();
+      this.PersonalForm.controls["IdNo"].disable();
+      this.PersonalForm.controls["IdExpDt"].disable();
+      this.PersonalForm.controls["MrIdTypeCode"].disable();
+      this.PersonalForm.controls["TaxIdNo"].disable();
+      this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
+      this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+      this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
   }
 
   // CountryCode="";

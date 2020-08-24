@@ -114,7 +114,7 @@ export class CommissionV2Component implements OnInit {
     await this.GetRuleDataForForm();
     await this.GetExistingAppCommData();
     if(Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object){
-      if(this.BizTemplateCode == CommonConstant.CFNA){
+      if(this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.CFRFN4W){
         this.IsCalculated = true;
       }
     }
