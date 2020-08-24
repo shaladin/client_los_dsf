@@ -255,6 +255,9 @@ export class ApplicationDataComponent implements OnInit {
           InterestType: this.resultResponse.InterestType,
           FloatingPeriod: this.resultResponse.FloatingPeriodCode,
           ApplicationNotes: this.resultResponse.ApplicationNotes,
+          CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
+          PrevAgrNo: this.resultResponse.PrevAgrmntNo,
+          WayRestructure: this.resultResponse.MrWayOfRestructureCode,
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
