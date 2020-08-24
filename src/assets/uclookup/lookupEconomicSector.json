@@ -1,0 +1,89 @@
+{
+    "url": "",
+    "sectionTitle":"LOOK UP - Economic Sector",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "ECONOMIC_SECTOR_CODE",
+        "id": "EconomicSectorCodeId",
+        "value": "",
+        "label": "Economic Sector Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "ECONOMIC_SECTOR_NAME",
+        "id": "EconomicSectorNameId",
+        "value": "",
+        "label": "Economic Sector Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "REG_RPT_CODE",
+        "id": "RegRptCodeId",
+        "value": "",
+        "label": "BI Code",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT REF_ECONOMIC_SECTOR_ID AS RefEconomicSectorId, ECONOMIC_SECTOR_CODE AS EconomicSectorCode, ECONOMIC_SECTOR_NAME AS EconomicSectorName, REG_RPT_CODE AS RegRptCode",
+      "from": "FROM REF_ECONOMIC_SECTOR WITH(NOLOCK)",
+      "where": "WHERE IS_ACTIVE = 1"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Economic Sector Code",
+            "name": "REF_ECONOMIC_SECTOR_ID"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Economic Sector Name",
+            "name": "ECONOMIC_SECTOR_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "BI Code",
+            "name": "REG_RPT_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "EconomicSectorCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "EconomicSectorName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "RegRptCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "RefEconomicSectorId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "RefEconomicSectorId",
+    "propertyName": "EconomicSectorName"
+}

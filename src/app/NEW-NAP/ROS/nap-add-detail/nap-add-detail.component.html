@@ -61,23 +61,17 @@
             </div>
 
             <!--Tunggu Pemberitahuan Selanjutnya-->
-            <!--<div class="line"></div>
-            <div class="step" data-target="#referantor-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
-                id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('REF')">
-                <span class="bs-stepper-circle">3</span>
-                <span class="bs-stepper-label">Referantor Data</span>
-              </button>
-            </div>
+
             <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('APP')">
-                <span class="bs-stepper-circle">4</span>
+                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('APP')">
+                <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
             </div>
-            <div class="line"></div>
+            <!--
+              <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
                 [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
@@ -128,21 +122,16 @@
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                                    [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
+                                    [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-guarantor-paging>
             </div>
             <!--Tunggu Pemberitahuan Selanjutnya-->
-            <!--<div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId"
-                                   [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-referantor-data>
-            </div>-->
-            <!--<div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+            <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
+              <app-application-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
+                                    [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
-            <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
+            <!--<div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]=appId
                 [showCancel]="showCancel" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-asset-data>
             </div>
@@ -186,23 +175,16 @@
               </button>
             </div>
             <!--Tunggu Pemberitahuan Selanjutnya-->
-            <!--<div class="line"></div>
-            <div class="step" data-target="#referantor-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
-                      id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('REF')">
-                <span class="bs-stepper-circle">3</span>
-                <span class="bs-stepper-label">Referantor Data</span>
-              </button>
-            </div>
+
             <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('APP')">
-                <span class="bs-stepper-circle">4</span>
+                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('APP')">
+                <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
             </div>
-            <div class="line"></div>
+            <!--<div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
                       [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
@@ -245,20 +227,16 @@
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId"
-                                    [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
+                                    [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-guarantor-paging>
             </div>
-            <!--Tunggu Pemberitahuan Selanjutnya-->
-            <!--<div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId"
-                                   [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-referantor-data>
-            </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-application-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
                                     [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
+            <!--Tunggu Pemberitahuan Selanjutnya-->
+            <!--
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]=appId
                               [showCancel]="showCancel" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-asset-data>

@@ -39,13 +39,13 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
+  BizTemplateCode: string = CommonConstant.ROS;
 
   AppStep = {
     "NEW": 1,
     "CUST": 1,
     "GUAR": 2,
-    "REF": 3,
-    "APP": 4,
+    "APP": 3,
     "ASSET": 5,
     "INS": 6,
     "LFI": 7,
@@ -138,8 +138,7 @@ export class NapAddDetailComponent implements OnInit {
         "NEW": 1,
         "CUST": 1,
         "GUAR": 2,
-        "REF": 3,
-        "APP": 4,
+        "APP": 3,
         "ASSET": 5,
         "INS": 6,
         "LFI": 7,
@@ -158,8 +157,7 @@ export class NapAddDetailComponent implements OnInit {
         "NEW": 1,
         "CUST": 1,
         "GUAR": 2,
-        "REF": 3,
-        "APP": 4,
+        "APP": 3,
         "ASSET": 5,
         "INS": 6,
         "LFI": 7,
@@ -218,9 +216,6 @@ export class NapAddDetailComponent implements OnInit {
         break;
       case CommonConstant.AppStepGuar:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
-        break;
-      case CommonConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
         break;
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];

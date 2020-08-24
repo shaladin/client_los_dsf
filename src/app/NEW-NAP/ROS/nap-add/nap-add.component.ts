@@ -219,7 +219,7 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = CommonConstant.AppStepNew;
     napAppObj.AppCurrStep = CommonConstant.AppStepNew;
-    napAppObj.BizTemplateCode = CommonConstant.FL4W;
+    napAppObj.BizTemplateCode = CommonConstant.ROS;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
