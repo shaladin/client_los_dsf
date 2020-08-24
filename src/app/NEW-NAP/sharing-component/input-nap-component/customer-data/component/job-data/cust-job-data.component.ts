@@ -13,6 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-cust-job-data',
@@ -62,6 +63,7 @@ export class CustJobDataComponent implements OnInit {
   CustModelObj: any;
 
   testing: Date = new Date();
+  inputAddressObjForJobData: InputAddressObj;
 
   constructor(
     private fb: FormBuilder, 
@@ -74,9 +76,12 @@ export class CustJobDataComponent implements OnInit {
    MaxDate: Date;
    UserAccess: any;
    ngOnInit() {
+    this.inputAddressObjForJobData = new InputAddressObj();
+    this.inputAddressObjForJobData.showSubsection = false;
+    this.inputAddressObjForJobData.showPhn3 = false;
+
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
-
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.group({
       CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -190,6 +195,8 @@ export class CustJobDataComponent implements OnInit {
       
       this.inputFieldJobDataObj.inputLookupObj.nameSelect = this.appCustPersonalJobDataObj.AppCustAddrJobObj.Zipcode;
       this.inputFieldJobDataObj.inputLookupObj.jsonSelect = {Zipcode: this.appCustPersonalJobDataObj.AppCustAddrJobObj.Zipcode};  
+      this.inputAddressObjForJobData.default = this.jobDataAddrObj;
+      this.inputAddressObjForJobData.inputField = this.inputFieldJobDataObj;
     }
   }
 

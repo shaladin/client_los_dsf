@@ -108,6 +108,12 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   SaveForm(){
+    var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
+    if(selectedRelationship==undefined){ 
+      this.toastr.errorMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP) ;
+      return;
+    } 
+
     this.MouCustPersonalContactPersonObj = new MouCustPersonalContactPersonObj();
     if(this.listContactPersonPersonal == undefined){
       this.listContactPersonPersonal = new Array<MouCustPersonalContactPersonObj>();
@@ -181,7 +187,9 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   setCustRelationShip(MrCustRelationshipCode: string){
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
-    this.selectedRelationshipName = selectedRelationship.Value;
+    if(selectedRelationship!=undefined){
+      this.selectedRelationshipName = selectedRelationship.Value;
+    }
   }
 
   delete(i){

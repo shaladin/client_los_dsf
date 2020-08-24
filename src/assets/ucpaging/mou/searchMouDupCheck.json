@@ -16,9 +16,44 @@
             "value": "",
             "label": "Customer Name",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "Task Claim Status",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder"
         }
     ],
     "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ClaimBy"
+        },
         {
             "type": "sort",
             "position": "center",
@@ -38,11 +73,16 @@
         }
     ],
     "querystring": {
-        "select": "SELECT MR_CUST_TYPE_CODE as CustTypeCode, MOU_CUST_NO AS MouCustNo, CUST_NAME AS CustName , IS_EXISTING_CUST AS IsExistingCust, MOU_CUST_ID AS MouCustId, APPLICANT_NO AS ApplicantNo",
-        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
-        "where": "WHERE IS_MOU_CUST_CHECKED = 0 AND APPLICANT_NO IS NOT NULL"
+        "select": "SELECT MC.MR_CUST_TYPE_CODE as CustTypeCode, MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.IS_EXISTING_CUST AS IsExistingCust, MC.MOU_CUST_ID AS MouCustId, MC.APPLICANT_NO AS ApplicantNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy",
+        "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MC.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_DUPCHECK'",
+        "where": "WHERE MC.IS_MOU_CUST_CHECKED = 0 AND MC.APPLICANT_NO IS NOT NULL AND MC.IS_EXISTING_CUST = 0"
     },
     "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
         {
             "type": "link",
             "position": "center",
@@ -66,10 +106,39 @@
             "position": "center",
             "action": [
                 {
-                    "type": "callback",
-                    "key": "select"
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback"
+                            },
+                            "isHide": false
+                        }
+                    ]
                 }
-              ]
+            ]
         }
     ]
 }
