@@ -241,8 +241,10 @@
                     </div>
                   </div>
                   <div id="AssetLocation"> 
-                    <lib-ucaddress #UcAddrGrp [showSubsection]="false" [isRequired]="false" [title]="'Asset Location'" [UCAddrForm]="AssetDataForm" 
-                    [enjiForm]="enjiForm" [identifier]="'assetLocationAddress'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress>
+                    <lib-ucaddress #UcAddrGrp  [addressObj]="inputAddressObjForLoc"
+                    [enjiForm]="enjiForm" [identifier]="'assetLocationAddress'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
+                    <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [isRequired]="false" [title]="'Asset Location'" [UCAddrForm]="AssetDataForm" 
+                    [enjiForm]="enjiForm" [identifier]="'assetLocationAddress'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj" [showAllPhn]="false" [showOwnership]="false"></lib-ucaddress> -->
                   </div>
                 </div>
               </div>

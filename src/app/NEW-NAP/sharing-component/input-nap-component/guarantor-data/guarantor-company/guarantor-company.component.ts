@@ -18,6 +18,7 @@ import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCom
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -71,6 +72,7 @@ export class GuarantorCompanyComponent implements OnInit {
     Phn2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]]
   });
+  inputAddressObjForCoy: InputAddressObj;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
@@ -78,6 +80,10 @@ export class GuarantorCompanyComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
   async ngOnInit(): Promise<void> {
+    this.inputAddressObjForCoy = new InputAddressObj();
+    this.inputAddressObjForCoy.title = "Address";
+    this.inputAddressObjForCoy.showAllPhn = false;
+
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
@@ -286,6 +292,9 @@ export class GuarantorCompanyComponent implements OnInit {
             this.AddrObj.FaxArea = this.resultData.FaxArea;
             this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
             this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+            
+            this.inputAddressObjForCoy.default = this.AddrObj;
+            this.inputAddressObjForCoy.inputField = this.inputFieldObj;
           }
         );
       }
@@ -312,6 +321,9 @@ export class GuarantorCompanyComponent implements OnInit {
 
     this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
+    
+    this.inputAddressObjForCoy.default = this.AddrObj;
+    this.inputAddressObjForCoy.inputField = this.inputFieldObj;
   }
 
   Add() {

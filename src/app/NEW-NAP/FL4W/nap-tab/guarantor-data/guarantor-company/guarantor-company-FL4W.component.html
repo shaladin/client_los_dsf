@@ -267,9 +267,11 @@
                   </div> 
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="CompanyForm" [enjiForm]="enjiForm"
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+                [identifier]="'AddrObj'" [UCAddrForm]="CompanyForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="CompanyForm" [enjiForm]="enjiForm"
                 [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
-              </lib-ucaddress>
+              </lib-ucaddress> -->
               <div class="form-actions right">
                 <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
