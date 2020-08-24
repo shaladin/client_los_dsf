@@ -217,7 +217,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.isRequired = false;
 
-    if(this.ListCustNoCompany.length > 0){
+    if(this.ListCustNoCompany.length > 0 ){   
       var arrCopyLookupCrit = new Array();
       var addCrit = new CriteriaObj();
       addCrit.DataType = "text";

@@ -178,7 +178,8 @@ export class FinancialDataComponent implements OnInit {
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
           SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
           TotalDpAmt: this.appFinDataObj.TotalDpAmt,
-          VendorAtpmCode: this.appFinDataObj.VendorAtpmCode
+          VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
+          BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
