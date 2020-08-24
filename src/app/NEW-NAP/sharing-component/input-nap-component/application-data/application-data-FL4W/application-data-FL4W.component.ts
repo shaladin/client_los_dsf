@@ -192,13 +192,13 @@ export class ApplicationDataFL4WComponent implements OnInit {
   ChangeInterestType() {
     if (this.NapAppModelForm.value.InterestType == CommonConstant.InterestTypeFixed) {
       this.isFixedRate = true;
-      this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+      // this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
     }
     else {
       this.isFixedRate = false;
-      this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
+      // this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
     }
-    this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
+    // this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
 
   GetCrossInfoData(){
@@ -277,8 +277,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
           MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
-          InterestType: this.resultResponse.InterestType,
-          FloatingPeriod: this.resultResponse.FloatingPeriodCode
+          InterestType: this.resultResponse.InterestType
+          // FloatingPeriod: this.resultResponse.FloatingPeriodCode
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
