@@ -45,7 +45,7 @@
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].JobTitleName" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
           </div>
         </div>
-        <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [default]="jobDataAddrObj" [inputField]="inputFieldJobDataObj" [showPhn3]="false"></lib-ucaddress>
+        <lib-ucaddress [addressObj]="inputAddrJobDataObj" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [UCAddrForm]="parentForm"></lib-ucaddress>
       </div>
       <div *ngIf="custModelCode == 'EMP'">
         <div class="form-group row">
@@ -116,7 +116,7 @@
             <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
           </div>
         </div>
-        <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [default]="jobDataAddrObj" [inputField]="inputFieldJobDataObj" [showPhn3]="false"></lib-ucaddress>
+        <lib-ucaddress [addressObj]="inputAddrJobDataObj" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [UCAddrForm]="parentForm"></lib-ucaddress>
       </div>
       <div *ngIf="custModelCode == 'SME'">
         <div class="form-group row">
@@ -183,7 +183,7 @@
             </mat-radio-group>
           </div>
         </div>
-        <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [default]="jobDataAddrObj" [inputField]="inputFieldJobDataObj" [showPhn3]="false"></lib-ucaddress>
+        <lib-ucaddress [addressObj]="inputAddrJobDataObj" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [UCAddrForm]="parentForm"></lib-ucaddress>
       </div>
       <div *ngIf="custModelCode == 'NONPROF'">
         <div class="form-group row">

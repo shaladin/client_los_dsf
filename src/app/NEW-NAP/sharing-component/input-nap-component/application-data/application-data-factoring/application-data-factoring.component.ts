@@ -450,6 +450,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrWopCode: this.resultData.MrWopCode,
             MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode
           });
+          this.CalculateNumOfInst(true, this.SalesAppInfoForm.controls.Tenor.value);
         } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0) {
           this.mode = "edit";
           this.SalesAppInfoForm.patchValue({
@@ -475,11 +476,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
             MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
             InterestType: this.resultData.InterestType
           });
+          this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
         }
         this.makeNewLookupCriteria();
       });
-
-      this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
   }
   SaveForm(): void {
     this.salesAppInfoObj = this.SalesAppInfoForm.getRawValue();
@@ -489,6 +489,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP"; 
       this.salesAppInfoObj.Tenor = 1;
+      this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
