@@ -132,7 +132,6 @@ export class FinancialDataComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    console.log("aaaa")
     this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
