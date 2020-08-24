@@ -72,6 +72,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   defaultRelationshipName: any;
   UserAccess: any;
   MaxDate: Date;
+  inputAddressObjForCP: InputAddressObj;
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -290,8 +291,8 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
     this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: appCustPersonalContactPerson.Zipcode };
 
-    this.inputAddrContactPersonObj.inputField = this.inputFieldContactPersonObj;
-    this.inputAddrContactPersonObj.default = this.contactPersonAddrObj;
+    this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
+    this.inputAddressObjForCP.default = this.contactPersonAddrObj;
   }
 
   setProfessionName(professionCode) {
@@ -306,16 +307,15 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       }
     );
   }
-  inputAddrContactPersonObj: InputAddressObj;
+
   initContactPersonAddrObj() {
     this.contactPersonAddrObj = new AddrObj()
     this.inputFieldContactPersonObj = new InputFieldObj();
     this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
 
-    this.inputAddrContactPersonObj = new InputAddressObj();
-    this.inputAddrContactPersonObj.showAllPhn = false;
-    this.inputAddrContactPersonObj.isRequired = false;
-    this.inputAddrContactPersonObj.showSubsection = false;
+    this.inputAddressObjForCP = new InputAddressObj();
+    this.inputAddressObjForCP.showAllPhn = false;
+    this.inputAddressObjForCP.showSubsection = false;
   }
 
   initLookup() {

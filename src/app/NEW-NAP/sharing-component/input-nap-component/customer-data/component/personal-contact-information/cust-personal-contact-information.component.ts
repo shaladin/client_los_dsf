@@ -105,11 +105,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputAddressObjForCP = new InputAddressObj();
-    this.inputAddressObjForCP.showSubsection = false;
-    this.inputAddressObjForCP.isRequired = false;
-    this.inputAddressObjForCP.showAllPhn = false;
-
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
@@ -230,7 +225,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     });
 
     this.copyFromContactPerson = "";
-    this.contactPersonAddrObj = new AddrObj();
     this.selectedGenderName = this.defaultGenderName;
     this.selectedRelationshipName = this.defaultRelationshipName;
 
@@ -283,7 +277,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   setContactPersonAddr(appCustPersonalContactPerson) {
-    this.contactPersonAddrObj = new AddrObj();
     this.contactPersonAddrObj.Addr = appCustPersonalContactPerson.Addr;
     this.contactPersonAddrObj.AreaCode1 = appCustPersonalContactPerson.AreaCode1;
     this.contactPersonAddrObj.AreaCode2 = appCustPersonalContactPerson.AreaCode2;
@@ -316,9 +309,13 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   initContactPersonAddrObj() {
+    this.contactPersonAddrObj = new AddrObj();
     this.inputFieldContactPersonObj = new InputFieldObj();
     this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldContactPersonObj.inputLookupObj.isRequired = false;
+    
+    this.inputAddressObjForCP = new InputAddressObj();
+    this.inputAddressObjForCP.showSubsection = false;
+    this.inputAddressObjForCP.showAllPhn = false;
   }
 
   initLookup() {

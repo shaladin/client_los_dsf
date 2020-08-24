@@ -71,9 +71,13 @@ export class MouCustJobDataComponent implements OnInit {
    MaxDate: Date;
    UserAccess: any;
 
-   inputAddrJobDataObj: InputAddressObj = new InputAddressObj();
+   inputAddressObjForJobData: InputAddressObj;
 
    ngOnInit() {
+    this.inputAddressObjForJobData = new InputAddressObj();
+    this.inputAddressObjForJobData.showPhn3 = false;
+    this.inputAddressObjForJobData.showSubsection = false;
+    
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
@@ -187,8 +191,8 @@ export class MouCustJobDataComponent implements OnInit {
       this.inputFieldJobDataObj.inputLookupObj.nameSelect = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode;
       this.inputFieldJobDataObj.inputLookupObj.jsonSelect = {Zipcode: this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode};  
     
-      this.inputAddrJobDataObj.inputField = this.inputFieldJobDataObj;
-      this.inputAddrJobDataObj.default = this.jobDataAddrObj;
+      this.inputAddressObjForJobData.inputField = this.inputFieldJobDataObj;
+      this.inputAddressObjForJobData.default = this.jobDataAddrObj;
     }
   }
 
@@ -212,10 +216,6 @@ export class MouCustJobDataComponent implements OnInit {
     this.jobDataAddrObj = new AddrObj();
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
-
-    this.inputAddrJobDataObj = new InputAddressObj();
-    this.inputAddrJobDataObj.showPhn3 = false;
-    this.inputAddrJobDataObj.showSubsection = false;
 
     if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
