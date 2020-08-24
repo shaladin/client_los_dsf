@@ -31,6 +31,8 @@ import { RolepickComponent } from 'app/shared/rolepick/rolepick.component';
 import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { GrowlModule } from 'primeng/primeng';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
+import { BackdoorComponent } from './backdoor/backdoor.component';
+import { SafePipe } from './shared/pipe/safepipe';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -41,7 +43,9 @@ export function createTranslateLoader(http: HttpClient) {
         FullLayoutComponent,
         ContentLayoutComponent,
         ErrorDialogComponent,
-        RolepickComponent
+        RolepickComponent,
+        SafePipe,
+        BackdoorComponent
         ],
     
     imports: [
