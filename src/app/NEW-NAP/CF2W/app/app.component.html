@@ -331,11 +331,12 @@
                   </div>
                 </div>
 
-
-                <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
+                <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner"
+                [enjiForm]="enjiForm" [identifier]="'ownerAddress'" [UCAddrForm]="appForm"></lib-ucaddress>
+                <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
                   [enjiForm]="enjiForm" [identifier]="'ownerAddress'" [default]="ownerAddrObj"
                   [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false" [showFax]="false">
-                </lib-ucaddress>
+                </lib-ucaddress> -->
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Mobile Phone</label>
                   <div class="col-md-4">
@@ -375,9 +376,11 @@
                     </button>
                   </div>
                 </div>
-                <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
+                <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc"
+                [enjiForm]="enjiForm" [identifier]="'locationAddress'" [UCAddrForm]="appForm"></lib-ucaddress>
+                <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
                   [enjiForm]="enjiForm" [identifier]="'locationAddress'" [default]="locationAddrObj"
-                  [inputField]="inputFieldLocationAddrObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress>
+                  [inputField]="inputFieldLocationAddrObj" [showFax]="false" [showAllPhn]="false"></lib-ucaddress> -->
               </div>
 
               <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'">

@@ -21,6 +21,7 @@ import { formatDate } from '@angular/common';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-lead-customer-data',
@@ -104,6 +105,8 @@ export class CustomerDataComponent implements OnInit {
     MonthlyIncome: [0, [Validators.required, Validators.min(1.00)]],
     MonthlyExpense: [0]
   });
+  inputAddressObjForLegalAddr: InputAddressObj;
+  inputAddressObjForResidenceAddr: InputAddressObj;
   
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) { 
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -158,6 +161,18 @@ export class CustomerDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.inputAddressObjForLegalAddr = new InputAddressObj();
+    this.inputAddressObjForLegalAddr.showSubsection = false;
+    this.inputAddressObjForLegalAddr.title = "Legal Address";
+    this.inputAddressObjForLegalAddr.showPhn3 = false;
+    this.inputAddressObjForLegalAddr.showOwnership = false;
+
+    this.inputAddressObjForResidenceAddr = new InputAddressObj();
+    this.inputAddressObjForResidenceAddr.showSubsection = false;
+    this.inputAddressObjForResidenceAddr.title = "Residence Address";
+    this.inputAddressObjForResidenceAddr.showPhn3 = false;
+    this.inputAddressObjForResidenceAddr.showOwnership = false;
+
       var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
       if (context != null && context != undefined) // TOLONG JANGAN DIHAPUS, SUPAYA BISA DIAKSES EXTERNAL PAGE TANPA PERLU LOGIN!!!
       {
@@ -217,7 +232,8 @@ export class CustomerDataComponent implements OnInit {
                     this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
                     this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
                     this.inputLegalAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrLegalObj.Zipcode};
-                    
+                    this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
+                    this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
                 });
       
                 this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -245,7 +261,9 @@ export class CustomerDataComponent implements OnInit {
                       this.inputResidenceAddressObj = new InputFieldObj();
                       this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
                       this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
-                      this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};     
+                      this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};
+                      this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+                      this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;     
                   });
     
                 this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -443,6 +461,9 @@ export class CustomerDataComponent implements OnInit {
               this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
               this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
               this.inputLegalAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrLegalObj.Zipcode};
+
+              this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
+              this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
           });
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -472,7 +493,8 @@ export class CustomerDataComponent implements OnInit {
                 this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
                 this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
                 this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};
-                
+                this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+                this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
             });
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -587,12 +609,13 @@ export class CustomerDataComponent implements OnInit {
                     this.legalAddressObj.FaxArea = this.resLeadCustAddrLegalObj.FaxArea;
                     this.legalAddressObj.Fax = this.resLeadCustAddrLegalObj.Fax;
                     this.legalAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrLegalObj.MrBuildingOwnershipCode;
-      
+    
                     this.inputLegalAddressObj = new InputFieldObj();
                     this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
                     this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
                     this.inputLegalAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrLegalObj.Zipcode};
-                    
+                    this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
+                    this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
                 });
   
                 this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -623,7 +646,8 @@ export class CustomerDataComponent implements OnInit {
                       this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
                       this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
                       this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.resLeadCustAddrResObj.Zipcode};
-                      
+                      this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+                      this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
                   });
   
                 this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -707,6 +731,8 @@ export class CustomerDataComponent implements OnInit {
 
     this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = {Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value};
+    this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+    this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj; 
   }
 
   setLegalAddr(){

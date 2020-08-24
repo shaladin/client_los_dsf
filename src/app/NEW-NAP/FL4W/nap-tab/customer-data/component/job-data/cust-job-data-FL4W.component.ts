@@ -14,6 +14,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-cust-job-data-FL4W',
@@ -60,6 +61,8 @@ export class CustJobDataFL4WComponent implements OnInit {
   InvestmentTypeObj: any;
   CustModelObj: any;
   businessDt: Date = new Date();
+  inputAddressObjForJobData: InputAddressObj;
+
   IsInitJobData : boolean;
   constructor(
     private fb: FormBuilder, 
@@ -70,6 +73,10 @@ export class CustJobDataFL4WComponent implements OnInit {
      }
 
    ngOnInit() {
+    this.inputAddressObjForJobData = new InputAddressObj();
+    this.inputAddressObjForJobData.showSubsection = false;
+    this.inputAddressObjForJobData.showPhn3 = false;
+
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -184,6 +191,8 @@ export class CustJobDataFL4WComponent implements OnInit {
       
       this.inputFieldJobDataObj.inputLookupObj.nameSelect = this.appCustPersonalJobDataObj.AppCustAddrJobObj.Zipcode;
       this.inputFieldJobDataObj.inputLookupObj.jsonSelect = {Zipcode: this.appCustPersonalJobDataObj.AppCustAddrJobObj.Zipcode};  
+      this.inputAddressObjForJobData.default = this.jobDataAddrObj;
+      this.inputAddressObjForJobData.inputField = this.inputFieldJobDataObj;
     }
   }
 

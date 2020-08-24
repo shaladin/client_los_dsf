@@ -15,6 +15,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',
@@ -50,6 +51,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   isIdExpiredDateMandatory: boolean = false;
   businessDt: Date;
   @Input() ListCustNoPersonal : any[];
+  inputAddressObj: InputAddressObj;
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
@@ -74,6 +76,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   };
 
   async ngOnInit(): Promise<void> {
+    this.inputAddressObj = new InputAddressObj();
+    this.inputAddressObj.title = "Address";
+    this.inputAddressObj.showAllPhn = false;
+
     this.getDate();
     this.initLookup();
     this.initAddr();
@@ -263,6 +269,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
     this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorPersonalObj.Zipcode;
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorPersonalObj.Zipcode };
+    this.inputAddressObj.default = this.AddrObj;
+    this.inputAddressObj.inputField = this.inputFieldObj;
   }
 
   setCountryName(countryCode) {
@@ -395,6 +403,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             this.AddrObj.FaxArea = this.resultData.FaxArea;
             this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
             this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+            this.inputAddressObj.default = this.AddrObj;
+            this.inputAddressObj.inputField = this.inputFieldObj;
           }
         );
       }

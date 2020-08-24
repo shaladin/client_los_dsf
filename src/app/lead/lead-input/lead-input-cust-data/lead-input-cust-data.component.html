@@ -157,10 +157,11 @@
           </lib-ucSubsection>
           <div id="legalAddr">
             <div id="LegalAddress">
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Legal Address'"
+              <lib-ucaddress  #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm" [identifier]="'legalAddress'" [UCAddrForm]="CustomerDataForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Legal Address'"
                 [UCAddrForm]="CustomerDataForm" [enjiForm]="enjiForm" [identifier]="'legalAddress'"
                 [default]="legalAddressObj" [inputField]="inputLegalAddressObj" [showPhn3]="false"
-                [showOwnership]="false"></lib-ucaddress>
+                [showOwnership]="false"></lib-ucaddress> -->
             </div>
           </div>
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
@@ -175,10 +176,11 @@
               </div>
             </div>
             <div id="ResidenceAddress">
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Residence Address'"
+              <lib-ucaddress  #UcAddrGrp [addressObj]="inputAddressObjForResidenceAddr" [enjiForm]="enjiForm" [identifier]="'residenceAddress'" [UCAddrForm]="CustomerDataForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Residence Address'"
                 [UCAddrForm]="CustomerDataForm" [enjiForm]="enjiForm" [identifier]="'residenceAddress'"
                 [default]="residenceAddressObj" [inputField]="inputResidenceAddressObj" [showPhn3]="false"
-                [showOwnership]="false"></lib-ucaddress>
+                [showOwnership]="false"></lib-ucaddress> -->
             </div>
           </div>
           <lib-ucSubsection [id]="'jobDataId'" [title]="'Job Data'" [panel]="'jobData'">

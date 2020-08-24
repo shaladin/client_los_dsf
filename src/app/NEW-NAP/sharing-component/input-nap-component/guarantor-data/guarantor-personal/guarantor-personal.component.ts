@@ -16,6 +16,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -47,6 +48,7 @@ export class GuarantorPersonalComponent implements OnInit {
   isLocal: boolean = false;
   isReady: boolean = false;
   tempCustNo: string;
+  inputAddressObjForPersonal: InputAddressObj;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
@@ -72,6 +74,10 @@ export class GuarantorPersonalComponent implements OnInit {
   };
 
   async ngOnInit(): Promise<void> {
+    this.inputAddressObjForPersonal = new InputAddressObj();
+    this.inputAddressObjForPersonal.title = "Address";
+    this.inputAddressObjForPersonal.showAllPhn = false;
+
     this.getDate();
     this.initLookup();
     this.initAddr();
@@ -219,6 +225,8 @@ export class GuarantorPersonalComponent implements OnInit {
 
     this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorPersonalObj.Zipcode;
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorPersonalObj.Zipcode };
+    this.inputAddressObjForPersonal.default = this.AddrObj;
+    this.inputAddressObjForPersonal.inputField = this.inputFieldObj;
   }
 
   async setCountryName(countryCode) {
@@ -323,6 +331,8 @@ export class GuarantorPersonalComponent implements OnInit {
         this.AddrObj.FaxArea = this.resultData.FaxArea;
         this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
         this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+        this.inputAddressObjForPersonal.default = this.AddrObj;
+        this.inputAddressObjForPersonal.inputField = this.inputFieldObj;
       });
     this.http.post(URLConstant.GetCustPersonalByCustId, { CustId: event.CustId }).subscribe(
       (response) => {

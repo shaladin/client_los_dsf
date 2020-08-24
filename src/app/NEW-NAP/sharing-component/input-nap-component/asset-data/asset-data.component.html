@@ -472,9 +472,11 @@
             </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
+                <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm"
+                               [identifier]="'ownerData'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
+                <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
                                [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj"
-                               [showAllPhn]="false"></lib-ucaddress>
+                               [showAllPhn]="false"></lib-ucaddress> -->
               </div>
             </div>
 
@@ -505,9 +507,10 @@
               </div>
               <div class="form-group row">
                 <div class="col-md-12">
-                  <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
+                  <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm" [identifier]="'locationData'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
+                  <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
                                  [identifier]="'locationData'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj"
-                                 [showAllPhn]="false"></lib-ucaddress>
+                                 [showAllPhn]="false"></lib-ucaddress> -->
                 </div>
               </div>
             </div>

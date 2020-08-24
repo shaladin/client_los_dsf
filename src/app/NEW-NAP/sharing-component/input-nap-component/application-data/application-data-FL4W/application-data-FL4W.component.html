@@ -114,9 +114,9 @@
                   </div>
                 </div>
                 
-                <div class="form-group row adins-required">
+                <div class="form-group row">
                   <!-- Payment Frequency -->
-                  <label class="col-md-2 adInsLabel"> Payment Frequency</label>
+                  <label class="col-md-2 adins-required-label"> Payment Frequency</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }" (change) = "ChangeNumOfInstallmentPayFreq($event)">
@@ -127,7 +127,7 @@
                     <lib-uc-show-errors  [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>
                   <!-- Interest Type -->
-                  <label class="col-md-2 adInsLabel"> Interest Type </label>
+                  <label class="col-md-2 adins-required-label"> Interest Type </label>
                   <div class="col-md-4">
                     <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
                     <!-- <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
