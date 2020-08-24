@@ -113,11 +113,11 @@ export class MouCustTabComponent implements OnInit {
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appId: number;
-  inputAddrLegalPersonalObj: InputAddressObj;
-  inputAddrLegalCompanyObj: InputAddressObj;
-  inputAddrResidenceObj: InputAddressObj;
-  inputAddrMailingPersonalObj: InputAddressObj;
-  inputAddrMailingCompanyObj: InputAddressObj;
+  inputAddrLegalPersonalObj: InputAddressObj = new InputAddressObj();
+  inputAddrLegalCompanyObj: InputAddressObj = new InputAddressObj();
+  inputAddrResidenceObj: InputAddressObj = new InputAddressObj();
+  inputAddrMailingPersonalObj: InputAddressObj = new InputAddressObj();
+  inputAddrMailingCompanyObj: InputAddressObj = new InputAddressObj();
 
   constructor(
     private fb: FormBuilder,
@@ -130,6 +130,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log("help");
     await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();

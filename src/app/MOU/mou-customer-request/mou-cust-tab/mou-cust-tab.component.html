@@ -106,7 +106,7 @@
           <app-mou-cust-company-main (callbackCopyCust)="CopyCustomerCompany($event)"
             [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
             [identifier]="'companyMainData'" [MouCustId]="MouCustId"></app-mou-cust-company-main>
-            <lib-ucaddress [addressObj]="inputAddrLegalCompanyObj" [enjiForm]="enjiForm" [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <lib-ucaddress [addressObj]="inputAddrLegalCompanyObj" [enjiForm]="enjiForm" [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
           <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'" [panel]="'mailingAddrCompany'">
           </lib-ucSubsection>
           <div id="mailingAddrCompany">
@@ -129,7 +129,7 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress [addressObj]="inputAddrMailingCompanyObj" [enjiForm]="enjiForm" [identifier]="'mailingAddrCompany'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <lib-ucaddress [addressObj]="inputAddrMailingCompanyObj" [enjiForm]="enjiForm" [identifier]="'mailingAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
           </div>
           <app-mou-cust-mgmnt-shrholder (callbackSubmit)="getMouCustShareholder($event)" [listShareholder]="listShareholder">
           </app-mou-cust-mgmnt-shrholder>
