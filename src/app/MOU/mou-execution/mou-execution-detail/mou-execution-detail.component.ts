@@ -18,8 +18,11 @@ export class MouExecutionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
   MouCustId: number;
+  WfTaskListId: number;
 
   MouExecutionForm = this.fb.group({
+    MouCustId: [''],
+    WfTaskListId: [''],
     MouCustDt: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]]
@@ -34,6 +37,11 @@ export class MouExecutionDetailComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         if (params['MouCustId'] != null) {
           this.MouCustId = params['MouCustId'];
+          this.MouExecutionForm.controls.MouCustId.setValue(this.MouCustId);
+        }
+        if (params['WfTaskListId'] != null) {
+          this.WfTaskListId = params['WfTaskListId'];
+          this.MouExecutionForm.controls.WfTaskListId.setValue(this.WfTaskListId);
         }
       });
     }

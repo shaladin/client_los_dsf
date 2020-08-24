@@ -329,7 +329,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   CheckInstType() {
-
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {  
       this.SalesAppInfoForm.controls.TopDays.clearValidators();
       this.SalesAppInfoForm.controls.TopBased.disable();  

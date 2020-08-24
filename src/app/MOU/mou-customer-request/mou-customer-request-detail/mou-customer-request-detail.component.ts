@@ -159,6 +159,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   Save(){
     var mouCustFormData = this.MOUMainInfoForm.value;
+    
     if(this.pageType == "add"){
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
