@@ -7,6 +7,12 @@
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
+              <div *ngIf="tempCustNo!= null">
+                <div class="form-group row">
+                  <label class="col-md-2">Customer No</label>
+                  <label class="col-md-4">{{this.tempCustNo}}</label>
+                </div>
+              </div>
               <div class="row" id="mainData">
                 <div class="col-md-6">
                   <div class="form-group row adins-required">
@@ -267,9 +273,11 @@
                   </div> 
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="CompanyForm" [enjiForm]="enjiForm"
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+                [identifier]="'AddrObj'" [UCAddrForm]="CompanyForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="CompanyForm" [enjiForm]="enjiForm"
                 [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
-              </lib-ucaddress>
+              </lib-ucaddress> -->
               <div class="form-actions right">
                 <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel

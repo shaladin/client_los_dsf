@@ -129,7 +129,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
         IsEnd: this.IsEnd
       }
       this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
-        this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging?BizTemplateCode=" + this.BizTemplateCode]);
+        this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode} });
       });
     }
   }

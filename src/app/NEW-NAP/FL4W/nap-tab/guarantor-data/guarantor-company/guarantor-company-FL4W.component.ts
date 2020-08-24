@@ -18,6 +18,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-guarantor-company-FL4W',
@@ -72,10 +73,15 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   });
   businessDt: Date = new Date();
   selectedListLegalDocType: any = new Array();
+  inputAddressObj: InputAddressObj;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {  
+    this.inputAddressObj = new InputAddressObj();
+    this.inputAddressObj.title = "Address";
+    this.inputAddressObj.showAllPhn = false;
+
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -211,7 +217,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.isRequired = false;
 
-    if(this.ListCustNoCompany.length > 0){
+    if(this.ListCustNoCompany.length > 0 ){   
       var arrCopyLookupCrit = new Array();
       var addCrit = new CriteriaObj();
       addCrit.DataType = "text";
@@ -300,6 +306,8 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             this.AddrObj.FaxArea = this.resultData.FaxArea;
             this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
             this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+            this.inputAddressObj.default = this.AddrObj;
+            this.inputAddressObj.inputField = this.inputFieldObj;
           }
         );
       }
@@ -337,15 +345,17 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
   setAddrLegalObj() {
     this.AddrObj = new AddrObj();
-    this.AddrObj.Addr = this.resultData.appGuarantorCompanyObj.Addr;
-    this.AddrObj.AreaCode1 = this.resultData.appGuarantorCompanyObj.AreaCode1;
-    this.AddrObj.AreaCode2 = this.resultData.appGuarantorCompanyObj.AreaCode2;
-    this.AddrObj.AreaCode3 = this.resultData.appGuarantorCompanyObj.AreaCode3;
-    this.AddrObj.AreaCode4 = this.resultData.appGuarantorCompanyObj.AreaCode4;
-    this.AddrObj.City = this.resultData.appGuarantorCompanyObj.City;
+    this.AddrObj.Addr = this.resultData.AppGuarantorCompanyObj.Addr;
+    this.AddrObj.AreaCode1 = this.resultData.AppGuarantorCompanyObj.AreaCode1;
+    this.AddrObj.AreaCode2 = this.resultData.AppGuarantorCompanyObj.AreaCode2;
+    this.AddrObj.AreaCode3 = this.resultData.AppGuarantorCompanyObj.AreaCode3;
+    this.AddrObj.AreaCode4 = this.resultData.AppGuarantorCompanyObj.AreaCode4;
+    this.AddrObj.City = this.resultData.AppGuarantorCompanyObj.City;
 
-    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.appGuarantorCompanyObj.Zipcode;
-    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.appGuarantorCompanyObj.Zipcode };
+    this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
+    this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
+    this.inputAddressObj.default = this.AddrObj;
+    this.inputAddressObj.inputField = this.inputFieldObj;
   }
 
   Add() {

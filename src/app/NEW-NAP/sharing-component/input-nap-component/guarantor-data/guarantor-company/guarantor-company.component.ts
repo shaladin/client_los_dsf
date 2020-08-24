@@ -18,6 +18,7 @@ import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCom
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -71,6 +72,7 @@ export class GuarantorCompanyComponent implements OnInit {
     Phn2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     PhnExt2: ['', [Validators.maxLength(10), Validators.pattern("^[0-9]+$")]]
   });
+  inputAddressObjForCoy: InputAddressObj;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
   }
@@ -78,6 +80,10 @@ export class GuarantorCompanyComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
   async ngOnInit(): Promise<void> {
+    this.inputAddressObjForCoy = new InputAddressObj();
+    this.inputAddressObjForCoy.title = "Address";
+    this.inputAddressObjForCoy.showAllPhn = false;
+
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
@@ -86,6 +92,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.addControl("LegalDocForm", this.fb.array([]));
 
     if (this.mode == "edit") {
+      this.isReady = true;
       var guarantorCompanyObj = new GuarantorCompanyObj();
       guarantorCompanyObj.AppGuarantorObj.AppGuarantorId = this.AppGuarantorId;
       await this.http.post(URLConstant.GetAppGuarantorCompanyByAppGuarantorId, guarantorCompanyObj).toPromise().then(
@@ -119,6 +126,29 @@ export class GuarantorCompanyComponent implements OnInit {
           this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
         });
+        if (this.resultData.AppGuarantorObj.CustNo != null) {
+          this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
+          this.inputLookupObj.isReadonly = true;
+          this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+          this.CompanyForm.controls["TaxIdNo"].disable();
+          this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+          this.CompanyForm.controls["ContactName"].disable();
+          this.CompanyForm.controls["MrJobPositionCode"].disable();
+          this.CompanyForm.controls["MobilePhnNo1"].disable();
+          this.CompanyForm.controls["ContactEmail"].disable();
+          this.CompanyForm.controls["MobilePhnNo2"].disable();
+          this.CompanyForm.controls["FaxArea"].disable();
+          this.CompanyForm.controls["Fax"].disable();
+          this.CompanyForm.controls["PhnArea1"].disable();
+          this.CompanyForm.controls["Phn1"].disable();
+          this.CompanyForm.controls["PhnExt1"].disable();
+          this.CompanyForm.controls["PhnArea2"].disable();
+          this.CompanyForm.controls["Phn2"].disable();
+          this.CompanyForm.controls["PhnExt2"].disable();
+          this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+          this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+          this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+        }
     } else {
       this.ClearForm();
       this.inputLookupObj1.isReady = true;
@@ -286,10 +316,33 @@ export class GuarantorCompanyComponent implements OnInit {
             this.AddrObj.FaxArea = this.resultData.FaxArea;
             this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.Zipcode;
             this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.Zipcode };
+            
+            this.inputAddressObjForCoy.default = this.AddrObj;
+            this.inputAddressObjForCoy.inputField = this.inputFieldObj;
           }
         );
       }
-    );
+    ); 
+
+    this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+    this.CompanyForm.controls["TaxIdNo"].disable();
+    this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+    this.CompanyForm.controls["ContactName"].disable();
+    this.CompanyForm.controls["MrJobPositionCode"].disable();
+    this.CompanyForm.controls["MobilePhnNo1"].disable();
+    this.CompanyForm.controls["ContactEmail"].disable();
+    this.CompanyForm.controls["MobilePhnNo2"].disable();
+    this.CompanyForm.controls["FaxArea"].disable();
+    this.CompanyForm.controls["Fax"].disable();
+    this.CompanyForm.controls["PhnArea1"].disable();
+    this.CompanyForm.controls["Phn1"].disable();
+    this.CompanyForm.controls["PhnExt1"].disable();
+    this.CompanyForm.controls["PhnArea2"].disable();
+    this.CompanyForm.controls["Phn2"].disable();
+    this.CompanyForm.controls["PhnExt2"].disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
   }
 
   // IndustryTypeCode="";
@@ -312,6 +365,9 @@ export class GuarantorCompanyComponent implements OnInit {
 
     this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
+    
+    this.inputAddressObjForCoy.default = this.AddrObj;
+    this.inputAddressObjForCoy.inputField = this.inputFieldObj;
   }
 
   Add() {
