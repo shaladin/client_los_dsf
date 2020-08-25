@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href /LOS_OPL/",
+    "build": "ng build --prod --base-href /LOSR3/",
     "sit": "ng build --configuration=sit --base-href /LOS_SIT/",
     "demo": "ng build --configuration=demo_env --base-href /LOS_DEMO/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
