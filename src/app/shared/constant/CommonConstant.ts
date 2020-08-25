@@ -120,6 +120,7 @@ export class CommonConstant {
     public static CFNA = "CFNA";
     public static CENTER_GROUP_CODE = "CG";
     public static ROS = "ROS";
+    public static OPL = "OPL";
     //OFFICE TYPE
     public static HeadOffice = "HO"; 
     public static HeadOfficeName = "Head Office"; 
@@ -435,7 +436,7 @@ export class CommonConstant {
     public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
     public static RefProdCompAssetCond = "ASSETCOND";
     public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
-  public static RefMasterTypeCodeCharacteristicCredit = "CHAR_CREDIT";
+  public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WOR";
     //RATE TYPE
     public static RateTypeFlat = "FLT";

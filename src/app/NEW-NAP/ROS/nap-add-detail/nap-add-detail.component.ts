@@ -39,7 +39,7 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  BizTemplateCode: string = CommonConstant.ROS;
+  BizTemplateCode: string = CommonConstant.OPL;
 
   AppStep = {
     "NEW": 1,

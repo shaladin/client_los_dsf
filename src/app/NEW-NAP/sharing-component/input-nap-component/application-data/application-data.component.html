@@ -72,8 +72,8 @@
 
                 <div class="form-group row adins-required">
                   <!-- Tenor -->
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'ROS'">Tenor </label>
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'ROS'">Rental Period (In Months) </label>
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'">Tenor </label>
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'OPL'">Rental Period (In Months) </label>
                   <div class="col-md-8">
                     <input type="text" class="form-control adInsInput number" formControlName="Tenor"
                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
@@ -83,7 +83,7 @@
                   </div>
                 </div>
 
-                <div class="form-group row adins-required" *ngIf="BizTemplateCode != 'ROS'">
+                <div class="form-group row adins-required" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Payment Frequency -->
                   <label class="col-md-4 adInsLabel"> Payment Frequency</label>
                   <div class="col-md-8">
@@ -99,7 +99,7 @@
                   </div>
                 </div>
 
-                <div class="form-group row" *ngIf="BizTemplateCode != 'ROS'">
+                <div class="form-group row" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Num of Installment -->
                   <label class="col-md-4 adInsLabel">Num of Installment</label>
                   <label class="col-md-8 adInsLabel">{{NapAppModelForm.controls.NumOfInst.value}} </label>
@@ -126,8 +126,8 @@
 
                 <div class="form-group row">
                   <!-- First Installment Type -->
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'ROS'"> First Installment Type </label>
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'ROS'"> First Rental Type </label>
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'"> First Installment Type </label>
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'OPL'"> First Rental Type </label>
                   <div class="col-md-8">
                     <label class="adInsLabel"> {{FirstInstType}} </label>
                     <!-- <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
@@ -140,7 +140,7 @@
                   </div>
                 </div>
 
-                <div class="form-group row" *ngIf="BizTemplateCode != 'ROS'">
+                <div class="form-group row" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Interest Type -->
                   <div class="col-md-4 adins-required">
                     <label class="adInsLabel"> Interest Type </label>
@@ -159,7 +159,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="isFixedRate == 0 && BizTemplateCode != 'ROS'" class="form-group row adins-required">
+                <div *ngIf="isFixedRate == 0 && BizTemplateCode != 'OPL'" class="form-group row adins-required">
                   <!-- Floating Period -->
                   <label class="col-md-4 adInsLabel"> Floating Period </label>
                   <div class="col-md-8">
@@ -175,7 +175,7 @@
                   </div>
                 </div>
 
-                <div class="form-group row" *ngIf="BizTemplateCode != 'ROS'">
+                <div class="form-group row" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Installment Scheme -->
                   <div class="form-group col-md-4 adins-required">
                     <label class="adInsLabel">Installment Scheme</label>
@@ -207,7 +207,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-                <div class="form-group row" *ngIf="BizTemplateCode == 'ROS'">
+                <div class="form-group row" *ngIf="BizTemplateCode == 'OPL'">
                   <!-- Application Notes -->
                   <label class="col-md-4 adInsLabel"> Application Notes </label>
                   <div class="col-md-8">
@@ -220,7 +220,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="BizTemplateCode != 'ROS'">
+          <div *ngIf="BizTemplateCode != 'OPL'">
             <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'" [panel]="'crossInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="crossInfomation">
@@ -287,11 +287,11 @@
           </div>
           <!-- Cross Info -->
           <!-- Loan Object -->
-          <div *ngIf="BizTemplateCode != 'ROS'">
+          <div *ngIf="BizTemplateCode != 'OPL'">
             <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true" *ngIf="IsLoanObject"></app-loan-object>
           </div>
 
-          <div *ngIf="BizTemplateCode == 'ROS'">
+          <div *ngIf="BizTemplateCode == 'OPL'">
             <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
             </lib-ucSubsection>
             <div class="form-body" id="restData">
@@ -305,7 +305,7 @@
                       <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let it of applicationDDLitems['CHAR_CREDIT']" value="{{it.Key}}">
+                        <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
                           {{it.Value}}
                         </option>
                       </select>

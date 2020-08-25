@@ -27,7 +27,7 @@ export class CreditReviewPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.BizTemplateCode == CommonConstant.ROS) {
+    if (this.BizTemplateCode == CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/searchApplicationReview.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationReview.json";
     }

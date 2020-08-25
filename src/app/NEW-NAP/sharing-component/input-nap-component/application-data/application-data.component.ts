@@ -122,7 +122,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
-    if (this.BizTemplateCode != CommonConstant.ROS) {
+    if (this.BizTemplateCode != CommonConstant.OPL) {
       this.GetCrossInfoData();
     }
     else {
@@ -453,7 +453,7 @@ export class ApplicationDataComponent implements OnInit {
     temp.RowVersion = this.resultResponse.RowVersion;
     temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
 
-    if (this.BizTemplateCode == CommonConstant.ROS) {
+    if (this.BizTemplateCode == CommonConstant.OPL) {
       temp.ApplicationNotes = this.NapAppModelForm.controls.ApplicationNotes.value;
       temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
       temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
@@ -485,7 +485,7 @@ export class ApplicationDataComponent implements OnInit {
       MrInstSchemeCode: this.NapAppModelForm.controls.MrInstSchemeCode.value,
       InterestType: this.NapAppModelForm.controls.InterestType.value,
     }
-    if (this.BizTemplateCode == CommonConstant.ROS) {
+    if (this.BizTemplateCode == CommonConstant.OPL) {
       temp.MrInstSchemeCode= CommonConstant.INST_SCHM_REGULAR_FIXED;
     }
     return temp;
