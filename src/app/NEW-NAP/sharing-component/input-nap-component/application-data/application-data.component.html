@@ -329,7 +329,7 @@
                         <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
                           <option value="">-Select One-</option>
-                          <option *ngFor="let it of applicationDDLitems['WOR']" value="{{it.Key}}">
+                          <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
                             {{it.Value}}
                           </option>
                         </select>

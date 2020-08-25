@@ -437,7 +437,7 @@ export class CommonConstant {
     public static RefProdCompAssetCond = "ASSETCOND";
     public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
-  public static RefMasterTypeCodeWayOfRestructure = "WOR";
+  public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
     //RATE TYPE
     public static RateTypeFlat = "FLT";
     public static RateTypeEffective = "EFCTV";
