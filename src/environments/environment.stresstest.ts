@@ -7,14 +7,14 @@ export const environment = {
     production: true,
     navbarColor: 'lime',
     losUrl: 'http://R3STWEBBE1.ad-ins.com/LOS',
-    FoundationR3Url: 'http://R3STWEBBE1.ad-ins.com/FOUNDATION',
-    DashboardURL: 'http://R3STWEBBE1.ad-ins.com/Dashboard',
-    WebSocketURL: 'http://R3STWEBBE1.ad-ins.com/FOUNDATION',
+    FoundationR3Url: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
+    DashboardURL: 'http://R3STWEBBE.ad-ins.com/Dashboard',
+    WebSocketURL: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
     
-    FoundationR3Web: 'http://R3STWEBFE1.ad-ins.com/Foundation',
-    losR3Web: 'http://R3STWEBFE1.ad-ins.com/LOS',
+    FoundationR3Web: 'http://R3STWEBFE.ad-ins.com/Foundation',
+    losR3Web: 'http://R3STWEBFE.ad-ins.com/LOS',
 
-    WorkflowR3Url: 'http://r3stengine1.ad-ins.com/WORKFLOW',
-    ApprovalR3Url: 'http://r3stengine1.ad-ins.com/approval',
+    WorkflowR3Url: 'http://r3stengine.ad-ins.com/WORKFLOW',
+    ApprovalR3Url: 'http://r3stengine.ad-ins.com/approval',
     Module: "LOS"
 };  
