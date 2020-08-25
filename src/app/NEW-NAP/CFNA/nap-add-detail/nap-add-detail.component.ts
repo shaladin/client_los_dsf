@@ -186,7 +186,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/CFRefinancing/Paging"])
+        this.router.navigate(["/Nap/CFNA/Paging"])
       })
   }
 
@@ -216,7 +216,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
   Cancel() {
-    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFRFN4W } });
+    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFNA } });
   }
 
   GetCallback(ev) {
