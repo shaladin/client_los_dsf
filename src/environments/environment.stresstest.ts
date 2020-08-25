@@ -6,7 +6,7 @@
 export const environment = {
     production: true,
     navbarColor: 'lime',
-    losUrl: 'http://R3STWEBBE1.ad-ins.com/LOS',
+    losUrl: 'http://R3STWEBBE.ad-ins.com/LOS',
     FoundationR3Url: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
     DashboardURL: 'http://R3STWEBBE.ad-ins.com/Dashboard',
     WebSocketURL: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
