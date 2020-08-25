@@ -13,6 +13,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustPersonalJobDataObj } from 'app/shared/model/MouCustPersonalJobDataObj.Model';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-mou-cust-job-data',
@@ -69,7 +70,14 @@ export class MouCustJobDataComponent implements OnInit {
 
    MaxDate: Date;
    UserAccess: any;
+
+   inputAddressObjForJobData: InputAddressObj;
+
    ngOnInit() {
+    this.inputAddressObjForJobData = new InputAddressObj();
+    this.inputAddressObjForJobData.showPhn3 = false;
+    this.inputAddressObjForJobData.showSubsection = false;
+    
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
@@ -163,11 +171,8 @@ export class MouCustJobDataComponent implements OnInit {
   }
 
   setAddrJobDataObj(){
-    this.inputFieldJobDataObj = new InputFieldObj();
-    this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
-
+    console.log("test")
     if(this.MouCustPersonalJobDataObj.MouCustAddrJobObj != undefined){
-      this.jobDataAddrObj = new AddrObj();
       this.jobDataAddrObj.Addr = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Addr;
       this.jobDataAddrObj.AreaCode1 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.AreaCode1;
       this.jobDataAddrObj.AreaCode2 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.AreaCode2;
@@ -185,6 +190,9 @@ export class MouCustJobDataComponent implements OnInit {
       
       this.inputFieldJobDataObj.inputLookupObj.nameSelect = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode;
       this.inputFieldJobDataObj.inputLookupObj.jsonSelect = {Zipcode: this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode};  
+    
+      this.inputAddressObjForJobData.inputField = this.inputFieldJobDataObj;
+      this.inputAddressObjForJobData.default = this.jobDataAddrObj;
     }
   }
 
@@ -205,6 +213,10 @@ export class MouCustJobDataComponent implements OnInit {
   }
 
   bindMouCustPersonalJobData(){
+    this.jobDataAddrObj = new AddrObj();
+    this.inputFieldJobDataObj = new InputFieldObj();
+    this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
+
     if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
     if(this.MouCustPersonalJobDataObj.MouCustPersonalId != 0){

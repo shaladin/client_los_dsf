@@ -164,7 +164,7 @@ export class MouDetailFactoringComponent implements OnInit {
 
     formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
     if(formData.IsListedCust){
-      if(!this.MouListedFctrComp.listedCusts || this.MouListedFctrComp.listedCusts.length <= 0){
+      if(!this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"] || this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"]["controls"]["length"] <= 0){
         this.toastr.warningMessage("At Least 1 Listed Customer Factoring Needed To Submit");
         return false;
       }

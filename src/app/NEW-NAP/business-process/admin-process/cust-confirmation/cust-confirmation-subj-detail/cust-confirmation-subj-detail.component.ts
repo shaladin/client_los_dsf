@@ -33,7 +33,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
   CustConfirm = this.fb.group({
-    Notes: ["", Validators.required],
+    Notes: [""],
     Phn: ["", Validators.required],
     MrVerfResultHStatCode: ["", Validators.required],
     VerfResultDForm: this.fb.array([])
@@ -269,7 +269,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   clearform() {
     this.CustConfirm.reset();
     this.CustConfirm = this.fb.group({
-      Notes: ["", Validators.required],
+      Notes: [""],
       Phn: ["", Validators.required],
       MrVerfResultHStatCode: ["", Validators.required],
       VerfResultDForm: this.fb.array([])

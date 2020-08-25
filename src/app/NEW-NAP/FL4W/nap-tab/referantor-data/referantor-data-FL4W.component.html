@@ -24,8 +24,8 @@
                 <div class="form-group row adins-required">
                   <label class="col-md-2 adInsLabel">Referantor Name </label>
                   <div class="col-md-5">
-                    <lib-uclookupgeneric *ngIf="ReferantorOn" [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
-                      [enjiForm]='enjiForm' ng-disabled="!ReferantorOn" [identifier]="'ProductOfferingIdentifier'"
+                    <lib-uclookupgeneric *ngIf="inputLookupObj.isReady" [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
+                      [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
                       (lookup)="getLookupAppReferantorResponse($event)">
                     </lib-uclookupgeneric>
                   </div>
@@ -62,7 +62,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> Npwp No </label>
+                        <label> NPWP No </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label> {{appReferantorObj.TaxIdNo}} </label>
@@ -71,7 +71,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> Npwp Name </label>
+                        <label> NPWP Name </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label> {{appReferantorObj.TaxIdName}} </label>

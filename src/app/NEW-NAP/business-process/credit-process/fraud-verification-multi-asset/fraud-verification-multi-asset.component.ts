@@ -49,7 +49,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   addAppFraudVerfUrl = URLConstant.AddAppFraudVerf;
   isDataAlreadyLoaded: boolean = false;
   closeResult: string;
-  appCustObj: any;
+  appCustObj: AppCustObj = new AppCustObj();
   appCustCompanyObj: any;
   appCustPersonalObj: any;
   TrxNo: any;
@@ -117,8 +117,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
         this.mrCustTypeCode = this.appCustObj["MrCustTypeCode"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj = response["AppCustPersonalObj"];
-        this.TrxNo = this.appCustObj.AppNo;
-        this.trxRefNo = this.appCustObj.AppNo;
+        this.TrxNo = this.appCustObj["AppNo"];
+        this.trxRefNo = this.appCustObj["AppNo"];
         this.idNo = this.appCustObj.IdNo;
         this.mrSrvySourceCode = "MOU";
         this.getFraudDukcapil();
