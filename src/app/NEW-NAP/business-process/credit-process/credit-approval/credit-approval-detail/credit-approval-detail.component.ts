@@ -82,6 +82,7 @@ export class CreditApprovalDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
+    console.log(event);
     if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
       var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -99,7 +100,20 @@ export class CreditApprovalDetailComponent implements OnInit {
           this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         });
 
-    } else {
+    } 
+    else if(event.result.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()){
+      console.log("cust neg");
+      var NegCustObj = {
+        AppId: this.appId,
+        MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
+        NegCustCause: event.reason
+      };
+      this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
+        (response) => {
+          this.toastr.successMessage("Success");
+          this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        });
+    }else {
       this.toastr.successMessage("Success");
       this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
     }
