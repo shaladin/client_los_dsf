@@ -82,7 +82,6 @@ export class CreditApprovalDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
-    console.log(event);
     if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
       var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
