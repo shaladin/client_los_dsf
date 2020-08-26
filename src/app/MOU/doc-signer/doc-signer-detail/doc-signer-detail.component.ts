@@ -171,7 +171,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.custShareholderLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
+    this.custShareholderLookUpObj1.urlEnviPaging = environment.losUrl;
     this.custShareholderLookUpObj1.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.addCritInput = new Array();
@@ -180,7 +180,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.custShareholderLookUpObj2.isRequired = false;
     this.custShareholderLookUpObj2.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.custShareholderLookUpObj2.urlEnviPaging = environment.FoundationR3Url;
+    this.custShareholderLookUpObj2.urlEnviPaging = environment.losUrl;
     this.custShareholderLookUpObj2.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj2.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj2.addCritInput = new Array();
@@ -206,7 +206,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.customerLookUpObj1.isRequired = false;
     this.customerLookUpObj1.urlJson = "./assets/uclookup/lookupCustPersonal.json";
     this.customerLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.customerLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
+    this.customerLookUpObj1.urlEnviPaging = environment.losUrl;
     this.customerLookUpObj1.pagingJson = "./assets/uclookup/lookupCustPersonal.json";
     this.customerLookUpObj1.genericJson = "./assets/uclookup/lookupCustPersonal.json";
 
@@ -218,27 +218,15 @@ export class DocSignerDetailComponent implements OnInit {
         this.MrCustTypeCode = this.returnMouCust["MrCustTypeCode"];
         this.custNo = this.returnMouCust["CustNo"];
         if (this.MrCustTypeCode == "COMPANY") {
-          var custObj = { CustNo: this.custNo };
-          this.http.post(this.getCustByCustNo, custObj).subscribe(
-            (response) => {
-              var custId = response['CustId'];
-              var custCompanyObj = { CustId: custId };
-              this.http.post(this.getCustCompanyByCustId, custCompanyObj).subscribe(
-                (response) => {
-                  this.custCompanyId = response['CustCompanyId'];
-                  this.custCompanyCrit = new CriteriaObj();
-                  this.custCompanyCrit.DataType = "text";
-                  this.custCompanyCrit.propName = "CC.CUST_COMPANY_ID";
-                  this.custCompanyCrit.restriction = AdInsConstant.RestrictionEq;
-                  this.custCompanyCrit.value = this.custCompanyId;
-                  this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
-                  this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
-                  this.ucLookupShareHolder1.setAddCritInput();
-                  this.ucLookupShareHolder2.setAddCritInput();
-                }
-              );
-            }
-          );
+          this.custCompanyCrit = new CriteriaObj();
+          this.custCompanyCrit.DataType = "text";
+          this.custCompanyCrit.propName = "MC.MOU_CUST_ID";
+          this.custCompanyCrit.restriction = AdInsConstant.RestrictionEq;
+          this.custCompanyCrit.value = this.MouCustId.toString();
+          this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
+          this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
+          this.ucLookupShareHolder1.setAddCritInput();
+          this.ucLookupShareHolder2.setAddCritInput();
         }
         this.mouUrl = environment.losR3Web + "/View/Mou/CustView?MouCustId=" + this.MouCustId;
         var addCustomerCrit: CriteriaObj = new CriteriaObj();

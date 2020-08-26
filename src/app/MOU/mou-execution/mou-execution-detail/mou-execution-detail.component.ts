@@ -47,6 +47,12 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+
     var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {

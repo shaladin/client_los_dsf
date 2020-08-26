@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mou-dup-check-paging',
@@ -14,7 +15,9 @@ export class MouDupCheckPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
 
   constructor(
-    private router: Router) {
+    private http: HttpClient,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -26,6 +29,12 @@ export class MouDupCheckPagingComponent implements OnInit {
   }
 
   NextScreen(event) {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: event.RowObj.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
       this.router.navigate(["/Mou/DuplicateCheck/SimilarPersonal"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
