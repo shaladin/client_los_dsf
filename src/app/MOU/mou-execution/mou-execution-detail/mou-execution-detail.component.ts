@@ -34,17 +34,17 @@ export class MouExecutionDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
     private router: Router) {
-      this.route.queryParams.subscribe(params => {
-        if (params['MouCustId'] != null) {
-          this.MouCustId = params['MouCustId'];
-          this.MouExecutionForm.controls.MouCustId.setValue(this.MouCustId);
-        }
-        if (params['WfTaskListId'] != null) {
-          this.WfTaskListId = params['WfTaskListId'];
-          this.MouExecutionForm.controls.WfTaskListId.setValue(this.WfTaskListId);
-        }
-      });
-    }
+    this.route.queryParams.subscribe(params => {
+      if (params['MouCustId'] != null) {
+        this.MouCustId = params['MouCustId'];
+        this.MouExecutionForm.controls.MouCustId.setValue(this.MouCustId);
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+        this.MouExecutionForm.controls.WfTaskListId.setValue(this.WfTaskListId);
+      }
+    });
+  }
 
   ngOnInit() {
     var datePipe = new DatePipe("en-US");
@@ -54,13 +54,18 @@ export class MouExecutionDetailComponent implements OnInit {
       this.businessDt.setDate(this.businessDt.getDate() - 1);
     }
 
-    this.httpClient.post(URLConstant.GetMouCustById, {MouCustId: this.MouCustId}).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).subscribe(
       (response: any) => {
+        console.log("INI")
+        if (response["MouCustDt"] != null) {
+          response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
+        }
         response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
         response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
         this.MouExecutionForm.patchValue({
           StartDt: response["StartDt"],
-          EndDt: response["EndDt"]
+          EndDt: response["EndDt"],
+          MouCustDt: response["MouCustDt"]
         });
       });
 
@@ -80,7 +85,7 @@ export class MouExecutionDetailComponent implements OnInit {
 
   SaveForm() {
     var request = this.MouExecutionForm.value;
-    this.httpClient.post(URLConstant.MouCustExecutionActivity, request).subscribe(
+    this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
       (response: any) => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(['/Mou/Execution/Paging']);
