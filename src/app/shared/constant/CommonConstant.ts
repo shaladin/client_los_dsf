@@ -379,6 +379,8 @@ export class CommonConstant {
     public static RefMasterTypeCodeAssetUsage = "ASSET_USAGE";
     public static RefMasterTypeCodeCustPersonalRelationship = "CUST_PERSONAL_RELATIONSHIP";
     public static RefMasterTypeCodeCustCompanyRelationship = "CUST_COMPANY_RELATIONSHIP";
+    public static RefMasterTypeCodeGuarPersonalRelationship = "GUAR_PERSONAL_RELATIONSHIP";
+    public static RefMasterTypeCodeGuarCompanyRelationship = "GUAR_COMPANY_RELATIONSHIP"; 
     public static RefMasterTypeCodeIdType = "ID_TYPE";
     public static RefMasterTypeCodeRateType = "RATE_TYPE";
     public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
