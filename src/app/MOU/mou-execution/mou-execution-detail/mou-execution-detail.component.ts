@@ -56,7 +56,6 @@ export class MouExecutionDetailComponent implements OnInit {
 
     this.httpClient.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).subscribe(
       (response: any) => {
-        console.log("INI")
         if (response["MouCustDt"] != null) {
           response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
         }
