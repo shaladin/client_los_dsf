@@ -27,10 +27,17 @@ export class CreditReviewPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/searchCreditReview.json";
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.inputPagingObj._url = "./assets/ucpaging/searchApplicationReview.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationReview.json";
+    }
+    else {
+      this.inputPagingObj._url = "./assets/ucpaging/searchCreditReview.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
+    }   
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
+    
 
     this.inputPagingObj.ddlEnvironments = [
       {

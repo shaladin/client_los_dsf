@@ -26,6 +26,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -84,7 +85,6 @@ export class CustomerDataComponent implements OnInit {
   inputAddressObjForMailing: InputAddressObj;
   inputAddressObjForLegalCoy: InputAddressObj;
   inputAddressObjForMailingCoy: InputAddressObj;
-;
   listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
@@ -127,6 +127,7 @@ export class CustomerDataComponent implements OnInit {
   spouseGender: string = "";
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
+  appData: AppObj;
 
   constructor(
     private fb: FormBuilder,
@@ -165,12 +166,27 @@ export class CustomerDataComponent implements OnInit {
     await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+    await this.http.post(URLConstant.GetAppById, { AppId: this.appId }).toPromise().then(
+      (response: AppObj) => {
+        this.appData = response;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   SaveForm() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+      if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
+        if(this.custDataPersonalObj.AppCustBankAccObjs.length <= 0){
+          this.toastr.errorMessage("Must Have At Least 1 Bank Account");
+          return false;
+        }
+      }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
       if (this.isSpouseOk) {
         this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
@@ -207,6 +223,12 @@ export class CustomerDataComponent implements OnInit {
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
+      if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
+        if(this.custDataPersonalObj.AppCustBankAccObjs.length <= 0){
+          this.toastr.errorMessage("Must Have At Least 1 Bank Account");
+          return false;
+        }
+      }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {

@@ -1544,7 +1544,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpSupervisi() {
-    this.http.post(URLConstant.GetVendorEmpSupervisorByVendorEmpId, this.vendorEmpObj).subscribe(
+    this.http.post(URLConstant.GetVendorEmpSupervisorByVendorEmpNo, this.vendorEmpObj).subscribe(
       (response) => {
         this.BranchManagerObj = response;
         if (this.BranchManagerObj.VendorEmpName != null) {
