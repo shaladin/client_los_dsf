@@ -1049,6 +1049,7 @@ export class URLConstant {
     public static AddReturnHandlingFromPhoneVerif = environment.losUrl + "/PhoneVerif/AddReturnHandlingFromPhoneVerif";
     // App Cust
     public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
+    public static AddNegativeCustByAppId = environment.losUrl + "/AppCust/AddNegativeCustByAppId";
 
     //Verf Question Answer
     public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
