@@ -68,7 +68,7 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress [addressObj]="inputAddrMailingPersonalObj" [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing"  [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
           </div>
           <app-mou-cust-personal-contact-info (callbackCopyAddr)="copyToContactPersonAddr($event)"
             (callbackSubmit)="getCustContactInformation($event)" [isMarried]="isMarried" [spouseGender]="spouseGender"

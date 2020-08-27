@@ -141,10 +141,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.inputLookupObj1.isReady = true;
     }
 
-    var refCustRelObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship,
-      RowVersion: ""
-    }
     var idTypeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
       RowVersion: ""
@@ -172,16 +168,44 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         this.clearExpDt();
       }
     );
-    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
-      (response) => {
-        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
-        if (this.mode != "edit") {
-          this.PersonalForm.patchValue({
-            MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
-          });
-        }
+  
+    var AppCust = {
+      AppId: this.AppId,
+      RowVersion: ""
+    }
+    this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
+      (response) => { 
+        if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
+          var refCustRelObj = {
+            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
+            ReserveField1: CommonConstant.CustTypePersonal,
+            RowVersion: ""
+          }
+        }else{
+          var refCustRelObj = {
+            RefMasterTypeCode:  CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+            ReserveField1:  CommonConstant.CustTypePersonal,
+            RowVersion: ""
+          }
+        } 
+        console.log(refCustRelObj)
+        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+          (response) => {
+            this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
+            if (this.mode != "edit") {
+              this.PersonalForm.patchValue({
+                MrCustRelationshipCode: this.MrCustRelationshipCode[0].Key
+              });
+            }
+          }
+        );
+
       }
     );
+
+
+
+
     this.http.post(URLConstant.GetListActiveRefMaster, genderObj).subscribe(
       (response) => {
         this.MrGenderCode = response[CommonConstant.ReturnObj];

@@ -116,7 +116,7 @@ export class MouCustTabComponent implements OnInit {
   inputAddrLegalPersonalObj: InputAddressObj = new InputAddressObj();
   inputAddrLegalCompanyObj: InputAddressObj = new InputAddressObj();
   inputAddrResidenceObj: InputAddressObj = new InputAddressObj();
-  inputAddrMailingPersonalObj: InputAddressObj = new InputAddressObj();
+  inputAddressObjForMailing: InputAddressObj = new InputAddressObj();
   inputAddrMailingCompanyObj: InputAddressObj = new InputAddressObj();
 
   constructor(
@@ -700,6 +700,8 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
+      this.inputAddrResidenceObj.default = this.residenceAddrObj;
+      this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
   }
 
@@ -723,9 +725,8 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
-    
-      this.inputAddrMailingPersonalObj.inputField = this.inputFieldMailingObj;
-      this.inputAddrMailingPersonalObj.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
     }
 
     if (this.copyFromMailing == CommonConstant.AddrTypeResidence) {
@@ -747,9 +748,8 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
-    
-      this.inputAddrMailingPersonalObj.inputField = this.inputFieldMailingObj;
-      this.inputAddrMailingPersonalObj.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
     }
   }
 
@@ -773,6 +773,8 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value };
+      this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
+      this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
     }
   }
 
@@ -894,10 +896,9 @@ export class MouCustTabComponent implements OnInit {
     this.inputFieldMailingObj = new InputFieldObj();
     this.inputFieldMailingObj.inputLookupObj = new InputLookupObj();
 
-    this.inputAddrMailingPersonalObj = new InputAddressObj();
-    this.inputAddrMailingPersonalObj.showPhn3 = false;
-    this.inputAddrMailingPersonalObj.showSubsection = false;
-    this.inputAddrMailingPersonalObj.showOwnership = true;
+    this.inputAddressObjForMailing = new InputAddressObj();
+    this.inputAddressObjForMailing.showSubsection = false;
+    this.inputAddressObjForMailing.showPhn3 = false;
   }
 
   initAddrMailingCompanyObj() {
@@ -990,7 +991,6 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.custDataPersonalObj.MouCustAddrResidenceObj.Zipcode;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataPersonalObj.MouCustAddrResidenceObj.Zipcode };
-    
       this.inputAddrResidenceObj.default = this.residenceAddrObj;
       this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
@@ -1019,9 +1019,8 @@ export class MouCustTabComponent implements OnInit {
 
         this.inputFieldMailingObj.inputLookupObj.nameSelect = this.custDataPersonalObj.MouCustAddrMailingObj.Zipcode;
         this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataPersonalObj.MouCustAddrMailingObj.Zipcode };
-      
-    this.inputAddrMailingPersonalObj.inputField = this.inputFieldMailingObj;
-    this.inputAddrMailingPersonalObj.default = this.mailingAddrObj;
+        this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
+        this.inputAddressObjForMailing.default = this.mailingAddrObj;
       }
     }
 
@@ -1047,9 +1046,8 @@ export class MouCustTabComponent implements OnInit {
 
         this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.MouCustAddrMailingObj.Zipcode;
         this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataCompanyObj.MouCustAddrMailingObj.Zipcode };
-      
-    this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
-    this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
+        this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
+        this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
       }
     }
   }
@@ -1167,8 +1165,6 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = event["CustAddrResidenceObj"].Zipcode;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrResidenceObj"].Zipcode };
-    
-      
     this.inputAddrResidenceObj.default = this.residenceAddrObj;
     this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
@@ -1192,9 +1188,8 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
-    
-      this.inputAddrMailingPersonalObj.inputField = this.inputFieldMailingObj;
-      this.inputAddrMailingPersonalObj.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
+      this.inputAddressObjForMailing.default = this.mailingAddrObj;
     }
   }
 
@@ -1243,7 +1238,6 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
-    
       this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
       this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
     }

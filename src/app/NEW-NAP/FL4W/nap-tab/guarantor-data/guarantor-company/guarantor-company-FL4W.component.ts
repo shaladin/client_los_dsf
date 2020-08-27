@@ -159,10 +159,45 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
     }
-    var refCustRelObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
+  
+
+ 
+    var AppCust = {
+      AppId: this.AppId,
       RowVersion: ""
     }
+    this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
+      (response) => {  
+
+        if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
+          var refCustRelObj = {
+            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
+            ReserveField1: CommonConstant.CustTypeCompany,
+            RowVersion: ""
+          }
+        }else{
+          var refCustRelObj = {
+            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+            ReserveField1: CommonConstant.CustTypeCompany,
+            RowVersion: ""
+          }
+        }
+
+        console.log(refCustRelObj)
+        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+          (response) => {
+            this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
+            if (this.mode != "edit") {
+              this.CompanyForm.patchValue({
+                MrCustRelationshipCode: this.MrCustRelationshipCode[0].Key
+              });
+            }
+          }
+        );
+
+      }
+    );
+  
     var refJobObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
@@ -177,16 +212,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
         }
       }
     );
-    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
-      (response) => {
-        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
-        if (this.mode != "edit") {
-          this.CompanyForm.patchValue({
-            MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
-          });
-        }
-      }
-    );
+ 
     this.http.post(URLConstant.GetListActiveRefMaster, refJobObj).subscribe(
       (response) => {
         this.MrJobPositionCode = response[CommonConstant.ReturnObj];

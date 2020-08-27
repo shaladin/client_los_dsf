@@ -1,0 +1,70 @@
+{
+    "title": "Lookup Asset",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "FULL_ASSET_CODE",
+        "id": "assetCode",
+        "value": "",
+        "label": "Full Asset Code",
+        "placeholder": "Asset Code"
+      },
+      {
+        "type": "textbox",
+        "name": "FULL_ASSET_NAME",
+        "id": "assetName",
+        "value": "",
+        "label": "Full Asset Name",
+        "placeholder": "Asset Name"
+      }
+    ],
+    "querystring": {
+      "select": "SELECT A.FULL_ASSET_CODE AS FullAssetCode, A.FULL_ASSET_NAME AS FullAssetName, B.ASSET_TYPE_ID AS AssetTypeId, B.ASSET_TYPE_CODE AS AssetTypeCode, C.ASSET_CATEGORY_CODE AS AssetCategoryCode",
+      "from": "FROM dbo.ASSET_MASTER A WITH(NOLOCK) JOIN dbo.ASSET_TYPE B WITH(NOLOCK) ON A.ASSET_TYPE_ID = B.ASSET_TYPE_ID JOIN dbo.ASSET_CATEGORY C WITH (NOLOCK) ON A.ASSET_CATEGORY_ID = C.ASSET_CATEGORY_ID",
+      "where":"WHERE A.IS_ACTIVE = 1 AND A.ASSET_CATEGORY_ID IS NOT NULL AND A.IS_FINAL = 1"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Full Asset Code",
+        "name": "FullAssetCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Full Asset Name",
+        "name": "FullAssetName"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "FullAssetCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "FullAssetCode"
+          }
+        ]
+      }
+    ],
+    "propertyId": "FullAssetCode",
+    "propertyName": "FullAssetName"
+  }
+  

@@ -158,31 +158,52 @@ export class GuarantorCompanyComponent implements OnInit {
     var refCompObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
-    }
-    var refCustRelObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
-      RowVersion: ""
-    }
+    } 
     var refJobObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
     }
+    var AppCust = {
+      AppId: this.AppId,
+      RowVersion: ""
+    }
+    this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
+      (response) => {  
+
+        if( response["MrCustTypeCode"] ==  CommonConstant.CustTypePersonal){ 
+          var refCustRelObj = {
+            RefMasterTypeCode:  CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
+            ReserveField1:  CommonConstant.CustTypeCompany,
+            RowVersion: ""
+          }
+        }else{
+          var refCustRelObj = {
+            RefMasterTypeCode:  CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+            ReserveField1: CommonConstant.CustTypeCompany,
+            RowVersion: ""
+          }
+        }
+
+        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+          (response) => {
+            this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
+            if (this.mode != "edit") {
+              this.CompanyForm.patchValue({
+                MrCustRelationshipCode: this.MrCustRelationshipCode[0].Key
+              });
+            }
+          }
+        );
+
+      }
+    );
+
     this.http.post(URLConstant.GetListActiveRefMaster, refCompObj).subscribe(
       (response) => {
         this.MrCompanyTypeCode = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.CompanyForm.patchValue({
             MrCompanyTypeCode: this.MrCompanyTypeCode[0].MasterCode
-          });
-        }
-      }
-    );
-    this.http.post(URLConstant.GetListActiveRefMaster, refCustRelObj).subscribe(
-      (response) => {
-        this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
-        if (this.mode != "edit") {
-          this.CompanyForm.patchValue({
-            MrCustRelationshipCode: this.MrCustRelationshipCode[0].MasterCode
           });
         }
       }

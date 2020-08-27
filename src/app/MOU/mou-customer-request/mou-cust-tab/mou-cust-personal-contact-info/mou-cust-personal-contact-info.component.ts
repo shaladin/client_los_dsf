@@ -272,27 +272,26 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.callbackCopyAddr.emit(this.copyFromContactPerson);
   }
 
-  setContactPersonAddr(appCustPersonalContactPerson) {
-    this.contactPersonAddrObj.Addr = appCustPersonalContactPerson.Addr;
-    this.contactPersonAddrObj.AreaCode1 = appCustPersonalContactPerson.AreaCode1;
-    this.contactPersonAddrObj.AreaCode2 = appCustPersonalContactPerson.AreaCode2;
-    this.contactPersonAddrObj.AreaCode3 = appCustPersonalContactPerson.AreaCode3;
-    this.contactPersonAddrObj.AreaCode4 = appCustPersonalContactPerson.AreaCode4;
-    this.contactPersonAddrObj.City = appCustPersonalContactPerson.City;
-    this.contactPersonAddrObj.Fax = appCustPersonalContactPerson.Fax;
-    this.contactPersonAddrObj.FaxArea = appCustPersonalContactPerson.FaxArea;
-    this.contactPersonAddrObj.Phn1 = appCustPersonalContactPerson.Phn1;
-    this.contactPersonAddrObj.Phn2 = appCustPersonalContactPerson.Phn2;
-    this.contactPersonAddrObj.PhnArea1 = appCustPersonalContactPerson.PhnArea1;
-    this.contactPersonAddrObj.PhnArea2 = appCustPersonalContactPerson.PhnArea2;
-    this.contactPersonAddrObj.PhnExt1 = appCustPersonalContactPerson.PhnExt1;
-    this.contactPersonAddrObj.PhnExt2 = appCustPersonalContactPerson.PhnExt2;
+  setContactPersonAddr(MouCustPersonalContactPerson) {
+    this.contactPersonAddrObj.Addr = MouCustPersonalContactPerson.Addr;
+    this.contactPersonAddrObj.AreaCode1 = MouCustPersonalContactPerson.AreaCode1;
+    this.contactPersonAddrObj.AreaCode2 = MouCustPersonalContactPerson.AreaCode2;
+    this.contactPersonAddrObj.AreaCode3 = MouCustPersonalContactPerson.AreaCode3;
+    this.contactPersonAddrObj.AreaCode4 = MouCustPersonalContactPerson.AreaCode4;
+    this.contactPersonAddrObj.City = MouCustPersonalContactPerson.City;
+    this.contactPersonAddrObj.Fax = MouCustPersonalContactPerson.Fax;
+    this.contactPersonAddrObj.FaxArea = MouCustPersonalContactPerson.FaxArea;
+    this.contactPersonAddrObj.Phn1 = MouCustPersonalContactPerson.Phn1;
+    this.contactPersonAddrObj.Phn2 = MouCustPersonalContactPerson.Phn2;
+    this.contactPersonAddrObj.PhnArea1 = MouCustPersonalContactPerson.PhnArea1;
+    this.contactPersonAddrObj.PhnArea2 = MouCustPersonalContactPerson.PhnArea2;
+    this.contactPersonAddrObj.PhnExt1 = MouCustPersonalContactPerson.PhnExt1;
+    this.contactPersonAddrObj.PhnExt2 = MouCustPersonalContactPerson.PhnExt2;
 
-    this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
-    this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: appCustPersonalContactPerson.Zipcode };
-
-    this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
+    this.inputFieldContactPersonObj.inputLookupObj.nameSelect = MouCustPersonalContactPerson.Zipcode;
+    this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: MouCustPersonalContactPerson.Zipcode };
     this.inputAddressObjForCP.default = this.contactPersonAddrObj;
+    this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
   }
 
   setProfessionName(professionCode) {
@@ -319,6 +318,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   initLookup() {
+    this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;

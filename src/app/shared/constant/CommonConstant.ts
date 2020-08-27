@@ -168,6 +168,7 @@ export class CommonConstant {
     public static AppStatCancel = "CAN";
     //APV RESULT
     public static ApvResultReturn = "Return";
+    public static ApvResultRejectFinal = "RejectFinal";
 
     //REF PROD COMPNT
     public static RefProdCompntCodeWayOfFinancing = "WAY_OF_FINANCING";
@@ -379,6 +380,8 @@ export class CommonConstant {
     public static RefMasterTypeCodeAssetUsage = "ASSET_USAGE";
     public static RefMasterTypeCodeCustPersonalRelationship = "CUST_PERSONAL_RELATIONSHIP";
     public static RefMasterTypeCodeCustCompanyRelationship = "CUST_COMPANY_RELATIONSHIP";
+    public static RefMasterTypeCodeGuarPersonalRelationship = "GUAR_PERSONAL_RELATIONSHIP";
+    public static RefMasterTypeCodeGuarCompanyRelationship = "GUAR_COMPANY_RELATIONSHIP"; 
     public static RefMasterTypeCodeIdType = "ID_TYPE";
     public static RefMasterTypeCodeRateType = "RATE_TYPE";
     public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
@@ -486,4 +489,7 @@ export class CommonConstant {
     public static MOU_REVOLVING_TYPE = "MOU_REVOLVING_TYPE";
     public static MRT_ON_PAYMENT = "ON_PAYMENT";
     public static MRT_ON_FIN_CON = "ON_FIN_CON";
+    
+    // Negative Customer Source Code
+    public static NegCustSourceCodeConfins = "CONFINS";
 }
