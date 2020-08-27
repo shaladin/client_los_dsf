@@ -40,6 +40,7 @@
                     <th class="text-left">Document Name</th>
                     <th class="text-left">Required</th>
                     <th class="text-left">Check</th>
+                    <th class="text-left">Has Expired Date</th>
                     <th class="text-left">Promised Date</th>
                     <th class="text-left">Expired Date</th>
                     <th class="text-left">Notes</th>
@@ -59,6 +60,9 @@
                     </td>
                     <td [formGroupName]="i" class="text-center">
                       <input type="checkbox" class="form-check-input" formControlName="IsChecked">
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      <input type="checkbox" class="form-check-input" formControlName="IsExpDtMandatory" (change)="ExpDtHandler($event, i)">
                     </td>
                     <td [formGroupName]="i" class="text-center">
                       <input type="date" class="form-control adInsInput width-100-per" formControlName="PromisedDt"
@@ -92,7 +96,7 @@
               [queryParams]="{BizTemplateCode: BizTemplateCode}">
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="button" class="btn btn-raised btn-primary" (click)="setAddTc()">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="SaveAdditionalTCHandler()">
               <i class="far fa-check-square"></i> Save
             </button>
             <button type="submit" class="btn btn-raised btn-primary">
@@ -129,7 +133,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-6 adins-required-label"translate>Notes</label>
+                  <label class="col-md-6"translate>Notes</label>
                   <div class="col-md-6">
                     <textarea type="text" class="form-control adInsInput" formControlName="Notes"></textarea>
                     <lib-uc-show-errors [control]="AddTcForm.controls.Notes" [submit]="enjiForm.submitted">
