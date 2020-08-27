@@ -118,8 +118,8 @@
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrCustRelationshipCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrCustRelationshipCode.invalid }">
-                        <option *ngFor="let it of MrCustRelationshipCode" value="{{it.MasterCode}}">
-                          {{it.Descr}}
+                        <option *ngFor="let it of MrCustRelationshipCode" value="{{it.Key}}">
+                          {{it.Value}}
                         </option>
                         <lib-uc-show-errors [control]="PersonalForm.controls.MrCustRelationshipCode"
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
