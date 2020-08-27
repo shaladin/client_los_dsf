@@ -12,7 +12,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { ResponseMouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctr/ResponseMouCustListedCustFctrObj.Model';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -22,7 +21,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() IsListedCustFctr: boolean;
   @Output() OutputData: EventEmitter<any> = new EventEmitter();
-  listedCusts: Array<ResponseMouCustListedCustFctrObj>;
+  listedCusts: Array<MouCustListedCustFctrObj>;
   inputLookupObj: InputLookupObj;
   dictLookup: {[key: string]: any;} = {};
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
@@ -47,7 +46,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     });
     var mouListedFctr = new MouCustListedCustFctrObj();
     mouListedFctr.MouCustId = this.MouCustId;
-    this.httpClient.post<Array<ResponseMouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
+    this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
       (response) => {
         this.listedCusts = response;
         var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
