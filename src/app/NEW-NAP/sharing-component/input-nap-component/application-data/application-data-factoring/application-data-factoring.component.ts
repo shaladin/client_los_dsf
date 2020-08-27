@@ -237,7 +237,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
       (response) => {
-        this.CheckInstType();
         this.allRecourseType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
@@ -345,7 +344,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();  
       this.SalesAppInfoForm.controls.PaidBy.disable(); 
       this.SalesAppInfoForm.controls.MrWopCode.disable(); 
-      this.SalesAppInfoForm.controls.RecourseType.disable();  
+      this.SalesAppInfoForm.controls.RecourseType.disable();    
       this.SalesAppInfoForm.controls.TopDays.disable();   
       this.SalesAppInfoForm.controls.IsDisclosed.disable();   
       this.SalesAppInfoForm.controls.Tenor.disable();  
