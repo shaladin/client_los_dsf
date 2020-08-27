@@ -200,6 +200,9 @@ export class NapFromLeadDetailComponent implements OnInit {
         if (this.bizTemplateCode == CommonConstant.FCTR) {
           this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         }
+        if (this.bizTemplateCode == CommonConstant.CFNA) {
+          this.router.navigate(["Nap/CFNA/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        }
       });
 
   }
