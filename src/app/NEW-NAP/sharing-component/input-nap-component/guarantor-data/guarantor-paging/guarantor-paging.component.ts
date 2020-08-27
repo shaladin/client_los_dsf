@@ -33,6 +33,7 @@ export class GuarantorPagingComponent implements OnInit {
   appWizardObj: AppWizardObj;
   closeChk: any;
   MrCustRelationshipCode: any = new Array();
+  guarantorObj: GuarantorObj;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -42,9 +43,9 @@ export class GuarantorPagingComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
 
-    var guarantorObj = new GuarantorObj();
-    guarantorObj.AppId = this.AppId;
-    this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
+    this.guarantorObj = new GuarantorObj();
+    this.guarantorObj.AppId = this.AppId;
+    this.http.post(URLConstant.GetAppGuarantorList, this.guarantorObj).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""
@@ -80,7 +81,17 @@ export class GuarantorPagingComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    this.outputTab.emit();
+    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, this.guarantorObj).subscribe(
+      (response) => {
+        for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+          if (response[CommonConstant.ReturnObj][i].MrMaritalStatCode == null || response[CommonConstant.ReturnObj][i].MrNationalityCode == null) {
+            this.toastr.errorMessage(ExceptionConstant.PLEASE_COMPLETE_MANDATORY_INPUT);
+            return;
+          }
+        }
+        this.outputTab.emit();
+      });
+
   }
 
   Cancel() {
@@ -125,7 +136,7 @@ export class GuarantorPagingComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
         this.result = this.inputGridObj.resultData.Data;
-      });
+      }); 
   }
 
   close(event) {
