@@ -60,7 +60,7 @@ export class GuarantorPersonalComponent implements OnInit {
     IdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     MrMaritalStatCode: ['', [Validators.required, Validators.maxLength(50)]],
     IdExpDt: ['', [Validators.required]],
-    MrNationalityCode: ['', [Validators.maxLength(50)]],
+    MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
     BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
     BirthDt: ['', [Validators.required]],
     TaxIdNo: ['', [Validators.maxLength(50)]],
@@ -195,9 +195,14 @@ export class GuarantorPersonalComponent implements OnInit {
           this.PersonalForm.patchValue({
             MrMaritalStatCode: this.MrMaritalStatCode[0].MasterCode
           });
+        }else if(  this.resultData.AppGuarantorPersonalObj.MrMaritalStatCode == null){
+          this.PersonalForm.patchValue({
+            MrMaritalStatCode: ""
+          });
         }
       }
     );
+
     var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
@@ -208,6 +213,10 @@ export class GuarantorPersonalComponent implements OnInit {
               MrNationalityCode: this.MrNationalityCode[0].MasterCode
             });
           }
+        }else if(  this.resultData.AppGuarantorPersonalObj.MrNationalityCode == null){
+          this.PersonalForm.patchValue({
+            MrNationalityCode: ""
+          });
         }
       }
     );
@@ -217,6 +226,10 @@ export class GuarantorPersonalComponent implements OnInit {
         if (this.mode != "edit") {
           this.PersonalForm.patchValue({
             MrReligionCode: this.MrReligionCode[0].MasterCode
+          });
+        }else if(  this.resultData.AppGuarantorPersonalObj.MrReligionCode == null){
+          this.PersonalForm.patchValue({
+            MrReligionCode: ""
           });
         }
       }
@@ -508,7 +521,7 @@ export class GuarantorPersonalComponent implements OnInit {
       MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrGenderCode: ['', [Validators.maxLength(50)]],
       IdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      MrMaritalStatCode: ['', [Validators.maxLength(50)]],
+      MrMaritalStatCode: ['', [Validators.required,Validators.maxLength(50)]],
       IdExpDt: ['', [Validators.required]],
       MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
