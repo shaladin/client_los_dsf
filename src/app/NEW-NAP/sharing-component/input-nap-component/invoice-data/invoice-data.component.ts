@@ -17,7 +17,6 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
   templateUrl: './invoice-data.component.html'
 })
 export class InvoiceDataComponent implements OnInit {
-
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   inputPagingObj: UcPagingObj;
@@ -28,7 +27,7 @@ export class InvoiceDataComponent implements OnInit {
   IsDisableCustFctr: boolean = true;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   arrAddCrit;
-
+  
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
   }
@@ -51,7 +50,17 @@ export class InvoiceDataComponent implements OnInit {
     this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
 
-
+    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      (response) => {
+          this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
+            (response2) => {
+              if (response2["mouCustListedCustFctrObjs"]["length"] > 0) {
+                this.IsDisableCustFctr = false;
+              } else {
+                this.IsDisableCustFctr = true;
+              }
+            });
+        });
 
     var obj = {
       AppId: this.AppId,
@@ -59,7 +68,8 @@ export class InvoiceDataComponent implements OnInit {
     this.httpClient.post<AppFctrObj>(URLConstant.GetAppFctrByAppId, obj).subscribe(
       (response) => {
         this.AppFactoringObj = response;
-        if (!this.AppFactoringObj.IsCustListed) {
+        this.GetListAppInvoiceFctr();
+        if (!this.IsDisableCustFctr) {
           this.InvoiceForm.controls.CustomerFactoringName.clearValidators();
           this.InvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
         }
@@ -72,8 +82,6 @@ export class InvoiceDataComponent implements OnInit {
         this.arrAddCrit.push(addCrit);
         this.MouCustLookupObj.addCritInput = this.arrAddCrit;
         // this.MouCustLookupObj.isReady = true;
-
-        this.GetListAppInvoiceFctr();
       });
   }
 
@@ -88,18 +96,6 @@ export class InvoiceDataComponent implements OnInit {
     this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
         this.dataobj = response['ReturnObject'];
-        if (this.AppFactoringObj.PaidBy == "CUST_FCTR" && this.dataobj.AppInvoiceFctrList.length >= 1) {
-          this.IsDisableCustFctr = true;
-          this.InvoiceForm.patchValue({
-            CustomerFactoringNo: this.dataobj.AppInvoiceFctrList[0].CustomerFactoringNo,
-            CustomerFactoringName: this.dataobj.AppInvoiceFctrList[0].CustomerFactoringName
-          });
-          this.InvoiceForm.controls.CustomerFactoringName.clearValidators();
-          this.InvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
-          this.InvoiceForm.controls.CustomerFactoringName.disable();
-        } else {
-          this.IsDisableCustFctr = false;
-        }
       });
   }
 

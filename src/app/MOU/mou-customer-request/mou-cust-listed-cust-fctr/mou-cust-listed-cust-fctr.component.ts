@@ -46,19 +46,19 @@ export class MouCustListedCustFctrComponent implements OnInit {
     });
     var mouListedFctr = new MouCustListedCustFctrObj();
     mouListedFctr.MouCustId = this.MouCustId;
-    this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
+    this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
       (response) => {
-        this.listedCusts = response["mouCustListedCustFctrObjs"];
-        var custSocmedObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
+        this.listedCusts = response;
+        var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
         for (let i = 0; i < this.listedCusts.length; i++) {
-          custSocmedObjs.push(this.addGroup(this.listedCusts[i], i));
+          MouCustListedCustFctrObjs.push(this.addGroup(this.listedCusts[i], i));
 
           var InputLookupCustomerObj = this.initLookup();
           this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
           this.dictLookup[i] = InputLookupCustomerObj;
           this.setCustName(i, this.listedCusts[i].CustNo);
         }
-        this.OutputData.emit(custSocmedObjs.getRawValue());
+        this.OutputData.emit(MouCustListedCustFctrObjs.getRawValue());
       });   
   }
 
@@ -120,24 +120,24 @@ export class MouCustListedCustFctrComponent implements OnInit {
             }
           );
         }
-        var custSocmedObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
-        var no = custSocmedObjs.value[idx].No;
+        var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
+        var no = MouCustListedCustFctrObjs.value[idx].No;
         this.MouCustIsListedForm.removeControl("lookupCustomerForGrp" + no);
-        custSocmedObjs.removeAt(idx);
-        this.OutputData.emit(custSocmedObjs.getRawValue());
+        MouCustListedCustFctrObjs.removeAt(idx);
+        this.OutputData.emit(MouCustListedCustFctrObjs.getRawValue());
       }
     }
   }
 
   addListCust(){
-    var custSocmedObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
-    var length = custSocmedObjs.value.length;
-    console.log(custSocmedObjs);
+    var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
+    var length = MouCustListedCustFctrObjs.value.length;
+    console.log(MouCustListedCustFctrObjs);
     var max = 0;
     if(length > 0){
-      max = custSocmedObjs.value[length-1].No;
+      max = MouCustListedCustFctrObjs.value[length-1].No;
     }
-    custSocmedObjs.push(this.addGroup(undefined, max + 1));
+    MouCustListedCustFctrObjs.push(this.addGroup(undefined, max + 1));
 
     var InputLookupCustomerObj = this.initLookup();
     this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
@@ -170,6 +170,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
         CustNo: ['', [Validators.required]],
         CustName: ['', [Validators.required]],
         MrCustTypeCode: ['', [Validators.required]],
+        MrCustTypeDescr: [''],
         RowVersion: ['']
       })
     }else{
@@ -180,6 +181,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
         CustNo: [mouCustListedCustFctrObj.CustNo, [Validators.required]],
         CustName: [mouCustListedCustFctrObj.CustName, [Validators.required]],
         MrCustTypeCode: [mouCustListedCustFctrObj.MrCustTypeCode, [Validators.required]],
+        MrCustTypeDescr: [mouCustListedCustFctrObj.MrCustTypeDescr, [Validators.required]],
         RowVersion: [mouCustListedCustFctrObj.RowVersion]
       })
     } 
@@ -191,7 +193,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
       CustName: event.CustName,
       MrCustTypeCode: event.MrCustTypeCode,
     });    
-    var custSocmedObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
-    this.OutputData.emit(custSocmedObjs.getRawValue());
+    var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
+    this.OutputData.emit(MouCustListedCustFctrObjs.getRawValue());
   }
 }
