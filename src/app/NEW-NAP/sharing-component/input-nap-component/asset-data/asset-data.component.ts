@@ -118,6 +118,7 @@ export class AssetDataComponent implements OnInit {
     OwnerAddrType: [''],
     selectedDpType: ['', Validators.required],
     SelfUsage: [false],
+    SelfOwner: [false],
     AssetAccessoriesObjs: this.fb.array([]),
     items: this.fb.array([]),
     AppAssetAttrObjs: this.fb.array([]),
@@ -277,6 +278,7 @@ export class AssetDataComponent implements OnInit {
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
+    await this.GetAppCustPhone();
     this.bindAllRefMasterObj();
     this.initLookup();
     this.locationAddrObj = new AddrObj();
@@ -847,45 +849,8 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.patchValue({
         UserName: this.AppCustObj.CustName,
         MrUserRelationshipCode: "SELF",
-        OwnerName: this.AppCustObj.CustName,
-        MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
-        OwnerIdNo: this.AppCustObj.IdNo,
-        MrOwnerRelationshipCode: "SELF",
-        OwnerAddr: this.AddrLegalObj[0].Addr,
-        OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
-        OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
-        OwnerAreaCode3: this.AddrLegalObj[0].AreaCode3,
-        OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
-        OwnerCity: this.AddrLegalObj[0].City,
-        OwnerZipcode: this.AddrLegalObj[0].Zipcode
       });
-      if (this.CustType == CommonConstant.CustTypePersonal) {
-        this.AssetDataForm.patchValue({
-          MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
-          OwnerIdNo: this.AppCustObj.IdNo,
-        });
-      }
-      if (this.CustType == CommonConstant.CustTypeCompany) {
-        this.AssetDataForm.patchValue({
-          MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
-          OwnerIdNo: this.AppCustCoyObj.RegistrationNo,
-        });
-      }
-
-      this.inputFieldOwnerAddrObj = new InputFieldObj();
-      this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
-      this.ownerAddrObj = new AddrObj();
-      this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
-      this.ownerAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
-      this.ownerAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
-      this.ownerAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
-      this.ownerAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
-      this.ownerAddrObj.City = this.AddrLegalObj[0].City;
-      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
-      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
-      this.inputAddressObjForOwner.default = this.ownerAddrObj;
-      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
-
+      
       this.AssetDataForm.controls.UserName.clearValidators();
       this.AssetDataForm.controls.UserName.updateValueAndValidity();
       this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
@@ -902,6 +867,53 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls["MrUserRelationshipCode"].enable();
     };
 
+  }
+
+  async SelfOwnerChange(event) {
+    if (event.checked == true) {
+      this.AssetDataForm.patchValue({
+        OwnerName: this.AppCustObj.CustName,
+        MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
+        OwnerIdNo: this.AppCustObj.IdNo,
+        MrOwnerRelationshipCode: "SELF",
+        OwnerAddr: this.AddrLegalObj[0].Addr,
+        OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
+        OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
+        OwnerAreaCode3: this.AddrLegalObj[0].AreaCode3,
+        OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
+        OwnerCity: this.AddrLegalObj[0].City,
+        OwnerZipcode: this.AddrLegalObj[0].Zipcode,
+        OwnerMobilePhnNo: typeof(this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : ''
+      });
+      this.inputFieldOwnerAddrObj = new InputFieldObj();
+      this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+      this.ownerAddrObj = new AddrObj();
+      this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
+      this.ownerAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
+      this.ownerAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
+      this.ownerAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
+      this.ownerAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
+      this.ownerAddrObj.City = this.AddrLegalObj[0].City;
+      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
+      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
+      this.inputAddressObjForOwner.default = this.ownerAddrObj;
+      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+
+      this.AssetDataForm.controls["OwnerName"].disable();
+      this.AssetDataForm.controls["MrIdTypeCode"].disable();
+      this.AssetDataForm.controls["OwnerIdNo"].disable();
+      this.AssetDataForm.controls["MrOwnerRelationshipCode"].disable();
+      this.AssetDataForm.controls["OwnerMobilePhnNo"].disable();
+      this.AssetDataForm.controls["ownerData"].disable();
+    } else {
+      this.AssetDataForm.controls["OwnerName"].enable();
+      this.AssetDataForm.controls["MrIdTypeCode"].enable();
+      this.AssetDataForm.controls["OwnerIdNo"].enable();
+      this.AssetDataForm.controls["MrOwnerRelationshipCode"].enable();
+      this.AssetDataForm.controls["OwnerMobilePhnNo"].enable();
+      this.AssetDataForm.controls["ownerData"].enable();
+
+    };
   }
 
 
@@ -985,6 +997,8 @@ export class AssetDataComponent implements OnInit {
               LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
               LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
               LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
+              SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
+              SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
             });
           }
           this.AssetConditionChanged();
@@ -1663,6 +1677,21 @@ export class AssetDataComponent implements OnInit {
         }
       }
     );
+  }
+
+  async GetAppCustPhone() {
+    if(typeof(this.AppCustObj) != 'undefined')
+    {
+      var appObj = {
+        AppId: this.AppId,
+      };
+      await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
+        (response) => {
+          if (typeof(response['AppCustPersonalObj']) != 'undefined') this.AppCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
+        }
+      );
+    }
+    
   }
 
   async GetRefProdCompt() {
