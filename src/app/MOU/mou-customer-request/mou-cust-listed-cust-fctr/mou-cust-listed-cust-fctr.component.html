@@ -51,7 +51,7 @@
               <a [routerLink]="" (click)="openView(MouCustIsListedForm.controls['ListCust'].value[i].CustNo)">{{MouCustIsListedForm.controls['ListCust'].value[i].CustName}}</a>
             </td>
             <td style="text-align: left;">
-              {{MouCustIsListedForm.controls['ListCust'].value[i].MrCustTypeCode}}
+              {{MouCustIsListedForm.controls['ListCust'].value[i].MrCustTypeDescr}}
             </td>
             <td style="text-align: center;">
               <a (click)="deleteCustFctr(MouCustIsListedForm.controls['ListCust'].value[i].MouListedCustFctrId, i)">

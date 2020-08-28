@@ -237,7 +237,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecourseType).subscribe(
       (response) => {
-        this.CheckInstType();
         this.allRecourseType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
@@ -301,6 +300,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
     for (let i = 0; i < this.allMouCust.length; i++) {
       if(this.allMouCust[i].MouCustId == MouCustId){
+        this.CheckInstType();
         this.SalesAppInfoForm.patchValue({
           MrInstTypeCode : this.allMouCust[i].MrInstTypeCode
         }) 
@@ -325,13 +325,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }else{
       this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
     }
-
   }
 
   CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {  
-      this.SalesAppInfoForm.controls.TopDays.clearValidators();
-      this.SalesAppInfoForm.controls.TopBased.disable();  
+      this.SalesAppInfoForm.controls.TopDays.disable();
+      this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();  
       this.SalesAppInfoForm.controls.PaidBy.disable(); 
       this.SalesAppInfoForm.controls.MrWopCode.disable(); 
@@ -341,11 +340,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.Tenor.setValue("");  
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) { 
       this.SalesAppInfoForm.controls.TopBased.enable();
+      this.SalesAppInfoForm.controls.TopBased.setValidators([Validators.required]);
       this.SalesAppInfoForm.controls.TopDays.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();  
       this.SalesAppInfoForm.controls.PaidBy.disable(); 
       this.SalesAppInfoForm.controls.MrWopCode.disable(); 
-      this.SalesAppInfoForm.controls.RecourseType.disable();  
+      this.SalesAppInfoForm.controls.RecourseType.disable();    
       this.SalesAppInfoForm.controls.TopDays.disable();   
       this.SalesAppInfoForm.controls.IsDisclosed.disable();   
       this.SalesAppInfoForm.controls.Tenor.disable();  

@@ -39,8 +39,8 @@
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCustRelationshipCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCustRelationshipCode.invalid }">
-                        <option *ngFor="let it of MrCustRelationshipCode" [value]="it.MasterCode">
-                          {{it.Descr}}</option>
+                        <option *ngFor="let it of MrCustRelationshipCode" [value]="it.Key">
+                          {{it.Value}}</option>
                           <lib-uc-show-errors [control]="CompanyForm.controls.MrCustRelationshipCode"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </select>

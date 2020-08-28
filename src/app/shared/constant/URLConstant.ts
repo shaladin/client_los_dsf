@@ -546,7 +546,7 @@ export class URLConstant {
     public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
     public static GetListMouCustByCustNo = environment.losUrl + "/MouCust/GetListMouCustByCustNo";
     public static GetMouCustByAppId = environment.losUrl + "/MouCust/GetMouCustByAppId";
-    public static MouCustExecutionActivity = environment.losUrl + "/MouCust/MouCustExecutionActivity";
+    public static MouCustExecutionHumanActivity = environment.losUrl + "/MouCust/MouCustExecutionHumanActivity";
 
     public static AddEditMouCustPersonalData = environment.losUrl + "/MouCust/AddEditMouCustPersonalData";
     public static AddEditMouCustCompanyData = environment.losUrl + "/MouCust/AddEditMouCustCompanyData";
@@ -733,6 +733,7 @@ export class URLConstant {
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
     public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
     public static DeleteAppTc = environment.losUrl + "/AppTc/DeleteAppTc";
+    public static EditAdditionalTcNew = environment.losUrl + "/AppTc/EditAdditionalTcNew";
     
     // App Asset
     public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
@@ -1049,6 +1050,7 @@ export class URLConstant {
     public static AddReturnHandlingFromPhoneVerif = environment.losUrl + "/PhoneVerif/AddReturnHandlingFromPhoneVerif";
     // App Cust
     public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
+    public static AddNegativeCustByAppId = environment.losUrl + "/AppCust/AddNegativeCustByAppId";
 
     //Verf Question Answer
     public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
