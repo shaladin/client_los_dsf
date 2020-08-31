@@ -166,7 +166,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             AssetTypeCode: this.CollTypeList[0].Key
           });
           // SEMENTARA DI COMMENT BUAT CFNA
-          // this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
+          this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
         }
       });
 
@@ -175,7 +175,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         this.CollConditionList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
-            MrCollateralConditionCode: this.CollConditionList[0].Key
+            MrCollateralConditionCode: this.CollConditionList[1].Key
           });
         }
       });
@@ -261,30 +261,30 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       ProdOfferingCode: ProdOfferingCode,
       ProdOfferingVersion: ProdOfferingVersion,
     };
-    this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, ProdOfferingObj).subscribe(
-      (response) => {
-        var temp = response["ListProdOfferingDObj"];
-        var LobCode: string = "";
-        for (var i = 0; i < temp.length; i++) {
-          if (temp[i].RefProdCompntCode == "ASSETTYPE") {
-            LobCode = temp[i].CompntValue;
-          }
-        }
-        this.AssetTypeCode = LobCode;
+    // this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion, ProdOfferingObj).subscribe(
+    //   (response) => {
+    //     var temp = response["ListProdOfferingDObj"];
+    //     var LobCode: string = "";
+    //     for (var i = 0; i < temp.length; i++) {
+    //       if (temp[i].RefProdCompntCode == "ASSETTYPE") {
+    //         LobCode = temp[i].CompntValue;
+    //       }
+    //     }
+    //     this.AssetTypeCode = LobCode;
         // this.AddCollForm.patchValue({
         //   AssetTypeCode: this.AssetTypeCode
         // });
         // SEMENTARA DI COMMENT BUAT CFNA
         // this.onItemChange(this.AssetTypeCode);
         // Generate Collateral Doc
-        this.getRefAssetDocList();
-      });
-
+        // this.getRefAssetDocList();
+      // });
   }
 
   getRefAssetDocList() {
     this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
       (response) => {
+        console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
           var ListDoc = this.AddCollForm.get('ListDoc') as FormArray;
           for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
@@ -613,7 +613,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
           this.items.push(eachDataDetail);
           if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-            this.items.controls[i]['controls']['SerialNoValue'].disable();
+            // this.items.controls[i]['controls']['SerialNoValue'].disable();
             this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
           }
         }
@@ -625,6 +625,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             }
           }
         }
+
+        this.AssetTypeCode = AssetTypeCode;
+        this.getRefAssetDocList();
       });
   }
 
