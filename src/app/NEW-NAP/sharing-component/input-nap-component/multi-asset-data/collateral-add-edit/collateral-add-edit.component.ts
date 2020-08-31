@@ -27,6 +27,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -117,6 +118,7 @@ export class CollateralAddEditComponent implements OnInit {
   appCollateralRegistObj: any;
   returnAppCollateralRegistObj: any;
   businessDt: Date;
+  AppCustObj: AppCustObj;
   // @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
@@ -141,6 +143,7 @@ export class CollateralAddEditComponent implements OnInit {
     Notes: [''],
     SerialNo4: [''],
 
+    SelfOwner: [false],
     OwnerName: [''],
     MrIdTypeCode: [''],
     OwnerRelationship: [''],
@@ -323,6 +326,59 @@ export class CollateralAddEditComponent implements OnInit {
     );
   }
 
+  CopyUserForSelfOwner(){
+    if (this.AddCollForm.controls.SelfOwner.value == true) {
+
+      this.AddCollForm.controls.OwnerName.disable();
+      this.AddCollForm.controls.OwnerRelationship.disable();
+      this.AddCollForm.controls.OwnerMobilePhn.disable();
+      this.AddCollForm.controls.MrIdTypeCode.disable();
+      this.AddCollForm.controls.OwnerIdNo.disable();
+      this.AddCollForm.controls.collOwnerAddress.disable();
+
+      this.AppCustObj = new AppCustObj();
+      this.collOwnerAddrObj = new AppCustAddrObj();
+
+      var appObj = { "AppId": this.AppId };
+      this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
+        response => {
+          this.AppCustObj = response['AppCustObj'];
+          this.returnCollOwnerObj = response['AppCustAddrLegalObj'];
+
+          this.AddCollForm.patchValue({
+            OwnerName: this.AppCustObj.CustName,
+            OwnerRelationship: "SELF",
+            MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
+            OwnerIdNo: this.AppCustObj.IdNo,
+            OwnerMobilePhn: typeof(response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
+          })
+          this.collOwnerAddrObj = new AppCustAddrObj();
+          this.collOwnerAddrObj.Addr = this.returnCollOwnerObj.Addr;
+          this.collOwnerAddrObj.AreaCode3 = this.returnCollOwnerObj.AreaCode3;
+          this.collOwnerAddrObj.AreaCode4 = this.returnCollOwnerObj.AreaCode4;
+          this.collOwnerAddrObj.AreaCode1 = this.returnCollOwnerObj.AreaCode1;
+          this.collOwnerAddrObj.AreaCode2 = this.returnCollOwnerObj.AreaCode2;
+          this.collOwnerAddrObj.City = this.returnCollOwnerObj.City;
+         
+          this.inputFieldCollOwnerObj = new InputFieldObj();
+          this.inputFieldCollOwnerObj.inputLookupObj = new InputLookupObj();
+          this.inputFieldCollOwnerObj.inputLookupObj.nameSelect = this.returnCollOwnerObj.Zipcode;
+          this.inputFieldCollOwnerObj.inputLookupObj.jsonSelect = { Zipcode: this.returnCollOwnerObj.Zipcode };
+          this.inputAddressObjForColl.default = this.collOwnerAddrObj;
+          this.inputAddressObjForColl.inputField = this.inputFieldCollOwnerObj;
+        }
+      )
+    }
+    else {
+      this.AddCollForm.controls.OwnerName.enable();
+      this.AddCollForm.controls.OwnerRelationship.enable();
+      this.AddCollForm.controls.OwnerMobilePhn.enable();
+      this.AddCollForm.controls.MrIdTypeCode.enable();
+      this.AddCollForm.controls.OwnerIdNo.enable();
+      this.AddCollForm.controls.collOwnerAddress.enable();
+    }
+  }
+
   copyToLocationAddr() {
     this.appCustAddrObj = new AppCustAddrObj();
     this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
@@ -441,6 +497,7 @@ export class CollateralAddEditComponent implements OnInit {
             MrIdTypeCode: this.returnAppCollateralRegistObj.MrIdTypeCode,
             OwnerIdNo: this.returnAppCollateralRegistObj.OwnerIdNo,
             OwnerMobilePhn: this.returnAppCollateralRegistObj.OwnerMobilePhnNo,
+            SelfOwner: (this.returnAppCollateralRegistObj.MrOwnerRelationshipCode=="SELF"),
           });
 
           this.collOwnerAddrObj = new AppCustAddrObj();
