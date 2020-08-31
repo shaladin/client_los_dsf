@@ -199,7 +199,7 @@
                   <div class="form-group row">
                     <label class="col-md-5" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-7">
-                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUser($event)"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage($event)"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -234,6 +234,16 @@
             </lib-ucSubsection>
             <div id="AddCollOwner">
               <div class="form-group row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
+                    <div class="col-md-8">
+                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner($event)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                </div>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Owner Name</label>

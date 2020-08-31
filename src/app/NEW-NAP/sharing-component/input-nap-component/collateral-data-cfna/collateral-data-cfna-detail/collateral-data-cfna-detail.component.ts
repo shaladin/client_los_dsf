@@ -92,6 +92,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     CopyFromLegal: ['LEGAL'],
     AppAttrName: [''],
     SelfUsage: [false],
+    SelfOwner: [false],
     items: this.fb.array([]),
   });
 
@@ -449,6 +450,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         MrOwnerRelationshipCode: response["MrOwnerRelationshipCode"],
         UserName: response["Username"],
         MrUserRelationshipCode: response["MrUserRelationshipCode"],
+        SelfOwner: (response["MrOwnerRelationshipCode"] == "SELF")
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
 
@@ -522,7 +524,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
               UserName: this.collateralRegistrationObj.UserName,
               MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
-              RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
+              RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
+              SelfOwner: (this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
             });
 
             if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
@@ -648,52 +651,23 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     );
   }
 
-  CopyUser() {
+  CopyUserForSelfUsage() {
     if (this.AddCollForm.controls.SelfUsage.value == true) {
       this.AddCollForm.controls.UserName.disable();
       this.AddCollForm.controls.MrUserRelationshipCode.disable();
 
       this.AppCustObj = new AppCustObj();
       this.AppCustCompanyObj = new AppCustCompanyObj();
-      this.AppCustAddrObj = new AppCustAddrObj();
 
       var appObj = { "AppId": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
-          this.AppCustAddrObj = response['AppCustAddrLegalObj'];
-
-
           this.AddCollForm.patchValue({
             UserName: this.AppCustObj.CustName,
-            OwnerName: this.AppCustObj.CustName,
-            MrOwnerRelationshipCode: "SELF",
             MrUserRelationshipCode: "SELF"
           })
-          this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
-          this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
-          this.OwnerAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2
-          this.OwnerAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3
-          this.OwnerAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4
-          this.OwnerAddrObj.City = this.AppCustAddrObj.City
-          this.inputFieldLegalObj.inputLookupObj.nameSelect = this.AppCustAddrObj.Zipcode;
-          this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj.Zipcode };
-          this.inputAddressObjForOwner.default = this.OwnerAddrObj;
-          this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
-
-          if (this.AppCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-            this.AddCollForm.patchValue({
-              MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
-              OwnerIdNo: this.AppCustObj.IdNo,
-            });
-          }
-          if (this.AppCustObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-            this.AddCollForm.patchValue({
-              MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
-              OwnerIdNo: this.AppCustCompanyObj.RegistrationNo,
-            });
-          }
         }
       )
       this.AddCollForm.controls.UserName.clearValidators();
@@ -708,6 +682,57 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();
       this.AddCollForm.controls.UserName.enable();
       this.AddCollForm.controls.MrUserRelationshipCode.enable();
+    }
+  }
+
+  CopyUserForSelfOwner() {
+    if (this.AddCollForm.controls.SelfOwner.value == true) 
+    {
+      this.AddCollForm.controls.OwnerName.disable();
+      this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
+      this.AddCollForm.controls.OwnerMobilePhnNo.disable();
+      this.AddCollForm.controls.MrIdTypeCode.disable();
+      this.AddCollForm.controls.OwnerIdNo.disable();
+      this.AddCollForm.controls.OwnerAddrObj.disable();
+
+      this.AppCustObj = new AppCustObj();
+      this.AppCustCompanyObj = new AppCustCompanyObj();
+      this.AppCustAddrObj = new AppCustAddrObj();
+
+      var appObj = { "AppId": this.AppId };
+      this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
+        response => {
+          this.AppCustObj = response['AppCustObj'];
+          this.AppCustCompanyObj = response['AppCustCompanyObj'];
+          this.AppCustAddrObj = response['AppCustAddrLegalObj'];
+
+          this.AddCollForm.patchValue({
+            OwnerName: this.AppCustObj.CustName,
+            MrOwnerRelationshipCode: "SELF",
+            MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
+            OwnerIdNo: this.AppCustObj.IdNo,
+            OwnerMobilePhnNo: typeof(response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
+          })
+          this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
+          this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
+          this.OwnerAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2
+          this.OwnerAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3
+          this.OwnerAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4
+          this.OwnerAddrObj.City = this.AppCustAddrObj.City
+          this.inputFieldLegalObj.inputLookupObj.nameSelect = this.AppCustAddrObj.Zipcode;
+          this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj.Zipcode };
+          this.inputAddressObjForOwner.default = this.OwnerAddrObj;
+          this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
+        }
+      )
+    }
+    else {
+      this.AddCollForm.controls.OwnerName.enable();
+      this.AddCollForm.controls.MrOwnerRelationshipCode.enable();
+      this.AddCollForm.controls.OwnerMobilePhnNo.enable();
+      this.AddCollForm.controls.MrIdTypeCode.enable();
+      this.AddCollForm.controls.OwnerIdNo.enable();
+      this.AddCollForm.controls.OwnerAddrObj.enable();
     }
   }
 
