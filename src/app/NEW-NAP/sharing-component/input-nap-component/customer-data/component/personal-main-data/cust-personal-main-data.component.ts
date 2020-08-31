@@ -94,7 +94,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       Email2: ['', Validators.maxLength(50)],
       NoOfResidence: ['', [Validators.maxLength(4)]],
       Email3: ['', Validators.maxLength(50)],
-      NoOfDependents: ['', [Validators.maxLength(4)]],
+      NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
     }));
 
     this.initUrl();
