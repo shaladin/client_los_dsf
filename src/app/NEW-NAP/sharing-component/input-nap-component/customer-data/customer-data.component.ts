@@ -225,7 +225,7 @@ export class CustomerDataComponent implements OnInit {
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
       if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-        if(this.custDataPersonalObj.AppCustBankAccObjs.length <= 0){
+        if(this.custDataCompanyObj.AppCustBankAccObjs.length <= 0){
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
           return false;
         }
