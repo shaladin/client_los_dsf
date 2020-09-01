@@ -146,6 +146,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.inputAddressObjForResidence.showSubsection = false;
     this.inputAddressObjForResidence.showPhn3 = false;
     this.inputAddressObjForResidence.showOwnership = true;
+    this.inputAddressObjForResidence.showStayLength = true;
 
     this.inputAddressObjForMailing = new InputAddressObj();
     this.inputAddressObjForMailing.showSubsection = false;
@@ -376,6 +377,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrResidenceObj.FaxArea = this.CustDataForm.controls["residenceAddr"]["controls"].FaxArea.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.Fax = this.CustDataForm.controls["residenceAddr"]["controls"].Fax.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
   }
 
@@ -946,6 +948,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.residenceAddrObj.PhnExt1 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt1;
       this.residenceAddrObj.PhnExt2 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt2;
       this.residenceAddrObj.MrHouseOwnershipCode = this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode;
+      this.residenceAddrObj.StayLength = this.custDataPersonalObj.AppCustAddrResidenceObj.StayLength;
       this.residenceAddrObj.SubZipcode = this.custDataPersonalObj.AppCustAddrResidenceObj.SubZipcode;
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode;
