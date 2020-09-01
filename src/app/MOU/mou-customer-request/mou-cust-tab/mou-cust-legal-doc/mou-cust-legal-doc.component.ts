@@ -65,7 +65,7 @@ export class MouCustLegalDocComponent implements OnInit {
   }
 
   ExpDtHandler(){
-    var isExpDt = this.LegalDocForm.controls["isExpDateMandatory"].value;
+    var isExpDt = this.LegalDocForm.controls["IsExpDtMandatory"].value;
     this.LegalDocForm.patchValue({
       DocExpiredDt: ""
     });
@@ -103,6 +103,14 @@ export class MouCustLegalDocComponent implements OnInit {
   add(content){
     this.mode = "Add";
     this.clearForm();
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
+      (response) => {
+        this.LegalDocForm.patchValue({
+          IsExpDtMandatory: response["IsExpDtMandatory"]
+        });
+        this.ExpDtHandler();
+      }
+    );
     this.open(content);
   }
 
@@ -207,15 +215,6 @@ export class MouCustLegalDocComponent implements OnInit {
         if(this.LegalDocTypeObj.length > 0){
             this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
             this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
-
-            this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
-              (response) => {
-                this.LegalDocForm.patchValue({
-                  IsExpDtMandatory: response["IsExpDtMandatory"]
-                });
-                this.ExpDtHandler();
-              }
-            );
         }
       }
     );

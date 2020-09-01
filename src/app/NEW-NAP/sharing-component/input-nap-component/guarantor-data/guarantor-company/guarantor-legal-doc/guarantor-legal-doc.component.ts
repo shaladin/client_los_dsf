@@ -66,7 +66,7 @@ export class GuarantorLegalDocComponent implements OnInit {
   }
 
   IsExpDateHandler(){
-    var isExpDt = this.LegalDocForm.controls["isExpDateMandatory"].value;
+    var isExpDt = this.LegalDocForm.controls["IsExpDtMandatory"].value;
     this.LegalDocForm.patchValue({
       DocExpiredDt: ""
     });
@@ -104,6 +104,14 @@ export class GuarantorLegalDocComponent implements OnInit {
   add(content) {
     this.mode = "Add";
     this.clearForm();
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
+      (response) => {
+        this.LegalDocForm.patchValue({
+          IsExpDtMandatory: response["IsExpDtMandatory"]
+        });
+        this.IsExpDateHandler();
+      }
+    );
     this.open(content);
   }
 
@@ -207,15 +215,6 @@ export class GuarantorLegalDocComponent implements OnInit {
         if (this.LegalDocTypeObj.length > 0) {
           this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
           this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
-
-          this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
-            (response) => {
-              this.LegalDocForm.patchValue({
-                IsExpDtMandatory: response["IsExpDtMandatory"]
-              });
-              this.IsExpDateHandler();
-            }
-          );
         }
       }
     );
