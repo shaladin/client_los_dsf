@@ -21,6 +21,7 @@ import { SubsidyCFNAComponent } from "./nap-components/financial-data/component/
 import { SubsidyAddEditCFNAComponent } from "./nap-components/financial-data/component/subsidy-add-edit/subsidy-add-edit-cfna.component";
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -68,7 +69,8 @@ export const customCurrencyMaskConfig = {
     NGXToastrService
   ],
   entryComponents: [
-    SubsidyAddEditCFNAComponent
+    SubsidyAddEditCFNAComponent,
+    UcviewgenericComponent
   ]
 })
 export class InputNapCFNAModule { }
