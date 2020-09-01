@@ -409,44 +409,56 @@ export class CustPersonalMainDataComponent implements OnInit {
       SpouseGender: "",
       IsSpouseDelete: false
     };
-    if (this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value == CommonConstant.MasterCodeGenderFemale) {
-      if (this.IsSpouseExist) {
-        if (confirm("You have changed your gender, and it will delete your spouse data, countinue?")) {
-          obj.SpouseGender = CommonConstant.MasteCodeGenderMale;
-          obj.IsSpouseDelete = true;
-          this.spouseObj.emit(obj);
-        }
-        else {
-          this.parentForm.controls[this.identifier].patchValue({
-            MrGenderCode: CommonConstant.MasteCodeGenderMale
-          });
-        }
-      }
-      else {
-        obj.SpouseGender = CommonConstant.MasteCodeGenderMale;
-        obj.IsSpouseDelete = false;
-        this.spouseObj.emit(obj);
+
+    if (this.IsSpouseExist) {
+      if (confirm("You have changed your gender, and it will delete your spouse data, continue?")) {
+        obj.IsSpouseDelete = true;
       }
     }
-    else if (this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value == CommonConstant.MasteCodeGenderMale) {
-      if (this.IsSpouseExist) {
-        if (confirm("You have changed your gender, and it will delete your spouse data, countinue?")) {
-          obj.SpouseGender = CommonConstant.MasterCodeGenderFemale;
-          obj.IsSpouseDelete = true;
-          this.spouseObj.emit(obj);
-        }
-        else {
-          this.parentForm.controls[this.identifier].patchValue({
-            MrGenderCode: CommonConstant.MasterCodeGenderFemale
-          });
-        }
-      }
-      else {
-        obj.SpouseGender = CommonConstant.MasterCodeGenderFemale;
-        obj.IsSpouseDelete = false;
-        this.spouseObj.emit(obj);
-      }
+    else {
+      obj.IsSpouseDelete = false;
     }
+    obj.SpouseGender = this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value;
+    this.spouseObj.emit(obj);
+
+    // if (this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value == CommonConstant.MasterCodeGenderFemale) {
+    //   if (this.IsSpouseExist) {
+    //     if (confirm("You have changed your gender, and it will delete your spouse data, countinue?")) {
+    //       obj.SpouseGender = CommonConstant.MasteCodeGenderMale;
+    //       obj.IsSpouseDelete = true;
+    //       this.spouseObj.emit(obj);
+    //     }
+    //     else {
+    //       this.parentForm.controls[this.identifier].patchValue({
+    //         MrGenderCode: CommonConstant.MasteCodeGenderMale
+    //       });
+    //     }
+    //   }
+    //   else {
+    //     obj.SpouseGender = CommonConstant.MasteCodeGenderMale;
+    //     obj.IsSpouseDelete = false;
+    //     this.spouseObj.emit(obj);
+    //   }
+    // }
+    // else if (this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value == CommonConstant.MasteCodeGenderMale) {
+    //   if (this.IsSpouseExist) {
+    //     if (confirm("You have changed your gender, and it will delete your spouse data, countinue?")) {
+    //       obj.SpouseGender = CommonConstant.MasterCodeGenderFemale;
+    //       obj.IsSpouseDelete = true;
+    //       this.spouseObj.emit(obj);
+    //     }
+    //     else {
+    //       this.parentForm.controls[this.identifier].patchValue({
+    //         MrGenderCode: CommonConstant.MasterCodeGenderFemale
+    //       });
+    //     }
+    //   }
+    //   else {
+    //     obj.SpouseGender = CommonConstant.MasterCodeGenderFemale;
+    //     obj.IsSpouseDelete = false;
+    //     this.spouseObj.emit(obj);
+    //   }
+    // }
   }
 
   ChangeMaritalStats() {
