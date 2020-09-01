@@ -1124,4 +1124,7 @@ export class URLConstant {
 
     // Authentication
     public static RequestNewPassword = environment.FoundationR3Url + "/Authenticate/RequestNewPassword";
+
+    // DocExpDt
+    public static GetDocIsExpDtMandatory = environment.losUrl + "/DocumentExpDt/GetDocIsExpDtMandatory";
 }

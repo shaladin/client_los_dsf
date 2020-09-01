@@ -67,11 +67,12 @@ export class CustLegalDocComponent implements OnInit {
     this.bindLegalDocTypeObj();
   }
 
-  IsExpDateHandler(e){
+  IsExpDateHandler(){
+    var isExpDt = this.LegalDocForm.controls["isExpDateMandatory"].value;
     this.LegalDocForm.patchValue({
       DocExpiredDt: ""
     });
-    if(e.target.checked){
+    if(isExpDt){
       this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
       this.LegalDocForm.controls["DocExpiredDt"].enable();
@@ -206,8 +207,17 @@ export class CustLegalDocComponent implements OnInit {
       (response) => {
         this.LegalDocTypeObj = response[CommonConstant.ReturnObj];
         if(this.LegalDocTypeObj.length > 0){
-            this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
-            this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
+          this.defaultLegalDocType = this.LegalDocTypeObj[0].Key;
+          this.defaultLegalDocName = this.LegalDocTypeObj[0].Value;
+
+          this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
+            (response) => {
+              this.LegalDocForm.patchValue({
+                IsExpDtMandatory: response["IsExpDtMandatory"]
+              });
+              this.IsExpDateHandler();
+            }
+          );
         }
       }
     );
@@ -216,6 +226,15 @@ export class CustLegalDocComponent implements OnInit {
   changeLegalDocType(ev){
     var idx = ev.target.selectedIndex;
     this.selectedLegalDocName=this.LegalDocTypeObj[idx].Value;
+    console.log("selectedLegalDocName: " + this.selectedLegalDocName);
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.selectedLegalDocName }).subscribe(
+      (response) => {
+        this.LegalDocForm.patchValue({
+          IsExpDtMandatory: response["IsExpDtMandatory"]
+        });
+        this.IsExpDateHandler();
+      }
+    );
   }
 
   open(content) {
