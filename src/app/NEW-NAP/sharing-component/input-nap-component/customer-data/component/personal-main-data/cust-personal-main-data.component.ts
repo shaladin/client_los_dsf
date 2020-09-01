@@ -274,7 +274,8 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   clearExpDt(){
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP){
+    let noExpDate = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP, CommonConstant.MrIdTypeCodeAKTA];
+    if (noExpDate.includes(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value)){
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
