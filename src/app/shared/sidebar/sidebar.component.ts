@@ -39,13 +39,12 @@ export class SidebarComponent implements OnInit {
         //         this.menuItems = data;
         //     }
         //     );
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
-        // if (environment.production == false) {
-        //     this.menuItems = ROUTES.filter(menuItem => menuItem);
-        // }
-        // else {
-        //     this.menuItems = JSON.parse(localStorage.getItem("Menu"));
-        // }
+        if (environment.production == false) {
+            this.menuItems = ROUTES.filter(menuItem => menuItem);
+        }
+        else {
+            this.menuItems = JSON.parse(localStorage.getItem("Menu"));
+        }
     }
 
     genParam(params: [{ 'Attr': string, 'Value': string }]) {
