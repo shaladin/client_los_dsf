@@ -39,8 +39,6 @@
                 </div>
               </div>
               <div class="col-md-6">
-              </div>
-              <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Collateral Name</label>
                   <div class="col-md-8">
@@ -50,49 +48,14 @@
                     </lib-uclookupgeneric>
                   </div>
                 </div>
+              </div>
+              <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4" translate>Manufacturing Year</label>
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear"
-                      [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div formArrayName="items">
-                  <div *ngFor="let item of items.controls; let i = index;">
-                    <div class="form-group row" [formGroupName]="i">
-                      <label class="col-md-4 "
-                        [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
-                        {{item.controls.SerialNoLabel.value}} </label>
-                      <div class="col-md-8">
-                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
-                        <lib-uc-show-errors
-                          [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Portion Percentage</label>
-                  <div class="col-md-8">
-                    <input type="text" class="form-control" formControlName="CollateralPrcnt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid }">
-                    <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
-                  <div class="col-md-8">
-                    <input type="text" currencyMask class="form-control" formControlName="CollateralValueAmt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
-                    <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt"
                       [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -132,10 +95,47 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Portion Percentage</label>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" formControlName="CollateralPrcnt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid }">
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label class="col-md-4 adins-label" translate>Collateral Notes</label>
                   <div class="col-md-8">
                     <textarea type="textarea" row="5" class="form-control" formControlName="CollateralNotes"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralNotes.invalid}"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
+                  <div class="col-md-8">
+                    <input type="text" currencyMask class="form-control" formControlName="CollateralValueAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div formArrayName="items">
+                  <div *ngFor="let item of items.controls; let i = index;">
+                    <div class="form-group row" [formGroupName]="i">
+                      <label class="col-md-4 "
+                        [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
+                        {{item.controls.SerialNoLabel.value}} </label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                        <lib-uc-show-errors
+                          [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
