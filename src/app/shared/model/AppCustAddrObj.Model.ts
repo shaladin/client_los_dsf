@@ -20,6 +20,7 @@ export class AppCustAddrObj {
     FaxArea: string;
     Fax: string;
     FullAddr: string;
+    StayLength: number;
     RowVersion: any;
 
     constructor() { this.AppCustAddrId = 0; }
