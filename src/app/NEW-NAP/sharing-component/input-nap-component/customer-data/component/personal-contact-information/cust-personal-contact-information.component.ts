@@ -182,6 +182,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       IsFamily: this.listContactPersonPersonal[i].IsFamily,
       IsGuarantor: this.listContactPersonPersonal[i].IsGuarantor
     });
+    this.selectedGenderName = this.listContactPersonPersonal[i].GenderName;
 
     this.setCustRelationShip(this.listContactPersonPersonal[i].MrCustRelationshipCode);
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
