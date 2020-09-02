@@ -189,10 +189,13 @@
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustShareholderForm" [identifier]="'lookupCustomerShareholder'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2" for="industryType" translate>Industry Type</label>
-                <div class="col-md-4" [hidden]="isCust == true">
+                <!-- <div class="col-md-4" [hidden]="isCust == true">
+                  <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="CustShareholderForm" [identifier]="'lookupIndustryTypeShareholder'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
+                </div> -->
+                <!-- <label [hidden]="isCust == false" class="col-md-4" translate>{{industryTypeName}}</label> -->
+                <div class="col-md-4">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="CustShareholderForm" [identifier]="'lookupIndustryTypeShareholder'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
                 </div>
-                <label [hidden]="isCust == false" class="col-md-4" translate>{{industryTypeName}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2" for="companyType" translate>Company Type</label>

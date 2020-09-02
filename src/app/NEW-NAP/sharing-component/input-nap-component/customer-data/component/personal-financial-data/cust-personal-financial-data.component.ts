@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -15,13 +15,13 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 })
 
-export class CustPersonalFinancialDataComponent implements OnInit {
+export class CustPersonalFinancialDataComponent implements OnInit, OnChanges {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
-  @Input() isMarried: boolean = true;
+  @Input() isMarried: boolean;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -37,6 +37,18 @@ export class CustPersonalFinancialDataComponent implements OnInit {
     private http: HttpClient) {
 
      }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!changes.isMarried.currentValue){
+      this.appCustPersonalFinDataObj.IsJoinIncome = false;
+      this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
+      this.parentForm.controls[this.identifier].patchValue({
+        IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
+        SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt
+      });
+      this.ChangeTotalMonthly();
+    }
+  }
 
   ngOnInit() {
 
@@ -70,6 +82,10 @@ export class CustPersonalFinancialDataComponent implements OnInit {
 
   bindAppCustPersonalFinData(){
     if(this.appCustPersonalFinDataObj.AppCustPersonalId != 0){
+      if(!this.isMarried){
+        this.appCustPersonalFinDataObj.IsJoinIncome = false;
+        this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
+      }
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
         MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
