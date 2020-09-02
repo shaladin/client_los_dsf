@@ -18,8 +18,11 @@ export class MouExecutionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
   MouCustId: number;
+  WfTaskListId: number;
 
   MouExecutionForm = this.fb.group({
+    MouCustId: [''],
+    WfTaskListId: [''],
     MouCustDt: ['', [Validators.required]],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]]
@@ -31,14 +34,25 @@ export class MouExecutionDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
     private router: Router) {
-      this.route.queryParams.subscribe(params => {
-        if (params['MouCustId'] != null) {
-          this.MouCustId = params['MouCustId'];
-        }
-      });
-    }
+    this.route.queryParams.subscribe(params => {
+      if (params['MouCustId'] != null) {
+        this.MouCustId = params['MouCustId'];
+        this.MouExecutionForm.controls.MouCustId.setValue(this.MouCustId);
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+        this.MouExecutionForm.controls.WfTaskListId.setValue(this.WfTaskListId);
+      }
+    });
+  }
 
   ngOnInit() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+
     var datePipe = new DatePipe("en-US");
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {
@@ -46,13 +60,17 @@ export class MouExecutionDetailComponent implements OnInit {
       this.businessDt.setDate(this.businessDt.getDate() - 1);
     }
 
-    this.httpClient.post(URLConstant.GetMouCustById, {MouCustId: this.MouCustId}).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).subscribe(
       (response: any) => {
+        if (response["MouCustDt"] != null) {
+          response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
+        }
         response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
         response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
         this.MouExecutionForm.patchValue({
           StartDt: response["StartDt"],
-          EndDt: response["EndDt"]
+          EndDt: response["EndDt"],
+          MouCustDt: response["MouCustDt"]
         });
       });
 
@@ -72,7 +90,7 @@ export class MouExecutionDetailComponent implements OnInit {
 
   SaveForm() {
     var request = this.MouExecutionForm.value;
-    this.httpClient.post(URLConstant.MouCustExecutionActivity, request).subscribe(
+    this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
       (response: any) => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigate(['/Mou/Execution/Paging']);

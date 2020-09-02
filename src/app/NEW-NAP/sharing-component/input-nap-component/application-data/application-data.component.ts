@@ -23,6 +23,7 @@ export class ApplicationDataComponent implements OnInit {
   @Input() appId: number;
   @Input() showCancel: boolean = true;
   @Input() IsLoanObject: boolean = false;
+  @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -89,13 +90,19 @@ export class ApplicationDataComponent implements OnInit {
     MrInstSchemeCode: ["", Validators.required],
     InterestType: ['', Validators.required],
     InterestTypeDesc: [''],
-    FloatingPeriod: ['']
+    FloatingPeriod: [''],
+    CharaCredit: [''],
+    PrevAgrNo: [''],
+    WayRestructure: [''],
+    EconomicSector: [''],
+    ApplicationNotes: ['']
   });
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private toastr: NGXToastrService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    console.log(this.BizTemplateCode);
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
@@ -112,8 +119,25 @@ export class ApplicationDataComponent implements OnInit {
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     // this.getPayFregData();
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
-    this.GetCrossInfoData();
+    if (this.BizTemplateCode != CommonConstant.OPL) {
+      this.GetCrossInfoData();
+    }
+    else {
+      this.NapAppModelForm.controls.PayFreqCode.clearValidators();
+      this.NapAppModelForm.controls.PayFreqCode.updateValueAndValidity();
+      this.NapAppModelForm.controls.InterestTypeDesc.clearValidators();
+      this.NapAppModelForm.controls.InterestTypeDesc.updateValueAndValidity();
+      this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+      this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
+      this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
+      this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
+      this.NapAppModelForm.controls.CharaCredit.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.NapAppModelForm.controls.CharaCredit.updateValueAndValidity();
+    }
+    
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){
@@ -229,7 +253,11 @@ export class ApplicationDataComponent implements OnInit {
           RsvField5: this.resultResponse.RsvField5,
           MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
-          FloatingPeriod: this.resultResponse.FloatingPeriodCode
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode,
+          ApplicationNotes: this.resultResponse.ApplicationNotes,
+          CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
+          PrevAgrNo: this.resultResponse.PrevAgrmntNo,
+          WayRestructure: this.resultResponse.MrWayOfRestructureCode,
         });
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
@@ -424,6 +452,14 @@ export class ApplicationDataComponent implements OnInit {
     temp.RsvField5 = this.NapAppModelForm.controls.RsvField5.value;
     temp.RowVersion = this.resultResponse.RowVersion;
     temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
+
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      temp.ApplicationNotes = this.NapAppModelForm.controls.ApplicationNotes.value;
+      temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
+      temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
+      temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
+      temp.IsRos = true;
+    }
     return temp;
   }
 
@@ -448,6 +484,9 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId,
       MrInstSchemeCode: this.NapAppModelForm.controls.MrInstSchemeCode.value,
       InterestType: this.NapAppModelForm.controls.InterestType.value,
+    }
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      temp.MrInstSchemeCode= CommonConstant.INST_SCHM_REGULAR_FIXED;
     }
     return temp;
   }

@@ -81,5 +81,6 @@ export class ExceptionConstant {
     public static MAX_DATA = "Maximum {50} Data";
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
     public static INCORRECT_PASSWORD = "Password Mismatch";
+    public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input"; 
 }
 

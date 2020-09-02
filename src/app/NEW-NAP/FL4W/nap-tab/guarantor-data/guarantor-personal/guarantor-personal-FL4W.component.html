@@ -7,6 +7,12 @@
             <div class="form-body">
               <lib-ucSubsection [id]="'mainDataId'" [title]="'Main Data'" [panel]="'mainData'">
               </lib-ucSubsection>
+              <div *ngIf="tempCustNo!= null">
+                <div class="form-group row">
+                  <label class="col-md-2">Customer No</label>
+                  <label class="col-md-4">{{this.tempCustNo}}</label>
+                </div>
+              </div>
               <div class="row" id="mainData">
                 <div class="col-md-6 ">
                   <div class="form-group row adins-required">
@@ -95,8 +101,8 @@
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrCustRelationshipCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrCustRelationshipCode.invalid }">
-                        <option *ngFor="let it of MrCustRelationshipCode" value="{{it.MasterCode}}">
-                          {{it.Descr}}</option>
+                        <option *ngFor="let it of MrCustRelationshipCode" value="{{it.Key}}">
+                          {{it.Value}}</option>
                         <lib-uc-show-errors [control]="PersonalForm.controls.MrCustRelationshipCode"
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </select>
@@ -169,9 +175,11 @@
                   </div>
                 </div>
               </div>
-              <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+                [identifier]="'AddrObj'" [UCAddrForm]="PersonalForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [title]="'Address'" [UCAddrForm]="PersonalForm" [enjiForm]="enjiForm"
                 [identifier]="'AddrObj'" [default]="AddrObj" [inputField]="inputFieldObj" [showAllPhn]="false">
-              </lib-ucaddress>
+              </lib-ucaddress> -->
               <div class="form-actions right">
                 <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel

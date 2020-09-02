@@ -1,0 +1,432 @@
+<div class="px-3">
+  <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="custInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Name </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.CustName}} - {{SummaryAppObj?.AppCustObj?.IsExistingCust == true ? '(Existing Customer)' : '(New Customer)'}} <i class="fa fa-circle" *ngIf="SummaryAppObj?.NegCustColor != '' && SummaryAppObj?.NegCustColor != null" aria-hidden="true" [ngStyle]="{'color': SummaryAppObj?.NegCustColor}"></i></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Birth Place/Date </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> NPWP </label>
+          </div>
+          <div class="col-md-6">
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">{{SummaryAppObj?.AppCustPersonalObj?.BirthPlace}}, {{SummaryAppObj?.AppCustPersonalObj?.BirthDt  | date: 'dd-MM-yyyy'}} ({{SummaryAppObj?.AppCustObj?.Age}} Years Old) </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.TaxIdNo}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Address </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppCustAddrLegalObj?.FullAddr}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Occupation </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Industry Type </label>
+          </div>
+          <div class="col-md-6">
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> {{SummaryAppObj?.AppCustPersonalJobDataObj?.ProfessionName}} </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> {{SummaryAppObj?.AppCustCompanyObj?.IndustryTypeName}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Status </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Owner </label>
+          </div>
+          <div class="col-md-6">
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> {{SummaryAppObj?.AppCustPersonalObj?.MaritalStatName}} </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> {{SummaryAppObj?.OwnerName}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="SummaryAppObj?.AppCustPersonalObj?.MrMaritalStatCode == 'MARRIED'" class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Spouse </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.SpouseName}} </label>
+          </div>
+        </div>
+        <div class="row" *ngFor="let item of SummaryAppObj?.AppGuarantorObjs; let i=index">
+          <div class="col-md-6">
+            <label *ngIf="i == 0" class="adInsLabel"> Guarantor </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{item.GuarantorName + ' - ' + item.CustRelationshipCodeDesc}} <i class="fa fa-circle" aria-hidden="true" [ngStyle]="{'color': item.SLAColor}"></i></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'exposureInfoId'" [title]="'Exposure Information'" [panel]="'exposureInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="exposureInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel" style="font-weight: bold;"> Exposure </label>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Exposure </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.CustExposureAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Group Exposure </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.CustGrpExposureAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Obligor Exposure </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.ObligorExposureAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel" style="font-weight: bold;"> Existing Application / Agreement </label>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <!--<div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> OS AR Agreement </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.OsArAgrmntAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>-->
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Application Reject </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppRejectCount}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Application in Process </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppInProcessCount}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'scoringInfoId'" [title]="'Scoring Information'" [panel]="'scoringInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="scoringInfo">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <view-app-score-grade-scoring [AppId]="AppId"></view-app-score-grade-scoring>
+      </div>
+      <div class="col-md-4">
+        <view-app-score-grade-dsr [AppId]="AppId"></view-app-score-grade-dsr>
+      </div>
+      <div class="col-md-4">
+        <view-app-score-grade-dukcapil *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" [AppId]="AppId"></view-app-score-grade-dukcapil>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'thirdpartyid'" [title]="'Third Party Checking'" [panel]="'thirdparty'">
+  </lib-ucSubsection>
+  <div class="form-body px-3" id="thirdparty">
+    <lib-ucSubsection [id]="'pefindoId'" [title]="'Pefindo'" [panel]="'pefindo'">
+    </lib-ucSubsection>
+    <div class="form-body" id="pefindo">
+
+    </div>
+    <lib-ucSubsection [id]="'dukcapilid'" [title]="'Dukcapil'" [panel]="'dukcapil'">
+    </lib-ucSubsection>
+    <div class="form-body" id="dukcapil">
+
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'appInfoId'" [title]="'Application Information'" [panel]="'appInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="appInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Rental Period (In Month) - First Installment Type</label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppObj?.NumOfInst}} - {{SummaryAppObj?.AppObj?.FirstInstTypeName}}</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Submitted TC </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.SubmittedTcCount}}/{{SummaryAppObj?.TotalTcCount}} </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Sales Officer - Supervisor </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryAppObj?.AppObj?.SalesOfficerName}} -  {{SummaryAppObj?.SalesOfficerSuperVisorName}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset Information'" [panel]="'assetInfo'">
+  </lib-ucSubsection>
+  <div class="form-body px-3" id="assetInfo">
+    <lib-ucSubsection [id]="'listAssetId'" [title]="'List of Asset'" [panel]="'listAsset'">
+    </lib-ucSubsection>
+    <div class="form-body" id="listAsset">
+      <div class="table-responsive">
+        <table class="table text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th style="text-align: left;">
+                <span class="thead-header" name="AssetName" translate>
+                  Asset Name
+                </span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name="AssetUsage" translate>
+                  Total Asset Price After Discount
+                </span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name="Asset Condition" translate>
+                  Total Accessory Price
+                </span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name="ChassisNo" translate>
+                  Total Service Fee Amount
+                </span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name="EngineNo" translate>
+                  Total Separepart Fee
+                </span>
+              </th>
+              <th style="text-align: center;">
+                <span class="thead-header" name="LicensePlateNo" translate>
+                  Insurance Coverage
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="SummaryAppObj?.AppAssetObjs?.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="SummaryAppObj?.AppAssetObjs?.length > 0">
+            <tr *ngFor="let item of SummaryAppObj?.AppAssetObjs; let i = index">
+              <td style="text-align: left;">{{item.FullAssetName}}</td>
+              <td style="text-align: right;">{{item.MrAssetUsageCodeDesc}}</td>
+              <td style="text-align: right;">{{item.MrAssetConditionCodeDesc}}</td>
+              <td style="text-align: right;">{{item.SerialNo1}}</td>
+              <td style="text-align: right;">{{item.SerialNo2}}</td>
+              <td style="text-align: center;">{{item.StringListInsCvg}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--<div *ngIf="SummaryAppObj?.AppAssetObjs?.length > 1">
+    <lib-ucSubsection [id]="'collateralInfoId'" [title]="'Collateral Information'" [panel]="'collateralInfo'">
+    </lib-ucSubsection>
+    <div class="form-body table-responsive" id="collateralInfo">
+      <table class="table text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: left;"><span class="thead-header" name="CollateralName" translate>
+              Collateral Name
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="CollateralUsage" translate>
+              Collateral Usage
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="CollateralCondition" translate>
+              Collateral Condition
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="ChassisNo" translate>
+              Serial No 1
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="EngineNo" translate>
+              Serial No 2
+            </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="LicensePlateNo" translate>
+              Serial No 3
+            </span>
+            </th>
+            <th style="text-align: right;"><span class="thead-header" name="CollateralValue" translate>
+              Collateral Value
+            </span>
+            </th>
+            <th style="text-align: right;"><span class="thead-header" name="CollateralValue" translate>
+              Insurance
+            </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf = "SummaryAppObj?.AppCollateralObjs?.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf = "SummaryAppObj?.AppCollateralObjs?.length > 0">
+          <tr *ngFor="let item of SummaryAppObj?.AppCollateralObjs; let i = index">
+            <td style="text-align: left;">{{item.FullAssetName}}</td>
+            <td style="text-align: center;">{{item.CollateralUsageName}}</td>
+            <td style="text-align: center;">{{item.CollateralConditionName}}</td>
+            <td style="text-align: center;">{{item.SerialNo1}}</td>
+            <td style="text-align: center;">{{item.SerialNo2}}</td>
+            <td style="text-align: center;">{{item.SerialNo3}}</td>
+            <td style="text-align: right;">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: center;">{{item.InsAssetCoveredByDesc}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>-->
+  <lib-ucSubsection [id]="'financialInfoId'" [title]="'Financial Information'" [panel]="'financialInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="financialInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Security Deposit </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.TotalAr | number:'.2':'en-US'}} </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Operating Margin </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.TotalPrincipalAmt | number:'.2':'en-US'}} </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Rental Amount (Monthly) (Exec.VAT) </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.TotalInterestAmt | number:'.2':'en-US'}} </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Rental VAT Amount (Monthly) </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.EffectiveRatePrcnt | number:'.6':'en-US'}}% </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Rental Amount (Monthly) (Inc.VAT)</label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.EffectiveRatePrcnt | number:'.6':'en-US'}}% </label>-->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Operating Cost </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.TotalIncomeAmt | number:'.2':'en-US'}} </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Cost After Margin </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.TotalExpenseAmt | number:'.2':'en-US'}} </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Final Rental (Exec. VAT) </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.GrossYieldPrcnt | number:'.6':'en-US'}}% </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Final Rental VAT Amount </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.GrossYieldPrcnt | number:'.6':'en-US'}}% </label>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Final Rental (Inc. VAT) </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> Feature Not Yet </label>
+            <!--<label class="adInsLabel"> {{SummaryAppObj?.AppFinDataObj?.GrossYieldPrcnt | number:'.6':'en-US'}}% </label>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

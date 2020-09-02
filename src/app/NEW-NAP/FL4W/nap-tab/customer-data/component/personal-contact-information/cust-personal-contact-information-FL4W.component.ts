@@ -12,6 +12,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-cust-personal-contact-information-FL4W',
@@ -88,6 +89,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     CopyFromContactPerson: ['']
   });
   businessDt: Date = new Date();
+  inputAddressObjForCP: any;
 
 
   constructor(
@@ -98,6 +100,11 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
      }
 
   ngOnInit() {
+    this.inputAddressObjForCP = new InputAddressObj();
+    this.inputAddressObjForCP.showSubsection = false;
+    this.inputAddressObjForCP.isRequired = false;
+    this.inputAddressObjForCP.showAllPhn = false;
+    
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -186,6 +193,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     this.selectedGenderName = this.defaultGenderName;
     this.selectedRelationshipName = this.defaultRelationshipName;
 
+    this.inputAddressObjForCP.default = this.contactPersonAddrObj;
     this.initLookup();
     this.initContactPersonAddrObj();
   }
@@ -250,6 +258,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
 
       this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
       this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = {Zipcode: appCustPersonalContactPerson.Zipcode};
+      this.inputAddressObjForCP.default = this.contactPersonAddrObj;
+      this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
     
   }
 

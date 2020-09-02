@@ -92,7 +92,7 @@
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNo.invalid }">
                     <lib-uc-show-errors [control]="LegalDocForm.controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2 adins-required-label" for="expDt" translate>Expired Date</label>
+                  <label class="col-md-2 {{isExpDateMandatory ? 'adins-required-label' : ''}}" for="expDt" translate>Expired Date</label>
                   <div class="col-md-4">
                     <input type="date" id="expDt" class="form-control" formControlName="DocExpiredDt" min="{{MaxDate | date:'yyyy-MM-dd'}}"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid }">
@@ -121,6 +121,12 @@
                     <lib-uc-show-errors [control]="LegalDocForm.controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
+                <!-- <div class="form-group row">
+                  <label class="col-md-2" for="ExpDtMandatory" translate>Expired Date Mandatory</label>
+                  <div class="col-md-4">
+                    <input type="checkbox" id="ExpDtMandatory" formControlName="IsExpDtMandatory" (change)="IsExpDateHandler($event)" />
+                  </div>
+                </div> -->
               <!-- </div> -->
             </div>
             <div class="form-actions right">

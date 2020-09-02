@@ -108,14 +108,14 @@
             <div class="form-group row">
               <label class="col-md-2 adInsLabel adins-required-label" translate>Mobile Phone 1</label>
               <div class="col-md-4">
-                <input type="number" class="form-control adInsInput" formControlName="MobilePhone1" required
+                <input type="text" class="form-control adInsInput" formControlName="MobilePhone1" required
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MobilePhone1.invalid}">
                 <lib-uc-show-errors [control]="CustomerDataForm.controls.MobilePhone1" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
               <label class="col-md-2 adInsLabel" translate>Mobile Phone 2</label>
               <div class="col-md-4">
-                <input type="number" class="form-control adInsInput" formControlName="MobilePhone2"
+                <input type="text" class="form-control adInsInput" formControlName="MobilePhone2"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MobilePhone2.invalid}">
                 <lib-uc-show-errors [control]="CustomerDataForm.controls.MobilePhone2" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
@@ -157,10 +157,11 @@
           </lib-ucSubsection>
           <div id="legalAddr">
             <div id="LegalAddress">
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Legal Address'"
+              <lib-ucaddress  #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm" [identifier]="'legalAddress'" [UCAddrForm]="CustomerDataForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Legal Address'"
                 [UCAddrForm]="CustomerDataForm" [enjiForm]="enjiForm" [identifier]="'legalAddress'"
                 [default]="legalAddressObj" [inputField]="inputLegalAddressObj" [showPhn3]="false"
-                [showOwnership]="false"></lib-ucaddress>
+                [showOwnership]="false"></lib-ucaddress> -->
             </div>
           </div>
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
@@ -175,10 +176,11 @@
               </div>
             </div>
             <div id="ResidenceAddress">
-              <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Residence Address'"
+              <lib-ucaddress  #UcAddrGrp [addressObj]="inputAddressObjForResidenceAddr" [enjiForm]="enjiForm" [identifier]="'residenceAddress'" [UCAddrForm]="CustomerDataForm"></lib-ucaddress>
+              <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Residence Address'"
                 [UCAddrForm]="CustomerDataForm" [enjiForm]="enjiForm" [identifier]="'residenceAddress'"
                 [default]="residenceAddressObj" [inputField]="inputResidenceAddressObj" [showPhn3]="false"
-                [showOwnership]="false"></lib-ucaddress>
+                [showOwnership]="false"></lib-ucaddress> -->
             </div>
           </div>
           <lib-ucSubsection [id]="'jobDataId'" [title]="'Job Data'" [panel]="'jobData'">

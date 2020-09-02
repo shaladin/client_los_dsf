@@ -13,6 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -92,6 +93,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     CopyFromContactPerson: [''],
     IsGuarantor: [false]
   });
+  inputAddressObjForCP: InputAddressObj;
 
 
   constructor(
@@ -180,6 +182,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       IsFamily: this.listContactPersonPersonal[i].IsFamily,
       IsGuarantor: this.listContactPersonPersonal[i].IsGuarantor
     });
+    this.selectedGenderName = this.listContactPersonPersonal[i].GenderName;
 
     this.setCustRelationShip(this.listContactPersonPersonal[i].MrCustRelationshipCode);
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
@@ -223,7 +226,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     });
 
     this.copyFromContactPerson = "";
-    this.contactPersonAddrObj = new AddrObj();
     this.selectedGenderName = this.defaultGenderName;
     this.selectedRelationshipName = this.defaultRelationshipName;
 
@@ -276,7 +278,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   setContactPersonAddr(appCustPersonalContactPerson) {
-    this.contactPersonAddrObj = new AddrObj();
     this.contactPersonAddrObj.Addr = appCustPersonalContactPerson.Addr;
     this.contactPersonAddrObj.AreaCode1 = appCustPersonalContactPerson.AreaCode1;
     this.contactPersonAddrObj.AreaCode2 = appCustPersonalContactPerson.AreaCode2;
@@ -294,6 +295,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
     this.inputFieldContactPersonObj.inputLookupObj.nameSelect = appCustPersonalContactPerson.Zipcode;
     this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: appCustPersonalContactPerson.Zipcode };
+    this.inputAddressObjForCP.default = this.contactPersonAddrObj;
+    this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
 
   }
 
@@ -307,9 +310,13 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   initContactPersonAddrObj() {
+    this.contactPersonAddrObj = new AddrObj();
     this.inputFieldContactPersonObj = new InputFieldObj();
     this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldContactPersonObj.inputLookupObj.isRequired = false;
+    
+    this.inputAddressObjForCP = new InputAddressObj();
+    this.inputAddressObjForCP.showSubsection = false;
+    this.inputAddressObjForCP.showAllPhn = false;
   }
 
   initLookup() {
@@ -406,15 +413,17 @@ export class CustPersonalContactInformationComponent implements OnInit {
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
         this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasteCodeGenderMale
-        });
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-      }
-      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
-        this.ContactInfoPersonalForm.patchValue({
           MrGenderCode: CommonConstant.MasterCodeGenderFemale
         });
         this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        this.selectedGenderName = CommonConstant.MasterCodeGenderFemaleName;
+      }
+      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: CommonConstant.MasteCodeGenderMale
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        this.selectedGenderName = CommonConstant.MasterCodeGenderMaleName;
       }
       else {
         this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();

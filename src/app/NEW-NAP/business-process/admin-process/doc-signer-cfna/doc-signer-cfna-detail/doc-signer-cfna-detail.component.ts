@@ -168,15 +168,21 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         // this.inputLookupBranchEmpObj.addCritInput.push(crit1Obj);
         if(response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0){
           var arrValue = new Array<string>();
+          var hasNotDisburseToCust = false;
           for (const item of response["listResponseAppLoanPurpose"]) {
-            arrValue.push(item["SupplCode"]);
+            if(!item["IsDisburseToCust"]){
+              hasNotDisburseToCust = true;
+              arrValue.push(item["SupplCode"]);
+            }
           }
           var crit1Obj = new CriteriaObj();
           crit1Obj.propName = 'V.VENDOR_CODE';
           crit1Obj.restriction = AdInsConstant.RestrictionIn;
           crit1Obj.listValue = arrValue;
           this.inputLookupBranchEmpObj.addCritInput.push(crit1Obj);
-          this.isSupplierExists = true;
+          if(hasNotDisburseToCust){
+            this.isSupplierExists = true;
+          }
         }
         console.log("this.inputLookupBranchEmpObj: " + JSON.stringify(this.inputLookupBranchEmpObj));
     

@@ -35,16 +35,18 @@ export class GuarantorLegalDocComponent implements OnInit {
   selectedLegalDocName: any;
   defaultLegalDocName: any;
   modal: any;
+  isExpDateMandatory: boolean = false;
 
 
   LegalDocForm = this.fb.group({
     MrLegalDocTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     DocNo: ['', [Validators.required, Validators.maxLength(50)]],
     DocDt: ['', Validators.required],
-    DocExpiredDt: ['', Validators.required],
+    DocExpiredDt: [''],
     ReleaseBy: ['', Validators.maxLength(200)],
     DocNotes: ['', Validators.maxLength(1000)],
-    ReleaseLocation: ['', Validators.maxLength(200)]
+    ReleaseLocation: ['', Validators.maxLength(200)],
+    IsExpDtMandatory: [false]
   });
 
   constructor(
@@ -61,6 +63,25 @@ export class GuarantorLegalDocComponent implements OnInit {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.bindLegalDocTypeObj();
+  }
+
+  IsExpDateHandler(){
+    var isExpDt = this.LegalDocForm.controls["IsExpDtMandatory"].value;
+    this.LegalDocForm.patchValue({
+      DocExpiredDt: ""
+    });
+    if(isExpDt){
+      this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
+      this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
+      this.LegalDocForm.controls["DocExpiredDt"].enable();
+      this.isExpDateMandatory = true;
+    }
+    else{
+      this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
+      this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
+      this.LegalDocForm.controls["DocExpiredDt"].disable();
+      this.isExpDateMandatory = false;
+    }
   }
 
   SaveForm() {
@@ -83,6 +104,14 @@ export class GuarantorLegalDocComponent implements OnInit {
   add(content) {
     this.mode = "Add";
     this.clearForm();
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
+      (response) => {
+        this.LegalDocForm.patchValue({
+          IsExpDtMandatory: response["IsExpDtMandatory"]
+        });
+        this.IsExpDateHandler();
+      }
+    );
     this.open(content);
   }
 
@@ -94,11 +123,24 @@ export class GuarantorLegalDocComponent implements OnInit {
       MrLegalDocTypeCode: this.listLegalDoc[i].MrLegalDocTypeCode,
       DocNo: this.listLegalDoc[i].DocNo,
       DocDt: formatDate(this.listLegalDoc[i].DocDt, 'yyyy-MM-dd', 'en-US'),
-      DocExpiredDt: formatDate(this.listLegalDoc[i].DocExpiredDt, 'yyyy-MM-dd', 'en-US'),
+      DocExpiredDt: this.listLegalDoc[i].IsExpDtMandatory ? formatDate(this.listLegalDoc[i].DocExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
       ReleaseBy: this.listLegalDoc[i].ReleaseBy,
       DocNotes: this.listLegalDoc[i].DocNotes,
-      ReleaseLocation: this.listLegalDoc[i].ReleaseLocation
+      ReleaseLocation: this.listLegalDoc[i].ReleaseLocation,
+      IsExpDtMandatory: this.listLegalDoc[i].IsExpDtMandatory
     });
+    if(this.listLegalDoc[i].IsExpDtMandatory){
+      this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
+      this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
+      this.LegalDocForm.controls["DocExpiredDt"].enable();
+      this.isExpDateMandatory = true;
+    }
+    else{
+      this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
+      this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
+      this.LegalDocForm.controls["DocExpiredDt"].disable();
+      this.isExpDateMandatory = false;
+    }
     this.selectedLegalDocName = this.listLegalDoc[i].LegalDocName;
     this.open(content);
   }
@@ -115,10 +157,11 @@ export class GuarantorLegalDocComponent implements OnInit {
       MrLegalDocTypeCode: [this.defaultLegalDocType, [Validators.required, Validators.maxLength(50)]],
       DocNo: ['', [Validators.required, Validators.maxLength(50)]],
       DocDt: ['', Validators.required],
-      DocExpiredDt: ['', Validators.required],
+      DocExpiredDt: [''],
       ReleaseBy: ['', Validators.maxLength(200)],
       DocNotes: ['', Validators.maxLength(1000)],
-      ReleaseLocation: ['', Validators.maxLength(200)]
+      ReleaseLocation: ['', Validators.maxLength(200)],
+      IsExpDtMandatory: [false]
     });
     this.selectedLegalDocName = this.defaultLegalDocName;
   }
@@ -133,6 +176,7 @@ export class GuarantorLegalDocComponent implements OnInit {
     this.appGuarantorCompanyLegalDocObj.DocNotes = this.LegalDocForm.controls.DocNotes.value;
     this.appGuarantorCompanyLegalDocObj.ReleaseLocation = this.LegalDocForm.controls.ReleaseLocation.value;
     this.appGuarantorCompanyLegalDocObj.LegalDocName = this.selectedLegalDocName;
+    this.appGuarantorCompanyLegalDocObj.IsExpDtMandatory = this.LegalDocForm.controls.IsExpDtMandatory.value;
     var currentEditedIndex = -1;
     if (this.mode == "Edit") {
       currentEditedIndex = this.currentEditedIndex;
@@ -179,6 +223,15 @@ export class GuarantorLegalDocComponent implements OnInit {
   changeLegalDocType(ev) {
     var idx = ev.target.selectedIndex;
     this.selectedLegalDocName = this.LegalDocTypeObj[idx].Value;
+    console.log("selectedLegalDocName: " + this.selectedLegalDocName);
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.selectedLegalDocName }).subscribe(
+      (response) => {
+        this.LegalDocForm.patchValue({
+          IsExpDtMandatory: response["IsExpDtMandatory"]
+        });
+        this.IsExpDateHandler();
+      }
+    );
   }
 
   open(content) {

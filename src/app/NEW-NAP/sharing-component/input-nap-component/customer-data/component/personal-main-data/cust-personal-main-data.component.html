@@ -35,8 +35,8 @@
           <label class="col-md-4" for="idExpDt" *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'KITAS' && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'SIM'" translate>Id Expired Date</label>
           <label class="col-md-4 adins-required-label" for="idExpDt" *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'KITAS' || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'SIM'" translate>Id Expired Date</label>
           <div class="col-md-8">
-            <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
-            <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'EKTP'" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+            <input *ngIf="['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls'].MrIdTypeCode.value)" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+            <input *ngIf="!['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls'].MrIdTypeCode.value)" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>

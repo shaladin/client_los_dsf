@@ -25,6 +25,8 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalD
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -78,7 +80,11 @@ export class CustomerDataComponent implements OnInit {
   inputFieldMailingCompanyObj: InputFieldObj;
   copyFromMailingCompany: any;
   appCustPersonalId: any;
-  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();;
+  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();inputAddressObjForLegal: InputAddressObj;
+  inputAddressObjForResidence: InputAddressObj;
+  inputAddressObjForMailing: InputAddressObj;
+  inputAddressObjForLegalCoy: InputAddressObj;
+  inputAddressObjForMailingCoy: InputAddressObj;
   listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
@@ -121,6 +127,7 @@ export class CustomerDataComponent implements OnInit {
   spouseGender: string = "";
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
+  appData: AppObj;
 
   constructor(
     private fb: FormBuilder,
@@ -133,16 +140,54 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    
+    this.inputAddressObjForLegal = new InputAddressObj();
+    this.inputAddressObjForLegal.title = "Legal Address";
+    this.inputAddressObjForLegal.showAllPhn = false;
+    
+    this.inputAddressObjForResidence = new InputAddressObj();
+    this.inputAddressObjForResidence.showSubsection = false;
+    this.inputAddressObjForResidence.showPhn3 = false;
+    this.inputAddressObjForResidence.showOwnership = true;
+    this.inputAddressObjForResidence.showStayLength = true;
+
+    this.inputAddressObjForMailing = new InputAddressObj();
+    this.inputAddressObjForMailing.showSubsection = false;
+    this.inputAddressObjForMailing.showPhn3 = false;
+
+    this.inputAddressObjForLegalCoy = new InputAddressObj();
+    this.inputAddressObjForLegalCoy.title = "Company Legal Address";
+    this.inputAddressObjForLegalCoy.showPhn3 = false;
+
+    this.inputAddressObjForMailingCoy = new InputAddressObj();
+    this.inputAddressObjForMailingCoy.showSubsection = false;
+    this.inputAddressObjForMailingCoy.showPhn3 = false;
+
     this.initUrl();
     await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+    await this.http.post(URLConstant.GetAppById, { AppId: this.appId }).toPromise().then(
+      (response: AppObj) => {
+        this.appData = response;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   SaveForm() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+      if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
+        if(this.custDataPersonalObj.AppCustBankAccObjs.length <= 0){
+          this.toastr.errorMessage("Must Have At Least 1 Bank Account");
+          return false;
+        }
+      }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
       if (this.isSpouseOk) {
         this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
@@ -179,6 +224,12 @@ export class CustomerDataComponent implements OnInit {
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
+      if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
+        if(this.custDataCompanyObj.AppCustBankAccObjs.length <= 0){
+          this.toastr.errorMessage("Must Have At Least 1 Bank Account");
+          return false;
+        }
+      }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
@@ -402,6 +453,7 @@ export class CustomerDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrResidenceObj.FaxArea = this.CustDataForm.controls["residenceAddr"]["controls"].FaxArea.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.Fax = this.CustDataForm.controls["residenceAddr"]["controls"].Fax.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
+    this.custDataPersonalObj.AppCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
     this.custDataPersonalObj.AppCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
   }
 
@@ -632,6 +684,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
+      this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
+      this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
     }
 
     if (event == CommonConstant.AddrTypeResidence) {
@@ -652,6 +706,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
+      this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
+      this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
     }
 
     if (event == CommonConstant.AddrTypeMailing) {
@@ -672,6 +728,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value;
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value };
+      this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
+      this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
     }
   }
 
@@ -695,6 +753,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
+      this.inputAddressObjForResidence.default = this.residenceAddrObj;
+      this.inputAddressObjForResidence.inputField = this.inputFieldResidenceObj;
     }
   }
 
@@ -718,6 +778,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
+      this.inputAddressObjForMailing.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
     }
 
     if (this.copyFromMailing == CommonConstant.AddrTypeResidence) {
@@ -739,6 +801,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
+      this.inputAddressObjForMailing.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
     }
   }
 
@@ -762,6 +826,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value };
+      this.inputAddressObjForMailingCoy.default = this.mailingAddrCompanyObj;
+      this.inputAddressObjForMailingCoy.inputField = this.inputFieldMailingCompanyObj;
     }
   }
 
@@ -806,6 +872,7 @@ export class CustomerDataComponent implements OnInit {
 
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
+            this.spouseGender = this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode;
 
             this.CheckSpouseExist();
           }
@@ -910,6 +977,8 @@ export class CustomerDataComponent implements OnInit {
 
         this.inputFieldLegalObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode;
         this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode };
+        this.inputAddressObjForLegal.default = this.legalAddrObj;
+        this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
       }
     }
 
@@ -935,6 +1004,8 @@ export class CustomerDataComponent implements OnInit {
 
         this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.AppCustAddrLegalObj.Zipcode;
         this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataCompanyObj.AppCustAddrLegalObj.Zipcode };
+        this.inputAddressObjForLegalCoy.default = this.legalAddrCompanyObj;
+        this.inputAddressObjForLegalCoy.inputField = this.inputFieldLegalCompanyObj;
       }
     }
   }
@@ -958,10 +1029,13 @@ export class CustomerDataComponent implements OnInit {
       this.residenceAddrObj.PhnExt1 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt1;
       this.residenceAddrObj.PhnExt2 = this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt2;
       this.residenceAddrObj.MrHouseOwnershipCode = this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode;
+      this.residenceAddrObj.StayLength = this.custDataPersonalObj.AppCustAddrResidenceObj.StayLength;
       this.residenceAddrObj.SubZipcode = this.custDataPersonalObj.AppCustAddrResidenceObj.SubZipcode;
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode };
+      this.inputAddressObjForResidence.default = this.residenceAddrObj;
+      this.inputAddressObjForResidence.inputField = this.inputFieldResidenceObj;
     }
   }
 
@@ -988,6 +1062,8 @@ export class CustomerDataComponent implements OnInit {
 
         this.inputFieldMailingObj.inputLookupObj.nameSelect = this.custDataPersonalObj.AppCustAddrMailingObj.Zipcode;
         this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataPersonalObj.AppCustAddrMailingObj.Zipcode };
+        this.inputAddressObjForMailing.default = this.mailingAddrObj;
+        this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
       }
     }
 
@@ -1013,6 +1089,8 @@ export class CustomerDataComponent implements OnInit {
 
         this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.AppCustAddrMailingObj.Zipcode;
         this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataCompanyObj.AppCustAddrMailingObj.Zipcode };
+        this.inputAddressObjForMailingCoy.default = this.mailingAddrCompanyObj;
+        this.inputAddressObjForMailingCoy.inputField = this.inputFieldMailingCompanyObj;
       }
     }
   }
@@ -1055,6 +1133,7 @@ export class CustomerDataComponent implements OnInit {
       this.custGrpMemberComponent.copyAppGrp();
     }
 
+    this.spouseGender = event["CustPersonalObj"]["MrGenderCode"];
   }
 
   CopyCustomerCompany(event) {
@@ -1108,6 +1187,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldLegalObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
       this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
+      this.inputAddressObjForLegal.default = this.legalAddrObj;
+      this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
     }
 
     if (event["CustAddrResidenceObj"] != undefined) {
@@ -1129,6 +1210,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = event["CustAddrResidenceObj"].Zipcode;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrResidenceObj"].Zipcode };
+      this.inputAddressObjForResidence.default = this.residenceAddrObj;
+      this.inputAddressObjForResidence.inputField = this.inputFieldResidenceObj;
     }
 
     if (event["CustAddrMailingObj"] != undefined) {
@@ -1150,6 +1233,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
+      this.inputAddressObjForMailing.default = this.mailingAddrObj;
+      this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
     }
   }
 
@@ -1173,6 +1258,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
       this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
+      this.inputAddressObjForLegalCoy.default = this.legalAddrCompanyObj;
+      this.inputAddressObjForLegalCoy.inputField = this.inputFieldLegalCompanyObj;
     }
 
     if (event["CustAddrMailingObj"] != undefined) {
@@ -1194,6 +1281,8 @@ export class CustomerDataComponent implements OnInit {
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
+      this.inputAddressObjForMailingCoy.default = this.mailingAddrCompanyObj;
+      this.inputAddressObjForMailingCoy.inputField = this.inputFieldMailingCompanyObj;
     }
   }
 

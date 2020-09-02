@@ -81,7 +81,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.MOU_REVOLVING_TYPE}).subscribe(
       (response) => {
         this.RevolvingTypeList = response[CommonConstant.ReturnObj];
-        if (this.pageType != "edit") {
+        if (this.pageType != "edit" ) {
           this.MOUMainInfoForm.patchValue({
             MrRevolvingTypeCode: this.RevolvingTypeList[0].Key
           });
@@ -135,6 +135,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
             (response: any) => { 
               this.custId = response['CustId'];
             });
+
+          if(response["MrRevolvingTypeCode"]==null){
+            this.MOUMainInfoForm.controls.MrRevolvingTypeCode.setValue(this.RevolvingTypeList[0].Key);
+          }
         });
     }
     else{
@@ -159,6 +163,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   Save(){
     var mouCustFormData = this.MOUMainInfoForm.value;
+    if(!this.MOUMainInfoForm.controls.IsRevolving.value){
+      mouCustFormData["MrRevolvingTypeCode"] = null;
+    }
+
     if(this.pageType == "add"){
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(

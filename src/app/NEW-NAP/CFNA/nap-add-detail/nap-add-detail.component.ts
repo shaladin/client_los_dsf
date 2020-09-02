@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -27,6 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -49,7 +51,8 @@ export class NapAddDetailComponent implements OnInit {
     private route: ActivatedRoute, 
     private http: HttpClient, 
     private fb: FormBuilder, 
-    private router: Router
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) { 
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -103,6 +106,11 @@ export class NapAddDetailComponent implements OnInit {
     })
 
     this.MakeViewReturnInfoObj();
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewProdMainInfoObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   MakeViewReturnInfoObj() {
@@ -179,6 +187,12 @@ export class NapAddDetailComponent implements OnInit {
       (response) => {
         this.ChangeTab(Step);
         this.stepper.next();
+
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+        this.mainInfoContainer.clear();
+        const component = this.mainInfoContainer.createComponent(componentFactory);
+        component.instance.viewGenericObj = this.viewProdMainInfoObj;
+        component.instance.callback.subscribe((e) => this.GetCallback(e));
       }
     )
   }
@@ -186,7 +200,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/CFRefinancing/Paging"])
+        this.router.navigate(["/Nap/CFNA/Paging"])
       })
   }
 
@@ -216,7 +230,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
   Cancel() {
-    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFRFN4W } });
+    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFNA } });
   }
 
   GetCallback(ev) {

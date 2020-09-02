@@ -109,32 +109,42 @@ export class FraudVerifPageComponent implements OnInit {
               });
           });
       });
-    this.leadAssetObj.LeadId = this.LeadId;
-    this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
+
+    this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).subscribe(
       (response) => {
-        this.tempLeadAsset = response;
-        this.leadAssetObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
-        this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
-          (response) => {
-            this.tempAssetCategoryTypeCode = response;
-            this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;
-            this.negativeAssetCheckObj.SerialNo1 = this.tempLeadAsset.SerialNo1;
-            this.negativeAssetCheckObj.SerialNo2 = this.tempLeadAsset.SerialNo2;
-            this.negativeAssetCheckObj.SerialNo3 = this.tempLeadAsset.SerialNo3;
-            this.negativeAssetCheckObj.SerialNo4 = this.tempLeadAsset.SerialNo4;
-            this.negativeAssetCheckObj.SerialNo5 = this.tempLeadAsset.SerialNo5;
-
-            this.http.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
-              (response) => {
-                this.ResultDuplicateDoubleFinancing = response[CommonConstant.ReturnObj];
-              })
-
-            this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
-              (response) => {
-                this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
-              });
-          });
-      });
+        if(response["LobCode"] !== CommonConstant.CFNA){
+          this.leadAssetObj.LeadId = this.LeadId;
+          this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
+            (response) => {
+              this.tempLeadAsset = response;
+              this.leadAssetObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
+              this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
+                (response) => {
+                  this.tempAssetCategoryTypeCode = response;
+                  this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;
+                  this.negativeAssetCheckObj.SerialNo1 = this.tempLeadAsset.SerialNo1;
+                  this.negativeAssetCheckObj.SerialNo2 = this.tempLeadAsset.SerialNo2;
+                  this.negativeAssetCheckObj.SerialNo3 = this.tempLeadAsset.SerialNo3;
+                  this.negativeAssetCheckObj.SerialNo4 = this.tempLeadAsset.SerialNo4;
+                  this.negativeAssetCheckObj.SerialNo5 = this.tempLeadAsset.SerialNo5;
+      
+                  this.http.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
+                    (response) => {
+                      this.ResultDuplicateDoubleFinancing = response[CommonConstant.ReturnObj];
+                    })
+      
+                  this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
+                    (response) => {
+                      this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
+                    });
+                });
+            });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   reject(): void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();

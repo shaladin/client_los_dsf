@@ -295,7 +295,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
             MrIdTypeCode: this.IdTypeObj[0].Key
           });
         }
-        if (this.IdTypeObj[0].Key == CommonConstant.MrIdTypeCodeEKTP) {
+        let noExpDate = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP, CommonConstant.MrIdTypeCodeAKTA];
+        if (noExpDate.includes(this.IdTypeObj[0].Key)) {
           this.parentForm.controls[this.identifier].patchValue({
             IdExpiredDt: null
           });
@@ -381,7 +382,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     );
   }
   ddlIdTypeChanged(event) {
-    if (event.target.value == CommonConstant.MrIdTypeCodeEKTP) {
+    let noExpDate = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP, CommonConstant.MrIdTypeCodeAKTA];
+    if (noExpDate.includes(event.target.value)) {
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: null
       });

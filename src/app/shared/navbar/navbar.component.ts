@@ -54,38 +54,38 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     ngOnInit() {
         this.GetListNotifH();
-        Object.defineProperty(WebSocket, 'OPEN', { value: 1, });
+        // Object.defineProperty(WebSocket, 'OPEN', { value: 1, });
 
-        var _hubConnection = new HubConnectionBuilder()
-            .withUrl(URLConstant.WebSocketUrl)
-            //.withUrl("Http://localhost:5000/Notificationhub")
-            .withAutomaticReconnect()
-            .build();
+        // var _hubConnection = new HubConnectionBuilder()
+        //     .withUrl(URLConstant.WebSocketUrl)
+        //     //.withUrl("Http://localhost:5000/Notificationhub")
+        //     .withAutomaticReconnect()
+        //     .build();
 
-        _hubConnection.start()
-            .then(() => console.log("Connection Started !"))
-            .then(() => _hubConnection.invoke("SubscribeNotification", this.userAccess.UserName, this.userAccess.RoleCode))
-            .catch((e) => console.log("Exception : " + e));
+        // _hubConnection.start()
+        //     .then(() => console.log("Connection Started !"))
+        //     .then(() => _hubConnection.invoke("SubscribeNotification", this.userAccess.UserName, this.userAccess.RoleCode))
+        //     .catch((e) => console.log("Exception : " + e));
 
-        _hubConnection.on("ReceiveNotification", (response) => {
-            console.log("Response API : " + response);
-            if (response.type == "SUCCESS") {
-                this.toastr.successMessageTitle(response.title, response.message);
-            }
-            else if (response.type == "ERROR") {
-                this.toastr.errorMessageTitle(response.title, response.message);
-            }
-            else if (response.type == "INFO") {
-                this.toastr.infoMessageTitle(response.title, response.message);
-            }
+        // _hubConnection.on("ReceiveNotification", (response) => {
+        //     console.log("Response API : " + response);
+        //     if (response.type == "SUCCESS") {
+        //         this.toastr.successMessageTitle(response.title, response.message);
+        //     }
+        //     else if (response.type == "ERROR") {
+        //         this.toastr.errorMessageTitle(response.title, response.message);
+        //     }
+        //     else if (response.type == "INFO") {
+        //         this.toastr.infoMessageTitle(response.title, response.message);
+        //     }
 
 
-            this.GetListNotifH();
-            if (response.isNeedLogout == true) {
-                AdInsHelper.ForceLogOut(response.timeLogOut, this.toastr);
-            }
-            //this.notifications.push({ title: response, desc: "User " + response });
-        });
+        //     this.GetListNotifH();
+        //     if (response.isNeedLogout == true) {
+        //         AdInsHelper.ForceLogOut(response.timeLogOut, this.toastr);
+        //     }
+        //     //this.notifications.push({ title: response, desc: "User " + response });
+        // });
     }
 
     GetListNotifH() {

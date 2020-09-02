@@ -187,11 +187,11 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
-    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
     this.generalSettingObj = new GeneralSettingObj();
     this.generalSettingObj.gsCode = "LOB_KTA";

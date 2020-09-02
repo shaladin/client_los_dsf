@@ -21,6 +21,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -96,8 +97,8 @@ export class LeadInputCustDataComponent implements OnInit {
     MrMaritalStatCode: ['', [Validators.required]],
     Npwp: [''],
     Email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]],
-    MobilePhone1: [''],
-    MobilePhone2: [''],
+    MobilePhone1: ['',[Validators.pattern("^[0-9]+$")]],
+    MobilePhone2: ['',Validators.pattern("^[0-9]+$")],
     Facebook: [''],
     Instagram: [''],
     Twitter: [''],
@@ -106,6 +107,8 @@ export class LeadInputCustDataComponent implements OnInit {
     MonthlyIncome: [0, [Validators.required, Validators.min(1.00)]],
     MonthlyExpense: [0]
   });
+  inputAddressObjForLegalAddr: any;
+  inputAddressObjForResidenceAddr: InputAddressObj;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -162,142 +165,26 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.addCritInput = arrAddCrit;
   }
 
-  ngOnInit() {
+   async ngOnInit() {
+    this.inputAddressObjForLegalAddr = new InputAddressObj();
+    this.inputAddressObjForLegalAddr.showSubsection = false;
+    this.inputAddressObjForLegalAddr.title = "Legal Address";
+    this.inputAddressObjForLegalAddr.showPhn3 = false;
+    this.inputAddressObjForLegalAddr.showOwnership = false;
+    
+    this.inputAddressObjForResidenceAddr = new InputAddressObj();
+    this.inputAddressObjForResidenceAddr.showSubsection = false;
+    this.inputAddressObjForResidenceAddr.title = "Residence Address";
+    this.inputAddressObjForResidenceAddr.showPhn3 = false;
+    this.inputAddressObjForResidenceAddr.showOwnership = false;
+
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    this.reqLeadCustObj = new LeadCustObj();
-    this.reqLeadCustObj.LeadId = this.LeadId;
-    this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
-      (response) => {
-        this.resLeadCustObj = response;
-        if (this.resLeadCustObj.LeadCustId != 0) {
-          this.CustomerDataForm.patchValue({
-            CustName: this.resLeadCustObj.CustName,
-            MrIdTypeCode: this.resLeadCustObj.MrIdTypeCode,
-            CustModel: this.resLeadCustObj.MrCustModelCode,
-            IdNo: this.resLeadCustObj.IdNo,
-            Npwp: this.resLeadCustObj.TaxIdNo,
-          });
-          this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
-          this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
-            (response) => {
-              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-              this.CustomerDataForm.patchValue({
-                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
-                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
-                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
-              });
-            });
-
-          this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
-          this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
-            (response) => {
-              this.resLeadCustAddrLegalObj = response;
-              this.legalAddressObj = new LeadCustAddrObj();
-              this.legalAddressObj.Addr = this.resLeadCustAddrLegalObj.Addr;
-              this.legalAddressObj.AreaCode3 = this.resLeadCustAddrLegalObj.AreaCode3;
-              this.legalAddressObj.AreaCode4 = this.resLeadCustAddrLegalObj.AreaCode4;
-              this.legalAddressObj.AreaCode1 = this.resLeadCustAddrLegalObj.AreaCode1;
-              this.legalAddressObj.AreaCode2 = this.resLeadCustAddrLegalObj.AreaCode2;
-              this.legalAddressObj.City = this.resLeadCustAddrLegalObj.City;
-              this.legalAddressObj.PhnArea1 = this.resLeadCustAddrLegalObj.PhnArea1;
-              this.legalAddressObj.Phn1 = this.resLeadCustAddrLegalObj.Phn1;
-              this.legalAddressObj.PhnExt1 = this.resLeadCustAddrLegalObj.PhnExt1;
-              this.legalAddressObj.PhnArea2 = this.resLeadCustAddrLegalObj.PhnArea2;
-              this.legalAddressObj.Phn2 = this.resLeadCustAddrLegalObj.Phn2;
-              this.legalAddressObj.PhnExt2 = this.resLeadCustAddrLegalObj.PhnExt2;
-              this.legalAddressObj.FaxArea = this.resLeadCustAddrLegalObj.FaxArea;
-              this.legalAddressObj.Fax = this.resLeadCustAddrLegalObj.Fax;
-              this.legalAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrLegalObj.MrBuildingOwnershipCode;
-
-              this.inputLegalAddressObj = new InputFieldObj();
-              this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
-              this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
-              this.inputLegalAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrLegalObj.Zipcode };
-
-            });
-
-          this.reqLeadCustAddrResObj = new LeadCustAddrObj();
-          this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
-          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
-            (response) => {
-              this.resLeadCustAddrResObj = response;
-              this.residenceAddressObj = new LeadCustAddrObj();
-              this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
-              this.residenceAddressObj.AreaCode3 = this.resLeadCustAddrResObj.AreaCode3;
-              this.residenceAddressObj.AreaCode4 = this.resLeadCustAddrResObj.AreaCode4;
-              this.residenceAddressObj.AreaCode1 = this.resLeadCustAddrResObj.AreaCode1;
-              this.residenceAddressObj.AreaCode2 = this.resLeadCustAddrResObj.AreaCode2;
-              this.residenceAddressObj.City = this.resLeadCustAddrResObj.City;
-              this.residenceAddressObj.PhnArea1 = this.resLeadCustAddrResObj.PhnArea1;
-              this.residenceAddressObj.Phn1 = this.resLeadCustAddrResObj.Phn1;
-              this.residenceAddressObj.PhnExt1 = this.resLeadCustAddrResObj.PhnExt1;
-              this.residenceAddressObj.PhnArea2 = this.resLeadCustAddrResObj.PhnArea2;
-              this.residenceAddressObj.Phn2 = this.resLeadCustAddrResObj.Phn2;
-              this.residenceAddressObj.PhnExt2 = this.resLeadCustAddrResObj.PhnExt2;
-              this.residenceAddressObj.FaxArea = this.resLeadCustAddrResObj.FaxArea;
-              this.residenceAddressObj.Fax = this.resLeadCustAddrResObj.Fax;
-              this.residenceAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrResObj.MrBuildingOwnershipCode;
-              this.inputResidenceAddressObj = new InputFieldObj();
-              this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
-              this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
-              this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrResObj.Zipcode };
-            });
-
-          this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
-          this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
-            (response) => {
-              this.resLeadCustPersonalObj = response;
-              this.CustomerDataForm.patchValue({
-                Gender: this.resLeadCustPersonalObj.MrGenderCode,
-                BirthPlace: this.resLeadCustPersonalObj.BirthPlace,
-                BirthDate: formatDate(this.resLeadCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
-                MotherName: this.resLeadCustPersonalObj.MotherMaidenName,
-                MrMaritalStatCode: this.resLeadCustPersonalObj.MrMaritalStatCode,
-                Email: this.resLeadCustPersonalObj.Email1,
-                MobilePhone1: this.resLeadCustPersonalObj.MobilePhnNo1,
-                MobilePhone2: this.resLeadCustPersonalObj.MobilePhnNo2,
-              });
-              this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
-              this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-              this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
-                (response) => {
-                  this.resLeadCustPersonalJobDataObj = response;
-                  this.CustomerDataForm.patchValue({
-                    CompanyName: this.resLeadCustPersonalJobDataObj.CompanyName,
-                  });
-                  this.refProfessionObj = new RefProfessionObj();
-                  this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                  this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
-                    (response) => {
-                      this.returnRefProfessionObj = response;
-                      this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
-                      this.professionLookUpObj.jsonSelect = this.returnRefProfessionObj;
-                      this.tempProfession = this.returnRefProfessionObj.ProfessionCode;
-                    });
-                });
-              this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
-              this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-              this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
-                (response) => {
-                  this.resLeadCustPersonalFinDataObj = response;
-                  this.CustomerDataForm.patchValue({
-                    MonthlyIncome: this.resLeadCustPersonalFinDataObj.MonthlyIncomeAmt,
-                    MonthlyExpense: this.resLeadCustPersonalFinDataObj.MonthlyExpenseAmt,
-                  });
-                });
-            });
-        }
-      });
+    await this.getLeadData();
 
     this.inputLegalAddressObj = new InputFieldObj();
     this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
@@ -447,6 +334,8 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
               this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
               this.inputLegalAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrLegalObj.Zipcode };
+              this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
+              this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
             });
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -477,6 +366,8 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
               this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrResObj.Zipcode };
 
+              this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+              this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
             });
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -595,7 +486,8 @@ export class LeadInputCustDataComponent implements OnInit {
                 this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
                 this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
                 this.inputLegalAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrLegalObj.Zipcode };
-
+                this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
+                this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
               });
 
             this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -626,7 +518,8 @@ export class LeadInputCustDataComponent implements OnInit {
                 this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
                 this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
                 this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrResObj.Zipcode };
-
+                this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+                this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
               });
 
             this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -710,6 +603,8 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value };
+    this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+    this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
   }
 
   setLegalAddr() {
@@ -822,7 +717,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
   SaveForm() {
     if (this.typePage == "edit" || this.typePage == "update") {
-      if (this.resLeadCustObj.LeadId != 0) {
+      if (this.resLeadCustObj.LeadCustId != 0) {
         this.leadInputObj = new LeadInputObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
@@ -878,12 +773,151 @@ export class LeadInputCustDataComponent implements OnInit {
         });
     }
   }
-
+  
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
+      });
+  }
+
+  async getLeadData(){
+    this.reqLeadCustObj = new LeadCustObj();
+    this.reqLeadCustObj.LeadId = this.LeadId;
+  await this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).toPromise().then(
+      (response) => {
+        this.resLeadCustObj = response;
+        if(this.resLeadCustObj.LeadCustId!=0){
+          this.typePage = "edit";
+          this.CopyFrom=null;
+        }
+        if (this.resLeadCustObj.LeadCustId != 0) {
+          this.CustomerDataForm.patchValue({
+            CustName: this.resLeadCustObj.CustName,
+            MrIdTypeCode: this.resLeadCustObj.MrIdTypeCode,
+            CustModel: this.resLeadCustObj.MrCustModelCode,
+            IdNo: this.resLeadCustObj.IdNo,
+            Npwp: this.resLeadCustObj.TaxIdNo,
+          });
+          this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
+          this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+          this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
+            (response) => {
+              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+              this.CustomerDataForm.patchValue({
+                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
+                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
+                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
+              });
+            });
+
+          this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
+          this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+          this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
+          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
+            (response) => {
+              this.resLeadCustAddrLegalObj = response;
+              this.legalAddressObj = new LeadCustAddrObj();
+              this.legalAddressObj.Addr = this.resLeadCustAddrLegalObj.Addr;
+              this.legalAddressObj.AreaCode3 = this.resLeadCustAddrLegalObj.AreaCode3;
+              this.legalAddressObj.AreaCode4 = this.resLeadCustAddrLegalObj.AreaCode4;
+              this.legalAddressObj.AreaCode1 = this.resLeadCustAddrLegalObj.AreaCode1;
+              this.legalAddressObj.AreaCode2 = this.resLeadCustAddrLegalObj.AreaCode2;
+              this.legalAddressObj.City = this.resLeadCustAddrLegalObj.City;
+              this.legalAddressObj.PhnArea1 = this.resLeadCustAddrLegalObj.PhnArea1;
+              this.legalAddressObj.Phn1 = this.resLeadCustAddrLegalObj.Phn1;
+              this.legalAddressObj.PhnExt1 = this.resLeadCustAddrLegalObj.PhnExt1;
+              this.legalAddressObj.PhnArea2 = this.resLeadCustAddrLegalObj.PhnArea2;
+              this.legalAddressObj.Phn2 = this.resLeadCustAddrLegalObj.Phn2;
+              this.legalAddressObj.PhnExt2 = this.resLeadCustAddrLegalObj.PhnExt2;
+              this.legalAddressObj.FaxArea = this.resLeadCustAddrLegalObj.FaxArea;
+              this.legalAddressObj.Fax = this.resLeadCustAddrLegalObj.Fax;
+              this.legalAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrLegalObj.MrBuildingOwnershipCode;
+
+              this.inputLegalAddressObj = new InputFieldObj();
+              this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
+              this.inputLegalAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrLegalObj.Zipcode;
+              this.inputLegalAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrLegalObj.Zipcode };
+              this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
+              this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+            });
+
+          this.reqLeadCustAddrResObj = new LeadCustAddrObj();
+          this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+          this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
+          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
+            (response) => {
+              this.resLeadCustAddrResObj = response;
+              this.residenceAddressObj = new LeadCustAddrObj();
+              this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
+              this.residenceAddressObj.AreaCode3 = this.resLeadCustAddrResObj.AreaCode3;
+              this.residenceAddressObj.AreaCode4 = this.resLeadCustAddrResObj.AreaCode4;
+              this.residenceAddressObj.AreaCode1 = this.resLeadCustAddrResObj.AreaCode1;
+              this.residenceAddressObj.AreaCode2 = this.resLeadCustAddrResObj.AreaCode2;
+              this.residenceAddressObj.City = this.resLeadCustAddrResObj.City;
+              this.residenceAddressObj.PhnArea1 = this.resLeadCustAddrResObj.PhnArea1;
+              this.residenceAddressObj.Phn1 = this.resLeadCustAddrResObj.Phn1;
+              this.residenceAddressObj.PhnExt1 = this.resLeadCustAddrResObj.PhnExt1;
+              this.residenceAddressObj.PhnArea2 = this.resLeadCustAddrResObj.PhnArea2;
+              this.residenceAddressObj.Phn2 = this.resLeadCustAddrResObj.Phn2;
+              this.residenceAddressObj.PhnExt2 = this.resLeadCustAddrResObj.PhnExt2;
+              this.residenceAddressObj.FaxArea = this.resLeadCustAddrResObj.FaxArea;
+              this.residenceAddressObj.Fax = this.resLeadCustAddrResObj.Fax;
+              this.residenceAddressObj.MrHouseOwnershipCode = this.resLeadCustAddrResObj.MrBuildingOwnershipCode;
+              this.inputResidenceAddressObj = new InputFieldObj();
+              this.inputResidenceAddressObj.inputLookupObj = new InputLookupObj();
+              this.inputResidenceAddressObj.inputLookupObj.nameSelect = this.resLeadCustAddrResObj.Zipcode;
+              this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrResObj.Zipcode };
+              this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
+              this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+            });
+
+          this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
+          this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+          this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
+            (response) => {
+              this.resLeadCustPersonalObj = response;
+              this.CustomerDataForm.patchValue({
+                Gender: this.resLeadCustPersonalObj.MrGenderCode,
+                BirthPlace: this.resLeadCustPersonalObj.BirthPlace,
+                BirthDate: formatDate(this.resLeadCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+                MotherName: this.resLeadCustPersonalObj.MotherMaidenName,
+                MrMaritalStatCode: this.resLeadCustPersonalObj.MrMaritalStatCode,
+                Email: this.resLeadCustPersonalObj.Email1,
+                MobilePhone1: this.resLeadCustPersonalObj.MobilePhnNo1,
+                MobilePhone2: this.resLeadCustPersonalObj.MobilePhnNo2,
+              });
+              this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
+              this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
+              this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
+                (response) => {
+                  this.resLeadCustPersonalJobDataObj = response;
+                  this.CustomerDataForm.patchValue({
+                    CompanyName: this.resLeadCustPersonalJobDataObj.CompanyName,
+                  });
+                  this.refProfessionObj = new RefProfessionObj();
+                  this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
+                  this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
+                    (response) => {
+                      this.returnRefProfessionObj = response;
+                      this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
+                      this.professionLookUpObj.jsonSelect = this.returnRefProfessionObj;
+                      this.tempProfession = this.returnRefProfessionObj.ProfessionCode;
+                    });
+                });
+              this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
+              this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
+              this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
+                (response) => {
+                  this.resLeadCustPersonalFinDataObj = response;
+                  this.CustomerDataForm.patchValue({
+                    MonthlyIncome: this.resLeadCustPersonalFinDataObj.MonthlyIncomeAmt,
+                    MonthlyExpense: this.resLeadCustPersonalFinDataObj.MonthlyExpenseAmt,
+                  });
+                });
+            });
+        }
       });
   }
 }
