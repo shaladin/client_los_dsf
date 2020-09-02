@@ -873,6 +873,7 @@ export class CustomerDataComponent implements OnInit {
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
             this.spouseGender = this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode;
+            this.isMarried = this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
 
             this.CheckSpouseExist();
           }
@@ -1134,6 +1135,7 @@ export class CustomerDataComponent implements OnInit {
     }
 
     this.spouseGender = event["CustPersonalObj"]["MrGenderCode"];
+    this.isMarried = event["CustPersonalObj"]["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
   }
 
   CopyCustomerCompany(event) {
