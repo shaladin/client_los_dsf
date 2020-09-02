@@ -140,6 +140,18 @@ export class MouCustTabComponent implements OnInit {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new MouCustPersonalDataObj();
       this.setCustPersonalObjForSave();
+      for (let i = 0; i < this.custDataPersonalObj.MouCustGrpObjs.length; i++) {
+        for (let j = i+1; j < this.custDataPersonalObj.MouCustGrpObjs.length; j++) {
+          if (this.custDataPersonalObj.MouCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.MouCustGrpObjs[j]["CustNo"] ) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            return;
+          }
+          if (this.custDataPersonalObj.MouCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.MouCustGrpObjs[j]["MrCustRelationshipCode"]) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            return;
+          }
+        }
+      }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
       if (this.isSpouseOk) {
         this.http.post(URLConstant.AddEditMouCustPersonalData, this.custDataPersonalObj).subscribe(
@@ -180,6 +192,18 @@ export class MouCustTabComponent implements OnInit {
       }      
       this.custDataCompanyObj = new MouCustCompanyDataObj();
       this.setCustCompanyObjForSave();
+      for (let i = 0; i < this.custDataCompanyObj.MouCustGrpObjs.length; i++) {
+        for (let j = i+1; j < this.custDataCompanyObj.MouCustGrpObjs.length; j++) {
+          if (this.custDataCompanyObj.MouCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.MouCustGrpObjs[j]["CustNo"] ) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            return;
+          }
+          if (this.custDataCompanyObj.MouCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.MouCustGrpObjs[j]["MrCustRelationshipCode"]) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            return;
+          }
+        }
+      }
       if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       this.http.post(URLConstant.AddEditMouCustCompanyData, this.custDataCompanyObj).subscribe(
         (response) => {

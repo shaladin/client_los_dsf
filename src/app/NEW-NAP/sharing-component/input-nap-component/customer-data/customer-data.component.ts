@@ -182,13 +182,29 @@ export class CustomerDataComponent implements OnInit {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+      for (let i = 0; i < this.custDataPersonalObj.AppCustGrpObjs.length; i++) {
+        for (let j = i+1; j < this.custDataPersonalObj.AppCustGrpObjs.length; j++) {
+          if (this.custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            return;
+          }
+
+          if (this.custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            return;
+          }
+        }
+      }
+
       if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
         if(this.custDataPersonalObj.AppCustBankAccObjs.length <= 0){
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
           return false;
         }
       }
+
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
+
       if (this.isSpouseOk) {
         this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
           (response) => {
@@ -222,8 +238,23 @@ export class CustomerDataComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
         return;
       }
+
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
+      for (let i = 0; i < this.custDataCompanyObj.AppCustGrpObjs.length; i++) {
+        for (let j = i+1; j < this.custDataCompanyObj.AppCustGrpObjs.length; j++) {
+          if (this.custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            return;
+          }
+
+          if (this.custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            return;
+          }
+        }
+      }
+
       if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
         if(this.custDataCompanyObj.AppCustBankAccObjs.length <= 0){
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
@@ -637,7 +668,6 @@ export class CustomerDataComponent implements OnInit {
         this.custDataCompanyObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
-
   }
 
   getCustContactInformation(event) {
@@ -829,14 +859,6 @@ export class CustomerDataComponent implements OnInit {
       this.inputAddressObjForMailingCoy.default = this.mailingAddrCompanyObj;
       this.inputAddressObjForMailingCoy.inputField = this.inputFieldMailingCompanyObj;
     }
-  }
-
-
-
-  test() {
-  }
-
-  testCompany() {
   }
 
   async getCustData() {
