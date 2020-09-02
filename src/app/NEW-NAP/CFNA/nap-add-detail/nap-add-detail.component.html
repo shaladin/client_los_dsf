@@ -8,7 +8,8 @@
       </button>
       </div>
     </div>
-    <lib-ucviewgeneric [viewGenericObj]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
+    <!-- <lib-ucviewgeneric [viewGenericObj]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
+    <ng-template #CFNAMainInfoContainer></ng-template>
     <div class="card-body">
       <div class="px-3">
         <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
