@@ -872,6 +872,7 @@ export class CustomerDataComponent implements OnInit {
 
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
+            this.spouseGender = this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode;
 
             this.CheckSpouseExist();
           }
@@ -1132,6 +1133,7 @@ export class CustomerDataComponent implements OnInit {
       this.custGrpMemberComponent.copyAppGrp();
     }
 
+    this.spouseGender = event["CustPersonalObj"]["MrGenderCode"];
   }
 
   CopyCustomerCompany(event) {

@@ -413,15 +413,17 @@ export class CustPersonalContactInformationComponent implements OnInit {
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
         this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasteCodeGenderMale
-        });
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-      }
-      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
-        this.ContactInfoPersonalForm.patchValue({
           MrGenderCode: CommonConstant.MasterCodeGenderFemale
         });
         this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        this.selectedGenderName = CommonConstant.MasterCodeGenderFemaleName;
+      }
+      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: CommonConstant.MasteCodeGenderMale
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        this.selectedGenderName = CommonConstant.MasterCodeGenderMaleName;
       }
       else {
         this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();

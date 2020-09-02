@@ -468,6 +468,8 @@ export class CommonConstant {
     //Gender Type
     public static MasterCodeGenderFemale = "FEMALE";
     public static MasteCodeGenderMale = "MALE";
+    public static MasterCodeGenderFemaleName = "Female";
+    public static MasterCodeGenderMaleName = "Male";
 
     //Martial Status
     public static MasteCodeMartialStatsMarried = "MARRIED";
