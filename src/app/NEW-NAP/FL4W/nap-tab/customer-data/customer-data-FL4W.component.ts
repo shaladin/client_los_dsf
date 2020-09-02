@@ -177,6 +177,19 @@ export class CustomerDataFL4WComponent implements OnInit {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new CustDataPersonalObj();
       this.setCustPersonalObjForSave();
+      for (let i = 0; i < this.custDataPersonalObj.AppCustGrpObjs.length; i++) {
+        for (let j = i+1; j < this.custDataPersonalObj.AppCustGrpObjs.length; j++) {
+          if (this.custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            return;
+          }
+
+          if (this.custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            return;
+          }
+        }
+      }
 
       if (!this.isSocmedValid) {
         return;
@@ -210,6 +223,19 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
       this.setCustCompanyObjForSave();
+      for (let i = 0; i < this.custDataCompanyObj.AppCustGrpObjs.length; i++) {
+        for (let j = i+1; j < this.custDataCompanyObj.AppCustGrpObjs.length; j++) {
+          if (this.custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            return;
+          }
+
+          if (this.custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
+            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            return;
+          }
+        }
+      }
       this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
