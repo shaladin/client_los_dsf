@@ -235,7 +235,7 @@ export class CustomerDataComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
       }
 
