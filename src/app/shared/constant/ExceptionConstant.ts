@@ -82,5 +82,8 @@ export class ExceptionConstant {
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
     public static INCORRECT_PASSWORD = "Password Mismatch";
     public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input"; 
+
+    public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
+    public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
 }
 

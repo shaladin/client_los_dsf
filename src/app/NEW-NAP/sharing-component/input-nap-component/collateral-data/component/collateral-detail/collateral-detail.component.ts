@@ -263,10 +263,19 @@ export class CollateralDetailComponent implements OnInit {
         this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
         this.criteriaObj.value = this.AssetTypeCode;
         this.criteriaList.push(this.criteriaObj);
-        this.inputLookupExistColl.addCritInput = this.criteriaList;
-        this.inputLookupExistColl.isReady = true;
-      });
 
+        // tambah filter cust no
+        this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
+          (response) => {
+            this.criteriaObj = new CriteriaObj();
+            this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+            this.criteriaObj.propName = 'ACU.CUST_NO';
+            this.criteriaObj.value = response.CustNo;
+            this.criteriaList.push(this.criteriaObj);
+            this.inputLookupExistColl.addCritInput = this.criteriaList;
+            this.inputLookupExistColl.isReady = true;
+        });
+      });
   }
 
   getRefAssetDocList() {

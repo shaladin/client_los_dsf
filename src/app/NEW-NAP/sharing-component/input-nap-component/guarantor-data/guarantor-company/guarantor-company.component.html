@@ -92,8 +92,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Mobile Phone 1</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Mobile Phone 1</label>
+                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Mobile Phone 1</label>
+                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Mobile Phone 1</label> -->
+                    <label class="col-md-4 adInsLabel">Mobile Phone 1</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
@@ -111,8 +112,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Email</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Email</label>
+                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Email</label>
+                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Email</label> -->
+                    <label class="col-md-4 adInsLabel">Email</label>
                     <div class="col-md-8">
                       <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="ContactEmail"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactEmail.invalid }">
@@ -124,8 +126,9 @@
                 <!-- right -->
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Position</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Position</label>
+                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Position</label>
+                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Position</label> -->
+                    <label class="col-md-4 adInsLabel">Position</label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrJobPositionCode.invalid }">
@@ -139,8 +142,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Phone No 1</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Phone No (Fix Line) 1</label>
+                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Phone No 1</label> -->
+                    <!-- <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Phone No (Fix Line) 1</label> -->
+                    <label class="col-md-4 adInsLabel">Phone No 1</label>
                     <div class="col-md-8">
                       <div class="form-group row">
                         <div class="col-md-3" style="border-right: 1px solid grey">

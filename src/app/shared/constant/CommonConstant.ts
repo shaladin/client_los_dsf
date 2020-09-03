@@ -458,6 +458,7 @@ export class CommonConstant {
 
     //SUBSIDY FROM TYPE
     public static SubsidyFromTypeAtpm = "ATPM";
+    public static SubsidyFromTypeSupplier = "SUPPLIER";
 
     
     //SCORE TYPE

@@ -142,18 +142,15 @@
                     </div>
                   </div>
                   <div class="form-group row ">
-                    <label class="col-md-4 adins-required-label">Marital Status </label>
+                    <label class="col-md-4">Marital Status </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
-                        formControlName="MrMaritalStatCode"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrMaritalStatCode.invalid}">
+                        formControlName="MrMaritalStatCode">
                         <option value="">-Select One-</option>
                         <option *ngFor="let it of MrMaritalStatCode" value="{{it.MasterCode}}">
                           {{it.Descr}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="PersonalForm.controls.MrMaritalStatCode"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row adins-required">
