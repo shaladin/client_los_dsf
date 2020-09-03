@@ -145,7 +145,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="maritalStatus" translate>Marital Status</label>
           <div class="col-md-8">
-            <select class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode">
+            <select class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode" (change)="ChangeMaritalStats()">
               <option value="">-Select One-</option>
               <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
                 {{item.Value}}
