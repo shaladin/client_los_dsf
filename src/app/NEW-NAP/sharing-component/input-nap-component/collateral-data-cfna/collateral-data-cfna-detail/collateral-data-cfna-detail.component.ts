@@ -167,7 +167,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             AssetTypeCode: this.CollTypeList[0].Key
           });
           // SEMENTARA DI COMMENT BUAT CFNA
-          this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
+          this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value, true)
         }
       });
 
@@ -243,9 +243,11 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             this.criteriaObj = new CriteriaObj();
             this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
             this.criteriaObj.propName = 'CU.CUST_NO';
-            this.criteriaObj.value = this.AppCustData.CustNo;
-            this.criteriaList.push(this.criteriaObj);
-            this.inputLookupExistColl.addCritInput = this.criteriaList;
+            if(this.AppCustData.CustNo){
+              this.criteriaObj.value = this.AppCustData.CustNo;
+              this.criteriaList.push(this.criteriaObj);
+              this.inputLookupExistColl.addCritInput = this.criteriaList;
+            }
             this.inputLookupExistColl.isReady = true;
           }
         ).catch(
@@ -282,7 +284,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       // });
   }
 
-  getRefAssetDocList() {
+  getRefAssetDocList(isInit: boolean) {
     this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
@@ -303,7 +305,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             ListDoc.push(assetDocumentDetail);
           }
         }
-        this.setAppCollateralDoc(this.appCollateralObj.AppCollateralId);
+        if(isInit){
+          this.setAppCollateralDoc(this.appCollateralObj.AppCollateralId);
+        }
       });
   }
 
@@ -436,7 +440,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         MrCollateralUsageCode: response["MrCollateralUsageCode"],
         CollateralValueAmt: response["CollateralPriceAmt"],
         CollateralNotes: response["Notes"],
-        AssetTaxDt: formatDate(response["AssetTaxDt"], 'yyyy-MM-dd', 'en-US'),
+        AssetTaxDt: response["AssetTaxDate"] ? formatDate(response["AssetTaxDate"], 'yyyy-MM-dd', 'en-US') : "",
         // CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
         // IsMainCollateral: this.appCollateralObj.IsMainCollateral,
         // ManufacturingYear: this.appCollateralObj.ManufacturingYear,
@@ -450,15 +454,22 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         MrOwnerRelationshipCode: response["MrOwnerRelationshipCode"],
         UserName: response["Username"],
         MrUserRelationshipCode: response["MrUserRelationshipCode"],
-        SelfOwner: (response["MrOwnerRelationshipCode"] == "SELF")
+        SelfOwner: response["MrOwnerRelationshipCode"] == "SELF" ? true : false
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
+
+      for (var i = 0; i < this.items.controls.length; i++) {
+        var formGroupItem = this.items.controls[i] as FormGroup;
+        formGroupItem.patchValue({
+          SerialNoValue: response["SerialNo"+(i+1)]
+        });
+      }
 
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
         this.AddCollForm.patchValue({
           SelfUsage: true
         })
-      }// bookmark
+      }
 
       // this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
       this.changeSerialNoValidators(response["MrCollateralConditionCode"]);
@@ -561,7 +572,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
             this.inputAddressObjForOwner.default = this.OwnerAddrObj;
             this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
-            this.onItemChange(this.appCollateralObj.AssetTypeCode);
+            this.onItemChange(this.appCollateralObj.AssetTypeCode, true);
           },
           (error) => {
             console.log(error);
@@ -583,7 +594,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     });
   }
 
-  onItemChange(AssetTypeCode: string) {
+  onItemChange(AssetTypeCode: string, isInit: boolean = false) {
     var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -630,7 +641,12 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         }
 
         this.AssetTypeCode = AssetTypeCode;
-        this.getRefAssetDocList();
+        var listDocExisting = this.AddCollForm.get('ListDoc') as FormArray;
+        listDocExisting.reset();
+        while(listDocExisting.length !== 0){
+          listDocExisting.removeAt(0);
+        }
+        this.getRefAssetDocList(isInit);
       });
   }
 
@@ -765,6 +781,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.setCollateralLocation();
     this.setCollateralPercentage();
 
+    this.appCollateralDataObj.BizTemplateCode = CommonConstant.CFNA;
     this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
 
     for (var i = 0; i < this.AddCollForm.value.ListDoc["length"]; i++) {

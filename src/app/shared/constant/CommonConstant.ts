@@ -173,6 +173,7 @@ export class CommonConstant {
     //REF PROD COMPNT
     public static RefProdCompntCodeWayOfFinancing = "WAY_OF_FINANCING";
     public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
+    public static CollateralNeeded = "COLLATERALNEEDED";
 
     //VERIFICATION
     public static VerificationNew = "NEW";

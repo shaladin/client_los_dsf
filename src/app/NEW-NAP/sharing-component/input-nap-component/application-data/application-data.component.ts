@@ -492,22 +492,49 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ClickSave() {
-    var tempAppObj = this.GetAppObjValue();
-    var tempListAppCrossObj = this.GetListAppCrossValue();
-    var tempAppFindDataObj = this.GetAppFinDataValue();
-    var url = URLConstant.EditAppAddAppCross;
-    var obj = {
-      appObj: tempAppObj,
-      listAppCrossObj: tempListAppCrossObj,
-      appFinData: tempAppFindDataObj,
-      RowVersion: ""
-    };
-    this.http.post(url, obj).subscribe(
-      (response) => {
-        this.toastr.successMessage('Save Application Data');
-        this.outputTab.emit();
-      });
-
+    if(this.BizTemplateCode == CommonConstant.CFNA){
+      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
+        (response) => {
+          if(response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0){
+            var tempAppObj = this.GetAppObjValue();
+            var tempListAppCrossObj = this.GetListAppCrossValue();
+            var tempAppFindDataObj = this.GetAppFinDataValue();
+            var url = URLConstant.EditAppAddAppCross;
+            var obj = {
+              appObj: tempAppObj,
+              listAppCrossObj: tempListAppCrossObj,
+              appFinData: tempAppFindDataObj,
+              RowVersion: ""
+            };
+            this.http.post(url, obj).subscribe(
+              (response) => {
+                this.toastr.successMessage('Save Application Data');
+                this.outputTab.emit();
+              });
+          }
+          else{
+            this.toastr.errorMessage("At Least 1 Loan Object Is Required");
+            return false;
+          }
+        });
+    }
+    else{
+      var tempAppObj = this.GetAppObjValue();
+      var tempListAppCrossObj = this.GetListAppCrossValue();
+      var tempAppFindDataObj = this.GetAppFinDataValue();
+      var url = URLConstant.EditAppAddAppCross;
+      var obj = {
+        appObj: tempAppObj,
+        listAppCrossObj: tempListAppCrossObj,
+        appFinData: tempAppFindDataObj,
+        RowVersion: ""
+      };
+      this.http.post(url, obj).subscribe(
+        (response) => {
+          this.toastr.successMessage('Save Application Data');
+          this.outputTab.emit();
+        });
+    }
   }
 
   Cancel(){

@@ -135,7 +135,7 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="'true'"
+              <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="'true'" [BizTemplateCode]="BizTemplateCode"
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">

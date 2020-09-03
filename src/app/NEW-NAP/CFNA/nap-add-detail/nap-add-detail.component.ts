@@ -28,6 +28,7 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  BizTemplateCode: string;
   @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
 
   FormReturnObj = this.fb.group({
@@ -64,6 +65,7 @@ export class NapAddDetailComponent implements OnInit {
         this.wfTaskListId = params["WfTaskListId"];
       }
     });
+    this.BizTemplateCode = CommonConstant.CFNA;
   }
 
   ngOnInit() {
