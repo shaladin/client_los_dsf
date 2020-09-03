@@ -401,6 +401,10 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.selectedNationalityCountryName = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField2;
       this.isLocal = true;
     }else{
+      var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
+      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
+      this.selectedNationalityCountryCode = foreign.ReserveField1;
       this.isLocal = false;
     }
   }

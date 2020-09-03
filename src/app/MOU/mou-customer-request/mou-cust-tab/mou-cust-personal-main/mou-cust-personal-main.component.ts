@@ -374,6 +374,10 @@ export class MouCustPersonalMainComponent implements OnInit {
       this.isLocal = true;
     }else{
       this.isLocal = false;
+      var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
+      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
+      this.selectedNationalityCountryCode = foreign.ReserveField1;
     }
   }
 
