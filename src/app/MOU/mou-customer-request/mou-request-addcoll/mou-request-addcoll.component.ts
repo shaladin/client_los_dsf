@@ -578,7 +578,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.FullAssetName = this.AddCollForm.controls.FullAssetName.value.value;
     this.mouCustCollateralObj.AssetCategoryCode = this.AddCollForm.controls.AssetCategoryCode.value;
     this.mouCustCollateralObj.MrCollateralConditionCode = this.AddCollForm.controls.MrCollateralConditionCode.value;
-    this.mouCustCollateralObj.MrCollateralUsageCode = "COMMERCIAL";
+    this.mouCustCollateralObj.MrCollateralUsageCode = "COMM";
     this.mouCustCollateralObj.CollateralStat = "NEW";
 
     if (this.items.controls[0] != null) {
