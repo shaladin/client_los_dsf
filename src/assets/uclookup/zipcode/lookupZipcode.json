@@ -24,6 +24,14 @@
         "value": "",
         "label": "Kecamatan",
         "placeholder": "Kecamatan"
+      },
+      {
+        "type": "textbox",
+        "name": "RZ.CITY",
+        "id": "kota",
+        "value": "",
+        "label": "Kota",
+        "placeholder": "Kota"
       }
     ],
     "querystring": {
@@ -34,7 +42,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "City",
+            "label": "Kota",
             "name": "RZ.CITY"
         },
         {

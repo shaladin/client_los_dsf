@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -21,6 +21,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj;
+  @Input() isMarried: boolean;
   totalMonthlyIncome: number;
   nettMonthlyIncome: number;
   totalMonthlyExpense: number;
@@ -40,6 +41,18 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
     private http: HttpClient) {
 
      }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!changes.isMarried.currentValue){
+      this.appCustPersonalFinDataObj.IsJoinIncome = false;
+      this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
+      this.parentForm.controls[this.identifier].patchValue({
+        IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
+        SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt
+      });
+      this.CalculateFinData();
+    }
+  }
 
   ngOnInit() {
 
@@ -66,6 +79,10 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
 
   bindAppCustPersonalFinData(){
     if(this.appCustPersonalFinDataObj != undefined){
+      if(!this.isMarried){
+        this.appCustPersonalFinDataObj.IsJoinIncome = false;
+        this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
+      }
       this.parentForm.controls[this.identifier].patchValue({
         MonthlyIncomeAmt: this.appCustPersonalFinDataObj.MonthlyIncomeAmt,
         MonthlyExpenseAmt: this.appCustPersonalFinDataObj.MonthlyExpenseAmt,
@@ -103,5 +120,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
     this.totalMonthlyExpense = formGroup.controls["MonthlyExpenseAmt"].value + formGroup.controls["MonthlyInstallmentAmt"].value;
     this.nettMonthlyIncome = this.totalMonthlyIncome - this.totalMonthlyExpense;
   }
+
+  
 
 }

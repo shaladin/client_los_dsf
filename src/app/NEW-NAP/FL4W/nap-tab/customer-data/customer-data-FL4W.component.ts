@@ -126,6 +126,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   defCustModelCode: any;
   MrCustTypeCode: any;
   isSocmedValid: boolean = true;
+  isMarried: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -218,7 +219,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       }
 
       if (totalSharePrcnt != 100) {
-        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MAX_100);
+        this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
       }
       this.custDataCompanyObj = new CustDataCompanyObj();
@@ -823,6 +824,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
+            this.isMarried = this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
           }
 
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
@@ -1085,6 +1087,8 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custGrpMemberComponent.appCustGrpObjs = event["CustGrpObjs"];
       this.custGrpMemberComponent.copyAppGrp();
     }
+
+    this.isMarried = event["CustPersonalObj"]["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
   }
 
   CopyCustomerCompany(event) {
@@ -1252,6 +1256,10 @@ export class CustomerDataFL4WComponent implements OnInit {
         }
       }
     );
+  }
+
+  MaritalChanged(event) {
+    this.isMarried = event;
   }
 
   EmitToMainComp() {
