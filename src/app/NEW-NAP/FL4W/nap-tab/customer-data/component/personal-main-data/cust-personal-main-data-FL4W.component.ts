@@ -30,7 +30,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   @Input() custType: any;
 
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-
+  @Output() isMarried: EventEmitter<any> = new EventEmitter();
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -340,7 +340,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindNationalityObj() {
-    // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
     var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
@@ -404,7 +403,20 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
       this.isLocal = true;
     } else {
+      var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
+      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
+      this.selectedNationalityCountryCode = foreign.ReserveField1;
       this.isLocal = false;
+    }
+  }
+
+  ChangeMaritalStats() {
+    if (this.parentForm.controls[this.identifier]['controls'].MrMaritalStatCode.value == CommonConstant.MasteCodeMartialStatsMarried) {
+      this.isMarried.emit(true);
+    }
+    else {
+      this.isMarried.emit(false);
     }
   }
 }

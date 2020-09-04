@@ -25,8 +25,8 @@
         <td class="text-left">{{item.Subject}}</td>
         <td class="text-left">{{item.SubjectName}}</td>
         <td class="text-center">{{item.PhoneNumber}}</td>
-        <td class="text-center">{{item.DatetimeVerif}}</td>
-        <td class="text-center">{{item.DatetimeVerif}}</td>
+        <td class="text-center">{{item.DatetimeVerif | date: 'dd-MMMM-yyyy'}}</td>
+        <td class="text-center">{{item.DatetimeVerif | date: 'h:mm a'}}</td>
         <td class="text-left">{{item.Result}}</td>
         <td class="text-left">{{item.SubjectRelation}}</td>
         <td class="text-left">{{item.Notes}}</td>

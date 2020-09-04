@@ -70,37 +70,39 @@
         </div>
       </div>
       <br />
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label>DP Asset</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>TDP</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TotalDownPaymentNettAmt.value | number : '1.2-2'}}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label>DP Asset - Subsidy DP</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
+      <span *ngIf="result.BizTemplateCode != 'CFRFN4W'">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label>DP Asset</label>
+              </div>
+              <div class="col-md-3 form-inline form-inline-right">
+                <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
+              </div>
+              <div class="col-md-3 form-inline">
+                <label>TDP</label>
+              </div>
+              <div class="col-md-3 form-inline form-inline-right">
+                <label>{{ParentForm.controls.TotalDownPaymentNettAmt.value | number : '1.2-2'}}</label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <br />
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label>DP Asset - Subsidy DP</label>
+              </div>
+              <div class="col-md-3 form-inline form-inline-right">
+                <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </span>
       <div class="row">
         <div class="col-md-12">
           <div class="row">
@@ -159,8 +161,7 @@
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)"
-                    (keyup)="Rate_Keyup($event)"
-                    (paste)="Rate_Paste($event)"
+                    (keyup)="Rate_Keyup($event)" (paste)="Rate_Paste($event)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
@@ -170,8 +171,7 @@
                   <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
                     (ngModelChange)="SetNeedReCalculate(true)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'FLT'"
-                    (keyup)="Rate_Keyup($event)"
+                    [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="Rate_Keyup($event)"
                     (paste)="Rate_Paste($event)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     currencyMask>
@@ -180,12 +180,14 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline">
-              <label>Supplier Rate</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
-            </div>
+            <span *ngIf="result.BizTemplateCode != 'CFRFN4W'">
+              <div class="col-md-3 form-inline">
+                <label>Supplier Rate</label>
+              </div>
+              <div class="col-md-3 form-inline form-inline-right">
+                <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+              </div>
+            </span>
             <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
             </div>
@@ -210,8 +212,7 @@
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="InstAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.InstAmt.invalid}"
-                (keyup)="InstallmentAmount_Keyup($event)"
-                (paste)="InstallmentAmount_Paste($event)" currencyMask>
+                (keyup)="InstallmentAmount_Keyup($event)" (paste)="InstallmentAmount_Paste($event)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -281,7 +282,7 @@
 
       <div class="row">
         <div class="col-md-12">
-          <div class="row">            
+          <div class="row">
             <div class="col-md-3 form-inline">
               <label class="adins-required-label">Balloon Amount</label>
             </div>
@@ -296,15 +297,14 @@
               <label>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="CalcBase" class="form-control full-width"
-              (change)="CalcBaseChanged($event)">
+              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.CalcBase" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-          </div>    
+          </div>
         </div>
       </div>
       <br />
@@ -333,7 +333,7 @@
               <label>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
             </div>
           </div>
         </div>

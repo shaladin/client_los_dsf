@@ -161,7 +161,7 @@
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MrNationalityCode.invalid}"
                         (change)="ChangeNationality($event)">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let it of MrNationalityCode" value="{{it.MasterCode}}">
+                        <option *ngFor="let it of NationalityObj" value="{{it.MasterCode}}">
                           {{it.Descr}}
                         </option>
                       </select>

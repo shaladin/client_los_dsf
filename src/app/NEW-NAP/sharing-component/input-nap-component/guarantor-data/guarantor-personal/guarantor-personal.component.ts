@@ -36,7 +36,7 @@ export class GuarantorPersonalComponent implements OnInit {
   MrIdTypeCode: any;
   MrGenderCode: any;
   MrMaritalStatCode: any;
-  MrNationalityCode: any;
+  NationalityObj: any;
   MrReligionCode: any;
   AddrObj: AddrObj;
   inputFieldObj: InputFieldObj;
@@ -222,21 +222,10 @@ export class GuarantorPersonalComponent implements OnInit {
       }
     );
 
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality]};
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
-        this.MrNationalityCode = response[CommonConstant.ReturnObj];
-        if (this.mode != "edit") {
-          if (this.MrNationalityCode.length > 0) {
-            this.PersonalForm.patchValue({
-              MrNationalityCode: this.MrNationalityCode[0].MasterCode
-            });
-          }
-        }else if(  this.resultData.AppGuarantorPersonalObj.MrNationalityCode == null){
-          this.PersonalForm.patchValue({
-            MrNationalityCode: ""
-          });
-        }
+        this.NationalityObj = response[CommonConstant.ReturnObj];
       }
     );
     this.http.post(URLConstant.GetListActiveRefMaster, religionObj).subscribe(
@@ -281,13 +270,11 @@ export class GuarantorPersonalComponent implements OnInit {
     this.inputAddressObjForPersonal.inputField = this.inputFieldObj;
   }
 
-  async setCountryName(countryCode) {
-    this.countryObj.CountryCode = countryCode;
-
-    await this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).toPromise().then(
+  setCountryName(countryCode) {
+    this.http.post(URLConstant.GetRefCountryByCountryCode, {CountryCode: countryCode}).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["CountryName"];
-        this.inputLookupObj1.jsonSelect = response;
+        this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"]};
         if (countryCode == "LOCAL") {
           this.selectedNationalityCountryName = response["CountryName"];
           this.isLocal = true;
@@ -295,16 +282,20 @@ export class GuarantorPersonalComponent implements OnInit {
           this.isLocal = false
         }
       });
-
   }
   selectedNationalityCountryName: string = "";
   ChangeNationality(ev) {
-    if (this.PersonalForm.controls.MrNationalityCode.value == "LOCAL") {
+    console.log("HELEP")
+    if (ev.target.value == "LOCAL") {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
+      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
+      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
       this.isLocal = true;
     } else {
+      var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
+      this.inputLookupObj1.nameSelect = foreign.ReserveField2;
+      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.ReserveField2};
+      this.selectedNationalityCountryCode = foreign.ReserveField1;
       this.isLocal = false;
     }
   }
@@ -401,9 +392,9 @@ export class GuarantorPersonalComponent implements OnInit {
         if (this.resultData.MrNationalityCode == "LOCAL") {
           this.isLocal = true;
           var idx = 1;
-          this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
-          this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
-          this.inputLookupObj1.nameSelect = this.MrNationalityCode[idx].ReserveField2;
+          this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
+          this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+          this.inputLookupObj1.nameSelect = this.NationalityObj[idx].ReserveField2;
         }
         this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
           (response) => {
