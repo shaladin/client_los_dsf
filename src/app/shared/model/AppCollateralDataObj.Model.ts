@@ -8,12 +8,14 @@ export class AppCollateralDataObj{
     AppCollateralAttrObj: any;
     RowVersion: any;
     ListAppCollateralDocObj:any;
+    BizTemplateCode: string;
 
     constructor() { 
         this.AppCollateralObj = new AppCollateralObj(); 
         this.AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
         this.AppCollateralAttrObj = new Array();
         this.ListAppCollateralDocObj= new Array();
+        this.BizTemplateCode = "";
         this.RowVersion = ""; 
     }
 }
