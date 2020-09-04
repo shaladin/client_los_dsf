@@ -230,13 +230,6 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.MrNationalityCode = response[CommonConstant.ReturnObj];
-        if (this.mode != "edit") {
-          if (this.MrNationalityCode.length > 0) {
-            this.PersonalForm.patchValue({
-              MrNationalityCode: this.MrNationalityCode[0].MasterCode
-            });
-          }
-        }
       }
     );
     this.http.post(URLConstant.GetListActiveRefMaster, religionObj).subscribe(
@@ -303,11 +296,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["CountryName"];
-        this.inputLookupObj1.jsonSelect = response;
+        this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"]};
         if (this.resultData.AppGuarantorPersonalObj.MrNationalityCode == CommonConstant.NationalityLocal) {
           this.isLocal = true;
           this.selectedNationalityCountryName = response["CountryName"];
-
         } else {
           this.isLocal = false
           this.countryCode = countryCode;
@@ -323,6 +315,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
       this.isLocal = true;
     } else {
+      var foreign = this.MrNationalityCode.find(x => x["MasterCode"] == ev.target.value);
+      this.inputLookupObj1.nameSelect = foreign.ReserveField2;
+      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.ReserveField2};
+      this.countryCode = foreign.ReserveField1;
       this.isLocal = false;
     }
   }

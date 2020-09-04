@@ -10,7 +10,8 @@ export class ExceptionConstant {
     public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
     public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
 
-    public static TOTAL_SHARE_PERCENTAGE_MAX_100 = "Total Share Percentage cannot be more than 100.";
+    
+    public static TOTAL_SHARE_PERCENTAGE_MUST_100 = "Total Share Percentage must be 100.";
     public static INVOICE_AMOUNT_CANNOT_ZERO = "Invoice Amount cannot be zero (0).";
     public static INVOICE_AMOUNT_CANNOT_LESS_THAN = "Invoice Amount cannot be less than ";
     public static APP_FEE_PRCNT_MUST_GREATER = "App Fee Prcnt must be greater than ";
