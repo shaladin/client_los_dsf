@@ -30,7 +30,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   @Input() custType: any;
 
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-
+  @Output() isMarried: EventEmitter<any> = new EventEmitter();
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -405,6 +405,15 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       this.isLocal = true;
     } else {
       this.isLocal = false;
+    }
+  }
+
+  ChangeMaritalStats() {
+    if (this.parentForm.controls[this.identifier]['controls'].MrMaritalStatCode.value == CommonConstant.MasteCodeMartialStatsMarried) {
+      this.isMarried.emit(true);
+    }
+    else {
+      this.isMarried.emit(false);
     }
   }
 }
