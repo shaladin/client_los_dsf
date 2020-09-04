@@ -24,7 +24,8 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 
 export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   @Input() listContactPersonPersonal: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
-
+  @Input() isMarried: boolean = true;
+  @Input() spouseGender: string = "";
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
@@ -160,7 +161,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
-
+    this.CheckSpouse();
     this.open(content);
   }
 
@@ -196,6 +197,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     this.inputAddressObjForCP.default = this.contactPersonAddrObj;
     this.initLookup();
     this.initContactPersonAddrObj();
+    this.CheckSpouse();
   }
 
   setAppCustPersonalContactPerson(){
@@ -233,6 +235,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
 
   RelationshipChanged(event){
     this.selectedRelationshipName = event.target.options[event.target.options.selectedIndex].text;
+    this.CheckSpouse();
   }
 
   copyFromChanged(){
@@ -273,9 +276,13 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
   }
 
   initContactPersonAddrObj(){
+    this.contactPersonAddrObj = new AddrObj();
     this.inputFieldContactPersonObj = new InputFieldObj();
     this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldContactPersonObj.inputLookupObj.isRequired = false;
+
+    this.inputAddressObjForCP = new InputAddressObj();
+    this.inputAddressObjForCP.showSubsection = false;
+    this.inputAddressObjForCP.showAllPhn = false;
   }
 
   initLookup(){
@@ -367,6 +374,34 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     this.modalService.dismissAll();
   }
 
+  CheckSpouse() {
+    if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == CommonConstant.MasteCodeRelationshipSpouse) {
+      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+      if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: CommonConstant.MasterCodeGenderFemale
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        this.selectedGenderName = CommonConstant.MasterCodeGenderFemaleName;
+      }
+      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: CommonConstant.MasteCodeGenderMale
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        this.selectedGenderName = CommonConstant.MasterCodeGenderMaleName;
+      }
+      else {
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+      }
+    }
+    else {
+      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+      this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+    }
+  }
 
 
 }

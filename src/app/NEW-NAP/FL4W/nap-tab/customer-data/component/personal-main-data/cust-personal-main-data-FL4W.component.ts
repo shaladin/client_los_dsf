@@ -28,9 +28,10 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   @Input() custType: any;
-
+  @Input() IsSpouseExist: boolean = false;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -160,6 +161,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       this.setCountryName(response["CustPersonalObj"].NationalityCountryCode);
       this.parentForm.controls[this.identifier]['controls']["BirthPlace"].disable();
       this.parentForm.controls[this.identifier]['controls']["BirthDt"].disable();
+      this.ChangeMaritalStats();
     }
   }
 
@@ -248,6 +250,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
       this.selectedNationalityCountryCode = this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode;
       this.setCountryName(this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode);
+      this.ChangeMaritalStats();
     }
   }
 
@@ -334,6 +337,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
           this.parentForm.controls[this.identifier].patchValue({
             MrMaritalStatCode: this.MaritalStatObj[0].Key
           });
+          this.ChangeMaritalStats();
         }
       }
     );
@@ -418,5 +422,23 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     else {
       this.isMarried.emit(false);
     }
+  }
+
+  ChangeGender() {
+    var obj = {
+      SpouseGender: "",
+      IsSpouseDelete: false
+    };
+
+    if (this.IsSpouseExist) {
+      if (confirm("You have changed your gender, and it will delete your spouse data, continue?")) {
+        obj.IsSpouseDelete = true;
+      }
+    }
+    else {
+      obj.IsSpouseDelete = false;
+    }
+    obj.SpouseGender = this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value;
+    this.spouseObj.emit(obj);
   }
 }
