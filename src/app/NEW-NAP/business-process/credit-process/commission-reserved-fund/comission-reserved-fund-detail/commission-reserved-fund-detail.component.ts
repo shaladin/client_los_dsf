@@ -77,6 +77,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   arrValue = [];
 
   ngOnInit() {
+    console.log(this.BizTemplateCode);
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
     this.arrValue.push(this.ReturnHandlingHObj.AppId);
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
