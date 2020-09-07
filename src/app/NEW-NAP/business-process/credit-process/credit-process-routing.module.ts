@@ -101,6 +101,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'CreditReview/Paging',
+        component: CreditReviewPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
         path: 'CreditReviewPrototype/Paging',
         component: CreditReviewComponent,
         data: {
