@@ -76,6 +76,12 @@
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'PERSONAL'">
               <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="custName" translate>Name</label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustShareholderForm" [identifier]="'lookupCustomerShareholder'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
@@ -169,6 +175,12 @@
               </div>
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'COMPANY'">
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                </div>
+              </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="custName" translate>Name</label>
                 <div class="col-md-4">

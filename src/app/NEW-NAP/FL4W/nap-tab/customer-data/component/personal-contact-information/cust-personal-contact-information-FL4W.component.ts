@@ -87,7 +87,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
     IsFamily: [false],
     Email: ['', [Validators.maxLength(100)]],
-    CopyFromContactPerson: ['']
+    CopyFromContactPerson: [''],
+    IsGuarantor: [false]
   });
   businessDt: Date = new Date();
   inputAddressObjForCP: any;
@@ -155,7 +156,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       MobilePhnNo1: this.listContactPersonPersonal[i].MobilePhnNo1,
       MobilePhnNo2: this.listContactPersonPersonal[i].MobilePhnNo2,
       Email: this.listContactPersonPersonal[i].Email,
-      IsFamily: this.listContactPersonPersonal[i].IsFamily
+      IsFamily: this.listContactPersonPersonal[i].IsFamily,
+      IsGuarantor: this.listContactPersonPersonal[i].IsGuarantor
     });
 
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
@@ -186,7 +188,8 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       MobilePhnNo2: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
       Email: ['', Validators.maxLength(100)],
-      CopyFromContactPerson: ['']
+      CopyFromContactPerson: [''],
+      IsGuarantor: [false]
     });
 
     this.copyFromContactPerson = "";
@@ -223,6 +226,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     this.appCustPersonalContactPersonObj.City = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].City.value;
     this.appCustPersonalContactPersonObj.GenderName = this.selectedGenderName;
     this.appCustPersonalContactPersonObj.RelationshipName = this.selectedRelationshipName;
+    this.appCustPersonalContactPersonObj.IsGuarantor = this.ContactInfoPersonalForm.controls.IsGuarantor.value;
   }
 
   GetProfession(event){
