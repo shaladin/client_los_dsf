@@ -70,7 +70,7 @@ export class MouRequestAddcollComponent implements OnInit {
   type: any;
   SerialNoList: any;
   items: FormArray;
-  isUsed: boolean;
+  isUsed: boolean = true;
   custNo: string;
   mouCustObj: MouCustObj = new MouCustObj();
   returnMouCust: MouCustObj = new MouCustObj();
@@ -159,18 +159,7 @@ export class MouRequestAddcollComponent implements OnInit {
     );
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition };
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
-      (response) => {
-        this.AssetConditionList = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][1]['Key'] });
-
-        if (response['ReturnObject'][1]['Key'] == CommonConstant.AssetConditionUsed) {
-          this.isUsed = true;
-        } else {
-          this.isUsed = false;
-        }
-      }
-    );
+    
 
     var mouCustObj = { MouCustId: this.MouCustId }
     this.http.post(URLConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
@@ -364,12 +353,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.AddCollForm.controls.CollateralPrcnt.setValidators([Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)]);
           this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity();
 
-          if (this.collateralObj.MrCollateralConditionCode == CommonConstant.AssetConditionUsed) {
-            this.isUsed = true;
-          } else {
-            this.isUsed = false;
-          }
-  
+     
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
           var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
@@ -501,23 +485,7 @@ export class MouRequestAddcollComponent implements OnInit {
         });
     this.updateUcLookup(value, false, this.type );
   }
-
-  radioChange(event) {
-    if (event.target.value == CommonConstant.AssetConditionUsed) {
-      this.isUsed = true;
-    } else {
-      this.isUsed = false;
-    }
-    for (var i = 0; i < this.items["length"]; i++) {
-      if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-        this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-        this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-      } else {
-        this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
-        this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-      }
-    }
-  }
+ 
   SaveForm() {
     this.setCollateralObjForSave();
     var custCollObj = {
@@ -559,9 +527,9 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.FullAssetCode.value;
     this.mouCustCollateralObj.FullAssetName = this.AddCollForm.controls.FullAssetName.value.value;
     this.mouCustCollateralObj.AssetCategoryCode = this.AddCollForm.controls.AssetCategoryCode.value;
-    this.mouCustCollateralObj.MrCollateralConditionCode = this.AddCollForm.controls.MrCollateralConditionCode.value;
-    this.mouCustCollateralObj.MrCollateralUsageCode = "COMM";
-    this.mouCustCollateralObj.CollateralStat = "NEW";
+    this.mouCustCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
+    this.mouCustCollateralObj.MrCollateralUsageCode = CommonConstant.AssetUsageComm;
+    this.mouCustCollateralObj.CollateralStat = CommonConstant.AssetConditionNew;
 
     if (this.items.controls[0] != null) {
       this.mouCustCollateralObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
@@ -641,12 +609,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
-        if (this.collateralObj.MrCollateralConditionCode == CommonConstant.AssetConditionUsed) {
-          this.isUsed = true;
-        } else {
-          this.isUsed = false;
-        }
-
+        
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
         var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };

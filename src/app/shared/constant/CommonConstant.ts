@@ -181,7 +181,7 @@ export class CommonConstant {
     public static VerificationFail = "FAIL";
     //Asset Usage 
     public static AssetUsageNonComm = "NON_COMM"
-
+    public static AssetUsageComm = "COMM"
     //Nationality
     public static NationalityLocal = "LOCAL";
 
