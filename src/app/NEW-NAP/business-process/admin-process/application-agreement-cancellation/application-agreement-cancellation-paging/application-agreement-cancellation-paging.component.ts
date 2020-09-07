@@ -27,12 +27,11 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    var critInputAppStatNotCancel = new CriteriaObj();
-    critInputAppStatNotCancel.propName = "ap.APP_STAT";
-    critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
-    critInputAppStatNotCancel.value = CommonConstant.AppStatCancel;
-    this.arrCrit.push(critInputAppStatNotCancel);
+    // var critInputAppStatNotCancel = new CriteriaObj();
+    // critInputAppStatNotCancel.propName = "ap.APP_STAT";
+    // critInputAppStatNotCancel.restriction = AdInsConstant.RestrictionNeq;
+    // critInputAppStatNotCancel.value = CommonConstant.AppStatCancel;
+    // this.arrCrit.push(critInputAppStatNotCancel);
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
