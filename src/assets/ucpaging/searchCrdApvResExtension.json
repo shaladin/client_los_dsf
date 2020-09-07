@@ -89,7 +89,7 @@
       "type": "sort",
       "position": "center",
       "label": "PO # OF EXTENSION",
-      "name": "CARE.NUM_OF_EXTENDED"
+      "name": "ACRD.NUM_OF_EXTENDED"
     },
     {
       "type": "label",
