@@ -14,6 +14,7 @@
           <th><span translate class="thead-header">LESSEE NAME</span></th>
           <th><span translate class="thead-header">LESSEE RELATIONSHIP</span></th>
           <th><span translate class="thead-header">NOTES</span></th>
+          <th><span translate class="thead-header">Both Way</span></th>
           <th><span translate class="thead-header">ACTION</span></th>
         </tr>
       </thead>
@@ -41,6 +42,10 @@
             <textarea rows="5" class="form-control" formControlName="CustGrpNotes"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes.invalid }"></textarea>
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
+          </td>
+          <td [formGroupName]="i" class="text-center">
+            <input class="border-primary" type="checkbox" formControlName="IsReversible" />
+            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].IsReversible" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
           <td [formGroupName]="i">
             <a class="danger p-0" (click)="deleteCustGrp(i)">
