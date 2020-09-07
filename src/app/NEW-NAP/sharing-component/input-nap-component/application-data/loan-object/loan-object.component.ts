@@ -159,6 +159,12 @@ export class LoanObjectComponent implements OnInit {
         if(this.AppObj.LobCode == CommonConstant.CFNA){
           this.isCFNA = true;
         }
+        if(this.AppObj.BizTemplateCode == CommonConstant.CFRFN4W){
+          this.MainInfoForm.controls.IsDisburseToCust.setValue(true);
+          this.MainInfoForm.controls.IsDisburseToCust.disable();
+          this.AppLoanPurposeObj.IsDisburseToCust = true;
+          this.CheckIsDisburseToCust();
+        }
       }
     );
 
@@ -324,6 +330,6 @@ export class LoanObjectComponent implements OnInit {
       this.supplierInputLookupObj.isRequired = true;
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
     }
-    this.MainInfoForm.controls.lookupValueSupplier["controls"].value.updateValueAndValidity();
+    this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
   }
 }
