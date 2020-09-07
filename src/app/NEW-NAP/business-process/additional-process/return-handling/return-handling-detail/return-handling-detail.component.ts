@@ -32,7 +32,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
-    ReturnHandlingNotes: ['', Validators.maxLength(4000)]
+    ReturnHandlingNotes: ['',[Validators.required, Validators.maxLength(4000)]]
   });
 
   constructor(private fb: FormBuilder, 
