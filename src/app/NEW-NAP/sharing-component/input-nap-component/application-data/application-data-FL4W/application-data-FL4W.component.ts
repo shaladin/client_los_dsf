@@ -25,6 +25,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+
+  FirstInstType : string;
   mode : any;
   ListCrossAppObj: any = {};
   constructor(
@@ -79,7 +81,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     CreditAnalystNo: [''],
     CreditRiskNo: [''],
     DataEntryNo: [''],
-    MrSalesRecommendCode: ["", Validators.required],
     MrCustNotifyOptCode: ["", Validators.required],
     PreviousAppId: [''],
     IsAppInitDone: [''],
@@ -166,8 +167,15 @@ export class ApplicationDataFL4WComponent implements OnInit {
     };
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
+        
         var listDDL = response["DDLRefProdComptCode"];
         this.applicationDDLitems[refProdCompntCode]=listDDL;
+        if(refProdCompntCode == CommonConstant.RefProdCompFirstInstType){
+          this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
+          this.NapAppModelForm.patchValue({
+            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
+          });
+        }
       });
   }
 
@@ -265,7 +273,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
           DataEntryNo: this.resultResponse.DataEntryNo,
-          MrSalesRecommendCode: this.resultResponse.MrSalesRecommendCode,
           MrCustNotifyOptCode: this.resultResponse.MrCustNotifyOptCode,
           PreviousAppId: this.resultResponse.PreviousAppId,
           IsAppInitDone: this.resultResponse.IsAppInitDone,
@@ -284,6 +291,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
+        this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
       });
     
     if(this.NapAppModelForm.controls.PayFreqCode.value == CommonConstant.PAY_FREQ_MONTHLY)
@@ -478,7 +486,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     temp.CreditAnalystNo = this.NapAppModelForm.controls.CreditAnalystNo.value;
     temp.CreditRiskNo = this.NapAppModelForm.controls.CreditRiskNo.value;
     temp.DataEntryNo = this.NapAppModelForm.controls.DataEntryNo.value;
-    temp.MrSalesRecommendCode = this.NapAppModelForm.controls.MrSalesRecommendCode.value;
     temp.MrCustNotifyOptCode = this.NapAppModelForm.controls.MrCustNotifyOptCode.value;
     temp.PreviousAppId = this.NapAppModelForm.controls.PreviousAppId.value;
     temp.IsAppInitDone = this.NapAppModelForm.controls.IsAppInitDone.value;
