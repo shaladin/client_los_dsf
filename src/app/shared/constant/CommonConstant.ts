@@ -116,6 +116,7 @@ export class CommonConstant {
     public static CF4W = "CF4W";
     public static FCTR = "FCTR";
     public static CFRFN4W = "CFRFN4W";
+    public static CFRFN = "CFRFN";
     public static CFNEWCAR = "CFNEWCAR";
     public static CFNA = "CFNA";
     public static CENTER_GROUP_CODE = "CG";
