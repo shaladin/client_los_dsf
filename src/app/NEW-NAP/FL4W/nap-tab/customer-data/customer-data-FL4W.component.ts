@@ -601,6 +601,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         appCustGrpObj.CustNo = this.CustDataForm.controls["custGrpMember"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataForm.controls["custGrpMember"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataForm.controls["custGrpMember"].value[i].CustGrpNotes;
+        appCustGrpObj.IsReversible = this.CustDataForm.controls["custGrpMember"].value[i].IsReversible;
         this.custDataPersonalObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
@@ -612,6 +613,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         appCustGrpObj.CustNo = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustGrpNotes;
+        appCustGrpObj.IsReversible = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].IsReversible;
         this.custDataCompanyObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
