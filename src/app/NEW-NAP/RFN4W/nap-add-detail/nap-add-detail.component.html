@@ -78,9 +78,9 @@
           <div class="line"></div>
           <div class="step" data-target="#asset-tab">
             <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-              [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
+              [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
               <span class="bs-stepper-circle">5</span>
-              <span class="bs-stepper-label">Asset Data</span>
+              <span class="bs-stepper-label">Collateral Data</span>
             </button>
           </div>
           <div class="line"></div>
@@ -135,9 +135,9 @@
             </app-referantor-data>
           </div>
           <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-            <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [appId]="appId"
-              [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-            </app-application-data>
+            <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]="false"
+            [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel"
+            (outputTab)="NextStep('COLL')"></app-application-data>
           </div>
           <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
             <app-single-coll-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]=appId
@@ -201,9 +201,9 @@
           <div class="line"></div>
           <div class="step" data-target="#asset-tab">
             <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-              [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
+              [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
               <span class="bs-stepper-circle">5</span>
-              <span class="bs-stepper-label">Asset Data</span>
+              <span class="bs-stepper-label">Collateral Data</span>
             </button>
           </div>
           <div class="line"></div>
@@ -250,9 +250,9 @@
             </app-referantor-data>
           </div>
           <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-            <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"
-              [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-            </app-application-data>
+            <app-application-data *ngIf="AppStepIndex == 4" [appId]="appId" [isCollateral]="false"
+            [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel"
+            (outputTab)="NextStep('COLL')"></app-application-data>
           </div>
           <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
             <app-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]=appId
