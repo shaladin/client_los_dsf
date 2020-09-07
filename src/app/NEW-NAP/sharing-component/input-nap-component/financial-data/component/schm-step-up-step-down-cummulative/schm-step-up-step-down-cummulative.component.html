@@ -187,14 +187,12 @@
                 </div>
               </div>
             </div>
-            <span *ngIf="result.BizTemplateCode != 'CFRFN4W'">
-              <div class="col-md-3 form-inline">
-                <label>Supplier Rate</label>
-              </div>
-              <div class="col-md-3 form-inline form-inline-right">
-                <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
-              </div>
-            </span>
+            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'CFRFN4W'">
+              <label>Supplier Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W'">
+              <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+            </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
             </div>

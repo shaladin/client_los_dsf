@@ -37,7 +37,8 @@
   ],
   "querystring": {
     "select": "SELECT ap.APP_NO AS AppNo, agr.AGRMNT_NO AS AgrmntNo, apcust.CUST_NAME AS CustName, ap.PROD_OFFERING_NAME AS ProdOfferingName,  ap.PROD_OFFERING_CODE AS ProdOfferingCode, ap.PROD_OFFERING_VERSION AS ProdOfferingVersion, ap.APP_ID AS AppId, agr.AGRMNT_ID AS AgrmntId, apcust.APP_CUST_ID AS AppCustId, agr.AGRMNT_STAT AS AgrmntStat,ap.BIZ_TEMPLATE_CODE as BizTemplateCode",
-    "from": "FROM dbo.APP ap WITH(NOLOCK) LEFT JOIN dbo.APP_CUST apcust WITH(NOLOCK) ON ap.APP_ID = apcust.APP_ID LEFT JOIN dbo.AGRMNT agr WITH(NOLOCK) ON agr.APP_ID = ap.APP_ID"
+    "from": "FROM dbo.APP ap WITH(NOLOCK) LEFT JOIN dbo.APP_CUST apcust WITH(NOLOCK) ON ap.APP_ID = apcust.APP_ID LEFT JOIN dbo.AGRMNT agr WITH(NOLOCK) ON agr.APP_ID = ap.APP_ID",
+    "where" : "WHERE ap.APP_STAT NOT IN('CAN','LIV','RJC') AND ap.APP_CURR_STEP NOT IN('CSR','LIV')"
   },
   "headerList": [
     {
@@ -136,6 +137,10 @@
                   {
                     "type": "AgrmntId",
                     "property": "AgrmntId"
+                  },
+                  {
+                    "type": "BizTemplateCode",
+                    "property": "BizTemplateCode"
                   }
                 ]
               },

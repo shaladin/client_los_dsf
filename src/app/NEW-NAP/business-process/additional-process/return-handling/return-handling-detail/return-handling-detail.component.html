@@ -28,7 +28,7 @@
                                 </select>
                                 <lib-uc-show-errors [control]="ReturnHandlingForm.controls.MrReturnTaskCode" [submit]="enjiForm.submitted"></lib-uc-show-errors> 
                             </div>    
-                            <label class="col-md-2" for="notes" translate>Task Notes</label>
+                            <label class="col-md-2 adins-required-label" for="notes" translate>Task Notes</label>
                             <div class="col-md-4">
                                 <textarea rows="5" id="notes" class="form-control" formControlName="ReturnHandlingNotes" 
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.ReturnHandlingNotes.invalid }"></textarea>
