@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-tab-analysis-result',
@@ -23,9 +24,12 @@ export class TabAnalysisResultComponent implements OnInit {
   ResponseCreditReviewData;
   isFormOnCreditInvestigation;
   isFormOnCreditReview;
+  BizTemplateCode
   async ngOnInit() {
     this.initData();
-    await this.GetCreditInvestigationData();
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    if(this.BizTemplateCode != CommonConstant.CFRFN4W)
+      await this.GetCreditInvestigationData();
     this.GetCreditReviewData();
   }
 

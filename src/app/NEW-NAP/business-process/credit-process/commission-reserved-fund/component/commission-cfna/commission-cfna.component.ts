@@ -110,13 +110,15 @@ export class CommissionCfnaComponent implements OnInit {
     await this.GetContentData();
     await this.GetRuleDataForForm();
     // console.log(this.CommissionForm);
-    console.log(this.DictMaxIncomeForm);
+    // console.log(this.DictMaxIncomeForm);
     await this.GetExistingAppCommData();
-    if(Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object){
-      if(this.BizTemplateCode == CommonConstant.CFNA){
-        this.IsCalculated = true;
-      }
-    }
+    // console.log(this.CommissionForm.value.SupplierReferantor.length);
+
+    // if(Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object){
+    //   if(this.BizTemplateCode == CommonConstant.CFNA){
+    //     this.IsCalculated = true;
+    //   }
+    // }
     console.log("DictMaxIncomeForm: " + JSON.stringify(this.DictMaxIncomeForm));
     console.log("FormInputObjSupplier: " + JSON.stringify(this.FormInputObjSupplier));
   }
@@ -221,8 +223,8 @@ export class CommissionCfnaComponent implements OnInit {
         //   }
         // }
         if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
-          this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);  
-        
+          this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
+
         // console.log(this.RuleSupplierData);
         // console.log(this.RuleSupplierEmpData);
         // console.log(this.RuleReferantorData);
@@ -280,8 +282,8 @@ export class CommissionCfnaComponent implements OnInit {
       }
 
       // sort 
-      for(var i=0;i<listJobPosition.length;i++){
-        listTempObj= DictJobPosition[listJobPosition[i]];
+      for (var i = 0; i < listJobPosition.length; i++) {
+        listTempObj = DictJobPosition[listJobPosition[i]];
         // console.log(listTempObj);
         listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
       }
@@ -306,7 +308,7 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   isAutoGenerate: boolean = true;
-  async GetExistingAppCommData(){
+  async GetExistingAppCommData() {
     var objApi = { AppId: this.AppId };
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
@@ -350,14 +352,14 @@ export class CommissionCfnaComponent implements OnInit {
     );
   }
 
-  GetData(){
+  GetData() {
     console.log("change data");
     this.IsCalculated = false;
   }
 
   DictTotalIncomeForm: any = {};
   ListAllocFromForDict: Array<string> = new Array();
-  CalculateTotal(){
+  CalculateTotal() {
     console.log("Calc");
     this.Summary.TotalCommisionAmount = 0;
     this.Summary.TotalTaxAmmount = 0;
@@ -375,20 +377,20 @@ export class CommissionCfnaComponent implements OnInit {
     var listTrxAmt: Array<Array<number>> = new Array<Array<number>>();
     // if(this.GetCalcTaxData(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     // if(this.GetCalcTaxData(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    if(this.GetCalcTaxData(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    if (this.GetCalcTaxData(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     // console.log(listVendorCode);
     // console.log(listVendorEmpNo);
     // console.log(listTrxAmt);
 
     if (listVendorCode.length > 0) {
-      var obj={
+      var obj = {
         AppId: this.AppId,
         VendorCode: listVendorCode,
         VendorEmpNo: listVendorEmpNo,
         TrxAmt: listTrxAmt,
         TrxTypeCode: CommonConstant.TrxTypeCodeAppCom,
         ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
-        IsSave: false,        
+        IsSave: false,
       };
 
       // console.log(obj);
@@ -427,14 +429,14 @@ export class CommissionCfnaComponent implements OnInit {
         var tempListTrxAmt: Array<number> = new Array<number>();
         var totalCommAmt: number = 0;
         for (var j = 0; j < this.CommissionForm.value[identifier][i].ListAllocated.length; j++) {
-          
-          if (this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] == undefined){
+
+          if (this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] == undefined) {
             // console.log("kosong");
             this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] = 0;
             this.ListAllocFromForDict.push(this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom);
           }
           this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] += this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationAmount;
-          
+
           tempListTrxAmt.push(this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationAmount);
           totalCommAmt += this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationAmount;
         }
@@ -521,6 +523,13 @@ export class CommissionCfnaComponent implements OnInit {
 
   SaveForm() {
     console.log("save");
+    // console.log(Object.keys(this.CommissionForm.value).length);
+    // console.log(Object.keys(this.CommissionForm.value)[0]);
+    for (var i = 0; i < Object.keys(this.CommissionForm.value).length; i++) {
+      if (this.CommissionForm.value[Object.keys(this.CommissionForm.value)[i]].length === 0) {
+          this.IsCalculated = true;
+      }
+    }
     if (!this.IsCalculated) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
     if (this.Summary.TotalCommisionAmount > this.maxAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
     if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
@@ -605,7 +614,7 @@ export class CommissionCfnaComponent implements OnInit {
     return temp;
   }
 
-  PatchAppCommDData(AppCommH: any){
+  PatchAppCommDData(AppCommH: any) {
     var listAppCommissionDObj = new Array();
     var temp = AppCommH.ListAllocated;
     for (var i = 0; i < temp.length; i++) {
@@ -628,7 +637,7 @@ export class CommissionCfnaComponent implements OnInit {
     }
     return listAppCommissionDObj;
   }
-  
+
   Cancel() {
     this.outputCancel.emit();
   }

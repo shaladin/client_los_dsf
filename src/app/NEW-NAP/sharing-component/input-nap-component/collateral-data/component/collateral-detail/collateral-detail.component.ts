@@ -232,6 +232,11 @@ export class CollateralDetailComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.getProdOffering(response.ProdOfferingCode, response.ProdOfferingVersion);
+        if(response["BizTemplateCode"] == CommonConstant.CFRFN4W){
+          this.AddCollForm.patchValue({
+            MrCollateralConditionCode: this.CollConditionList[1].Key
+          });
+        }
       });
   }
 

@@ -39,7 +39,7 @@
           <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsJoinIncome" (change)="setSpouseMonthlyIncome()" [(ngModel)]="MouCustPersonalFinDataObj.IsJoinIncome"/>
         </div>
       </div>
-      <div class="form-group row" *ngIf="parentForm.controls[identifier]['controls'].IsJoinIncome.value == true">
+      <div class="form-group row" *ngIf="parentForm.controls[identifier]['controls'].IsJoinIncome.value == true && isMarried">
         <label class="col-md-2" for="spouseMonthlyIncome" translate>Spouse Monthly Income </label>
         <div class="col-md-4">
           <input type="" currencyMask id="spouseMonthlyIncome" class="form-control" formControlName="SpouseMonthlyIncomeAmt" [options]="{ allowNegative: false}" [(ngModel)]="MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt"

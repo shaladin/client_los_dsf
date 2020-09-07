@@ -44,12 +44,16 @@ export class DocumentViewComponent implements OnInit {
   agrmntDocPrintObj: AgrmntDocPrintObj;
   getUrl: string;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
+  BizTemplateCode: string;
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params['AgrmntId'] != null) {
         this.AgrmntId = params['AgrmntId'];
+      }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
 

@@ -94,11 +94,6 @@ export class MouRequestAddcollComponent implements OnInit {
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
-    SerialNo1: [''],
-    SerialNo2: [''],
-    SerialNo3: [''],
-    SerialNo4: [''],
-    SerialNo5: [''],
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: [''],
     items: this.fb.array([]),
@@ -118,7 +113,7 @@ export class MouRequestAddcollComponent implements OnInit {
   this.inputAddressObjForLocAddr = new InputAddressObj();
   this.inputAddressObjForLocAddr.showSubsection = false;
   this.inputAddressObjForLocAddr.showPhn3 = false;
-  
+
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
     this.initAddrObj();
@@ -167,9 +162,9 @@ export class MouRequestAddcollComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.AssetConditionList = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][0]['Key'] });
+        this.AddCollForm.patchValue({ MrCollateralConditionCode: response['ReturnObject'][1]['Key'] });
 
-        if (response['ReturnObject'][0]['Key'] == CommonConstant.AssetConditionUsed) {
+        if (response['ReturnObject'][1]['Key'] == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
         } else {
           this.isUsed = false;
@@ -190,6 +185,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
         });
+        this.onItemChange(this.CollTypeList[0].Key);
         this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
       })
 
@@ -277,6 +273,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   open(pageType) {
+  this.AddCollForm.controls.MrCollateralConditionCode.disable();
     this.type = pageType;
     if (pageType == 'AddExisting') {
       // this.clearList();
@@ -299,12 +296,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.MrIdType.disable();
       this.AddCollForm.controls.Notes.disable();
-      this.AddCollForm.controls.SerialNo1.disable();
-      this.AddCollForm.controls.SerialNo2.disable();
-      this.AddCollForm.controls.SerialNo3.disable();
-      this.AddCollForm.controls.SerialNo4.disable();
-      this.AddCollForm.controls.SerialNo5.disable();
-      this.AddCollForm.controls.MrCollateralConditionCode.disable();
+
       this.AddCollForm.controls.ManufacturingYear.disable();
       this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
     }else{
@@ -321,15 +313,10 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.OwnerIdNo.enable();
       this.AddCollForm.controls.MrIdType.enable();
       this.AddCollForm.controls.Notes.enable();
-      this.AddCollForm.controls.SerialNo1.enable();
-      this.AddCollForm.controls.SerialNo2.enable();
-      this.AddCollForm.controls.SerialNo3.enable();
-      this.AddCollForm.controls.SerialNo4.enable();
-      this.AddCollForm.controls.SerialNo5.enable();
-      this.AddCollForm.controls.MrCollateralConditionCode.enable();
       this.AddCollForm.controls.ManufacturingYear.enable();
 
     }
+    this.AddCollForm.updateValueAndValidity();
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
@@ -365,26 +352,6 @@ export class MouRequestAddcollComponent implements OnInit {
         FullAssetName: e.FullAssetName,
         AssetCategoryCode: e.AssetCategoryCode
       });
-      var AssetTypeCode = { 'AssetTypeCode': e.AssetTypeCode };
-      this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
-        (response: any) => {
-          while (this.items.length) {
-            this.items.removeAt(0);
-          }
-          this.SerialNoList = response['ReturnObject'];
-          for (var i = 0; i < this.SerialNoList["length"]; i++) {
-            var eachDataDetail = this.fb.group({
-              SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-              SerialNoValue: [''],
-              IsMandatory: [this.SerialNoList[i].IsMandatory]
-            }) as FormGroup;
-            this.items.push(eachDataDetail);
-            if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-              this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-              this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-            }
-          }
-        });
     }else{
       var collObj = { CollateralNo: e.CollateralNo };
       this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, collObj).subscribe(
@@ -457,11 +424,6 @@ export class MouRequestAddcollComponent implements OnInit {
             MrCollateralConditionCode: this.collateralObj.MrCollateralConditionCode,
             MrCollateralUsageCode: this.collateralObj.MrCollateralUsageCode,
             CollateralStat: this.collateralObj.CollateralStat,
-            SerialNo1: this.collateralObj.SerialNo1,
-            SerialNo2: this.collateralObj.SerialNo2,
-            SerialNo3: this.collateralObj.SerialNo3,
-            SerialNo4: this.collateralObj.SerialNo4,
-            SerialNo5: this.collateralObj.SerialNo5,
             CollateralValueAmt: this.collateralObj.CollateralValueAmt,
             CollateralPrcnt: this.maxPrcnt,
             // CollateralNotes: this.collateralObj.Notes,
@@ -517,6 +479,26 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   onItemChange(value) {
+    var AssetTypeCode = { 'AssetTypeCode': value};
+      this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+        (response: any) => {
+          while (this.items.length) {
+            this.items.removeAt(0);
+          }
+          this.SerialNoList = response['ReturnObject'];
+          for (var i = 0; i < this.SerialNoList["length"]; i++) {
+            var eachDataDetail = this.fb.group({
+              SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+              SerialNoValue: [''],
+              IsMandatory: [this.SerialNoList[i].IsMandatory]
+            }) as FormGroup;
+            this.items.push(eachDataDetail);
+            if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
+              this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+              this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+            }
+          }
+        });
     this.updateUcLookup(value, false, this.type );
   }
 
@@ -748,6 +730,9 @@ export class MouRequestAddcollComponent implements OnInit {
           Notes: this.collateralRegistrationObj.Notes,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
+
+        this.AddCollForm.controls.MrCollateralConditionCode.disable();
+        this.AddCollForm.updateValueAndValidity();
 
         this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
         this.legalAddrObj.City = this.collateralRegistrationObj.OwnerCity;

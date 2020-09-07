@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -10,6 +10,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -17,22 +20,24 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
   styles: []
 })
 export class NapAddDetailComponent implements OnInit {
-  private stepper: Stepper;
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  private stepperPersonal: Stepper;
+  private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  mode: string;
-  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  viewReturnInfoObj: string = "";
   NapObj: AppObj;
-  ResponseReturnInfoObj: any;
-  OnFormReturnInfo: boolean = false;
-  IsMultiAsset: boolean = false;
+  IsMultiAsset: string;
   ListAsset: any;
+  ReturnHandlingHId: number = 0;
+  showCancel: boolean = true;
+  custType: string = CommonConstant.CustTypeCompany;
+  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  IsLastStep: boolean = false;
+  IsSavedTC: boolean = false;
   @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
-
-  FormReturnObj = this.fb.group({
-    ReturnExecNotes: ['']
-  });
 
   AppStep = {
     // "NEW": 1,
@@ -47,32 +52,40 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9,
   };
 
+  ResponseReturnInfoObj: ReturnHandlingDObj;
+  FormReturnObj = this.fb.group({
+    ReturnExecNotes: ['']
+  });
+  OnFormReturnInfo = false;
+
   constructor(
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
-    private fb: FormBuilder, 
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private fb: FormBuilder,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) { 
+    private toastr: NGXToastrService,
+    private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
-        this.mode = params["Mode"];
-        this.CheckMultiAsset();
+        // this.CheckMultiAsset();
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.showCancel = false;
       }
     });
   }
 
   ngOnInit() {
     this.ClaimTask();
-    this.AppStepIndex = 0;
-    // this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
-    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
-    this.viewProdMainInfoObj.ddlEnvironments = [
+    this.AppStepIndex = 1;
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",
         environment: environment.losR3Web
@@ -88,38 +101,92 @@ export class NapAddDetailComponent implements OnInit {
     ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-        } else {
-          this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
-        }
-      }
-    );
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
+    // this.ChangeStepper();
 
+    if (this.ReturnHandlingHId > 0) {
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
+    } else {
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+            if (this.NapObj.MrCustTypeCode != null)
+              this.custType = this.NapObj.MrCustTypeCode;
+
+            this.ChangeStepper();
+            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+            this.ChooseStep(this.AppStepIndex);
+          }
+        });
+    }
     this.MakeViewReturnInfoObj();
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewProdMainInfoObj;
+    component.instance.viewGenericObj = this.viewGenericObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
+  stepperMode: string = CommonConstant.CustTypeCompany;
+  ChangeStepper() {
+    if (this.custType == CommonConstant.CustTypePersonal) {
+      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = CommonConstant.CustTypePersonal;
+      document.getElementById('stepperPersonal').style.display = 'block';
+      document.getElementById('stepperCompany').style.display = 'none';
+      this.AppStep = {
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "COLL": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 8,
+        "TC": 9,
+      };
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
+      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = CommonConstant.CustTypeCompany;
+      document.getElementById('stepperPersonal').style.display = 'none';
+      document.getElementById('stepperCompany').style.display = 'block';
+      this.AppStep = {
+        "CUST": 1,
+        "GUAR": 2,
+        "REF": 3,
+        "APP": 4,
+        "COLL": 5,
+        "INS": 6,
+        "LFI": 7,
+        "FIN": 7,
+        "TC": 8,
+      };
+    }
+  }
+
+  ChooseStep(idxStep: number) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
+      this.stepperPersonal.to(idxStep);
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
+      this.stepperCompany.to(idxStep);
+    }
+  }
+
   MakeViewReturnInfoObj() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
+    if (this.ReturnHandlingHId > 0) {
       var obj = {
-        AppId: this.appId,
+        ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -130,23 +197,24 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
-    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
-      (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
-            this.IsMultiAsset = true;
-          else
-            this.IsMultiAsset = false;
-        }
-        else
-          this.IsMultiAsset = false;
-      })
-  }
+  // CheckMultiAsset() {
+  //   var appObj = { AppId: this.appId }
+  //   this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
+  //     (response) => {
+  //       this.ListAsset = response[CommonConstant.ReturnObj];
+  //       if (this.ListAsset != undefined && this.ListAsset != null) {
+  //         if (this.ListAsset.length > 1)
+  //           this.IsMultiAsset = 'True';
+  //         else
+  //           this.IsMultiAsset = 'False';
+  //       }
+  //       else
+  //         this.IsMultiAsset = 'False';
+  //     })
+  // }
 
   ChangeTab(AppStep) {
+    this.IsSavedTC = false;
     switch (AppStep) {
       case CommonConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
@@ -179,62 +247,111 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    if (AppStep == CommonConstant.AppStepTC)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
+
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+        this.mainInfoContainer.clear();
+        const component = this.mainInfoContainer.createComponent(componentFactory);
+        component.instance.viewGenericObj = this.viewGenericObj;
+        component.instance.callback.subscribe((e) => this.GetCallback(e));
+      
+    //  this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
+    if (this.ReturnHandlingHId > 0) {
+
+    } else {
+      this.UpdateAppStep(Step);
+    }
+
+    this.ChangeTab(Step);
+    if (this.custType == CommonConstant.CustTypePersonal) {
+      this.stepperPersonal.next();
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
+      this.stepperCompany.next();
+    }
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+        this.mainInfoContainer.clear();
+        const component = this.mainInfoContainer.createComponent(componentFactory);
+        component.instance.viewGenericObj = this.viewGenericObj;
+        component.instance.callback.subscribe((e) => this.GetCallback(e));
+    // this.ucViewMainProd.initiateForm();
+  }
+
+  UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
-        this.ChangeTab(Step);
-        this.stepper.next();
-
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-        this.mainInfoContainer.clear();
-        const component = this.mainInfoContainer.createComponent(componentFactory);
-        component.instance.viewGenericObj = this.viewProdMainInfoObj;
-        component.instance.callback.subscribe((e) => this.GetCallback(e));
       }
     )
   }
+
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
-      (response) => {
-        this.router.navigate(["/Nap/CFNA/Paging"])
-      })
-  }
-
-  Submit() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
-      var obj = {
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
-
-      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
+    if (this.ReturnHandlingHId > 0) {
+      this.IsSavedTC = true;
+    } else {
+      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate(["/Nap/CFNA/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CFNA } })
         })
     }
   }
+
+  Cancel() {
+    this.router.navigate(["/Nap/CFNA/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CFNA } });
+  }
+
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      if (!this.IsSavedTC) {
+        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
+      }
+      else {
+        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+        ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+        ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+        ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+        ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+        ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+        ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+        ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })
+          }
+        )
+      }
+    }
+  }
+
   ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
 
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      () => {
       });
   }
-  Cancel() {
-    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFNA } });
+
+  CheckCustType(ev: string) {
+    this.custType = ev;
+    this.ChangeStepper();
+    this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) { 
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
 }

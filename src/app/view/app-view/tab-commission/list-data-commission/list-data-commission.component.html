@@ -32,7 +32,7 @@
             <label class="adInsLabel"> Total Commission Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.TotalCommissionAmt}} </label>
+            <label class="adInsLabel"> {{item.TotalCommissionAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
 
@@ -41,7 +41,7 @@
             <label class="adInsLabel"> Tax Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.TaxAmt}} </label>
+            <label class="adInsLabel"> {{item.TaxAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
 
@@ -50,7 +50,7 @@
             <label class="adInsLabel"> Vat Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.VatAmt}} </label>
+            <label class="adInsLabel"> {{item.VatAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
 
@@ -73,7 +73,7 @@
               <label class="adInsLabel"> Allocate from {{appCommissionDObj.MrCommissionSourceCodeDesc}} </label>
             </div>
             <div class="col-md-6">
-              <label class="adInsLabel"> {{appCommissionDObj.CommissionAmt}} </label>
+              <label class="adInsLabel"> {{appCommissionDObj.CommissionAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
         </div>

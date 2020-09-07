@@ -1,5 +1,5 @@
 {
-    "title": "Document",
+    "title": "Document Printing",
     "exportExcel": false,
     "component": [
         {
@@ -209,6 +209,10 @@
                         {
                             "type": "AgrmntId",
                             "property": "AgrmntId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
                         }
                     ]
                 }

@@ -293,6 +293,9 @@ export class FinancialDataCFNAComponent implements OnInit {
     var GrossYieldPrcnt = this.FinDataForm.get("GrossYieldPrcnt").value
     var valid: boolean = true;
 
+    console.log("ValidateGrossYield, GrossPrcnt: " + GrossYieldPrcnt);
+    console.log("ValidateGrossYield, StdGrossYieldPrcnt: " + StdGrossYieldPrcnt);
+
     if (GrossYieldBhv == 'MIN') {
       if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
         this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
