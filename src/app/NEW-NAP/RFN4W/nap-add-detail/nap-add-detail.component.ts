@@ -12,7 +12,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -20,12 +19,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
-  IsSavedTC: boolean;
-  custType: string;
-  stepperMode: string = CommonConstant.CustTypePersonal;
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;NapO
-  private stepperPersonal: Stepper;	
-  private stepperCompany: Stepper;
+  custType: string = CommonConstant.CustTypePersonal;
+  private stepper: Stepper;
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
@@ -56,7 +52,7 @@ export class NapAddDetailComponent implements OnInit {
     "TC": 9,
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -94,20 +90,40 @@ export class NapAddDetailComponent implements OnInit {
     ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
 
     if (this.ReturnHandlingHId > 0) {
-      this.ChangeStepper();
-      this.ChooseStep(this.AppStepIndex);
+      this.stepper.to(this.AppStepIndex);
     }
     else {
       this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           if (response) {
-          if (response["MrCustTypeCode"] != null)
-          this.custType = response["MrCustTypeCode"];
-            this.ChangeStepper();
-            this.AppStepIndex = this.AppStep[response["AppCurrStep"]];	
-            this.ChooseStep(this.AppStepIndex);
+            if (response["MrCustTypeCode"] != null){
+              this.custType = response["MrCustTypeCode"];
+              if(this.custType == CommonConstant.CustTypeCompany){
+                this.AppStep = {
+                  "NEW": 1,
+                  "CUST": 1,
+                  "GUAR": 2,
+                  "REF": 3,
+                  "APP": 4,
+                  "COLL":5,
+                  "INS": 6,
+                  "LFI": 7,
+                  "FIN": 7,
+                  "TC": 8,
+                };
+              }
+            }
+            this.AppStepIndex = this.AppStep[response.AppCurrStep];
+            this.stepper.to(this.AppStepIndex);
+          } else {
+            this.AppStepIndex = 0;
+            this.stepper.to(this.AppStepIndex);
           }
         }
       );
@@ -116,71 +132,13 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
-  ChangeStepper() {	
-    console.log("tolong ini sumpah")
-    if (this.custType == CommonConstant.CustTypePersonal) {	
-      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {	
-        linear: false,	
-        animation: true	
-      });	
-      this.stepperMode = CommonConstant.CustTypePersonal;	
-      document.getElementById('stepperPersonal').style.display = 'block';	
-      document.getElementById('stepperCompany').style.display = 'none';	
-      this.AppStep = {	
-        "NEW": 1,	
-        "CUST": 1,	
-        "GUAR": 2,	
-        "REF": 3,	
-        "APP": 4,	
-        "COLL": 5,	
-        "INS": 6,	
-        "LFI": 7,	
-        "FIN": 8,	
-        "TC": 9,	
-      };	
-    } else if (this.custType == CommonConstant.CustTypeCompany) {	
-      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {	
-        linear: false,	
-        animation: true	
-      });	
-      this.stepperMode = CommonConstant.CustTypeCompany;	
-      document.getElementById('stepperPersonal').style.display = 'none';	
-      document.getElementById('stepperCompany').style.display = 'block';	
-      this.AppStep = {	
-        "NEW": 1,	
-        "CUST": 1,	
-        "GUAR": 2,	
-        "REF": 3,	
-        "APP": 4,	
-        "COLL": 5,	
-        "INS": 6,	
-        "LFI": 7,	
-        "FIN": 7,	
-        "TC": 8,	
-      };	
-    }	
-  }	
-  ChooseStep(idxStep: number) {	
-    if (this.custType == CommonConstant.CustTypePersonal) {	
-      this.stepperPersonal.to(idxStep);	
-    } else if (this.custType == CommonConstant.CustTypeCompany) {	
-      this.stepperCompany.to(idxStep);	
-    }	
-  }
-
-  CheckCustType(ev: string)  {	
-    this.custType = ev;	
-    this.ChangeStepper();	
-    this.NextStep(CommonConstant.AppStepGuar);	
-  }
-
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {	
+      var obj = {
         ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode,obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -244,8 +202,7 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-    
-    this.ucViewMainProd.initiateForm();
+      this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -253,68 +210,38 @@ export class NapAddDetailComponent implements OnInit {
 
     }
     else {
-      this.UpdateAppStep(Step);
+      this.NapObj.AppCurrStep = Step;
+      this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+        (response) => {
+        }
+      )
     }
-
     this.ChangeTab(Step);
-    if (this.custType == CommonConstant.CustTypePersonal) {	
-      this.stepperPersonal.next();	
-    } else if (this.custType == CommonConstant.CustTypeCompany) {	
-      this.stepperCompany.next();	
-    }
-    
     this.ucViewMainProd.initiateForm();
+    this.stepper.next();
   }
-
-  UpdateAppStep(Step: string) {	
-    this.NapObj.AppCurrStep = Step;	
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(	
-      (response) => {	
-      }	
-    )	
-  }	
-
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    if (this.ReturnHandlingHId > 0) {	
-      this.IsSavedTC = true;	
-    } else {	
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(	
-        (response) => {	
-          this.toastr.successMessage(response["message"]);	
-          this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })	
-        })	
-    }	
-  }	
-
-  Cancel() {	
-    this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } });	
-  }	
-
-  Submit() {
-    if (this.ReturnHandlingHId > 0) {	
-      if (!this.IsSavedTC) {	
-        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);	
-      }	
-      else {
-        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();	
-        ReturnHandlingResult.WfTaskListId = this.wfTaskListId;	
-        ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;	
-        ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;	
-        ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;	
-        ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;	
-        ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;	
-        ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;	
-        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(	
-          (response) => {	
-            this.toastr.successMessage(response["message"]);	
-            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })	
-          }	
-        )	
-      }
-    }
+    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      (response) => {
+        this.router.navigate(["/Nap/CFRefinancing/Paging"])
+      })
   }
 
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      var obj = {
+        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
+        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
+        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
+        RowVersion: this.ResponseReturnInfoObj.RowVersion
+      };
+
+      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
+        (response) => {
+        })
+    }
+  }
   ClaimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
@@ -325,6 +252,9 @@ export class NapAddDetailComponent implements OnInit {
       (response) => {
 
       });
+  }
+  Cancel() {
+    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFRFN4W } });
   }
 
   GetCallback(ev) {
