@@ -9,6 +9,7 @@ import { PurchaseOrderViewComponent } from './purchase-order-view/purchase-order
 import { ViewCollateralDataComponent } from './app-view/view-collateral-data/view-collateral-data.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { MouViewComponent } from './mou-view/mou-view.component';
+import { SurveyViewComponent } from './survey-view-prototype/survey-view.component';
 const routes: Routes = [
   {
     path: '',
@@ -76,6 +77,13 @@ const routes: Routes = [
           title: 'Mou View'
         }
       },
+      {
+        path: 'SurveyView',
+        component: SurveyViewComponent,
+        data: {
+          title: 'Mou View'
+        }
+      }
     ]
   }
 ];
