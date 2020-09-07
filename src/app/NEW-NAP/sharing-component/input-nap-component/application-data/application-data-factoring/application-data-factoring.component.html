@@ -31,26 +31,7 @@
                         <label class="col-md-4 adInsLabel">{{SalesAppInfoForm.controls.SalesHeadName.value}} </label>
                       </div>
 
-                      <div class="form-group row">
-                        <!-- Sales Recommendation -->
-                        <div class="form-group col-md-2 adins-required">
-                          <label class="adInsLabel">Sales Recommendation </label>
-                        </div>
-                        <div class="col-md-4">
-                          <!-- <mat-radio-group formControlName="MrSalesRecommendCode">
-                            <mat-radio-button class="custom-control custom-radio" color="primary"
-                              *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key">
-                              {{item.Value}}
-                            </mat-radio-button>
-                          </mat-radio-group> -->
-                          <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrSalesRecommendCode.invalid }">
-                            <option value="">-Select One-</option>
-                            <option *ngFor="let it of allSlsRecom" value="{{it.Key}}">
-                              {{it.Value}} </option>
-                          </select>
-                          <lib-uc-show-errors  [control]="SalesAppInfoForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                        </div>
+                      <div class="form-group row">   
                         <!-- Sales Notes -->
                         <label class="col-md-2 adInsLabel">Sales Notes </label>
                         <div class="col-md-4">
