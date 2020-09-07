@@ -43,7 +43,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
      }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(!changes.isMarried.currentValue){
+    if(typeof(changes.isMarried) != 'undefined' && !changes.isMarried.currentValue){
       this.appCustPersonalFinDataObj.IsJoinIncome = false;
       this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = 0;
       this.parentForm.controls[this.identifier].patchValue({
@@ -89,6 +89,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
         MonthlyInstallmentAmt: this.appCustPersonalFinDataObj.MonthlyInstallmentAmt,
         MrSourceOfIncomeTypeCode: this.appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
         IsJoinIncome: this.appCustPersonalFinDataObj.IsJoinIncome,
+        SpouseMonthlyIncomeAmt: this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
       });
       this.totalMonthlyIncome = this.appCustPersonalFinDataObj.MonthlyIncomeAmt + this.appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
       this.totalMonthlyExpense = this.appCustPersonalFinDataObj.MonthlyExpenseAmt + this.appCustPersonalFinDataObj.MonthlyInstallmentAmt;
