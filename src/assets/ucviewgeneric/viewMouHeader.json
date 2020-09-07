@@ -19,22 +19,12 @@
               "property": "MouCustId"
             }
           ]
-        },
-        {
-          "type": "date",
-          "label": "Mou Date",
-          "property": "MouCustDt"
-        },
+        }, 
         {
           "type": "callback",
           "key": "customer",
           "label": "Customer Name",
           "property": "CustName"
-        },
-        {
-          "type": "text",
-          "label": "Mou Type",
-          "property": "MouType"
         },
         {
           "type": "date",
@@ -60,21 +50,6 @@
           "type": "currency",
           "label": "Plafond Amount",
           "property": "PlafondAmt"
-        },
-        {
-          "type": "currency",
-          "label": "Realisation Amount",
-          "property": "RealisationAmt"
-        },
-        {
-          "type": "currency",
-          "label": "In Process Amount",
-          "property": "InProcessAmt"
-        },
-        {
-          "type": "currency",
-          "label": "Available Amount",
-          "property": "AvailableAmt"
         }
       ],
       "querystring": {
