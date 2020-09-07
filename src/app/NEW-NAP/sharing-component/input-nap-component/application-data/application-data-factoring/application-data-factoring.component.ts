@@ -81,6 +81,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   resultData: any;
   allPayFreq: any;
   allInSalesOffice: any;
+  responseApp : any;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
@@ -418,6 +419,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
     var obj = {
       AppId: this.AppId
     }
+ 
+    this.http.post(URLConstant.GetAppById, obj).subscribe(
+      (response) => {
+        this.responseApp = response
+        var prodObj = {
+          ProdOfferingCode: this.responseApp.ProdOfferingCode,
+          RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
+          ProdOfferingVersion: this.responseApp.ProdOfferingVersion
+        }
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).subscribe(
+      (response) => {
+        console.log(response);
+      });
+      });
 
     this.http.post(URLConstant.GetApplicationDataByAppId, obj).subscribe(
       (response) => {
