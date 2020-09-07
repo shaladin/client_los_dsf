@@ -170,25 +170,25 @@
       "name": "A.APP_CREATED_DT"
     },
     {
-      "type": "label",
+      "type": "sort",
       "position": "center",
       "label": "NAP Submitted",
       "name": "A.IS_APP_INIT_DONE"
     },
     {
-      "type": "label",
+      "type": "sort",
       "position": "center",
       "label": "Contract Status",
       "name": "B.AGRMNT_STAT"
     },
     {
-      "type": "label",
+      "type": "sort",
       "position": "left",
       "label": "Application Step",
-      "name": "appStep"
+      "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)"
     },
     {
-      "type": "label",
+      "type": "sort",
       "position": "left",
       "label": "Application Status",
       "name": "A.APP_STAT"
