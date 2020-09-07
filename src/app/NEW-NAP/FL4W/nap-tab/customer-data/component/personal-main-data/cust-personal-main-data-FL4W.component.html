@@ -125,7 +125,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="gender" translate>Gender</label>
           <div class="col-md-8">
-            <select class="form-control" id="gender" formControlName="MrGenderCode"  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrGenderCode.invalid}">
+            <select class="form-control" id="gender" formControlName="MrGenderCode" (change)="ChangeGender()"  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrGenderCode.invalid}">
               <option value="">-Select One-</option>
               <option *ngFor="let item of GenderObj" [value]="item.Key">
                 {{item.Value}}

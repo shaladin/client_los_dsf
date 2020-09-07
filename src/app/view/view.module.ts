@@ -89,6 +89,7 @@ import { MouViewSurveyComponent } from "./mou-view/mou-view-survey/mou-view-surv
 import { MouViewTcComponent } from "./mou-view/mou-view-tc/mou-view-tc.component";
 import { MouViewComponent } from "./mou-view/mou-view.component";
 import { MouViewApprovalHistoryComponent } from "./mou-view/mou-view-approval-history/mou-view-approval-history.component";
+import { SurveyViewComponent } from "./survey-view-prototype/survey-view.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -188,7 +189,9 @@ import { MouViewApprovalHistoryComponent } from "./mou-view/mou-view-approval-hi
     MouViewSurveyComponent,
     MouViewTcComponent,
     MouViewComponent,
-    MouViewApprovalHistoryComponent
+    MouViewApprovalHistoryComponent,
+    //surveyView prototype
+    SurveyViewComponent
   ],
   entryComponents: [
     UclookupgenericComponent,
