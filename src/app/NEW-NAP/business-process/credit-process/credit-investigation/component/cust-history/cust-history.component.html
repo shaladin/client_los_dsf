@@ -26,7 +26,7 @@
                     <span  style="float: right;"  translate class="thead-header" name='InstallmentAmt'>Installment Amount</span>
                   </th>
                   <th>
-                    <span translate style="float: right;" class="thead-header" name='OSAR'>OS AR</span>
+                    <span translate style="float: right;" class="thead-header" name='OSAR'>Total Installment Amount</span>
                   </th>
                   <th>
                     <span style="float: left;"  translate class="thead-header" name='Sales'>Sales</span>
@@ -47,8 +47,8 @@
                   <td *ngIf="item.GoLiveDt == null"> - </td>
                   <td style="text-align: right;" *ngIf="item.InstAmt!=null">{{item.InstAmt | number:'.2':'en-US'}}</td>
                   <td style="text-align: right;" *ngIf="item.InstAmt==null"> - </td>
-                  <td style="text-align: right;" *ngIf="item.TotalInsCustAmt!=null">
-                    {{item.TotalInsCustAmt | number:'.2':'en-US'}}</td>
+                  <td style="text-align: right;" *ngIf="item.InstAmt!=null">
+                    {{item.InstAmt*item.NumOfInst | number:'.2':'en-US'}}</td>
                   <td style="text-align: right;" *ngIf="item.TotalInsCustAmt==null"> - </td>
                   <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
                   <td *ngIf="item.SalesName==null"> - </td>

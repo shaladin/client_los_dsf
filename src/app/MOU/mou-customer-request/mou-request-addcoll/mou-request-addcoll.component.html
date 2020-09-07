@@ -84,15 +84,7 @@
           </div>
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" translate>Collateral Condition</label>
-            <div class="col-md-8">
-              <select class="form-control" formControlName="MrCollateralConditionCode" (change)="radioChange($event)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrCollateralConditionCode.invalid }">
-                <option *ngFor="let item of AssetConditionList" [value]="item.Key">{{item.Value}}</option>
-              </select>
-              <lib-uc-show-errors [control]="AddCollForm.controls.MrCollateralConditionCode"
-                [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
+              <label class="col-md-8">Used</label> 
           </div>
           <div class="form-group row">
             <label class="col-md-4" translate>Manufacturing Year</label>
@@ -270,15 +262,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Collateral Condition</label>
-            <div class="col-md-8">
-              <select class="form-control" formControlName="MrCollateralConditionCode" (change)="radioChange($event)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrCollateralConditionCode.invalid }">
-                <option *ngFor="let item of AssetConditionList" [value]="item.Key">{{item.Value}}</option>
-              </select>
-              <lib-uc-show-errors [control]="AddCollForm.controls.MrCollateralConditionCode" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
+            <label class="col-md-4 adins-required-label" translate>Collateral Condition</label> 
+              <label class="col-md-8">Used</label>  
           </div>
           <div class="form-group row">
             <label class="col-md-4" translate>Manufacturing Year</label>
