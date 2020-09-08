@@ -205,8 +205,7 @@
 
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-              <i *ngIf="!isReturnOn" class="ft-x"> Return</i>
-              <i *ngIf="isReturnOn" class="ft-x"> Cancel Return</i>
+              <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
             </button>
             <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
                     [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
