@@ -79,7 +79,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     AssetTaxDt: [''],
     UserName: ['', Validators.required],
     MrUserRelationshipCode: [''],
-    OwnerMobilePhnNo: ['', Validators.required],
+    OwnerMobilePhnNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     OwnerName: ['', Validators.required],
     OwnerIdNo: ['', Validators.required],
     MrIdTypeCode: [''],
@@ -780,6 +780,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.setCollateralOwner();
     this.setCollateralLocation();
     this.setCollateralPercentage();
+    if(this.IsCollateralOwnerInvalid){
+      return false;
+    }
 
     this.appCollateralDataObj.BizTemplateCode = CommonConstant.CFNA;
     this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
@@ -858,6 +861,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   }
 
+  IsCollateralOwnerInvalid: boolean = false;
   setCollateralOwner() {
     this.appCollateralDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AddCollForm.controls["MrOwnerRelationshipCode"].value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AddCollForm.controls["MrUserRelationshipCode"].value;
@@ -873,6 +877,13 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerCity = this.AddCollForm.controls["OwnerAddrObj"]["controls"].City.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls["OwnerMobilePhnNo"].value;
+    for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
+      if(!this.appCollateralDataObj.AppCollateralRegistrationObj[key]){
+        this.toastr.warningMessage("Please complete owner data first");
+        this.IsCollateralOwnerInvalid = true;
+        return false;
+      }
+    }
   }
 
   setCollateralLocation() {

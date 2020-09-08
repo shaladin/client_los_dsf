@@ -474,7 +474,6 @@ export class CollateralDetailComponent implements OnInit {
           this.items.push(eachDataDetail);
           if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-            this.items.controls[i]['controls']['SerialNoValue'].disable();
             this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
           }
         }
