@@ -29,7 +29,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   returnHandlingHObj: ReturnHandlingHObj;
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
-
+  MrCustTypeCode : string;
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
     ReturnHandlingNotes: ['',[Validators.required, Validators.maxLength(4000)]]
@@ -49,6 +49,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }
+      if(params["MrCustTypeCode"] != null){
+        this.MrCustTypeCode = params["MrCustTypeCode"];
       }
     });
   }
@@ -136,8 +139,8 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReturnTask, ReserveField1: this.lobCode};
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReturnTask, ReserveField1: this.lobCode, ReserveField2: this.MrCustTypeCode};
+    await this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response[CommonConstant.ReturnObj];
         if(this.taskObj.length > 0){
