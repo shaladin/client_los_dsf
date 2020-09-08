@@ -433,6 +433,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean, response: object) {
     if (IsFromLookup) {
       this.AddCollForm.patchValue({
+        AppCollateralId: AppCollateralId,
         AssetTypeCode: response["AssetTypeCode"],
         FullAssetCode: response["FullAssetCode"],
         AssetCategoryCode: response["AssetCategoryCode"],
@@ -832,6 +833,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   setCollateralInfo() {
+    this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AddCollForm.controls["AppCollateralId"].value;
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
     this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
     this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
