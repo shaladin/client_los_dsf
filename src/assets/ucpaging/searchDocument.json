@@ -182,7 +182,30 @@
                         ]
                     },
                     "isHide": false
-                    }
+                    },
+                    {
+                        "conditions": [
+                            {
+                            "property": "BizTemplateCode",
+                            "value": "CFNA",
+                            "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "link",
+                            "position": "center",
+                            "property": "AggrementNo",
+                            "target": "_blank",
+                            "path": "/View/AgrmntView",
+                            "param": [
+                            {
+                                "type": "AgrmntId",
+                                "property": "AgrmntId"
+                            }
+                            ]
+                        },
+                        "isHide": false
+                        }
                 ]
                 }
             ]
