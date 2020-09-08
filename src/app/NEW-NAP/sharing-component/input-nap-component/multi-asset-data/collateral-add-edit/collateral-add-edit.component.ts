@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ComponentFac
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, Validators, NgForm, FormGroup, FormArray } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
@@ -122,7 +122,9 @@ export class CollateralAddEditComponent implements OnInit {
   // @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
-
+  items: FormArray;
+  SerialNoList: any;
+  
   appObj = {
     AppId: 0,
   };
@@ -136,12 +138,8 @@ export class CollateralAddEditComponent implements OnInit {
     FullAssetCode: ['', [Validators.required]],
     FullAssetName: ['', [Validators.required]],
     AssetCategoryCode: [''],
-    SerialNo1: [''],
-    SerialNo2: [''],
     CollateralValueAmt: ['', [Validators.required, Validators.min(1)]],
-    SerialNo3: [''],
     Notes: [''],
-    SerialNo4: [''],
 
     SelfOwner: [false],
     OwnerName: [''],
@@ -162,6 +160,7 @@ export class CollateralAddEditComponent implements OnInit {
     LocationAddrType: [''],
 
     CollPercentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+    items: this.fb.array([])
   });
   inputAddressObjForColl: any;
   inputAddressObjForLoc: any;
@@ -282,6 +281,39 @@ export class CollateralAddEditComponent implements OnInit {
       AssetCategoryCode: "",
       CollateralName: ""
     });
+
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value
+  }).subscribe(
+   (response: any) => {
+     while (this.items.length) {
+       this.items.removeAt(0);
+     }
+     
+     this.SerialNoList = response[CommonConstant.ReturnObj];
+     for (let i = 0; i < this.SerialNoList.length; i++) {
+       let eachDataDetail = this.fb.group({
+         SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+         SerialNoValue: [''],
+         IsMandatory: [this.SerialNoList[i].IsMandatory]
+       }) as FormGroup;
+       this.items.push(eachDataDetail);
+     }
+
+     for (let i = 0; i < this.items.length; i++) {
+       if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
+         this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+         this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+       }
+     }
+
+     if (this.returnAppCollateralObj != undefined || this.returnAppCollateralObj != null) {
+       for (let i = 0; i < this.items.length; i++) {
+         if (this.items.controls[i] != null) {
+           this.items.controls[i]['controls']['SerialNoValue'].value = this.returnAppCollateralObj["SerialNo" + (i + 1)];
+         }
+       }
+     }
+   });
     // bookmark
     // const component = this.collateralModal.createComponent(componentFactory);
     // component.instance.lookupInput = this.inputLookupObj;
@@ -428,6 +460,7 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.items = this.AddCollForm.get('items') as FormArray;
     this.inputAddressObjForColl = new InputAddressObj();
     this.inputAddressObjForColl.title = "Collateral Owner";
     this.inputAddressObjForColl.showAllPhn = false;
@@ -459,10 +492,6 @@ export class CollateralAddEditComponent implements OnInit {
           }
           this.CollChange();
           this.AddCollForm.patchValue({
-            SerialNo1: this.returnAppCollateralObj.SerialNo1,
-            SerialNo2: this.returnAppCollateralObj.SerialNo2,
-            SerialNo3: this.returnAppCollateralObj.SerialNo3,
-            SerialNo4: this.returnAppCollateralObj.SerialNo4,
             CollateralValueAmt: this.returnAppCollateralObj.CollateralValueAmt,
             Notes: this.returnAppCollateralObj.CollateralNotes,
             AssetTypeCode: this.returnAppCollateralObj.AssetTypeCode,
@@ -652,7 +681,8 @@ export class CollateralAddEditComponent implements OnInit {
       (response) => {
         this.returnCollTypeObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
-
+        this.collateralTypeHandler();
+        
         this.inputLookupObj = new InputLookupObj();
         this.inputLookupObj.isReady = false;
         this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
@@ -716,10 +746,11 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.CollateralSeqNo = this.AddCollForm.controls["CollateralSeqNo"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     this.appCollateralDataObj.AppCollateralObj.FullAssetName = this.AddCollForm.controls["FullAssetName"].value;
-    this.appCollateralDataObj.AppCollateralObj.SerialNo1 = this.AddCollForm.controls["SerialNo1"].value;
-    this.appCollateralDataObj.AppCollateralObj.SerialNo2 = this.AddCollForm.controls["SerialNo2"].value;
-    this.appCollateralDataObj.AppCollateralObj.SerialNo3 = this.AddCollForm.controls["SerialNo3"].value;
-    this.appCollateralDataObj.AppCollateralObj.SerialNo4 = this.AddCollForm.controls["SerialNo4"].value;
+    for (var i = 0; i < this.items.length; i++) {
+      if (this.items.controls[i] != null) {
+        this.appCollateralDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+      }
+    }
 
     this.appCollateralDataObj.AppCollateralObj.CollateralNotes = this.AddCollForm.controls["Notes"].value;
     this.appCollateralDataObj.AppCollateralObj.AssetTypeCode = this.AddCollForm.controls["AssetTypeCode"].value;
