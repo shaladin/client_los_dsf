@@ -124,7 +124,7 @@ export class CustomerDataComponent implements OnInit {
   defCustModelCode: string;
   MrCustTypeCode: any;
   isMarried: boolean = true;
-  spouseGender: string = "";
+  spouseGender: string = CommonConstant.MasterCodeGenderFemale;
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appData: AppObj;
