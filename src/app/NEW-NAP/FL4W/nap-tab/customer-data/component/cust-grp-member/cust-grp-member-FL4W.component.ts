@@ -178,6 +178,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: ['', [Validators.maxLength(4000)]],
+        IsReversible: [false]
       })
     }else{
       return this.fb.group({
@@ -186,6 +187,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
+        IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
       })
     } 
   }

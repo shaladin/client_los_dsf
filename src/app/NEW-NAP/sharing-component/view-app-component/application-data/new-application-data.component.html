@@ -42,7 +42,7 @@
                   <td *ngIf="item.Address!=null">{{item.Address}}</td>
                   <td *ngIf="item.Address==null"> - </td>
                   <td *ngIf="item.MobilePhone!=null">{{item.MobilePhone}}</td>
-                  <td *ngIf="item.MobilePhone!=null"> - </td>
+                  <td *ngIf="item.MobilePhone==null"> - </td>
                 </tr>
               </tbody>
             </table>
@@ -183,7 +183,7 @@
                   <td *ngIf="item.SelfFinancingAmt != null">{{item.SelfFinancingAmt | currency : "USD" : ""}}</td>
                   <td *ngIf="item.SelfFinancingAmt == null"> - </td>
                   <td *ngIf="item.FinancingAmt != null">{{item.FinancingAmt | currency : "USD" : ""}}</td>
-                  <td *ngIf="item.FinancingAmt != null"> - </td>
+                  <td *ngIf="item.FinancingAmt == null"> - </td>
                 </tr>
               </tbody>
             </table>
@@ -230,7 +230,7 @@
             </div>
           </div>
 
-          <lib-ucSubsection [id]="'viewCollateralInsuranceId'" [title]="'Collateral Insurance'" [panel]="'viewCollateralInsuranceSection'">
+          <lib-ucSubsection [id]="'viewCollateralInsuranceId'" [title]="'Insurance Object'" [panel]="'viewCollateralInsuranceSection'">
           </lib-ucSubsection>
           <div class="form-body" id="viewCollateralInsuranceSection">
             <table class="table table-responsive-md text-center table-hover">
@@ -274,13 +274,13 @@
                   <td *ngIf="item.CoverPeriod != null">{{item.CoverPeriod}}</td>
                   <td *ngIf="item.CoverPeriod == null"> - </td>
                   <td *ngIf="item.InsuranceLength != null">{{item.InsuranceLength}}</td>
-                  <td *ngIf="item.InsuranceLength != null"> - </td>
+                  <td *ngIf="item.InsuranceLength == null"> - </td>
                   <td *ngIf="item.MainPremi != null">{{item.MainPremi}}</td>
-                  <td *ngIf="item.MainPremi != null"> - </td>
+                  <td *ngIf="item.MainPremi == null"> - </td>
                   <td *ngIf="item.AddPremi != null">{{item.AddPremi}}</td>
-                  <td *ngIf="item.AddPremi != null"> - </td>
+                  <td *ngIf="item.AddPremi == null"> - </td>
                   <td *ngIf="item.Fee != null">{{item.Fee | currency : "USD" : ""}}</td>
-                  <td *ngIf="item.Fee != null"> - </td>
+                  <td *ngIf="item.Fee == null"> - </td>
                 </tr>
               </tbody>
             </table>

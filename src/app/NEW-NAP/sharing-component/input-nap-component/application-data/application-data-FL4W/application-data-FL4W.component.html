@@ -30,25 +30,6 @@
                 </div>
   
                 <div class="form-group row">
-                  <!-- Sales Recommendation -->
-                  <div class="form-group col-md-2 adins-required">
-                    <label class="adInsLabel">Sales Recommendation </label>
-                  </div>
-                  <div class="col-md-4" *ngIf="applicationDDLitems['SLS_RECOM']">
-                    <!-- <mat-radio-group formControlName="MrSalesRecommendCode">
-                      <mat-radio-button class="custom-control custom-radio" color="primary"
-                        *ngFor="let item of applicationDDLitems['SLS_RECOM']" [value]="item.Key">
-                        {{item.Value}}
-                      </mat-radio-button>
-                    </mat-radio-group> -->
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrSalesRecommendCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['SLS_RECOM']" value="{{it.Key}}">
-                        {{it.Value}} </option>
-                    </select>
-                    <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
-                  </div>
                   <!-- Sales Notes -->
                   <label class="col-md-2 adInsLabel">Sales Notes </label>
                   <div class="col-md-4">
@@ -87,9 +68,9 @@
                   </div>
                 </div>
                 
-                <div class="form-group row adins-required">
+                <div class="form-group row ">
                   <!-- Tenor -->
-                  <label class="col-md-2 adInsLabel">Tenor </label>
+                  <label class="col-md-2 adins-required-label">Tenor </label>
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput width-100-per" formControlName="Tenor"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }" (change) = "ChangeNumOfInstallmentTenor()">
@@ -98,19 +79,14 @@
                   <!-- First Installment Type -->
                   <label class="col-md-2 adInsLabel"> First Installment Type </label>
                   <div class="col-md-4">
-                    <!-- <mat-radio-group formControlName="MrFirstInstTypeCode">
-                      <mat-radio-button class="custom-control custom-radio" [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }"
-                        *ngFor="let item of applicationDDLitems['FIRST_INST_TYPE']" [value]="item.Key" color="primary">
-                        {{item.Value}}
-                      </mat-radio-button>
-                    </mat-radio-group> -->
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
+                    <label class="adInsLabel"> {{FirstInstType}} </label>
+                    <!--select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
                           <option value="">-Select One-</option>
                           <option *ngFor="let it of applicationDDLitems['FIRST_INST_TYPE']" value="{{it.Key}}">
                             {{it.Value}} </option>
                         </select>
-                    <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors -->
                   </div>
                 </div>
                 
@@ -203,7 +179,7 @@
               </div>
   
               <!-- Cross Info -->
-              <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Information'" [panel]="'crossInfomation'">
+              <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'" [panel]="'crossInfomation'">
               </lib-ucSubsection>
               <div class="form-body" id="crossInfomation">
   
@@ -251,7 +227,7 @@
                 <!-- Model Card -->
                 <ng-template #contentCrossApp let-c="close" let-d="dismiss">
                   <div class="modal-header">
-                    <h4 class="modal-title">Add App Cross</h4>
+                    <h4 class="modal-title">Add Cross Application</h4>
                     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                       <span aria-hidden="true">&times;</span>
                     </button>

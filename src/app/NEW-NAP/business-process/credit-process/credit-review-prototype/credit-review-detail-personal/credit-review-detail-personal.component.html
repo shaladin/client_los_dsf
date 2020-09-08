@@ -1,0 +1,3645 @@
+<div>
+  <!--Credit Scoring View-->
+  <ng-template #contentAppl let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <section id="horizontal-form-layouts">
+        <div class="row text-left">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                  <div class="form-body">
+                    <div class="panel-active">
+                      <lib-ucSubsection [id]="'CreditScoringViewId'" [title]="'Credit Scoring'"
+                        [panel]="'CreditScoringView'">
+                      </lib-ucSubsection>
+                      <div id="autoDeviationInfo">
+                        <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                            <tr>
+                              <th><span class="thead-header" translate>No</span></th>
+                              <th><span class="thead-header" translate>Attribute</span></th>
+                              <th><span class="thead-header" translate>Value</span></th>
+                              <th><span class="thead-header" translate>Final Score</span></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-center">1</td>
+                              <td class="text-center">Education</td>
+                              <td class="text-center">S1</td>
+                              <td class="text-right">500</td>
+                            </tr>
+                            <tr>
+                              <td class="text-center">2</td>
+                              <td class="text-center">Marital Status</td>
+                              <td class="text-center">Married</td>
+                              <td class="text-right">500</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Total Score</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>1000 / Recommended</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+  <!--Bank Statement View-->
+  <ng-template #bankStatementView let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <section id="horizontal-form-layouts">
+        <div class="row text-left">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                  <div class="form-body">
+                    <div class="panel-active">
+                      <lib-ucSubsection [id]="'bankStatementId'" [title]="'Bank Statement Details'"
+                        [panel]="'bankStatement'">
+                      </lib-ucSubsection>
+                      <div id="bankStatement">
+                        <div class="form-group row">
+                          <label class="col-md-12" for="custNickName" translate>1. BCA / 8200304567 / ADINS /
+                            JAKARTA</label>
+                        </div>
+                        <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                            <tr>
+                              <th><span class="thead-header" translate>No</span></th>
+                              <th><span class="thead-header" translate>Year</span></th>
+                              <th><span class="thead-header" translate>Month</span></th>
+                              <th><span class="thead-header" translate>Debit Amount</span></th>
+                              <th><span class="thead-header" translate>Credit Amount</span></th>
+                              <th><span class="thead-header" translate>Balance Amount</span></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-center">1</td>
+                              <td class="text-center">2020</td>
+                              <td class="text-center">January</td>
+                              <td class="text-right">20.000.000,00</td>
+                              <td class="text-right">30.000.000,00</td>
+                              <td class="text-right">50.000.000,00</td>
+                            </tr>
+                            <tr>
+                              <td class="text-center">2</td>
+                              <td class="text-center">2020</td>
+                              <td class="text-center">February</td>
+                              <td class="text-right">20.000.000,00</td>
+                              <td class="text-right">30.000.000,00</td>
+                              <td class="text-right">50.000.000,00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <div class="form-group row">
+                          <label class="col-md-12" for="custNickName" translate>2. BCA / 8200304569 / ADINS /
+                            JAKARTA</label>
+                        </div>
+                        <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                            <tr>
+                              <th><span class="thead-header" translate>No</span></th>
+                              <th><span class="thead-header" translate>Year</span></th>
+                              <th><span class="thead-header" translate>Month</span></th>
+                              <th><span class="thead-header" translate>Debit Amount</span></th>
+                              <th><span class="thead-header" translate>Credit Amount</span></th>
+                              <th><span class="thead-header" translate>Balance Amount</span></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-center">1</td>
+                              <td class="text-center">2020</td>
+                              <td class="text-center">January</td>
+                              <td class="text-right">20.000.000,00</td>
+                              <td class="text-right">30.000.000,00</td>
+                              <td class="text-right">50.000.000,00</td>
+                            </tr>
+                            <tr>
+                              <td class="text-center">2</td>
+                              <td class="text-center">2020</td>
+                              <td class="text-center">February</td>
+                              <td class="text-right">20.000.000,00</td>
+                              <td class="text-right">30.000.000,00</td>
+                              <td class="text-right">50.000.000,00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+  <!--Exposure View-->
+  <ng-template #ExposureView let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <section id="horizontal-form-layouts">
+        <div class="row text-left">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                  <div class="form-body">
+                    <div class="panel-active">
+                      <lib-ucSubsection [id]="'ExposureId'" [title]="'Customer Exposure'" [panel]="'Exposure'">
+                      </lib-ucSubsection>
+                      <div id="Exposure">
+                        <!-- Cust Main Info -->
+                        <lib-ucSubsection [id]="'mainInfoCustId'" [title]="'Main Information'" [panel]="'mainInfoCust'">
+                        </lib-ucSubsection>
+                        <div id="mainInfoCust">
+                          <div class="form-group row">
+                            <label class="col-md-2" for="custNickName" translate>Name</label>
+                            <div class="col-md-4">
+                              <div class="row">
+                                <label class="col-md-1" for="custNickName" translate><i
+                                    class="fas fa-circle green"></i></label>
+                                <label class="col-md-11" for="custNickName" translate>Jovi / 0123456789</label>
+                              </div>
+                            </div>
+
+                            <label class="col-md-2" for="custNickName" translate>Relation With Customer</label>
+                            <div class="col-md-4">
+                              <div class="row">
+                                <label class="col-md-1" for="custNickName" translate></label>
+                                <label class="col-md-11" for="custNickName" translate>Customer</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <mat-tab-group>
+                          <mat-tab label="Customer Exposure">
+                            <ng-template matTabContent>
+
+                              <!-- Outstanding Amount -->
+                              <lib-ucSubsection [id]="'outStandingAmountId'" [title]="'Outstanding Amount'"
+                                [panel]="'outStandingAmount'">
+                              </lib-ucSubsection>
+                              <div id="outStandingAmount">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>OS Principal Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>500.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>OS Interest Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>80.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>OS AR Balance</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>600.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <!-- Maximum Amount -->
+                              <lib-ucSubsection [id]="'maxAmountId'" [title]="'Maximum Amount'" [panel]="'maxAmount'">
+                              </lib-ucSubsection>
+                              <div id="maxAmount">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Max AR</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>200.000.000,00</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Max Overdue Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>140.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Max Installment
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>15.000.000,00</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Max Overdue Days</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>15</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Number Of -->
+                              <lib-ucSubsection [id]="'numberOfId'" [title]="'Number of'" [panel]="'numberOf'">
+                              </lib-ucSubsection>
+                              <div id="numberOf">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Active Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>4</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Asset Repossessed</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>2</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Agreement In Process</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Asset Inventoried</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Asset In Financing</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>5</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Written Off Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Rejected Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Non Acrual Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>2</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Cancelled Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Bonus Cheque</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>2</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--Bucket-->
+                              <lib-ucSubsection [id]="'bucketId'" [title]="'Bucket'" [panel]="'bucketP'">
+                              </lib-ucSubsection>
+                              <div id="bucketP">
+                                <div class="form-group row">
+                                  <div class="col-md-6">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>Bucket</span></th>
+                                          <th><span class="thead-header" translate>Total Past Due</span></th>
+                                          <th><span class="thead-header" translate>Bucket</span></th>
+                                          <th><span class="thead-header" translate>Total Past Due</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td class="text-center">OD(1-3)</td>
+                                          <td class="text-right">7.000.000,00</td>
+                                          <td class="text-center">OD(361-400)</td>
+                                          <td class="text-right">7.000.000,00</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">OD(4-15)</td>
+                                          <td class="text-right">20.000.000,00</td>
+                                          <td class="text-center">OD(400-600)</td>
+                                          <td class="text-right">20.000.000,00</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">OD(16-360)</td>
+                                          <td class="text-right">50.000.000,00</td>
+                                          <td class="text-center">OD(601-900)</td>
+                                          <td class="text-right">50.000.000,00</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--Application / Agreement List-->
+                              <lib-ucSubsection [id]="'appAgrListId'" [title]="'Application / Agreement List'"
+                                [panel]="'appAgrList'">
+                              </lib-ucSubsection>
+                              <div id="appAgrList">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>No</span></th>
+                                          <th><span class="thead-header" translate>Application No</span></th>
+                                          <th><span class="thead-header" translate>Agreement No</span></th>
+                                          <th><span class="thead-header" translate>Go Live Date</span></th>
+                                          <th><span class="thead-header" translate>Offering Name</span></th>
+                                          <th><span class="thead-header" translate>Contract Status</span></th>
+                                          <th><span class="thead-header" translate>OS Principal</span></th>
+                                          <th><span class="thead-header" translate>FPD (#AGR)</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of listAppAgr; let i = index">
+                                          <td>{{i + 1}}</td>
+                                          <td class="align-left">{{item.AppNo}}</td>
+                                          <td class="align-center">{{item.AgrNo}}</td>
+                                          <td class="align-left">{{item.GoLiveDt}}</td>
+                                          <td class="align-left">{{item.OfferingName}}</td>
+                                          <td class="align-left">{{item.ContractStatus}}</td>
+                                          <td class="align-left">{{item.OSPrincipal}}</td>
+                                          <td class="align-left">{{item.FPD}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            </ng-template>
+                          </mat-tab>
+                          <mat-tab label="Customer Group Exposure">
+                            <ng-template matTabContent>
+                              <!-- Outstanding Amount -->
+                              <lib-ucSubsection [id]="'outStandingAmountId'" [title]="'Outstanding Amount'"
+                                [panel]="'outStandingAmount'">
+                              </lib-ucSubsection>
+                              <div id="outStandingAmount">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>OS Principal Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>500.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>OS Interest Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>80.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>OS AR Balance</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>600.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <!-- Maximum Amount -->
+                              <lib-ucSubsection [id]="'maxAmountId'" [title]="'Maximum Amount'" [panel]="'maxAmount'">
+                              </lib-ucSubsection>
+                              <div id="maxAmount">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Max AR</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>200.000.000,00</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Max Overdue Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>140.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Max Installment
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>15.000.000,00</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Max Overdue Days</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>15</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Number Of -->
+                              <lib-ucSubsection [id]="'numberOfId'" [title]="'Number of'" [panel]="'numberOf'">
+                              </lib-ucSubsection>
+                              <div id="numberOf">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Active Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>4</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Asset Repossessed</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>2</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Agreement In Process</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Asset Inventoried</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Asset In Financing</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>5</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Written Off Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Rejected Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Non Acrual Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>2</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Cancelled Agreement</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>0</label>
+                                    </div>
+                                  </div>
+                                  <label class="col-md-2" for="custNickName" translate>Bonus Cheque</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>2</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--Bucket-->
+                              <lib-ucSubsection [id]="'bucketId'" [title]="'Bucket'" [panel]="'bucketP'">
+                              </lib-ucSubsection>
+                              <div id="bucketP">
+                                <div class="form-group row">
+                                  <div class="col-md-6">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>Bucket</span></th>
+                                          <th><span class="thead-header" translate>Total Past Due</span></th>
+                                          <th><span class="thead-header" translate>Bucket</span></th>
+                                          <th><span class="thead-header" translate>Total Past Due</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td class="text-center">OD(1-3)</td>
+                                          <td class="text-right">7.000.000,00</td>
+                                          <td class="text-center">OD(361-400)</td>
+                                          <td class="text-right">7.000.000,00</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">OD(4-15)</td>
+                                          <td class="text-right">20.000.000,00</td>
+                                          <td class="text-center">OD(400-600)</td>
+                                          <td class="text-right">20.000.000,00</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="text-center">OD(16-360)</td>
+                                          <td class="text-right">50.000.000,00</td>
+                                          <td class="text-center">OD(601-900)</td>
+                                          <td class="text-right">50.000.000,00</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--Application / Agreement List-->
+                              <lib-ucSubsection [id]="'appAgrListId'" [title]="'Application / Agreement List'"
+                                [panel]="'appAgrList'">
+                              </lib-ucSubsection>
+                              <div id="appAgrList">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>No</span></th>
+                                          <th><span class="thead-header" translate>Application No</span></th>
+                                          <th><span class="thead-header" translate>Agreement No</span></th>
+                                          <th><span class="thead-header" translate>Go Live Date</span></th>
+                                          <th><span class="thead-header" translate>Offering Name</span></th>
+                                          <th><span class="thead-header" translate>Contract Status</span></th>
+                                          <th><span class="thead-header" translate>OS Principal</span></th>
+                                          <th><span class="thead-header" translate>FPD (#AGR)</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of listAppAgr; let i = index">
+                                          <td>{{i + 1}}</td>
+                                          <td class="align-left">{{item.AppNo}}</td>
+                                          <td class="align-center">{{item.AgrNo}}</td>
+                                          <td class="align-left">{{item.GoLiveDt}}</td>
+                                          <td class="align-left">{{item.OfferingName}}</td>
+                                          <td class="align-left">{{item.ContractStatus}}</td>
+                                          <td class="align-left">{{item.OSPrincipal}}</td>
+                                          <td class="align-left">{{item.FPD}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </mat-tab>
+                          <mat-tab label="Obligor Exposure">
+                            <ng-template matTabContent>
+                              <!-- Obligor Exposure -->
+                              <lib-ucSubsection [id]="'ObligorExposureId'" [title]="'Summary'"
+                                [panel]="'ObligorExposure'">
+                              </lib-ucSubsection>
+                              <div id="ObligorExposure">
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Customer Exposure
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>500.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Spouse Exposure
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>20.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Guarantor Exposure
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>-</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Shareholder Exposure
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>-</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-2" for="custNickName" translate>Obligor Exposure
+                                    Amount</label>
+                                  <div class="col-md-4">
+                                    <div class="row">
+                                      <label class="col-md-1" for="custNickName" translate></label>
+                                      <label class="col-md-11" for="custNickName" translate>520.000.000,00</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <!--Customer Data-->
+                              <lib-ucSubsection [id]="'custDataId'" [title]="'Customer Data'" [panel]="'custData'">
+                              </lib-ucSubsection>
+                              <div id="custData">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>Application No</span></th>
+                                          <th><span class="thead-header" translate>Agreement No</span></th>
+                                          <th><span class="thead-header" translate>Product Offering Name</span></th>
+                                          <th><span class="thead-header" translate>Outstanding AR</span></th>
+                                          <th><span class="thead-header" translate>Application Step</span></th>
+                                          <th><span class="thead-header" translate>Application Status</span></th>
+                                          <th><span class="thead-header" translate>Contract Status</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of listObligor; let i = index">
+                                          <td class="align-left">{{item.AppNo}}</td>
+                                          <td class="align-left">{{item.AgrNo}}</td>
+                                          <td class="align-left">{{item.ProductOfferingName}}</td>
+                                          <td class="align-right">{{item.OutstandingAR}}</td>
+                                          <td class="align-left">{{item.ApplicationStep}}</td>
+                                          <td class="align-left">{{item.ApplicationStatus}}</td>
+                                          <td class="align-left">{{item.ContractStatus}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+
+
+
+                              <!--Spouse Data-->
+                              <lib-ucSubsection [id]="'SpouseDataId'" [title]="'Spouse Data'" [panel]="'SpouseData'">
+                              </lib-ucSubsection>
+                              <div id="SpouseData">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>Application No</span></th>
+                                          <th><span class="thead-header" translate>Agreement No</span></th>
+                                          <th><span class="thead-header" translate>Customer Name</span></th>
+                                          <th><span class="thead-header" translate>Product Offering Name</span></th>
+                                          <th><span class="thead-header" translate>Outstanding AR</span></th>
+                                          <th><span class="thead-header" translate>Application Step</span></th>
+                                          <th><span class="thead-header" translate>Application Status</span></th>
+                                          <th><span class="thead-header" translate>Contract Status</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of listObligor; let i = index">
+                                          <td class="align-left">{{item.AppNo}}</td>
+                                          <td class="align-left">{{item.AgrNo}}</td>
+                                          <td class="align-left">{{item.CustomerName}}</td>
+                                          <td class="align-left">{{item.ProductOfferingName}}</td>
+                                          <td class="align-right">{{item.OutstandingAR}}</td>
+                                          <td class="align-left">{{item.ApplicationStep}}</td>
+                                          <td class="align-left">{{item.ApplicationStatus}}</td>
+                                          <td class="align-left">{{item.ContractStatus}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!--Guarantor Data-->
+                              <lib-ucSubsection [id]="'GuarantorDataId'" [title]="'Guarantor Data'"
+                                [panel]="'GuarantorData'">
+                              </lib-ucSubsection>
+                              <div id="GuarantorData">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>Application No</span></th>
+                                          <th><span class="thead-header" translate>Agreement No</span></th>
+                                          <th><span class="thead-header" translate>Customer Name</span></th>
+                                          <th><span class="thead-header" translate>Product Offering Name</span></th>
+                                          <th><span class="thead-header" translate>Outstanding AR</span></th>
+                                          <th><span class="thead-header" translate>Application Step</span></th>
+                                          <th><span class="thead-header" translate>Application Status</span></th>
+                                          <th><span class="thead-header" translate>Contract Status</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of listObligor; let i = index">
+                                          <td class="align-left">{{item.AppNo}}</td>
+                                          <td class="align-left">{{item.AgrNo}}</td>
+                                          <td class="align-left">{{item.CustomerNameGuarantor}}</td>
+                                          <td class="align-left">{{item.ProductOfferingName}}</td>
+                                          <td class="align-right">{{item.OutstandingAR}}</td>
+                                          <td class="align-left">{{item.ApplicationStep}}</td>
+                                          <td class="align-left">{{item.ApplicationStatus}}</td>
+                                          <td class="align-left">{{item.ContractStatus}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!--Shareholder Data-->
+                              <lib-ucSubsection [id]="'ShareholderDataId'" [title]="'Shareholder Data'"
+                                [panel]="'ShareholderData'">
+                              </lib-ucSubsection>
+                              <div id="ShareholderData">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <table class="table table-responsive-md text-center table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th><span class="thead-header" translate>Application No</span></th>
+                                          <th><span class="thead-header" translate>Agreement No</span></th>
+                                          <th><span class="thead-header" translate>Customer Name</span></th>
+                                          <th><span class="thead-header" translate>Product Offering Name</span></th>
+                                          <th><span class="thead-header" translate>Outstanding AR</span></th>
+                                          <th><span class="thead-header" translate>Application Step</span></th>
+                                          <th><span class="thead-header" translate>Application Status</span></th>
+                                          <th><span class="thead-header" translate>Contract Status</span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of listObligor; let i = index">
+                                          <td class="align-left">{{item.AppNo}}</td>
+                                          <td class="align-left">{{item.AgrNo}}</td>
+                                          <td class="align-left">{{item.CustomerNameShareholder}}</td>
+                                          <td class="align-left">{{item.ProductOfferingName}}</td>
+                                          <td class="align-right">{{item.OutstandingAR}}</td>
+                                          <td class="align-left">{{item.ApplicationStep}}</td>
+                                          <td class="align-left">{{item.ApplicationStatus}}</td>
+                                          <td class="align-left">{{item.ContractStatus}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            </ng-template>
+                          </mat-tab>
+                        </mat-tab-group>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+  <!--Rapindo View-->
+  <ng-template #rapindoView let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <section id="horizontal-form-layouts">
+        <div class="row text-left">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                  <div class="form-body">
+                    <div class="panel-active">
+                      <lib-ucSubsection [id]="'RapindoId'" [title]="'Rapindo'" [panel]="'Rapindo'">
+                      </lib-ucSubsection>
+                      <div id="Rapindo">
+                        <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                            <tr>
+                              <th><span class="thead-header" translate>No</span></th>
+                              <th><span class="thead-header" translate>Asset Name</span></th>
+                              <th><span class="thead-header" translate>Is Asset Exist</span></th>
+                              <th><span class="thead-header" translate>Chasis No</span></th>
+                              <th><span class="thead-header" translate>Engine No</span></th>
+                              <th><span class="thead-header" translate>License Plate No</span></th>
+                              <th><span class="thead-header" translate>Multifinance</span></th>
+                              <th><span class="thead-header" translate>Agreement No</span></th>
+                              <th><span class="thead-header" translate>Active</span></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-center">1</td>
+                              <td class="text-center">Honda Brio / 2018</td>
+                              <td class="text-center">Yes</td>
+                              <td class="text-center">B181278821</td>
+                              <td class="text-center">581239213</td>
+                              <td class="text-center">581239213</td>
+                              <td class="text-center">B1234D</td>
+                              <td class="text-center">BFI</td>
+                              <td class="text-center">AGR001</td>
+                              <td class="text-center">No</td>
+                            </tr>
+                            <tr>
+                              <td class="text-center">2</td>
+                              <td class="text-center">Honda Brio / 2020</td>
+                              <td class="text-center">No</td>
+                              <td class="text-center">B012381230</td>
+                              <td class="text-center">123921312</td>
+                              <td class="text-center">RI 1</td>
+                              <td class="text-center">-</td>
+                              <td class="text-center">-</td>
+                              <td class="text-center">-</td>
+                              <td class="text-center">No</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+  <!--Income and Expense View-->
+  <ng-template #incomeExpenseView let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <section id="horizontal-form-layouts">
+        <div class="row text-left">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                  <div class="form-body">
+                    <div class="panel-active">
+
+                      <!-- Income and Expense Detail -->
+                      <lib-ucSubsection [id]="'IncomeExpenseId'" [title]="'Income and Expense Detail'"
+                        [panel]="'IncomeExpense'">
+                      </lib-ucSubsection>
+                      <div id="IncomeExpense">
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate><b>Income</b></label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate></label>
+                            </div>
+                          </div>
+
+                          <label class="col-md-2" for="custNickName" translate><b>Acquisition Cost</b></label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate></label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Total Interest</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>10.000.000,00</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Comission</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>1.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Insurance</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>2.000.000,00</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Reserve Fund</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>500.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Life Insurance</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>2.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Admin</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>250.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Provision Fee</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>500.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Other</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>150.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate></label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate></label>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Total Income</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>14.900.000,00</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>TAC Amount</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>1.500.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate></label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate></label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>TAC Percentage</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>10,07%</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate></label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate></label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate></label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate></label>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Insurance Subsidy</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>500.000,00</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Multifinance Subsidy</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>500.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="IncomeAq">
+                          <table class="table table-responsive-md text-center table-hover">
+                            <thead>
+                              <tr>
+                                <th><span class="thead-header" translate> </span></th>
+                                <th><span class="thead-header" translate>Max Allocated</span></th>
+                                <th><span class="thead-header" translate>Comission</span></th>
+                                <th><span class="thead-header" translate>Reserved</span></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="text-center">Upping</td>
+                                <td class="text-right">2000</td>
+                                <td class="text-right">1800</td>
+                                <td class="text-right">200</td>
+                              </tr>
+                              <tr>
+                                <td class="text-center">Insurance</td>
+                                <td class="text-right">1500</td>
+                                <td class="text-right">1500</td>
+                                <td class="text-right">0</td>
+                              </tr>
+                              <tr>
+                                <td class="text-center">Other</td>
+                                <td class="text-right">200</td>
+                                <td class="text-right">100</td>
+                                <td class="text-right">100</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+  <!--Financial Ratio-->
+  <ng-template #financialRatio let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <section id="horizontal-form-layouts">
+        <div class="row text-left">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                  <div class="form-body">
+                    <div class="panel-active">
+                      <lib-ucSubsection [id]="'FinancialRatioId'" [title]="'Financial Ratio'"
+                        [panel]="'FinancialRatio'">
+                      </lib-ucSubsection>
+                      <div id="FinancialRatio">
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Date As Of</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>26-08-2020</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Working Capital (Amt)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>500.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Monthly Income</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>1.000.000.000,00</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Other Monthly Installment</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>-</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Monthly Expense</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>800.000.000,00</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Revenue</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>50.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Return Of Investment (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>20</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Opr Cost</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>-</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Return Of Equity (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>20</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Profit Before Tax</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>200.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Return Of Asset (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>20</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Current Asset</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>350.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Profit Margin (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>20</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Net Fixed Asset</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>325.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Current Ratio (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>20</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Total Asset</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>350.000.000,00</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Debt Equity Ratio (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>10</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Current Liabilities</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>0</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Inventory Turn Over (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>10</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Long Term Liabilities</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>0</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>AR Turn Over (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>5</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Shareholder Equity</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>100</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-2" for="custNickName" translate>Growth (%)</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>20</label>
+                            </div>
+                          </div>
+                          <label class="col-md-2" for="custNickName" translate>Current Ratio</label>
+                          <div class="col-md-4">
+                            <div class="row">
+                              <label class="col-md-1" for="custNickName" translate></label>
+                              <label class="col-md-11" for="custNickName" translate>100</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+  <div *ngIf="custType == 'P'">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+            <div class="form-body">
+              <!-- Main Info -->
+              <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
+              </lib-ucSubsection>
+              <div id="mainInfo">
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Lead No / App No</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue">201907LEAD00001</a> /
+                        <a class="blue">201907APP010002</a></label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Original Office</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Jakarta - Prod Offering 0002</label>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Mou No</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>-</label>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Customer Info -->
+              <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+              </lib-ucSubsection>
+              <div id="custInfo">
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Customer Name</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="far fa-circle"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Budiman Haryanto / 30 yo / S1</label>
+                    </div>
+                  </div>
+                  <label class="col-md-6" for="custNickName" style="color: blue;" translate>Exposure .000 (#Active / OS
+                    Principal / OS AR)</label>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Legal Address</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Jalan BSD no 1, Setu, Setu, Tangerang
+                        Selatan</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Customer</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><span> 3 </span> / <span> 500,000 </span> /
+                        <span>
+                          500,000 </span></label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Residence Address</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Jalan BSD no 1,
+                        Setu, Setu, Tangerang Selatan / Milik
+                        Sendiri</label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Customer Group</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>4 / 1,000,000 / 1,000,000</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Occupation</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Permanent Programmer at PT. Adicipta Inovasi
+                        Teknologi for 8Y2M</label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Obligor</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>4 / 520,000 / 520,000 </label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Marital Status</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Married with <a class="blue"
+                          (click)="openAppl(ExposureView)">Ayu
+                          Yuniar</a></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>NPWP</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>160987654321</label>
+
+                    </div>
+                  </div>
+                  <label class="col-md-6" for="custNickName" translate><b>Application / Agreement History</b></label>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Mobile Phone No</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate><span style="color: green;"> 082812812
+                        </span>
+                        /
+                        <span style="color : red;"><i class="fas fa-circle red"></i> 08712371237 </span></label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Num of Application Reject / Process</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><span> 0 </span> / <span> 4 </span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Monthly Income</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>25,000,000 (Join Income)</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>#AGR FPD (Last X month / All)</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
+                      <label class="col-md-11" for="custNickName" translate><span> 1 </span> / <span> 1 </span></label>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Bank Statement</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue"
+                          (click)="openAppl(bankStatementView)">View</a></label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Current Overdue</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><span> 1 </span> / <span> 100 </span> /
+                        <span>
+                          10,000,000 </span></label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate><a class="blue">Difference to master
+                      customer</a></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle yellow"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Residence Address, Legal Address,
+                        Occupation,
+                        Mobile
+                        Phone</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate> </label>
+                  <label class="col-md-4" for="custNickName" translate> </label>
+                  <div class="col-md-6">
+                    <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                        <tr>
+                          <th><span class="thead-header" translate>Guarantor</span></th>
+                          <th><span class="thead-header" translate>Negative Status</span></th>
+                          <th><span class="thead-header" translate>#AGR / Max Ovd / Total Ovd Amt</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="text-left"><a class="blue" (click)="openAppl(ExposureView)">Beni - Parent</a></td>
+                          <td class="text-center"><i class="fas fa-circle red"></i></td>
+                          <td class="text-left"><span> <i class="fas fa-circle red"></i> </span> / <span> 10 </span> /
+                            <span> 100 </span> / <span>
+                              40,000,000 </span></td>
+                        </tr>
+                        <tr>
+                          <td class="text-left"><a class="blue" (click)="openAppl(ExposureView)">Joko - Sibling</a></td>
+                          <td class="text-center"><i class="fas fa-circle green"></i></td>
+                          <td class="text-left"><span> <i class="fas fa-circle green"></i> </span> / <span> 0 </span> /
+                            <span> 0 </span> / <span> 0
+                            </span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Family Data</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue"
+                          (click)="openAppl(ExposureView)"> Bunga / Spouse </a></label>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate> </label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue"
+                          (click)="openAppl(ExposureView)"> Beni / Brother </a></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Survey -->
+            <lib-ucSubsection [id]="'surveyInfoId'" [title]="'Survey'" [panel]="'surveyInfo'">
+            </lib-ucSubsection>
+            <div id="surveyInfo">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Customer</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank"> Home Address </a></label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate> </label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank"> Office Address</a></label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
+                    <label class="col-md-11" for="custNickName" translate><span><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank"> Home Address
+                        </a></span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Third Party Checking -->
+            <lib-ucSubsection [id]="'thirdPartyId'" [title]="'Third Party Checking'" [panel]="'thirdParty'">
+            </lib-ucSubsection>
+            <div id="thirdParty">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate><a class="blue"> 1. Dukcapil </a></label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>Ada perbedaan data : Name, Nama Ibu
+                      Kandung</label>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate><a class="blue"> 2. Perfindo </a></label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle yellow"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>Score : 697, B2 : Low Risk, Trend :
+                      Sideways</label>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate><a class="blue" (click)="openAppl(rapindoView)"> 3.
+                    Rapindo
+                  </a></label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>Data Exist & Active in BFI since
+                      30-04-2020</label>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate><a class="blue"> 4. SLIK </a></label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>Data Exist in 2 Kreditur, Lancar : 1, Dalam
+                      Perhatian
+                      Khusus : 1</label>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate><a class="blue"> 5. Profind </a></label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>OK : Nama, Kantor, Alamat Rumah, Mobile Phone
+                      No.
+                      Not
+                      OK : Suspected Income.</label>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Application Information -->
+            <lib-ucSubsection [id]="'appInfoId'" [title]="'Application Information'" [panel]="'appInfo'">
+            </lib-ucSubsection>
+            <div id="appInfo">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Num of Inst/ Tenor</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>12 / 12 / Arrear / Regular Fixed</label>
+                  </div>
+                </div>
+
+                <label class="col-md-2" for="custNickName" translate><a (click)="openAppl(contentAppl)">Credit
+                    Scoring</a></label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>1000 / Recommended</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Order Information</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>New Order</label>
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>TC Received</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>7 of 10 / 4 of 6 mandatory</label>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Life Insured</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Yes / Customer</label>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Financial -->
+            <lib-ucSubsection [id]="'financialInfoid'" [title]="'Financial'" [panel]="'financialInfo'">
+            </lib-ucSubsection>
+            <div id="financialInfo">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>NTR / AR</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>275,000,000 / 275,000,000</label>
+                  </div>
+                </div>
+
+                <label class="col-md-2" for="custNickName" translate><a (click)="openAppl(incomeExpenseView)">Income and
+                    Expense</a></label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Installment Amount / DSR</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>7000000 / 10%</label>
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>Total Income</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>14,900,000</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Effective Rate / Flat Rate / Gross Yield</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>10% / 5% / 12%</label>
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>Total Expense</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>1,500,000</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Supplier Rate / Standart Rate</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>10% / 15%</label>
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>TAC Commission + Reserve Fund</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>10,07%</label>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Asset -->
+            <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset'" [panel]="'assetInfo'">
+            </lib-ucSubsection>
+            <div id="assetInfo">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Asset Name</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Honda BRV e CVT 2020 / New Asset /
+                      Commercial</label>
+
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>Total Income</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>14,900,000</label>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Asset Price</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>250,000,000</label>
+
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>Insurance</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Cover By Company / 2 years ALLRISK, 1 year
+                      TLO</label>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Negative Asset</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                    <label class="col-md-11" for="custNickName" translate>Yes / Asset Curian</label>
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>Is Double Financing</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Yes</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Collateral -->
+            <lib-ucSubsection [id]="'collateralInfoId'" [title]="'Additional Collateral'" [panel]="'collateralInfo'">
+            </lib-ucSubsection>
+            <div id="collateralInfo">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr>
+                    <th><span class="thead-header" translate>Collateral Seq No</span></th>
+                    <th><span class="thead-header" translate>Full Asset Name</span></th>
+                    <th><span class="thead-header" translate>Collateral Value</span></th>
+                    <th><span class="thead-header" translate>Collateral Percent</span></th>
+                    <th><span class="thead-header" translate>Insurance</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-left">1</td>
+                    <td class="text-left">BAJAJ MOTOR</td>
+                    <td class="text-right">10.000.000,00</td>
+                    <td class="text-center">50</td>
+                    <td class="text-left">Cover By Company ( 2 years / ALL RISK)</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">2</td>
+                    <td class="text-left">WULING CORTEZ 1500 CC</td>
+                    <td class="text-right">20.000.000,00</td>
+                    <td class="text-center">50</td>
+                    <td class="text-left">Cover By Company ( 2 years / ALL RISK)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- CMO Info -->
+            <lib-ucSubsection [id]="'cmoInfoId'" [title]="'CMO Info'" [panel]="'cmoInfo'">
+            </lib-ucSubsection>
+            <div id="cmoInfo">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>CMO Name / Supervisor Name</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Andara/ Deidara</label>
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>#AGR FPD (Last X month / All)</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>1 / 10</label>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Join Date</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>12/11/2019</label>
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>#AGR Ovd / REPO / WO</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>1 / 2 / 5</label>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer Info -->
+            <lib-ucSubsection [id]="'dealerInfoId'" [title]="'Dealer Info'" [panel]="'dealerInfo'">
+            </lib-ucSubsection>
+            <div id="dealerInfo">
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Dealer Name</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>OTO 2000 Cengkareng</label>
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>#AGR FPD (Last X month / All)</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>1 / 10</label>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Address</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Jln. Cengkareng</label>
+
+                  </div>
+                </div>
+                <label class="col-md-2" for="custNickName" translate>#AGR Ovd / REPO / WO</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>1 / 2 / 5</label>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Sales / Spv / BM</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>Dini / Dana / Joni</label>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Cooperation Date</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>10/12/2018</label>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Automatic Deviation -->
+            <lib-ucSubsection [id]="'autoDeviationInfoId'" [title]="'Automatic Deviation'"
+              [panel]="'autoDeviationInfo'">
+            </lib-ucSubsection>
+            <div id="autoDeviationInfo">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr>
+                    <th><span class="thead-header" translate>No</span></th>
+                    <th><span class="thead-header" translate>Deviation Type</span></th>
+                    <th><span class="thead-header" translate>Original Value</span></th>
+                    <th><span class="thead-header" translate>Current Value</span></th>
+                    <th><span class="thead-header" translate>Approval At</span></th>
+                    <th><span class="thead-header" translate>Notes</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-left">1</td>
+                    <td class="text-left">Deviation I</td>
+                    <td class="text-right">10.000.000,00</td>
+                    <td class="text-right">9.000.000,00</td>
+                    <td class="text-center">BM</td>
+                    <td class="text-left">-</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">2</td>
+                    <td class="text-left">Deviation II</td>
+                    <td class="text-right">10.000.000,00</td>
+                    <td class="text-right">9.000.000,00</td>
+                    <td class="text-center">AM</td>
+                    <td class="text-left">-</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">3</td>
+                    <td class="text-left">Deviation III</td>
+                    <td class="text-right">10.000.000,00</td>
+                    <td class="text-right">9.000.000,00</td>
+                    <td class="text-center">AM</td>
+                    <td class="text-left">-</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">4</td>
+                    <td class="text-left">Deviation IV</td>
+                    <td class="text-right">10.000.000,00</td>
+                    <td class="text-right">9.000.000,00</td>
+                    <td class="text-center">BM</td>
+                    <td class="text-left">-</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">5</td>
+                    <td class="text-left">Deviation V</td>
+                    <td class="text-right">10.000.000,00</td>
+                    <td class="text-right">9.000.000,00</td>
+                    <td class="text-center">DIVHEAD</td>
+                    <td class="text-left">-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Manual Deviation-->
+            <lib-ucSubsection [id]="'manualDeviation'" [title]="'Manual Deviation'" [panel]="'manualDeviationId'">
+            </lib-ucSubsection>
+
+            <div id="manualDeviationId">
+              <div class="ucSearch-Button-Right">
+                <span class="mr-1">
+                  <button type="button" class="btn btn-raised btn-primary" (click)="addDeviation()" translate><i
+                      class="ft-plus-circle"></i>
+                    Add
+                  </button>
+                </span>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Deviation Criteria</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <div class="col-md-11">
+                      <select class="form-control" style="width: inherit">
+                        <option>Criteria I</option>
+                        <option>Criteria II</option>
+                        <option>Criteria III</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Approve At</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <label class="col-md-11" for="custNickName" translate>BM</label>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="custNickName" translate>Notes</label>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-md-1" for="custNickName" translate></label>
+                    <div class="col-md-11">
+                      <textarea class="form-control adInsInput"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th><span class="thead-header" translate>No</span></th>
+                      <th><span class="thead-header" translate>Deviation Criteria</span></th>
+                      <th><span class="thead-header" translate>Approval At</span></th>
+                      <th><span class="thead-header" translate>Notes</span></th>
+                      <th><span class="thead-header" translate>Delete</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listDeviation; let i = index">
+                      <td>{{i + 1}}</td>
+                      <td class="align-left">{{item.DeviationCriteria}}</td>
+                      <td class="align-center">{{item.ApprovalAt}}</td>
+                      <td class="align-left">{{item.Notes}}</td>
+                      <td>
+                        <a class="danger p-0" data-original-title="" title="" (click)="deleteData(i)">
+                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Credit Analysis -->
+              <lib-ucSubsection [id]="'creditAnalysisId'" [title]="'Credit Analysis'" [panel]="'creditAnalysis'">
+              </lib-ucSubsection>
+              <div id="creditAnalysis">
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>6C</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Latar Belakang Debitur</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Faktor - Faktor Pendukung</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Faktor - Faktor Tidak / Kurang Mendukung</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Syarat - Syarat</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Dispensasi / Lain - Lain</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>SWOT</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <div class="col-md-11">
+                        <input type="text" class="form-control" formControlName="CustName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-container *ngIf="return == 'Yes'">
+
+                <!-- Request for Approval -->
+                <lib-ucSubsection [id]="'rfaId'" [title]="'Request for Approval'" [panel]="'rfa'">
+                </lib-ucSubsection>
+                <div id="rfa">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Approval Amount</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>900.000.000</label>
+
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate>Credit Scoring</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>85</label>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Recommendation</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <select class="form-control" style="width: inherit">
+                            <option>--Select One--</option>
+                            <option>Other Reason</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate>Approver</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <select class="form-control" style="width: inherit">
+                            <option>User I</option>
+                            <option>User II</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Notes</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <textarea class="form-control adInsInput"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="ucSearch-Button-Right">
+
+                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm1()" translate>
+                      <i class="ft-x"></i>Return
+                    </button>
+                    <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
+                      [routerLink]="['/Nap/CreditProcess/CreditReviewPrototype/Paging']" translate>
+                      <i class="fa fa-arrow-left"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
+                      <i class="far fa-check-square"></i> Save
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <div class="form-group row"> </div>
+              <!-- Return Credit Review -->
+              <ng-container *ngIf="return == 'No'">
+
+                <lib-ucSubsection [id]="'rtnCrdRvwId'" [title]="'Return Credit Review'" [panel]="'rtnCrdRvw'">
+                </lib-ucSubsection>
+                <div id="rtnCrdRvw">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Return Reason</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <select class="form-control" style="width: inherit">
+                            <option>--Select One--</option>
+                            <option>Other Reason</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Notes</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <textarea class="form-control adInsInput"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="ucSearch-Button-Right">
+
+                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm2()" translate>
+                      <i class="ft-x"></i>Cancel Return
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
+                      <i class="far fa-check-square"></i> Submit
+                    </button>
+                  </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                  <div class="form-group row"> </div>
+                </div>
+              </ng-container>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="custType == 'C'">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+            <div class="form-body">
+              <!-- Main Info -->
+              <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
+              </lib-ucSubsection>
+              <div id="mainInfo">
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Application No</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue">201907APP010002</a></label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Original Office</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Jakarta</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Customer Name</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Budi</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Product Offering</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Prod Offering 0002</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Tenor</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>12</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Currency</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>IDR</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Order Information</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>New Order</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Asset Name</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Honda BRV e CVT</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Lead No</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue">201907LEAD00001</a></label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Customer Info -->
+              <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+              </lib-ucSubsection>
+              <div id="custInfo">
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Customer Name</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="far fa-circle"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>PT. Milik Bersama (New Customer) / 10
+                        yo</label>
+                    </div>
+                  </div>
+                  <label class="col-md-6" for="custNickName" style="color: blue;" translate><b>Exposure</b></label>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate><b>NPWP</b></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>No</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Customer Exposure</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>600.000.000,00</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Address</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Jalan BSD no 1, Setu, Setu, Tangerang
+                        Selatan
+                        / Sewa</label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Customer Group Exposure</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>1.000.000.000,00</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Industry Type</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>Pariwisata</label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Obligor Exposure</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>800.000.000,00</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>RQI Status</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>20%</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Phone</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Valid</label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate><b>Application History</b></label>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Financial Ratio</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue"
+                          (click)="openAppl(financialRatio)">View</a></label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate>Num of Application Reject</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>0</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate></label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate>Num of Application in Process</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate>1</label>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate><b>Survey</b></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate></label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate></label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Customer</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank">Legal Address</a></label>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2" for="custNickName" translate><b>Guarantor</b></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a></a></label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate>Guarantor</label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank">Home Address</a></label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate><a class="blue"
+                      (click)="openAppl(ExposureView)">Beni - Parent</a></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle yellow"></i></label>
+                      <label class="col-md-11" for="custNickName" translate></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate> </label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate></label>
+                      <label class="col-md-11" for="custNickName" translate></label>
+                    </div>
+                  </div>
+                  <label class="col-md-2" for="custNickName" translate><a class="blue"
+                      (click)="openAppl(ExposureView)">Joko - Sibling</a></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
+                      <label class="col-md-11" for="custNickName" translate></label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <lib-ucSubsection [id]="'LegalDocId'" [title]="'Legal Doc'" [panel]="'LegalDoc'">
+              </lib-ucSubsection>
+              <div id="LegalDoc">
+
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                        <tr>
+                          <th><span class="thead-header" translate>Legal Document</span></th>
+                          <th><span class="thead-header" translate>Document No</span></th>
+                          <th><span class="thead-header" translate>Document Date</span></th>
+                          <th><span class="thead-header" translate>Document Expired Date</span></th>
+                          <th><span class="thead-header" translate>Release By</span></th>
+                          <th><span class="thead-header" translate>Release Location</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="text-left">SIUP</td>
+                          <td class="text-left">SIUP001</td>
+                          <td class="text-left">24-08-2020</td>
+                          <td class="text-left">24-08-2030</td>
+                          <td class="text-left">Jovi</td>
+                          <td class="text-left">Jakarta</td>
+                        </tr>
+                        <tr>
+                          <td class="text-left">AKTA</td>
+                          <td class="text-left">AKTA001</td>
+                          <td class="text-left">24-08-2020</td>
+                          <td class="text-left">24-08-2031</td>
+                          <td class="text-left">Jovi</td>
+                          <td class="text-left">Jakarta</td>
+                        </tr>
+                        <tr>
+                          <td class="text-left">NPWP</td>
+                          <td class="text-left">NPWP001</td>
+                          <td class="text-left">24-08-2020</td>
+                          <td class="text-left">24-08-2032</td>
+                          <td class="text-left">Jovi</td>
+                          <td class="text-left">Jakarta</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Third Party Checking -->
+              <lib-ucSubsection [id]="'thirdPartyId'" [title]="'Third Party Checking'" [panel]="'thirdParty'">
+              </lib-ucSubsection>
+              <div id="thirdParty">
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate><a class="blue"> 1. Perfindo </a></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Score : 697, B2 : Low Risk, Trend :
+                        Sideways</label>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate><a class="blue" (click)="openAppl(rapindoView)">
+                      2. Rapindo
+                    </a></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Data Exist & Active in BFI since
+                        30-04-2020</label>
+
+
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" for="custNickName" translate><a class="blue">3. SLIK</a></label>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                      <label class="col-md-11" for="custNickName" translate>Data Exist in 2 Kreditur, Lancar : 1, Dalam
+                        Perhatian Khusus : 1
+                        30-04-2020</label>
+
+
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Application Information -->
+                <lib-ucSubsection [id]="'appInfoId'" [title]="'Application Information'" [panel]="'appInfo'">
+                </lib-ucSubsection>
+                <div id="appInfo">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Num of Inst / Tenor</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>12 / 12</label>
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate><a class="blue"
+                        (click)="openAppl(contentAppl)">Credit Scoring</a></label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>1000 / Recommended</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Installment Scheme</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Arrear Reguler Fixed</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>TC Received</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>7 of 10 / 4 of 6 mandatory</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Order Information</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>New Order</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Financial -->
+                <lib-ucSubsection [id]="'FinancialinfoId'" [title]="'Financial'" [panel]="'Financialinfo'">
+                </lib-ucSubsection>
+                <div id="Financialinfo">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Total AR</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>275.000.000,00</label>
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate><a class="blue"
+                        (click)="openAppl(incomeExpenseView)">Income Expense</a></label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Installment Amount / DSR</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                        <label class="col-md-11" for="custNickName" translate>7.000.000 / 10%</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Total Income</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>14.900.000,00</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Effective Rate / Flat Rate</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>10% / 5%</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Total Expense</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>1.500.000,00</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Gross Yield</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                        <label class="col-md-11" for="custNickName" translate>12%</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>TAC</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>10.07%</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <!-- Assset -->
+                <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset'" [panel]="'AssetInfo'">
+                </lib-ucSubsection>
+                <div id="AssetInfo">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Asset Name</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Honda BRV e CVT 2020 / New Asset for
+                          Commercial</label>
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate>DP Amount / Percentage</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>50.000.000,00 / 20%</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Asset Price</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>250.000.000,00</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Insurance</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Cover By Company / 2 years ALLRISK, 1 year
+                          TLO</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Negative Asset</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                        <label class="col-md-11" for="custNickName" translate>Yes / Asset Curian</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+                <!-- Additional Collateral -->
+                <lib-ucSubsection [id]="'collateralInfoId'" [title]="'Additional Collateral'"
+                  [panel]="'collateralInfo'">
+                </lib-ucSubsection>
+                <div id="collateralInfo">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr>
+                        <th><span class="thead-header" translate>Collateral Seq No</span></th>
+                        <th><span class="thead-header" translate>Full Asset Name</span></th>
+                        <th><span class="thead-header" translate>Collateral Value</span></th>
+                        <th><span class="thead-header" translate>Collateral Percent</span></th>
+                        <th><span class="thead-header" translate>Insurance</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">BAJAJ MOTOR</td>
+                        <td class="text-right">10.000.000,00</td>
+                        <td class="text-center">50</td>
+                        <td class="text-left">Cover By Company ( 2 years / ALL RISK)</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">2</td>
+                        <td class="text-left">WULING CORTEZ 1500 CC</td>
+                        <td class="text-right">20.000.000,00</td>
+                        <td class="text-center">50</td>
+                        <td class="text-left">Cover By Company ( 2 years / ALL RISK)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Sales -->
+                <lib-ucSubsection [id]="'SalesoId'" [title]="'Sales'" [panel]="'Saleso'">
+                </lib-ucSubsection>
+                <div id="Saleso">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Sales Name / Supervisor Name</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Andara / Deidara</label>
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate></label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Join Date</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>12/11/2019</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Total Profit</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>500.000.000,00</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>F12PD (#AGR / Overdue Amount)</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                        <label class="col-md-11" for="custNickName" translate>12 / 200.000.000,00</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Total Loss</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>200.000.000,00</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <!-- Dealer -->
+                <lib-ucSubsection [id]="'DealeroId'" [title]="'Dealer'" [panel]="'Dealero'">
+                </lib-ucSubsection>
+                <div id="Dealero">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Dealer Name</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>OTO 2000 Cengkareng</label>
+                      </div>
+                    </div>
+
+                    <label class="col-md-2" for="custNickName" translate>Address</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Jln. Cengkareng</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Sales Dealer</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Dini</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Supervisor</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Dana</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>F12PD (#AGR / Overdue Amount)</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
+                        <label class="col-md-11" for="custNickName" translate>12 / 200.000.000,00</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>BM</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>Joni</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Cooperation Date</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>10/12/2018</label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Total Profit</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>500.000.000,00</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate></label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate></label>
+                      </div>
+                    </div>
+                    <label class="col-md-2" for="custNickName" translate>Total Loss</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>200.000.000,00</label>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Automatic Deviation -->
+                <lib-ucSubsection [id]="'autoDeviationInfoId'" [title]="'Automatic Deviation'"
+                  [panel]="'autoDeviationInfo'">
+                </lib-ucSubsection>
+                <div id="autoDeviationInfo">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr>
+                        <th><span class="thead-header" translate>No</span></th>
+                        <th><span class="thead-header" translate>Deviation Type</span></th>
+                        <th><span class="thead-header" translate>Original Value</span></th>
+                        <th><span class="thead-header" translate>Current Value</span></th>
+                        <th><span class="thead-header" translate>Approval At</span></th>
+                        <th><span class="thead-header" translate>Notes</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Deviation I</td>
+                        <td class="text-right">10.000.000,00</td>
+                        <td class="text-right">9.000.000,00</td>
+                        <td class="text-center">BM</td>
+                        <td class="text-left">-</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">2</td>
+                        <td class="text-left">Deviation II</td>
+                        <td class="text-right">10.000.000,00</td>
+                        <td class="text-right">9.000.000,00</td>
+                        <td class="text-center">AM</td>
+                        <td class="text-left">-</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">3</td>
+                        <td class="text-left">Deviation III</td>
+                        <td class="text-right">10.000.000,00</td>
+                        <td class="text-right">9.000.000,00</td>
+                        <td class="text-center">AM</td>
+                        <td class="text-left">-</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">4</td>
+                        <td class="text-left">Deviation IV</td>
+                        <td class="text-right">10.000.000,00</td>
+                        <td class="text-right">9.000.000,00</td>
+                        <td class="text-center">BM</td>
+                        <td class="text-left">-</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">5</td>
+                        <td class="text-left">Deviation V</td>
+                        <td class="text-right">10.000.000,00</td>
+                        <td class="text-right">9.000.000,00</td>
+                        <td class="text-center">DIVHEAD</td>
+                        <td class="text-left">-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Manual Deviation-->
+                <lib-ucSubsection [id]="'manualDeviation'" [title]="'Manual Deviation'" [panel]="'manualDeviationId'">
+                </lib-ucSubsection>
+
+                <div id="manualDeviationId">
+                  <div class="ucSearch-Button-Right">
+                    <span class="mr-1">
+                      <button type="button" class="btn btn-raised btn-primary" (click)="addDeviation()" translate><i
+                          class="ft-plus-circle"></i>
+                        Add
+                      </button>
+                    </span>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Deviation Criteria</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <select class="form-control" style="width: inherit">
+                            <option>Criteria I</option>
+                            <option>Criteria II</option>
+                            <option>Criteria III</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Approve At</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <label class="col-md-11" for="custNickName" translate>BM</label>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Notes</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <textarea class="form-control adInsInput"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-group row">
+                    <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                        <tr>
+                          <th><span class="thead-header" translate>No</span></th>
+                          <th><span class="thead-header" translate>Deviation Criteria</span></th>
+                          <th><span class="thead-header" translate>Approval At</span></th>
+                          <th><span class="thead-header" translate>Notes</span></th>
+                          <th><span class="thead-header" translate>Delete</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of listDeviation; let i = index">
+                          <td>{{i + 1}}</td>
+                          <td class="align-left">{{item.DeviationCriteria}}</td>
+                          <td class="align-center">{{item.ApprovalAt}}</td>
+                          <td class="align-left">{{item.Notes}}</td>
+                          <td>
+                            <a class="danger p-0" data-original-title="" title="" (click)="deleteData(i)">
+                              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+                <!-- Credit Analysis -->
+                <lib-ucSubsection [id]="'creditAnalysisId'" [title]="'Credit Analysis'" [panel]="'creditAnalysis'">
+                </lib-ucSubsection>
+                <div id="creditAnalysis">
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>6C</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Latar Belakang Debitur</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Faktor - Faktor Pendukung</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Faktor - Faktor Tidak / Kurang
+                      Mendukung</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Syarat - Syarat</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>Dispensasi / Lain - Lain</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2" for="custNickName" translate>SWOT</label>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <label class="col-md-1" for="custNickName" translate></label>
+                        <div class="col-md-11">
+                          <input type="text" class="form-control" formControlName="CustName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngIf="return == 'Yes'">
+                  <!-- Request for Approval -->
+                  <lib-ucSubsection [id]="'rfaId'" [title]="'Request for Approval'" [panel]="'rfa'">
+                  </lib-ucSubsection>
+                  <div id="rfa">
+                    <div class="form-group row">
+                      <label class="col-md-2" for="custNickName" translate>Approval Amount</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <label class="col-md-11" for="custNickName" translate>900.000.000</label>
+
+                        </div>
+                      </div>
+
+                      <label class="col-md-2" for="custNickName" translate>Credit Scoring</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <label class="col-md-11" for="custNickName" translate>85</label>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-2" for="custNickName" translate>Recommendation</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <div class="col-md-11">
+                            <select class="form-control" style="width: inherit">
+                              <option>--Select One--</option>
+                              <option>Other Reason</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <label class="col-md-2" for="custNickName" translate>Approver</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <div class="col-md-11">
+                            <select class="form-control" style="width: inherit">
+                              <option>User I</option>
+                              <option>User II</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-2" for="custNickName" translate>Notes</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <div class="col-md-11">
+                            <textarea class="form-control adInsInput"></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="ucSearch-Button-Right">
+                      <span class="mr-1">
+                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm1()" translate>
+                          <i class="ft-x"></i>Return
+                        </button>
+                        <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
+                          [routerLink]="['/Nap/CreditProcess/CreditReviewPrototype/Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}"
+                          translate>
+                          <i class="fa fa-arrow-left"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
+                          <i class="far fa-check-square"></i> Save
+                        </button>
+                      </span>
+
+                    </div>
+                  </div>
+                </ng-container>
+
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <div class="form-group row"> </div>
+                <!-- Return Credit Review -->
+
+                <ng-container *ngIf="return == 'No'">
+                  <lib-ucSubsection [id]="'rtnCrdRvwId'" [title]="'Return Credit Review'" [panel]="'rtnCrdRvw'">
+                  </lib-ucSubsection>
+                  <div id="rtnCrdRvw">
+                    <div class="form-group row">
+                      <label class="col-md-2" for="custNickName" translate>Return Reason</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <div class="col-md-11">
+                            <select class="form-control" style="width: inherit">
+                              <option>--Select One--</option>
+                              <option>Other Reason</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-2" for="custNickName" translate>Notes</label>
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-1" for="custNickName" translate></label>
+                          <div class="col-md-11">
+                            <textarea class="form-control adInsInput"></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="ucSearch-Button-Right">
+                      <div class="form-actions right">
+
+                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm2()" translate>
+                          <i class="ft-x"></i>Cancel Return
+                        </button>
+                        <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
+                          <i class="far fa-check-square"></i> Submit
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                    <div class="form-group row"> </div>
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

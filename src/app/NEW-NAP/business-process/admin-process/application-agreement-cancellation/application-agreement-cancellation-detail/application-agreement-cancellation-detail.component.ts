@@ -20,6 +20,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   AppAgrmntCancelObj: any;
+  BizTemplateCode : string;
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
@@ -31,6 +32,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
+      this.BizTemplateCode = params["BizTemplateCode"];
     });
     if (this.AgrmntId == "AgrmntId") {
       this.AgrmntId = -1;
@@ -78,7 +80,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      this.router.navigateByUrl("/Nap/AdminProcess/AgreementCancellation/Paging");
+      this.router.navigate(["/Nap/AdminProcess/AgreementCancellation/Paging"],{ queryParams: { "BizTemplateCode": this.BizTemplateCode} });
     });
   }
 
