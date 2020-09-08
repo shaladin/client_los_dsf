@@ -112,6 +112,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
+    this.CheckSpouse();
   }
 
   SaveForm() {
