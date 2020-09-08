@@ -134,7 +134,7 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
     <i class="fa fa-check-square-o"></i> Cancel
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"

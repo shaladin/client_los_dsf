@@ -8,7 +8,7 @@
                   <form class="form form-horizontal" [formGroup]="DocSignerForm"
                       (ngSubmit)="DocSignerForm.valid && SaveForm()" #enjiForm="ngForm">
                       <div *ngIf="MrCustTypeCode == 'COMPANY'">
-                          <div *ngIf="isSupplierExists">
+                          <!-- <div *ngIf="isSupplierExists">
                               <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
                                   [panel]="'SupplierSigner'">
                               </lib-ucSubsection>
@@ -36,7 +36,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                          </div> -->
                               <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
                                   [panel]="'CompanySigner'">
                               </lib-ucSubsection>
@@ -171,7 +171,7 @@
                               </div>
                       </div>
                       <div *ngIf="MrCustTypeCode == 'PERSONAL'">
-                          <div *ngIf="isSupplierExists">
+                          <!-- <div *ngIf="isSupplierExists">
                               <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
                                   [panel]="'SupplierSigner'">
                               </lib-ucSubsection>
@@ -199,7 +199,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                          </div> -->
                           <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
                               [panel]="'CompanySigner'">
                           </lib-ucSubsection>

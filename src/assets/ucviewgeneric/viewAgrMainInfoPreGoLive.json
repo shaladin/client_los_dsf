@@ -85,16 +85,6 @@
           "type": "text",
           "label": "Tenor",
           "property": "Tenor"
-        },
-        {
-          "type": "text",
-          "label": "Order Information",
-          "property": "MrOrderInfoCode"
-        },
-        {
-          "type": "text",
-          "label": "Currency",
-          "property": "CurrCode"
         }
       ],
       "querystring": {
