@@ -192,6 +192,16 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if(Step == 'GUAR'){
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            if (response["MrCustTypeCode"] != null)
+            this.custType = response["MrCustTypeCode"];
+          }
+        });
+    }
+
     if (this.ReturnHandlingHId > 0) {
 
     }
@@ -206,6 +216,7 @@ export class NapAddDetailComponent implements OnInit {
     this.ucViewMainProd.initiateForm();
     this.stepper.next();
   }
+  
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
