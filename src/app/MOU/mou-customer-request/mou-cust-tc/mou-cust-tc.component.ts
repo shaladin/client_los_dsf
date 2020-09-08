@@ -96,6 +96,9 @@ export class MouCustTcComponent implements OnInit {
             IsExpiredDt: [item.IsExpiredDt],
             RowVersion: ['']
           });
+          if(formGroup.controls.IsChecked.value == true){
+            formGroup.controls.IsChecked.disable();
+          }
           formArray.push(formGroup);
         }
       }
@@ -158,7 +161,7 @@ export class MouCustTcComponent implements OnInit {
     this.formSubmitted = true;
     if (this.MouCustTcForm.valid) {
       var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
-      var formData = formArray.value;
+      var formData = formArray.getRawValue();
       var formFinal = { MouCustTcObjs: formData };
 
       this.httpClient.post(URLConstant.EditListMouCustTc, formFinal).subscribe(
