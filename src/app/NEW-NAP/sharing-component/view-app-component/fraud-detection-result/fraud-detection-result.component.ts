@@ -87,7 +87,7 @@ export class FraudDetectionResultComponent implements OnInit {
   async getNegativeCollateral(){
     await this.http.post(URLConstant.GetListNegativeCollateralByAppId, { AppId: this.appId }).toPromise().then(
       (response) => {
-        this.newListNegativeAppCollateral = response["GetListNegativeCollateralByAppId"];
+        this.newListNegativeAppCollateral = response["NegativeAppCollateralObjs"];
       }
     ).catch(
       (error) => {
