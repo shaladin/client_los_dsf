@@ -74,7 +74,7 @@ export class TermConditionsComponent implements OnInit {
               TCDetail.controls.ExpiredDt.disable();
             } else {
               TCDetail.controls.PromisedDt.disable();
-
+              TCDetail.controls.IsChecked.disable();
               if(!this.AppTcList[i].IsExpDtMandatory){
                 TCDetail.controls.ExpiredDt.disable();
               }
