@@ -1754,7 +1754,8 @@ export class AssetDataComponent implements OnInit {
     var GenObj =
     {
       AppAssetId: this.appAssetId,
-      AssetTypeCode: this.RefProdCmptAssetType.CompntValue
+      AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
+      AttrTypeCode : CommonConstant.AttrTypeCodeTrx
     };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {

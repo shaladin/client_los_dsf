@@ -204,7 +204,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   LastStepHandler(allAppReservedFundObj: AllAppReservedFundObj) {
     if (allAppReservedFundObj.ReturnHandlingHId != 0) {
       this.AllAppReservedFundObj = allAppReservedFundObj;
-      this.SubmitReturnHandling();
+      // this.SubmitReturnHandling();
     }
     else {
       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
