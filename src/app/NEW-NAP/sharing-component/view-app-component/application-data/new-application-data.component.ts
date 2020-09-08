@@ -26,7 +26,7 @@ export class NewApplicationDataComponent implements OnInit {
   LoanObjectData: Array<Object>;
   AppCollateralInsData: Array<Object>;
   AppLifeInsData: Object;
-  IsLifeIns : boolean = false ;
+  IsLifeIns: boolean = false;
 
   constructor(
     private http: HttpClient
@@ -74,53 +74,91 @@ export class NewApplicationDataComponent implements OnInit {
 
   ngOnInit() {
     var objGuarantor = {
-      AppGuarantorObj: {
-        AppID: this.AppId
-      },
+      AppId: this.AppId,
       RowVersion: ""
     };
     var objReferantor = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     var objAppDetail = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     var objComm = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     var objTc = {
       AppId: this.AppId
     }
-    let getGuarantor = this.http.post(URLConstant.GetListAppGuarantorDetail, objGuarantor).toPromise();
-    let getReferantor = this.http.post(URLConstant.GetAppReferantorForAppsData, objReferantor).toPromise();
-    let getAppDetail = this.http.post(URLConstant.GetAppDetailForAppTabById, objAppDetail).toPromise();
-    let getCommission = this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, objComm).toPromise();
-    let getAppTc = this.http.post(URLConstant.GetListTCbyAppId, objTc).toPromise();
-    let getLoanObj = this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).toPromise();
-    let getCollateralIns = this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { AppId: this.AppId }).toPromise();
-    let getLifeInsurance = this.http.post(URLConstant.GetAppLifeInsHByAppId, { AppId: this.AppId }).toPromise();
-    forkJoin([getGuarantor, getReferantor, getAppDetail, getCommission, getAppTc, getLoanObj, getCollateralIns, getLifeInsurance]).toPromise().then(
-      (response) => {
-        this.GetGuarantorData(response[0]);
-        this.GetReferantorData(response[1]);
-        this.GetAppDetailData(response[2]);
-        this.GetCommData(response[3]);
-        this.GetAppTc(response[4]);
-        this.LoanObjectData = response[5]["listResponseAppLoanPurpose"];
-        this.AppCollateralInsData = response[6]["ListAppInsObjForView"];
 
-        if(response[7] != null && response[7]["AppLifeInsHId"] > 0){
+    this.http.post(URLConstant.GetListAppGuarantorDetail, objGuarantor).subscribe(
+      (response) => {
+        this.GetGuarantorData(response);
+      });
+    this.http.post(URLConstant.GetAppReferantorForAppsData, objReferantor).subscribe(
+      (response) => {
+        this.GetReferantorData(response);
+      });
+    this.http.post(URLConstant.GetAppDetailForAppTabById, objAppDetail).subscribe(
+      (response) => {
+        this.GetAppDetailData(response);
+      });
+    this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, objComm).subscribe(
+      (response) => {
+        this.GetCommData(response);
+      });
+    this.http.post(URLConstant.GetListTCbyAppId, objTc).subscribe(
+      (response) => {
+        this.GetAppTc(response);
+      });
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.LoanObjectData = response["listResponseAppLoanPurpose"];
+      });
+    this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.AppCollateralInsData = response["ListAppInsObjForView"];
+      });
+    this.http.post(URLConstant.GetAppLifeInsHByAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        if (response != null && response["AppLifeInsHId"] > 0) {
           this.AppLifeInsData["CoverLifeIns"] = "Yes";
-          this.AppLifeInsData["LifeInscoBranchName"] = response[7]["LifeInscoBranchName"];
+          this.AppLifeInsData["LifeInscoBranchName"] = response["LifeInscoBranchName"];
         }
-        else{
+        else {
           this.AppLifeInsData["CoverLifeIns"] = "No";
           this.AppLifeInsData["LifeInscoBranchName"] = "-";
         }
       });
+    // let getGuarantor = this.http.post(URLConstant.GetListAppGuarantorDetail, objGuarantor).toPromise();
+    // let getReferantor = this.http.post(URLConstant.GetAppReferantorForAppsData, objReferantor).toPromise();
+    // let getAppDetail = this.http.post(URLConstant.GetAppDetailForAppTabById, objAppDetail).toPromise();
+    // let getCommission = this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, objComm).toPromise();
+    // let getAppTc = this.http.post(URLConstant.GetListTCbyAppId, objTc).toPromise();
+    // let getLoanObj = this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).toPromise();
+    // let getCollateralIns = this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { AppId: this.AppId }).toPromise();
+    // let getLifeInsurance = this.http.post(URLConstant.GetAppLifeInsHByAppId, { AppId: this.AppId }).toPromise();
+    // forkJoin([getGuarantor, getReferantor, getAppDetail, getCommission, getAppTc, getLoanObj, getCollateralIns, getLifeInsurance]).toPromise().then(
+    //   (response) => {
+    //     this.GetGuarantorData(response[0]);
+    //     this.GetReferantorData(response[1]);
+    //     this.GetAppDetailData(response[2]);
+    //     this.GetCommData(response[3]);
+    //     this.GetAppTc(response[4]);
+    //     this.LoanObjectData = response[5]["listResponseAppLoanPurpose"];
+    //     this.AppCollateralInsData = response[6]["ListAppInsObjForView"];
+
+    //     if(response[7] != null && response[7]["AppLifeInsHId"] > 0){
+    //       this.AppLifeInsData["CoverLifeIns"] = "Yes";
+    //       this.AppLifeInsData["LifeInscoBranchName"] = response[7]["LifeInscoBranchName"];
+    //     }
+    //     else{
+    //       this.AppLifeInsData["CoverLifeIns"] = "No";
+    //       this.AppLifeInsData["LifeInscoBranchName"] = "-";
+    //     }
+    //   });
     if (this.AssetInsuranceAndLifeInsuranceData.CoverBy == CommonConstant.InsuredByCompany) {
       this.InsuranceTitle = "Asset Insurance";
     } else {
@@ -132,22 +170,22 @@ export class NewApplicationDataComponent implements OnInit {
     for (var i = 0; i < guarantorData[CommonConstant.ReturnObj].length; i++) {
       var tempResponse = guarantorData[CommonConstant.ReturnObj][i];
       var temp = {
-        GuarantorName: tempResponse.appGuarantorObj.GuarantorName,
-        GuarantorType: tempResponse.appGuarantorObj.GuarantorTypeCodeDesc,
-        Relationship: tempResponse.appGuarantorObj.CustRelationshipCodeDesc,
+        GuarantorName: tempResponse.AppGuarantorObj.GuarantorName,
+        GuarantorType: tempResponse.AppGuarantorObj.GuarantorTypeCodeDesc,
+        Relationship: tempResponse.AppGuarantorObj.CustRelationshipCodeDesc,
         IdNo: "",
         Address: "",
         MobilePhone: ""
       };
-      if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodeCompany) {
-        temp.IdNo = tempResponse.appGuarantorObj.TaxIdNo;
-        temp.Address = tempResponse.appGuarantorCompanyObj.Addr;
-        temp.MobilePhone = tempResponse.appGuarantorCompanyObj.MobilePhnNo1 + " / " + tempResponse.appGuarantorCompanyObj.MobilePhnNo2;
+      if (tempResponse.AppGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodeCompany) {
+        temp.IdNo = tempResponse.AppGuarantorObj.TaxIdNo;
+        temp.Address = tempResponse.AppGuarantorCompanyObj.Addr;
+        temp.MobilePhone = tempResponse.AppGuarantorCompanyObj.MobilePhnNo1 + " / " + tempResponse.AppGuarantorCompanyObj.MobilePhnNo2;
       }
-      if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodePersonal) {
-        temp.IdNo = tempResponse.appGuarantorPersonalObj.IdNo;
-        temp.Address = tempResponse.appGuarantorPersonalObj.Addr;
-        temp.MobilePhone = tempResponse.appGuarantorPersonalObj.MobilePhnNo;
+      if (tempResponse.AppGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodePersonal) {
+        temp.IdNo = tempResponse.AppGuarantorPersonalObj.IdNo;
+        temp.Address = tempResponse.AppGuarantorPersonalObj.Addr;
+        temp.MobilePhone = tempResponse.AppGuarantorPersonalObj.MobilePhnNo;
       }
       this.GuarantorData.push(temp);
     }
@@ -169,7 +207,7 @@ export class NewApplicationDataComponent implements OnInit {
       TotalLoss: 0,
       InAmount: 0,
     };
-        
+
     this.AppDetailFinData = {
       InstScheme: appData["MrInstSchemeCodeDesc"],
       PayFreqDesc: appData["PayFreqCodeDesc"],
@@ -178,7 +216,7 @@ export class NewApplicationDataComponent implements OnInit {
       InstAmt: appData["TotalInstAmt"],
       AssetName: appData["FullAssetName"],
     };
-    if(appData["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+    if (appData["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
       this.IsLifeIns = true;
       this.AssetInsuranceAndLifeInsuranceData = {
         CoverBy: appData["AssetCoverBy"],

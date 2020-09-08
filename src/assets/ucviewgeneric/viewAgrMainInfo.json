@@ -59,16 +59,6 @@
           "key": "ViewProdOffering",
           "label": "Product Offering Name",
           "property": "ProdOfferingName"
-        },
-        {
-          "type": "text",
-          "label": "Currency",
-          "property": "CurrCode"
-        },
-        {
-          "type": "text",
-          "label": "Order Information",
-          "property": "MrOrderInfoCode"
         }
       ],
       "querystring": {

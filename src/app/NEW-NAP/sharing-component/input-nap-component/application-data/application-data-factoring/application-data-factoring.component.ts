@@ -33,8 +33,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   SalesAppInfoForm = this.fb.group({
     MouCustId: ['', Validators.required],
-    TopBased: ['', Validators.required],
-    MrSalesRecommendCode: ['', Validators.required],
+    TopBased: ['', Validators.required], 
     SalesNotes: [''],
     SalesOfficerNo: ['', Validators.required],
     SalesHeadNo: [''],
@@ -196,16 +195,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           });
         }
       });
-
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
-      (response) => {
-        this.allSlsRecom = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
-          this.SalesAppInfoForm.patchValue({
-            MrSalesRecommendCode: this.allSlsRecom[0].Key
-          });
-        }
-      })
+ 
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
       (response) => {
@@ -457,8 +447,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
         if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0) {
           this.mode = "add";
-          this.SalesAppInfoForm.patchValue({
-            MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+          this.SalesAppInfoForm.patchValue({ 
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
@@ -480,8 +469,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           this.CalculateNumOfInst(true, this.SalesAppInfoForm.controls.Tenor.value);
         } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0) {
           this.mode = "edit";
-          this.SalesAppInfoForm.patchValue({
-            MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+          this.SalesAppInfoForm.patchValue({ 
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
