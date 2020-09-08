@@ -43,16 +43,6 @@
           },
           {
             "type": "text",
-            "label": "Currency",
-            "property": "CurrCode"
-          },
-          {
-            "type": "text",
-            "label": "Order Information",
-            "property": "MrOrderInfoCode"
-          },
-          {
-            "type": "text",
             "label": "Total Asset", 
             "property": "TotalAsset"
           },

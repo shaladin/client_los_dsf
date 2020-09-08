@@ -47,16 +47,6 @@
             "property": "ProdOfferingName"
           },
           {
-            "type": "text",
-            "label": "Currency",
-            "property": "CurrCode"
-          },
-          {
-            "type": "text",
-            "label": "Order Information",
-            "property": "MrOrderInfoCode"
-          },
-          {
             "type": "link",
             "label": "Lead No.",
             "property": "LeadNo",

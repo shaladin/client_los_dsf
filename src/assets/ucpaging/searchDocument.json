@@ -36,8 +36,8 @@
         }
     ],
     "querystring": {
-        "select":"SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion",
-        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID"
+        "select": "SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion",
+        "from": "FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID"
     },
     "headerList": [
         {
@@ -75,12 +75,12 @@
             "type": "link",
             "position": "center",
             "property": "ApplicationNo",
-            "target" : "_blank",
+            "target": "_blank",
             "path": "/View/AppView",
             "param": [
                 {
-                "type": "AppId",
-                "property": "AppId"
+                    "type": "AppId",
+                    "property": "AppId"
                 }
             ]
         },
@@ -89,101 +89,124 @@
             "position": "center",
             "action": [
                 {
-                "type": "switch",
-                "case": [
-                    {
-                    "conditions": [
+                    "type": "switch",
+                    "case": [
                         {
-                        "property": "BizTemplateCode",
-                        "value": "CF4W",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AggrementNo",
-                        "target": "_blank",
-                        "path": "/View/AgrmntView",
-                        "param": [
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "CF4W",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "/View/AgrmntView",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
                         {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "FL4W",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "/View/AgrmntView",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
                         {
-                        "property": "BizTemplateCode",
-                        "value": "FL4W",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AggrementNo",
-                        "target" : "_blank",
-                        "path": "/View/AgrmntView",
-                        "param": [
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "CFRFN4W",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "/View/AgrmntView",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
                         {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "/View/AgrmntView",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
                         {
-                        "property": "BizTemplateCode",
-                        "value": "CFRFN4W",
-                        "restriction": "EQ"
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "CFNA",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "/View/AgrmntView",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AggrementNo",
-                        "target" : "_blank",
-                        "path": "/View/AgrmntView",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
-                        {
-                        "property": "BizTemplateCode",
-                        "value": "FACTORING",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AggrementNo",
-                        "target" : "_blank",
-                        "path": "/View/AgrmntView",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    }
-                ]
+                    ]
                 }
             ]
         },

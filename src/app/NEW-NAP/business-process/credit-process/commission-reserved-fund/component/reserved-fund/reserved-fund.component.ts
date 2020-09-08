@@ -110,7 +110,7 @@ export class ReservedFundComponent implements OnInit {
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.allAppReservedFundObj.ReturnHandlingHId != 0 && this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
+            if (this.allAppReservedFundObj.ReturnHandlingHId != 0 || this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
               this.outputTab.emit(this.allAppReservedFundObj);
             } else {
               this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
