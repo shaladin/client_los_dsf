@@ -176,6 +176,10 @@ export class CommonConstant {
   public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
   public static CollateralNeeded = "COLLATERALNEEDED";
 
+  // PRODUCT BEHAVIOUR
+  public static ProductBehaviourLock = "LOCK";
+  public static ProductBehaviourDefault= "DEFAULT";
+  
   //VERIFICATION
   public static VerificationNew = "NEW";
   public static VerificationFail = "FAIL";
