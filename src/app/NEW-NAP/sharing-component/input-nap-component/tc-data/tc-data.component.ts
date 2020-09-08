@@ -192,10 +192,10 @@ export class TcDataComponent implements OnInit {
       appTC.TcCode = this.AppTcForm.value.TCList[i].TcCode;
       appTC.TcName = this.AppTcForm.value.TCList[i].TcName;
       appTC.PriorTo = this.AppTcForm.value.TCList[i].PriorTo;
-      appTC.IsChecked = this.AppTcForm.value.TCList[i].IsChecked;
-      appTC.ExpiredDt = this.AppTcForm.value.TCList[i].ExpiredDt;
+      appTC.IsChecked = this.AppTcForm.getRawValue().TCList[i].IsChecked;
+      appTC.ExpiredDt = this.AppTcForm.getRawValue().TCList[i].ExpiredDt;
       appTC.IsMandatory = this.AppTcForm.value.TCList[i].IsMandatory;
-      appTC.PromisedDt = this.AppTcForm.value.TCList[i].PromisedDt;
+      appTC.PromisedDt = this.AppTcForm.getRawValue().TCList[i].PromisedDt;
       appTC.CheckedDt = this.AppTcForm.value.TCList[i].CheckedDt;
       appTC.Notes = this.AppTcForm.value.TCList[i].Notes;
       appTC.IsAdditional = this.AppTcForm.value.TCList[i].IsAdditional;
