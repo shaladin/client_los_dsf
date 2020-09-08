@@ -163,6 +163,7 @@ export class LoanObjectComponent implements OnInit {
           this.MainInfoForm.controls.IsDisburseToCust.setValue(true);
           this.MainInfoForm.controls.IsDisburseToCust.disable();
           this.AppLoanPurposeObj.IsDisburseToCust = true;
+          this.supplierInputLookupObj.isRequired = false;
           this.CheckIsDisburseToCust();
         }
       }
