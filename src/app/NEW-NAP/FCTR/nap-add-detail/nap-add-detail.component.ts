@@ -58,6 +58,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
