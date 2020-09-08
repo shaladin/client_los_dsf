@@ -19,6 +19,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
+
   custType: string = CommonConstant.CustTypePersonal;
   private stepper: Stepper;
   @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
@@ -102,23 +103,8 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           if (response) {
-            if (response["MrCustTypeCode"] != null){
-              this.custType = response["MrCustTypeCode"];
-              if(this.custType == CommonConstant.CustTypeCompany){
-                this.AppStep = {
-                  "NEW": 1,
-                  "CUST": 1,
-                  "GUAR": 2,
-                  "REF": 3,
-                  "APP": 4,
-                  "COLL":5,
-                  "INS": 6,
-                  "LFI": 7,
-                  "FIN": 7,
-                  "TC": 8,
-                };
-              }
-            }
+            if (response["MrCustTypeCode"] != null)
+            this.custType = response["MrCustTypeCode"];
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
             this.stepper.to(this.AppStepIndex);
           } else {

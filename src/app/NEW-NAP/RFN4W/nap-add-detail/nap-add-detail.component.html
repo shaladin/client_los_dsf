@@ -94,43 +94,27 @@
                 <span class="bs-stepper-label">Insurance Data</span>
               </button>
             </div>
-            <div class="line" *ngIf="custType == 'PERSONAL'"></div>
-            <div class="step" data-target="#lifeInsurance-tab" *ngIf="custType == 'PERSONAL'">
+            <div class="line" [hidden]="custType != 'PERSONAL'"></div>
+            <div class="step" data-target="#lifeInsurance-tab" [hidden]="custType != 'PERSONAL'">
               <button type="button" class="step-trigger" role="tab" aria-controls="lifeInsurance-tab"
                 id="lifeInsurance-tab-trigger" [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('LFI')">
                 <span class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Life Insurance Data</span>
               </button>
             </div>
-            <div class="line" *ngIf="custType == 'COMPANY'"></div>
-            <div class="step" data-target="#financial-tab" *ngIf="custType == 'COMPANY'">
-              <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('FIN')">
-                <span class="bs-stepper-circle" >7</span>
-                <span class="bs-stepper-label">Financial Data</span>
-              </button>
-            </div>
-            <div class="line" *ngIf="custType == 'PERSONAL'"></div>
-            <div class="step" data-target="#financial-tab" *ngIf="custType == 'PERSONAL'">
+            <div class="line"></div>
+            <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
                 id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('FIN')">
-                <span class="bs-stepper-circle" >8</span>
+                <span class="bs-stepper-circle" >{{custType == 'PERSONAL' ? 8 : 7}}</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
             </div>
-            <div class="line" *ngIf="custType == 'COMPANY'"></div>
-            <div class="step" data-target="#TC-tab" *ngIf="custType == 'COMPANY'">
-              <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('TC')">
-                <span class="bs-stepper-circle">8</span>
-                <span class="bs-stepper-label">Term & Conditions</span>
-              </button>
-            </div>
-            <div class="line" *ngIf="custType == 'PERSONAL'"></div>
-            <div class="step" data-target="#TC-tab" *ngIf="custType == 'PERSONAL'">
+            <div class="line"></div>
+            <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
                 [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('TC')">
-                <span class="bs-stepper-circle">9</span>
+                <span class="bs-stepper-circle">{{custType == 'PERSONAL' ? 9 : 8}}</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
@@ -163,26 +147,20 @@
                 (outputCancel)="Cancel()"> </app-single-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 6 && custType=='COMPANY'" [appId]="appId" (outputTab)="NextStep('FIN')"
-                (outputCancel)="Cancel()" [showCancel]="showCancel"></app-insurance-data>
-              <app-insurance-data *ngIf="AppStepIndex == 6 && custType == 'PERSONAL'" [appId]="appId" (outputTab)="NextStep('LFI')"
+              <app-insurance-data *ngIf="AppStepIndex == 6" [appId]="appId" (outputTab)="NextStep(custType == 'PERSONAL' ? 'LFI' : 'FIN')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-insurance-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <app-life-insurance-data *ngIf="AppStepIndex == 7 && custType == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('FIN')"
+              <app-life-insurance-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('FIN')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 7 && custType=='COMPANY'" [AppId]=appId (outputTab)="NextStep('TC')"
-              (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
-              <app-financial-data *ngIf="AppStepIndex == 8 && custType == 'PERSONAL'" [AppId]=appId (outputTab)="NextStep('TC')"
+              <app-financial-data *ngIf="AppStepIndex == 8" [AppId]=appId (outputTab)="NextStep('TC')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 8 && custType=='COMPANY'" [AppId]="appId" (outputTab)="LastStepHandler()"
-              (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
-              <app-tc-data *ngIf="AppStepIndex == 9 && custType == 'PERSONAL'" [AppId]="appId" (outputTab)="LastStepHandler()"
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="LastStepHandler()"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
           </div>
