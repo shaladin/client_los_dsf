@@ -82,7 +82,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allPayFreq: any;
   allInSalesOffice: any;
   responseApp : any;
-
+  responseProd : any;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -139,9 +139,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
       (response) => {
         this.allIntrstType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
-          this.SalesAppInfoForm.patchValue({
-            InterestType: this.allIntrstType[0].Key
-          });
+          if(this.responseProd.MrProdBehaviourCode == CommonConstant.ProductBehaviourDefault ){
+            this.SalesAppInfoForm.patchValue({
+              InterestType:  this.allIntrstType[0].Key
+            });
+          }else{ 
+            this.SalesAppInfoForm.controls.InterestType.disable();
+            this.SalesAppInfoForm.patchValue({
+              InterestType: this.responseProd.CompntValue
+            }); 
+          } 
+        }else{
+          if(this.responseProd.MrProdBehaviourCode == CommonConstant.ProductBehaviourLock ){
+            this.SalesAppInfoForm.controls.InterestType.disable();
+          }
         }
       });
 
@@ -415,24 +426,25 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.makeLookUpObj();
   }
 
-  loadData() {
+  async loadData() {
     var obj = {
       AppId: this.AppId
     }
  
-    this.http.post(URLConstant.GetAppById, obj).subscribe(
+    await this.http.post(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         this.responseApp = response
-        var prodObj = {
-          ProdOfferingCode: this.responseApp.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-          ProdOfferingVersion: this.responseApp.ProdOfferingVersion
-        }
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).subscribe(
+      });
+    var prodObj = {
+      ProdOfferingCode: this.responseApp.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
+      ProdOfferingVersion: this.responseApp.ProdOfferingVersion
+    }
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
       (response) => {
-        console.log(response);
+        this.responseProd = response;
       });
-      });
+
 
     this.http.post(URLConstant.GetApplicationDataByAppId, obj).subscribe(
       (response) => {
