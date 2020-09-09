@@ -33,8 +33,20 @@
         {
             "type": "label",
             "position": "left",
+            "label": "Serial No 3",
+            "name": "SerialNo3"
+        },
+        {
+            "type": "label",
+            "position": "left",
             "label": "Serial No 4",
             "name": "SerialNo4"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Serial No 5",
+            "name": "SerialNo5"
         },
         {
             "type": "label",
@@ -77,7 +89,17 @@
         {
             "type": "text",
             "position": "left",
+            "property": "SerialNo3"
+        },
+        {
+            "type": "text",
+            "position": "left",
             "property": "SerialNo4"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo5"
         },
         {
             "type": "text",

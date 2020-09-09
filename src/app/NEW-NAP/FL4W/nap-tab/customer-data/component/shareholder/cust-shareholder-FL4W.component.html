@@ -106,7 +106,7 @@
                   </select>
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>Birth Place / Date</label>
+                <label class="col-md-2 adins-required-label" translate>Birth Place / Date</label>
                 <div class="col-md-2" style="border-right: 1px solid grey">
                   <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthPlace.invalid}">
