@@ -6,7 +6,7 @@
     "querystring": {
         "select": "SELECT FULL_ASSET_NAME AS FullAssetName, ASSET_PRICE_AMT AS AssetPriceAmt, DOWN_PAYMENT_AMT AS DownPaymentAmt, SERIAL_NO_1 AS SerialNo1, SERIAL_NO_2 AS SerialNo2, SERIAL_NO_3 AS SerialNo3, APP_ID AS AppId, APP_ASSET_ID AS AppAssetId",
         "from": "FROM dbo.APP_ASSET WITH(NOLOCK)",
-        "where": "WHERE APP_ID = N'{0}'"
+        "where": "WHERE APP_ID = N'{0}' AND AGRMNT_ID IS NULL"
     },
     "headerList": [
         {

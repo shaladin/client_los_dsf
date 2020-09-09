@@ -48,9 +48,10 @@
             <div class="form-group row">
               <label class="col-md-3 adInsLabel adins-required-label" for="PurchaseOrderExpiredDt" translate>Expired Date</label>
               <div class="col-md-3">
-                <input type="date" class="form-control adInsInput" formControlName="PurchaseOrderExpiredDt" [min]="BusinessDt | date: 'yyyy-MM-dd'" onkeypress="return false;"
+                <label class="col-md-9 adInsLabel" translate>{{ExpirationDate}}</label>
+                <input type="date" [hidden]="true" class="form-control adInsInput" formControlName="PurchaseOrderExpiredDt" [min]="BusinessDt | date: 'yyyy-MM-dd'" onkeypress="return false;"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.PurchaseOrderExpiredDt.invalid }" />
-                <lib-uc-show-errors  [control]="PODetailForm.controls.PurchaseOrderExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                <!-- <lib-uc-show-errors  [control]="PODetailForm.controls.PurchaseOrderExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors > -->
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { Console } from '@angular/core/src/console';
 
@@ -32,6 +32,9 @@ export class PoEntryComponent implements OnInit {
   BusinessDt: Date;
   vendorBankAccList: Array<Object>;
 
+  AppData: any;
+  Date: Date;
+  ExpirationDate: string;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
@@ -42,6 +45,7 @@ export class PoEntryComponent implements OnInit {
     this.VendorBankAcc = new VendorBankAccObj();
     this.PurchaseOrderH = new PurchaseOrderHObj();
     this.BusinessDt = new Date();
+    this.Date = new Date();
     this.PODetailForm = this.fb.group({
       SupplName: [''],
       BankAccNo: [''],
@@ -118,7 +122,36 @@ export class PoEntryComponent implements OnInit {
           console.log(error);
         }
       );
+
     }
+    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.AppData = response;
+        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+          (response2) => {
+            var productOfferinH = response2;
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+              (response) => {
+                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                this.Date = new Date(a);
+                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
+                this.PODetailForm.patchValue({
+                  PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
+                });
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
+        ).catch(
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   BankAccHandler(){
@@ -135,7 +168,7 @@ export class PoEntryComponent implements OnInit {
     var formValue = this.PODetailForm.value;
     var requestPurchaseOrderH = new PurchaseOrderHObj();
     var requestListPurchaseOrderD = new Array<PurchaseOrderDObj>();
-    if(!this.PurchaseOrderHId || this.PurchaseOrderHId == 0){
+    if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
       requestPurchaseOrderH.PurchaseOrderDt = new Date();
@@ -158,7 +191,7 @@ export class PoEntryComponent implements OnInit {
         requestListPurchaseOrderD.push(purchaseOrderDObj);
       }
     }
-    else{
+    else {
       requestPurchaseOrderH.PurchaseOrderHId = this.PurchaseOrderH.PurchaseOrderHId;
       requestPurchaseOrderH.PurchaseOrderNo = this.PurchaseOrderH.PurchaseOrderNo;
       requestPurchaseOrderH.PurchaseOrderDt = this.PurchaseOrderH.PurchaseOrderDt;
@@ -196,7 +229,7 @@ export class PoEntryComponent implements OnInit {
       (error) => {
       }
     );
-    
+
   }
 
 }
