@@ -77,7 +77,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
+                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Collateral Data</span>
               </button>
@@ -135,7 +135,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                                         [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+                                         [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
               </app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
@@ -201,7 +201,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
+                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Collateral Data</span>
               </button>
@@ -251,7 +251,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
-                                         [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+                                         [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
               </app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
