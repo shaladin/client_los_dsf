@@ -11,83 +11,49 @@
       <div class="px-3">
         <lib-ucSubsection [id]="'DOAssetInformationId'" [title]="'ASSET INFORMATION'" [panel]="'DOAssetInformationSection'"></lib-ucSubsection>
         <div id="DOAssetInformationSection" class="form-body">
-          <div class="col-md-9">
+          <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel {{serial1Mandatory ? 'adins-required-label' : ''}}" for="SerialNo1" translate>Serial No. 1</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control adInsInput" formControlName="SerialNo1" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo1.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel {{serial2Mandatory ? 'adins-required-label' : ''}}" for="SerialNo2" translate>Serial No. 2</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control adInsInput" formControlName="SerialNo2" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo2.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <!-- <div class="form-group row" *ngIf="ShowSerialNo3">
-              <label class="col-md-3 adInsLabel {{serial3Mandatory ? 'adins-required-label' : ''}}" for="SerialNo3" translate>Serial No. 3</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control adInsInput" formControlName="SerialNo3" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo3.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <div class="form-group row" *ngIf="ShowSerialNo4">
-              <label class="col-md-3 adInsLabel {{serial4Mandatory ? 'adins-required-label' : ''}}" for="SerialNo4" translate>Serial No. 4</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control adInsInput" formControlName="SerialNo4" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo4.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <div class="form-group row" *ngIf="ShowSerialNo5">
-              <label class="col-md-3 adInsLabel {{serial5Mandatory ? 'adins-required-label' : ''}}" for="SerialNo5" translate>Serial No. 5</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control adInsInput" formControlName="SerialNo5" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.SerialNo5.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div> -->
-          </div>
-          <div class="col-md-9">
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel {{licensePlateNoMandatory ? 'adins-required-label' : ''}}" for="LicensePlateNo" translate>License Plate No</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control adInsInput" formControlName="LicensePlateNo" 
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.LicensePlateNo.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.LicensePlateNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="ManufacturingYear" translate>Manufacturing Year</label>
-              <div class="col-md-9">
-                <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear" 
+              <label class="col-md-4 adInsLabel adins-required-label" for="ManufacturingYear" translate>Manufacturing Year</label>
+              <div class="col-md-8">
+                <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.ManufacturingYear.invalid }" />
-                <lib-uc-show-errors [control]="DOAssetDetail.controls.ManufacturingYear" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <lib-uc-show-errors [control]="DOAssetDetail.controls.ManufacturingYear" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div formArrayName="listItem">
+              <div *ngFor="let item of listItem.controls; let i = index;">
+                <div class="form-group row" [formGroupName]="i">
+                  <label class="col-md-4 " [ngClass]="{'adins-required-label': item.controls.IsMandatory.value == true}"
+                    translate>
+                    {{item.controls.SerialNoLabel.value}} </label>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.listItem['controls'][i]['controls'].SerialNoValue.invalid}">
+                    <lib-uc-show-errors [control]="DOAssetDetail.controls.listItem['controls'][i]['controls'].SerialNoValue"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <lib-ucSubsection [id]="'MainDocLetterId'" [title]="'MAIN DOCUMENT LETTER'" [panel]="'MainDocLetterSection'"></lib-ucSubsection>
         <div id="MainDocLetterSection" class="form-body">
-          <div class="col-md-9">
+          <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
-              <div class="col-md-9">
+              <label class="col-md-4 adInsLabel adins-required-label" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
+              <div class="col-md-8">
                 <input type="text" class="form-control adInsInput" formControlName="TempRegisLettNo" 
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettNo.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.TempRegisLettNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
           </div>
-          <div class="col-md-9">
+          <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel adins-required-label" for="TempRegisLettDt" translate>Temporary Registration Letter Date</label>
-              <div class="col-md-9">
+              <label class="col-md-4 adInsLabel adins-required-label" for="TempRegisLettDt" translate>Temporary Registration Letter Date</label>
+              <div class="col-md-8">
                 <input type="date" class="form-control adInsInput" formControlName="TempRegisLettDt" onkeypress="return false;"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettDt.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.TempRegisLettDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
