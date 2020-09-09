@@ -326,10 +326,11 @@ export class LoanObjectComponent implements OnInit {
   CheckIsDisburseToCust() {
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
-      this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
+      this.MainInfoForm.controls.lookupValueSupplier.disable();
     } else {
       this.supplierInputLookupObj.isRequired = true;
-      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
+      this.MainInfoForm.controls.lookupValueSupplier.enable();
+      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
     }
     this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
   }
