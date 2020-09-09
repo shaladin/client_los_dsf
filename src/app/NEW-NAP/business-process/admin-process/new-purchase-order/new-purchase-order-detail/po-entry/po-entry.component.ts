@@ -10,7 +10,7 @@ import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
@@ -29,7 +29,9 @@ export class PoEntryComponent implements OnInit {
   VendorBankAcc: VendorBankAccObj;
   PurchaseOrderH: PurchaseOrderHObj;
   BusinessDt: Date;
-
+  AppData: any;
+  Date: Date;
+  ExpirationDate: string;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
@@ -40,6 +42,7 @@ export class PoEntryComponent implements OnInit {
     this.VendorBankAcc = new VendorBankAccObj();
     this.PurchaseOrderH = new PurchaseOrderHObj();
     this.BusinessDt = new Date();
+    this.Date = new Date();
     this.PODetailForm = this.fb.group({
       SupplName: [''],
       BankAccNo: [''],
@@ -53,7 +56,7 @@ export class PoEntryComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.USER_ACCESS]);
-    if(!this.PurchaseOrderHId || this.PurchaseOrderHId == 0){
+    if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, { AppId: this.AppId, SupplCode: this.SupplCode }).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode });
       forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
@@ -63,13 +66,13 @@ export class PoEntryComponent implements OnInit {
           var isDefaultFound = false;
           var totalDisburse = 0;
           for (const item of vendorBankAccList) {
-            if(item["IsDefault"]){
+            if (item["IsDefault"]) {
               this.VendorBankAcc = item as VendorBankAccObj;
               isDefaultFound = true;
               break;
             }
           }
-          if(isDefaultFound){
+          if (isDefaultFound) {
             this.VendorBankAcc = vendorBankAccList[0] as VendorBankAccObj;
           }
           for (const loan of this.AppLoanPurposeList) {
@@ -84,7 +87,7 @@ export class PoEntryComponent implements OnInit {
       ).catch(
       );
     }
-    else{
+    else {
       this.httpClient.post(URLConstant.GetPurchaseOrderHByPurchaseOrderHId, { PurchaseOrderHId: this.PurchaseOrderHId }).toPromise().then(
         (response: PurchaseOrderHObj) => {
           this.PurchaseOrderH = response;
@@ -98,14 +101,43 @@ export class PoEntryComponent implements OnInit {
         }
       ).catch(
       );
+
     }
+    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.AppData = response;
+        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+          (response2) => {
+            var productOfferinH = response2;
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+              (response) => {
+                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                this.Date = new Date(a);
+                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
+                this.PODetailForm.patchValue({
+                  PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
+                });
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
+        ).catch(
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  Save(){
+  Save() {
     var formValue = this.PODetailForm.value;
     var requestPurchaseOrderH = new PurchaseOrderHObj();
     var requestListPurchaseOrderD = new Array<PurchaseOrderDObj>();
-    if(!this.PurchaseOrderHId || this.PurchaseOrderHId == 0){
+    if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
       requestPurchaseOrderH.PurchaseOrderDt = new Date();
@@ -128,7 +160,7 @@ export class PoEntryComponent implements OnInit {
         requestListPurchaseOrderD.push(purchaseOrderDObj);
       }
     }
-    else{
+    else {
       requestPurchaseOrderH.PurchaseOrderHId = this.PurchaseOrderH.PurchaseOrderHId;
       requestPurchaseOrderH.PurchaseOrderNo = this.PurchaseOrderH.PurchaseOrderNo;
       requestPurchaseOrderH.PurchaseOrderDt = this.PurchaseOrderH.PurchaseOrderDt;
@@ -162,7 +194,7 @@ export class PoEntryComponent implements OnInit {
       (error) => {
       }
     );
-    
+
   }
 
 }
