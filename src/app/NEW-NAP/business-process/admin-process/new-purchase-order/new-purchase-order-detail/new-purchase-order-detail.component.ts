@@ -143,10 +143,10 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.appTC.TcCode = this.TcForm.value.TCList[i].TcCode;
         this.appTC.TcName = this.TcForm.value.TCList[i].TcName;
         this.appTC.PriorTo = this.TcForm.value.TCList[i].PriorTo;
-        this.appTC.IsChecked = this.TcForm.value.TCList[i].IsChecked;
-        this.appTC.ExpiredDt = this.TcForm.value.TCList[i].ExpiredDt;
+        this.appTC.IsChecked = this.TcForm.getRawValue().TCList[i].IsChecked;
+        this.appTC.ExpiredDt = this.TcForm.getRawValue().TCList[i].ExpiredDt;
         this.appTC.IsMandatory = this.TcForm.value.TCList[i].IsMandatory;
-        this.appTC.PromisedDt = this.TcForm.value.TCList[i].PromisedDt;
+        this.appTC.PromisedDt = this.TcForm.getRawValue().TCList[i].PromisedDt;
         this.appTC.CheckedDt = this.TcForm.value.TCList[i].CheckedDt;
         this.appTC.Notes = this.TcForm.value.TCList[i].Notes;
         this.listAppTCObj.AppTCObj.push(this.appTC);
@@ -159,18 +159,18 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           (error) => {
             console.log(error);
           }
-        );;
+        );
 
-      this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
-        (response) => {
-          this.toastr.successMessage("Success");
-          this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-        }
-      );
+        this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
+          (response) => {
+            this.toastr.successMessage("Success");
+            this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
+          }
+        ).catch(
+          (error) => {
+            console.log(error);
+          }
+        );
 
     }
   }

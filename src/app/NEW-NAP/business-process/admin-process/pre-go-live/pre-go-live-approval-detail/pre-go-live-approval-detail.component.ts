@@ -92,7 +92,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("aaa");
     this.arrValue.push(this.AgrmntId);
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.TrxNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
@@ -255,10 +254,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
       this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
       this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.MainInfoForm.value.TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.MainInfoForm.value.TCList[i].ExpiredDt;
+      this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+      this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
       this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.MainInfoForm.value.TCList[i].PromisedDt;
+      this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
       this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
       this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
       this.listAppTCObj.AppTCObj.push(this.appTC);

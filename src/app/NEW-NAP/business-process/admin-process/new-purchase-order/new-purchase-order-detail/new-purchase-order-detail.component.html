@@ -54,18 +54,19 @@
           (ngSubmit)="TcForm.valid && Save()" #enjiForm="ngForm">
           <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
           </app-term-conditions>
-        </form>
-
           <div class="form-body">
             <div class="form-actions right" style="text-align: right;">
               <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="button" class="btn btn-raised btn-primary" >
+              <button type="submit" class="btn btn-raised btn-primary" >
                 <i class="far fa-check-square"></i> Save
               </button>
             </div>
           </div>
+        </form>
+
+      
         </div>
       </div>
     </div>
