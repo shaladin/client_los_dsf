@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -115,6 +115,8 @@ export class AssetDataAddEditComponent implements OnInit {
   isChassisNoMandatory: boolean = false;
   appData: AppObj;
   grossDPPrcnt: number = 0;
+  items: FormArray;
+  SerialNoList: any;
 
   AssetDataForm = this.fb.group({
     SupplName: [''],
@@ -169,7 +171,8 @@ export class AssetDataAddEditComponent implements OnInit {
     LocationAddrType: [''],
 
     DownPaymentPrctg : [''],
-    DownPaymentAmt : ['']
+    DownPaymentAmt : [''],
+    items: this.fb.array([])
   });
 
   appObj = {
@@ -342,40 +345,6 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
 
-  assetConditionHandler() {
-    var value = this.AssetDataForm.controls["MrAssetConditionCode"].value;
-    if (value == CommonConstant.AssetConditionUsed) {
-      this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
-      this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
-      this.isChassisNoMandatory = true;
-
-      this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
-      this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
-      this.isEngineNoMandatory = true;
-
-      this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
-      this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
-      this.isLicensePlateMandatory = true;
-    }
-    else {
-      this.AssetDataForm.controls['ChassisNo'].clearValidators();
-      this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
-      this.isChassisNoMandatory = false;
-
-      this.AssetDataForm.controls['EngineNo'].clearValidators();
-      this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
-      this.isEngineNoMandatory = false;
-
-      this.AssetDataForm.controls['LicensePlate'].clearValidators();
-      this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
-      this.isLicensePlateMandatory = false;
-    }
-
-    if (this.checkAssetValidationRequirement()) {
-      this.CheckDP();
-    }
-  }
-
   assetUsageHandler() {
     if (this.checkAssetValidationRequirement()) {
       this.CheckDP();
@@ -497,6 +466,10 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.AssetDataForm.controls.MrAssetConditionCodeView.disable();
+    this.AssetDataForm.updateValueAndValidity();
+    this.items = this.AssetDataForm.get('items') as FormArray;
+    
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.title = "Asset Location";
     this.inputAddressObjForLoc.showSubsection = false;
@@ -521,9 +494,6 @@ export class AssetDataAddEditComponent implements OnInit {
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.returnAppAssetObj.MrAssetConditionCode,
             AssetUsage: this.returnAppAssetObj.MrAssetUsageCode,
-            ChassisNo: this.returnAppAssetObj.SerialNo1,
-            EngineNo: this.returnAppAssetObj.SerialNo2,
-            LicensePlate: this.returnAppAssetObj.SerialNo5,
             AssetPrice: this.returnAppAssetObj.AssetPriceAmt,
             DownPayment: this.returnAppAssetObj.DownPaymentAmt,
             Notes: this.returnAppAssetObj.AssetNotes,
@@ -535,19 +505,6 @@ export class AssetDataAddEditComponent implements OnInit {
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
           this.updateValueDownPaymentPrctg();
-          if (this.returnAppAssetObj.MrAssetConditionCode == "USED") {
-            this.AssetDataForm.controls['ChassisNo'].setValidators([Validators.required]);
-            this.AssetDataForm.controls['ChassisNo'].updateValueAndValidity();
-            this.isChassisNoMandatory = true;
-
-            this.AssetDataForm.controls['EngineNo'].setValidators([Validators.required]);
-            this.AssetDataForm.controls['EngineNo'].updateValueAndValidity();
-            this.isEngineNoMandatory = true;
-
-            this.AssetDataForm.controls['LicensePlate'].setValidators([Validators.required]);
-            this.AssetDataForm.controls['LicensePlate'].updateValueAndValidity();
-            this.isLicensePlateMandatory = true;
-          }
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
@@ -720,11 +677,38 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
-        this.AssetDataForm.patchValue({
-          MrAssetConditionCode: assetCond["CompntValue"],
-          MrAssetConditionCodeView: assetCond["CompntValue"]
-        });
-        this.AssetDataForm.controls["MrAssetConditionCodeView"].disable();
+        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: assetType["CompntValue"]
+         }).subscribe(
+          (response: any) => {
+            while (this.items.length) {
+              this.items.removeAt(0);
+            }
+            
+            this.SerialNoList = response[CommonConstant.ReturnObj];
+            for (let i = 0; i < this.SerialNoList.length; i++) {
+              let eachDataDetail = this.fb.group({
+                SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                SerialNoValue: [''],
+                IsMandatory: [this.SerialNoList[i].IsMandatory]
+              }) as FormGroup;
+              this.items.push(eachDataDetail);
+            }
+    
+            for (let i = 0; i < this.items.length; i++) {
+              if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              }
+            }
+    
+            if (this.returnAppAssetObj != undefined || this.returnAppAssetObj != null) {
+              for (let i = 0; i < this.items.length; i++) {
+                if (this.items.controls[i] != null) {
+                  this.items.controls[i]['controls']['SerialNoValue'].value = this.returnAppAssetObj["SerialNo" + (i + 1)];
+                }
+              }
+            }
+          });
 
         var arrCritSuppl = new Array<CriteriaObj>();
         var critObjSuppl = new CriteriaObj();
@@ -766,7 +750,14 @@ export class AssetDataAddEditComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
-        // this.AssetDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
+        if(this.mode!='edit'){
+          this.AssetDataForm.patchValue(
+            {
+              MrAssetConditionCode: this.returnAssetConditionObj[1].Key,
+              MrAssetConditionCodeView: this.returnAssetConditionObj[1].Key
+            }
+          )
+        }
       }
     );
 
@@ -869,9 +860,11 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
     this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
-    this.allAssetDataObj.AppAssetObj.SerialNo1 = this.AssetDataForm.controls["ChassisNo"].value;
-    this.allAssetDataObj.AppAssetObj.SerialNo2 = this.AssetDataForm.controls["EngineNo"].value;
-    this.allAssetDataObj.AppAssetObj.SerialNo5 = this.AssetDataForm.controls["LicensePlate"].value;
+    for (var i = 0; i < this.items.length; i++) {
+      if (this.items.controls[i] != null) {
+        this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+      }
+    }
     this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls["SupplName"].value;
     this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls["SupplCode"].value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
@@ -912,9 +905,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
-    this.allAssetDataObj.AppCollateralObj.SerialNo1 = this.AssetDataForm.controls["ChassisNo"].value;
-    this.allAssetDataObj.AppCollateralObj.SerialNo2 = this.AssetDataForm.controls["EngineNo"].value;
-    this.allAssetDataObj.AppCollateralObj.SerialNo5 = this.AssetDataForm.controls["LicensePlate"].value;
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
     this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls["AssetCategoryCode"].value;
