@@ -81,7 +81,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
     MrCustRelationshipCode: ['', Validators.maxLength(50)],
     IdNo: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
     BirthPlace: ['', Validators.maxLength(100)],
-    BirthDt: [''],
+    BirthDt: ['', Validators.required],
     IsEmergencyContact: [false],
     MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
@@ -182,7 +182,7 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       MrCustRelationshipCode: [this.defaultCustRelationship, Validators.maxLength(50)],
       IdNo: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
       BirthPlace: ['', Validators.maxLength(100)],
-      BirthDt: [''],
+      BirthDt: ['', Validators.required],
       IsEmergencyContact: [false],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
       MobilePhnNo2: ['', [Validators.maxLength(100),Validators.pattern("^[0-9]+$")]],
@@ -380,8 +380,6 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
 
   CheckSpouse() {
     if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == CommonConstant.MasteCodeRelationshipSpouse) {
-      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
-      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
         this.ContactInfoPersonalForm.patchValue({
           MrGenderCode: CommonConstant.MasterCodeGenderFemale
@@ -401,8 +399,6 @@ export class CustPersonalContactInformationFL4WComponent   implements OnInit {
       }
     }
     else {
-      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
-      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
     }
   }

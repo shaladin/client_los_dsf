@@ -13,87 +13,79 @@
               </select>
             </div>
           </div>
+
           <div id="addColl" *ngIf="this.collateral == 'New'">
             <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral Info'" [panel]="'AddCollInfo'">
             </lib-ucSubsection>
             <div id="AddCollInfo">
-              <div class="form-group row">
-                <label class="col-md-2 adins-required" translate>Collateral Type</label>
-                <div class="col-md-3">
-                  <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AssetTypeCode.invalid }">
-                    <option *ngFor="let item of returnCollTypeObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="AddCollForm.controls.AssetTypeCode" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2" translate>Serial No 1</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="SerialNo1"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo1" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
-                <div class="col-md-3">
-                  <div class="col-md-12 input-group" style="padding: 0;">
-                    <input type="text" class="form-control" formControlName="CollateralName" [readonly]="true"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralName.invalid }" />
-                    <div class="input-group-append">
-                      <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="showModalCollateral()">
-                          <i class="ft-search"></i>
-                        </button>
-                      </span>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-4 adins-required" translate>Collateral Type</label>
+                    <div class="col-md-8">
+                      <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler()"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AssetTypeCode.invalid }">
+                        <option *ngFor="let item of returnCollTypeObj" [value]="item.Key">
+                          {{item.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.AssetTypeCode" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
-                  <lib-uc-show-errors [control]="AddCollForm.controls.CollateralName" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <div class="form-group row">
+                    <label class="col-md-4 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
+                    <div class="col-md-8">
+                      <div class="col-md-12 input-group" style="padding: 0;">
+                        <input type="text" class="form-control" formControlName="CollateralName" [readonly]="true"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralName.invalid }" />
+                        <div class="input-group-append">
+                          <span class="input-group-btn">
+                            <button class="btn btn-raised btn-primary" type="button" (click)="showModalCollateral()">
+                              <i class="ft-search"></i>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.CollateralName" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
+                    <div class="col-md-8">
+                      <input type="" currencyMask class="form-control" formControlName="CollateralValueAmt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 adins-label" translate>Notes</label>
+                    <div class="col-md-8">
+                      <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
+                    </div>
+                  </div>
                 </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2" translate>Serial No 2</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="SerialNo2"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo2" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Collateral Price</label>
-                <div class="col-md-3">
-                  <input type="" currencyMask class="form-control" formControlName="CollateralValueAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2" translate>Serial No 3</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="SerialNo3"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo3" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 adins-label" translate>Notes</label>
-                <div class="col-md-3">
-                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Notes.invalid}"></textarea>
-                </div>
-                <label class="col-md-1"></label>
-                <label class="col-md-2" translate>Serial No 4</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" formControlName="SerialNo4"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo4.invalid }">
-                  <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo4" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                <div class="col-md-6">
+                  <div formArrayName="items">
+                    <div *ngFor="let item of items.controls; let i = index;">
+                      <div class="form-group row" [formGroupName]="i">
+                        <label class="col-md-4 "
+                          [ngClass]="{'adins-required-label': item.controls.IsMandatory.value == true}"
+                          translate>
+                          {{item.controls.SerialNoLabel.value}} </label>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                          <lib-uc-show-errors
+                            [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
