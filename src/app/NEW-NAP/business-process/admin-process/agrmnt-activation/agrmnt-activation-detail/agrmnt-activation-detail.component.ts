@@ -64,6 +64,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("aaa")
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
@@ -91,26 +92,33 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   getListTemp(ev) {
     this.listSelectedId = ev.TempListId;
-
-    let obj = {
-      AppId: this.AppId,
-      ListAppAssetId: this.listSelectedId
-    };
-
-    this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
-      this.AssetObj = response["ListAppAsset"];
-      if (this.AssetObj.length == 0)
-        this.IsEnd = true;
-      let objFinDataAndFee = {
+    this.IsEnd = false;
+    if(this.listSelectedId.length == 0){
+      this.AppFees = null;
+      this.AppFinData = null;
+    }else{
+      let obj = {
         AppId: this.AppId,
-        ListAppAssetId: this.listSelectedId,
-        IsEnd: this.IsEnd
+        ListAppAssetId: this.listSelectedId
       };
-      this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
-        this.AppFees = response["ListAppFeeObj"];
-        this.AppFinData = response["AppFinDataObj"];
-      })
-    });
+  
+      this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
+        this.AssetObj = response["ListAppAsset"];
+        if (this.AssetObj.length == 0)
+          this.IsEnd = true;
+        let objFinDataAndFee = {
+          AppId: this.AppId,
+          ListAppAssetId: this.listSelectedId,
+          IsEnd: this.IsEnd
+        };
+        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
+          this.AppFees = response["ListAppFeeObj"];
+          this.AppFinData = response["AppFinDataObj"];
+        })
+      });
+    }
+
+    
   }
 
   Submit() {
