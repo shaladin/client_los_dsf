@@ -118,12 +118,26 @@ export class CustShareholderComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
       }
+      if(this.appCustCompanyMgmntShrholderObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
+        if(this.appCustCompanyMgmntShrholderObj.IsSigner){
+          for (const item of this.listShareholder) {
+            item.IsSigner = false;
+          }
+        }
+      }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
     if(this.mode == "edit"){
       if(this.checkSharePrcnt(this.currentEditedIndex) == false){
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
+      }
+      if(this.appCustCompanyMgmntShrholderObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
+        if(this.appCustCompanyMgmntShrholderObj.IsSigner){
+          for (const item of this.listShareholder) {
+            item.IsSigner = false;
+          }
+        }
       }
       this.listShareholder[this.currentEditedIndex] = this.appCustCompanyMgmntShrholderObj;
     }

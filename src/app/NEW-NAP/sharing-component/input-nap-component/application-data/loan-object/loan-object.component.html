@@ -75,7 +75,7 @@
                 </lib-uclookupgeneric>
               </div>
             </div>
-            <div class="form-group row" *ngIf="MainInfoForm.controls.IsDisburseToCust.value == false">
+            <div class="form-group row" [hidden]="MainInfoForm.controls.IsDisburseToCust.value">
               <label class="col-md-3" [ngClass]="{ 'adins-required-label': MainInfoForm.controls.IsDisburseToCust.value == false }" translate>Supplier Name</label>
               <div class="col-md-5">
                 <lib-uclookupgeneric [lookupInput]="supplierInputLookupObj" [parentForm]='MainInfoForm'

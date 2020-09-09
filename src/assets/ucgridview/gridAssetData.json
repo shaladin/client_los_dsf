@@ -38,6 +38,12 @@
         },
         {
             "type": "label",
+            "position": "left",
+            "label": "Serial No 5",
+            "name": "SerialNo5"
+        },
+        {
+            "type": "label",
             "position": "center",
             "label": "Edit"
         }
@@ -72,6 +78,11 @@
             "type": "text",
             "position": "left",
             "property": "SerialNo4"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo5"
         },
         {
             "type": "action",

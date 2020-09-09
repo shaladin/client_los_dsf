@@ -62,7 +62,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   isUsed: boolean = true;
 
   AddCollForm = this.fb.group({
-    AppCollateralId: [''],
+    AppCollateralId: [0],
     FullAssetCode: ['', Validators.required],
     MrCollateralConditionCode: ['', Validators.required],
     MrCollateralUsageCode: ['', Validators.required],
