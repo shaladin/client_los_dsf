@@ -33,7 +33,6 @@ export class TermConditionsComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    console.log("aaa")
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
