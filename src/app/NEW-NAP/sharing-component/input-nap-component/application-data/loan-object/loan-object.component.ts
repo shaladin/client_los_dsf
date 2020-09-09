@@ -329,7 +329,7 @@ export class LoanObjectComponent implements OnInit {
       this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
     } else {
       this.supplierInputLookupObj.isRequired = true;
-      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required)
+      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
     }
     this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
   }
