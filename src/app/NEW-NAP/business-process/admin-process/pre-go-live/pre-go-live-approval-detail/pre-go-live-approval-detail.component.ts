@@ -10,6 +10,9 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
+import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -46,7 +49,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppTcList: any = [];
   identifier: string = "TCList";
   IsApvReady: boolean = false;
-
+  outstandingTcObj : any;
+  listAppTCObj : ListAppTCObj;
+  appTC : AppTCObj;
   count1: number = 0;
   RfaLogObj: {
     RfaNo: any
@@ -87,6 +92,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("aaa");
     this.arrValue.push(this.AgrmntId);
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.TrxNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
@@ -178,7 +184,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         );
 
 
-
         var Obj5 = {
           AgrmntId: this.result.AgrmntId,
           RowVersion: ""
@@ -199,41 +204,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         );
 
       }
-    );
-
-    this.MainInfoForm.addControl(this.identifier, this.fb.array([]));
-    var listTC = this.MainInfoForm.get(this.identifier) as FormArray;
-    var appTcObj = {
-      AppId: this.AppId
-    }
-    this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
-      (response) => {
-        this.AppTcList = response["AppTcs"];
-        if (this.AppTcList != null && this.AppTcList["length"] != 0) {
-          for (let i = 0; i < this.AppTcList["length"]; i++) {
-            var TCDetail = this.fb.group({
-              AppTcId: this.AppTcList[i].AppTcId,
-              AppId: this.AppTcList[i].AppId,
-              TcCode: this.AppTcList[i].TcCode,
-              TcName: this.AppTcList[i].TcName,
-              PriorTo: this.AppTcList[i].PriorTo,
-              IsChecked: this.AppTcList[i].IsChecked,
-              ExpiredDt: this.AppTcList[i].ExpiredDt != null ? formatDate(this.AppTcList[i].ExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
-              IsMandatory: this.AppTcList[i].IsMandatory,
-              PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
-              CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
-              Notes: this.AppTcList[i].Notes,
-              RowVersion: this.AppTcList[i].RowVersion
-            }) as FormGroup;
-
-            TCDetail.controls.IsChecked.disable();
-            TCDetail.controls.ExpiredDt.disable();
-            TCDetail.controls.PromisedDt.disable();
-            TCDetail.controls.Notes.disable();
-            listTC.push(TCDetail);
-          }
-        }
-      });
+    ); 
 
 
   }
@@ -246,23 +217,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       }
     )
   }
-
-  changeValidation(arr) {
-    if (this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].IsMandatory.value == true) {
-      this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.setValidators([Validators.required]);
-    }
-    if (this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].IsChecked.value == false) {
-      this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.disable();
-      this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.enable();
-    } else {
-
-      this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.enable();
-      this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.disable();
-    }
-
-    this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].PromisedDt.updateValueAndValidity();
-    this.MainInfoForm.controls[this.identifier]["controls"][arr]["controls"].ExpiredDt.updateValueAndValidity();
-  }
+ 
   //nanti bakalan ke View, sementara kek gini dlu
 
   OpenView(key: string){
@@ -288,9 +243,36 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited() {
-    this.toastr.successMessage("Success");
-    this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+  onApprovalSubmited() {  
+    this.outstandingTcObj = new OutstandingTcObj(); 
+    this.listAppTCObj = new ListAppTCObj();
+    this.listAppTCObj.AppTCObj = new Array();
+
+    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+      this.appTC = new AppTCObj();
+      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
+      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
+      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
+      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
+      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
+      this.appTC.IsChecked = this.MainInfoForm.value.TCList[i].IsChecked;
+      this.appTC.ExpiredDt = this.MainInfoForm.value.TCList[i].ExpiredDt;
+      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
+      this.appTC.PromisedDt = this.MainInfoForm.value.TCList[i].PromisedDt;
+      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
+      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
+      this.listAppTCObj.AppTCObj.push(this.appTC);
+    }
+
+    this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
+
+    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
+      response => {
+        this.toastr.successMessage("Success");
+        this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+      }
+    );
+ 
   }
 
   onCancelClick() {

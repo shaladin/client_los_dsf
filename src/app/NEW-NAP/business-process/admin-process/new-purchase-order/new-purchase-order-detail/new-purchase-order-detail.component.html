@@ -23,10 +23,10 @@
                   <th style="text-align: center;">
                     <span class="thead-header" name='disburseToName' translate>DISBURSE TO NAME</span>
                   </th>
-                  <th style="text-align: left;">
+                  <th style="text-align: center;">
                     <span class="thead-header" name='purchaseOrderNo' translate>PURCHASE ORDER NO.</span>
                   </th>
-                  <th style="text-align: left;">
+                  <th style="text-align: center;">
                     <span class="thead-header" name='entry' translate>ENTRY</span>
                   </th>
                 </tr>
@@ -39,7 +39,7 @@
                   <td style="text-align: center;">
                     {{item.SupplName}}
                   </td>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{item.PurchaseOrderNo}}
                   </td>
                   <td style="text-align: center;">
@@ -49,12 +49,19 @@
               </tbody>
             </table>
           </div>
+
+          <form class="form form-horizontal" [formGroup]="TcForm"
+          (ngSubmit)="TcForm.valid && Save()" #enjiForm="ngForm">
+          <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
+          </app-term-conditions>
+        </form>
+
           <div class="form-body">
             <div class="form-actions right" style="text-align: right;">
               <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="Save()">
+              <button type="button" class="btn btn-raised btn-primary" >
                 <i class="far fa-check-square"></i> Save
               </button>
             </div>

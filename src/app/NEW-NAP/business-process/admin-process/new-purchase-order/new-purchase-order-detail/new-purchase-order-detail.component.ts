@@ -9,6 +9,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PoEntryComponent } from './po-entry/po-entry.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { FormBuilder } from '@angular/forms';
+import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -23,14 +27,18 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   TaskListId: number;
   arrValue: Array<number>;
   POList: Array<Object>;
-
+  outstandingTcObj : any;
+  listAppTCObj : ListAppTCObj;
+  appTC : AppTCObj;
+  TcForm = this.fb.group({});
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
     private toastr: NGXToastrService, 
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private fb: FormBuilder,
   ) { 
     this.POList = new Array<Object>();
     this.arrValue = new Array<number>();
@@ -109,7 +117,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
   }
 
-  Save(){
+  async Save(){
     var isPOResolved = true;
     for (const item of this.POList) {
       if(!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === ""){
@@ -123,6 +131,36 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       var workflowModel = new WorkflowApiObj();
       workflowModel.TaskListId = this.TaskListId;
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
+
+      this.outstandingTcObj = new OutstandingTcObj();
+      this.listAppTCObj = new ListAppTCObj();
+      this.listAppTCObj.AppTCObj = new Array();
+
+      for (var i = 0; i < this.TcForm.value.TCList["length"]; i++) {
+        this.appTC = new AppTCObj();
+        this.appTC.AppId = this.TcForm.value.TCList[i].AppId;
+        this.appTC.AppTcId = this.TcForm.value.TCList[i].AppTcId;
+        this.appTC.TcCode = this.TcForm.value.TCList[i].TcCode;
+        this.appTC.TcName = this.TcForm.value.TCList[i].TcName;
+        this.appTC.PriorTo = this.TcForm.value.TCList[i].PriorTo;
+        this.appTC.IsChecked = this.TcForm.value.TCList[i].IsChecked;
+        this.appTC.ExpiredDt = this.TcForm.value.TCList[i].ExpiredDt;
+        this.appTC.IsMandatory = this.TcForm.value.TCList[i].IsMandatory;
+        this.appTC.PromisedDt = this.TcForm.value.TCList[i].PromisedDt;
+        this.appTC.CheckedDt = this.TcForm.value.TCList[i].CheckedDt;
+        this.appTC.Notes = this.TcForm.value.TCList[i].Notes;
+        this.listAppTCObj.AppTCObj.push(this.appTC);
+      } 
+      this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
+
+      await this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).toPromise().then(
+        response => {
+        }).catch(
+          (error) => {
+            console.log(error);
+          }
+        );;
+
       this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
         (response) => {
           this.toastr.successMessage("Success");
@@ -133,7 +171,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           console.log(error);
         }
       );
-      
+
     }
   }
 }

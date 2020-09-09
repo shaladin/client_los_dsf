@@ -34,6 +34,7 @@ export class OutstandingTcDetailComponent implements OnInit {
   OustandingTCForm = this.fb.group({});
 
   ngOnInit() {
+    console.log("bbbb")
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
