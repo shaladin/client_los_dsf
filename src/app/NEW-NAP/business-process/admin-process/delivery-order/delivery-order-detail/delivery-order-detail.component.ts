@@ -43,10 +43,10 @@ export class DeliveryOrderDetailComponent implements OnInit {
   arrValue = [];
   UserAccess: any;
   MaxDate: Date;
-
   businessDt: Date = new Date();
-
   PurchaseOrderDt: Date = new Date();
+  listItem: FormArray;
+  SerialNoList: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -58,9 +58,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
   }
 
   DeliveryOrderForm = this.fb.group({
-    SerialNo1: ['', Validators.required],
-    SerialNo2: ['', Validators.required],
-    SerialNo3: ['', Validators.required],
     ManufacturingYear: ['', Validators.required],
     TempRegisLettNo: [''],
     TempRegisLettDt: [''],
@@ -74,9 +71,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
     PromisedDt: [''],
     ATExpiredDt: [''],
     Notes: [''],
+    listItem: this.fb.array([])
   })
 
   ngOnInit() {
+    console.log("HELEP")
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -105,6 +104,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
 
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
+    this.listItem = this.DeliveryOrderForm.get('listItem') as FormArray;
 
     this.http.post(URLConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
       (response) => {
@@ -150,6 +150,32 @@ export class DeliveryOrderDetailComponent implements OnInit {
             }
           }
         );
+
+        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+          AssetTypeCode: this.appAssetObj.AssetTypeCode
+        }).subscribe(
+          (response: any) => {
+            while (this.listItem.length) {
+              this.listItem.removeAt(0);
+            }
+
+            this.SerialNoList = response[CommonConstant.ReturnObj];
+            for (let i = 0; i < this.SerialNoList.length; i++) {
+              let eachDataDetail = this.fb.group({
+                SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                SerialNoValue: [''],
+                IsMandatory: [this.SerialNoList[i].IsMandatory]
+              }) as FormGroup;
+              this.listItem.push(eachDataDetail);
+            }
+
+            for (let i = 0; i < this.listItem.length; i++) {
+              if (this.listItem.controls[i]['controls']['IsMandatory'].value == true) {
+                this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              }
+            }
+          });
       }
     );
   }
@@ -168,9 +194,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
       IsCollateral: this.appAssetObj.IsCollateral,
       IsInsurance: this.appAssetObj.IsInsurance,
       IsEditableDp: this.appAssetObj.IsEditableDp,
-      SerialNo1: this.DeliveryOrderForm.controls.SerialNo1.value,
-      SerialNo2: this.DeliveryOrderForm.controls.SerialNo2.value,
-      SerialNo3: this.DeliveryOrderForm.controls.SerialNo3.value,
       ManufacturingYear: this.DeliveryOrderForm.controls.ManufacturingYear.value,
       TempRegisLettNo: this.DeliveryOrderForm.controls.TempRegisLettNo.value,
       TempRegisLettDt: this.DeliveryOrderForm.controls.TempRegisLettDt.value,
@@ -182,6 +205,12 @@ export class DeliveryOrderDetailComponent implements OnInit {
       FullAssetName: this.FullAssetName,
       MrAssetUsageCode: this.MrAssetUsageCode,
       AssetCategoryCode: this.AssetCategoryCode
+    }
+
+    for (var i = 0; i < this.listItem.length; i++) {
+      if (this.listItem.controls[i] != null) {
+        appAsset["SerialNo" + (i + 1)] = this.listItem.controls[i]["controls"]["SerialNoValue"].value;
+      }
     }
 
     var deliveryOrderH = {
