@@ -221,7 +221,7 @@ export class PoEntryComponent implements OnInit {
       }
     }
 
-    this.httpClient.post(URLConstant.SubmitNewPurchaseOrder, { requestPurchaseOrderHObj: requestPurchaseOrderH, requestPurchaseOrderDObjs: requestListPurchaseOrderD }).toPromise().then(
+    this.httpClient.post(URLConstant.SubmitPurchaseOrder, { requestPurchaseOrderHObj: requestPurchaseOrderH, requestPurchaseOrderDObjs: requestListPurchaseOrderD }).toPromise().then(
       (response) => {
         this.activeModal.close(response);
       }
