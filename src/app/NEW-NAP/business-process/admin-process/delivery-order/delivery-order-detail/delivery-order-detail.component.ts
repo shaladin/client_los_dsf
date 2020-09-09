@@ -216,10 +216,10 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.appTC.TcCode = this.DeliveryOrderForm.value.TCList[i].TcCode;
       this.appTC.TcName = this.DeliveryOrderForm.value.TCList[i].TcName;
       this.appTC.PriorTo = this.DeliveryOrderForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.DeliveryOrderForm.value.TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.DeliveryOrderForm.value.TCList[i].ExpiredDt;
+      this.appTC.IsChecked = this.DeliveryOrderForm.getRawValue().TCList[i].IsChecked;
+      this.appTC.ExpiredDt = this.DeliveryOrderForm.getRawValue().TCList[i].ExpiredDt;
       this.appTC.IsMandatory = this.DeliveryOrderForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
+      this.appTC.PromisedDt = this.DeliveryOrderForm.getRawValue().TCList[i].PromisedDt;
       this.appTC.CheckedDt = this.DeliveryOrderForm.value.TCList[i].CheckedDt;
       this.appTC.Notes = this.DeliveryOrderForm.value.TCList[i].Notes;
       this.appTC.IsAdditional = this.DeliveryOrderForm.value.TCList[i].IsAdditional;
