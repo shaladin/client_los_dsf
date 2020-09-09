@@ -75,7 +75,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
   })
 
   ngOnInit() {
-    console.log("HELEP")
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
