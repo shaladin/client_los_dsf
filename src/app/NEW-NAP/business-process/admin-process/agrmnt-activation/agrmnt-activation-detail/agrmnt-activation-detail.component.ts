@@ -64,7 +64,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("aaa")
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
