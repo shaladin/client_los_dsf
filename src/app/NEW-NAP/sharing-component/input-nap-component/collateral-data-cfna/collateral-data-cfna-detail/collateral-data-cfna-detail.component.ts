@@ -79,7 +79,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     AssetTaxDt: [''],
     UserName: ['', Validators.required],
     MrUserRelationshipCode: [''],
-    OwnerMobilePhnNo: ['', Validators.required],
+    OwnerMobilePhnNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     OwnerName: ['', Validators.required],
     OwnerIdNo: ['', Validators.required],
     MrIdTypeCode: [''],
@@ -433,6 +433,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean, response: object) {
     if (IsFromLookup) {
       this.AddCollForm.patchValue({
+        AppCollateralId: AppCollateralId,
         AssetTypeCode: response["AssetTypeCode"],
         FullAssetCode: response["FullAssetCode"],
         AssetCategoryCode: response["AssetCategoryCode"],
@@ -780,6 +781,17 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.setCollateralOwner();
     this.setCollateralLocation();
     this.setCollateralPercentage();
+    for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
+      console.log(key + ": " + this.appCollateralDataObj.AppCollateralRegistrationObj[key]);
+      if(key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes"){
+        continue;
+      }
+      if(!this.appCollateralDataObj.AppCollateralRegistrationObj[key]){
+        this.toastr.warningMessage("Please complete owner data first");
+        this.IsCollateralOwnerInvalid = true;
+        return false;
+      }
+    }
 
     this.appCollateralDataObj.BizTemplateCode = CommonConstant.CFNA;
     this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
@@ -821,6 +833,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   setCollateralInfo() {
+    this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AddCollForm.controls["AppCollateralId"].value;
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
     this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
     this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
@@ -858,6 +871,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   }
 
+  IsCollateralOwnerInvalid: boolean = false;
   setCollateralOwner() {
     this.appCollateralDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AddCollForm.controls["MrOwnerRelationshipCode"].value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AddCollForm.controls["MrUserRelationshipCode"].value;

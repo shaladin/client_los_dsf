@@ -64,7 +64,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
@@ -269,7 +269,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   SaveForm() {
     if (this.doList.length > 0) {
       // var tcFormData = this.AppTcForm.value.TCList;
-      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList] };
+      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
       this.httpClient.post(URLConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
@@ -299,7 +299,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
       if (valid) {
         // var tcFormData = this.AppTcForm.value.TCList;
-        var tcFormData = { "ListAppTcObj": [...this.AppTcForm.value.TCList] };
+        var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
         let editTc = this.httpClient.post(URLConstant.EditAppTc, tcFormData);
         let submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
         forkJoin([editTc, submitDO]).subscribe(

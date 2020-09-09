@@ -3,7 +3,6 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { forkJoin } from 'rxjs';
 import { Sort } from '@angular/material';
 
 @Component({
