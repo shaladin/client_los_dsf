@@ -21,7 +21,7 @@ export class CollateralDataCfnaComponent implements OnInit {
   AppCollateral: any;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IsCollateral: boolean = false;
-
+  @Input() showCancel: boolean = true;
   constructor(private toastr : NGXToastrService, private http: HttpClient) { }
 
   ngOnInit() {
