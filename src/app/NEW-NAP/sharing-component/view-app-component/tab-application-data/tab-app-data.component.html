@@ -293,7 +293,8 @@
                   <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.LifeInsFee == null"> - </label>
                 </div>
               </div>
-              <h4>Life Insurance Object</h4>
+              <lib-ucSubsection [id]="'viewAppLifeInsInfoId'" [title]="'Life Insurance Object'" [panel]="'viewAppLifeInsInfo'">
+              </lib-ucSubsection>
               <div class="form-body" id="viewAppLifeInsInfo">
                   <lib-ucgridview *ngIf="IsGridLifeInsReady" [gridInput]="InputGridLifeIns"></lib-ucgridview>
               </div>

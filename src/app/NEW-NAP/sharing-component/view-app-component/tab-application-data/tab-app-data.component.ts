@@ -90,6 +90,7 @@ export class TabAppDataComponent implements OnInit {
   }
 
   async ngOnInit() {
+     console.log("aaaa")
     this.InitData();
     await this.GetGuarantorData();
     await this.GetReferantorData();
