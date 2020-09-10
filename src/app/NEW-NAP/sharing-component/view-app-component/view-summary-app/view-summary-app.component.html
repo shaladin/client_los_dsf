@@ -241,190 +241,243 @@
       </div>
     </div>
   </div>
-  <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset Information'" [panel]="'assetInfo'">
-  </lib-ucSubsection>
-  <div class="form-body" id="assetInfo">
-    <div *ngIf="SummaryAppObj?.AppAssetObjs?.length == 1" class="form-group row">
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel"> Asset Name </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.FullAssetName}}</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel"> Asset Condition </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.MrAssetConditionCodeDesc}} </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel"> Asset Price </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.AssetPriceAmt | number: '.2':'en-US'}} </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel"> DP Amount / Percentage </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.DownPaymentAmt | number:'.2':'en-US'}} / {{SummaryAppObj?.AppAssetObjs[0]?.DownPaymentPrcnt | number:'.6':'en-US'}}% </label>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel"> Asset Usage </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.MrAssetUsageCodeDesc}} </label>
-          </div>
-        </div>
-        <div class="row" *ngFor="let item of SerialNoObjs; let i=index">
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{item.SerialNoLabel}} </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{item.SerialNoValue}} </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel"> Insurance </label>
-          </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.InsAssetCoveredByDesc}} </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="SummaryAppObj?.AppAssetObjs?.length > 1" class="table-responsive">
-      <table class="table text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th style="text-align: left;"><span class="thead-header" name="AssetName" translate>
-                Asset Name
-              </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="AssetUsage" translate>
-              Asset Usage 
-              </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="Asset Condition" translate>
-              Asset Condition
-              </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="ChassisNo" translate>
-              Serial No 1
-              </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="EngineNo" translate>
-              Serial No 2
-            </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="LicensePlateNo" translate>
-              Serial No 3
-            </span>
-            </th>
-            <th style="text-align: right;"><span class="thead-header" name="AssetPriceAmt" translate>
-              Asset Price  
-            </span>
-            </th>
-            <th style="text-align: right;"><span class="thead-header" name="DPAmtPrcnt" translate>
-              DP Amount / Percentage  
-            </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody *ngIf = "SummaryAppObj?.AppAssetObjs?.length == 0">
-          <tr>
-            <td colspan="100%">No Data Available</td>
-          </tr>
-        </tbody>
-        <tbody *ngIf = "SummaryAppObj?.AppAssetObjs?.length > 0">
-          <tr *ngFor="let item of SummaryAppObj?.AppAssetObjs; let i = index">
-            <td style="text-align: left;">{{item.FullAssetName}}</td>
-            <td style="text-align: center;">{{item.MrAssetUsageCodeDesc}}</td>
-            <td style="text-align: center;">{{item.MrAssetConditionCodeDesc}}</td>
-            <td style="text-align: center;">{{item.SerialNo1}}</td>
-            <td style="text-align: center;">{{item.SerialNo2}}</td>
-            <td style="text-align: center;">{{item.SerialNo3}}</td>
-            <td style="text-align: right;">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
-            <td style="text-align: right;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt | number:'.6':'en-US'}}%</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div *ngIf="SummaryAppObj?.AppAssetObjs?.length > 1">
-    <lib-ucSubsection [id]="'collateralInfoId'" [title]="'Collateral Information'" [panel]="'collateralInfo'">
+
+  <div *ngIf="SummaryAppObj?.AppAssetObjs?.length > 0">
+    <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset Information'" [panel]="'assetInfo'">
     </lib-ucSubsection>
-    <div class="form-body table-responsive" id="collateralInfo">
-      <table class="table text-center table-hover">
+    <div class="form-body" id="assetInfo">
+      <div *ngIf="SummaryAppObj.AppObj.BizTemplateCode == 'CF4W'" class="form-group row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> Asset Name </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.FullAssetName}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> Asset Condition </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.MrAssetConditionCodeDesc}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> Asset Price </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.AssetPriceAmt | number: '.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> DP Amount / Percentage </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.DownPaymentAmt | number:'.2':'en-US'}} / {{SummaryAppObj?.AppAssetObjs[0]?.DownPaymentPrcnt | number:'.6':'en-US'}}% </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> Asset Usage </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.MrAssetUsageCodeDesc}} </label>
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of SerialNoObjs; let i=index">
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{item.SerialNoLabel}} </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{item.SerialNoValue}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> Insurance </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryAppObj?.AppAssetObjs[0]?.InsAssetCoveredByDesc}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="SummaryAppObj.AppObj.BizTemplateCode == 'FL4W' || SummaryAppObj.AppObj.BizTemplateCode == 'CFRFN4W'" class="table-responsive">
+        <table class="table text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th style="text-align: left;"><span class="thead-header" name="AssetName" translate>
+                  Asset Name
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="AssetUsage" translate>
+                Asset Usage 
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="Asset Condition" translate>
+                Asset Condition
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="ChassisNo" translate>
+                Serial No 1
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="EngineNo" translate>
+                Serial No 2
+              </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="LicensePlateNo" translate>
+                Serial No 3
+              </span>
+              </th>
+              <th style="text-align: right;"><span class="thead-header" name="AssetPriceAmt" translate>
+                Asset Price  
+              </span>
+              </th>
+              <th style="text-align: right;"><span class="thead-header" name="DPAmtPrcnt" translate>
+                DP Amount / Percentage  
+              </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf = "SummaryAppObj?.AppAssetObjs?.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf = "SummaryAppObj?.AppAssetObjs?.length > 0">
+            <tr *ngFor="let item of SummaryAppObj?.AppAssetObjs; let i = index">
+              <td style="text-align: left;">{{item.FullAssetName}}</td>
+              <td style="text-align: center;">{{item.MrAssetUsageCodeDesc}}</td>
+              <td style="text-align: center;">{{item.MrAssetConditionCodeDesc}}</td>
+              <td style="text-align: center;">{{item.SerialNo1}}</td>
+              <td style="text-align: center;">{{item.SerialNo2}}</td>
+              <td style="text-align: center;">{{item.SerialNo3}}</td>
+              <td style="text-align: right;">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
+              <td style="text-align: right;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt | number:'.6':'en-US'}}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="SummaryAppObj?.AppAssetObjs?.length > 1">
+      <lib-ucSubsection [id]="'collateralInfoId'" [title]="'Collateral Information'" [panel]="'collateralInfo'">
+      </lib-ucSubsection>
+      <div class="form-body table-responsive" id="collateralInfo">
+        <table class="table text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th style="text-align: left;"><span class="thead-header" name="CollateralName" translate>
+                Collateral Name
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="CollateralUsage" translate>
+                Collateral Usage 
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="CollateralCondition" translate>
+                Collateral Condition
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="ChassisNo" translate>
+                Serial No 1
+                </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="EngineNo" translate>
+                Serial No 2
+              </span>
+              </th>
+              <th style="text-align: center;"><span class="thead-header" name="LicensePlateNo" translate>
+                Serial No 3
+              </span>
+              </th>
+              <th style="text-align: right;"><span class="thead-header" name="CollateralValue" translate>
+                Collateral Value  
+              </span>
+              </th>
+              <th style="text-align: right;"><span class="thead-header" name="CollateralValue" translate>
+                Insurance  
+              </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf = "SummaryAppObj?.AppCollateralObjs?.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf = "SummaryAppObj?.AppCollateralObjs?.length > 0">
+            <tr *ngFor="let item of SummaryAppObj?.AppCollateralObjs; let i = index">
+              <td style="text-align: left;">{{item.FullAssetName}}</td>
+              <td style="text-align: center;">{{item.CollateralUsageName}}</td>
+              <td style="text-align: center;">{{item.CollateralConditionName}}</td>
+              <td style="text-align: center;">{{item.SerialNo1}}</td>
+              <td style="text-align: center;">{{item.SerialNo2}}</td>
+              <td style="text-align: center;">{{item.SerialNo3}}</td>
+              <td style="text-align: right;">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
+              <td style="text-align: center;">{{item.InsAssetCoveredByDesc}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="SummaryAppObj.AppObj.BizTemplateCode == 'CFRFN4W'"> 
+    <lib-ucSubsection [id]="'viewLoanInfoId'" [title]="'Loan Object'" [panel]="'viewLoanInfo'">
+    </lib-ucSubsection>
+    <div class="form-body" id="viewLoanInfo">
+      <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortLoanData($event)">
         <thead>
           <tr class="table-header">
-            <th style="text-align: left;"><span class="thead-header" name="CollateralName" translate>
-              Collateral Name
-              </span>
+            <th><span translate class="thead-header" mat-sort-header="MrLoanPurposeDescr">Loan Purpose</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="CollateralUsage" translate>
-              Collateral Usage 
-              </span>
+            <th><span translate class="thead-header" mat-sort-header="IsDisburseToCust">Disburse To Cust</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="CollateralCondition" translate>
-              Collateral Condition
-              </span>
+            <th><span translate class="thead-header" mat-sort-header="BudgetPlanAmt">Budget Plan Amount</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="ChassisNo" translate>
-              Serial No 1
-              </span>
+            <th><span translate class="thead-header" mat-sort-header="SelfFinancingAmt">Self Financing</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="EngineNo" translate>
-              Serial No 2
-            </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="LicensePlateNo" translate>
-              Serial No 3
-            </span>
-            </th>
-            <th style="text-align: right;"><span class="thead-header" name="CollateralValue" translate>
-              Collateral Value  
-            </span>
-            </th>
-            <th style="text-align: right;"><span class="thead-header" name="CollateralValue" translate>
-              Insurance  
-            </span>
+            <th><span translate class="thead-header" mat-sort-header="FinancingAmt">Financing Amount</span>
             </th>
           </tr>
         </thead>
-        <tbody *ngIf = "SummaryAppObj?.AppCollateralObjs?.length == 0">
+        <tbody *ngIf = "LoanObjectData?.length == 0">
           <tr>
             <td colspan="100%">No Data Available</td>
           </tr>
         </tbody>
-        <tbody *ngIf = "SummaryAppObj?.AppCollateralObjs?.length > 0">
-          <tr *ngFor="let item of SummaryAppObj?.AppCollateralObjs; let i = index">
-            <td style="text-align: left;">{{item.FullAssetName}}</td>
-            <td style="text-align: center;">{{item.CollateralUsageName}}</td>
-            <td style="text-align: center;">{{item.CollateralConditionName}}</td>
-            <td style="text-align: center;">{{item.SerialNo1}}</td>
-            <td style="text-align: center;">{{item.SerialNo2}}</td>
-            <td style="text-align: center;">{{item.SerialNo3}}</td>
-            <td style="text-align: right;">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
-            <td style="text-align: center;">{{item.InsAssetCoveredByDesc}}</td>
+        <tbody>
+          <tr *ngFor="let item of LoanObjectData">
+            <td *ngIf="item.MrLoanPurposeDescr!=null">{{item.MrLoanPurposeDescr}}</td>
+            <td *ngIf="item.MrLoanPurposeDescr==null"> - </td>
+            <td *ngIf="item.IsDisburseToCust == true">Yes</td>
+            <td *ngIf="item.IsDisburseToCust != true">No</td>
+            <td *ngIf="item.IsDisburseToCust==null"> - </td>
+            <td *ngIf="item.BudgetPlanAmt!=null">{{item.BudgetPlanAmt | number: '.2':'en-US'}}</td>
+            <td *ngIf="item.BudgetPlanAmt==null"> - </td>
+            <td *ngIf="item.SelfFinancingAmt!=null">{{item.SelfFinancingAmt | number: '.2':'en-US'}}</td>
+            <td *ngIf="item.SelfFinancingAmt==null"> - </td>
+            <td *ngIf="item.FinancingAmt!=null">{{item.FinancingAmt | number: '.2':'en-US'}}</td>
+            <td *ngIf="item.FinancingAmt==null"> - </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <lib-ucSubsection [id]="'viewAppCollId'" [title]="'Collateral Information'" [panel]="'viewAppCollInfo'">
+    </lib-ucSubsection>
+    <div class="form-body" id="viewAppCollInfo">
+        <lib-ucgridview *ngIf="IsGridCollReady" [gridInput]="InputGridColl"></lib-ucgridview>
+    </div>
   </div>
+  
   <lib-ucSubsection [id]="'financialInfoId'" [title]="'Financial Information'" [panel]="'financialInfo'">
   </lib-ucSubsection>
   <div class="form-body" id="financialInfo">
