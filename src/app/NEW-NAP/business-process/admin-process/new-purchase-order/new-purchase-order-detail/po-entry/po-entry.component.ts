@@ -162,9 +162,38 @@ export class PoEntryComponent implements OnInit {
         break;
       }
     }
+    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.AppData = response;
+        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+          (response2) => {
+            var productOfferinH = response2;
+            var datePipe = new DatePipe("locale");
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+              (response) => {
+                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                this.Date = new Date(a);
+                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
+                this.PODetailForm.patchValue({
+                  PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
+                });
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
+        ).catch(
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  Save(){
+  Save() {
     var formValue = this.PODetailForm.value;
     var requestPurchaseOrderH = new PurchaseOrderHObj();
     var requestListPurchaseOrderD = new Array<PurchaseOrderDObj>();
@@ -180,7 +209,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.BankBranch = this.VendorBankAcc.BankCode;
       requestPurchaseOrderH.BankAccNo = this.VendorBankAcc.BankAccountNo;
       requestPurchaseOrderH.BankAccName = this.VendorBankAcc.BankAccountName;
-      requestPurchaseOrderH.Notes = formValue["Notes"];
+      requestPurchaseOrderH.Notes = this.PODetailForm.controls.Notes.value;
       requestPurchaseOrderH.NumOfExtension = 0;
       requestPurchaseOrderH.MouNo = this.MouNo;
 
@@ -207,7 +236,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.BankBranch = this.VendorBankAcc.BankCode;
       requestPurchaseOrderH.BankAccNo = this.VendorBankAcc.BankAccountNo;
       requestPurchaseOrderH.BankAccName = this.VendorBankAcc.BankAccountName;
-      requestPurchaseOrderH.Notes = formValue["Notes"];
+      requestPurchaseOrderH.Notes =this.PODetailForm.controls.Notes.value;
       requestPurchaseOrderH.NumOfExtension = this.PurchaseOrderH.NumOfExtension;
       requestPurchaseOrderH.MouNo = this.PurchaseOrderH.MouNo;
 
