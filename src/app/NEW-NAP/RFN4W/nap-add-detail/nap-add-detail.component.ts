@@ -214,7 +214,7 @@ export class NapAddDetailComponent implements OnInit {
     }
     this.ChangeTab(Step);
     this.ucViewMainProd.initiateForm();
-    this.stepper.next();
+    this.stepper.to(this.AppStepIndex)
   }
   
   LastStepHandler() {
