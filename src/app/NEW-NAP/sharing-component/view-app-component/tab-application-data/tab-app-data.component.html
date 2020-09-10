@@ -321,7 +321,8 @@
                   <label class="col-md-6 adInsLabel"> {{appFinDataObj?.MaxAllocatedRefundAmt | number:'.2':'en-US'}} </label>
                 </div>
                 <div class="row">
-                  <h5>List Commission</h5>
+                  <div class="col-md-12">
+                  <label class="adInsLabel font-weight-bold">List Commission</label>
                   <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
                     <thead>
                       <tr class="table-header">
@@ -354,6 +355,7 @@
                   </table>
                 </div>
               </div>
+              </div>
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Total Reserved Fund </label>
@@ -364,7 +366,8 @@
                 </div>
                 <br>
                 <div class="row">
-                  <h5>List Reserved Fund</h5>
+                  <div class="col-md-12">
+                  <label class="adInsLabel font-weight-bold">List Reserved Fund</label>
                   <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
                     <thead>
                       <tr class="table-header">
@@ -392,6 +395,7 @@
                     </tbody>
                   </table>
                 </div>
+               </div>
               </div>
             </div>
             <!-- <div class="col-md-6">
