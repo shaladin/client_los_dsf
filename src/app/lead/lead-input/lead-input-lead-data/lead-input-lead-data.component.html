@@ -153,8 +153,10 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Installment Amount</label>
                 <div class="col-md-5">
-                  <label class="col-md-5 adInsLabel"
-                    style="font-size: 13px;">{{LeadDataForm.controls.InstallmentAmt.value | number:'.2':'en-US'}}</label>
+                  <!-- <label class="col-md-5 adInsLabel"
+                    style="font-size: 13px;">{{LeadDataForm.controls.InstallmentAmt.value | number:'.2':'en-US'}}</label> -->
+                  <input type="text" currencyMask class="form-control adInsInput text-right col-md-5 adInsLabel"
+                    formControlName="InstallmentAmt">
                   <!-- <lib-ucinputnumber [parentForm]="LeadDataForm" [identifier]="'InstallmentAmt'"
                     [enjiForm]="enjiForm" [isRequired]="false"
                     ucNumber="LeadDataForm.controls.InstallmentAmt.value"></lib-ucinputnumber>  -->
