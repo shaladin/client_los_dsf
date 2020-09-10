@@ -274,7 +274,7 @@
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
                   <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.IsCover == true"> Yes </label>
-                  <label class="col-md-6 adInsLabel" *ngIf="!LifeInsData.IsCover == true"> No </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.IsCover != true"> No </label>
                 </div>
                 <div class="row" >
                   <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
