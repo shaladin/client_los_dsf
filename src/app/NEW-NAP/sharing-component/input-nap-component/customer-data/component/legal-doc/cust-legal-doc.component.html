@@ -21,7 +21,7 @@
         <th style="text-align: center;"><span class="thead-header" translate>Expired Date
         </span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>Release By
+        <th style="text-align: center;"><span class="thead-header" translate>Issued By
         </span>
         </th>
         <th><span translate class="thead-header" name='action'>Action</span></th>
@@ -94,19 +94,19 @@
                   </div>
                   <label class="col-md-2 {{isExpDateMandatory ? 'adins-required-label' : ''}}" for="expDt" translate>Expired Date</label>
                   <div class="col-md-4">
-                    <input type="date" id="expDt" class="form-control" formControlName="DocExpiredDt" min="{{MaxDate | date:'yyyy-MM-dd'}}"
+                    <input type="date" id="expDt" class="form-control" [readonly]="!LegalDocForm.controls['IsExpDtMandatory'].value" formControlName="DocExpiredDt" min="{{MaxDate | date:'yyyy-MM-dd'}}"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid }">
                     <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2" for="releaseBy" translate>Release By</label>
+                  <label class="col-md-2" for="releaseBy" translate>Issued By</label>
                   <div class="col-md-4">
                     <input type="text" class="form-control" id="releaseBy" formControlName="ReleaseBy"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.ReleaseBy.invalid }">
                     <lib-uc-show-errors [control]="LegalDocForm.controls.ReleaseBy" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2" for="releaseLocation" translate>Release Location</label>
+                  <label class="col-md-2" for="releaseLocation" translate>Issued Location</label>
                   <div class="col-md-4">
                     <input type="text" class="form-control" id="releaseLocation" formControlName="ReleaseLocation"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.ReleaseLocation.invalid }">

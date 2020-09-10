@@ -1173,6 +1173,7 @@ export class CustomerDataComponent implements OnInit {
 
     if (event["CustCompanyLegalDocObjs"] != undefined) {
       this.listLegalDoc = event["CustCompanyLegalDocObjs"];
+      console.log(this.listLegalDoc);
     }
 
     if (event["CustCompanyFinDataObj"] != undefined) {

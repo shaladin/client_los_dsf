@@ -76,13 +76,13 @@ export class CustLegalDocComponent implements OnInit {
     if(isExpDt){
       this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
-      this.LegalDocForm.controls["DocExpiredDt"].enable();
+      // this.LegalDocForm.controls["DocExpiredDt"].enable();
       this.isExpDateMandatory = true;
     }
     else{
       this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
-      this.LegalDocForm.controls["DocExpiredDt"].disable();
+      // this.LegalDocForm.controls["DocExpiredDt"].disable();
       this.isExpDateMandatory = false;
     }
   }
@@ -127,22 +127,23 @@ export class CustLegalDocComponent implements OnInit {
       MrLegalDocTypeCode: this.listLegalDoc[i].MrLegalDocTypeCode,
       DocNo: this.listLegalDoc[i].DocNo,
       DocDt: formatDate(this.listLegalDoc[i].DocDt, 'yyyy-MM-dd', 'en-US'),
-      DocExpiredDt: this.listLegalDoc[i].IsExpDtMandatory ? formatDate(this.listLegalDoc[i].DocExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+      DocExpiredDt: formatDate(this.listLegalDoc[i].DocExpiredDt, 'yyyy-MM-dd', 'en-US'),
       ReleaseBy: this.listLegalDoc[i].ReleaseBy,
       DocNotes: this.listLegalDoc[i].DocNotes,
       ReleaseLocation: this.listLegalDoc[i].ReleaseLocation,
       IsExpDtMandatory: this.listLegalDoc[i].IsExpDtMandatory
     });
+    console.log(this.LegalDocForm);
     if(this.listLegalDoc[i].IsExpDtMandatory){
       this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
-      this.LegalDocForm.controls["DocExpiredDt"].enable();
+      // this.LegalDocForm.controls["DocExpiredDt"].enable();
       this.isExpDateMandatory = true;
     }
     else{
       this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
-      this.LegalDocForm.controls["DocExpiredDt"].disable();
+      // this.LegalDocForm.controls["DocExpiredDt"].disable();
       this.isExpDateMandatory = false;
     }
     this.selectedLegalDocName = this.listLegalDoc[i].LegalDocName;
