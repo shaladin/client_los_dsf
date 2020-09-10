@@ -20,7 +20,14 @@
             </div>
             <div class="form-group row">
               <label class="col-md-3 adInsLabel" for="MrFeeTypeCode" translate>Disburse to Account No.</label>
-              <label class="col-md-9 adInsLabel" for="MrFeeTypeCode" translate>{{PODetailForm.controls.BankAccNo.value}}</label>
+              <!-- <label class="col-md-9 adInsLabel" for="MrFeeTypeCode" translate>{{PODetailForm.controls.BankAccNo.value}}</label> -->
+              <div class="col-md-3">
+                <select class="form-control adInsInput" formControlName="BankAccNo" (change)="BankAccHandler()"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.BankAccNo.invalid }">
+                  <option *ngFor="let bankAcc of vendorBankAccList" [value]="bankAcc.BankAccountNo">{{bankAcc.BankAccountNo}}</option>
+                </select>
+                <lib-uc-show-errors  [control]="PODetailForm.controls.BankAccNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+              </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 adInsLabel adins-required-label" for="FeeAmt" translate>Total Disburse Amount</label>
@@ -42,7 +49,7 @@
               <label class="col-md-3 adInsLabel adins-required-label" for="PurchaseOrderExpiredDt" translate>Expired Date</label>
               <div class="col-md-3">
                 <label class="col-md-9 adInsLabel" translate>{{ExpirationDate}}</label>
-                <input type="date" [hidden]="true" class="form-control adInsInput" formControlName="PurchaseOrderExpiredDt" onkeypress="return false;"
+                <input type="date" [hidden]="true" class="form-control adInsInput" formControlName="PurchaseOrderExpiredDt" [min]="BusinessDt | date: 'yyyy-MM-dd'" onkeypress="return false;"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.PurchaseOrderExpiredDt.invalid }" />
                 <!-- <lib-uc-show-errors  [control]="PODetailForm.controls.PurchaseOrderExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors > -->
               </div>
