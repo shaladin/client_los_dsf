@@ -327,6 +327,8 @@ export class TabAppDataComponent implements OnInit {
   }  
   
   async GetLifeInsData() {
+    this.InputGridLifeIns = new InputGridObj();
+    this.InputGridLifeIns.pagingJson = "./assets/ucgridview/gridAppLifeInsurance.json";
     var obj = {
       AppId: this.AppId,
       RowVersion: ""

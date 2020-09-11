@@ -171,7 +171,7 @@ export class MouCustGrpMbrComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: ['', [Validators.maxLength(4000)]],
-        IsReversible: [false]
+        //IsReversible: [false]
       })
     }else{
       return this.fb.group({
@@ -180,7 +180,7 @@ export class MouCustGrpMbrComponent implements OnInit {
         CustName: [''],
         MrCustRelationshipCode: [MouCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
         CustGrpNotes: [MouCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
-        IsReversible: [MouCustGrpObj.IsReversible == null ? false : MouCustGrpObj.IsReversible],
+        //IsReversible: [MouCustGrpObj.IsReversible == null ? false : MouCustGrpObj.IsReversible],
       })
     } 
   }

@@ -106,7 +106,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.refMasterRecommendation.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSlsRecom;
     this.refMasterWOP.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
     this.refMasterCalcMethod.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSingleInstCalcMethod;
-    this.refMasterAppPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAppPaidBy;
+    this.refMasterAppPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodePaidBy;
     this.refMasterRecourseType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRecourseType;
     this.refMasterIntrstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
     this.refMasterTOPType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeTopCalcBased;
