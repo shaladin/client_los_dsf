@@ -293,21 +293,21 @@
                   <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.LifeInsFee != null"> {{LifeInsData.LifeInsFee}} </label>
                   <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.LifeInsFee == null"> - </label>
                 </div>
-              </div>
-            </div>
-              <h4>Life Insurance Object</h4>
-              <div class="form-body" id="viewAppLifeInsInfo">
+              </div> 
+              <div class="col-md-12">
+                <lib-ucSubsection [id]="'viewAppLifeInsInfoId'" [title]="'Life Insurance Object'" [panel]="'viewAppLifeInsInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" id="viewAppLifeInsInfo">
                   <lib-ucgridview *ngIf="IsGridLifeInsReady" [gridInput]="InputGridLifeIns"></lib-ucgridview>
+                </div>
               </div>
             </div>
           </div>
-          
           <lib-ucSubsection [id]="'viewAppTcId'" [title]="'Term & Condition'" [panel]="'viewAppTcInfo'">
           </lib-ucSubsection>
           <div class="form-body" id="viewAppTcInfo">
               <lib-ucgridview *ngIf="IsGridTcReady" [gridInput]="inputGridObj"></lib-ucgridview>
           </div>
-
           <lib-ucSubsection [id]="'viewCommissionInfoId'" [title]="'Commission'" [panel]="'viewCommissionInfo'">
           </lib-ucSubsection>
           <div class="form-body" id="viewCommissionInfo">
@@ -322,7 +322,8 @@
                   <label class="col-md-6 adInsLabel"> {{appFinDataObj?.MaxAllocatedRefundAmt | number:'.2':'en-US'}} </label>
                 </div>
                 <div class="row">
-                  <h5>List Commission</h5>
+                  <div class="col-md-12">
+                  <label class="adInsLabel font-weight-bold">List Commission</label>
                   <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
                     <thead>
                       <tr class="table-header">
@@ -355,6 +356,7 @@
                   </table>
                 </div>
               </div>
+              </div>
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6 adInsLabel"> Total Reserved Fund </label>
@@ -365,9 +367,10 @@
                 </div>
                 <br>
                 <div class="row">
-                  <h5>List Reserved Fund</h5>
+                  <div class="col-md-12">
+                  <label class="adInsLabel font-weight-bold">List Reserved Fund</label>
                   <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
-                    <thead>
+                    <thead>x  
                       <tr class="table-header">
                         <th><span translate class="thead-header" > No </span>
                         </th>
@@ -393,6 +396,7 @@
                     </tbody>
                   </table>
                 </div>
+               </div>
               </div>
             </div>
             <!-- <div class="col-md-6">
