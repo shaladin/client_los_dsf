@@ -1,4 +1,4 @@
-import { InputLookupAddr } from "./InputLookupAddr.Model";
+import { InputLookupObj } from "./InputLookupObj.Model";
 
 export class InputFieldObj{
     addr: string;
@@ -16,7 +16,7 @@ export class InputFieldObj{
     areaCode2: string;
     areaCode1: string;
     city: string;
-    inputLookupObj: InputLookupAddr;
+    inputLookupObj: InputLookupObj;
 
     constructor()
     {
@@ -35,6 +35,6 @@ export class InputFieldObj{
         this.areaCode2 = "";
         this.areaCode1 = "";
         this.city = "";
-        this.inputLookupObj = new InputLookupAddr();
+        this.inputLookupObj = new InputLookupObj();
     }
 }

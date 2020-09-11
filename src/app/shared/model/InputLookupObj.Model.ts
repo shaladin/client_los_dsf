@@ -20,7 +20,7 @@ export class InputLookupObj{
 
     constructor()
     {
-        this.urlJson = "";
+        this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
         this.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.urlEnviPaging = environment.FoundationR3Url;
         this.jsonSelect = "";
