@@ -33,7 +33,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
   CustConfirm = this.fb.group({
-    Notes: [""],
+    Notes: ["", Validators.required],
     Phn: ["", Validators.required],
     MrVerfResultHStatCode: ["", Validators.required],
     VerfResultDForm: this.fb.array([])
@@ -45,6 +45,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   BizTemplateCode: string;
   SubjectResponse: RefMasterObj = new RefMasterObj();
   cust: any;
+  isFailed: boolean = false;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -101,7 +102,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.verfQuestionAnswerObj = response[CommonConstant.ReturnObj];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
-          this.GenerateFormVerfQuestion();
+          this.GenerateFormVerfQuestion(CommonConstant.VerfResultStatSuccess);
         }
       });
   }
@@ -146,7 +147,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.VerfResultHList = response["responseVerfResultHCustomObjs"];
       });
   }
-  GenerateFormVerfQuestion() {
+  GenerateFormVerfQuestion(result) {
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
     var grpListObj = this.verfQuestionAnswerObj.VerfQuestionAnswerListObj;
 
@@ -185,7 +186,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               VerfResultHId: 0,
               VerfQuestionAnswerId: QuestionList[j].VerfQuestionAnswerId,
               VerfQuestionText: QuestionList[j].VerfQuestionText,
-              Answer: ["", Validators.required],
+              Answer: ["", result == CommonConstant.VerfResultStatSuccess ? Validators.required : []],
               Notes: "",
               SeqNo: j + 1,
               Score: 0,
@@ -203,7 +204,9 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               this.ListVerfAnswer[i].push("");
             }
           } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
+            if(result == CommonConstant.VerfResultStatSuccess){
+              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
+            }
             this.ListVerfAnswer[i].push("");
           } else {
             this.ListVerfAnswer[i].push("");
@@ -262,14 +265,23 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         else {
           this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);
           formDirective.resetForm();
-          this.clearform();
+          this.clearform(CommonConstant.VerfResultStatSuccess, false);
         }
       });
   }
-  clearform() {
+
+  ResultHandler(){
+    var value = this.CustConfirm.controls["MrVerfResultHStatCode"].value;
+    if(value != CommonConstant.VerfResultStatSuccess){
+      this.isFailed = true;
+    }
+    this.clearform(value, false);
+  }
+  
+  clearform(resultStat, isInit) {
     this.CustConfirm.reset();
     this.CustConfirm = this.fb.group({
-      Notes: [""],
+      Notes: ["", Validators.required],
       Phn: ["", Validators.required],
       MrVerfResultHStatCode: ["", Validators.required],
       VerfResultDForm: this.fb.array([])
@@ -278,17 +290,26 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.CustConfirm.markAsUntouched();
 
 
-    this.GenerateFormVerfQuestion();
+    this.GenerateFormVerfQuestion(resultStat);
     if (this.PhnList.length > 0) {
       this.CustConfirm.patchValue({
         Phn: this.PhnList[0].Key
       });
     }
-    if (this.RefStatusList.length > 0) {
+
+    if(isInit){
+      if (this.RefStatusList.length > 0) {
+        this.CustConfirm.patchValue({
+          MrVerfResultHStatCode: this.RefStatusList[0].Key
+        });
+      }
+    }
+    else{
       this.CustConfirm.patchValue({
-        MrVerfResultHStatCode: this.RefStatusList[0].Key
+        MrVerfResultHStatCode: resultStat
       });
     }
+    
   }
 
   OpenView(key: string){

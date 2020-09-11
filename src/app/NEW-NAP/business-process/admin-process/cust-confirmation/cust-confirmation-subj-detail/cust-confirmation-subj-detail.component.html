@@ -32,7 +32,7 @@
                 <label class="label-control col-md-6">{{agrmntObj.CustName}}</label>
               </div>
               <div class="row">
-                <label class="label-control col-md-6">Notes</label>
+                <label class="label-control col-md-6 adins-required-label">Notes</label>
                 <div class="col-md-6">
                   <textarea class="form-control" formControlName="Notes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Notes.invalid }"></textarea>
@@ -57,7 +57,7 @@
               </div>
               <div class="row">
                 <label class="label-control col-md-6">Result</label>
-                <select class="form-control" formControlName="MrVerfResultHStatCode"
+                <select class="form-control" formControlName="MrVerfResultHStatCode" (change)="ResultHandler()"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.MrVerfResultHStatCode.invalid }">
                   <option *ngFor="let item of RefStatusList" [value]="item.Key">{{item.Value}}</option>
                 </select>
@@ -69,7 +69,7 @@
           </div>
         </div>
         <!-- Verification Question -->
-        <div formArrayName="VerfResultDForm">
+        <div formArrayName="VerfResultDForm" [hidden]="CustConfirm.controls.MrVerfResultHStatCode.value === 'FAIL'">
           <div class="form-body" [formGroupName]="i"
                *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm.controls; let i = index">
             <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
@@ -79,7 +79,7 @@
               <span formArrayName="VerfQuestionAnswerList">
                 <div class="form-group row" [formGroupName]="j"
                      *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
-                  <label class="col-md-3 adins-required-label" translate>
+                  <label class="col-md-3 {{isFailed ? '' : 'adins-required-label'}}" translate>
                     {{QRList.value.QuestionGrp.VerfQuestionText}}
                   </label>
                   <div class="col-md-5" formGroupName="ResultGrp">
