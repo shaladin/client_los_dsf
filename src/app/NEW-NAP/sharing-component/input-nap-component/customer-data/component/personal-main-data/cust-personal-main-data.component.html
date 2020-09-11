@@ -89,21 +89,21 @@
         <div class="form-group row">
           <label class="col-md-4" for="email1" translate>Email 1</label>
           <div class="col-md-8">
-            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" id="email1" formControlName="Email1">
+            <input type="text" class="form-control" id="email1" formControlName="Email1">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email2" translate>Email 2</label>
           <div class="col-md-8">
-            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="Email2" id="email2">
+            <input type="text" class="form-control" formControlName="Email2" id="email2">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email3" translate>Email 3</label>
           <div class="col-md-8">
-            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="Email3" id="email3">
+            <input type="text" class="form-control" formControlName="Email3" id="email3">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
