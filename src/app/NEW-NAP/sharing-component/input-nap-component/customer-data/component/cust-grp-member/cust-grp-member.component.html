@@ -2,7 +2,8 @@
 </lib-ucSubsection>
 <div id="custGrp">
   <div class="form-actions right">
-    <button type="button" name="add" id="add" (click)="addCustGrp()" class="btn btn-raised btn-primary">
+    <button type="button" name="add" id="add" (click)="addCustGrp()" class="btn btn-raised btn-primary"
+    *ngIf = "parentForm.controls[identifier].controls.length == 0">
       Add
     </button>
   </div>
@@ -14,7 +15,7 @@
           <th><span translate class="thead-header">Customer Name</span></th>
           <th><span translate class="thead-header">Customer Relationship</span></th>
           <th><span translate class="thead-header">Notes</span></th>
-          <th><span translate class="thead-header">Both Way</span></th>
+          <!--th><span translate class="thead-header">Both Way</span></th-->
           <th><span translate class="thead-header">Action</span></th>
         </tr>
       </thead>
@@ -44,10 +45,10 @@
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes.invalid }"></textarea>
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
-          <td [formGroupName]="i" class="text-center">
+          <!--td [formGroupName]="i" class="text-center">
             <input class="border-primary" type="checkbox" formControlName="IsReversible" />
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].IsReversible" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
-          </td>
+          </td-->
           <td [formGroupName]="i">
             <a class="danger p-0" (click)="deleteCustGrp(i)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
