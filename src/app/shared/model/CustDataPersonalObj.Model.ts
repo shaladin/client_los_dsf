@@ -5,6 +5,8 @@ import { AppCustPersonalContactPersonObj } from "./AppCustPersonalContactPersonO
 import { AppCustPersonalFinDataObj } from "./AppCustPersonalFinDataObj.Model";
 import { AppCustPersonalJobDataObj } from "./AppCustPersonalJobDataObj.Model";
 import { AppCustSocmedObj } from "./AppCustSocmedObj.Model";
+import { AppCustGrpObj } from "./AppCustGrpObj.Model";
+import { AppCustBankAccObj } from "./AppCustBankAccObj.Model";
 
 
 export class CustDataPersonalObj {
@@ -13,12 +15,12 @@ export class CustDataPersonalObj {
     AppCustAddrLegalObj: AppCustAddrObj;
     AppCustAddrResidenceObj: AppCustAddrObj;
     AppCustAddrMailingObj: AppCustAddrObj;
-    AppCustPersonalContactPersonObjs: any;
+    AppCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj>;
     AppCustPersonalFinDataObj: AppCustPersonalFinDataObj;
-    AppCustBankAccObjs: any;
+    AppCustBankAccObjs: Array<AppCustBankAccObj>;
     AppCustPersonalJobDataObj: AppCustPersonalJobDataObj;
-    AppCustSocmedObjs: any;
-    AppCustGrpObjs: any;
+    AppCustSocmedObjs: Array<AppCustSocmedObj>;
+    AppCustGrpObjs: Array<AppCustGrpObj>;
     RowVersion: any;
 
     constructor() { 
@@ -29,6 +31,11 @@ export class CustDataPersonalObj {
         this.AppCustAddrMailingObj = new AppCustAddrObj();
         this.AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
         this.AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
+        this.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
+        this.AppCustGrpObjs = new Array<AppCustGrpObj>();
+        this.AppCustBankAccObjs = new Array<AppCustBankAccObj>();
+        this.AppCustPersonalContactPersonObjs = new Array<AppCustPersonalContactPersonObj>();
+
         this.RowVersion = ""; 
     }
 }
