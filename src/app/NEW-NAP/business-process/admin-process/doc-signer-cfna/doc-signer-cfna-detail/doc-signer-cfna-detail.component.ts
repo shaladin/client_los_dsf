@@ -115,11 +115,11 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         } else {
           this.mode = "edit";
 
-          this.inputLookupOfficeEmp1Obj.isReady = true;
-          this.inputLookupOfficeEmp2Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
+          // this.inputLookupOfficeEmp1Obj.isReady = true;
+          // this.inputLookupOfficeEmp2Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
@@ -342,7 +342,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         },
         error => {
           console.log(error);
@@ -352,7 +352,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         },
         error => {
           console.log(error);
