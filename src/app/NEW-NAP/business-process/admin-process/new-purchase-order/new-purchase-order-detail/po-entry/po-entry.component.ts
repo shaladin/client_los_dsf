@@ -130,15 +130,11 @@ export class PoEntryComponent implements OnInit {
         this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
           (response2) => {
             var productOfferinH = response2;
-            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
-                for(let i = 0; i < response["ReturnObject"]["ProdOffComponents"][0]["Components"].length; i++){
-                  if(response["ReturnObject"]["ProdOffComponents"][0]["Components"][i]["ProdCompntName"] == "Credit Approval Result Expiration Days"){
-                    this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][i]["CompntValue"]));
-                  }
-                }
+                    this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
 
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
                 this.PODetailForm.patchValue({
