@@ -335,7 +335,7 @@ export class TabAppDataComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppLifeInsHByAppId, obj).toPromise().then(
       (response) => {
-        if(response["AppId"]!=0){
+        if(response["AppLifeInsHId"]!=0){
         this.LifeInsData.IsCover = true;
         this.LifeInsData.LifeInscoBranchName = response["LifeInscoBranchName"];
         this.LifeInsData.NewCoverNotes = response["NewCoverNotes"];
