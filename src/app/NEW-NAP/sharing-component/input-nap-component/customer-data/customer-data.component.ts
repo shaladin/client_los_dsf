@@ -937,7 +937,7 @@ export class CustomerDataComponent implements OnInit {
           }
         }
         else {
-          this.MrCustTypeCode = this.CustTypeObj[1].Key;
+          this.MrCustTypeCode = this.CustTypeObj[0].Key;
         }
         this.isBindDataDone = true;
       },
@@ -1379,7 +1379,7 @@ export class CustomerDataComponent implements OnInit {
   CheckBox(ev: MatRadioChange) {
     // clearing if not edit
     if (!this.isExisting) {
-      if (ev.value == 'PERSONAL') {
+      if (ev.value == CommonConstant.CustTypePersonal) {
         this.CustDataForm.controls['personalMainData'].patchValue({
           CustFullName: [''],
           MrIdTypeCode: [''],
@@ -1437,7 +1437,7 @@ export class CustomerDataComponent implements OnInit {
         this.CustDataForm.controls['personalMainData']['controls']["BirthPlace"].enable();
         this.CustDataForm.controls['personalMainData']['controls']["BirthDt"].enable();
       }
-      if (ev.value == 'COMPANY') {
+      if (ev.value == CommonConstant.CustTypeCompany) {
         this.CustDataCompanyForm.controls['companyMainData'].patchValue({
           CustNo: [''],
           IndustryTypeCode: [''],
