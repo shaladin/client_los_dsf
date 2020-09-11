@@ -115,11 +115,11 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         } else {
           this.mode = "edit";
 
-          this.inputLookupOfficeEmp1Obj.isReady = true;
-          this.inputLookupOfficeEmp2Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
+          // this.inputLookupOfficeEmp1Obj.isReady = true;
+          // this.inputLookupOfficeEmp2Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
