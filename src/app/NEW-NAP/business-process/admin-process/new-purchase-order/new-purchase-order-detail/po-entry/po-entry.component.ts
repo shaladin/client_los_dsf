@@ -134,7 +134,12 @@ export class PoEntryComponent implements OnInit {
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                for(let i = 0; i < response["ReturnObject"]["ProdOffComponents"][0]["Components"].length; i++){
+                  if(response["ReturnObject"]["ProdOffComponents"][0]["Components"][i]["ProdCompntName"] == "Credit Approval Result Expiration Days"){
+                    this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][i]["CompntValue"]));
+                  }
+                }
+
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
                 this.PODetailForm.patchValue({
                   PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
