@@ -248,6 +248,11 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               this.criteriaList.push(this.criteriaObj);
               this.inputLookupExistColl.addCritInput = this.criteriaList;
             }
+            else{
+              this.criteriaObj.value = "null";
+              this.criteriaList.push(this.criteriaObj);
+              this.inputLookupExistColl.addCritInput = this.criteriaList;
+            }
             this.inputLookupExistColl.isReady = true;
           }
         ).catch(
