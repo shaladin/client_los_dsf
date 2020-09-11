@@ -232,7 +232,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         AllocationFrom: [ruleObj[i].AllocationFrom],
         AllocationFromDesc: [ruleObj[i].AllocationFromDesc],
         MaxAllocationAmount: [maxAllocAmt],
-        AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(maxAllocAmt)]],
+        AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)]],
         AllocationBehaviour: [behaviour],
         TaxAmt: [0],
         VatAmt: [0],
