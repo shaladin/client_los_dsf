@@ -293,9 +293,11 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if(this.MaritalStatObj.length > 0){
-          this.parentForm.controls[this.identifier].patchValue({
-            MrMaritalStatCode: this.MaritalStatObj[0].Key
-          });
+          if(this.custDataPersonalObj.MouCustPersonalObj.MrMaritalStatCode==null){
+            this.parentForm.controls[this.identifier].patchValue({
+              MrMaritalStatCode: this.MaritalStatObj[0].Key
+            });
+          }
           this.ChangeMaritalStats();
         }
       }

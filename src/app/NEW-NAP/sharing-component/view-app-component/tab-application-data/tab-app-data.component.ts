@@ -84,7 +84,7 @@ export class TabAppDataComponent implements OnInit {
     this.LifeInsData = {
       IsCover: false,
       LifeInscoBranchName: "",
-      NewCoverNotes: 0,
+      NewCoverNotes: "",
       LifeInsFee: "",
     };
   }
@@ -327,12 +327,15 @@ export class TabAppDataComponent implements OnInit {
   }  
   
   async GetLifeInsData() {
+    this.InputGridLifeIns = new InputGridObj();
+    this.InputGridLifeIns.pagingJson = "./assets/ucgridview/gridAppLifeInsurance.json";
     var obj = {
       AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppLifeInsHByAppId, obj).toPromise().then(
       (response) => {
+        if(response["AppId"]!=0){
         this.LifeInsData.IsCover = true;
         this.LifeInsData.LifeInscoBranchName = response["LifeInscoBranchName"];
         this.LifeInsData.NewCoverNotes = response["NewCoverNotes"];
@@ -342,7 +345,9 @@ export class TabAppDataComponent implements OnInit {
         }
         this.InputGridLifeIns.resultData["Data"] = new Array();
         this.InputGridLifeIns.resultData.Data = response["ListAppLifeInsD"]
+      }
       });
+    
     this.IsGridLifeInsReady = true;
   }
 

@@ -226,9 +226,6 @@ export class ReferantorDataComponent implements OnInit {
     this.appReferantorObj.TaxIdZipcode = ev.ZipCode;
     this.appReferantorObj.MrTaxCalcMethod = ev.MrTaxCalcMethod;
 
-    this.NapAppReferantorForm.patchValue({
-      AccountBank: ""
-    });
     
     // this.NpwpOn = ev.IsNPWPExist;
     this.NpwpOn = true;
@@ -248,8 +245,13 @@ export class ReferantorDataComponent implements OnInit {
         this.bankItems = response[CommonConstant.ReturnObj];
         // if(this.bankItems.length == 0){
         //   this.NapAppReferantorForm.get("AccountBank").clearValidators();
-        //   this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity();
-        // }
+        //   this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity(); 
+        // } 
+        var bankItem = this.bankItems.find(x => x.IsDefault == true); 
+     
+        this.NapAppReferantorForm.patchValue({
+          AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : "" 
+        }); 
       });
   }
 

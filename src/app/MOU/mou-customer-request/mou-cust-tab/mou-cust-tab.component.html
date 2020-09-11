@@ -19,7 +19,7 @@
       #enjiForm="ngForm">
       <div class="form-body">
         <div *ngIf="isBindDataDone == true">
-          <app-mou-cust-personal-main (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)" [MouCustId]="MouCustId" [IsSpouseExist]="IsSpouseExist"
+          <app-mou-cust-personal-main (isMarried)="MaritalChanged($event)"  (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)" [MouCustId]="MouCustId" [IsSpouseExist]="IsSpouseExist"
             [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'PersonalMain'"></app-mou-cust-personal-main>
             <lib-ucaddress [addressObj]="inputAddrLegalPersonalObj" [enjiForm]="enjiForm" [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">

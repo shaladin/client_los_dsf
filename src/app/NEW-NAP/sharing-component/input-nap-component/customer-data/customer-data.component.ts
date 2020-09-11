@@ -27,6 +27,11 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { MatRadioChange } from '@angular/material/radio/typings/public-api';
+import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
+import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
+import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -88,9 +93,10 @@ export class CustomerDataComponent implements OnInit {
   listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
-  listContactPersonCompany: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
+  isExisting: boolean = false;
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
   getCustDataUrl: any;
@@ -868,6 +874,7 @@ export class CustomerDataComponent implements OnInit {
       (response) => {
         if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
+            this.isExisting = true;
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
             this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
@@ -901,6 +908,7 @@ export class CustomerDataComponent implements OnInit {
           }
 
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
+            this.isExisting = true;
             this.custDataCompanyObj = new CustDataCompanyObj();
             this.custDataCompanyObj.AppCustObj = response["AppCustObj"];
             this.custDataCompanyObj.AppCustCompanyObj = response["AppCustCompanyObj"];
@@ -1173,6 +1181,7 @@ export class CustomerDataComponent implements OnInit {
 
     if (event["CustCompanyLegalDocObjs"] != undefined) {
       this.listLegalDoc = event["CustCompanyLegalDocObjs"];
+      console.log(this.listLegalDoc);
     }
 
     if (event["CustCompanyFinDataObj"] != undefined) {
@@ -1365,6 +1374,105 @@ export class CustomerDataComponent implements OnInit {
     }
     else {
       this.IsSpouseExist = false;
+    }
+  }
+
+  CheckBox(ev: MatRadioChange) {
+    // clearing if not edit
+    if (!this.isExisting) {
+      if (ev.value == CommonConstant.CustTypePersonal) {
+        this.CustDataForm.controls['personalMainData'].patchValue({
+          CustFullName: [''],
+          MrIdTypeCode: [''],
+          MrGenderCode: [''],
+          IdNo: [''],
+          MotherMaidenName: [''],
+          IdExpiredDt: [''],
+          MrMaritalStatCode: [''],
+          BirthPlace: [''],
+          BirthDt: [''],
+          MrNationalityCode: [''],
+          TaxIdNo: [''],
+          MobilePhnNo1: [''],
+          MrEducationCode: [''],
+          MobilePhnNo2: [''],
+          MrReligionCode: [''],
+          MobilePhnNo3: [''],
+          IsVip: [false],
+          Email1: [''],
+          FamilyCardNo: [''],
+          Email2: [''],
+          NoOfResidence: [''],
+          Email3: [''],
+          NoOfDependents: ['0'],
+        });
+
+        this.legalAddrObj = new AddrObj();
+        this.inputFieldLegalObj.inputLookupObj.nameSelect = "";
+        this.inputFieldLegalObj.inputLookupObj.jsonSelect = {};
+        this.inputAddressObjForLegal.default = null;
+        this.inputAddressObjForLegal.inputField = new InputFieldObj();
+
+        this.mailingAddrObj = new AddrObj();
+        this.inputFieldMailingObj.inputLookupObj.nameSelect = "";
+        this.inputFieldMailingObj.inputLookupObj.jsonSelect = {};
+        this.inputAddressObjForMailing.default = null;
+        this.inputAddressObjForMailing.inputField = new InputFieldObj();
+
+        this.residenceAddrObj = new AddrObj();
+        this.inputFieldResidenceObj.inputLookupObj.nameSelect = "";
+        this.inputFieldResidenceObj.inputLookupObj.jsonSelect = {};
+        this.inputAddressObjForResidence.default = null;
+        this.inputAddressObjForResidence.inputField = new InputFieldObj();
+
+        this.listAppCustPersonalContactInformation = new Array<AppCustPersonalContactPersonObj>();
+        this.listAppCustBankAcc = new Array<AppCustBankAccObj>();
+        this.custDataPersonalObj.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
+        this.custDataPersonalObj.AppCustPersonalFinDataObj= new AppCustPersonalFinDataObj();
+        this.custDataPersonalObj.AppCustGrpObjs=new Array<AppCustGrpObj>();
+        this.custDataPersonalObj.AppCustPersonalJobDataObj=new AppCustPersonalJobDataObj();
+
+        this.CustDataForm.controls['personalMainData']['controls']["MrIdTypeCode"].enable();
+        this.CustDataForm.controls['personalMainData']['controls']["IdNo"].enable();
+        this.CustDataForm.controls['personalMainData']['controls']["TaxIdNo"].enable();
+        this.CustDataForm.controls['personalMainData']['controls']["BirthPlace"].enable();
+        this.CustDataForm.controls['personalMainData']['controls']["BirthDt"].enable();
+      }
+      if (ev.value == CommonConstant.CustTypeCompany) {
+        this.CustDataCompanyForm.controls['companyMainData'].patchValue({
+          CustNo: [''],
+          IndustryTypeCode: [''],
+          CustModelCode: [''],
+          CompanyBrandName: [''],
+          MrCompanyTypeCode: [''],
+          NumOfEmp: [0],
+          IsAffiliated: [false],
+          EstablishmentDt: [''],
+          TaxIdNo: [''],
+          IsVip: [false]
+        });
+        
+        this.legalAddrCompanyObj = new AddrObj();
+        this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
+        this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
+        this.inputAddressObjForLegalCoy.default = null;
+        this.inputAddressObjForLegalCoy.inputField = new InputFieldObj();
+
+        this.mailingAddrCompanyObj = new AddrObj();
+        this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = "";
+        this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = {};
+        this.inputAddressObjForMailingCoy.default = null;
+        this.inputAddressObjForMailingCoy.inputField = new InputFieldObj();
+
+        this.listShareholder = new Array<AppCustCompanyMgmntShrholderObj>();
+        this.listContactPersonCompany = new Array<AppCustCompanyContactPersonObj>();
+        this.custDataCompanyObj.AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
+        this.listAppCustBankAccCompany = new Array<AppCustBankAccObj>();
+        this.listLegalDoc = new Array<AppCustCompanyLegalDocObj>();
+        this.custDataCompanyObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
+
+        this.CustDataCompanyForm.controls['companyMainData']['controls']["TaxIdNo"].enable();
+      }
     }
   }
 }

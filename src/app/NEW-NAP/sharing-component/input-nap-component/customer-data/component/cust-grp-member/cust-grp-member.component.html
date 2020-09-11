@@ -37,8 +37,9 @@
             <option *ngFor="let item of CustRelationshipObjs[i]?.list" value="{{item.Key}}">
               {{item.Value}}
             </option>
-            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].MrCustRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
-          </select></td>
+          </select>
+          <lib-uc-show-errors class="text-left" [control]="parentForm.controls[identifier]['controls'][i]['controls'].MrCustRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
+          </td>
           <td [formGroupName]="i" class="text-center">
             <textarea rows="5" class="form-control" formControlName="CustGrpNotes"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes.invalid }"></textarea>
