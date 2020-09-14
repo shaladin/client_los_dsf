@@ -87,7 +87,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appCustObj: any;
   assetUsageObj: any
   returnAssetUsageObj: any;
-  getAppAssetByAppAssetId: any;
+  getAllAssetDataByAppAssetId: any;
   appAssetObj: any;
   returnAppAssetObj: any;
   reqAssetMasterObj: any;
@@ -208,7 +208,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.addEditAllAssetDataUrl = URLConstant.AddEditAllAssetData;
     this.getRefCoy = URLConstant.GetRefCoy;
     this.getAppCustUrl = URLConstant.GetAppCustByAppId;
-    this.getAppAssetByAppAssetId = URLConstant.GetAllAssetDataByAppId;
+    this.getAllAssetDataByAppAssetId = URLConstant.GetAllAssetDataByAppAssetId;
     this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
     this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
@@ -286,7 +286,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
         this.inputFieldLocationAddrObj = new InputFieldObj();
         this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
+        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false; 
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
         this.inputAddressObjForLoc.default = this.locationAddrObj;
@@ -492,8 +492,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.title = "Asset Location";
-    this.inputAddressObjForLoc.showSubsection = false;
-    this.inputAddressObjForLoc.isRequired = false;
+    this.inputAddressObjForLoc.showSubsection = false; 
     this.inputAddressObjForLoc.showAllPhn = false;
     this.inputAddressObjForLoc.showOwnership = false;
 
@@ -507,8 +506,8 @@ export class AssetDataAddEditComponent implements OnInit {
       // this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
 
       this.appAssetObj = new AppAssetObj();
-      this.appAssetObj.AppId = this.AppId;
-      await this.http.post(this.getAppAssetByAppAssetId, this.appAssetObj).toPromise().then(
+      this.appAssetObj.AppAssetId = this.AppAssetId;
+      await this.http.post(this.getAllAssetDataByAppAssetId, this.appAssetObj).toPromise().then(
         (response) => {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
