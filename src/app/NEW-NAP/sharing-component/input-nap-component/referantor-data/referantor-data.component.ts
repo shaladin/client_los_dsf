@@ -45,9 +45,10 @@ export class ReferantorDataComponent implements OnInit {
   ExistedData;
   arrAddCrit;
   async ngOnInit() {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAA")
     this.appReferantorObj = new NapAppReferantorModel();
     this.ExistedData = false;
-    
+
     await this.GetAppData();
     this.GetInputLookupObj();
     this.getAppReferantorData();
@@ -63,7 +64,7 @@ export class ReferantorDataComponent implements OnInit {
     );
   }
 
-  GetInputLookupObj(){
+  GetInputLookupObj() {
     this.arrAddCrit = new Array();
 
     var addCrit = new CriteriaObj();
@@ -80,7 +81,7 @@ export class ReferantorDataComponent implements OnInit {
     // addCrit1.listValue = [1];
     // this.arrAddCrit.push(addCrit1);
 
-    var addCrit3 = new CriteriaObj(); 
+    var addCrit3 = new CriteriaObj();
     addCrit3.DataType = "text";
     addCrit3.propName = "ro.OFFICE_CODE";
     addCrit3.restriction = AdInsConstant.RestrictionIn;
@@ -98,7 +99,7 @@ export class ReferantorDataComponent implements OnInit {
     this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
     this.inputLookupObj.isRequired = false;
   }
-  
+
   getAppReferantorData() {
     // data dummy test
     // var tempId = 11;
@@ -112,10 +113,10 @@ export class ReferantorDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
-        if(response["AppReferantorId"]!=0){
+        if (response["AppReferantorId"] != 0) {
           this.ReferantorOn = true;
           this.ExistedData = true;
-          this.appReferantorObj = response;    
+          this.appReferantorObj = response;
           this.inputLookupObj.nameSelect = this.appReferantorObj.ReferantorName;
           this.inputLookupObj.jsonSelect = response;
           this.NapAppReferantorForm.controls.AccountBank.enable();
@@ -148,14 +149,14 @@ export class ReferantorDataComponent implements OnInit {
         this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Save Edit Data');
-          this.outputTab.emit();
+        this.outputTab.emit();
       } else {
         // delete & go to paging
         url = URLConstant.DeleteAppReferantor;
-        this.SaveData(url);    
+        this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Remove Data');
-          this.outputTab.emit();
+        this.outputTab.emit();
       }
     } else {
       if (this.ReferantorOn) {
@@ -168,12 +169,12 @@ export class ReferantorDataComponent implements OnInit {
         this.outputTab.emit();
       } else {
         // this.wizard.goToNextStep();
-          this.outputTab.emit();
+        this.outputTab.emit();
       }
     }
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -226,10 +227,10 @@ export class ReferantorDataComponent implements OnInit {
     this.appReferantorObj.TaxIdZipcode = ev.ZipCode;
     this.appReferantorObj.MrTaxCalcMethod = ev.MrTaxCalcMethod;
 
-    
+
     // this.NpwpOn = ev.IsNPWPExist;
     this.NpwpOn = true;
-    
+
     this.getDDLBank(ev.ReferantorCode);
   }
 
@@ -247,11 +248,15 @@ export class ReferantorDataComponent implements OnInit {
         //   this.NapAppReferantorForm.get("AccountBank").clearValidators();
         //   this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity(); 
         // } 
-        var bankItem = this.bankItems.find(x => x.IsDefault == true); 
-     
+        var bankItem = this.bankItems.find(x => x.IsDefault == true);
+        this.appReferantorObj.RefBankCode = bankItem.BankCode;
+        this.appReferantorObj.BankAccNo = bankItem.BankAccountNo;
+        this.appReferantorObj.BankAccName = bankItem.BankAccountName;
+
+
         this.NapAppReferantorForm.patchValue({
-          AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : "" 
-        }); 
+          AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : ""
+        });
       });
   }
 

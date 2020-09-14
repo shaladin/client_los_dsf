@@ -50,6 +50,21 @@
         </ng-template>
       </mat-tab>
     </mat-tab-group>
+    
+    <div class="ng-star-inserted">
+      <div class="row margin-bot-15">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="px-3">
+                <app-approval-hist [AppId]="appId"></app-approval-hist>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        
     <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
     </lib-ucapproval> 
   </div>
