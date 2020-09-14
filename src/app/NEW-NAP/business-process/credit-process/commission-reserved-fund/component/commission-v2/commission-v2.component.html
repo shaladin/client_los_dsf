@@ -6,13 +6,13 @@
         <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
           #enjiForm="ngForm">
           <div class="form-body">
-            <app-form-commission-generate #Form1 *ngIf="OnForm1" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+            <app-form-commission-generate #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
             </app-form-commission-generate>
-            <app-form-commission-generate #Form2 *ngIf="OnForm2" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+            <app-form-commission-generate #Form2 *ngIf="OnForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp"
               [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate>
-            <app-form-commission-generate #Form3 *ngIf="OnForm3" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+            <app-form-commission-generate #Form3 *ngIf="OnForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
             </app-form-commission-generate>
           </div>
