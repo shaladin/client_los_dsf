@@ -33,8 +33,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   SalesAppInfoForm = this.fb.group({
     MouCustId: ['', Validators.required],
-    TopBased: ['', Validators.required],
-    MrSalesRecommendCode: ['', Validators.required],
+    TopBased: ['', Validators.required], 
     SalesNotes: [''],
     SalesOfficerNo: ['', Validators.required],
     SalesHeadNo: [''],
@@ -81,7 +80,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
   resultData: any;
   allPayFreq: any;
   allInSalesOffice: any;
-
+  responseApp : any;
+  responseProd : any;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -106,7 +106,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.refMasterRecommendation.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSlsRecom;
     this.refMasterWOP.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
     this.refMasterCalcMethod.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSingleInstCalcMethod;
-    this.refMasterAppPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAppPaidBy;
+    this.refMasterAppPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodePaidBy;
     this.refMasterRecourseType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRecourseType;
     this.refMasterIntrstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
     this.refMasterTOPType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeTopCalcBased;
@@ -138,9 +138,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
       (response) => {
         this.allIntrstType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
-          this.SalesAppInfoForm.patchValue({
-            InterestType: this.allIntrstType[0].Key
-          });
+          if(this.responseProd.MrProdBehaviourCode == CommonConstant.ProductBehaviourDefault ){
+            this.SalesAppInfoForm.patchValue({
+              InterestType:  this.allIntrstType[0].Key
+            });
+          }else{ 
+            this.SalesAppInfoForm.controls.InterestType.disable();
+            this.SalesAppInfoForm.patchValue({
+              InterestType: this.responseProd.CompntValue
+            }); 
+          } 
+        }else{
+          if(this.responseProd.MrProdBehaviourCode == CommonConstant.ProductBehaviourLock ){
+            this.SalesAppInfoForm.controls.InterestType.disable();
+          }
         }
       });
 
@@ -184,16 +195,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           });
         }
       });
-
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterRecommendation).subscribe(
-      (response) => {
-        this.allSlsRecom = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
-          this.SalesAppInfoForm.patchValue({
-            MrSalesRecommendCode: this.allSlsRecom[0].Key
-          });
-        }
-      })
+ 
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
       (response) => {
@@ -414,10 +416,25 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.makeLookUpObj();
   }
 
-  loadData() {
+  async loadData() {
     var obj = {
       AppId: this.AppId
     }
+ 
+    await this.http.post(URLConstant.GetAppById, obj).toPromise().then(
+      (response) => {
+        this.responseApp = response
+      });
+    var prodObj = {
+      ProdOfferingCode: this.responseApp.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
+      ProdOfferingVersion: this.responseApp.ProdOfferingVersion
+    }
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
+      (response) => {
+        this.responseProd = response;
+      });
+
 
     this.http.post(URLConstant.GetApplicationDataByAppId, obj).subscribe(
       (response) => {
@@ -430,8 +447,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
         if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0) {
           this.mode = "add";
-          this.SalesAppInfoForm.patchValue({
-            MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+          this.SalesAppInfoForm.patchValue({ 
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,
@@ -453,8 +469,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           this.CalculateNumOfInst(true, this.SalesAppInfoForm.controls.Tenor.value);
         } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0) {
           this.mode = "edit";
-          this.SalesAppInfoForm.patchValue({
-            MrSalesRecommendCode: this.resultData.MrSalesRecommendCode,
+          this.SalesAppInfoForm.patchValue({ 
             MouCustId: this.resultData.MouCustId,
             SalesNotes: this.resultData.SalesNotes,
             SalesOfficerNo: this.resultData.SalesOfficerNo,

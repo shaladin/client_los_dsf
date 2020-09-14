@@ -42,7 +42,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   tempSalesUsername: any;
   tempAgencyCode: any;
   getListRefOffice: string;
-  getListActiveLob: string;
   getListActiveRefMasterUrl: string;
   getVendorByVendorCode: string;
   getLeadPersonalForLookup: string;
@@ -92,7 +91,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.editLead = URLConstant.EditLead;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.getListRefOffice = URLConstant.GetListKvpActiveRefOfficeForPaging;
-    this.getListActiveLob = URLConstant.GetListActiveLob;
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getVendorByVendorCode = URLConstant.GetVendorByVendorCode;
     this.getLeadPersonalForLookup = URLConstant.GetLeadPersonalForLookupCopy;
@@ -217,9 +215,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.GetOfficeDDL();
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     
-    this.refLobObj = new RefLobObj();
-    this.refLobObj.RefLobId = "-"
-    this.http.post(this.getListActiveLob, this.refLobObj).subscribe(
+    this.http.post(this.getListActiveRefMasterUrl, {RefMasterTypeCode: "LOB"}).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({

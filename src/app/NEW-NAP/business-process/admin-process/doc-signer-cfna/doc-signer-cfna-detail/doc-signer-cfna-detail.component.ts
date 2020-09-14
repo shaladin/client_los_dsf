@@ -115,11 +115,11 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         } else {
           this.mode = "edit";
 
-          this.inputLookupOfficeEmp1Obj.isReady = true;
-          this.inputLookupOfficeEmp2Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
+          // this.inputLookupOfficeEmp1Obj.isReady = true;
+          // this.inputLookupOfficeEmp2Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
@@ -143,7 +143,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
             MrJobPositionSupplBranchEmpName: this.ResponseAgrmntSignerObj.MrJobPositionSupplBranchEmpName,
             MrJobPositionMfEmpNo1Name: this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo1Name,
             MrJobPositionMfEmpNo2Name: this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo2Name,
-            MrJobPositionMgmntShrholder1Name: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Name,
+            MrJobPositionMgmntShrholder1Code: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Code,
             MrJobPositionMgmntShrholder2Name: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder2Name,
             MrJobPositionMgmntShrholder3Name: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder3Name,
           })
@@ -184,7 +184,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
             this.isSupplierExists = true;
           }
         }
-        console.log("this.inputLookupBranchEmpObj: " + JSON.stringify(this.inputLookupBranchEmpObj));
     
         var crit2Obj = new CriteriaObj();
         crit2Obj.propName = 'RM.REF_MASTER_TYPE_CODE';
@@ -252,6 +251,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
           this.inputLookupOfficeEmp1Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName1 };
           this.inputLookupOfficeEmp2Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName2 };
           this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
+          this.inputLookupAppCustCompanyShareHolder1Obj.nameSelect = this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name;
           this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
           this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
         }
@@ -342,7 +342,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         },
         error => {
           console.log(error);
@@ -352,7 +352,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         },
         error => {
           console.log(error);

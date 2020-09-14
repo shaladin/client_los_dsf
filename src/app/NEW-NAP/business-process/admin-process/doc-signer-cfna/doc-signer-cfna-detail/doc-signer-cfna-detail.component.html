@@ -8,7 +8,7 @@
                   <form class="form form-horizontal" [formGroup]="DocSignerForm"
                       (ngSubmit)="DocSignerForm.valid && SaveForm()" #enjiForm="ngForm">
                       <div *ngIf="MrCustTypeCode == 'COMPANY'">
-                          <div *ngIf="isSupplierExists">
+                          <!-- <div *ngIf="isSupplierExists">
                               <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
                                   [panel]="'SupplierSigner'">
                               </lib-ucSubsection>
@@ -36,7 +36,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                          </div> -->
                               <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
                                   [panel]="'CompanySigner'">
                               </lib-ucSubsection>
@@ -114,7 +114,7 @@
                                       </div>
                                   </div>
                               </div>
-                              <lib-ucSubsection [id]="'ApproverSignerId'" [title]="'Approver Signer'"
+                              <!-- <lib-ucSubsection [id]="'ApproverSignerId'" [title]="'Approver Signer'"
                                   [panel]="'ApproverSigner'">
                               </lib-ucSubsection>
                               <div class="form-body" id="ApproverSigner">
@@ -168,10 +168,10 @@
                                           </lib-uc-show-errors>
                                       </div>
                                   </div>
-                              </div>
+                              </div> -->
                       </div>
                       <div *ngIf="MrCustTypeCode == 'PERSONAL'">
-                          <div *ngIf="isSupplierExists">
+                          <!-- <div *ngIf="isSupplierExists">
                               <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
                                   [panel]="'SupplierSigner'">
                               </lib-ucSubsection>
@@ -199,7 +199,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                          </div> -->
                           <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
                               [panel]="'CompanySigner'">
                           </lib-ucSubsection>
@@ -257,7 +257,7 @@
                       </div>
                       <div class="form-actions right">
                           <button type="button" class="btn btn-raised btn-warning mr-1"
-                              [routerLink]="['/Nap/AdminProcess/DocumentSigner/Paging']"
+                              [routerLink]="['/Nap/AdminProcess/NewDocumentSigner/Paging']"
                               [queryParams]="{'BizTemplateCode': BizTemplateCode}" translate>
                               <i class="fa fa-times "></i> Cancel
                           </button>

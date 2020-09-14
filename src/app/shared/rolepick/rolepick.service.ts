@@ -58,13 +58,14 @@ export class RolePickService {
                     RoleCode: item.RoleCode,
                     JobTitleCode: item.JobTitleCode,
                     RequestDateTime: item.BusinessDt,
+                    ModuleCode : "LOS",
                     Ip: "",
                     RowVersion: ""
 
                 };
                 this.http.post(url, roleObject).subscribe(
                     (response) => {
-                        localStorage.setItem("Menu", JSON.stringify(response["returnObject"]));
+                        localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
                         localStorage.setItem("Token", response["Token"]);
                         AdInsHelper.CreateUserAccess(response);
                         // var currentUserContext = new CurrentUserContext;

@@ -71,7 +71,7 @@ export class CollateralDetailComponent implements OnInit {
     AssetCategoryCode: ['', Validators.required],
     AssetTaxCode: [''],
     CollateralNotes: [''],
-    CollateralPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(100)]],
+    CollateralPrcnt: ['', [Validators.required, Validators.max(100)]],
     IsMainCollateral: true,
     ManufacturingYear: ['', Validators.pattern("^[0-9]*$")],
     CollateralNo: [''],
@@ -474,7 +474,6 @@ export class CollateralDetailComponent implements OnInit {
           this.items.push(eachDataDetail);
           if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-            this.items.controls[i]['controls']['SerialNoValue'].disable();
             this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
           }
         }

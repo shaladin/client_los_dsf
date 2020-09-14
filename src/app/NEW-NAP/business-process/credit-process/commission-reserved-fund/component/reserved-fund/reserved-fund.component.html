@@ -82,7 +82,7 @@
                   <button *ngIf="showCancel" type="button"  class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                     <i class="ft-x"></i> Cancel
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary">
+                  <button type="submit" class="btn btn-raised btn-primary" *ngIf="ReturnHandlingHObj.ReturnHandlingHId <= 0">
                     <i class="far fa-check-square"></i> Save
                   </button>
                   <!--<button type="button" class="btn btn-raised btn-primary" (click)="test()">

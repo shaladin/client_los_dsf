@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -18,7 +20,9 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class NapAddDetailComponent implements OnInit {
 
+  custType: string = CommonConstant.CustTypePersonal;
   private stepper: Stepper;
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
@@ -99,6 +103,8 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
         (response: AppObj) => {
           if (response) {
+            if (response["MrCustTypeCode"] != null)
+            this.custType = response["MrCustTypeCode"];
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
             this.stepper.to(this.AppStepIndex);
           } else {
@@ -115,10 +121,10 @@ export class NapAddDetailComponent implements OnInit {
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
-        AppId: this.appId,
+        ReturnHandlingHId: this.ReturnHandlingHId,
         MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
       }
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
@@ -182,9 +188,20 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
+      this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
+    if(Step == 'GUAR'){
+      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            if (response["MrCustTypeCode"] != null)
+            this.custType = response["MrCustTypeCode"];
+          }
+        });
+    }
+
     if (this.ReturnHandlingHId > 0) {
 
     }
@@ -196,8 +213,10 @@ export class NapAddDetailComponent implements OnInit {
       )
     }
     this.ChangeTab(Step);
-    this.stepper.next();
+    this.ucViewMainProd.initiateForm();
+    this.stepper.to(this.AppStepIndex)
   }
+  
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(

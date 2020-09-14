@@ -18,7 +18,6 @@ export class TermConditionsComponent implements OnInit {
 
   totalCheckAll: number = 0;
   totalMandatory: number = 0;
-
   @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
   @Output() OutputMode: EventEmitter<any> = new EventEmitter();
   @Input() IsCheckedAll: boolean = true;
@@ -26,6 +25,7 @@ export class TermConditionsComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
+  @Input() IsNap: boolean;
   businessDt: Date;
 
   MinDate: Date;
@@ -72,9 +72,9 @@ export class TermConditionsComponent implements OnInit {
             }
             if (this.AppTcList[i].IsChecked == false) {
               TCDetail.controls.ExpiredDt.disable();
-            } else {
+            } else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
               TCDetail.controls.PromisedDt.disable();
-
+              TCDetail.controls.IsChecked.disable();
               if(!this.AppTcList[i].IsExpDtMandatory){
                 TCDetail.controls.ExpiredDt.disable();
               }
@@ -115,15 +115,16 @@ export class TermConditionsComponent implements OnInit {
                 if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                   this.IsCheckedAll = false;
                 }
-                if (this.AppTcList[i].IsChecked == false) {
-                  TCDetail.controls.ExpiredDt.disable();
-                } else {
-                  TCDetail.controls.PromisedDt.disable();
-
-                  if(!this.AppTcList[i].IsExpDtMandatory){
+              
+                  if (this.AppTcList[i].IsChecked == false) {
                     TCDetail.controls.ExpiredDt.disable();
-                  }
-                }
+                  } else {
+                    TCDetail.controls.PromisedDt.disable(); 
+                    if(!this.AppTcList[i].IsExpDtMandatory){
+                      TCDetail.controls.ExpiredDt.disable();
+                    }
+                }  
+ 
                 listTC.push(TCDetail);
                 this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
               }
@@ -133,7 +134,7 @@ export class TermConditionsComponent implements OnInit {
             }
           );
         }
-      });
+      }); 
   }
 
   ReconstructForm() {

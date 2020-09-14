@@ -28,6 +28,7 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -90,7 +91,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
-  listContactPersonCompany: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
   getRefMasterUrl: any;
@@ -127,6 +128,10 @@ export class CustomerDataFL4WComponent implements OnInit {
   MrCustTypeCode: any;
   isSocmedValid: boolean = true;
   isMarried: boolean = false;
+  IsSpouseExist: boolean = false;
+  isSpouseOk: boolean = true;
+  spouseGender: string = "";
+  
 
   constructor(
     private fb: FormBuilder,
@@ -191,10 +196,14 @@ export class CustomerDataFL4WComponent implements OnInit {
           }
         }
       }
-
       if (!this.isSocmedValid) {
         return;
       }
+      if (!this.isSpouseOk) {
+        this.toastr.warningMessage(ExceptionConstant.INPUT_SPOUSE_CONTACT_INFO);
+        return;
+      }
+
       this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
         (response) => {
           if (response["StatusCode"] == 200) {
@@ -252,6 +261,14 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.setAppCustAddrResidence();
     this.setAppCustAddrMailing();
     this.setAppCustPersonalFinData();
+    var CheckSpouseContactInfo = this.listAppCustPersonalContactInformation.find(
+      x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
+    if (CheckSpouseContactInfo == null && this.isMarried == true) {
+      this.isSpouseOk = false;
+    }
+    else {
+      this.isSpouseOk = true;
+    }
     this.custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
     this.custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
     this.setAppCustPersonalJobData();
@@ -585,6 +602,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         appCustGrpObj.CustNo = this.CustDataForm.controls["custGrpMember"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataForm.controls["custGrpMember"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataForm.controls["custGrpMember"].value[i].CustGrpNotes;
+        appCustGrpObj.IsReversible = this.CustDataForm.controls["custGrpMember"].value[i].IsReversible;
         this.custDataPersonalObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
@@ -596,6 +614,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         appCustGrpObj.CustNo = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustGrpNotes;
+        appCustGrpObj.IsReversible = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].IsReversible;
         this.custDataCompanyObj.AppCustGrpObjs.push(appCustGrpObj);
       }
     }
@@ -604,6 +623,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
   getCustContactInformation(event) {
     this.listAppCustPersonalContactInformation = event;
+    this.CheckSpouseExist();
   }
 
   getAppCustBankAcc(event) {
@@ -645,6 +665,8 @@ export class CustomerDataFL4WComponent implements OnInit {
 
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
+      this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
+      this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
     }
 
     if (event == CommonConstant.AddrTypeResidence) {
@@ -665,6 +687,8 @@ export class CustomerDataFL4WComponent implements OnInit {
 
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
+      this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
+      this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
     }
 
     if (event == CommonConstant.AddrTypeMailing) {
@@ -685,6 +709,8 @@ export class CustomerDataFL4WComponent implements OnInit {
 
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value;
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value };
+      this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
+      this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
     }
   }
 
@@ -825,6 +851,8 @@ export class CustomerDataFL4WComponent implements OnInit {
             this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
             this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
             this.isMarried = this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
+            this.spouseGender = this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode;
+            this.CheckSpouseExist();
           }
 
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
@@ -1047,6 +1075,7 @@ export class CustomerDataFL4WComponent implements OnInit {
 
     if (event["CustPersonalContactPersonObjs"] != undefined) {
       this.listAppCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
+      this.CheckSpouseExist();
     }
 
     this.custDataPersonalObj.AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
@@ -1088,6 +1117,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custGrpMemberComponent.copyAppGrp();
     }
 
+    this.spouseGender = event["CustPersonalObj"]["MrGenderCode"];
     this.isMarried = event["CustPersonalObj"]["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
   }
 
@@ -1264,5 +1294,27 @@ export class CustomerDataFL4WComponent implements OnInit {
 
   EmitToMainComp() {
     this.outputTab.emit(this.MrCustTypeCode);
+  }
+
+  CheckSpouseExist() {
+    var CheckSpouseContactInfo = this.listAppCustPersonalContactInformation.find(
+      x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
+    if (CheckSpouseContactInfo != null) {
+      this.IsSpouseExist = true;
+    }
+    else {
+      this.IsSpouseExist = false;
+    }
+  }
+  GenderChanged(event) {
+    if (event.IsSpouseDelete == true) {
+      for (let i = 0; i < this.listAppCustPersonalContactInformation.length; i++) {
+        if (this.listAppCustPersonalContactInformation[i].MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse) {
+          this.listAppCustPersonalContactInformation.splice(i, 1);
+        }
+        this.IsSpouseExist = false;
+      }
+    }
+    this.spouseGender = event.SpouseGender;
   }
 }

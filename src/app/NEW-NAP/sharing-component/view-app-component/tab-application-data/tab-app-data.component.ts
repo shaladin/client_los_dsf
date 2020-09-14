@@ -84,7 +84,7 @@ export class TabAppDataComponent implements OnInit {
     this.LifeInsData = {
       IsCover: false,
       LifeInscoBranchName: "",
-      NewCoverNotes: 0,
+      NewCoverNotes: "",
       LifeInsFee: "",
     };
   }
@@ -110,7 +110,7 @@ export class TabAppDataComponent implements OnInit {
   async GetGuarantorData() {
     var obj = {
       AppGuarantorObj: {
-        AppID: this.AppId
+        AppId: this.AppId
       },
       RowVersion: ""
     };
@@ -143,7 +143,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetReferantorData() {
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
@@ -156,7 +156,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetAppDetailData() {
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
@@ -190,7 +190,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCommData() {
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
@@ -210,7 +210,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetRsvFundData() {
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppReservedFundByAppId, obj).toPromise().then(
@@ -289,7 +289,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetLoanObjectData(){
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).toPromise().then(
@@ -310,7 +310,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCrossData(){
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
@@ -327,12 +327,15 @@ export class TabAppDataComponent implements OnInit {
   }  
   
   async GetLifeInsData() {
+    this.InputGridLifeIns = new InputGridObj();
+    this.InputGridLifeIns.pagingJson = "./assets/ucgridview/gridAppLifeInsurance.json";
     var obj = {
-      AppID: this.AppId,
+      AppId: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppLifeInsHByAppId, obj).toPromise().then(
       (response) => {
+        if(response["AppLifeInsHId"]!=0){
         this.LifeInsData.IsCover = true;
         this.LifeInsData.LifeInscoBranchName = response["LifeInscoBranchName"];
         this.LifeInsData.NewCoverNotes = response["NewCoverNotes"];
@@ -342,7 +345,9 @@ export class TabAppDataComponent implements OnInit {
         }
         this.InputGridLifeIns.resultData["Data"] = new Array();
         this.InputGridLifeIns.resultData.Data = response["ListAppLifeInsD"]
+      }
       });
+    
     this.IsGridLifeInsReady = true;
   }
 

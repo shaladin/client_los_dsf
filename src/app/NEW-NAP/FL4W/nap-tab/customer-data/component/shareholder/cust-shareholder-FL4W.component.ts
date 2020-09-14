@@ -71,7 +71,7 @@ export class CustShareholderFL4WComponent implements OnInit {
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     BirthPlace: ['', Validators.maxLength(200)],
-    BirthDt: [''],
+    BirthDt: ['', Validators.required],
     IdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
     TaxIdNo: ['', [Validators.maxLength(50)]],
     IdExpiredDt: [''],
@@ -81,7 +81,8 @@ export class CustShareholderFL4WComponent implements OnInit {
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
-    EstablishmentDt: ['']
+    EstablishmentDt: [''],
+    IsGuarantor: [false]
   });
   businessDt: Date;
 
@@ -204,7 +205,8 @@ export class CustShareholderFL4WComponent implements OnInit {
         Email: this.listShareholder[i].Email,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         MrJobPositionCode: this.listShareholder[i].MrJobPositionCode,
-        IsSigner: this.listShareholder[i].IsSigner
+        IsSigner: this.listShareholder[i].IsSigner,
+        IsGuarantor: this.listShareholder[i].IsGuarantor
       });
       if(this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != ""){
         this.InputLookupCustomerObj.isReadonly = true;
@@ -230,7 +232,8 @@ export class CustShareholderFL4WComponent implements OnInit {
         EstablishmentDt: this.listShareholder[i].EstablishmentDt != undefined && this.listShareholder[i].EstablishmentDt != "" ? formatDate(this.listShareholder[i].EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
         TaxIdNo: this.listShareholder[i].TaxIdNo,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
-        IsSigner: this.listShareholder[i].IsSigner
+        IsSigner: this.listShareholder[i].IsSigner,
+        IsGuarantor: this.listShareholder[i].IsGuarantor
       });
       this.selectedCustTypeName = this.listShareholder[i].CustTypeName;
       this.selectedJobPositionName = this.defaultJobPositionName;
@@ -265,7 +268,7 @@ export class CustShareholderFL4WComponent implements OnInit {
       MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: [this.defaultIdType, Validators.maxLength(50)],
       BirthPlace: ['', Validators.maxLength(200)],
-      BirthDt: [''],
+      BirthDt: ['', Validators.required],
       IdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
       TaxIdNo: ['', [Validators.maxLength(50),Validators.pattern("^[0-9]+$")]],
       IdExpiredDt: [''],
@@ -275,7 +278,8 @@ export class CustShareholderFL4WComponent implements OnInit {
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],
       MrCompanyTypeCode: [this.defaultCompanyType, Validators.maxLength(50)],
-      EstablishmentDt: ['']
+      EstablishmentDt: [''],
+      IsGuarantor: [false]
     });
     this.selectedCustNo = "";
     this.selectedJobPositionName = this.defaultJobPositionName;
@@ -386,6 +390,7 @@ export class CustShareholderFL4WComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.MrJobPositionCode = this.CustShareholderForm.controls.MrJobPositionCode.value;
       this.appCustCompanyMgmntShrholderObj.JobPositionName = this.selectedJobPositionName;
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
+      this.appCustCompanyMgmntShrholderObj.IsGuarantor = this.CustShareholderForm.controls.IsGuarantor.value;
     }
 
     if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypeCompany){
@@ -398,6 +403,7 @@ export class CustShareholderFL4WComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.EstablishmentDt = this.CustShareholderForm.controls.EstablishmentDt.value;
       this.appCustCompanyMgmntShrholderObj.TaxIdNo = this.CustShareholderForm.controls.TaxIdNo.value;
       this.appCustCompanyMgmntShrholderObj.SharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
+      this.appCustCompanyMgmntShrholderObj.IsGuarantor = this.CustShareholderForm.controls.IsGuarantor.value;
     }
   }
 

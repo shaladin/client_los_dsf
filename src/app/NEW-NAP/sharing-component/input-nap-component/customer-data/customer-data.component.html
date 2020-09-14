@@ -4,8 +4,8 @@
       <div class="form-group row">
         <label class="col-md-2" translate>Customer Type</label>
         <div class="col-md-10">
-          <mat-radio-group [(ngModel)]="MrCustTypeCode" name="MrCustTypeCode">
-            <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of CustTypeObj"
+          <mat-radio-group [(ngModel)]="MrCustTypeCode" name="MrCustTypeCode" (change)="CheckBox($event)">
+            <mat-radio-button [disabled]="isExisting" class="custom-control custom-radio display-inline-block" *ngFor="let item of CustTypeObj"
               [value]="item.Key">
               {{item.Value}}
             </mat-radio-button>

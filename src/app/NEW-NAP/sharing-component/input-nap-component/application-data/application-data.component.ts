@@ -608,7 +608,4 @@ export class ApplicationDataComponent implements OnInit {
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
-
-  test(){
-  }
 }

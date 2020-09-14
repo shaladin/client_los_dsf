@@ -20,14 +20,6 @@
         },
         {
             "type": "textbox",
-            "name": "vApv.TRX_NO",
-            "id": "TrxNoId",
-            "value": "",
-            "label": "Transaction Number",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
             "name": "vApv.APV_NO",
             "id": "ApvNoId",
             "value": "",
@@ -86,12 +78,6 @@
             "position": "left",
             "label": "Customer Name",
             "name": "CustName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Transaction No",
-            "name": "TrxNo"
         },
         {
             "type": "sort",
@@ -238,6 +224,29 @@
                         ]
                     },
                     "isHide": false
+                    },
+                    {
+                    "conditions": [
+                        {
+                        "property": "BizTemplateCode",
+                        "value": "CFNA",
+                        "restriction": "EQ"
+                        }
+                    ],
+                    "result": {
+                        "type": "link",
+                        "position": "center",
+                        "property": "AgrmntNo",
+                        "target" : "_blank",
+                        "path": "/View/AgrmntView",
+                        "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        }
+                        ]
+                    },
+                    "isHide": false
                     }
                 ]
                 }
@@ -247,11 +256,6 @@
             "type": "text",
             "position": "left",
             "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "TrxNo"
         },
         {
             "type": "text",

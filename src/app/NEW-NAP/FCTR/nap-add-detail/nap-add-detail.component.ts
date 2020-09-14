@@ -58,9 +58,8 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.wfTaskListId > 0) {
-      this.ClaimTask();
-    }
+    
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;

@@ -76,6 +76,12 @@
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'PERSONAL'">
               <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="custName" translate>Name</label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustShareholderForm" [identifier]="'lookupCustomerShareholder'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
@@ -100,7 +106,7 @@
                   </select>
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>Birth Place / Date</label>
+                <label class="col-md-2 adins-required-label" translate>Birth Place / Date</label>
                 <div class="col-md-2" style="border-right: 1px solid grey">
                   <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthPlace.invalid}">
@@ -169,6 +175,12 @@
               </div>
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'COMPANY'">
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
+                </div>
+              </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="custName" translate>Name</label>
                 <div class="col-md-4">
