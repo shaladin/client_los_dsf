@@ -5,7 +5,7 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && SaveData()" #enjiForm="ngForm">
             <div class="form-body">
-              <app-term-conditions [AppId]="AppId" [parentForm]="AppTcForm" [enjiForm]="enjiForm" (OutputMode)="SetMode($event)">
+              <app-term-conditions [AppId]="AppId" [parentForm]="AppTcForm" [enjiForm]="enjiForm" (OutputMode)="SetMode($event)" [IsNap]="'true'">
               </app-term-conditions>
               <!-- <ng-container formArrayName="AppTc">
                   <table class="table table-responsive-md text-center table-hover">

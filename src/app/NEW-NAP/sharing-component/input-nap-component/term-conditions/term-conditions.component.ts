@@ -25,6 +25,7 @@ export class TermConditionsComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
+  @Input() IsNap: boolean;
   businessDt: Date;
 
   MinDate: Date;
@@ -71,7 +72,7 @@ export class TermConditionsComponent implements OnInit {
             }
             if (this.AppTcList[i].IsChecked == false) {
               TCDetail.controls.ExpiredDt.disable();
-            } else {
+            } else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
               TCDetail.controls.PromisedDt.disable();
               TCDetail.controls.IsChecked.disable();
               if(!this.AppTcList[i].IsExpDtMandatory){
