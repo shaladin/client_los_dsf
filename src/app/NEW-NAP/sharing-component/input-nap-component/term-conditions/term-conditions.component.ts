@@ -25,7 +25,7 @@ export class TermConditionsComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
-  @Input() IsNap: boolean;
+  @Input() IsNap: boolean = false;
   businessDt: Date;
 
   MinDate: Date;
