@@ -209,10 +209,10 @@ export class ReferantorDataComponent implements OnInit {
     this.appReferantorObj.ReferantorCode = ev.ReferantorCode;
     this.appReferantorObj.ReferantorName = ev.ReferantorName;
     this.appReferantorObj.MrReferantorType = ev.ReferantorType;
-    // this.appReferantorObj.RefBankCode = ev.BankCode;
-    // this.appReferantorObj.BankAccNo = ev.BankAccNo;
-    // this.appReferantorObj.BankAccName = ev.BankAccName;
-    // this.appReferantorObj.BankBranch;
+    this.appReferantorObj.RefBankCode = ev.BankCode;
+    this.appReferantorObj.BankAccNo = ev.BankAccNo;
+    this.appReferantorObj.BankAccName = ev.BankAccName;
+    this.appReferantorObj.BankBranch;
 
     this.appReferantorObj.TaxpayerNo = ev.TaxPayerNo;
     this.appReferantorObj.TaxIdNo = ev.TaxIdNo;
@@ -248,7 +248,9 @@ export class ReferantorDataComponent implements OnInit {
         //   this.NapAppReferantorForm.get("AccountBank").updateValueAndValidity(); 
         // } 
         var bankItem = this.bankItems.find(x => x.IsDefault == true); 
-     
+        this.appReferantorObj.RefBankCode = bankItem.BankCode;
+        this.appReferantorObj.BankAccNo = bankItem.BankAccountNo;
+        this.appReferantorObj.BankAccName = bankItem.BankAccountName;
         this.NapAppReferantorForm.patchValue({
           AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : "" 
         }); 
