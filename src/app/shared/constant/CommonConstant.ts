@@ -414,7 +414,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeInvestmentType = "INVESTMENT_TYPE";
   public static RefMasterTypeCodeLegalDocType = "LEGAL_DOC_TYPE";
   public static RefMasterTypeCodeCustRelationship = "CUST_RELATIONSHIP";
-  public static RefMasterTypeCodeSourceIncome = "SOURCE_INCOME";
+  public static RefMasterTypeCodeSourceIncome = "SOURCE_OF_INCOME";
   public static RefMasterTypeCodeNationality = "NATIONALITY";
   public static RefMasterTypeCodeEducation = "EDUCATION";
   public static RefMasterTypeCodeReligion = "RELIGION";
