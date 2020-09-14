@@ -229,7 +229,7 @@
                     ucNumber="LeadDataForm.controls.InstallmentAmt.value"></lib-ucinputnumber>  -->
                 </div>
               </div>
-              <div class="form-group row" style="text-align: right;" *ngIf="lobKta == 'CFNA'">
+              <div class="form-group row" style="text-align: right;" *ngIf="returnLobCode != 'CFNA'">
                 <button type="button" class="btn btn-raised btn-primary mr-1" (click)="calculateKta()" translate>
                   <i class="fa fa-check-square-o"></i> Calculate
                 </button>

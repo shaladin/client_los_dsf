@@ -161,6 +161,7 @@ export class LeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("aa")
     this.items = this.LeadDataForm.get('items') as FormArray;
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
@@ -440,29 +441,29 @@ export class LeadDataComponent implements OnInit {
                         }
                       });
                   });
-              });
-
-            this.reqLeadAppObj = new LeadAppObj();
-            this.reqLeadAppObj.LeadId = this.LeadId;
-            this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
-              (response) => {
-                this.resLeadAppObj = response;
-                this.assetConditionObj = new RefMasterObj();
-                this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode; 
-                this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
-                  (response) => {
-                    this.tempMrFirstInstTypeCode = response["Descr"]; 
-                  }
-                ); 
-                this.LeadDataForm.patchValue({
-                  Tenor: this.resLeadAppObj.Tenor,
-                  MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
-                  NTFAmt: this.resLeadAppObj.NtfAmt,
-                  TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-                  InstallmentAmt: this.resLeadAppObj.InstAmt,
-                });
-              });
+              }); 
           }
+
+          this.reqLeadAppObj = new LeadAppObj();
+          this.reqLeadAppObj.LeadId = this.LeadId;
+          this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
+            (response) => {
+              this.resLeadAppObj = response;
+              this.assetConditionObj = new RefMasterObj();
+              this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode; 
+              this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+                (response) => {
+                  this.tempMrFirstInstTypeCode = response["Descr"]; 
+                }
+              ); 
+              this.LeadDataForm.patchValue({
+                Tenor: this.resLeadAppObj.Tenor,
+                MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
+                NTFAmt: this.resLeadAppObj.NtfAmt,
+                TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
+                InstallmentAmt: this.resLeadAppObj.InstAmt,
+              });
+            });
       });
     }
  
@@ -577,7 +578,41 @@ export class LeadDataComponent implements OnInit {
             }     
           }
         );
-      } 
+      } else{
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+        this.setLeadApp();
+        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+        // this.leadInputLeadDataObj.IsEdit = true;
+        this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            // if(this.originPage == "teleVerif"){
+            //   this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            // }
+            // else if(this.typePage == "update"){
+            //   this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            // }
+            // else{
+            //   this.router.navigate(["/Lead/Lead/Paging"]);
+            // }
+            if(this.originPage == "teleVerif"){
+              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              this.outputPage.emit({ pageType: "submit"});
+            }
+            else if(this.typePage == "edit"){
+              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              this.outputPage.emit({ pageType: "submit"});
+            }
+            else{
+              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              this.outputPage.emit({ pageType: "submit"});
+            }     
+          }
+        );
+        
+        
+      }
     } 
     else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();

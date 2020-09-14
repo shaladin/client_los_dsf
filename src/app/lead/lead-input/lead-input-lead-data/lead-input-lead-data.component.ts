@@ -724,7 +724,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
-    if (this.Calculate == false) {
+    if (this.Calculate == false &&  this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
     }
@@ -837,7 +837,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.Calculate == false  ) {
+    if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
     }
