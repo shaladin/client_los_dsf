@@ -733,7 +733,9 @@ export class URLConstant {
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
     public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
+    public static GetListNewTCbyAppId = environment.losUrl + "/AppTc/GetListNewTCbyAppId";
     public static DeleteAppTc = environment.losUrl + "/AppTc/DeleteAppTc";
+    public static DeleteRangeAppTc = environment.losUrl + "/AppTc/DeleteRangeAppTc";
     public static EditAdditionalTcNew = environment.losUrl + "/AppTc/EditAdditionalTcNew";
     
     // App Asset
