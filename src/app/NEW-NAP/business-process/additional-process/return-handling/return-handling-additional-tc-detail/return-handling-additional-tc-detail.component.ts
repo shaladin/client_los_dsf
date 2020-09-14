@@ -280,7 +280,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   SaveAdditionalTCHandler(){
-    if(!this.ReturnHandlingForm.invalid){
+    // if(!this.ReturnHandlingForm.invalid){
       var listAppTcObj = new Array<AppTCObj>();
       for (var i = 0; i < this.ReturnHandlingForm.value.AppTcs["length"]; i++) {
         var appTC = new AppTCObj();
@@ -311,10 +311,10 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
         }
       );
-    }
-    else{
-      this.toastr.errorMessage("Please Complete TC");
-    }
+    // }
+    // else{
+    //   this.toastr.errorMessage("Please Complete TC");
+    // }
   }
 
   async GetAppData() {
