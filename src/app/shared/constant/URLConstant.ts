@@ -119,6 +119,7 @@ export class URLConstant {
     public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
     public static GetAppAssetForDealerDataByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppAssetId";
     public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode";
+    public static GetProdOfferingDByProdOfferingHIdAndCompCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingHIdAndCompCode";
     // App Commission
     public static GetAppCommissionDataDetailByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataDetailByAppId";
 
@@ -733,7 +734,9 @@ export class URLConstant {
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
     public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
+    public static GetListNewTCbyAppId = environment.losUrl + "/AppTc/GetListNewTCbyAppId";
     public static DeleteAppTc = environment.losUrl + "/AppTc/DeleteAppTc";
+    public static DeleteRangeAppTc = environment.losUrl + "/AppTc/DeleteRangeAppTc";
     public static EditAdditionalTcNew = environment.losUrl + "/AppTc/EditAdditionalTcNew";
     
     // App Asset

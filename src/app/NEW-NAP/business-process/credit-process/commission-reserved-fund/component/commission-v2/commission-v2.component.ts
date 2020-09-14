@@ -70,6 +70,9 @@ export class CommissionV2Component implements OnInit {
   OnForm1: boolean = false;
   OnForm2: boolean = false;
   OnForm3: boolean = false;
+  HideForm1: boolean = false;
+  HideForm2: boolean = false;
+  HideForm3: boolean = false;
   GetFormAddDynamicObj(content) {
     if (content == CommonConstant.ContentSupplier) {
       this.FormInputObjSupplier["title"] = CommonConstant.TitleSupplier;
@@ -197,6 +200,14 @@ export class CommissionV2Component implements OnInit {
     var obj = { AppId: this.AppId };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
+        // override hide suppl & suppl emp jika CFRFN4W ignore rule
+        if(this.BizTemplateCode == CommonConstant.CFRFN4W)
+        {
+          response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
+          response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
+          this.HideForm1 = true;
+          this.HideForm2 = true;
+        }
         if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp) { // For CFNA
           for (var i = 0; i < response["length"]; i++) {
             var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;

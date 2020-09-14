@@ -130,11 +130,12 @@ export class PoEntryComponent implements OnInit {
         this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
           (response2) => {
             var productOfferinH = response2;
-            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                    this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
                 this.PODetailForm.patchValue({
                   PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")

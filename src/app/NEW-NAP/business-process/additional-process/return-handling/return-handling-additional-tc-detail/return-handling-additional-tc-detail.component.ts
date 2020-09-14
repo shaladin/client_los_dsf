@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Validators, FormBuilder, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 import { formatDate } from '@angular/common';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -124,6 +125,50 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
     }
+    this.http.post(URLConstant.GetListNewTCbyAppId, { AppId: this.appId }).toPromise().then(
+      (response) => {
+        this.listAddTc = response["AppTcs"];
+        var fa_apptc = this.ReturnHandlingForm.get("AppTcs") as FormArray;
+        for (const item of response["AppTcs"] as Array<AppTCObj>) {
+          fa_apptc.push(this.AddTcControl(item));
+        }
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  Back(){
+    // var listAppTcObj = new Array<AppTCObj>();
+    // for (var i = 0; i < this.ReturnHandlingForm.value.AppTcs["length"]; i++) {
+    //   var appTC = new AppTCObj();
+    //   appTC.AppTcId = this.ReturnHandlingForm.value.AppTcs[i].AppTcId;
+    //   appTC.AppId = this.appId;
+    //   appTC.TcCode = this.ReturnHandlingForm.value.AppTcs[i].TcCode;
+    //   appTC.TcName = this.ReturnHandlingForm.value.AppTcs[i].TcName;
+    //   appTC.PriorTo = this.ReturnHandlingForm.value.AppTcs[i].PriorTo;
+    //   appTC.IsChecked = this.ReturnHandlingForm.value.AppTcs[i].IsChecked;
+    //   appTC.ExpiredDt = this.ReturnHandlingForm.value.AppTcs[i].ExpiredDt;
+    //   appTC.IsMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsMandatory;
+    //   appTC.PromisedDt = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+    //   appTC.Notes = this.ReturnHandlingForm.value.AppTcs[i].Notes;
+    //   appTC.IsAdditional = this.ReturnHandlingForm.value.AppTcs[i].IsAdditional;
+    //   appTC.IsExpDtMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsExpDtMandatory;
+
+    //   var prmsDt = new Date(appTC.PromisedDt);
+    //   var prmsDtForm = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+  
+    //   listAppTcObj.push(appTC);
+    // }
+    // this.ReqTCObj.ListAppTcObj = listAppTcObj;
+    // this.http.post(URLConstant.DeleteRangeAppTc, this.ReqTCObj).subscribe(
+    //   (response) => {
+    //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    //     this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    //   }
+    // );
   }
 
   SaveForm() {
@@ -131,14 +176,60 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
     }
     if (this.isReturnHandling == true) {
-      this.setAddTc();
+      // this.setAddTc();
       this.setReturnHandlingD();
-      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+      
+      var listAppTcObj = new Array<AppTCObj>();
+      for (var i = 0; i < this.ReturnHandlingForm.value.AppTcs["length"]; i++) {
+        var appTC = new AppTCObj();
+        appTC.AppTcId = this.ReturnHandlingForm.value.AppTcs[i].AppTcId;
+        appTC.AppId = this.appId;
+        appTC.TcCode = this.ReturnHandlingForm.value.AppTcs[i].TcCode;
+        appTC.TcName = this.ReturnHandlingForm.value.AppTcs[i].TcName;
+        appTC.PriorTo = this.ReturnHandlingForm.value.AppTcs[i].PriorTo;
+        appTC.IsChecked = this.ReturnHandlingForm.value.AppTcs[i].IsChecked;
+        appTC.ExpiredDt = this.ReturnHandlingForm.value.AppTcs[i].ExpiredDt;
+        appTC.IsMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsMandatory;
+        appTC.PromisedDt = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+        appTC.Notes = this.ReturnHandlingForm.value.AppTcs[i].Notes;
+        appTC.IsAdditional = this.ReturnHandlingForm.value.AppTcs[i].IsAdditional;
+        appTC.IsExpDtMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsExpDtMandatory;
+  
+        var prmsDt = new Date(appTC.PromisedDt);
+        var prmsDtForm = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+    
+        listAppTcObj.push(appTC);
+      }
+      this.ReqTCObj.ListAppTcObj = listAppTcObj;
+      this.http.post(URLConstant.EditAdditionalTcNew, this.ReqTCObj).pipe(
+        map((response) => {
+          if(response["StatusCode"] == 200){
+            return response;
+          }
+          else{
+            throw new Error(response["Message"]);
+          }
+        }),
+        mergeMap((response) => {
+          return this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData);
+        })
+      ).subscribe(
         (response) => {
-          this.toastr.successMessage(response["message"]);
+          this.toastr.successMessage(response["Message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-        });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      // this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+      //   (response) => {
+      //     this.toastr.successMessage(response["message"]);
+      //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+      //     this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+      //   });
 
     }
   }
@@ -189,36 +280,41 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   SaveAdditionalTCHandler(){
-    var listAppTcObj = new Array<AppTCObj>();
-    for (var i = 0; i < this.ReturnHandlingForm.value.AppTcs["length"]; i++) {
-      var appTC = new AppTCObj();
-      appTC.AppTcId = this.ReturnHandlingForm.value.AppTcs[i].AppTcId;
-      appTC.AppId = this.appId;
-      appTC.TcCode = this.ReturnHandlingForm.value.AppTcs[i].TcCode;
-      appTC.TcName = this.ReturnHandlingForm.value.AppTcs[i].TcName;
-      appTC.PriorTo = this.ReturnHandlingForm.value.AppTcs[i].PriorTo;
-      appTC.IsChecked = this.ReturnHandlingForm.value.AppTcs[i].IsChecked;
-      appTC.ExpiredDt = this.ReturnHandlingForm.value.AppTcs[i].ExpiredDt;
-      appTC.IsMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsMandatory;
-      appTC.PromisedDt = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
-      appTC.Notes = this.ReturnHandlingForm.value.AppTcs[i].Notes;
-      appTC.IsAdditional = this.ReturnHandlingForm.value.AppTcs[i].IsAdditional;
-      appTC.IsExpDtMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsExpDtMandatory;
-
-      var prmsDt = new Date(appTC.PromisedDt);
-      var prmsDtForm = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+    if(!this.ReturnHandlingForm.invalid){
+      var listAppTcObj = new Array<AppTCObj>();
+      for (var i = 0; i < this.ReturnHandlingForm.value.AppTcs["length"]; i++) {
+        var appTC = new AppTCObj();
+        appTC.AppTcId = this.ReturnHandlingForm.value.AppTcs[i].AppTcId;
+        appTC.AppId = this.appId;
+        appTC.TcCode = this.ReturnHandlingForm.value.AppTcs[i].TcCode;
+        appTC.TcName = this.ReturnHandlingForm.value.AppTcs[i].TcName;
+        appTC.PriorTo = this.ReturnHandlingForm.value.AppTcs[i].PriorTo;
+        appTC.IsChecked = this.ReturnHandlingForm.value.AppTcs[i].IsChecked;
+        appTC.ExpiredDt = this.ReturnHandlingForm.value.AppTcs[i].ExpiredDt;
+        appTC.IsMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsMandatory;
+        appTC.PromisedDt = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+        appTC.Notes = this.ReturnHandlingForm.value.AppTcs[i].Notes;
+        appTC.IsAdditional = this.ReturnHandlingForm.value.AppTcs[i].IsAdditional;
+        appTC.IsExpDtMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsExpDtMandatory;
   
-      listAppTcObj.push(appTC);
-    }
-    // this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
-    this.ReqTCObj.ListAppTcObj = listAppTcObj;
-    this.http.post(URLConstant.EditAdditionalTcNew, this.ReqTCObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["Message"]);
-        var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+        var prmsDt = new Date(appTC.PromisedDt);
+        var prmsDtForm = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
+    
+        listAppTcObj.push(appTC);
       }
-    );
+      // this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
+      this.ReqTCObj.ListAppTcObj = listAppTcObj;
+      this.http.post(URLConstant.EditAdditionalTcNew, this.ReqTCObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+        }
+      );
+    }
+    else{
+      this.toastr.errorMessage("Please Complete TC");
+    }
   }
 
   async GetAppData() {
@@ -301,7 +397,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     appTcObj.TcName = this.AddTcForm.controls.TcName.value;
     appTcObj.Notes = this.AddTcForm.controls.Notes.value;
     appTcObj.TcCode = this.appTcObj.find(i => i["TcName"] == this.AddTcForm.controls.TcName.value)["TcCode"];
-    appTcObj.IsMandatory = true ;
+    appTcObj.IsMandatory = true;
     appTcObj.AppId = this.appId;
     appTcObj.IsAdditional = true;
     appTcObj.PriorTo = "APP";
@@ -312,21 +408,74 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   
     if (this.mode == "Add") {
       this.listAddTc.push(appTcObj);
-      console.log(this.listAddTc);
       this.ReqTCObj.ListAppTcObj= new Array<AppTCObj>();
       this.ReqTCObj.ListAppTcObj.push(appTcObj);
-      this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
-        (response: Array<AppTCObj>) => {
-          console.log("appTcObj: " + JSON.stringify(response));
-          appTcObj.AppTcId = response[0].AppTcId;
-          fa_apptc.push(this.AddTcControl(appTcObj));
-        });
+      this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: appTcObj.TcCode }).subscribe(
+        (response) => {
+          console.log("IsExpDate: " + JSON.stringify(response));
+          if(response["DocCode"]){
+            appTcObj.IsExpDtMandatory = response["IsExpDtMandatory"];
+          }
+          this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
+            (response: Array<AppTCObj>) => {
+              appTcObj.AppTcId = response[0].AppTcId;
+              fa_apptc.push(this.AddTcControl(appTcObj));
+            });
+        }
+      );
     }
     // if (this.mode == "Edit") {
     //   this.listAddTc[this.currentEditedIndex] = appTcObj;
     // }
     this.modal.close();
     this.clearForm();
+  }
+
+  IsCheckedHandler(idx){
+    //bookmark
+    var fa_apptc = this.ReturnHandlingForm.get("AppTcs") as FormArray;
+    var group = fa_apptc.at(idx) as FormGroup;
+    group.patchValue({
+      ExpiredDt: "",
+      PromisedDt: ""
+    });
+    if(group.controls["IsChecked"].value){
+      group.controls["PromisedDt"].clearValidators();
+      group.controls["PromisedDt"].updateValueAndValidity();
+      group.controls["PromisedDt"].disable();
+      if(group.controls["IsExpDtMandatory"]){
+        group.controls["ExpiredDt"].setValidators([Validators.required]);
+        group.controls["ExpiredDt"].updateValueAndValidity();
+        group.controls["ExpiredDt"].enable();
+      }
+      else{
+        group.controls["ExpiredDt"].clearValidators();
+        group.controls["ExpiredDt"].updateValueAndValidity();
+        group.controls["ExpiredDt"].disable();
+      }
+    }
+    else{
+      group.controls["ExpiredDt"].clearValidators();
+      group.controls["ExpiredDt"].updateValueAndValidity();
+      group.controls["ExpiredDt"].disable();
+      group.controls["PromisedDt"].setValidators([Validators.required]);
+      group.controls["PromisedDt"].updateValueAndValidity();
+      group.controls["PromisedDt"].enable();
+    }
+  }
+
+  async getExpDtMandatory(TcCode){
+    console.log("getExpDtMandatory Code: " + TcCode);
+    await this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: TcCode }).subscribe(
+      (response) => {
+        console.log("getExpDtMandatory: " + JSON.stringify(response));
+        var isExpDateMandatory = false;
+        if(response["DocCode"]){
+          isExpDateMandatory = response["IsExpDtMandatory"];
+        }
+        return isExpDateMandatory;
+      }
+    );
   }
 
   ExpDtHandler(e, idx){
@@ -387,26 +536,75 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.http.post(URLConstant.DeleteAppTc, this.listAddTc[i]).subscribe(
         (response) => {
-        });
-      var apptcObjs = this.ReturnHandlingForm.controls["AppTcs"] as FormArray;
-      apptcObjs.removeAt(i);
-      this.listAddTc.splice(i, 1);
+          if(response["StatusCode"] == 200){
+            var apptcObjs = this.ReturnHandlingForm.controls["AppTcs"] as FormArray;
+            apptcObjs.removeAt(i);
+            this.listAddTc.splice(i, 1);
+          }
+          else{
+            throw new Error(response["Message"]);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
   
   AddTcControl(obj: AppTCObj) {
-    return this.fb.group({
+    var formGroup = this.fb.group({
       AppTcId: obj.AppTcId,
       TcName: obj.TcName,
       TcCode: obj.TcCode,
       PriorTo: obj.PriorTo,
       IsChecked: obj.IsChecked,
       IsMandatory: obj.IsMandatory,
-      PromisedDt: (obj.PromisedDt == null) ? '' : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
-      ExpiredDt: [{value: (obj.ExpiredDt == null) ? '' : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'), disabled: true}],
+      PromisedDt: [(obj.PromisedDt == null) ? '' : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      ExpiredDt: [{value: (obj.ExpiredDt == null) ? '' : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'), disabled: obj.IsExpDtMandatory}],
       Notes: obj.Notes,
-      IsExpDtMandatory: obj.IsExpDtMandatory
-    })
+      IsExpDtMandatory: obj.IsExpDtMandatory,
+      IsAdditional: obj.IsAdditional
+    });
+
+    if(obj.IsChecked){
+      formGroup.controls["PromisedDt"].clearValidators();
+      formGroup.controls["PromisedDt"].updateValueAndValidity();
+      formGroup.controls["PromisedDt"].disable();
+      if(formGroup.controls["IsExpDtMandatory"]){
+        formGroup.controls["ExpiredDt"].setValidators([Validators.required]);
+        formGroup.controls["ExpiredDt"].updateValueAndValidity();
+        formGroup.controls["ExpiredDt"].enable();
+      }
+      else{
+        formGroup.controls["ExpiredDt"].clearValidators();
+        formGroup.controls["ExpiredDt"].updateValueAndValidity();
+        formGroup.controls["ExpiredDt"].disable();
+      }
+    }
+    else{
+      formGroup.controls["ExpiredDt"].clearValidators();
+      formGroup.controls["ExpiredDt"].updateValueAndValidity();
+      formGroup.controls["ExpiredDt"].disable();
+      formGroup.controls["PromisedDt"].setValidators([Validators.required]);
+      formGroup.controls["PromisedDt"].updateValueAndValidity();
+      formGroup.controls["PromisedDt"].enable();
+    }
+
+    return formGroup;
+    // return this.fb.group({
+    //   AppTcId: obj.AppTcId,
+    //   TcName: obj.TcName,
+    //   TcCode: obj.TcCode,
+    //   PriorTo: obj.PriorTo,
+    //   IsChecked: obj.IsChecked,
+    //   IsMandatory: obj.IsMandatory,
+    //   PromisedDt: [(obj.PromisedDt == null) ? '' : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+    //   ExpiredDt: [{value: (obj.ExpiredDt == null) ? '' : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'), disabled: obj.IsExpDtMandatory}],
+    //   Notes: obj.Notes,
+    //   IsExpDtMandatory: obj.IsExpDtMandatory,
+    //   IsAdditional: obj.IsAdditional
+    // })
   }
 
   clearForm() {

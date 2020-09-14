@@ -260,11 +260,6 @@
         {
             "type": "text",
             "position": "center",
-            "property": "TrxNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
             "property": "ApvNo"
         },                
         {
