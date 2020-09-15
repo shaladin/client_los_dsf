@@ -648,7 +648,9 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.MrIdType.disable();
       this.AddCollForm.controls.Notes.disable();
       this.AddCollForm.controls.ManufacturingYear.disable();
-
+      this.inputAddressObjForLegalAddr.isReadonly = true;
+      this.inputAddressObjForLocAddr.isReadonly = true;
+      
       // this.AddCollForm.controls["legalAddr"]["controls"].Addr.disable();
       // this.AddCollForm.controls["legalAddr"]["controls"].AreaCode3.disable();
       // this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.disable();
@@ -933,16 +935,5 @@ export class MouRequestAddcollComponent implements OnInit {
   back() {
     this.modeDetail.emit({ mode: "edit" });
     this.ResponseMouAddColl.emit({ StatusCode: "-1" });
-  }
-
-  tes() {
-    console.log(this.AddCollForm)
-    this.AddCollForm.controls["legalAddr"]["controls"].Addr.disable();
-    this.AddCollForm.controls["legalAddr"]["controls"].AreaCode3.disable();
-    this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.disable();
-
-
-    this.inputAddressObjForLegalAddr.default = this.legalAddrObj;
-    this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
-  }
+  } 
 }

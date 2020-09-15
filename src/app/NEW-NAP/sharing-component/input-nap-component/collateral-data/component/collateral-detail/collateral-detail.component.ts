@@ -59,7 +59,8 @@ export class CollateralDetailComponent implements OnInit {
   items: FormArray;
   SerialNoList: any;
   isUsed: boolean = true;
-
+  isCopy: boolean = true;
+  isExisting: boolean = false;
   AddCollForm = this.fb.group({
     AppCollateralId: [''],
     FullAssetCode: ['', Validators.required],
@@ -300,6 +301,13 @@ export class CollateralDetailComponent implements OnInit {
               ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
               DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
             }) as FormGroup;
+            if(this.isExisting){
+              assetDocumentDetail.controls.DocNo.disable();
+              assetDocumentDetail.controls.IsReceived.disable();
+              assetDocumentDetail.controls.ACDExpiredDt.disable();
+              assetDocumentDetail.controls.DocNotes.disable(); 
+            }
+           
             ListDoc.push(assetDocumentDetail);
           }
         }
@@ -338,7 +346,7 @@ export class CollateralDetailComponent implements OnInit {
             //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
             // }
           } else {
-            if (this.mode = "add") {
+            if (this.mode == "add") {
               this.editAppCollateralObj = response['AppCollateral'];
               this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
               this.AddCollForm.patchValue({
@@ -357,6 +365,27 @@ export class CollateralDetailComponent implements OnInit {
             CollateralStat: "EXISTING"
           });
         }
+
+        if(IsExisting || response['AppCollateral']['CollateralStat'] == "EXISTING"){
+          this.isExisting = true;
+          this.isCopy=false;  
+          this.AddCollForm.controls.ManufacturingYear.disable();
+          this.AddCollForm.controls.CollateralValueAmt.disable();
+          this.AddCollForm.controls.MrCollateralUsageCode.disable();
+          this.AddCollForm.controls.AssetTaxDt.disable();
+          this.AddCollForm.controls.CollateralNotes.disable();
+          this.AddCollForm.controls.AssetTaxDt.disable();
+          this.AddCollForm.controls.UserName.disable();
+          this.AddCollForm.controls.MrUserRelationshipCode.disable(); 
+          this.AddCollForm.controls.OwnerName.disable();
+          this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
+          this.AddCollForm.controls.OwnerMobilePhnNo.disable();
+          this.AddCollForm.controls.OwnerIdNo.disable();
+          this.AddCollForm.controls.MrIdTypeCode.disable(); 
+          this.inputAddressObjForLegal.isReadonly = true;
+          this.inputAddressObjForLoc.isReadonly = true;
+        }
+        
 
         if (this.appCollateralObj.AppCollateralId == 0) {
           return true;
@@ -471,6 +500,9 @@ export class CollateralDetailComponent implements OnInit {
             SerialNoValue: [''],
             IsMandatory: [this.SerialNoList[i].IsMandatory]
           }) as FormGroup;
+          if(this.isExisting){ 
+            eachDataDetail.controls.SerialNoValue.disable(); 
+          }
           this.items.push(eachDataDetail);
           if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
@@ -594,26 +626,29 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   copyToLocation() {
-    this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
-    this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
-    this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
-    this.LocationAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3;
-    this.LocationAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4;
-    this.LocationAddrObj.City = this.AppCustAddrObj.City;
-    this.LocationAddrObj.Fax = this.AppCustAddrObj.Fax;
-    this.LocationAddrObj.FaxArea = this.AppCustAddrObj.FaxArea;
-    this.LocationAddrObj.Phn1 = this.AppCustAddrObj.Phn1;
-    this.LocationAddrObj.Phn2 = this.AppCustAddrObj.Phn2;
-    this.LocationAddrObj.PhnArea1 = this.AppCustAddrObj.PhnArea1;
-    this.LocationAddrObj.PhnArea2 = this.AppCustAddrObj.PhnArea2;
-    this.LocationAddrObj.PhnExt1 = this.AppCustAddrObj.PhnExt1;
-    this.LocationAddrObj.PhnExt2 = this.AppCustAddrObj.PhnExt2;
-    this.LocationAddrObj.SubZipcode = this.AppCustAddrObj.SubZipcode;
+    if(this.isCopy == true){
+      this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
+      this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
+      this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
+      this.LocationAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3;
+      this.LocationAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4;
+      this.LocationAddrObj.City = this.AppCustAddrObj.City;
+      this.LocationAddrObj.Fax = this.AppCustAddrObj.Fax;
+      this.LocationAddrObj.FaxArea = this.AppCustAddrObj.FaxArea;
+      this.LocationAddrObj.Phn1 = this.AppCustAddrObj.Phn1;
+      this.LocationAddrObj.Phn2 = this.AppCustAddrObj.Phn2;
+      this.LocationAddrObj.PhnArea1 = this.AppCustAddrObj.PhnArea1;
+      this.LocationAddrObj.PhnArea2 = this.AppCustAddrObj.PhnArea2;
+      this.LocationAddrObj.PhnExt1 = this.AppCustAddrObj.PhnExt1;
+      this.LocationAddrObj.PhnExt2 = this.AppCustAddrObj.PhnExt2;
+      this.LocationAddrObj.SubZipcode = this.AppCustAddrObj.SubZipcode;
+  
+      this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
+      this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
+      this.inputAddressObjForLoc.default = this.LocationAddrObj;
+      this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
+    }
 
-    this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
-    this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
-    this.inputAddressObjForLoc.default = this.LocationAddrObj;
-    this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
   }
 
   SaveForm() {
@@ -633,9 +668,9 @@ export class CollateralDetailComponent implements OnInit {
         this.appCollateralDoc.IsReceived = this.AddCollForm.value.ListDoc[i].IsReceived;
       }
       this.appCollateralDoc.DocCode = this.AddCollForm.value.ListDoc[i].DocCode;
-      this.appCollateralDoc.DocNo = this.AddCollForm.value.ListDoc[i].DocNo;
-      this.appCollateralDoc.ExpiredDt = this.AddCollForm.value.ListDoc[i].ACDExpiredDt;
-      this.appCollateralDoc.DocNotes = this.AddCollForm.value.ListDoc[i].DocNotes;
+      this.appCollateralDoc.DocNo = this.AddCollForm.getRawValue().ListDoc[i].DocNo;
+      this.appCollateralDoc.ExpiredDt = this.AddCollForm.getRawValue().ListDoc[i].ACDExpiredDt;
+      this.appCollateralDoc.DocNotes = this.AddCollForm.getRawValue().ListDoc[i].DocNotes;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;

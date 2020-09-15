@@ -60,7 +60,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   items: FormArray;
   SerialNoList: any;
   isUsed: boolean = true;
-
+  isCopy: boolean = true;
+  isExisting : boolean = false;
   AddCollForm = this.fb.group({
     AppCollateralId: [0],
     FullAssetCode: ['', Validators.required],
@@ -110,6 +111,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    console.log("aaa")
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
     this.inputAddressObjForOwner.showAllPhn = false;
@@ -295,6 +297,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
           var ListDoc = this.AddCollForm.get('ListDoc') as FormArray;
+          for(var i =0 ;i<ListDoc.length;i++){
+            ListDoc.removeAt(i);
+          } 
           for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
             var assetDocumentDetail = this.fb.group({
               DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
@@ -307,6 +312,12 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
               DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
             }) as FormGroup;
+            if(this.isExisting){
+              assetDocumentDetail.controls.DocNo.disable();
+              assetDocumentDetail.controls.IsReceived.disable();
+              assetDocumentDetail.controls.ACDExpiredDt.disable();
+              assetDocumentDetail.controls.DocNotes.disable(); 
+            }
             ListDoc.push(assetDocumentDetail);
           }
         }
@@ -468,7 +479,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         var formGroupItem = this.items.controls[i] as FormGroup;
         formGroupItem.patchValue({
           SerialNoValue: response["SerialNo"+(i+1)]
-        });
+        });   
       }
 
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
@@ -505,6 +516,49 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: response["OwnerZipcode"] };
       this.inputAddressObjForOwner.default = this.OwnerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
+   
+      // if(IsExisting || response['AppCollateral']['CollateralStat'] == "EXISTING"){
+      //   this.isExisting = true;
+      //   this.isCopy=false;  
+      //   this.AddCollForm.controls.ManufacturingYear.disable();
+      //   this.AddCollForm.controls.CollateralValueAmt.disable();
+      //   this.AddCollForm.controls.MrCollateralUsageCode.disable();
+      //   this.AddCollForm.controls.AssetTaxDt.disable();
+      //   this.AddCollForm.controls.CollateralNotes.disable();
+      //   this.AddCollForm.controls.AssetTaxDt.disable();
+      //   this.AddCollForm.controls.UserName.disable();
+      //   this.AddCollForm.controls.MrUserRelationshipCode.disable(); 
+      //   this.AddCollForm.controls.OwnerName.disable();
+      //   this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
+      //   this.AddCollForm.controls.OwnerMobilePhnNo.disable();
+      //   this.AddCollForm.controls.OwnerIdNo.disable();
+      //   this.AddCollForm.controls.MrIdTypeCode.disable(); 
+      //   this.inputAddressObjForOwner.isReadonly = true;
+      //   this.inputAddressObjForLoc.isReadonly = true;
+      // }
+    
+        this.isExisting = true;
+        this.isCopy=false;   
+        this.AddCollForm.controls.AssetTypeCode.disable();
+        this.AddCollForm.controls.ManufacturingYear.disable();
+        this.AddCollForm.controls.CollateralValueAmt.disable();
+        this.AddCollForm.controls.MrCollateralUsageCode.disable();
+        this.AddCollForm.controls.AssetTaxDt.disable();
+        this.AddCollForm.controls.CollateralNotes.disable();
+        this.AddCollForm.controls.AssetTaxDt.disable();
+        this.AddCollForm.controls.UserName.disable();
+        this.AddCollForm.controls.MrUserRelationshipCode.disable(); 
+        this.AddCollForm.controls.OwnerName.disable();
+        this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
+        this.AddCollForm.controls.OwnerMobilePhnNo.disable();
+        this.AddCollForm.controls.OwnerIdNo.disable();
+        this.AddCollForm.controls.MrIdTypeCode.disable(); 
+        this.inputAddressObjForOwner.isReadonly = true;
+        this.inputAddressObjForLoc.isReadonly = true; 
+        this.getRefAssetDocList(true);
+        this.AddCollForm.patchValue({
+          CollateralStat: "EXISTING"
+        });
     }
     else {
       if (this.mode == "edit") {
@@ -579,6 +633,28 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             this.inputAddressObjForOwner.default = this.OwnerAddrObj;
             this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
             this.onItemChange(this.appCollateralObj.AssetTypeCode, true);
+
+            if(this.appCollateralObj['CollateralStat'] == "EXISTING"){
+              this.isExisting = true;
+              this.isCopy=false;   
+              this.AddCollForm.controls.AssetTypeCode.disable();
+              this.AddCollForm.controls.ManufacturingYear.disable();
+              this.AddCollForm.controls.CollateralValueAmt.disable();
+              this.AddCollForm.controls.MrCollateralUsageCode.disable();
+              this.AddCollForm.controls.AssetTaxDt.disable();
+              this.AddCollForm.controls.CollateralNotes.disable();
+              this.AddCollForm.controls.AssetTaxDt.disable();
+              this.AddCollForm.controls.UserName.disable();
+              this.AddCollForm.controls.MrUserRelationshipCode.disable(); 
+              this.AddCollForm.controls.OwnerName.disable();
+              this.AddCollForm.controls.MrOwnerRelationshipCode.disable();
+              this.AddCollForm.controls.OwnerMobilePhnNo.disable();
+              this.AddCollForm.controls.OwnerIdNo.disable();
+              this.AddCollForm.controls.MrIdTypeCode.disable(); 
+              this.inputAddressObjForOwner.isReadonly = true;
+              this.inputAddressObjForLoc.isReadonly = true; 
+            }
+ 
           },
           (error) => {
             console.log(error);
@@ -641,7 +717,10 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         if (this.appCollateralObj != null) {
           for (var i = 0; i < this.items.length; i++) {
             if (this.items.controls[i] != null) {
-              this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)];
+              this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)]; 
+          if(this.appCollateralObj['CollateralStat'] == "EXISTING"){
+            this.items["controls"][i]["controls"]["SerialNoValue"].disable();
+         }
             }
           }
         }
@@ -759,6 +838,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   copyToLocation() {
+    if(this.isCopy == true){ 
     this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
     this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
     this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
@@ -779,6 +859,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
     this.inputAddressObjForLoc.default = this.LocationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
+    }
   }
 
   SaveForm() {
@@ -837,8 +918,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  setCollateralInfo() {
-    this.appCollateralDataObj.AppCollateralObj.AppCollateralId = this.AddCollForm.controls["AppCollateralId"].value;
+  setCollateralInfo() { 
     this.appCollateralDataObj.AppCollateralObj.AppId = this.AppId;
     this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
     this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
