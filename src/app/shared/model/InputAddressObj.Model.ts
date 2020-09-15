@@ -18,6 +18,7 @@ export class InputAddressObj {
     showStayLength: boolean;
     isRequired: boolean;
     environmentUrl: string;
+    isReadonly: boolean;
 
     constructor() {
         this.title = "Address Information";
@@ -31,6 +32,7 @@ export class InputAddressObj {
         this.showSubsection = true;
         this.showStayLength = false;
         this.isRequired = true;
-        this.environmentUrl = environment.FoundationR3Url
+        this.environmentUrl = environment.FoundationR3Url;
+        this.isReadonly = false;
     }
 }
