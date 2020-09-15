@@ -111,7 +111,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    console.log("aaa")
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
     this.inputAddressObjForOwner.showAllPhn = false;
@@ -479,7 +478,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         var formGroupItem = this.items.controls[i] as FormGroup;
         formGroupItem.patchValue({
           SerialNoValue: response["SerialNo"+(i+1)]
-        });   
+        });    
+            this.items["controls"][i]["controls"]["SerialNoValue"].disable(); 
       }
 
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
@@ -717,10 +717,10 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         if (this.appCollateralObj != null) {
           for (var i = 0; i < this.items.length; i++) {
             if (this.items.controls[i] != null) {
-              this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)]; 
-          if(this.appCollateralObj['CollateralStat'] == "EXISTING"){
-            this.items["controls"][i]["controls"]["SerialNoValue"].disable();
-         }
+              this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)];
+            }
+            if(this.appCollateralObj['CollateralStat'] == "EXISTING"){
+              this.items["controls"][i]["controls"]["SerialNoValue"].disable(); 
             }
           }
         }

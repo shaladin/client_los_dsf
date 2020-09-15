@@ -314,7 +314,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.legalAddrObj = new AddrObj();
     this.inputFieldLegalObj = new InputFieldObj();
     this.inputFieldLegalObj.inputLookupObj = new InputLookupObj();
-    console.log(this.AddCollForm)
 
   }
 
@@ -322,7 +321,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.locationAddrObj = new AddrObj();
     this.inputFieldLocationObj = new InputFieldObj();
     this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
-    console.log(this.AddCollForm)
   }
 
   getLookupCollateralTypeResponse(e) {
