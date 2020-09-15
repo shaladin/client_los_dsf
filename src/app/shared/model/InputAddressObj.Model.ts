@@ -1,5 +1,6 @@
 import { InputFieldObj } from './InputFieldObj.Model';
 import {NgForm, FormGroup} from '@angular/forms';
+import { environment } from 'environments/environment';
 
 export class InputAddressObj {
     enjiForm: NgForm;
@@ -16,6 +17,8 @@ export class InputAddressObj {
     showSubsection: boolean;
     showStayLength: boolean;
     isRequired: boolean;
+    environmentUrl: string;
+    isReadonly: boolean;
 
     constructor() {
         this.title = "Address Information";
@@ -29,5 +32,7 @@ export class InputAddressObj {
         this.showSubsection = true;
         this.showStayLength = false;
         this.isRequired = true;
+        this.environmentUrl = environment.FoundationR3Url;
+        this.isReadonly = false;
     }
 }

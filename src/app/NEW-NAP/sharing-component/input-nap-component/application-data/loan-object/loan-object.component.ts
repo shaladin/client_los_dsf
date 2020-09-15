@@ -158,6 +158,28 @@ export class LoanObjectComponent implements OnInit {
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if(this.AppObj.LobCode == CommonConstant.CFNA){
           this.isCFNA = true;
+
+          var objIsDisburse = {
+            ProdOfferingCode: this.AppObj.ProdOfferingCode,
+            RefProdCompntCode: CommonConstant.CollateralNeeded,
+            ProdOfferingVersion: this.AppObj.ProdOfferingVersion
+          };
+          this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+            (response) => {
+              if(response && response["ProdOfferingDId"] > 0){
+                this.MainInfoForm.patchValue({
+                  IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
+                });
+              }
+              else{
+                throw new Error("Disburse To Cust component not found, please use the latest product offering");
+              }
+            }
+          ).catch(
+            (error) => {
+              console.log(error);
+            }
+          );
         }
         if(this.AppObj.BizTemplateCode == CommonConstant.CFRFN4W){
           this.MainInfoForm.controls.IsDisburseToCust.setValue(true);
@@ -324,13 +346,17 @@ export class LoanObjectComponent implements OnInit {
   }
 
   CheckIsDisburseToCust() {
+    this.supplierInputLookupObj.isReady = false;
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
       this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
+      this.MainInfoForm.controls.lookupValueSupplier["controls"].value.setValue("");
+      this.AppLoanPurposeObj.SupplCode = "";
     } else {
       this.supplierInputLookupObj.isRequired = true;
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
     }
     this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
+    this.supplierInputLookupObj.isReady = true;
   }
 }
