@@ -327,6 +327,8 @@ export class LoanObjectComponent implements OnInit {
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
       this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
+      this.MainInfoForm.controls.lookupValueSupplier["controls"].value.setValue("");
+      this.AppLoanPurposeObj.SupplCode = "";
     } else {
       this.supplierInputLookupObj.isRequired = true;
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
