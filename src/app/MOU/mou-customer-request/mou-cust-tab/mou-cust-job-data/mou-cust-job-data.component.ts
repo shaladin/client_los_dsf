@@ -217,7 +217,7 @@ export class MouCustJobDataComponent implements OnInit {
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
 
-    if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
+    if (this.custModelCode != undefined && this.custModelCode != null && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
     if(this.MouCustPersonalJobDataObj.MouCustPersonalId != 0){
       this.parentForm.controls[this.identifier].patchValue({
