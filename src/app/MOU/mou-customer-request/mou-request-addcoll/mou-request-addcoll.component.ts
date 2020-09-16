@@ -648,37 +648,6 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.ManufacturingYear.disable();
       this.inputAddressObjForLegalAddr.isReadonly = true;
       this.inputAddressObjForLocAddr.isReadonly = true;
-      
-      // this.AddCollForm.controls["legalAddr"]["controls"].Addr.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].AreaCode3.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.disable();
-
-      // this.AddCollForm.controls["legalAddr"]["controls"].PhnArea1.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].Phn1.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].PhnExt1.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].PhnArea2.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].Phn2.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].PhnExt2.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].PhnArea3.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].Phn2.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].PhnExt3.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].Fax.disable();
-      // this.AddCollForm.controls["legalAddr"]["controls"].FaxArea.disable(); 
-
-      // this.AddCollForm.controls["locationAddr"]["controls"].Addr.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].AreaCode3.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].AreaCode4.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].PhnArea1.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].Phn1.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].PhnExt1.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].PhnArea2.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].Phn2.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].PhnExt2.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].PhnArea3.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].Phn2.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].PhnExt3.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].Fax.disable();
-      // this.AddCollForm.controls["locationAddr"]["controls"].FaxArea.disable(); 
     }
     var collObj = { MouCustCollateralId: MouCustCollId };
     this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(

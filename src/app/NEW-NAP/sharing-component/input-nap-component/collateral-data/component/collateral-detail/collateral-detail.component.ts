@@ -362,11 +362,11 @@ export class CollateralDetailComponent implements OnInit {
           });
         } else {
           this.AddCollForm.patchValue({
-            CollateralStat: "EXISTING"
+            CollateralStat: CommonConstant.AssetStatExisting
           });
         }
 
-        if(IsExisting || response['AppCollateral']['CollateralStat'] == "EXISTING"){
+        if(IsExisting || response['AppCollateral']['CollateralStat'] == CommonConstant.AssetStatExisting){
           this.isExisting = true;
           this.isCopy=false;  
           this.AddCollForm.controls.ManufacturingYear.disable();
