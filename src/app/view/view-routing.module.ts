@@ -4,12 +4,13 @@ import { MainInfoComponent } from './main-info/main-info.component';
 import { AppMainInfoComponent } from './app-main-info/app-main-info.component';
 import { AgrMainInfoComponent } from './agr-main-info/agr-main-info.component';
 import { AppViewComponent } from './app-view/app-view.component';
-import { AgreementViewContainerComponent } from './agr-view/agreement-view-container.component';
+
 import { PurchaseOrderViewComponent } from './purchase-order-view/purchase-order-view.component';
 import { ViewCollateralDataComponent } from './app-view/view-collateral-data/view-collateral-data.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { MouViewComponent } from './mou-view/mou-view.component';
 import { SurveyViewComponent } from './survey-view-prototype/survey-view.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -28,13 +29,13 @@ const routes: Routes = [
           title: 'App Main Info'
         }
       },
-      {
-        path: 'AgrMainInfo',
-        component: AgrMainInfoComponent,
-        data: {
-          title: 'Agreement Main INfo'
-        }
-      },
+      // {
+      //   path: 'AgrMainInfo',
+      //   component: AgrMainInfoComponent,
+      //   data: {
+      //     title: 'Agreement Main INfo'
+      //   }
+      // },
       {
         path: 'AppView',
         component: AppViewComponent,
@@ -42,12 +43,16 @@ const routes: Routes = [
           title: 'Application View'
         }
       },
+      // {
+      //   path: 'AgrmntView',
+      //   component: AgreementViewContainerComponent,
+      //   data: {
+      //     title: 'Agreement View'
+      //   }
+      // },
       {
         path: 'AgrmntView',
-        component: AgreementViewContainerComponent,
-        data: {
-          title: 'Agreement View'
-        }
+        loadChildren: './agr-view/agreement-view-container.module#AgreementViewContainerModule'
       },
       {
         path: 'POView',

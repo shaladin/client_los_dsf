@@ -19,7 +19,7 @@ import { environment } from 'environments/environment';
 })
 export class ViewAppCustDataCompanyComponent implements OnInit {
 
-  @Input() appId: number;
+  appId: number;
   viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj: string;
   viewJobDataEmpObj: string;

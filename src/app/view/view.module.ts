@@ -36,7 +36,7 @@ import { TabAppDataComponent } from "./app-view/tab-application-data/tab-app-dat
 import { TabCommissionComponent } from "./app-view/tab-commission/tab-commission.component";
 import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.component";
 import { TabReferantorComponent } from "./app-view/tab-referantor/tab-referantor.component";
-import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
+// import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAppCustDataPersonalComponent } from "./app-view/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppFraudVerificationComponent } from "./app-view/view-app-fraud-verification/view-app-fraud-verification.component";
 import { ViewAppScoreGradeDsrComponent } from "./app-view/view-app-score-grade-dsr/view-app-score-grade-dsr.component";
@@ -59,8 +59,8 @@ import { InvoiceDetailComponent } from "./app-view/invoice/invoice-detail/invoic
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { NewApplicationDataComponent } from "./app-view/application-data/new-application-data.component";
 import { ListDataCommissionComponent } from "./app-view/tab-commission/list-data-commission/list-data-commission.component";
-import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
-import { AgreementViewContainerComponent } from "./agr-view/agreement-view-container.component";
+// import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
+// import { AgreementViewContainerComponent } from "./agr-view/agreement-view-container.component";
 import { ViewAgrmntReservedFundComponent } from "./agr-view/view-reserved-fund/view-reserved-fund.component";
 import { AgrmntLifeInsuranceComponent } from "./agr-view/life-insurance/life-insurance.component";
 import { ViewPurchaseOrderComponent } from "./agr-view/view-purchase-order/view-purchase-order.component";
@@ -117,7 +117,7 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
     MainInfoComponent,
     LeadMainInfoComponent,
     AppMainInfoComponent,
-    AgrMainInfoComponent,
+    // AgrMainInfoComponent,
     AppViewComponent,
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
@@ -136,7 +136,7 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
     TabCommissionComponent,
     TabDeviationComponent,
     TabReferantorComponent,
-    ViewAppCustDataCompanyComponent,
+    // ViewAppCustDataCompanyComponent,
     ViewAppCustDataPersonalComponent,
     ViewAppFraudVerificationComponent,
     ViewAppScoreGradeDsrComponent,
@@ -158,8 +158,8 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
     InvoiceDetailComponent ,
     ListDataCommissionComponent,
     //agrmnt
-    AgrMainInfoComponent,
-    AgreementViewContainerComponent,
+    // AgrMainInfoComponent,
+    // AgreementViewContainerComponent,
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
     ViewPurchaseOrderComponent,

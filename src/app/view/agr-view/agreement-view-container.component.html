@@ -16,61 +16,61 @@
           <mat-tab-group *ngIf="IsReady">
             <mat-tab label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
+                <!-- <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
                   [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>
                 <app-view-app-cust-data-personal *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
-                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal>
+                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsAsset" label="Asset">
               <ng-template matTabContent>
-                <view-asset-data [appId]="ResponseAppDetailData?.AppId"></view-asset-data>
+                <!-- <view-asset-data [appId]="ResponseAppDetailData?.AppId"></view-asset-data> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsCollateral" label="Collateral">
               <ng-template matTabContent>
-                <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
+                <!-- <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsAppCollateral" label="Collateral">
               <ng-template matTabContent>
-                <app-view-app-collateral-multi *ngIf="IsMulti" [agrmntId]="AgrmntId"></app-view-app-collateral-multi>
-                <app-view-app-collateral-single *ngIf="!IsMulti" [agrmntId]="AgrmntId">
-                </app-view-app-collateral-single>
+                <!-- <app-view-app-collateral-multi *ngIf="IsMulti" [agrmntId]="AgrmntId"></app-view-app-collateral-multi> -->
+                <!-- <app-view-app-collateral-single *ngIf="!IsMulti" [agrmntId]="AgrmntId"> -->
+                <!-- </app-view-app-collateral-single> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsInsurance" label="Insurance">
               <ng-template matTabContent>
-                <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance>
+                <!-- <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsInsuranceFL4W" label="Insurance">
               <ng-template matTabContent>
-                <agrmnt-view-insurance [agrmntId]="AgrmntId"></agrmnt-view-insurance>
+                <!-- <agrmnt-view-insurance [agrmntId]="AgrmntId"></agrmnt-view-insurance> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsLifeInsurance && ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
               label="Life Insurance">
               <ng-template matTabContent>
-                <agrmnt-life-insurance [agrmntId]="AgrmntId"></agrmnt-life-insurance>
+                <!-- <agrmnt-life-insurance [agrmntId]="AgrmntId"></agrmnt-life-insurance> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsFinancial" label="Financial">
               <ng-template matTabContent>
-                <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
+                <!-- <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsTC" label="Term and Conditions">
               <ng-template matTabContent>
-                <app-app-tc [AppId]="AppId"></app-app-tc>
+                <!-- <app-app-tc [AppId]="AppId"></app-app-tc> -->
               </ng-template>
             </mat-tab>
 
@@ -81,19 +81,19 @@
 
             <mat-tab *ngIf="IsCommission" label="Commission">
               <ng-template matTabContent>
-                <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt>
+                <!-- <app-view-commission-agrmnt [agrmntId]="AgrmntId"></app-view-commission-agrmnt> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsReservedFund" label="Reserved Fund">
               <ng-template matTabContent>
-                <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund>
+                <!-- <agrmnt-view-reserved-fund [agrmntId]="AgrmntId"></agrmnt-view-reserved-fund> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsPurchaseOrder" label="Purchase Order">
               <ng-template matTabContent>
-                <app-view-purchase-order [agrmntId]="AgrmntId"></app-view-purchase-order>
+                <!-- <app-view-purchase-order [agrmntId]="AgrmntId"></app-view-purchase-order> -->
               </ng-template>
             </mat-tab>
 
@@ -104,7 +104,7 @@
 
             <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
-                <app-view-deviation [AppId]="ResponseAppDetailData?.AppId"></app-view-deviation>
+                <!-- <app-view-deviation [AppId]="ResponseAppDetailData?.AppId"></app-view-deviation> -->
               </ng-template>
             </mat-tab>
 
@@ -115,19 +115,19 @@
 
             <mat-tab *ngIf="IsDeliveryOrder" label="Delivery Order">
               <ng-template matTabContent>
-                <agrmnt-view-delivery-order [agrmntId]="AgrmntId"></agrmnt-view-delivery-order>
+                <!-- <agrmnt-view-delivery-order [agrmntId]="AgrmntId"></agrmnt-view-delivery-order> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsDocument" label="Document">
               <ng-template matTabContent>
-                <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
+                <!-- <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document> -->
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsSummary" label="Summary">
               <ng-template matTabContent>
-                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
+                <!-- <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary> -->
               </ng-template>
             </mat-tab>
 
@@ -148,6 +148,7 @@
 
           </mat-tab-group>
         </div>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
