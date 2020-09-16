@@ -87,9 +87,8 @@ export class MouDetailFactoringComponent implements OnInit {
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
     let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
-    var refMasterCurrency = new RefMasterObj();
-    refMasterCurrency.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCurrency;
-    let getCurrency = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
+    var refCurr; 
+    let getCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);
     var mouCustFctr = new MouCustFctrObj();
     mouCustFctr.MouCustId = this.MouCustId;
     let getMouFctr = this.httpClient.post(URLConstant.GetMouCustFctrByMouCustId, mouCustFctr);

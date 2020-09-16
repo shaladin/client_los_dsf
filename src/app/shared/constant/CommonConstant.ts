@@ -398,8 +398,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeRecourseType = "RECOURSE_TYPE";
   public static RefMasterTypeCodePaidBy = "PAID_BY";
   public static RefMasterTypeCodeInstType = "INST_TYPE";
-  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD";
-  public static RefMasterTypeCodeCurrency = "CURRENCY";
+  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD"; 
   public static RefMasterTypeCodeGender = "GENDER";
   public static RefMasterTypeCodeMaritalStat = "MARITAL_STAT";
   public static RefMasterTypeCodeCustModel = "CUST_MODEL";

@@ -69,9 +69,8 @@ export class MouDetailGeneralComponent implements OnInit {
 
     this.isDPInvalid = false;
     this.isTenorInvalid = false;
-    var refMasterCurrency = new RefMasterObj();
-    refMasterCurrency.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCurrency;
-    let reqCurrency = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterCurrency);
+    var refCurr; 
+    let reqCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);
     var refMasterIntrstType = new RefMasterObj();
     refMasterIntrstType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
     let reqIntrstType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterIntrstType);
@@ -116,6 +115,7 @@ export class MouDetailGeneralComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("aaa")
   }
 
   Save(enjiForm) {
