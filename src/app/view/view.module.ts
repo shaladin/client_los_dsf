@@ -90,6 +90,9 @@ import { MouViewTcComponent } from "./mou-view/mou-view-tc/mou-view-tc.component
 import { MouViewComponent } from "./mou-view/mou-view.component";
 import { MouViewApprovalHistoryComponent } from "./mou-view/mou-view-approval-history/mou-view-approval-history.component";
 import { SurveyViewComponent } from "./survey-view-prototype/survey-view.component";
+import { AgreementViewContainerComponent } from "./agr-view/agreement-view-container.component";
+import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
+import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -117,7 +120,7 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
     MainInfoComponent,
     LeadMainInfoComponent,
     AppMainInfoComponent,
-    // AgrMainInfoComponent,
+    AgrMainInfoComponent,
     AppViewComponent,
     AppAssetDataComponent,
     AppAssetDataDetailComponent,
@@ -136,7 +139,7 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
     TabCommissionComponent,
     TabDeviationComponent,
     TabReferantorComponent,
-    // ViewAppCustDataCompanyComponent,
+    ViewAppCustDataCompanyComponent,
     ViewAppCustDataPersonalComponent,
     ViewAppFraudVerificationComponent,
     ViewAppScoreGradeDsrComponent,
@@ -158,8 +161,8 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
     InvoiceDetailComponent ,
     ListDataCommissionComponent,
     //agrmnt
-    // AgrMainInfoComponent,
-    // AgreementViewContainerComponent,
+    AgrMainInfoComponent,
+    AgreementViewContainerComponent,
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
     ViewPurchaseOrderComponent,

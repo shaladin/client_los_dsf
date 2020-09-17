@@ -1,0 +1,19 @@
+<lib-ucSubsection [id]="'LoanObjectId'" [title]="'Loan Object'" [panel]="'LoanObjectSection'"></lib-ucSubsection>
+<div id="LoanObjectSection">
+  <div class="col-md-12">
+    <lib-ucgridview [gridInput]="inputGridObj" (callback)="getEvent($event)"></lib-ucgridview>
+  </div>
+</div>
+<div class="SummarySection" style="margin-top: 20px;">
+  <div class="col-md-12">
+    <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
+    <label class="col-md-3 adInsLabel" translate>{{TotalPremiumToCust | number:'.2':'en-US'}}</label>
+    <label class="col-md-3 adInsLabel" translate>Total Paid Amount by Customer</label>
+    <label class="col-md-3 adInsLabel" translate>{{PaidAmtByCust | number:'.2':'en-US'}}</label>
+  </div>
+  <div class="col-md-12">
+    <label class="col-md-3 adInsLabel" translate>Total Capitalized Amount</label>
+    <label class="col-md-3 adInsLabel" translate>{{InsCpltzAmt | number:'.2':'en-US'}} </label>
+    <label class="col-md-3 adInsLabel" translate>Total Discount Amount</label>
+    <label class="col-md-3 adInsLabel" translate>{{InsDiscAmt | number:'.2':'en-US'}} </label>
+  </div>

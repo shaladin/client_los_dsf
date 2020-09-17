@@ -10,6 +10,7 @@ import { ViewCollateralDataComponent } from './app-view/view-collateral-data/vie
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { MouViewComponent } from './mou-view/mou-view.component';
 import { SurveyViewComponent } from './survey-view-prototype/survey-view.component';
+import { AgreementViewContainerComponent } from './agr-view/agreement-view-container.component';
 
 const routes: Routes = [
   {
@@ -29,13 +30,13 @@ const routes: Routes = [
           title: 'App Main Info'
         }
       },
-      // {
-      //   path: 'AgrMainInfo',
-      //   component: AgrMainInfoComponent,
-      //   data: {
-      //     title: 'Agreement Main INfo'
-      //   }
-      // },
+      {
+        path: 'AgrMainInfo',
+        component: AgrMainInfoComponent,
+        data: {
+          title: 'Agreement Main INfo'
+        }
+      },
       {
         path: 'AppView',
         component: AppViewComponent,
@@ -43,16 +44,12 @@ const routes: Routes = [
           title: 'Application View'
         }
       },
-      // {
-      //   path: 'AgrmntView',
-      //   component: AgreementViewContainerComponent,
-      //   data: {
-      //     title: 'Agreement View'
-      //   }
-      // },
       {
         path: 'AgrmntView',
-        loadChildren: './agr-view/agreement-view-container.module#AgreementViewContainerModule'
+        component: AgreementViewContainerComponent,
+        data: {
+          title: 'Agreement View'
+        }
       },
       {
         path: 'POView',
