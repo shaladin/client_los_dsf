@@ -29,11 +29,11 @@ export class LeadInputLeadDataComponent implements OnInit {
   CopyFrom: string;
   LeadId: string;
   assetConditionObj: RefMasterObj;
-  returnAssetConditionObj: [];
+  returnAssetConditionObj: [] ;
   downPaymentObj: RefMasterObj;
   returnDownPaymentObj: [];
   firstInstObj: RefMasterObj;
-  returnFirstInstObj: [];
+  returnFirstInstObj: any;;
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
   assetTypeId: string;
@@ -357,7 +357,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           if (this.resLeadAppObj.LeadAppId != 0) {
             this.LeadDataForm.patchValue({
               Tenor: this.resLeadAppObj.Tenor,
-              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
+              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode  !=null ?this.resLeadAppObj.MrFirstInstTypeCode  : this.returnFirstInstObj[0]['Key'],
               NTFAmt: this.resLeadAppObj.NtfAmt,
               TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
               InstallmentAmt: this.resLeadAppObj.InstAmt,
@@ -535,7 +535,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                 this.resLeadAppObj = response;
                 this.LeadDataForm.patchValue({
                   Tenor: this.resLeadAppObj.Tenor,
-                  MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
+                  MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode  !=null ?this.resLeadAppObj.MrFirstInstTypeCode  : this.returnFirstInstObj[0]['Key'],
                   NTFAmt: this.resLeadAppObj.NtfAmt,
                   TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
                   InstallmentAmt: this.resLeadAppObj.InstAmt,
@@ -550,7 +550,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               this.resLeadAppObj = response;
               this.LeadDataForm.patchValue({
                 Tenor: this.resLeadAppObj.Tenor,
-                MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
+                MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode !=null ?this.resLeadAppObj.MrFirstInstTypeCode  : this.returnFirstInstObj[0]['Key'],
                 NTFAmt: this.resLeadAppObj.NtfAmt,
                 InstallmentAmt: this.resLeadAppObj.InstAmt,
               });
@@ -724,7 +724,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
-    if (this.Calculate == false) {
+    if (this.Calculate == false &&  this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
     }
@@ -837,7 +837,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.Calculate == false) {
+    if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
     }
