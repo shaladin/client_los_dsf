@@ -12,6 +12,12 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { map, mergeMap } from 'rxjs/operators';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { forkJoin } from 'rxjs';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-document-view',
@@ -45,6 +51,7 @@ export class DocumentViewComponent implements OnInit {
   getUrl: string;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
   BizTemplateCode: string;
+  isDocSignerAvailable: boolean;
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private toastr: NGXToastrService) {
@@ -56,7 +63,7 @@ export class DocumentViewComponent implements OnInit {
         this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
-
+    this.isDocSignerAvailable = false;
   }
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
@@ -86,6 +93,50 @@ export class DocumentViewComponent implements OnInit {
     this.pageNow = 1;
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
+
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).pipe(
+      map((response) => {
+        return response;
+      }),
+      mergeMap((response: AgrmntObj) => {
+        let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, { AppId: response.AppId });
+        let getAgrmntSigner = this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, { AgrmntId: this.AgrmntId });
+        return forkJoin([getAppCust, getAgrmntSigner]);
+      })
+    ).toPromise().then(
+      (response) => {
+        const appCust = response[0] as AppCustObj;
+        const agrmntSigner = response[1] as AgrmntSignerObj;
+        if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W){
+          if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
+            if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo){
+              this.isDocSignerAvailable = true;
+            }
+          }
+          else if(appCust.MrCustTypeCode == CommonConstant.CustTypeCompany){
+            if(agrmntSigner.AppCustCompanyMgmntShrholder1Id && agrmntSigner.AppCustCompanyMgmntShrholder1Id > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo){
+              this.isDocSignerAvailable = true;
+            }
+          }
+        }
+        else if(this.BizTemplateCode == CommonConstant.FACTORING || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
+          if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
+            if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1){
+              this.isDocSignerAvailable = true;
+            }
+          }
+          else if(appCust.MrCustTypeCode == CommonConstant.CustTypeCompany){
+            if(agrmntSigner.AppCustCompanyMgmntShrholder1Id && agrmntSigner.AppCustCompanyMgmntShrholder1Id > 0 && agrmntSigner.MfEmpNo1){
+              this.isDocSignerAvailable = true;
+            }
+          }
+        }
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   searchPagination(event: number) {
     this.pageNow = event;
@@ -136,32 +187,41 @@ export class DocumentViewComponent implements OnInit {
   }
 
   Print(item) {
-    this.RdlcReport.ExportFormat = "JPDF";
-    this.RdlcReport.ExportFile = "JPDF";
-    this.RdlcReport.MainReportParameter = null;
-    this.RdlcReport.ReportName = item.AgrmntDocName;
-    this.RdlcReport.ReportTemplate = item.RptTmpltCode;
-    this.RdlcReport.MainReportInfoDetail.ReportTemplateName = item.RptTmpltCode;
-    this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
-    // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
-
-    this.http.post(URLConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
-      (response) => {
-        let linkSource: string = 'data:application/pdf;base64,' + response[CommonConstant.ReturnObj];
-        let fileName: string = item.AgrmntDocName + ".pdf";
-        const downloadLink = document.createElement("a");
-        downloadLink.href = linkSource;
-        downloadLink.download = fileName;
-
-        if (response[CommonConstant.ReturnObj] != undefined) {
-          downloadLink.click();
-          this.SaveAgrmntDocPrint(item.AgrmntDocId);
-          this.toastr.successMessage(response['message']);
-
-        } else {
-          this.toastr.errorMessage(response['message']);
-        }
-      });
+    try {
+      if(this.isDocSignerAvailable){
+        this.RdlcReport.ExportFormat = "JPDF";
+        this.RdlcReport.ExportFile = "JPDF";
+        this.RdlcReport.MainReportParameter = null;
+        this.RdlcReport.ReportName = item.AgrmntDocName;
+        this.RdlcReport.ReportTemplate = item.RptTmpltCode;
+        this.RdlcReport.MainReportInfoDetail.ReportTemplateName = item.RptTmpltCode;
+        this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
+        // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
+    
+        this.http.post(URLConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
+          (response) => {
+            let linkSource: string = 'data:application/pdf;base64,' + response[CommonConstant.ReturnObj];
+            let fileName: string = item.AgrmntDocName + ".pdf";
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.download = fileName;
+    
+            if (response[CommonConstant.ReturnObj] != undefined) {
+              downloadLink.click();
+              this.SaveAgrmntDocPrint(item.AgrmntDocId);
+              this.toastr.successMessage(response['message']);
+    
+            } else {
+              this.toastr.errorMessage(response['message']);
+            }
+          });
+      }
+      else{
+        throw new Error(ExceptionConstant.NO_SIGNER_AVAILABLE);
+      }
+    } catch (error) {
+      this.toastr.errorMessage(error);
+    }
   }
 
   GetCallBack(ev: any) {
