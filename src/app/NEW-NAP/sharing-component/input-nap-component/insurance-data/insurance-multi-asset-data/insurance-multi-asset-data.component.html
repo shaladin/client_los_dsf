@@ -477,7 +477,7 @@
                     <label class="col-md-4" style="font-size: 90%" for="discAmt" translate>Discount</label>
                     <div class="col-md-4">
                       <input type="" currencyMask id="discAmt" style="float: right;" class="form-control width-75-per"
-                        formControlName="TotalCustDiscAmt" [options]="{ allowNegative: false }"
+                        formControlName="TotalCustDiscAmt" [options]="{ allowNegative: false }" (focusout)="BindCapitalize($event)"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.TotalCustDiscAmt"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -488,7 +488,13 @@
                       Discount</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
                       translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
-                  </div>
+                  </div> 
+                  <div class="form-group row">
+                    <label class="col-md-4" style="font-size: 90%" translate>Full Capitalized Amount</label>
+                    <div class="col-md-4">
+                      <input type="checkbox" class="checkboxLabel"style="float: right; margin-right: 0" formControlName="IsFullCapitalizedAmount"  (change)="IsFullCapitalizedAmount()"> 
+                    </div>
+                  </div>   
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" for="insCpltzAmt" translate>Capitalize
                       Amount</label>
