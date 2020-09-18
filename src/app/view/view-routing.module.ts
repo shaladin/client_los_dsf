@@ -4,12 +4,14 @@ import { MainInfoComponent } from './main-info/main-info.component';
 import { AppMainInfoComponent } from './app-main-info/app-main-info.component';
 import { AgrMainInfoComponent } from './agr-main-info/agr-main-info.component';
 import { AppViewComponent } from './app-view/app-view.component';
-import { AgreementViewContainerComponent } from './agr-view/agreement-view-container.component';
+
 import { PurchaseOrderViewComponent } from './purchase-order-view/purchase-order-view.component';
 import { ViewCollateralDataComponent } from './app-view/view-collateral-data/view-collateral-data.component';
 import { LeadViewComponent } from './lead-view/lead-view.component';
 import { MouViewComponent } from './mou-view/mou-view.component';
 import { SurveyViewComponent } from './survey-view-prototype/survey-view.component';
+import { AgreementViewContainerComponent } from './agr-view/agreement-view-container.component';
+
 const routes: Routes = [
   {
     path: '',

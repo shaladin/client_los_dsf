@@ -9,6 +9,6 @@ export const CONTENT_ROUTES: Routes = [
     },
     {
         path: 'View',
-        loadChildren: './view/view.module#ViewModule'
+        loadChildren: 'app/view-enhancing/view.module#ViewModule'
     },
 ];

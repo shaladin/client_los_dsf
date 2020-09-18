@@ -1,0 +1,10 @@
+<div *ngIf="result">
+  <div *ngIf="count1>0">
+    <lib-ucSubsection [id]="'MouApprovalHistoryId'" [title]="'MOU Approval History'" [panel]="'MouApprovalHistory'">
+    </lib-ucSubsection>
+    <div *ngIf='IsApvReady' id="MouApprovalHistory">
+      <lib-ucapprovalhist [inputObj]="listMouAppvrObj">
+      </lib-ucapprovalhist>
+    </div>
+  </div>
+</div>
