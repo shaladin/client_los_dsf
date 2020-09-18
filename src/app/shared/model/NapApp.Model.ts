@@ -1,4 +1,3 @@
-
 export class NapAppModel {
   AppId: any;
   MouCustId: any;
