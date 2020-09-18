@@ -19,6 +19,7 @@ export class AllAssetDataObj {
   AppCollateralAttrObj: Array<AppCollateralAttrObj>;
   AppAssetAttrObj: Array<AppAssetAttrObj>;
   LOBCode: string;
+  IsAppAssetAccessoryChanged: boolean;
   RowVersion: any;
 
   constructor() {
@@ -33,5 +34,6 @@ export class AllAssetDataObj {
     this.AppAssetAttrObj = new Array<AppAssetAttrObj>();
     this.RowVersion = "";
     this.LOBCode = "";
+    this.IsAppAssetAccessoryChanged = false;
   }
 }
