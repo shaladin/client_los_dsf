@@ -127,7 +127,6 @@ export class CommonConstant {
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
-
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
   public static ID_TYPE_NPWP = "NPWP";
@@ -505,4 +504,7 @@ export class CommonConstant {
   
   //ASSET ATTRIBUTE
   public static AttrTypeCodeTrx = "TRX";
+
+  //CHARACTERISTIC OF CREDIT
+  public static CharacteristicOfCreditTypeCredit = "CREDIT";
 }
