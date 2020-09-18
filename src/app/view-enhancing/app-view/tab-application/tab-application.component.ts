@@ -16,14 +16,22 @@ export class TabApplicationComponent implements OnInit {
   viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
+  isReady: boolean = false;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  initData() {
+  async ngOnInit() {
     if (this.BizTemplateCode == CommonConstant.FCTR) {
-      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringInfo.json";
+      await this.http.post(URLConstant.GetAppFctrByAppId, {AppId: this.appId}).toPromise().then(
+      (response) => {
+        if(response["MrInstTypeCode"] == CommonConstant.SINGLE_INST_TYPE){
+          this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringSingleInfo.json";
+        }else if(response["MrInstTypeCode"] == CommonConstant.MULTIPLE_INST_TYPE){
+          this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringMulInfo.json";
+        }
+      });
     }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
@@ -35,12 +43,9 @@ export class TabApplicationComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-  }
-
-  async ngOnInit() {
-    this.initData();
+    this.isReady = true;
     await this.GetCrossAppData();
-    this.GetLoanObjData();
+    await this.GetLoanObjData();
   }
 
   ListCrossAppData
@@ -55,11 +60,11 @@ export class TabApplicationComponent implements OnInit {
     );
   }
 
-  GetLoanObjData() {
+  async GetLoanObjData() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
 
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
+    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).toPromise().then(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""
