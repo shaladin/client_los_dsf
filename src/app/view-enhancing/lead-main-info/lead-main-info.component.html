@@ -1,0 +1,31 @@
+<form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'MainInfoId'" [title]="'Main Info'" [panel]="'MainInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="MainInfo">
+    <div class="form-group">
+      <label class="col-md-2 adins-label" translate>Lead No.</label>
+      <a href="{{leadUrl + LeadId}}"><label class="col-md-2 adins-label" style="color: blue; cursor: pointer;"
+          translate>{{LeadNo}}</label></a>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adins-label" translate>Office Name</label>
+      <label class="col-md-2 adins-label" translate>{{OriOfficeName}}</label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adins-required" translate>Order No</label>
+      <label class="col-md-2 adins-label" translate>{{OrderNo}}</label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adins-required" translate>Line of Business</label>
+      <label class="col-md-2 adins-label" translate>{{LobCode}}</label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adins-required" translate>Lead Source</label>
+      <label class="col-md-2 adins-label" translate>{{MrLeadSourceCode}}</label>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 adins-required" translate>Agency</label>
+      <label class="col-md-2 adins-label" translate>{{AgencyName}}</label>
+    </div>
+  </div>
+</form>

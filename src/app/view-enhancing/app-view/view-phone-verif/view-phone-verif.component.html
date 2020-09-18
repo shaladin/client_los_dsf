@@ -1,0 +1,38 @@
+<lib-ucSubsection [id]="'listobjectId'" [title]="'List Object'" [panel]="'listobject'">
+</lib-ucSubsection>
+<div id="listobject">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-left">Subject</th>
+        <th class="text-left">Name</th>
+        <th class="text-center">Phone</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Time</th>
+        <th class="text-left">Result</th>
+        <th class="text-left">Relation</th>
+        <th class="text-left">Notes</th>
+        <th class="text-left">View</th>
+      </tr>
+    </thead>
+    <tbody *ngIf = "phoneVerifObj.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr *ngFor="let item of phoneVerifObj" >
+        <td class="text-left">{{item.Subject}}</td>
+        <td class="text-left">{{item.SubjectName}}</td>
+        <td class="text-center">{{item.PhoneNumber}}</td>
+        <td class="text-center">{{item.DatetimeVerif | date: 'dd-MMMM-yyyy'}}</td>
+        <td class="text-center">{{item.DatetimeVerif | date: 'h:mm a'}}</td>
+        <td class="text-left">{{item.Result}}</td>
+        <td class="text-left">{{item.SubjectRelation}}</td>
+        <td class="text-left">{{item.Notes}}</td>
+        <td class="text-left" *ngIf="item.PhoneNumber != null"><a (click)="View(item.VerfResultHId, item.SubjectName)">View</a></td>
+        <td class="text-left" *ngIf="item.PhoneNumber == null"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
