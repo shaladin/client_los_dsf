@@ -400,7 +400,7 @@ export class URLConstant {
     public static AddExchangeRate = "/RefCurr/AddExchangeRate";
     public static EditExchangeRate = "/RefCurr/EditExchangeRate";
     public static GetExchangeRate = "/RefCurr/GetExchangeRate";
-
+    public static GetListKvpActiveRefCurr = environment.FoundationR3Url +"/RefCurr/GetListKvpActiveRefCurr"
     //GENERIC
     public static GetObjectBySQL = "/Generic/GetObjectBySQL";
     public static AddObjectBySQL = "/Generic/AddObjectBySQL";
