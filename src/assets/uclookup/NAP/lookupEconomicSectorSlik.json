@@ -22,7 +22,7 @@
     "querystring": {
       "select": "SELECT MASTER_CODE AS MasterCode, DESCR AS Descr",
       "from": "FROM dbo.REF_MASTER WITH(NOLOCK)",
-      "where":"WHERE REF_MASTER_TYPE_CODE = 'SLIK_SEC_ECO'"
+      "where":"WHERE REF_MASTER_TYPE_CODE = N'SLIK_SEC_ECO'"
     },
     "headerList": [
         {
