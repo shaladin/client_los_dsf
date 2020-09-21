@@ -12,6 +12,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -36,6 +37,9 @@ export class ApplicationDataComponent implements OnInit {
   PayFreqVal: number;
   PayFreqTimeOfYear: number;
   FirstInstType : string;
+  resMouCustObj;  
+  mouCustObj;
+  CustNo: string;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -124,6 +128,31 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
+    var AppObj = {
+      AppId: this.appId
+    }
+    var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
+      (response) => { 
+        this.CustNo = response["CustNo"];
+
+        this.mouCustObj = new MouCustObj();
+        this.mouCustObj.CustNo = this.CustNo;
+        this.mouCustObj.StartDt = user.BusinessDt;
+        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
+
+        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+          (response) => {
+            this.resMouCustObj = response[CommonConstant.ReturnObj];
+            
+
+            // if(this.resMouCustObj.length > 0)
+            // {
+            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
+            // }
+          }
+        );
+      });
     if (this.BizTemplateCode != CommonConstant.OPL) {
       this.GetCrossInfoData();
     }
@@ -488,7 +517,14 @@ export class ApplicationDataComponent implements OnInit {
     temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
     temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
     temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
-
+    if(this.NapAppModelForm.controls.MouCustId.value == "null")
+    {
+      temp.MouCustId = "";
+    }
+    else
+    {
+      temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
+    }
     return temp;
   }
 

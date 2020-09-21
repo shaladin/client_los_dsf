@@ -250,9 +250,9 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
                                          [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
-              </app-application-data-FL4W>
+              </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
