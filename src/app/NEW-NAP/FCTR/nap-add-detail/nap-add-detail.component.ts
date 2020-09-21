@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,13 +10,14 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
   selector: 'app-nap-add-detail',
   templateUrl: './nap-add-detail.component.html'
 })
 export class NapAddDetailComponent implements OnInit {
-
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -163,6 +164,7 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -173,6 +175,7 @@ export class NapAddDetailComponent implements OnInit {
         this.stepper.next();
       }
     )
+    this.ucViewMainProd.initiateForm();
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
