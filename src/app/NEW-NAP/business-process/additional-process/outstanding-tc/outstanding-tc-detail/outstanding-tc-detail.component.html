@@ -8,11 +8,14 @@
           </div>
           <form class="form form-horizontal" [formGroup]="OustandingTCForm"
             (ngSubmit)="OustandingTCForm.valid && SaveForm()" #enjiForm="ngForm">
-            <app-term-conditions [AppId]="AppId" [parentForm]="OustandingTCForm" [enjiForm]="enjiForm">
-            </app-term-conditions>
+            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
+            </lib-ucSubsection>
+            <div id="TCList">
+              <app-term-conditions [AppId]="AppId" [parentForm]="OustandingTCForm" [enjiForm]="enjiForm">
+              </app-term-conditions>
+            </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                (click)= "Back()" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>
