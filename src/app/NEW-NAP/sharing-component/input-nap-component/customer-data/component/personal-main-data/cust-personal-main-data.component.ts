@@ -30,6 +30,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   @Input() custType: any;
   @Input() IsSpouseExist: boolean = false;
+  @Input() bizTemplateCode : string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   @Output() isMarried: EventEmitter<any> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();

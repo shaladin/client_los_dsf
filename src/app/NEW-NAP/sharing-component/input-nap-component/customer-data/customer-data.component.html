@@ -20,7 +20,7 @@
       <div class="form-body">
         <div *ngIf="isBindDataDone == true">
           <app-cust-personal-main-data (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)" (isMarried)="MaritalChanged($event)" [appId]="appId" [IsSpouseExist]="IsSpouseExist"
-            [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
+            [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [bizTemplateCode]="bizTemplateCode"
             [identifier]="'personalMainData'"></app-cust-personal-main-data>
           <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
           [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
@@ -120,7 +120,7 @@
       <div class="form-body">
         <div *ngIf="isBindDataDone == true">
           <app-cust-company-main-data (callbackCopyCust)="CopyCustomerCompany($event)"
-            [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
+            [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [bizTemplateCode]="bizTemplateCode"
             [identifier]="'companyMainData'"></app-cust-company-main-data>
           <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy"
           [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
