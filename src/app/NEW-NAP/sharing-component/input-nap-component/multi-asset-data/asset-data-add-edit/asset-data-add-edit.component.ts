@@ -94,6 +94,7 @@ export class AssetDataAddEditComponent implements OnInit {
   resAssetMasterObj: any;
   getAssetMasterForLookupEmployee: any;
   getAppCollateralByAppId: any;
+  getAppCollateralByAppAssetId: string;
   getAppCollateralRegistByAppCollateralId: any;
   getListAppAssetSupplEmpByAppAssetId: any;
   getVendorForLookup: any;
@@ -160,7 +161,6 @@ export class AssetDataAddEditComponent implements OnInit {
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
     DownPayment: ['', Validators.required],
     MrAssetConditionCode: [''],
-    MrAssetConditionCodeView: [''],
     AssetUsage: [''],
     LicensePlate: [''],
     ChassisNo: [''],
@@ -211,6 +211,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.getAllAssetDataByAppAssetId = URLConstant.GetAllAssetDataByAppAssetId;
     this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
     this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
+    this.getAppCollateralByAppAssetId = URLConstant.GetAppCollateralByAppAssetId;
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
     this.getVendorForLookup = URLConstant.GetVendorForLookup;
@@ -284,8 +285,6 @@ export class AssetDataAddEditComponent implements OnInit {
         this.locationAddrObj.AreaCode2 = this.returnAppCustAddrObj.AreaCode2;
         this.locationAddrObj.City = this.returnAppCustAddrObj.City;
 
-        this.inputFieldLocationAddrObj = new InputFieldObj();
-        this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
         this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false; 
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
@@ -485,8 +484,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("aaaa")
-    this.AssetDataForm.controls.MrAssetConditionCodeView.disable();
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 
@@ -512,6 +509,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.returnAppAssetObj.MrAssetConditionCode,
+            MrAssetConditionCodeView: this.returnAppAssetObj.MrAssetConditionCode,
             AssetUsage: this.returnAppAssetObj.MrAssetUsageCode,
             AssetPrice: this.returnAppAssetObj.AssetPriceAmt,
             DownPayment: this.returnAppAssetObj.DownPaymentAmt,
@@ -616,8 +614,8 @@ export class AssetDataAddEditComponent implements OnInit {
 
         });
       this.appCollateralObj = new AppCollateralObj();
-      this.appCollateralObj.AppId = this.AppId;
-      this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
+      this.appCollateralObj.AppAssetId = this.AppAssetId;
+      this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
 
@@ -651,8 +649,6 @@ export class AssetDataAddEditComponent implements OnInit {
               this.locationAddrObj.AreaCode2 = this.returnAppCollateralRegistObj.LocationAreaCode2;
               this.locationAddrObj.City = this.returnAppCollateralRegistObj.LocationCity;
 
-              this.inputFieldLocationAddrObj = new InputFieldObj();
-              this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
               this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
               this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
               this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
@@ -698,6 +694,13 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetType = response[2];
         var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+
+        if (this.mode != 'editAsset') {
+          this.AssetDataForm.patchValue({
+            MrAssetConditionCode: assetCond["CompntValue"],
+            MrAssetConditionCodeView: assetCond["CompntValue"]
+          });
+        } 
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           AssetTypeCode: assetType["CompntValue"]
@@ -773,14 +776,15 @@ export class AssetDataAddEditComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
+        if (this.mode != 'editAsset') {
           this.AssetDataForm.patchValue(
             {
-              MrAssetConditionCode: this.returnAssetConditionObj[1].Key,
-              MrAssetConditionCodeView: this.returnAssetConditionObj[1].Key
+              MrAssetConditionCode: this.returnAssetConditionObj[0].Key
             }
           )
         }
+
+        this.UcAddressHandler();
       }
     );
 
@@ -833,8 +837,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     );
   }
-  checkForm() {
-  }
+
   showModalTaxCityIssuer() {
     const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
     modalTaxCityIssuer.result.then(
@@ -926,7 +929,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
-    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
@@ -1037,6 +1040,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
+          this.AssetDataForm.reset();
           //this.router.navigate(["/Nap/AssetData/Paging"]);
           this.assetValue.emit({ mode: 'paging' });
         });
@@ -1065,10 +1069,22 @@ export class AssetDataAddEditComponent implements OnInit {
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.AssetDataForm.reset();
           this.assetValue.emit({ mode: 'paging' });
         });
     }
+
+    this.inputAddressObjForLoc = new InputAddressObj();
+    this.inputAddressObjForLoc.title = "Asset Location";
+    this.inputAddressObjForLoc.showSubsection = false; 
+    this.inputAddressObjForLoc.showAllPhn = false;
+    this.inputAddressObjForLoc.showOwnership = false;
+
+    var datePipe = new DatePipe("en-US");
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
+
   }
   addGroup(appAssetAccessoriesObj, i) {
     if (appAssetAccessoriesObj == undefined) {
@@ -1265,5 +1281,15 @@ export class AssetDataAddEditComponent implements OnInit {
       AssetAccessoryCode: event.AssetAccessoryCode
     });
 
+  }
+
+  UcAddressHandler(){
+    if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed){
+      this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
+      this.inputAddressObjForLoc.isRequired = false;
+    }else{
+      this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
+      this.inputAddressObjForLoc.isRequired = true;
+    }
   }
 }

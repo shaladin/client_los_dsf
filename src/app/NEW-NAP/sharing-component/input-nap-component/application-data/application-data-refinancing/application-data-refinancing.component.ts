@@ -88,7 +88,12 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     RsvField4: [''],
     RsvField5: [''],
     MrInstSchemeCode: ["", Validators.required],
-    InterestType: ['', Validators.required]
+    InterestType: ['', Validators.required], 
+    InterestTypeDesc: [''], 
+    CharaCredit: ['',[Validators.required, Validators.maxLength(50)]],
+    PrevAgrNo: [''],
+    WayRestructure: ['',Validators.required],
+    MrSlikSecEcoCode: [''],
   });
 
   inputPagingObj;
@@ -97,7 +102,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj;
-
+  inputLookupEconomicSectorObj;
   mouCustObj;
   resMouCustObj;
   CustNo: string;
@@ -119,6 +124,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
@@ -191,7 +198,14 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
-
+  ChangeCharacteristicOfCredit(){
+    if (this.NapAppModelForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {  
+     this.NapAppModelForm.controls.WayRestructure.setValidators(Validators.required);
+    }else{
+      this.NapAppModelForm.controls.WayRestructure.clearValidators();
+    }
+    this.NapAppModelForm.controls.WayRestructure.updateValueAndValidity();
+  }
   GetCrossInfoData(){
     var obj = {
       AppId: this.AppId,
@@ -269,8 +283,17 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           RsvField5: this.resultResponse.RsvField5,
           MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
-          FloatingPeriod: this.resultResponse.FloatingPeriodCode
+          FloatingPeriod: this.resultResponse.FloatingPeriodCode,
+          CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
+          PrevAgrNo: this.resultResponse.PrevAgrmntNo,
+          WayRestructure: this.resultResponse.MrWayOfRestructureCode,
+          MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
         });
+        if(this.resultResponse.WayRestructure ==null){ 
+          this.NapAppModelForm.patchValue({
+            WayRestructure:  this.applicationDDLitems['WAY_OF_RESTRUCTURE'][0].Key
+          });
+          }
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
@@ -332,6 +355,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     });
   }
 
+  getLookupEconomicSector(ev) {
+    this.NapAppModelForm.patchValue({
+      MrSlikSecEcoCode: ev.MasterCode 
+    });
+  }
   makeLookUpObj(){
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
@@ -343,6 +371,14 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.inputLookupObj.jsonSelect = this.resultResponse;
     //this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
+    this.inputLookupEconomicSectorObj = new InputLookupObj();
+    this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json"; 
+    this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
+    this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     this.isInputLookupObj = true;
   }
 
@@ -471,7 +507,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     temp.RsvField3 = this.NapAppModelForm.controls.RsvField3.value;
     temp.RsvField4 = this.NapAppModelForm.controls.RsvField4.value;
     temp.RsvField5 = this.NapAppModelForm.controls.RsvField5.value;
-    temp.RowVersion = this.resultResponse.RowVersion;
+    temp.RowVersion = this.resultResponse.RowVersion; 
+    temp.MrSlikSecEcoCode = this.NapAppModelForm.controls.MrSlikSecEcoCode.value; 
+    temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
+    temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
+    temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
     return temp;
   }
 
@@ -502,6 +542,12 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   ClickSave(){
+    if(this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit){
+      this.NapAppModelForm.patchValue({
+        PrevAgrNo: null,
+        WayRestructure: null
+      });   
+     }
     var tempAppObj = this.GetAppObjValue();
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
