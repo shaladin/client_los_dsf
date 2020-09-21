@@ -85,7 +85,6 @@ export class InsuranceDataComponent implements OnInit {
   defaultInsMainCvgType: string;
   sumInsuredAmtObj: Array<string> = new Array<string>();
   insRateAddCvgRuleTplObjs: Array<InsRateAddCvgRuleObj>;
-
   showGenerate: boolean = false;
   isGenerate: boolean = false;
   isCalculate: boolean = false;
@@ -119,7 +118,8 @@ export class InsuranceDataComponent implements OnInit {
     CustCvgAmt: [0, Validators.required],
     TotalCustDiscAmt: [0],
     InsCpltzAmt: [0],
-    PayPeriodToInsco: ['', Validators.required]
+    PayPeriodToInsco: ['', Validators.required],
+    IsFullCapitalizedAmount: [false] 
   });
 
   constructor(private fb: FormBuilder,
@@ -548,7 +548,7 @@ export class InsuranceDataComponent implements OnInit {
         this.isCalculate = true;
       }
     );
-
+    this.BindCapitalize();
   }
 
   async GenerateInsurance(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
@@ -627,7 +627,7 @@ export class InsuranceDataComponent implements OnInit {
         this.showGenerate = true;
       }
     );
-
+    this.BindCapitalize();
   }
 
   GenerateMainAndAddCvgTable() {
@@ -666,7 +666,6 @@ export class InsuranceDataComponent implements OnInit {
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroupFromDB(appInsMainCvgObj[i]));
     }
   }
-
   bindInsAddCvgTypeRuleObj() {
     (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray) = this.fb.array([]);
     this.insAddCvgTypeRuleObj = [{ Key: "", Value: "" }];
@@ -1363,7 +1362,15 @@ export class InsuranceDataComponent implements OnInit {
         this.setInsLengthValidator(this.appInsObjObj.InsAssetCoverPeriod);
         await this.GenerateInsurance(this.appInsMainCvgObj);
       }
-      this.setValidator(insuredBy);
+       
+      this.setValidator(insuredBy); 
+
+      if (this.InsuranceDataForm["controls"]["InsCpltzAmt"].value == this.InsuranceDataForm["controls"]["TotalCustMainPremiAmt"].value + this.InsuranceDataForm["controls"]["TotalCustAddPremiAmt"].value + this.InsuranceDataForm["controls"]["CustAdminFeeAmt"].value - this.InsuranceDataForm["controls"]["TotalCustDiscAmt"].value) {
+        this.InsuranceDataForm["controls"]["InsCpltzAmt"].disable();
+        this.InsuranceDataForm.patchValue({
+          IsFullCapitalizedAmount: true
+        });
+      }
     }
   }
 
@@ -1503,4 +1510,24 @@ export class InsuranceDataComponent implements OnInit {
   back() {
     this.outputTab.emit();
   }
+
+  IsFullCapitalizedAmount(){
+    if(this.InsuranceDataForm["controls"]["IsFullCapitalizedAmount"].value == true ){
+      this.InsuranceDataForm.patchValue({
+        InsCpltzAmt: this.InsuranceDataForm["controls"]["TotalCustMainPremiAmt"].value  + this.InsuranceDataForm["controls"]["TotalCustAddPremiAmt"].value  + this.InsuranceDataForm["controls"]["CustAdminFeeAmt"].value  - this.InsuranceDataForm["controls"]["TotalCustDiscAmt"].value 
+      }); 
+      this.InsuranceDataForm["controls"]["InsCpltzAmt"].disable();
+    }else{
+      this.InsuranceDataForm["controls"]["InsCpltzAmt"].enable();
+    }
+  }
+  BindCapitalize(){
+    if(this.InsuranceDataForm["controls"]["IsFullCapitalizedAmount"].value == true ){
+      this.InsuranceDataForm.patchValue({
+        InsCpltzAmt: this.InsuranceDataForm["controls"]["TotalCustMainPremiAmt"].value  + this.InsuranceDataForm["controls"]["TotalCustAddPremiAmt"].value  + this.InsuranceDataForm["controls"]["CustAdminFeeAmt"].value  - this.InsuranceDataForm["controls"]["TotalCustDiscAmt"].value 
+      });  
+    }
+  }
+
+  
 }
