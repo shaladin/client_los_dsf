@@ -277,6 +277,67 @@
             <app-loan-object [AppId]="AppId" [mode]="mode"> </app-loan-object>
 
 
+            <div>
+              <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
+              </lib-ucSubsection>
+              <div class="form-body" id="restData">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <div class="form-group col-md-4 adins-required">
+                        <label class="adins-required-label">Characteristic of Credit </label>
+                      </div>
+                      <div class="col-md-8">
+                        <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"(change)= "ChangeCharacteristicOfCredit()">
+                          <option value="">-Select One-</option>
+                          <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
+                            {{it.Value}}
+                          </option>
+                        </select>
+                        <lib-uc-show-errors [control]="NapAppModelForm.controls.CharaCredit"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <div *ngIf="NapAppModelForm.controls.CharaCredit.value != 'OTHER' && NapAppModelForm.controls.CharaCredit.value != ''">
+                      <div class="form-group row">
+                        <label class="col-md-4 adInsLabel">Previous Agreement No </label>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.PrevAgrNo" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4 adins-required-label">Way of Restructure</label>
+                        <div class="col-md-8">
+                          <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
+                            <option value="">-Select One-</option>
+                            <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
+                              {{it.Value}}
+                            </option>
+                          </select>
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.WayRestructure"
+                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                      </div>  
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 adInsLabel">Economic Sector (Slik)</label>
+                      <div class="col-md-8">  
+                      <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupEconomicSectorObj" [parentForm]='NapAppModelForm' [enjiForm]='enjiForm'
+                        [identifier]="'economicSectorIdentifier'" (lookup)="getLookupEconomicSector($event)">
+                      </lib-uclookupgeneric>
+                      <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                      </div> 
+                    </div> 
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="form-actions right">
               <button type="submit" class="btn btn-raised btn-primary">
                 <i class="fa fa-check-square-o"></i> Save and Continue
