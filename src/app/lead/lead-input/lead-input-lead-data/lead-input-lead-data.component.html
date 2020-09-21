@@ -21,7 +21,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" (focusout)="radioChange($event)"
+                    <select class="form-control adInsInput" style="width: auto" (change)="radioChange($event)"
                       formControlName="MrAssetConditionCode" required
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrAssetConditionCode.invalid }">
                       <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
@@ -127,7 +127,7 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>First Installment Type</label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" (focusout)="FirstInstChange()"
+                  <select class="form-control adInsInput" style="width: auto" (change)="FirstInstChange()"
                     formControlName="MrFirstInstTypeCode" required
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrFirstInstTypeCode.invalid }">
                     <option *ngFor="let it of returnFirstInstObj " [value]="it.Key">
