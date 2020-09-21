@@ -408,39 +408,46 @@ export class AssetDataComponent implements OnInit {
     if (this.isValidOk == true) {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
-      for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
-        if(!this.allAssetDataObj.IsAppAssetAccessoryChanged){
-          for (const oriAcc of this.originalAppAssetAccessory) {
-            if(newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode){
-              if(newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName){
-                this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                break;
+      if(this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0){
+        if(this.originalAppAssetAccessory && this.originalAppAssetAccessory.length > 0){
+          for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
+            if(!this.allAssetDataObj.IsAppAssetAccessoryChanged){
+              for (const oriAcc of this.originalAppAssetAccessory) {
+                if(newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode){
+                  if(newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.SupplCode != oriAcc.SupplCode){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.SupplName != oriAcc.SupplName){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.AccessoryNotes != oriAcc.AccessoryNotes){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                }
               }
-              if(newAcc.SupplCode != oriAcc.SupplCode){
-                this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                break;
-              }
-              if(newAcc.SupplName != oriAcc.SupplName){
-                this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                break;
-              }
-              if(newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt){
-                this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                break;
-              }
-              if(newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt){
-                this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                break;
-              }
-              if(newAcc.AccessoryNotes != oriAcc.AccessoryNotes){
-                this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                break;
-              }
+            }
+            else{
+              break;
             }
           }
         }
         else{
-          break;
+          this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
         }
       }
       this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
