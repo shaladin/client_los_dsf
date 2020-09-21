@@ -485,7 +485,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("aaaa")
     this.AssetDataForm.controls.MrAssetConditionCodeView.disable();
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
@@ -512,6 +511,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.returnAppAssetObj.MrAssetConditionCode,
+            MrAssetConditionCodeView: this.returnAppAssetObj.MrAssetConditionCode,
             AssetUsage: this.returnAppAssetObj.MrAssetUsageCode,
             AssetPrice: this.returnAppAssetObj.AssetPriceAmt,
             DownPayment: this.returnAppAssetObj.DownPaymentAmt,
@@ -699,6 +699,13 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
+        if (this.mode != 'editAsset') {
+          this.AssetDataForm.patchValue({
+            MrAssetConditionCode: assetCond["CompntValue"],
+            MrAssetConditionCodeView: assetCond["CompntValue"]
+          });
+        } 
+
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           AssetTypeCode: assetType["CompntValue"]
         }).subscribe(
@@ -773,14 +780,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
-          this.AssetDataForm.patchValue(
-            {
-              MrAssetConditionCode: this.returnAssetConditionObj[1].Key,
-              MrAssetConditionCodeView: this.returnAssetConditionObj[1].Key
-            }
-          )
-        }
       }
     );
 
@@ -926,7 +925,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
-    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;

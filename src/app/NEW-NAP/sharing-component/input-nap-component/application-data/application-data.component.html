@@ -237,17 +237,17 @@
                   <tr class="table-header">
                     <th style="text-align: center;">
                       <span class="thead-header" translate>
+                        Application No
+                      </span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>
                         Agreement No
                       </span>
                     </th>
                     <th style="text-align: left;">
                       <span class="thead-header" translate>
                         Customer Name
-                      </span>
-                    </th>
-                    <th style="text-align: center;">
-                      <span class="thead-header" translate>
-                        Application No
                       </span>
                     </th>
                     <th><span translate class="thead-header" name='action'>Delete</span></th>
@@ -260,9 +260,9 @@
                 </tbody>
                 <tbody>
                   <tr *ngFor="let item of resultCrossApp; let i = index">
+                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td>
                       <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
