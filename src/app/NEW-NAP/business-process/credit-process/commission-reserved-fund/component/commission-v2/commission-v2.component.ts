@@ -335,7 +335,6 @@ export class CommissionV2Component implements OnInit {
     this.Summary.TotalVATAmount = 0;
     this.Summary.GrossYield = 0;
     this.totalExpenseAmt = 0;
-
     for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
       this.DictTotalIncomeForm[this.ListAllocFromForDict[i]] = 0;
     }
@@ -362,6 +361,7 @@ export class CommissionV2Component implements OnInit {
         ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
         IsSave: false,
       };
+      if (this.CekMaxValueIncomeInfo()) return;
 
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).subscribe(
         (response) => {

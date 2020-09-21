@@ -52,8 +52,12 @@
 
           <form class="form form-horizontal" [formGroup]="TcForm"
           (ngSubmit)="TcForm.valid && Save()" #enjiForm="ngForm">
+          <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
+          </lib-ucSubsection>
+          <div id="TCList">
           <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
           </app-term-conditions>
+        </div>
           <div class="form-body">
             <div class="form-actions right" style="text-align: right;">
               <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
