@@ -250,6 +250,13 @@ export class MouRequestAddcollComponent implements OnInit {
       this.criteriaObj.propName = 'MCC.ASSET_TYPE_CODE';
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
+
+      const addCritCustNo = new CriteriaObj();
+      addCritCustNo.DataType = 'text';
+      addCritCustNo.propName = 'MC.CUST_NO';
+      addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+      addCritCustNo.value = this.custNo;
+      this.criteriaList.push(addCritCustNo);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -407,8 +414,7 @@ export class MouRequestAddcollComponent implements OnInit {
             OwnerName: this.collateralRegistrationObj.OwnerName,
             OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
             MrIdTypeCode: this.collateralRegistrationObj.MrIdType,
-            MrOwnerRelationshipCode: this.collateralRegistrationObj.OwnerRelationship,
-            MrUserRelationshipCode: this.collateralRegistrationObj.OwnerRelationship,
+            OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
             Notes: this.collateralRegistrationObj.Notes,
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
           });
@@ -736,8 +742,7 @@ export class MouRequestAddcollComponent implements OnInit {
           OwnerName: this.collateralRegistrationObj.OwnerName,
           OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
           MrIdTypeCode: this.collateralRegistrationObj.MrIdType,
-          MrOwnerRelationshipCode: this.collateralRegistrationObj.OwnerRelationship,
-          MrUserRelationshipCode: this.collateralRegistrationObj.OwnerRelationship,
+          OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
           Notes: this.collateralRegistrationObj.Notes,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
@@ -868,7 +873,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
     const addCritCustNo = new CriteriaObj();
     addCritCustNo.DataType = 'text';
-    addCritCustNo.propName = 'CU.CUST_NO';
+    addCritCustNo.propName = 'MC.CUST_NO';
     addCritCustNo.restriction = AdInsConstant.RestrictionEq;
     addCritCustNo.value = this.custNo;
     this.tempPagingObj.addCritInput.push(addCritCustNo);
