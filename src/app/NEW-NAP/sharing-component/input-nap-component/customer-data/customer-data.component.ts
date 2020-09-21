@@ -57,6 +57,7 @@ export class CustomerDataComponent implements OnInit {
   });
 
   @Input() appId: number;
+  @Input() bizTemplateCode: string = "";
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();

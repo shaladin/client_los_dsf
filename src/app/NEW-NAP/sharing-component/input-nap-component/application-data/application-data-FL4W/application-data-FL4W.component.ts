@@ -138,7 +138,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => { 
-       this.CustNo = response["CustNo"];
+        this.CustNo = response["CustNo"];
 
         this.mouCustObj = new MouCustObj();
         this.mouCustObj.CustNo = this.CustNo;
