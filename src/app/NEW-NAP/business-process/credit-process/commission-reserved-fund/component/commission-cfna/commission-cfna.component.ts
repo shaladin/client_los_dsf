@@ -392,6 +392,7 @@ export class CommissionCfnaComponent implements OnInit {
         ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
         IsSave: false,
       };
+      if (this.CekMaxValueIncomeInfo()) return;
 
       // console.log(obj);
       // console.log(JSON.stringify(obj));
