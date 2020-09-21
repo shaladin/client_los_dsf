@@ -490,6 +490,8 @@ export class LeadInputLeadDataComponent implements OnInit {
               });
             });
         });
+    }else{
+      this.toastr.warningMessage("Please input Down Payment Amount!");
     }
   }
 
@@ -568,7 +570,9 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
-
+    this.NTFAmt = this.AssetPrice - this.DPAmount;
+    var minAmt = this.NTFAmt / this.Tenor;
+    
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
@@ -581,11 +585,26 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    this.NTFAmt = this.AssetPrice - this.DPAmount;
 
     this.LeadDataForm.patchValue({
       NTFAmt: this.NTFAmt
     });
+
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      return;
+    }else{
+      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+        this.TotalDownPayment = this.DPAmount + this.InstAmt;
+      }
+      else {
+        this.TotalDownPayment = this.DPAmount;
+      }
+      this.LeadDataForm.patchValue({
+        TotalDownPayment: this.TotalDownPayment
+      });
+    }
+
     this.Calculate = true;
   }
 
@@ -593,6 +612,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
+    var minAmt = this.NTFAmt / this.Tenor;
 
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
@@ -602,7 +623,21 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
+
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      return;
+    }else{
+      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+        this.TotalDownPayment = this.DPAmount + this.InstAmt;
+      }
+      else {
+        this.TotalDownPayment = this.DPAmount;
+      }
+      this.LeadDataForm.patchValue({
+        TotalDownPayment: this.TotalDownPayment
+      });
+    }
     this.Calculate = true;
   }
 
@@ -880,21 +915,18 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   InstAmtCheck(){
-    var minAmt = this.LeadDataForm.controls.NTFAmt.value / this.LeadDataForm.controls.Tenor.value;
-    this.InstAmt = this.LeadDataForm.controls.InstallmentAmt.value;
-    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
-      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
-      return;
-    }else{
-      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-        this.TotalDownPayment = this.DPAmount + this.InstAmt;
-      }
-      else {
-        this.TotalDownPayment = this.DPAmount;
-      }
+    if(this.returnLobCode != CommonConstant.CFNA){
+      this.Calculate = false;
+      this.InstAmt = this.LeadDataForm.controls.InstallmentAmt.value;
       this.LeadDataForm.patchValue({
-        TotalDownPayment: this.TotalDownPayment
+        InstallmentAmt: this.InstAmt,
       });
+    }else{
+      var minAmt = this.LeadDataForm.controls["NTFAmt"].value / this.LeadDataForm.controls["Tenor"].value;
+      if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+        this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+        return;
+      }
     }
   }
 }
