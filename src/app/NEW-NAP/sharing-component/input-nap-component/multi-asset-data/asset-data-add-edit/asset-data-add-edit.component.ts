@@ -509,6 +509,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.returnAppAssetObj.MrAssetConditionCode,
+            MrAssetConditionCodeView: this.returnAppAssetObj.MrAssetConditionCode,
             AssetUsage: this.returnAppAssetObj.MrAssetUsageCode,
             AssetPrice: this.returnAppAssetObj.AssetPriceAmt,
             DownPayment: this.returnAppAssetObj.DownPaymentAmt,
@@ -693,6 +694,13 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetType = response[2];
         var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+
+        if (this.mode != 'editAsset') {
+          this.AssetDataForm.patchValue({
+            MrAssetConditionCode: assetCond["CompntValue"],
+            MrAssetConditionCodeView: assetCond["CompntValue"]
+          });
+        } 
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           AssetTypeCode: assetType["CompntValue"]
@@ -921,7 +929,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
-    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;

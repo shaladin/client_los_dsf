@@ -1,0 +1,70 @@
+{
+    "url": "",
+    "title":"Lookup Economic Sector (Slik)",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "MASTER_CODE",
+        "id": "masterCodeId",
+        "value": "",
+        "label": "Economic Sector Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "Descr",
+        "id": "descrId",
+        "value": "",
+        "label": "Economic Sector Description",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "select": "SELECT MASTER_CODE AS MasterCode, DESCR AS Descr",
+      "from": "FROM dbo.REF_MASTER WITH(NOLOCK)",
+      "where":"WHERE REF_MASTER_TYPE_CODE = N'SLIK_SEC_ECO'"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Economic Sector Code",
+            "name": "MasterCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Economic Sector Description",
+            "name": "Descr"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MasterCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "MasterCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "MasterCode",
+    "propertyName": "Descr"
+}

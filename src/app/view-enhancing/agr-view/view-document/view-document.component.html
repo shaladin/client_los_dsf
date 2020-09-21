@@ -1,0 +1,102 @@
+<div class="px-3">
+  <lib-ucSubsection [id]="'docsignerId'" [title]="'Document Signer'" [panel]="'docsigner'">
+  </lib-ucSubsection>
+  <div id="docsigner">
+    <div>
+      <label class="col-md-4  adInsLabel" translate>MF Signer</label>
+    </div>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>MF Employee Name 1</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.MfEmpName1">{{this.AgrmntSignerObj.MfEmpName1}}</label>
+    </div>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>MF Employee Postion 1</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.MrJobPositionMfEmpNo1Name">{{this.AgrmntSignerObj.MrJobPositionMfEmpNo1Name}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.MfEmpName2">
+      <label class="col-md-4  adInsLabel" translate>MF Employee Name 2</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.MfEmpName2}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.MfEmpName2">
+      <label class="col-md-4  adInsLabel" translate>MF Employee Postion 2</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.MrJobPositionMfEmpNo2Name}}</label>
+    </div>
+    <br />
+    <label class="col-md-4  adInsLabel" translate>Customer Personal Signer</label>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>Customer Name</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.CustomerPersonalName">{{this.AgrmntSignerObj.CustomerPersonalName}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.SpouseName != null">
+      <label class="col-md-4  adInsLabel" translate>Spouse Name</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.SpouseName}}</label>
+    </div>
+    <br />
+    <label class="col-md-4  adInsLabel" translate>Customer Company Signer</label>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>Customer Signer 1</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.AppCustCompanyMgmntShrholder1Name">{{this.AgrmntSignerObj.AppCustCompanyMgmntShrholder1Name}}</label>
+    </div>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>Customer Signer Employee Position 1</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.MrJobPositionMgmntShrholder1Code">{{this.AgrmntSignerObj.MrJobPositionMgmntShrholder1Code}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.AppCustCompanyMgmntShrholder2Name != null">
+      <label class="col-md-4  adInsLabel" translate>Customer Signer 2</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.AppCustCompanyMgmntShrholder2Name}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.AppCustCompanyMgmntShrholder2Name != null">
+      <label class="col-md-4  adInsLabel" translate>Customer Signer Employee Position 2</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.MrJobPositionMgmntShrholder2Code}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.AppCustCompanyMgmntShrholder3Name != null">
+      <label class="col-md-4  adInsLabel" translate>Customer Signer 3</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.AppCustCompanyMgmntShrholder3Name}}</label>
+    </div>
+    <div *ngIf="AgrmntSignerObj?.AppCustCompanyMgmntShrholder3Name != null">
+      <label class="col-md-4  adInsLabel" translate>Customer Signer Employee Position 3</label>
+      <label class="col-md-4  adinslabel" translate>{{this.AgrmntSignerObj.MrJobPositionMgmntShrholder3Code}}</label>
+    </div>
+    <br />
+    <label class="col-md-4  adInsLabel" translate>Supplier Signer</label>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>Supplier Employee Name</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.SupplBranchEmpName">{{this.AgrmntSignerObj.SupplBranchEmpName}}</label>
+    </div>
+    <div>
+      <label class="col-md-4  adInsLabel" translate>Supplier Employee Position</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="AgrmntSignerObj?.MrJobPositionSupplBranchEmpName">{{this.AgrmntSignerObj.MrJobPositionSupplBranchEmpName}}</label>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'docprintId'" [title]="'Document Printing'" [panel]="'docprint'">
+  </lib-ucSubsection>
+  <div id="docprint">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th class="text-center">No</th>
+          <th class="text-left">Document Name</th>
+          <th class="text-left">Last Printed</th>
+          <th class="text-left">Last Printed By</th>
+          <th class="text-left">Number of Printed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of AgrmntDocObj;let i=index">
+          <td class="text-center">{{i+1}}</td>
+          <td class="text-left">{{item.AgrmntDocName}}</td>
+          <td class="text-left">{{item.DocPrintDt  | date: 'dd-MMMM-yyyy'}}</td>
+          <td class="text-left">{{item.EmpName}}</td>
+          <td class="text-left">{{item.NumOfDocPrinted}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
