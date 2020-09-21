@@ -12,12 +12,12 @@
           <div class="col-md-6">
             <div class="form-group row">
               <label class="col-md-5">Application No</label>
-              <a href="javascript:void(0);" (click)="OpenView('app')" class="col-md-7">{{appObj.AppNo}}</a>
+              <a *ngIf="appObj.AppNo != null" href="javascript:void(0);" (click)="OpenView('app')" class="col-md-7">{{appObj.AppNo}}</a>
               <label *ngIf="appObj.AppNo == null" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
               <label class="col-md-5">Agreement No</label>
-              <a href="javascript:void(0);" (click)="OpenView('agrmnt')" class="col-md-7">{{agrmntObj.AgrmntNo}}</a>
+              <a *ngIf="agrmntObj.AgrmntNo != null" href="javascript:void(0);" (click)="OpenView('agrmnt')" class="col-md-7">{{agrmntObj.AgrmntNo}}</a>
               <label *ngIf="agrmntObj.AgrmntNo == null" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
@@ -33,7 +33,8 @@
             </div>
             <div class="form-group row">
               <label class="col-md-5">Customer Name</label>
-              <label class="col-md-7">{{agrmntObj.CustName}}</label>
+              <label *ngIf="agrmntObj.CustName != null" class="col-md-7">{{agrmntObj.CustName}}</label>
+              <label *ngIf="agrmntObj.CustName == null" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
               <label class="col-md-5 adins-required-label">Notes</label>
