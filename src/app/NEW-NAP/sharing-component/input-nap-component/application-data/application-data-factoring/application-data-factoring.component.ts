@@ -90,6 +90,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allCharacteristicCredit:any;
   responseApp : any;
   responseProd : any;
+  isInit : boolean = true;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -326,7 +327,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 PayFreqCode: PayFreqCode
               });
             }
-            if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0) {
+            if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0  && this.isInit == true) {
               this.mode = "add";
               this.SalesAppInfoForm.patchValue({
                 MouCustId: this.resultData.MouCustId,
@@ -352,7 +353,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 MrSlikSecEcoCode : this.resultData.MrSlikSecEcoCode
               });
               this.CalculateNumOfInst(true, this.SalesAppInfoForm.controls.Tenor.value);
-            } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0) {
+              
+            } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 && this.isInit == true) {
               this.mode = "edit";
               this.SalesAppInfoForm.patchValue({ 
                 MouCustId: this.resultData.MouCustId,
@@ -382,6 +384,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
             }
+            this.isInit = false;
             if(this.resultData.WayRestructure ==null){ 
             this.SalesAppInfoForm.patchValue({
               WayRestructure: this.allWayRestructure[0].Key
