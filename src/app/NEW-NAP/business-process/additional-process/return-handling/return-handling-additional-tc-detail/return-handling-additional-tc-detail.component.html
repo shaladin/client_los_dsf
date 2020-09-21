@@ -48,33 +48,33 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of ReturnHandlingForm['controls']['AppTcs']['controls']; let i = index">
-                    <td [formGroupName]="i" class="text-center">
+                  <tr *ngFor="let item of ReturnHandlingForm['controls']['AppTcs']['controls']; let i = index" [formGroupName]="i">
+                    <td class="text-center">
                       {{i + 1}}
                     </td>
-                    <td [formGroupName]="i" class="text-center">
+                    <td class="text-center">
                       <label>{{ReturnHandlingForm.controls['AppTcs'].value[i].TcName}}</label>
                     </td>
-                    <td [formGroupName]="i" class="text-center">
+                    <td class="text-center">
                       <label>YES</label>
                     </td>
-                    <td [formGroupName]="i" class="text-center">
+                    <td class="text-center">
                       <input type="checkbox" class="form-check-input" formControlName="IsChecked" (change)="IsCheckedHandler(i)">
                     </td>
                     <!-- <td [formGroupName]="i" class="text-center">
                       <input type="checkbox" class="form-check-input" formControlName="IsExpDtMandatory" (change)="ExpDtHandler($event, i)">
                     </td> -->
-                    <td [formGroupName]="i" class="text-center">
+                    <td class="text-center">
                       <input type="date" class="form-control adInsInput width-100-per" formControlName="PromisedDt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].PromisedDt.invalid }">
                       <lib-uc-show-errors [control]="ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].PromisedDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
                     </td>
-                    <td [formGroupName]="i" class="text-center">
+                    <td class="text-center">
                       <input type="date" class="form-control adInsInput width-100-per" formControlName="ExpiredDt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].ExpiredDt.invalid }">
                       <lib-uc-show-errors [control]="ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
                     </td>
-                    <td [formGroupName]="i" class="text-center">
+                    <td class="text-center">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="Notes">
                     </td>
                     <td class="text-center">

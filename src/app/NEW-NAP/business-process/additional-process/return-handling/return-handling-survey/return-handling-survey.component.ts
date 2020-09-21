@@ -28,7 +28,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
    }
   TrxNo : any;
   TrxType : any = "APP";
-  Token : any = localStorage.getItem(CommonConstant.USER_ACCESS);
+  Token : any = localStorage.getItem(CommonConstant.TOKEN);
   inputPagingObj;
   userAccess;
   ngOnInit() {

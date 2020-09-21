@@ -57,6 +57,7 @@ export class NapAppModel {
   CharaCredit: string;
   PrevAgrNo: string;
   WayRestructure: string;
+  MrSlikSecEcoCode:string;
   constructor() {
     this.RowVersion = "";
     this.IsRos = false;

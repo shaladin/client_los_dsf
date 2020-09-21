@@ -93,7 +93,7 @@ export class AdInsHelper {
   
   public static OpenCustomerViewByCustId(CustId){
     var token = localStorage.getItem("Token");
-      window.open(environment.FoundationR3Web + "/View/Customer?CustId=" + CustId + "&Token=" + token, "_blank");
+      window.open(environment.FoundationR3Web + "/View/Customer/PersonalDetail?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
   public static OpenAppViewByAppId(AppId) {
@@ -129,7 +129,7 @@ export class AdInsHelper {
 
   public static OpenVendorBranchViewByVendorId(VendorId){
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + "/View/VendorBranch?VendorId=" + VendorId + "&Token=" + token, '_blank');
+    window.open(environment.FoundationR3Web + "/View/Vendor/VendorBranch?VendorId=" + VendorId + "&Token=" + token, '_blank');
   }
 
   public static CreateUserAccess(response) {

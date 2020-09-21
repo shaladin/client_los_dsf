@@ -1,0 +1,26 @@
+<div class="px-3">
+  <lib-ucSubsection [id]="'reservedFundId'" [title]="'Reserved Fund'" [panel]="'reservedFund'">
+  </lib-ucSubsection>
+  <div id="reservedFund">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th class="text-center">No</th>
+          <th class="text-center">Reserved Fund Source</th>
+          <th class="text-center">Reserved Fund Allocation</th>
+          <th class="text-right">Reserved Fund Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of RsvFundObj;let i=index">
+          <td class="text-center">{{i+1}}</td>
+          <td class="text-center">{{item.MrReservedFundSourceCode}}</td>
+          <td class="text-center">{{item.MrReservedFundCode}}</td>
+          <td class="text-right">{{item.ReservedFundAmt | number:'.2':'en-US'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <label class="col-md-2  adInsLabel" translate>Total Reserved Fund Amount</label>
+    <label class="col-md-4  adinslabel" translate>{{this.totalRsvFund | number:'.2':'en-US'}}</label>
+  </div>
+</div>

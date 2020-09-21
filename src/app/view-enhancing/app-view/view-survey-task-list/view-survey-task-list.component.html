@@ -1,0 +1,46 @@
+<lib-ucSubsection [id]="'SrvyId'" [title]="'Survey'" [panel]="'Srvy'">
+</lib-ucSubsection>
+<div class="form-body" id="Srvy">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><span class="thead-header" (click)="searchSort($event)" name='srvyTaskNo' translate>Survey Task No</span>
+        </th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='surveyeeName' translate>Surveyee Name</span>
+        </th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='objectSurvey' translate>Object Survey</span>
+        </th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='addr' translate>Address</span>
+        </th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='surveyType' translate>Survey Type</span>
+        </th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='surveyorCode' translate>Surveyor Name</span>
+        </th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='surveyTaskStatus' translate>Survey Task
+            Status</span></th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='resultDt' translate>Result Date</span></th>
+        <th><span class="thead-header" (click)="searchSort($event)" name='reviewBy' translate>Review By</span></th>
+        <th><span class="thead-header" translate>View Result</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="listSrvy?.length == 0">
+        <td align="center" colspan="10">No Data Available</td>
+      </tr>
+      <tr *ngFor="let item of listSrvy">
+        <td>{{item.SurveyTaskNo}}</td>
+        <td>{{item.SurveyeeName}}</td>
+        <td>{{item.ObjectSurvey}}</td>
+        <td>{{item.Addr}}</td>
+        <td>{{item.SurveyType}}</td>
+        <td>{{item.SurveyorCode}}</td>
+        <td>{{item.SurveyTaskStatus}}</td>
+        <td>{{item.ResultDt | date: 'dd-MMMM-yyyy'}}</td>
+        <td>{{item.ReviewBy}}</td>
+        <td>
+          <a [routerLink]="['']" [queryParams]="{SrvyTaskId:item.SrvyTaskId}">View</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

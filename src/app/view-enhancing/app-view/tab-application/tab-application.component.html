@@ -1,0 +1,32 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <lib-ucviewgeneric *ngIf="isReady" [viewGenericObj]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+    <lib-ucSubsection *ngIf="ListCrossAppData?.length" [id]="'formListCrossAppsId'" [title]="'Cross Application'" [panel]="'formListCrossApps'">
+    </lib-ucSubsection>
+    <div *ngIf="ListCrossAppData?.length" class="form-body" [id]="'formListCrossApps'">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th class="text-left"><span translate class="thead-header" name='No'>No</span></th>
+            <th class="text-left"><span translate class="thead-header" name='AgreementNo'>Agreement No</span></th>
+            <th class="text-left"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ListCrossAppData; let i = index">
+            <td class="text-left">{{i + 1}}</td>
+            <td class="text-left">{{item.CrossAgrmntNo}}</td>
+            <td class="text-left">{{item.CustName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="px-3">
+      <lib-ucSubsection [id]="'viewLoanObjId'" [title]="'Loan Object'" [panel]="'viewLoanObjInfo'">
+      </lib-ucSubsection>
+      <div class="form-body" id="viewLoanObjInfo">
+          <lib-ucgridview *ngIf="IsGridLoanReady" [gridInput]="inputGridObj"></lib-ucgridview>
+      </div>
+    </div>
+  </div>
+</div>

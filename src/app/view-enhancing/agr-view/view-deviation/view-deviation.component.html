@@ -1,0 +1,30 @@
+<div class="card-body">
+  <div class="px-3">
+<lib-ucSubsection [id]="'deviationResultId'" [title]="'Deviation List'" [panel]="'deviationResult'">
+</lib-ucSubsection>
+<div id="deviationResult">
+<table class="table table-responsive-md text-center table-hover">
+  <thead>
+    <tr class="table-header">
+      <th class="text-center"><span translate class="thead-header" name='SeqNo'>Seq No</span></th>
+      <th class="text-center"><span translate class="thead-header" name='DeviationCategory'>Deviation Category</span></th>
+      <th class="text-center"><span translate class="thead-header" name='OriginalValue'>Original Value</span></th>
+      <th class="text-center"><span translate class="thead-header" name='CurrentValue'>Current Value</span></th>
+      <th class="text-center"><span translate class="thead-header" name='ApvAt'>Approval At</span></th>
+      <th class="text-center"><span translate class="thead-header" name='Notes'>Notes</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of deviationResultList">
+      <td class="text-center">{{item.SeqNo}}</td>
+      <td class="text-left">{{item.DeviationCategory}}</td>
+      <td class="text-left">{{item.OriginalValue}}</td>
+      <td class="text-left">{{item.CurrentValue}}</td>
+      <td class="text-left">{{item.ApvAt}}</td>
+      <td class="text-right" >{{item.Notes}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>

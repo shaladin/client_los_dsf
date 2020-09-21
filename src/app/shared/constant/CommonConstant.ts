@@ -127,7 +127,6 @@ export class CommonConstant {
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
-
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
   public static ID_TYPE_NPWP = "NPWP";
@@ -398,8 +397,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeRecourseType = "RECOURSE_TYPE";
   public static RefMasterTypeCodePaidBy = "PAID_BY";
   public static RefMasterTypeCodeInstType = "INST_TYPE";
-  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD";
-  public static RefMasterTypeCodeCurrency = "CURRENCY";
+  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD"; 
   public static RefMasterTypeCodeGender = "GENDER";
   public static RefMasterTypeCodeMaritalStat = "MARITAL_STAT";
   public static RefMasterTypeCodeCustModel = "CUST_MODEL";
@@ -414,7 +412,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeInvestmentType = "INVESTMENT_TYPE";
   public static RefMasterTypeCodeLegalDocType = "LEGAL_DOC_TYPE";
   public static RefMasterTypeCodeCustRelationship = "CUST_RELATIONSHIP";
-  public static RefMasterTypeCodeSourceIncome = "SOURCE_INCOME";
+  public static RefMasterTypeCodeSourceIncome = "SOURCE_OF_INCOME";
   public static RefMasterTypeCodeNationality = "NATIONALITY";
   public static RefMasterTypeCodeEducation = "EDUCATION";
   public static RefMasterTypeCodeReligion = "RELIGION";
@@ -505,4 +503,7 @@ export class CommonConstant {
   
   //ASSET ATTRIBUTE
   public static AttrTypeCodeTrx = "TRX";
+
+  //CHARACTERISTIC OF CREDIT
+  public static CharacteristicOfCreditTypeCredit = "CREDIT";
 }

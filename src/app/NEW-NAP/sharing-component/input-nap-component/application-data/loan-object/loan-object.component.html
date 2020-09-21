@@ -56,7 +56,7 @@
         <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
           (ngSubmit)="MainInfoForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
           <div class="form-body">
-            <div class="form-group row">
+            <div class="form-group row" [hidden]="isCFNA">
               <label class="col-md-3 " for="IsDisburseToCust" translate>Disburse to Cust</label>
               <div class="col-md-9">
                 <input type="checkbox" id="IsDisburseToCust" class="border-primary"
@@ -78,7 +78,7 @@
             <div class="form-group row" [hidden]="MainInfoForm.controls.IsDisburseToCust.value">
               <label class="col-md-3" [ngClass]="{ 'adins-required-label': MainInfoForm.controls.IsDisburseToCust.value == false }" translate>Supplier Name</label>
               <div class="col-md-5">
-                <lib-uclookupgeneric [lookupInput]="supplierInputLookupObj" [parentForm]='MainInfoForm'
+                <lib-uclookupgeneric *ngIf="supplierInputLookupObj.isReady" [lookupInput]="supplierInputLookupObj" [parentForm]='MainInfoForm'
                   [enjiForm]='MainInfoReqForm' [identifier]="'lookupValueSupplier'"
                   (lookup)="getSupplierInputLookupValue($event)"></lib-uclookupgeneric>
               </div>

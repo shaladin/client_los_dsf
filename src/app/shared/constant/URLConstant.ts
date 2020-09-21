@@ -400,7 +400,7 @@ export class URLConstant {
     public static AddExchangeRate = "/RefCurr/AddExchangeRate";
     public static EditExchangeRate = "/RefCurr/EditExchangeRate";
     public static GetExchangeRate = "/RefCurr/GetExchangeRate";
-
+    public static GetListKvpActiveRefCurr = environment.FoundationR3Url +"/RefCurr/GetListKvpActiveRefCurr"
     //GENERIC
     public static GetObjectBySQL = "/Generic/GetObjectBySQL";
     public static AddObjectBySQL = "/Generic/AddObjectBySQL";
@@ -786,6 +786,7 @@ export class URLConstant {
     public static GetAppCollateralByAgrmntId = environment.losUrl + "/AppCollateral/GetAppCollateralByAgrmntId";
     public static GetListNegativeCollateralByAppId = environment.losUrl + "/AppCollateral/GetListNegativeCollateralByAppId";
     public static GetListExistingAppCollateralWithInsurance = environment.losUrl + "/AppCollateral/GetListExistingAppCollateralWithInsurance";
+    public static GetAppCollateralByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppAssetId";
 
     // App Collateral Suppl Emp
     public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";

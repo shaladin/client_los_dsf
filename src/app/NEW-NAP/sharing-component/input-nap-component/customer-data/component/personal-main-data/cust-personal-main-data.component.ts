@@ -232,11 +232,10 @@ export class CustPersonalMainDataComponent implements OnInit {
         Email3: this.custDataPersonalObj.AppCustPersonalObj.Email3,
         NoOfDependents: this.custDataPersonalObj.AppCustPersonalObj.NoOfDependents
       });
-      
+      this.ChangeMaritalStats();
       this.selectedNationalityCountryCode = this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode;
       this.setCountryName(this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode);
       this.ChangeNationality(this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode);
-      this.ChangeMaritalStats();
     }
   }
 
