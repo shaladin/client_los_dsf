@@ -136,6 +136,12 @@ export class CustPersonalContactInformationComponent implements OnInit {
     }
 
     this.setAppCustPersonalContactPerson();
+    if(this.appCustPersonalContactPersonObj.IsGuarantor){
+      if(this.appCustPersonalContactPersonObj.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse){
+        this.toastr.warningMessage("Guarantor cannot have spouse relationship");
+        return false;
+      }
+    }
     if (this.mode == "Add") {
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
