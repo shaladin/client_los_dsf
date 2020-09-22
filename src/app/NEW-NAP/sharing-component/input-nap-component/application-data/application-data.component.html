@@ -171,7 +171,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="isFixedRate == 0 && BizTemplateCode != 'OPL'" class="form-group row adins-required">
+                <div *ngIf="!isFixedRate && BizTemplateCode != 'OPL'" class="form-group row adins-required">
                   <!-- Floating Period -->
                   <label class="col-md-4 adInsLabel"> Floating Period </label>
                   <div class="col-md-8">
