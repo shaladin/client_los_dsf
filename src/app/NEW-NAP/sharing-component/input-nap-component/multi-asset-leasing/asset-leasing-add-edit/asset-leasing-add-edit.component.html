@@ -58,7 +58,7 @@
                       </div>
                       <label class="col-md-2 adInsLabel" translate>Security Deposit Type </label>
                       <div class="col-md-3">
-                        <select class="form-control adInsInput" style="width: auto" (change)="downPaymentChange($event)" formControlName="MrDownPaymentTypeCode"
+                        <select class="form-control adInsInput" style="width: auto" formControlName="MrDownPaymentTypeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrDownPaymentTypeCode.invalid }">
                             <option *ngFor="let it of returnDownPaymentObj " [value]="it.Key">
                                 {{it.Value}}
@@ -85,7 +85,7 @@
                     <div class="form-group row">
                       <label class="col-md-2 adInsLabel" translate>Asset Condition</label>
                       <div class="col-md-3">
-                          <select class="form-control adInsInput" style="width: auto" (change)="radioChange($event)" formControlName="MrAssetConditionCode"
+                          <select class="form-control adInsInput" style="width: auto" formControlName="MrAssetConditionCode"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetConditionCode.invalid }">
                           <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
                               {{it.Value}}

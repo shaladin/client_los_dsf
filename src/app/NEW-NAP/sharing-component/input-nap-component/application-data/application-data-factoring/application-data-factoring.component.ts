@@ -20,6 +20,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ApplicationDataFactoringComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
   mouCustFctrObj: MouCustFctrObj = new MouCustFctrObj();
@@ -561,9 +562,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.setDropdown();
 
       });
-
-
   }
+
+  Cancel(){
+    this.outputCancel.emit();
+  }
+  
   SaveForm(): void {
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.SalesAppInfoForm.patchValue({

@@ -40,7 +40,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   });
 
   ReferantorOn = false;
-  NpwpOn = false;
+  NpwpOn: boolean = false;
   appReferantorObj;
   ExistedData;
   arrAddCrit;
