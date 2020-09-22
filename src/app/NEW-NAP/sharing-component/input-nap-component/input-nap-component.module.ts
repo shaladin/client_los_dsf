@@ -229,11 +229,11 @@ export const customCurrencyMaskConfig = {
     LookupCollateralComponent,
     CollateralDataCfnaComponent,
     CollateralDataCfnaPagingComponent,
-    CollateralDataCfnaDetailComponent
-    // MultiAssetLeasingComponent,
-    // AssetLeasingPagingComponent,
-    // AssetLeasingAddEditComponent,
-    // CollateralLeasingAddEditComponent
+    CollateralDataCfnaDetailComponent,
+    MultiAssetLeasingComponent,
+    AssetLeasingPagingComponent,
+    AssetLeasingAddEditComponent,
+    CollateralLeasingAddEditComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [

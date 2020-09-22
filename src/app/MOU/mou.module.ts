@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
-import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
@@ -111,7 +110,6 @@ export const customCurrencyMaskConfig = {
     MouCustomerDetailComponent,
     CustomerDocPrintingDetailComponent,
     CustomerDocPrintingPagingComponent,
-    MainInfoComponent,
     DocSignerComponent,
     MouReviewPagingComponent, 
     MouViewDetailComponent,
