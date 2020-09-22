@@ -1,4 +1,4 @@
-<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid && Submit()" #enjiForm="ngForm">
+<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid" #enjiForm="ngForm">
     <app-fee-fctr *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-fctr>
     <app-single-inst-fctr *ngIf="IsParentLoaded && FinDataForm.controls.MrInstTypeCode.value == 'SINGLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-single-inst-fctr>
     <app-schm-reguler-fix-fctr *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-fctr>

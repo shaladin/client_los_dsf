@@ -49,6 +49,7 @@ export class AgrmntFinDataObj {
     TotalLifeInsCustAmt: number;
     TotalLifeInsInscoAmt: number;
     TotalAr: number;
+    FirstInstTypeName: string;
 
     constructor() {
     }

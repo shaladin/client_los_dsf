@@ -141,7 +141,7 @@
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="InterestType" class="form-control full-width"
-              (change)="SetNeedReCalculate()">
+              (change)="SetNeedReCalculate(true)">
                 <option *ngFor="let m of InterestTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.InterestType" [submit]="enjiForm.submitted">
