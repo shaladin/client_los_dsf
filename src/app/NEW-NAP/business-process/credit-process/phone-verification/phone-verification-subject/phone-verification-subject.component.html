@@ -61,7 +61,7 @@
               </tbody>
             </table>
           </div>
-          <div *ngIf="isReturnHandling == 0">
+          <div *ngIf="!isReturnHandling">
             <lib-ucSubsection [id]="'summaryId'" [title]="'Summary'" [panel]="'summary'">
             </lib-ucSubsection>
             <div id="summary" class="row">

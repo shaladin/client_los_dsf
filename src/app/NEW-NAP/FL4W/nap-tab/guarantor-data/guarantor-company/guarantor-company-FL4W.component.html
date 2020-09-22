@@ -93,12 +93,12 @@
                         <th><span translate class="thead-header">Delete</span></th>
                       </tr>
                     </thead>
-                    <tbody *ngIf="CompanyForm.controls['LegalDocForm'].controls.length == 0">
+                    <tbody *ngIf="CompanyForm.controls['LegalDocForm']['controls'].length == 0">
                       <tr>
                         <td colspan="100%">No Data Available</td>
                       </tr>
                     </tbody>
-                    <tbody *ngIf="CompanyForm.controls['LegalDocForm'].controls.length > 0">
+                    <tbody *ngIf="CompanyForm.controls['LegalDocForm']['controls'].length > 0">
                       <tr *ngFor="let item of CompanyForm.controls['LegalDocForm'].controls;let i = index">
                         <td [formGroupName]="i" class="text-center">
                           <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrLegalDocTypeCode"

@@ -42,7 +42,7 @@
             #enjiForm="ngForm">
         <div class="form-body">
           <div formArrayName="ReservedFundObjs">
-            <div *ngFor="let item of RsvForm.controls['ReservedFundObjs'].controls;let i = index">
+            <div *ngFor="let item of RsvForm.controls['ReservedFundObjs']['controls'];let i = index">
               <lib-ucSubsection [id]="'reservedFundDataId' + i + 'id'" [title]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value" [panel]="'reservedFundDataId' + i">
               </lib-ucSubsection>
               <div [id]="'reservedFundDataId' + i">
