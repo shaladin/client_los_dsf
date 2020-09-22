@@ -13,7 +13,7 @@
         </lib-ucSubsection>
         <div id="MOUMainInfoSection" class="col-md-12">
           <form class="form form-horizontal" [formGroup]="MOUMainInfoForm" #enjiForm="ngForm" novalidate
-            (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+            (ngSubmit)="enjiForm.form.valid && Save()">
             <div class="form-body">
               <div class="form-group row" *ngIf="pageType == 'edit' || pageType == 'return'">
                 <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>

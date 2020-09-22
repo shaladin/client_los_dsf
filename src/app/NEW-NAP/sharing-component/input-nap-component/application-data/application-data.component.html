@@ -6,7 +6,7 @@
         <!-- <div class="px-3"> -->
 
         <form class="form form-horizontal" [formGroup]="NapAppModelForm"
-              (ngSubmit)="NapAppModelForm.valid && ClickSave('next')" #enjiForm="ngForm">
+              (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
           <!-- Sales Info -->
           <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
           </lib-ucSubsection>
