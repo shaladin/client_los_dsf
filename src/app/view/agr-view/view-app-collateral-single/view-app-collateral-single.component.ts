@@ -17,7 +17,7 @@ export class ViewAppCollateralSingleComponent implements OnInit {
   @Input() agrmntId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  AppCollateralDocs: AppCollateralDocObj = new AppCollateralDocObj();
+  AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
   arrValue = [];
   IsHidden: boolean = true;
   @Output() outputTab: EventEmitter<boolean> = new EventEmitter();

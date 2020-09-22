@@ -18,7 +18,7 @@ import { ViewInsuranceDetailComponent } from './view-insurance-detail/view-insur
 import { ViewAppCollateralSingleComponent } from './view-app-collateral-single/view-app-collateral-single.component';
 import { ViewAppCollateralMultiComponent } from './view-app-collateral-multi/view-app-collateral-multi.component';
 // import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
-// import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
+import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
 
 
 @NgModule({
@@ -60,7 +60,7 @@ import { ViewAppCollateralMultiComponent } from './view-app-collateral-multi/vie
     ViewInsuranceDetailComponent,
     ViewAppCollateralSingleComponent,
     ViewAppCollateralMultiComponent,
-    // ListDataCommissionAgrmntComponent,
+    ListDataCommissionAgrmntComponent,
     // AgrmntCardComponent
   ],
   providers: [

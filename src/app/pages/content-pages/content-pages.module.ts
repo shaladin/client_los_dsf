@@ -21,7 +21,6 @@ import { ContentPagesRoutingModule } from "app/pages/content-pages/content-pages
 import { LoginPageComponent } from "app/pages/content-pages/login/login-page.component";
 import { CustomerSelfVerificationComponent } from './external-page/customer-self-verification/customer-self-verification.component';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { PagesComponent } from './pages/pages.component'; 
 import { RequestNewPasswordComponent } from "./request-new-password/request-new-password.component";
@@ -60,7 +59,6 @@ export const customCurrencyMaskConfig = {
         ArchwizardModule,
         MatRadioModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-        UcinputnumberModule,
         CustSharingComponentModule    
     ],
     declarations: [

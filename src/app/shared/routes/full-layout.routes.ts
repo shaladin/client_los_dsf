@@ -28,10 +28,6 @@ export const Full_ROUTES: Routes = [
     path: 'Mou',
     loadChildren: './MOU/mou.module#MouModule'
   },
-  // {
-  //   path: 'Nap',
-  //   loadChildren: './NAP/nap.module#NapModule'
-  // },
   {
     path: 'Nap',
     loadChildren: './NEW-NAP/nap.module#NapModule'

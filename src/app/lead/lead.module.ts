@@ -17,7 +17,7 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 // import { MainInfoComponent } from 'app/view/main-info/main-info.component';
-import { LeadRoutingModule } from "./lead-routing.module"; import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
+import { LeadRoutingModule } from "./lead-routing.module"; 
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
@@ -38,7 +38,6 @@ import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/le
 import { MatRadioModule } from "@angular/material";
 import { LeadUpdateComponent } from "./lead-update/lead-update.component";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
 import { UcuploadModule } from "@adins/ucupload";
@@ -78,13 +77,11 @@ export const customCurrencyMaskConfig = {
     ArchwizardModule,
     MatRadioModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    UcinputnumberModule,
     CustSharingComponentModule,
     UcuploadModule,
     UcaddtotempModule
   ],
   declarations: [
-    LeadMainInfoComponent, 
     LeadVerifComponent,
     LeadCancelComponent,
     LeadCancelConfirmComponent, 

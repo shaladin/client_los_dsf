@@ -129,7 +129,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  SetNeedReCalculate(value) {
+  SetNeedReCalculate(value: boolean) {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
