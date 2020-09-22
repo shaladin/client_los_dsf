@@ -102,7 +102,7 @@
           </lib-ucSubsection>
 
           <form class="form form-horizontal" [formGroup]="MainInfoForm"  
-            (ngSubmit)="MainInfoForm.valid && SaveForm()" #enjiForm="ngForm">
+            (ngSubmit)="MainInfoForm.valid" #enjiForm="ngForm">
          
             <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="enjiForm">
             </app-term-conditions> 
@@ -114,5 +114,5 @@
 </div>
 
 <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()"
-  (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+  (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited()">
 </lib-ucapproval>
