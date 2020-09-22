@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-application-data',
@@ -22,6 +23,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class ApplicationDataComponent implements OnInit {
   @Input() isCollateral: boolean;
   @Input() appId: number;
+  @Input() AppId: any;
   @Input() showCancel: boolean = true;
   @Input() IsLoanObject: boolean = false;
   @Input() BizTemplateCode: string = "";
@@ -105,7 +107,11 @@ export class ApplicationDataComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private toastr: NGXToastrService, private modalService: NgbModal) { }
+    private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
+      this.route.queryParams.subscribe(params => {
+        this.AppId = params["AppId"];
+      });  
+    }
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
