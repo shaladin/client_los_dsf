@@ -42,9 +42,13 @@
           <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}}</td>
           <td>{{item.CollateralStat}}</td>
           <td>
-            <a *ngIf="item.CollateralStat == 'NEW'" class="success p-0" (click)="editData(item.MouCustCollateralId)">
+            <a *ngIf="item.CollateralStat == 'NEW'" class="success p-0" (click)="editData(item.MouCustCollateralId, true )">
               <i class="ft-edit-2 font-medium-3 mr-2"></i>
             </a>
+            <a *ngIf="item.CollateralStat == 'EXISTING'" class="success p-0" (click)="editData(item.MouCustCollateralId, false )">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+            
             <a class="danger p-0" (click)="delete(item.MouCustCollateralId)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
@@ -167,7 +171,7 @@
         <label class="col-md-1"></label>
         <label class="col-md-2 adins-required-label" translate>ID Type</label>
         <div class="col-md-2">
-          <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="MrIdType"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
             <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -178,7 +182,7 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
         <div class="col-md-3">
-          <select class="form-control" formControlName="OwnerRelationship" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="OwnerRelationship"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
             <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -345,7 +349,7 @@
         <label class="col-md-1"></label>
         <label class="col-md-2 adins-required-label" translate>ID Type</label>
         <div class="col-md-2">
-          <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="MrIdType"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
             <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -356,7 +360,7 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
         <div class="col-md-3">
-          <select class="form-control" formControlName="OwnerRelationship" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="OwnerRelationship"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
             <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -395,7 +399,7 @@
       </button>
       <button type="submit" class="btn btn-raised btn-primary">
         <i class="far fa-check-square"></i> Save
-      </button>
+      </button> 
     </div>
   </form>
 </div>

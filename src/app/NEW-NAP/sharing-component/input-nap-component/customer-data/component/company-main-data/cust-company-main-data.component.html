@@ -1,5 +1,5 @@
 <div formGroupName="{{identifier}}">
-  <lib-ucSubsection [id]="'custCompanyMainDataId'" [title]="'Customer Company Main Data'" [panel]="'CustCompanyMainData'">
+  <lib-ucSubsection [id]="'custCompanyMainDataId'" [title]="bizTemplateCode == 'FL4W' ? 'Lessee Company Main Data' : 'Customer Company Main Data'" [panel]="'CustCompanyMainData'">
   </lib-ucSubsection>
   <div id="CustCompanyMainData">
     <div class="form-group row">

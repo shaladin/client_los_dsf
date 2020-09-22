@@ -12,6 +12,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-application-data',
@@ -21,6 +23,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class ApplicationDataComponent implements OnInit {
   @Input() isCollateral: boolean;
   @Input() appId: number;
+  @Input() AppId: any;
   @Input() showCancel: boolean = true;
   @Input() IsLoanObject: boolean = false;
   @Input() BizTemplateCode: string = "";
@@ -29,12 +32,16 @@ export class ApplicationDataComponent implements OnInit {
 
   ListCrossAppObj: any = {};
   inputLookupObj;
+  inputLookupEconomicSectorObj;
   arrAddCrit;
   isInputLookupObj: boolean = false;
   isFixedRate: boolean = false;
   PayFreqVal: number;
   PayFreqTimeOfYear: number;
   FirstInstType : string;
+  resMouCustObj;  
+  mouCustObj;
+  CustNo: string;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -91,15 +98,20 @@ export class ApplicationDataComponent implements OnInit {
     InterestType: ['', Validators.required],
     InterestTypeDesc: [''],
     FloatingPeriod: [''],
-    CharaCredit: [''],
+    CharaCredit: ['',[Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
-    WayRestructure: [''],
+    MrSlikSecEcoCode: [''],
+    WayRestructure: ['',[Validators.required]],
     EconomicSector: [''],
     ApplicationNotes: ['']
   });
 
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private toastr: NGXToastrService, private modalService: NgbModal) { }
+    private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
+      this.route.queryParams.subscribe(params => {
+        this.AppId = params["AppId"];
+      });  
+    }
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
@@ -122,6 +134,31 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
+    var AppObj = {
+      AppId: this.appId
+    }
+    var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
+      (response) => { 
+        this.CustNo = response["CustNo"];
+
+        this.mouCustObj = new MouCustObj();
+        this.mouCustObj.CustNo = this.CustNo;
+        this.mouCustObj.StartDt = user.BusinessDt;
+        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
+
+        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+          (response) => {
+            this.resMouCustObj = response[CommonConstant.ReturnObj];
+            
+
+            // if(this.resMouCustObj.length > 0)
+            // {
+            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
+            // }
+          }
+        );
+      });
     if (this.BizTemplateCode != CommonConstant.OPL) {
       this.GetCrossInfoData();
     }
@@ -134,8 +171,6 @@ export class ApplicationDataComponent implements OnInit {
       this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
       this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
       this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
-      this.NapAppModelForm.controls.CharaCredit.setValidators([Validators.required, Validators.maxLength(50)]);
-      this.NapAppModelForm.controls.CharaCredit.updateValueAndValidity();
     }
     
   }
@@ -258,7 +293,13 @@ export class ApplicationDataComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
+          MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
         });
+        if (this.resultResponse.WayRestructure == null) {
+          this.NapAppModelForm.patchValue({
+            WayRestructure: this.applicationDDLitems['WAY_OF_RESTRUCTURE'][0].Key
+          });
+        }
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
@@ -326,6 +367,11 @@ export class ApplicationDataComponent implements OnInit {
 
     });
   }
+  getLookupEconomicSector(ev) {
+    this.NapAppModelForm.patchValue({
+      MrSlikSecEcoCode: ev.MasterCode 
+    });
+  }
 
   makeLookUpObj() {
     // Lookup obj
@@ -338,6 +384,15 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupObj.jsonSelect = this.resultResponse;
     // this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
+    
+    this.inputLookupEconomicSectorObj = new InputLookupObj();
+    this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json"; 
+    this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
+    this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     this.isInputLookupObj = true;
   }
 
@@ -393,6 +448,14 @@ export class ApplicationDataComponent implements OnInit {
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
+  }
+  ChangeCharacteristicOfCredit(){
+    if (this.NapAppModelForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {  
+     this.NapAppModelForm.controls.WayRestructure.setValidators(Validators.required);
+    }else{
+      this.NapAppModelForm.controls.WayRestructure.clearValidators();
+    }
+    this.NapAppModelForm.controls.WayRestructure.updateValueAndValidity();
   }
 
   PatchNumOfInstallment(num: number) {
@@ -452,13 +515,21 @@ export class ApplicationDataComponent implements OnInit {
     temp.RsvField5 = this.NapAppModelForm.controls.RsvField5.value;
     temp.RowVersion = this.resultResponse.RowVersion;
     temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
-
+    temp.MrSlikSecEcoCode = this.NapAppModelForm.controls.MrSlikSecEcoCode.value;
     if (this.BizTemplateCode == CommonConstant.OPL) {
       temp.ApplicationNotes = this.NapAppModelForm.controls.ApplicationNotes.value;
-      temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
-      temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
-      temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
       temp.IsRos = true;
+    }
+    temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
+    temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
+    temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
+    if(this.NapAppModelForm.controls.MouCustId.value == "null")
+    {
+      temp.MouCustId = "";
+    }
+    else
+    {
+      temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
     }
     return temp;
   }
@@ -491,7 +562,13 @@ export class ApplicationDataComponent implements OnInit {
     return temp;
   }
 
-  ClickSave() {
+  ClickSave() { 
+    if(this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit){
+      this.NapAppModelForm.patchValue({
+        PrevAgrNo: null,
+        WayRestructure: null
+      });   
+     }
     if(this.BizTemplateCode == CommonConstant.CFNA){
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
         (response) => {

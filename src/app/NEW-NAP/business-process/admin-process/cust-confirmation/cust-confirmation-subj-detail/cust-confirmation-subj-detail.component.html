@@ -4,166 +4,175 @@
   </div>
   <div class="card-body">
     <div class="px-3">
-      <form class="form form-horizontal" [formGroup]="CustConfirm" #formDirective="ngForm" (ngSubmit)="CustConfirm.valid && SaveForm(formDirective)"
-            #enjiForm="ngForm">
+      <form class="form form-horizontal" [formGroup]="CustConfirm" #formDirective="ngForm"
+        (ngSubmit)="CustConfirm.valid && SaveForm(formDirective)" #enjiForm="ngForm">
         <lib-ucSubsection [id]="'CustConfirmationId'" [title]="'Customer Confirmation'" [panel]="'CustConfirmation'">
         </lib-ucSubsection>
-        <div class="form-body" id="CustConfirmation">
-          <div class="row">
+        <div class="form-group row" id="CustConfirmation">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-5">Application No</label>
+              <a *ngIf="appObj.AppNo != null" href="javascript:void(0);" (click)="OpenView('app')" class="col-md-7">{{appObj.AppNo}}</a>
+              <label *ngIf="appObj.AppNo == null" class="col-md-7">-</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-5">Agreement No</label>
+              <a *ngIf="agrmntObj.AgrmntNo != null" href="javascript:void(0);" (click)="OpenView('agrmnt')" class="col-md-7">{{agrmntObj.AgrmntNo}}</a>
+              <label *ngIf="agrmntObj.AgrmntNo == null" class="col-md-7">-</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-5">Lead No</label>
+              <a *ngIf="leadObj.LeadNo != null" href="javascript:void(0);" (click)="OpenView('lead')"
+                class="col-md-7">{{leadObj.LeadNo}}</a>
+              <label *ngIf="leadObj.LeadNo == null" class="col-md-7">-</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-5">Customer No</label>
+              <label *ngIf="agrmntObj.CustNo != null" class="col-md-7">{{agrmntObj.CustNo}}</label>
+              <label *ngIf="agrmntObj.CustNo == null" class="col-md-7">-</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-5">Customer Name</label>
+              <label *ngIf="agrmntObj.CustName != null" class="col-md-7">{{agrmntObj.CustName}}</label>
+              <label *ngIf="agrmntObj.CustName == null" class="col-md-7">-</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-5 adins-required-label">Notes</label>
+              <div class="col-md-7">
+                <textarea class="form-control" formControlName="Notes"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Notes.invalid }"></textarea>
+                <lib-uc-show-errors [control]="CustConfirm.controls.Notes" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
             <div class="col-md-6">
-              <div class="row">
-                <label class="label-control col-md-6">Application No</label>
-                <a href="javascript:void(0);" (click)="OpenView('app')" class="label-control col-md-6">{{appObj.AppNo}}</a>
+              <div class="form-group row">
+                <label class="col-md-4">Subject</label>
+                <label class="col-md-8">{{SubjectResponse.Descr}}</label>
               </div>
-              <div class="row">
-                <label class="label-control col-md-6">Agreement No</label>
-                <a href="javascript:void(0);" (click)="OpenView('agrmnt')" class="label-control col-md-6">{{agrmntObj.AgrmntNo}}</a>
+              <div class="form-group row">
+                <label class="col-md-4">Phone</label>
+                <div class="col-md-8">
+                  <select class="form-control" formControlName="Phn"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Phn.invalid }">
+                    <option *ngFor="let item of PhnList" [value]="item.Key">{{item.Value}}</option>
+                  </select>
+                </div>
+                <lib-uc-show-errors [control]="CustConfirm.controls.Phn" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
               </div>
-              <div class="row">
-                <label class="label-control col-md-6">Lead No</label>
-                <a href="javascript:void(0);" (click)="OpenView('lead')" class="label-control col-md-6">{{leadObj.LeadNo}}</a>
-              </div>
-              <div class="row">
-                <label class="label-control col-md-6">Customer No</label>
-                <label class="label-control col-md-6">{{agrmntObj.CustNo}}</label>
-              </div>
-              <div class="row">
-                <label class="label-control col-md-6">Customer Name</label>
-                <label class="label-control col-md-6">{{agrmntObj.CustName}}</label>
-              </div>
-              <div class="row">
-                <label class="label-control col-md-6 adins-required-label">Notes</label>
-                <div class="col-md-6">
-                  <textarea class="form-control" formControlName="Notes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Notes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="CustConfirm.controls.Notes" [submit]="enjiForm.submitted">
+              <div class="form-group row">
+                <label class="col-md-4">Result</label>
+                <div class="col-md-8">
+                  <select class="form-control" formControlName="MrVerfResultHStatCode" (change)="ResultHandler()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.MrVerfResultHStatCode.invalid }">
+                    <option *ngFor="let item of RefStatusList" [value]="item.Key">{{item.Value}}</option>
+                  </select>
+                  <lib-uc-show-errors [control]="CustConfirm.controls.MrVerfResultHStatCode"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="row">
-                <label class="label-control col-md-6">Subject</label>
-                <label class="label-control col-md-6">{{SubjectResponse.Descr}}</label>
-              </div>
-              <div class="row">
-                <label class="label-control col-md-6">Phone</label>
-                <select class="form-control" formControlName="Phn"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Phn.invalid }">
-                  <option *ngFor="let item of PhnList" [value]="item.Key">{{item.Value}}</option>
-                </select>
-                <lib-uc-show-errors [control]="CustConfirm.controls.Phn" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
-              </div>
-              <div class="row">
-                <label class="label-control col-md-6">Result</label>
-                <select class="form-control" formControlName="MrVerfResultHStatCode" (change)="ResultHandler()"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.MrVerfResultHStatCode.invalid }">
-                  <option *ngFor="let item of RefStatusList" [value]="item.Key">{{item.Value}}</option>
-                </select>
-                <lib-uc-show-errors [control]="CustConfirm.controls.MrVerfResultHStatCode"
-                                    [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
-              </div>
-            </div>
           </div>
-        </div>
-        <!-- Verification Question -->
-        <div formArrayName="VerfResultDForm" [hidden]="CustConfirm.controls.MrVerfResultHStatCode.value === 'FAIL'">
-          <div class="form-body" [formGroupName]="i"
-               *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm.controls; let i = index">
-            <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
-                              [panel]="'section' + i">
-            </lib-ucSubsection>
-            <div [id]="'section' + i">
-              <span formArrayName="VerfQuestionAnswerList">
-                <div class="form-group row" [formGroupName]="j"
-                     *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
-                  <label class="col-md-3 {{isFailed ? '' : 'adins-required-label'}}" translate>
-                    {{QRList.value.QuestionGrp.VerfQuestionText}}
-                  </label>
-                  <div class="col-md-5" formGroupName="ResultGrp">
-                    <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
-                      <select class="form-control" formControlName="Answer"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+          <!-- Verification Question -->
+          <div formArrayName="VerfResultDForm" [hidden]="CustConfirm.controls.MrVerfResultHStatCode.value === 'FAIL'">
+            <div class="form-body" [formGroupName]="i"
+              *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm.controls; let i = index">
+              <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
+                [panel]="'section' + i">
+              </lib-ucSubsection>
+              <div [id]="'section' + i">
+                <span formArrayName="VerfQuestionAnswerList">
+                  <div class="form-group row" [formGroupName]="j"
+                    *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
+                    <label class="col-md-3 {{isFailed ? '' : 'adins-required-label'}}" translate>
+                      {{QRList.value.QuestionGrp.VerfQuestionText}}
+                    </label>
+                    <div class="col-md-5" formGroupName="ResultGrp">
+                      <span
+                        *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DDL' || QRList.value.QuestionGrp.VerfAnswerTypeCode == 'RBL'">
+                        <select class="form-control" formControlName="Answer"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp.controls.Answer.invalid }">
+                          <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                          <option *ngFor="let item of ListVerfAnswer[i][j]" value="{{item}}">
+                            {{item}}
+                          </option>
+                        </select>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'TXT'">
+                        <input type="text" class="form-control" formControlName="Answer"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
                         <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                            [submit]="enjiForm.submitted">
+                          [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
-                        <option *ngFor="let item of ListVerfAnswer[i][j]" value="{{item}}">
-                          {{item}}
-                        </option>
-                      </select>
-                    </span>
-                    <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'TXT'">
-                      <input type="text" class="form-control" formControlName="Answer"
-                             [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
-                      <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                          [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </span>
-                    <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DT_PICKER'">
-                      <input type="date" class="form-control" formControlName="Answer"
-                             [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
-                      <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                          [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </span>
-                    <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'UC_INPUT_NUMBER'">
-                      <input type="" currencyMask class="form-control" formControlName="Answer"
-                             [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
-                      <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
-                                          [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </span>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'DT_PICKER'">
+                        <input type="date" class="form-control" formControlName="Answer"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                      <span *ngIf="QRList.value.QuestionGrp.VerfAnswerTypeCode == 'UC_INPUT_NUMBER'">
+                        <input type="" currencyMask class="form-control" formControlName="Answer"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && QRList.controls.ResultGrp?.controls.Answer.invalid }">
+                        <lib-uc-show-errors [control]="QRList.controls.ResultGrp.controls.Answer"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </span>
+                    </div>
+                    <div class="col-md-4" formGroupName="ResultGrp">
+                      <textarea class="form-control" formControlName="Notes"></textarea>
+                    </div>
                   </div>
-                  <div class="col-md-4" formGroupName="ResultGrp">
-                    <textarea class="form-control" formControlName="Notes"></textarea>
-                  </div>
-                </div>
-              </span>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-actions right">
-          <button type="submit" class="btn btn-raised btn-primary" id="saveHistory">
-            <i class="far fa-check-square"></i> Save History
-          </button>
-        </div>
-        <!-- History List -->
-        <lib-ucSubsection [id]="'HistoryListId'" [title]="'History List'" [panel]="'HistoryList'">
-        </lib-ucSubsection>
-        <div class="form-body" id="HistoryList">
-          <table class="table table-responsive-md table-hover">
-            <thead>
-              <tr class="table-header">
-                <th><span translate class="thead-header text-left">Phone No</span></th>
-                <th><span translate class="thead-header text-left">Status</span></th>
-                <th><span translate class="thead-header text-left">Notes</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="VerfResultHList?.length == 0">
-                <td align="center" colspan="5">No Data Available</td>
-              </tr>
-              <tr *ngFor="let item of VerfResultHList; let i = index">
-                <td class="text-left">{{item.Phn}}</td>
-                <td class="text-left">{{item.MrVerfResultHStatName}}</td>
-                <td class="text-left">{{item.Notes}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="form-actions right">
-          <button type="button" class="btn btn-raised btn-warning mr-1"
-                  [routerLink]="['/Nap/AdminProcess/CustConfirmation/Detail']"
-                  [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo, TaskListId: TaskListId, BizTemplateCode: BizTemplateCode}"
-                  translate>
-            <i class="ft-x"></i> Cancel
-          </button>
-          <button type="submit" class="btn btn-raised btn-primary" translate id="save">
-            <i class="far fa-check-square"></i> Save
-          </button>
-        </div>
+          <div class="form-actions right">
+            <button type="submit" class="btn btn-raised btn-primary" id="saveHistory">
+              <i class="far fa-check-square"></i> Save History
+            </button>
+          </div>
+          <!-- History List -->
+          <lib-ucSubsection [id]="'HistoryListId'" [title]="'History List'" [panel]="'HistoryList'">
+          </lib-ucSubsection>
+          <div class="form-body" id="HistoryList">
+            <table class="table table-responsive-md table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header text-left">Phone No</span></th>
+                  <th><span translate class="thead-header text-left">Status</span></th>
+                  <th><span translate class="thead-header text-left">Notes</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="VerfResultHList?.length == 0">
+                  <td align="center" colspan="5">No Data Available</td>
+                </tr>
+                <tr *ngFor="let item of VerfResultHList; let i = index">
+                  <td class="text-left">{{item.Phn}}</td>
+                  <td class="text-left">{{item.MrVerfResultHStatName}}</td>
+                  <td class="text-left">{{item.Notes}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1"
+              [routerLink]="['/Nap/AdminProcess/CustConfirmation/Detail']"
+              [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo, TaskListId: TaskListId, BizTemplateCode: BizTemplateCode}"
+              translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary" translate id="save">
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
       </form>
     </div>
   </div>

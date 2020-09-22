@@ -124,7 +124,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     CustCvgAmt: [0, Validators.required],
     TotalCustDiscAmt: [0],
     InsCpltzAmt: [0],
-    PayPeriodToInsco: ['', Validators.required]
+    PayPeriodToInsco: ['', Validators.required],
+    IsFullCapitalizedAmount: [false] 
   });
   // End Insurance Data
 
@@ -726,7 +727,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.isCalculate = true;
       }
     );
-
+    this.BindCapitalize();
   }
 
   async GenerateInsurance(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
@@ -805,7 +806,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.showGenerate = true;
       }
     );
-
+    this.BindCapitalize();
   }
 
   GenerateMainAndAddCvgTable() {
@@ -1485,6 +1486,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         await this.GenerateInsurance(this.appInsMainCvgObj);
       }
       this.setValidator(insuredBy);
+      if (this.InsuranceDataForm["controls"]["InsCpltzAmt"].value == this.InsuranceDataForm["controls"]["TotalCustMainPremiAmt"].value + this.InsuranceDataForm["controls"]["TotalCustAddPremiAmt"].value + this.InsuranceDataForm["controls"]["CustAdminFeeAmt"].value - this.InsuranceDataForm["controls"]["TotalCustDiscAmt"].value) {
+        this.InsuranceDataForm["controls"]["InsCpltzAmt"].disable();
+        this.InsuranceDataForm.patchValue({
+          IsFullCapitalizedAmount: true
+        });
+      }
     }
   }
 
@@ -1575,6 +1582,23 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.payPeriodToInscoObj = response[CommonConstant.ReturnObj];
       }
     );
+  }
+  IsFullCapitalizedAmount(){
+    if(this.InsuranceDataForm["controls"]["IsFullCapitalizedAmount"].value == true ){
+      this.InsuranceDataForm.patchValue({
+        InsCpltzAmt: this.InsuranceDataForm["controls"]["TotalCustMainPremiAmt"].value  + this.InsuranceDataForm["controls"]["TotalCustAddPremiAmt"].value  + this.InsuranceDataForm["controls"]["CustAdminFeeAmt"].value  - this.InsuranceDataForm["controls"]["TotalCustDiscAmt"].value 
+      }); 
+      this.InsuranceDataForm["controls"]["InsCpltzAmt"].disable();
+    }else{
+      this.InsuranceDataForm["controls"]["InsCpltzAmt"].enable();
+    }
+  }
+  BindCapitalize(){
+    if(this.InsuranceDataForm["controls"]["IsFullCapitalizedAmount"].value == true ){
+      this.InsuranceDataForm.patchValue({
+        InsCpltzAmt: this.InsuranceDataForm["controls"]["TotalCustMainPremiAmt"].value  + this.InsuranceDataForm["controls"]["TotalCustAddPremiAmt"].value  + this.InsuranceDataForm["controls"]["CustAdminFeeAmt"].value  - this.InsuranceDataForm["controls"]["TotalCustDiscAmt"].value 
+      });  
+    }
   }
   // End Insurance Method
 }

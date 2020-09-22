@@ -1,0 +1,19 @@
+<table class="table table-responsive-md text-center table-hover">
+  <thead>
+    <tr class="table-header">
+      <th class="text-center"><span class="thead-header" name='custNo' translate>CUSTOMER NO</span>
+      </th>
+      <th class="text-left"><span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
+      </th>
+      <th class="text-center"><span class="thead-header" name='custType' translate>CUSTOMER TYPE</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of responseCustListed">
+      <td class="text-center">{{item.CustNo}}</td>
+      <td class="text-left"><a [routerLink]="" (click)="openView(item.CustNo)">{{item.CustName}}</a></td>
+      <td class="text-center">{{item.MrCustTypeCode}}</td>
+    </tr>
+  </tbody>
+</table>

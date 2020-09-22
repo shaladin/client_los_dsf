@@ -1,0 +1,160 @@
+
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                Application View
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+
+          <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+
+          <ng-template #mainInfoContainerA></ng-template>
+          <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
+            <mat-tab *ngIf="IsCustomer" label="Customer">
+              <ng-template matTabContent>
+                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsGuarantor" label="Guarantor">
+              <ng-template matTabContent>
+                <app-guarantor [AppId]="AppId"></app-guarantor>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsReferantor" label="Referantor">
+              <ng-template matTabContent>
+                <app-tab-referantor [appId]="AppId"></app-tab-referantor>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsApplication" label="Application">
+              <ng-template matTabContent>
+                <app-tab-application [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></app-tab-application>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf=IsInvoice label="Invoice">
+              <ng-template matTabContent>
+                <app-invoice-view [AppId]="AppId"></app-invoice-view>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsAsset" label="Asset">
+              <ng-template matTabContent>
+                <view-asset-data [appId]="AppId"></view-asset-data>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsMultiAsset" label="Asset">
+              <ng-template matTabContent>
+                <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsCollateral" label="Collateral Data">
+              <ng-template matTabContent>
+                <app-view-collateral-data [appId]="AppId"></app-view-collateral-data>
+              </ng-template>
+            </mat-tab>
+            
+            <mat-tab *ngIf="IsMultiCollateral" label="Collateral Data">
+              <ng-template matTabContent>
+                <app-view-collateral-multi-asset [appId]="AppId"></app-view-collateral-multi-asset>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsInsurance" label="Insurance">
+              <ng-template matTabContent>
+                <view-insurance [AppId]="AppId"></view-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsMultiInsurance" label="Insurance">
+              <ng-template matTabContent>
+                <app-app-insurance [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsLifeInsurance" label="Life Insurance">
+              <ng-template matTabContent>
+                <app-life-insurance [AppId]="AppId"></app-life-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsFinancial" label="Financial">
+              <ng-template matTabContent>
+                <view-financial [AppId]="AppId"></view-financial>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsTC" label="TC">
+              <ng-template matTabContent>
+                <app-app-tc [AppId]="AppId"></app-app-tc>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsCommission" label="Commission">
+              <ng-template matTabContent>
+                <app-tab-commission [appId]="AppId"></app-tab-commission>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsReservedFund" label="Reserved Fund">
+              <ng-template matTabContent>
+                <view-reserved-fund [appId]="AppId"></view-reserved-fund>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsPhoneVerification" label="Phone Verification">
+              <ng-template matTabContent>
+                <view-phone-verif [appId]="AppId"></view-phone-verif>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsFraudDetectionResult" label="Fraud Detection Result">
+              <ng-template matTabContent>
+                <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType" [isView]=true></app-view-fraud-detection-result>
+              </ng-template>
+            </mat-tab>
+
+            <!-- <mat-tab *ngIf="IsFraudDetectionMulti" label="Fraud Detection Result">
+              <ng-template matTabContent>
+                <app-view-app-fraud-verification [AppId]="AppId" [mrCustTypeCode]="CustType"></app-view-app-fraud-verification>
+              </ng-template>
+            </mat-tab> -->
+
+            <!-- <mat-tab label="Deviation">
+              <ng-template matTabContent>
+                <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>
+              </ng-template>
+            </mat-tab> -->
+
+            <mat-tab *ngIf="IsAnalysisResult" label="Analysis Result">
+              <ng-template matTabContent>
+                <app-tab-analysis-result [appId]="AppId"></app-tab-analysis-result>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsApprovalHist" label="Approval History">
+              <ng-template matTabContent>
+                <app-approval-hist [AppId]="AppId"></app-approval-hist>
+              </ng-template>
+            </mat-tab>           
+
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

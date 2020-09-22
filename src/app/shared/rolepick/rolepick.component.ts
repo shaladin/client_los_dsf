@@ -45,6 +45,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
         (response) => {
           localStorage.setItem("Token", response["Token"]);
           localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
+          localStorage.setItem("EnvironmentModule", environment.Module); 
           AdInsHelper.CreateUserAccess(response);
           let currPath = this.router.routerState.snapshot.url;
           this.router.navigateByUrl("/pages/content", { skipLocationChange: true }).then(() => {
@@ -59,6 +60,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
         (response) => {
           localStorage.setItem("Token", response["Token"]);
           localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
+          localStorage.setItem("EnvironmentModule", environment.Module);
           AdInsHelper.CreateUserAccess(response);
           this.router.navigate(["/dashboard/dash-board"]);
           this.dialog.closeAll();

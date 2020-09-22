@@ -119,19 +119,19 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
+              <app-customer-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId" [bizTemplateCode]="'FL4W'"
                                       [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
-              </app-customer-data-FL4W>
+              </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging-FL4W *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"
+              <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"
                                          [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
-              </app-guarantor-paging-FL4W>
+              </app-guarantor-paging>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data-FL4W *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId"
                                         [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-referantor-data-FL4W>
+              </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
@@ -235,24 +235,24 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data-FL4W *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-customer-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId" [bizTemplateCode]="'FL4W'"
                                       [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
-              </app-customer-data-FL4W>
+              </app-customer-data>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging-FL4W *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId"
                                          [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
-              </app-guarantor-paging-FL4W>
+              </app-guarantor-paging>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data-FL4W *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId"
                                         [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-referantor-data-FL4W>
+              </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
                                          [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
-              </app-application-data-FL4W>
+              </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"

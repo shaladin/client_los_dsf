@@ -45,6 +45,7 @@ export class AssetDataComponent implements OnInit {
   SerialNoList: any;
   isUsed: boolean = false;
   isAssetAttrReady: boolean = false;
+  originalAppAssetAccessory: Array<AppAssetAccessoryObj>;
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
 
@@ -261,7 +262,8 @@ export class AssetDataComponent implements OnInit {
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
-    })
+    });
+    this.originalAppAssetAccessory = new Array<AppAssetAccessoryObj>();
   }
 
   async ngOnInit(): Promise<void> {
@@ -406,6 +408,48 @@ export class AssetDataComponent implements OnInit {
     if (this.isValidOk == true) {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
+      if(this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0){
+        if(this.originalAppAssetAccessory && this.originalAppAssetAccessory.length > 0){
+          for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
+            if(!this.allAssetDataObj.IsAppAssetAccessoryChanged){
+              for (const oriAcc of this.originalAppAssetAccessory) {
+                if(newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode){
+                  if(newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.SupplCode != oriAcc.SupplCode){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.SupplName != oriAcc.SupplName){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if(newAcc.AccessoryNotes != oriAcc.AccessoryNotes){
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                }
+              }
+            }
+            else{
+              break;
+            }
+          }
+        }
+        else{
+          this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+        }
+      }
       this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -1461,6 +1505,7 @@ export class AssetDataComponent implements OnInit {
 
   bindAccessories() {
     if (this.appAssetAccessoriesObjs != undefined) {
+      this.originalAppAssetAccessory = [...this.appAssetAccessoriesObjs];
       for (let i = 0; i < this.appAssetAccessoriesObjs.length; i++) {
         var listAppAccessories = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
         listAppAccessories.push(this.addGroup(this.appAssetAccessoriesObjs[i], i));

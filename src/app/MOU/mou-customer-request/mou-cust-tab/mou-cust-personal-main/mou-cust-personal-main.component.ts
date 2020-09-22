@@ -94,7 +94,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.initUrl();
     this.initLookup();
     this.bindAllRefMasterObj();
-    this.bindCustData();
+    await this.bindCustData();
   }
 
   CopyCustomerEvent(event) {
@@ -194,7 +194,7 @@ export class MouCustPersonalMainComponent implements OnInit {
 
   }
 
-  bindCustData(){
+  async bindCustData(){
     if(this.custDataPersonalObj.MouCustObj.MouCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataPersonalObj.MouCustObj.CustNo,
@@ -370,16 +370,18 @@ export class MouCustPersonalMainComponent implements OnInit {
   }
 
   ChangeNationality(mrNationalityCode){
-    if(mrNationalityCode == CommonConstant.NationalityLocal){
-      this.selectedNationalityCountryCode = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField2;
-      this.isLocal = true;
-    }else{
-      this.isLocal = false;
-      var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
-      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
-      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+    if(this.NationalityObj != undefined){
+      if(mrNationalityCode == CommonConstant.NationalityLocal){
+        this.selectedNationalityCountryCode = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField1;
+        this.selectedNationalityCountryName = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField2;
+        this.isLocal = true;
+      }else{
+        this.isLocal = false;
+        var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
+        this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
+        this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
+        this.selectedNationalityCountryCode = foreign.ReserveField1;
+      }
     }
   }
 

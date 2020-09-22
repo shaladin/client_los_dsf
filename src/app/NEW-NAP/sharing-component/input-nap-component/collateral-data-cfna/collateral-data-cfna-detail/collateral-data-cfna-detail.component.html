@@ -199,7 +199,7 @@
                   <div class="form-group row">
                     <label class="col-md-5" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-7">
-                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage($event)"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage($event)" [disabled]="isExisting"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -238,7 +238,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner($event)"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner($event)" [disabled]="isExisting"></mat-checkbox>
                     </div>
                   </div>
                 </div>

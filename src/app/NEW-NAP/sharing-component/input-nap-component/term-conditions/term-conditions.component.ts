@@ -5,6 +5,7 @@ import { formatDate } from '@angular/common';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-term-conditions',
@@ -42,55 +43,12 @@ export class TermConditionsComponent implements OnInit {
     var appTcObj = {
       AppId: this.AppId
     }
-    this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
-      (response) => {
-        this.AppTcList = response["AppTcs"];
-        if (this.AppTcList != null && this.AppTcList["length"] != 0) {
-          for (let i = 0; i < this.AppTcList["length"]; i++) {
-            var TCDetail = this.fb.group({
-              AppTcId: this.AppTcList[i].AppTcId,
-              AppId: this.AppTcList[i].AppId,
-              TcCode: this.AppTcList[i].TcCode,
-              TcName: this.AppTcList[i].TcName,
-              PriorTo: this.AppTcList[i].PriorTo,
-              IsChecked: this.AppTcList[i].IsChecked,
-              ExpiredDt: this.AppTcList[i].ExpiredDt != null ? formatDate(this.AppTcList[i].ExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
-              IsMandatory: this.AppTcList[i].IsMandatory,
-              PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
-              CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
-              Notes: this.AppTcList[i].Notes,
-              IsAdditional: this.AppTcList[i].IsAdditional,
-              IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
-              RowVersion: this.AppTcList[i].RowVersion
-            }) as FormGroup;
-
-            if (this.AppTcList[i].IsMandatory == true) {
-              TCDetail.controls.PromisedDt.setValidators([Validators.required]);
-            }
-            if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
-              this.IsCheckedAll = false;
-            }
-            if (this.AppTcList[i].IsChecked == false) {
-              TCDetail.controls.ExpiredDt.disable();
-            } else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
-              TCDetail.controls.PromisedDt.disable();
-              TCDetail.controls.IsChecked.disable();
-              if(!this.AppTcList[i].IsExpDtMandatory){
-                TCDetail.controls.ExpiredDt.disable();
-              }
-            }
-
-            listTC.push(TCDetail);
-            this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
-
-          }
-
-          this.ReconstructForm();
-          this.OutputMode.emit("edit");
-        } else {
-          this.http.post(URLConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
-            (response) => {
-              this.AppTcList = response["AppTcs"];
+    this.http.post(URLConstant.GetAppById, appTcObj).subscribe(
+      (responseApp: AppObj) => {
+        this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
+          (response) => {
+            this.AppTcList = response["AppTcs"];
+            if (this.AppTcList != null && this.AppTcList["length"] != 0) {
               for (let i = 0; i < this.AppTcList["length"]; i++) {
                 var TCDetail = this.fb.group({
                   AppTcId: this.AppTcList[i].AppTcId,
@@ -108,33 +66,87 @@ export class TermConditionsComponent implements OnInit {
                   IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
                   RowVersion: this.AppTcList[i].RowVersion
                 }) as FormGroup;
-
+    
                 if (this.AppTcList[i].IsMandatory == true) {
-                  TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                  if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep){
+                    TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                  }
                 }
                 if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                   this.IsCheckedAll = false;
                 }
-              
-                  if (this.AppTcList[i].IsChecked == false) {
+                if (this.AppTcList[i].IsChecked == false) {
+                  TCDetail.controls.ExpiredDt.disable();
+                } else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
+                  TCDetail.controls.PromisedDt.disable();
+                  TCDetail.controls.IsChecked.disable();
+                  if(!this.AppTcList[i].IsExpDtMandatory){
                     TCDetail.controls.ExpiredDt.disable();
-                  } else {
-                    TCDetail.controls.PromisedDt.disable(); 
-                    if(!this.AppTcList[i].IsExpDtMandatory){
-                      TCDetail.controls.ExpiredDt.disable();
-                    }
-                }  
- 
+                  }
+                }
+    
                 listTC.push(TCDetail);
                 this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+    
               }
-
+    
               this.ReconstructForm();
-              this.OutputMode.emit("add");
+              this.OutputMode.emit("edit");
+            } else {
+              this.http.post(URLConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
+                (response) => {
+                  this.AppTcList = response["AppTcs"];
+                  for (let i = 0; i < this.AppTcList["length"]; i++) {
+                    var TCDetail = this.fb.group({
+                      AppTcId: this.AppTcList[i].AppTcId,
+                      AppId: this.AppTcList[i].AppId,
+                      TcCode: this.AppTcList[i].TcCode,
+                      TcName: this.AppTcList[i].TcName,
+                      PriorTo: this.AppTcList[i].PriorTo,
+                      IsChecked: this.AppTcList[i].IsChecked,
+                      ExpiredDt: this.AppTcList[i].ExpiredDt != null ? formatDate(this.AppTcList[i].ExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+                      IsMandatory: this.AppTcList[i].IsMandatory,
+                      PromisedDt: this.AppTcList[i].PromisedDt != null ? formatDate(this.AppTcList[i].PromisedDt, 'yyyy-MM-dd', 'en-US') : "",
+                      CheckedDt: this.AppTcList[i].CheckedDt != null ? formatDate(this.AppTcList[i].CheckedDt, 'yyyy-MM-dd', 'en-US') : "",
+                      Notes: this.AppTcList[i].Notes,
+                      IsAdditional: this.AppTcList[i].IsAdditional,
+                      IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
+                      RowVersion: this.AppTcList[i].RowVersion
+                    }) as FormGroup;
+    
+                    if (this.AppTcList[i].IsMandatory == true) {
+                      if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep){
+                        TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                      }
+                    }
+                    if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
+                      this.IsCheckedAll = false;
+                    }
+                  
+                      if (this.AppTcList[i].IsChecked == false) {
+                        TCDetail.controls.ExpiredDt.disable();
+                      } else {
+                        TCDetail.controls.PromisedDt.disable(); 
+                        if(!this.AppTcList[i].IsExpDtMandatory){
+                          TCDetail.controls.ExpiredDt.disable();
+                        }
+                    }  
+     
+                    listTC.push(TCDetail);
+                    this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
+                  }
+    
+                  this.ReconstructForm();
+                  this.OutputMode.emit("add");
+                }
+              );
             }
-          );
-        }
-      }); 
+          }); 
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ReconstructForm() {

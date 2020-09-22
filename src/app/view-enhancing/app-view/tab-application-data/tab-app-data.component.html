@@ -1,0 +1,625 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <lib-ucSubsection [id]="'viewAppsFinInfoId'" [title]="'Application'" [panel]="'viewAppsFinInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppsFinInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Installment Scheme </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme!=null"> {{AppDetailFinData.InstScheme}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Num Of Installment </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst!=null"> {{AppDetailFinData.NumOfInst}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Installment Amount </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstAmt!=null"> {{AppDetailFinData.InstAmt | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstAmt==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Payment Frequency </label>
+                  <label class="col-md-6 adInsLabel"*ngIf="AppDetailFinData.PayFreqDesc!=null"> {{AppDetailFinData.PayFreqDesc}} </label>
+                  <label class="col-md-6 adInsLabel"*ngIf="AppDetailFinData.PayFreqDesc==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Interest Type </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InterestTypeDesc!=null"> {{AppDetailFinData.InterestTypeDesc}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InterestTypeDesc==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.AssetName!=null"> {{AppDetailFinData.AssetName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.AssetName==null"> - </label>
+                </div>
+              </div>
+            </div>
+            <h5>Cross Application</h5>
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" mat-sort-header="No">No</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="AgrmntNo">Agreement No</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="CustName">Customer Name</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "CrossData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of CrossData; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td *ngIf="item.CrossAgrmntNo!=null">{{item.CrossAgrmntNo}}</td>
+                  <td *ngIf="item.CrossAgrmntNo==null"> - </td>
+                  <td *ngIf="item.CustName!=null">{{item.CustName}}</td>
+                  <td *ngIf="item.CustName==null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewGuarantorInfoId'" [title]="'Guarantor'" [panel]="'viewGuarantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewGuarantorInfo">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortGuarantorData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" mat-sort-header="GuarantorName">Guarantor Name</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="GuarantorType">Guarantor Type</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Relationship">Relationship</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="IdNo">ID no</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Address">Address</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="MobilePhone">Mobile Phone</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "GuarantorData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of GuarantorData">
+                  <td *ngIf="item.GuarantorName!=null">{{item.GuarantorName}}</td>
+                  <td *ngIf="item.GuarantorName==null"> - </td>
+                  <td *ngIf="item.GuarantorType!=null">{{item.GuarantorType}}</td>
+                  <td *ngIf="item.GuarantorType==null"> - </td>
+                  <td *ngIf="item.Relationship!=null">{{item.Relationship}}</td>
+                  <td *ngIf="item.Relationship==null"> - </td>
+                  <td *ngIf="item.IdNo!=null">{{item.IdNo}}</td>
+                  <td *ngIf="item.IdNo==null"> - </td>
+                  <td *ngIf="item.Address!=null">{{item.Address}}</td>
+                  <td *ngIf="item.Address==null"> - </td>
+                  <td *ngIf="item.MobilePhone!=null">{{item.MobilePhone}}</td>
+                  <td *ngIf="item.MobilePhone!=null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewReferantorInfoId'" [title]="'Referantor'" [panel]="'viewReferantorInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewReferantorInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Referantor Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.ReferantorName!=null"> {{ReferantorData.ReferantorName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.ReferantorName==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Num Of Sales </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfSales!=null"> {{ReferantorData.NumOfSales}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfSales==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Sales Amount </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalSalesAmount!=null"> {{ReferantorData.TotalSalesAmount | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalSalesAmount==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalProfit!=null"> {{ReferantorData.TotalProfit}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalProfit==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cooperation Date </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.CooperationDate!=null"> {{ReferantorData.CooperationDate | date: 'dd-MMMM-yyyy'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.CooperationDate==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num Of Application) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfApplication!=null"> {{ReferantorData.NumOfApplication}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfApplication==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.InAmount!=null"> {{ReferantorData.InAmount | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.InAmount==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalLoss!=null"> {{ReferantorData.TotalLoss}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalLoss==null"> - </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewSalesInfoId'" [title]="'Sales'" [panel]="'viewSalesInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewSalesInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Sales Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SalesName!=null"> {{AppDetailAssetData.SalesName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SalesName==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Join Date </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.AppDetailAssetData!=null"> {{AppDetailAssetData.JoinDt | date: 'dd-MMMM-yyyy'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.AppDetailAssetData==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.NumOfApplication!=null"> {{AppDetailAssetData.NumOfApplication}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.NumOfApplication==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.InAmount!=null"> {{AppDetailAssetData.InAmount | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.InAmount==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Supervisor Name </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SpvName!=null"> {{AppDetailAssetData.SpvName}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SpvName==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Profit </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalProfit!=null"> {{AppDetailAssetData.TotalProfit}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalProfit==null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Loss </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalLoss!=null"> {{AppDetailAssetData.TotalLoss}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalLoss==null"> - </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'viewLoanInfoId'" [title]="'Loan Object'" [panel]="'viewLoanInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewLoanInfo">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortLoanData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header" mat-sort-header="MrLoanPurposeDescr">Loan Purpose</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="IsDisburseToCust">Disburse To Cust</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="BudgetPlanAmt">Budget Plan Amount</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="SelfFinancingAmt">Self Financing</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="FinancingAmt">Financing Amount</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "LoanObjectData?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of LoanObjectData">
+                  <td *ngIf="item.MrLoanPurposeDescr!=null">{{item.MrLoanPurposeDescr}}</td>
+                  <td *ngIf="item.MrLoanPurposeDescr==null"> - </td>
+                  <td *ngIf="item.IsDisburseToCust == true">Yes</td>
+                  <td *ngIf="item.IsDisburseToCust != true">No</td>
+                  <td *ngIf="item.IsDisburseToCust==null"> - </td>
+                  <td *ngIf="item.BudgetPlanAmt!=null">{{item.BudgetPlanAmt}}</td>
+                  <td *ngIf="item.BudgetPlanAmt==null"> - </td>
+                  <td *ngIf="item.SelfFinancingAmt!=null">{{item.SelfFinancingAmt}}</td>
+                  <td *ngIf="item.SelfFinancingAmt==null"> - </td>
+                  <td *ngIf="item.FinancingAmt!=null">{{item.FinancingAmt}}</td>
+                  <td *ngIf="item.FinancingAmt==null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewAppCollId'" [title]="'Collateral'" [panel]="'viewAppCollInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppCollInfo">
+              <lib-ucgridview *ngIf="IsGridCollReady" [gridInput]="InputGridColl"></lib-ucgridview>
+          </div>
+
+          <lib-ucSubsection [id]="'viewAppCollInsId'" [title]="'Insurance Object'" [panel]="'viewAppCollInsInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppCollInsInfo">
+              <lib-ucgridview *ngIf="IsGridCollInsReady" [gridInput]="InputGridCollIns"></lib-ucgridview>
+          </div>
+
+          <div *ngIf="IsLifeIns">
+            <lib-ucSubsection [id]="'viewInsuranceInfoId'" [title]="'Life Insurance'" [panel]="'viewInsuranceInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewInsuranceInfo">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.IsCover == true"> Yes </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="!LifeInsData.IsCover == true"> No </label>
+                </div>
+                <div class="row" >
+                  <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
+                  <label class="col-md-6 adInsLabel"*ngIf="LifeInsData.LifeInscoBranchName!=null"> {{LifeInsData.LifeInscoBranchName}} </label>
+                  <label class="col-md-6 adInsLabel"*ngIf="LifeInsData.LifeInscoBranchName==null"> - </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Life Insurance Notes </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.NewCoverNotes != null"> {{LifeInsData.NewCoverNotes}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.NewCoverNotes == null"> - </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Life Insurance Fee </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.LifeInsFee != null"> {{LifeInsData.LifeInsFee}} </label>
+                  <label class="col-md-6 adInsLabel" *ngIf="LifeInsData.LifeInsFee == null"> - </label>
+                </div>
+              </div>
+              <h4>Life Insurance Object</h4>
+              <div class="form-body" id="viewAppLifeInsInfo">
+                  <lib-ucgridview *ngIf="IsGridLifeInsReady" [gridInput]="InputGridLifeIns"></lib-ucgridview>
+              </div>
+            </div>
+          </div>
+          
+          <lib-ucSubsection [id]="'viewAppTcId'" [title]="'Term & Condition'" [panel]="'viewAppTcInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAppTcInfo">
+              <lib-ucgridview *ngIf="IsGridTcReady" [gridInput]="inputGridObj"></lib-ucgridview>
+          </div>
+
+          <lib-ucSubsection [id]="'viewCommissionInfoId'" [title]="'Commission'" [panel]="'viewCommissionInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewCommissionInfo">
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Commission </label>
+                  <label class="col-md-6 adInsLabel"> {{TotalCommission | number:'.2':'en-US'}} </label>
+                </div>
+                <div class="row" >
+                  <label class="col-md-6 adInsLabel"> TAC(17.5%) </label>
+                  <label class="col-md-6 adInsLabel"> {{appFinDataObj?.MaxAllocatedRefundAmt | number:'.2':'en-US'}} </label>
+                </div>
+                <div class="row">
+                  <h5>List Commission</h5>
+                  <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
+                    <thead>
+                      <tr class="table-header">
+                        <th><span translate class="thead-header" > No </span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="Subject">Subject</span>
+                        </th>
+                        <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="Name">Name</span>
+                        </th>
+                        <th style="text-align: right;"><span translate class="thead-header" mat-sort-header="TotalCommAmt">Total Commission</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf = "CommData?.length == 0">
+                      <tr>
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr *ngFor="let item of CommData; let idx = index">
+                        <td>{{idx + 1}}</td>
+                        <td *ngIf="item.Subject!=null">{{item.Subject}}</td>
+                        <td *ngIf="item.Subject==null"> - </td>
+                        <td style="text-align: left;" *ngIf="item.Name!=null">{{item.Name}}</td>
+                        <td style="text-align: left;" *ngIf="item.Name==null"> - </td>
+                        <td style="text-align: right;" *ngIf="item.TotalCommAmt!=null">{{item.TotalCommAmt | number:'.2':'en-US'}}</td>
+                        <td style="text-align: right;" *ngIf="item.TotalCommAmt==null"> - </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Total Reserved Fund </label>
+                  <label class="col-md-6 adInsLabel"> {{TotalReservedFund| number:'.2':'en-US'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> </label>
+                </div>
+                <br>
+                <div class="row">
+                  <h5>List Reserved Fund</h5>
+                  <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
+                    <thead>
+                      <tr class="table-header">
+                        <th><span translate class="thead-header" > No </span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="MrReservedFundCode">Reserved Fund Code</span>
+                        </th>
+                        <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="ReservedFundAmt">Total Reserved Amount</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf = "RsvFundData?.length == 0">
+                      <tr>
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr *ngFor="let item of RsvFundData; let idx = index">
+                        <td>{{idx + 1}}</td>
+                        <td *ngIf="item.MrReservedFundCode!=null">{{item.MrReservedFundCode}}</td>
+                        <td *ngIf="item.MrReservedFundCode==null"> - </td>
+                        <td style="text-align: right;" *ngIf="item.ReservedFundAmt!=null">{{item.ReservedFundAmt | number:'.2':'en-US'}}</td>
+                        <td style="text-align: right;" *ngIf="item.ReservedFundAmt==null"> - </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-6">
+            </div> -->
+            <!-- <div class="col-md-6">
+            </div> -->
+          </div>
+          <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
+          </lib-ucSubsection>
+          <div class="form-body" id="financialData">
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Asset Price </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Down Payment </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Fee </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TotalFeeAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Down Payment Paid at MF </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Insurance </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Subsidy </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel">{{TotalSubsidy| number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Life Insurance </label>
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> NTF </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.NtfAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total Interest </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TotalInterestAmt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Effective Rate to Customer (%) </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.EffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Effective Rate to Supplier (%) </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.SupplEffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Flat Rate to Customer (%) </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.FlatRatePrcnt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Flat Rate to Supplier (%) </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.SupplEffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Total AR </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.TotalAr | number:'.2':'en-US'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> Gross Yield </label>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="adInsLabel"> {{appFinDataObj?.GrossYieldPrcnt | number:'.2':'en-US'}}%</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <lib-ucSubsection [id]="'instSchdlId'" [title]="'Installment Schedule'" [panel]="'instSchdl'">
+          </lib-ucSubsection>
+          <div class="form-body" id="instSchdl">
+            <div class="form-group row">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+                        Seq No
+                      </span>
+                    </th>
+                    <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+                      Installment Amount  
+                      </span>
+                    </th>
+                    <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+                      Principal Amount
+                      </span>
+                    </th>
+                    <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+                      Interest Amount
+                      </span>
+                    </th>
+                    <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+                      Os Principal
+                    </span>
+                    </th>
+                    <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+                      Os Interest  
+                    </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf = "listInstallment.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf = "listInstallment.length > 0">
+                  <tr *ngFor="let item of listInstallment; let i = index">
+                    <td style="text-align: center;">{{item.InstSeqNo}}</td>
+                    <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
+                    <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
+                    <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
+                    <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
+                    <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

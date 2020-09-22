@@ -1,12 +1,12 @@
 <div formGroupName="{{identifier}}">
-  <lib-ucSubsection [id]="'custMainDataId'" [title]="'Customer Main Data'" [panel]="'CustMainData'">
+  <lib-ucSubsection [id]="'custMainDataId'" [title]="(bizTemplateCode == 'FL4W' ? 'Lessee ' : 'Customer ') + 'Main Data'" [panel]="'CustMainData'">
   </lib-ucSubsection>
   <div id="CustMainData">
     <div class="row">
       <!-- left -->
       <div class="col-md-6 ">
         <div class="form-group row">
-          <label class="col-md-4 adins-required-label" for="custName" translate>Customer Legal Name</label>
+          <label class="col-md-4 adins-required-label" for="custName" translate>{{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }} Legal Name</label>
           <div class="col-md-8">
             <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="parentForm" [identifier]="'lookupCustomer'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
           </div>
@@ -111,7 +111,7 @@
       <!-- right -->
       <div class="col-md-6 ">
         <div class="form-group row">
-          <label class="col-md-4 adins-required-label" for="custFullName" translate>Customer Full Name</label>
+          <label class="col-md-4 adins-required-label" for="custFullName" translate>{{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }} Full Name</label>
           <div class="col-md-8">
             <input type="text" class="form-control" formControlName="CustFullName" id="custFullName"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustFullName.invalid }">

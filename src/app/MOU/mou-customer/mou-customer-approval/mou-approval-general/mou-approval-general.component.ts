@@ -27,6 +27,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   resultData: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   mouCustObject: MouCustObj = new MouCustObj();
+  MrCustTypeCode: string;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
@@ -59,6 +60,7 @@ export class MouApprovalGeneralComponent implements OnInit {
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.MrCustTypeCode = response.MrCustTypeCode;
       }
     );
   }
