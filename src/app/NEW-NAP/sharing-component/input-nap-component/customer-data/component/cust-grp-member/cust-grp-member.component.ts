@@ -130,7 +130,7 @@ export class CustGrpMemberComponent implements OnInit {
     });
 
     // jika ada pihak yg tipenya company maka pake relasi company
-    if(this.identifier == CommonConstant.CustTypeCompany || event.MrCustTypeCode == CommonConstant.CustTypeCompany){
+    if(this.identifier == 'custGrpMemberCompany' || this.identifier == CommonConstant.CustTypeCompany || event.MrCustTypeCode == CommonConstant.CustTypeCompany){
       this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
       this.parentForm.controls[this.identifier]["controls"][i].patchValue({
         MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
