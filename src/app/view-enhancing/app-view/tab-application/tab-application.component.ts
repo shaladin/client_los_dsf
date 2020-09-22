@@ -17,12 +17,19 @@ export class TabApplicationComponent implements OnInit {
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
   isReady: boolean = false;
+  isLoanObjectNeeded: boolean = false;
 
   constructor(
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
+    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR){
+      this.isLoanObjectNeeded = false;
+    }
+    else{
+      this.isLoanObjectNeeded = true;
+    }
     if (this.BizTemplateCode == CommonConstant.FCTR) {
       await this.http.post(URLConstant.GetAppFctrByAppId, {AppId: this.appId}).toPromise().then(
       (response) => {

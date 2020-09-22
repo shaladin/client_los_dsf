@@ -21,7 +21,7 @@
         </tbody>
       </table>
     </div>
-    <div class="px-3">
+    <div class="px-3" *ngIf="isLoanObjectNeeded"> 
       <lib-ucSubsection [id]="'viewLoanObjId'" [title]="'Loan Object'" [panel]="'viewLoanObjInfo'">
       </lib-ucSubsection>
       <div class="form-body" id="viewLoanObjInfo">
