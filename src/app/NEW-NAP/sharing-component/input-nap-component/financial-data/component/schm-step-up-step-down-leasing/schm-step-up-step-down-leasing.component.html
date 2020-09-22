@@ -363,7 +363,7 @@
       </button>
     </div>
     <div formArrayName="ListEntryInst">
-      <table *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0"
+      <table *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0"
         class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -415,7 +415,7 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="form-inline-right">
+    <div *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0" class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
         (click)="CalculateAmortization()">
         Calculate Amortization

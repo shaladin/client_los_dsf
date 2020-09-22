@@ -15,7 +15,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewAgrmntSummaryComponent implements OnInit {
 
   @Input() agrmntId: any;
-
+  totalRsvFund: number;
 
   agrmntObj = {
     AgrmntId: 0,

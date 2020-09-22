@@ -239,10 +239,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs'].controls == 0">
+                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs']['controls'] == 0">
                         <td align="center" colspan="7">No data available</td>
                       </tr>
-                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
+                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs']['controls'];let i = index">
                         <td [formGroupName]="i" class="text-center">
                           {{i + 1}}
                         </td>

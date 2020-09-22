@@ -79,7 +79,7 @@
           <!-- Verification Question -->
           <div formArrayName="VerfResultDForm" [hidden]="CustConfirm.controls.MrVerfResultHStatCode.value === 'FAIL'">
             <div class="form-body" [formGroupName]="i"
-              *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm.controls; let i = index">
+              *ngFor="let QuestionGrpList of CustConfirm.controls.VerfResultDForm['controls']; let i = index">
               <lib-ucSubsection [id]="'verifQuest' + i + 'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
                 [panel]="'section' + i">
               </lib-ucSubsection>

@@ -69,7 +69,7 @@
             <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
             </lib-ucSubsection>
             <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
-              <div *ngFor="let item of FormObj.controls.arr.controls; let i = index;">
+              <div *ngFor="let item of FormObj.controls.arr['controls']; let i = index;">
                 <div [formGroupName]="i">
 
                   <div class="form-group row">

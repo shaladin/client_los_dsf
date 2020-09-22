@@ -22,7 +22,7 @@
         </tr>
       </tbody>
       <tbody>
-        <tr *ngFor="let item of parentForm.controls[identifier].controls;let i = index">
+        <tr *ngFor="let item of parentForm.controls[identifier]['controls'];let i = index">
           <td [formGroupName]="i" class="text-center">
             {{i + 1}}
           </td>

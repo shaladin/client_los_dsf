@@ -131,7 +131,7 @@
               </lib-ucSubsection>
               <div class="form-body" id="AddCollAttribut" formArrayName="ListAttr">
                 <div class="col-md-6 form-group row"
-                  *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
+                  *ngFor="let item of AddCollForm.controls.ListAttr['controls']; let i = index" [formGroupName]="i">
                   <label class="col-md-4 adins-required-label" translate>Attr</label>
                   <div class="col-md-8">
                     <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
@@ -152,7 +152,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of AddCollForm.controls.items.controls; let i = index" [formGroupName]="i">
+                    <tr *ngFor="let item of AddCollForm.controls.items['controls']; let i = index" [formGroupName]="i">
                       <td>{{item.controls.AssetDocName.value}}</td>
                       <td>
                         <input type="checkbox" class="border-primary" formControlName="IsReceived">

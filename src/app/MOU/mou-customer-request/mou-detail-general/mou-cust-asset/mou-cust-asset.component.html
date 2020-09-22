@@ -2,7 +2,7 @@
 <div id="MouAssetSection"> 
     <div class="col-md-8" style="padding: 0; display: inline-block;">
       <form class="form form-horizontal" [formGroup]="MouCustClauseAssetForm" #enjiForm="ngForm" novalidate
-        (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+        (ngSubmit)="enjiForm.form.valid">
         <label class="col-md-3 adInsLabel adins-required-label" for="AssetTypeCode" style="padding-left: 0;" translate>Asset Type</label>
         <div class="col-md-9" style="display: inline-block; padding-left: 0;">
           <select class="form-control adInsInput" formControlName="AssetTypeCode" 

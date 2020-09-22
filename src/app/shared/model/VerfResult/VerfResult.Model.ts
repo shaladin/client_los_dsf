@@ -4,6 +4,7 @@ export class VerfResultObj {
     TrxRefNo: string;
     VerfDt: Date;
     EmpNo: string;
+    EmpName: string;
     MrVerfResultStatCode: string;
     MrVerfTrxTypeCode: string;
     LobCode: string;
@@ -17,6 +18,7 @@ export class VerfResultObj {
         this.TrxRefNo = "";
         this.VerfDt = new Date();
         this.EmpNo = "";
+        this.EmpName = "";
         this.MrVerfResultStatCode = "";
         this.MrVerfTrxTypeCode = "";
         this.LobCode = "";
