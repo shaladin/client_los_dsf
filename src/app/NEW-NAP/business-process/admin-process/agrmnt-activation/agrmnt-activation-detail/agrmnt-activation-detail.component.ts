@@ -18,8 +18,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class AgrmntActivationDetailComponent implements OnInit {
   arrValue = [];
   AssetObj: any;
-  AppFees: Object;
-  AppFinData: Object;
+  AppFees: any;
+  AppFinData: any;
   listSelectedId: any = new Array();
   AppId: number;
   isOverwrite: boolean;
