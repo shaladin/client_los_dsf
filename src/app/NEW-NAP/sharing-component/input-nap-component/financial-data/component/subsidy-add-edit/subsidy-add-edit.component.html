@@ -60,7 +60,7 @@
         <label class="col-md-4 adInsLabel">Subsidy Value Type</label>
         <div class="col-md-3">
           <select formControlName="valueType" class="form-control full-width"
-            (change)="DDLValueType_OnChange($event);">
+            (change)="DDLValueType_OnChange();">
             <option value="">--Select--</option>
             <option *ngFor="let m of ValueTypeOptions" value={{m.Key}}>{{m.Value}}</option>
           </select>
