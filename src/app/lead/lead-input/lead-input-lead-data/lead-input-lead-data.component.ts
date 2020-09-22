@@ -99,7 +99,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   isDataLoad: boolean = false;
   SerialNoList: any;
   items: FormArray;
-
+  isAbleToSubmit: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -490,6 +490,8 @@ export class LeadInputLeadDataComponent implements OnInit {
               });
             });
         });
+    }else{
+      this.toastr.warningMessage("Please input Down Payment Amount!");
     }
   }
 
@@ -568,7 +570,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
-
+    this.NTFAmt = this.AssetPrice - this.DPAmount;
+    var minAmt = this.NTFAmt / this.Tenor;
+    
+    if(this.LeadDataForm.controls["InstallmentAmt"].value > this.LeadDataForm.controls["NTFAmt"].value ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      return;
+    }
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
@@ -581,11 +589,26 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    this.NTFAmt = this.AssetPrice - this.DPAmount;
 
     this.LeadDataForm.patchValue({
       NTFAmt: this.NTFAmt
     });
+
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      return;
+    }else{
+      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+        this.TotalDownPayment = this.DPAmount + this.InstAmt;
+      }
+      else {
+        this.TotalDownPayment = this.DPAmount;
+      }
+      this.LeadDataForm.patchValue({
+        TotalDownPayment: this.TotalDownPayment
+      });
+    }
+
     this.Calculate = true;
   }
 
@@ -593,7 +616,13 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
+    var minAmt = this.NTFAmt / this.Tenor;
 
+    if(this.LeadDataForm.controls["InstallmentAmt"].value > this.LeadDataForm.controls["NTFAmt"].value ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      return;
+    }
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
@@ -602,7 +631,21 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
+
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      return;
+    }else{
+      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+        this.TotalDownPayment = this.DPAmount + this.InstAmt;
+      }
+      else {
+        this.TotalDownPayment = this.DPAmount;
+      }
+      this.LeadDataForm.patchValue({
+        TotalDownPayment: this.TotalDownPayment
+      });
+    }
     this.Calculate = true;
   }
 
@@ -649,7 +692,11 @@ export class LeadInputLeadDataComponent implements OnInit {
     if (this.Calculate == false &&  this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
+    }else{
+      this.CheckSubmitForCFNA();
+      if(!this.isAbleToSubmit) return;
     }
+
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -762,6 +809,9 @@ export class LeadInputLeadDataComponent implements OnInit {
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
+    }else{
+      this.CheckSubmitForCFNA();
+      if(!this.isAbleToSubmit) return;
     }
 
     if (this.typePage == "edit" || this.typePage == "update") {
@@ -880,21 +930,27 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   InstAmtCheck(){
-    var minAmt = this.LeadDataForm.controls.NTFAmt.value / this.LeadDataForm.controls.Tenor.value;
-    this.InstAmt = this.LeadDataForm.controls.InstallmentAmt.value;
+    if(this.returnLobCode != CommonConstant.CFNA){
+      this.Calculate = false;
+      this.InstAmt = this.LeadDataForm.controls.InstallmentAmt.value;
+      this.LeadDataForm.patchValue({
+        InstallmentAmt: this.InstAmt,
+      });
+    }
+  }
+
+  CheckSubmitForCFNA(){
+    var minAmt = this.LeadDataForm.controls["NTFAmt"].value / this.LeadDataForm.controls["Tenor"].value;
     if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
       this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      this.isAbleToSubmit = false;
+      return;
+    }else if(this.LeadDataForm.controls["InstallmentAmt"].value > this.LeadDataForm.controls["NTFAmt"].value ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      this.isAbleToSubmit = false;
       return;
     }else{
-      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-        this.TotalDownPayment = this.DPAmount + this.InstAmt;
-      }
-      else {
-        this.TotalDownPayment = this.DPAmount;
-      }
-      this.LeadDataForm.patchValue({
-        TotalDownPayment: this.TotalDownPayment
-      });
+      this.isAbleToSubmit = true;
     }
   }
 }

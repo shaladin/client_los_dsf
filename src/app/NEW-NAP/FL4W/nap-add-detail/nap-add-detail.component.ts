@@ -35,8 +35,8 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  custType: string = CommonConstant.CustTypePersonal;
-  stepperMode: string = CommonConstant.CustTypePersonal;
+  custType: string = CommonConstant.CustTypeCompany;
+  stepperMode: string = CommonConstant.CustTypeCompany;
   showCancel: boolean = true;
   getApp: any;
   token: any = localStorage.getItem(CommonConstant.TOKEN);

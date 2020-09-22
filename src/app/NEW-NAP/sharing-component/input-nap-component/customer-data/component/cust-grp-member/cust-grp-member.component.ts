@@ -128,21 +128,21 @@ export class CustGrpMemberComponent implements OnInit {
       CustNo: event.CustNo,
       CustName: event.CustName
     });
-    if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
+
+    // jika ada pihak yg tipenya company maka pake relasi company
+    if(this.identifier == 'custGrpMemberCompany' || this.identifier == CommonConstant.CustTypeCompany || event.MrCustTypeCode == CommonConstant.CustTypeCompany){
+      this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
+      this.parentForm.controls[this.identifier]["controls"][i].patchValue({
+        MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
+      });
+    } 
+    else 
+    {
       this.CustRelationshipObjs[i].list = this.CustRelationshipPersonalObj;
       this.parentForm.controls[this.identifier]["controls"][i].patchValue({
         MrCustRelationshipCode: this.defaultCustRelationshipPersonalCode
       });
     }
-
-    if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
-      this.CustRelationshipObjs[i].list = this.CustRelationshipCompanyObj;
-      this.parentForm.controls[this.identifier]["controls"][i].patchValue({
-        MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-      });
-    }
-    
-
   }
 
   async bindAppGrp(){

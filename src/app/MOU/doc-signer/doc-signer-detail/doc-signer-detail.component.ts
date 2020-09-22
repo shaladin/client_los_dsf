@@ -271,6 +271,9 @@ export class DocSignerDetailComponent implements OnInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: this.returnMouCust['CustNo'] };
+      if(!this.returnMouCust.IsExistingCust)
+        AdInsHelper.OpenMOUCustViewByMouCustId(this.returnMouCust.MouCustId);
+
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);

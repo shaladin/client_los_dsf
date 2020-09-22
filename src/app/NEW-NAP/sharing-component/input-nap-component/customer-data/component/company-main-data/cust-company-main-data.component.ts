@@ -30,6 +30,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
   @Input() custType: any;
+  @Input() bizTemplateCode : string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
   AppId: number;
