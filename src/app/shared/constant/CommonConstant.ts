@@ -1,5 +1,7 @@
 
 export class CommonConstant {
+  //FORM
+  public static INVALID_FORM = "INVALID";
 
   // ADD EDIT DELETE UPDATE
   public static ADD = 'Add';
