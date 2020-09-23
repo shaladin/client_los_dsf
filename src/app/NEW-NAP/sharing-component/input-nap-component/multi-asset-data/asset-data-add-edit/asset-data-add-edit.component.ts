@@ -1179,7 +1179,7 @@ export class AssetDataAddEditComponent implements OnInit {
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: ['', Validators.required],
-        AccessoryDownPaymentAmt: ['', Validators.required],
+        AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
       })
     } else {
