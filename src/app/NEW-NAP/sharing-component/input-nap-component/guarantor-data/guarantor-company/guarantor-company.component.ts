@@ -53,6 +53,7 @@ export class GuarantorCompanyComponent implements OnInit {
   appLegalDoc: any = new Array();
   isReady: boolean = false;
   tempCustNo: string;
+  isContactMandatory: boolean = false;
 
   CompanyForm = this.fb.group({
     MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -61,7 +62,7 @@ export class GuarantorCompanyComponent implements OnInit {
     ContactName: ['', [Validators.maxLength(500)]],
     MrJobPositionCode: ['', [Validators.maxLength(50)]],
     MobilePhnNo1: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-    ContactEmail: ['', [Validators.maxLength(50)]],
+    ContactEmail: ['', [Validators.maxLength(50), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
     MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     FaxArea: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
     Fax: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -125,6 +126,7 @@ export class GuarantorCompanyComponent implements OnInit {
           this.setAddrLegalObj();
           this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
+          this.ChangeContactInfo();
         });
         // if (this.resultData.AppGuarantorObj.CustNo) {
         //   this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
@@ -432,7 +434,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.guarantorCompanyObj.AppGuarantorCompanyObj.AreaCode3 = this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.AreaCode4 = this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.City = this.CompanyForm.controls["AddrObj"]["controls"].City.value;
-    this.guarantorCompanyObj.AppGuarantorCompanyObj.Zipcode = this.inputFieldObj.inputLookupObj.nameSelect;
+    this.guarantorCompanyObj.AppGuarantorCompanyObj.Zipcode = this.CompanyForm.value.AddrObjZipcode.value;
     this.guarantorCompanyObj.AppGuarantorCompanyObj.RowVersion = "";
 
     this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.listLegalDoc;
@@ -471,7 +473,7 @@ export class GuarantorCompanyComponent implements OnInit {
       ContactName: ['', [Validators.maxLength(500)]],
       MrJobPositionCode: ['', [Validators.maxLength(50)]],
       MobilePhnNo1: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      ContactEmail: ['', [Validators.maxLength(50)]],
+      ContactEmail: ['', [Validators.maxLength(50),Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       FaxArea: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
       Fax: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -569,12 +571,14 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   setValidatorContactInfo() {
-
+    this.isContactMandatory = true;
+    this.CompanyForm.controls.ContactName.setValidators([Validators.required, Validators.maxLength(50)]);
+    this.CompanyForm.controls.ContactName.updateValueAndValidity();
     this.CompanyForm.controls.MrJobPositionCode.setValidators([Validators.required, Validators.maxLength(50)]);
     this.CompanyForm.controls.MrJobPositionCode.updateValueAndValidity();
     this.CompanyForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]);
     this.CompanyForm.controls.MobilePhnNo1.updateValueAndValidity();
-    this.CompanyForm.controls.ContactEmail.setValidators([Validators.required, Validators.maxLength(50)]);
+    this.CompanyForm.controls.ContactEmail.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
     this.CompanyForm.controls.ContactEmail.updateValueAndValidity();
     this.CompanyForm.controls.PhnArea1.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]);
     this.CompanyForm.controls.PhnArea1.updateValueAndValidity();
@@ -582,6 +586,9 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.controls.Phn1.updateValueAndValidity();
   }
   clearValidatorContactInfo() {
+    this.isContactMandatory = false;
+    this.CompanyForm.controls.ContactName.clearValidators();
+    this.CompanyForm.controls.ContactName.updateValueAndValidity();
     this.CompanyForm.controls.MrJobPositionCode.clearValidators();
     this.CompanyForm.controls.MrJobPositionCode.updateValueAndValidity();
     this.CompanyForm.controls.MobilePhnNo1.clearValidators();
@@ -593,13 +600,18 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.controls.Phn1.clearValidators();
     this.CompanyForm.controls.Phn1.updateValueAndValidity();
   }
-  
-  ChangeNameValue() {
-    if (this.CompanyForm.controls.ContactName.value == '') {
+
+  ChangeContactInfo(){
+    if (
+      this.CompanyForm.controls.ContactName.value == '' && 
+      this.CompanyForm.controls.MobilePhnNo1.value == '' &&
+      this.CompanyForm.controls.ContactEmail.value == '' &&
+      this.CompanyForm.controls.MrJobPositionCode.value == '' &&
+      this.CompanyForm.controls.PhnArea1.value == '' &&
+      this.CompanyForm.controls.Phn1.value == ''
+    )
       this.clearValidatorContactInfo();
-    }
-    else {
+    else if(!this.isContactMandatory)
       this.setValidatorContactInfo();
-    }
   }
 }
