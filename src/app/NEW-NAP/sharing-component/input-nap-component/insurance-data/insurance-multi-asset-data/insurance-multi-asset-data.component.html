@@ -300,7 +300,7 @@
                   </div>
                   <div [hidden]="InsuranceDataForm.controls.InsLength.value <= 12" class="form-group row">
                     <label class="col-md-2" for="startDt" translate>Additional Coverage</label>
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                       <label formArrayName="InsAddCvgTypes"
                         *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index"
                         class="custom-control display-inline-block">
