@@ -17,7 +17,6 @@ import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapproval
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { ViewRoutingModule } from "./view-routing.module";
 import { MainInfoComponent } from "./mou-main-info/main-info.component";
-import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ViewInsuranceDetailComponent } from "./agr-view/view-insurance-detail/view-insurance-detail.component";
 import { AppInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component";
@@ -45,7 +44,6 @@ import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component
   ],
   declarations: [
     MainInfoComponent,
-    AgrMainInfoComponent,
     ViewInsuranceDetailComponent,
     AppInsuranceDetailComponent,
     LeadMainInfoComponent
