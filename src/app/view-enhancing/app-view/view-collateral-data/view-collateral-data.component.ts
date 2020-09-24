@@ -19,7 +19,7 @@ export class ViewCollateralDataComponent implements OnInit {
   AppId: number;  @Input() appId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  AppCollateralDocs: AppCollateralDocObj = new AppCollateralDocObj();
+  AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
   IsHidden: boolean = true;
   arrValue = [];
   @Output() outputTab: EventEmitter<boolean> = new EventEmitter();

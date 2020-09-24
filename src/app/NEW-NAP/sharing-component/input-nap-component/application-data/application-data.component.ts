@@ -101,7 +101,7 @@ export class ApplicationDataComponent implements OnInit {
     CharaCredit: ['',[Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
     MrSlikSecEcoCode: [''],
-    WayRestructure: ['',[Validators.required]],
+    WayRestructure: [''],
     EconomicSector: [''],
     ApplicationNotes: ['']
   });
@@ -295,6 +295,7 @@ export class ApplicationDataComponent implements OnInit {
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
         }); 
+        
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);

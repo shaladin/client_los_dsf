@@ -22,6 +22,7 @@ export class ViewAgrmntSummaryComponent implements OnInit {
   };
   totalInsPremi: any;
   SummaryObj: any;
+  totalRsvFund: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 

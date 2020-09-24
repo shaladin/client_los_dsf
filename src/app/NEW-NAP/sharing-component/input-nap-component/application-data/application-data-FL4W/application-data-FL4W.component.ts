@@ -96,7 +96,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     InterestTypeDesc: [''], 
     CharaCredit: ['',[Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
-    WayRestructure: ['', Validators.required],
+    WayRestructure: [''],
     MrSlikSecEcoCode: [''],
   });
 
