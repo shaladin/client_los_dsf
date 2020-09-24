@@ -154,9 +154,12 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-FL4W *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]="appId"
+              <!-- <app-financial-data-FL4W *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]="appId"
                                        [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'">
-              </app-financial-data-FL4W>
+              </app-financial-data-FL4W> -->
+              <app-financial-data *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId"
@@ -265,9 +268,12 @@
               </app-insurance-multi-asset-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-FL4W *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <!-- <app-financial-data-FL4W *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [AppId]="appId"
                                        [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data-FL4W>
+              </app-financial-data-FL4W> -->
+              <app-financial-data *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [AppId]="appId"
+                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY'" [AppId]="appId"

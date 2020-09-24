@@ -20,6 +20,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ApplicationDataFactoringComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
   mouCustFctrObj: MouCustFctrObj = new MouCustFctrObj();
@@ -54,7 +55,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     InterestType: ['', Validators.required],
     CharaCredit: ['', [Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
-    WayRestructure: ['', Validators.required],
+    WayRestructure: [''],
     MrSlikSecEcoCode: [''],
   })
 
@@ -329,31 +330,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
             }
             if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0 && this.isInit == true) {
               this.mode = "add";
-              this.SalesAppInfoForm.patchValue({
-                MouCustId: this.resultData.MouCustId,
-                SalesNotes: this.resultData.SalesNotes,
-                SalesOfficerNo: this.resultData.SalesOfficerNo,
-                SalesOfficerName: this.resultData.SalesOfficerName,
-                SalesHeadName: this.resultData.SalesHeadName,
-                SalesHeadNo: this.resultData.SalesHeadNo,
-                MrInstTypeCode: this.resultData.MrInstTypeCode,
-                TopDays: this.resultData.TopDays,
-                TopBased: this.resultData.TopBased,
-                Tenor: this.resultData.Tenor,
-                NumOfInst: this.resultData.NumOfInst,
-                IsDisclosed: this.resultData.IsDisclosed,
-                PaidBy: this.resultData.PaidBy,
-                RecourseType: this.resultData.RecourseType,
-                MrAppSourceCode: this.resultData.MrAppSourceCode,
-                MrWopCode: this.resultData.MrWopCode,
-                MrSingleInstCalcMthdCode: this.resultData.MrSingleInstCalcMthdCode,
-                CharaCredit: this.resultData.CharaCredit,
-                PrevAgrNo: this.resultData.PrevAgrNo,
-                WayRestructure: this.resultData.WayRestructure,
-                MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
-              });
-              this.CalculateNumOfInst(true, this.SalesAppInfoForm.controls.Tenor.value);
-
             } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 && this.isInit == true) {
               this.mode = "edit";
               this.SalesAppInfoForm.patchValue({
@@ -384,12 +360,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
             }
-            this.isInit = false;
-            if (this.resultData.WayRestructure == null) {
-              this.SalesAppInfoForm.patchValue({
-                WayRestructure: this.allWayRestructure[0].Key
-              });
-            }
+            this.isInit = false; 
             this.makeNewLookupCriteria();
 
           });
@@ -561,9 +532,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.setDropdown();
 
       });
-
-
   }
+
+  Cancel(){
+    this.outputCancel.emit();
+  }
+  
   SaveForm(): void {
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.SalesAppInfoForm.patchValue({

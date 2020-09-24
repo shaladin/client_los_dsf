@@ -139,7 +139,7 @@
               <label>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate()">
+              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -247,6 +247,16 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
+            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode == 'FL4W'">
+              <label>Residual Value Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode == 'FL4W'">
+              <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
+                (keyup)="SetNeedReCalculate(true)" currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
           </div>
         </div>
       </div>
@@ -312,7 +322,7 @@
     </div>
 
     <div class="margin-b-5" formArrayName="ListEntryInst">
-      <table *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0"
+      <table *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0"
         class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -347,7 +357,7 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="form-inline-right">
+    <div *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0" class="form-inline-right">
       <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalculateAmortization()">
         Calculate Amortization
       </button>

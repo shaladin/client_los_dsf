@@ -131,7 +131,7 @@ export class CollateralDetailComponent implements OnInit {
       this.getAppCollData(this.AppId, 0);
     }
 
-    this.AddCollForm.controls.AssetTypeCode.disable();
+    // this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {

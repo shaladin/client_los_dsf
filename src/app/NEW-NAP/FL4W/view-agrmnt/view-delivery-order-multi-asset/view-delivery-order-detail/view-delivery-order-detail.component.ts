@@ -19,7 +19,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
   DOHId: number;
   assetDetailList: Array<any>;
   GetDeliveryOrderHByDeliveryOrderHId: string;
-  doData: Object;
+  doData: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {

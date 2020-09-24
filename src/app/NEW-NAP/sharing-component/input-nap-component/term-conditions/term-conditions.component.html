@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr [formGroupName]="i" *ngFor="let item of parentForm.controls[identifier].controls; let i = index">
+      <tr [formGroupName]="i" *ngFor="let item of parentForm.controls[identifier]['controls']; let i = index">
         <td style="width: 5%" class="text-center">{{i+1}}</td>
         <td style="width: 25%;" class="text-left">{{parentForm.controls[identifier].controls[i].controls.TcName.value}}</td>
         <td style="width: 10%" class="text-center">{{parentForm.controls[identifier].controls[i].controls.PriorTo.value}}</td>

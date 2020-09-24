@@ -114,7 +114,7 @@
                       <label class="col-md-4 adInsLabel adins-required-label" translate>Asset Price</label>
                       <div class="col-md-8">
                         <input type="" currencyMask class="form-control adInsInput" formControlName="AssetPrice"
-                          (keyup)="updateValueDownPayment($event)"
+                          (keyup)="updateValueDownPayment()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPrice.invalid}">
                         <lib-uc-show-errors [control]="AssetDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
@@ -239,10 +239,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs'].controls == 0">
+                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs']['controls'] == 0">
                         <td align="center" colspan="7">No data available</td>
                       </tr>
-                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
+                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs']['controls'];let i = index">
                         <td [formGroupName]="i" class="text-center">
                           {{i + 1}}
                         </td>

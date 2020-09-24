@@ -17,7 +17,7 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 // import { MainInfoComponent } from 'app/view/main-info/main-info.component';
-import { LeadRoutingModule } from "./lead-routing.module"; import { LeadMainInfoComponent } from 'app/view/lead-main-info/lead-main-info.component';
+import { LeadRoutingModule } from "./lead-routing.module";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
 import { LeadVerifComponent } from './lead-verif/lead-verif.component';
 import { LeadInputComponent } from "./lead-input/lead-input.component";
@@ -25,10 +25,7 @@ import { LeadInputPageComponent } from "./lead-input/lead-input-page/lead-input-
 import { LeadInputMainInfoComponent } from "./lead-input/lead-input-main-info/lead-input-main-info.component";
 import { LeadViewHeaderComponent } from "./lead-input/lead-view-header/lead-view-header.component";
 import { LeadCancelComponent } from './lead-cancel/lead-cancel/lead-cancel.component';
-import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component'; 
-import { LeadViewComponent } from './lead-view/lead-view.component';
-import { ViewCustomerDataComponent } from './lead-view/view-customer-data/view-customer-data.component';
-import { ViewLeadDataComponent } from './lead-view/view-lead-data/view-lead-data.component'; 
+import { LeadCancelConfirmComponent } from './lead-cancel/lead-cancel-confirm/lead-cancel-confirm.component';
 import { FraudVerifPagingComponent } from './fraud-verif/fraud-verif-paging/fraud-verif-paging.component';
 import { FraudVerifPageComponent } from './fraud-verif/fraud-verif-page/fraud-verif-page.component';
 import { LeadInquiryComponent } from './lead-inquiry/lead-inquiry.component';
@@ -38,24 +35,24 @@ import { LeadInputLeadDataComponent } from "./lead-input/lead-input-lead-data/le
 import { MatRadioModule } from "@angular/material";
 import { LeadUpdateComponent } from "./lead-update/lead-update.component";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
 import { UcuploadModule } from "@adins/ucupload";
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 import { UcaddtotempModule } from "@adins/ucaddtotemp";
-export const customCurrencyMaskConfig = {     
-  align: "left",     
-  allowNegative: true,     
-  allowZero: true,     
-  decimal: ".",     
-  precision: 2,     
-  prefix: "",     
-  suffix: "",     
-  thousands: ",",     
+export const customCurrencyMaskConfig = {
+  align: "left",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.NATURAL };
+  inputMode: CurrencyMaskInputMode.NATURAL
+};
 
 @NgModule({
   imports: [
@@ -67,7 +64,7 @@ export const customCurrencyMaskConfig = {
     UcgridfooterModule,
     UcpagingModule,
     NgbModule,
-    SharingModule, 
+    SharingModule,
     ReactiveFormsModule,
     UcaddressModule,
     UcSubsectionModule,
@@ -78,20 +75,15 @@ export const customCurrencyMaskConfig = {
     ArchwizardModule,
     MatRadioModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    UcinputnumberModule,
     CustSharingComponentModule,
     UcuploadModule,
     UcaddtotempModule
   ],
   declarations: [
-    LeadMainInfoComponent, 
     LeadVerifComponent,
     LeadCancelComponent,
-    LeadCancelConfirmComponent, 
-    LeadViewComponent,
-    ViewCustomerDataComponent,
-    ViewLeadDataComponent, 
-    FraudVerifPagingComponent, FraudVerifPageComponent, LeadInquiryComponent, 
+    LeadCancelConfirmComponent,
+    FraudVerifPagingComponent, FraudVerifPageComponent, LeadInquiryComponent,
     LeadInputComponent,
     LeadInputPageComponent,
     LeadInputMainInfoComponent,
@@ -101,11 +93,10 @@ export const customCurrencyMaskConfig = {
     LeadInputLeadDataComponent,
     LeadViewHeaderComponent,
     LeadUpdateComponent,
-    ViewLeadDataComponent, 
-    FraudVerifPagingComponent, 
-    FraudVerifPageComponent, 
-    LeadInquiryComponent, 
-    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent 
+    FraudVerifPagingComponent,
+    FraudVerifPageComponent,
+    LeadInquiryComponent,
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

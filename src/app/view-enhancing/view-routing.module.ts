@@ -7,13 +7,6 @@ const routes: Routes = [
         path: '',
         children: [
             {
-                path: 'Dummy',
-                // component: DocSignerComponent,
-                data: {
-                    title: 'Document'
-                }
-            },
-            {
                 path: 'AppView',
                 loadChildren: './app-view/app-view.module#AppViewModule'
             },

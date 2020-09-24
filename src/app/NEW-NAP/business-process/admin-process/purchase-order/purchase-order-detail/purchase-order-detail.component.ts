@@ -20,7 +20,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   AppId: number;
   AppAssetId: number;
   SupplCode: string;
-  AssetObj: Object;
+  AssetObj: any;
   MouNo: string = "";
   Notes: string = "";
   Address: string = "";

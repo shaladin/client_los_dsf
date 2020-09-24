@@ -101,7 +101,7 @@ export class ApplicationDataComponent implements OnInit {
     CharaCredit: ['',[Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
     MrSlikSecEcoCode: [''],
-    WayRestructure: ['',[Validators.required]],
+    WayRestructure: [''],
     EconomicSector: [''],
     ApplicationNotes: ['']
   });
@@ -294,12 +294,8 @@ export class ApplicationDataComponent implements OnInit {
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
-        });
-        if (this.resultResponse.WayRestructure == null) {
-          this.NapAppModelForm.patchValue({
-            WayRestructure: this.applicationDDLitems['WAY_OF_RESTRUCTURE'][0].Key
-          });
-        }
+        }); 
+        
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);

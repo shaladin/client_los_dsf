@@ -1,5 +1,0 @@
-<input type="text" formControlName="{{identifier}}" class="form-control UcInputNumber" [required]="isRequired"
-  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier].invalid }" [(ngModel)]="ucNumber"
-  autocomplete="off" (keydown)="NumberCheck($event)" (keyup)="CommaFormatted($event)" />
-<lib-uc-show-errors [control]="parentForm.controls[identifier]" [submit]="enjiForm.submitted">
-</lib-uc-show-errors>

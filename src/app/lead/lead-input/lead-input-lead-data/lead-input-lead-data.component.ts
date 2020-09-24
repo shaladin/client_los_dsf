@@ -490,8 +490,6 @@ export class LeadInputLeadDataComponent implements OnInit {
               });
             });
         });
-    }else{
-      this.toastr.warningMessage("Please input Down Payment Amount!");
     }
   }
 
@@ -572,9 +570,17 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     var minAmt = this.NTFAmt / this.Tenor;
-    
-    if(this.LeadDataForm.controls["InstallmentAmt"].value > this.LeadDataForm.controls["NTFAmt"].value ){
-      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+    this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
+
+    if(this.NTFAmt > 0){
+      if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
+        this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+        return;
+      }
+    }
+
+    if (this.AssetPrice <= 0) {
+      this.toastr.warningMessage("Please input Asset Price!");
       return;
     }
     if (this.DPAmount > this.AssetPrice) {
@@ -582,7 +588,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       return;
     }
     if (this.DPAmount <= 0) {
-      this.toastr.warningMessage("Please Check Down Payment Amount!");
+      this.toastr.warningMessage("Please input Down Payment Amount!");
       return;
     }
     if (this.Tenor == '') {
@@ -618,11 +624,14 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
     var minAmt = this.NTFAmt / this.Tenor;
+    this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
-    if(this.LeadDataForm.controls["InstallmentAmt"].value > this.LeadDataForm.controls["NTFAmt"].value ){
+    if(this.NTFAmt > 0){
+    if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
       this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
       return;
     }
+  }
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
@@ -662,7 +671,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
-
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
@@ -697,6 +705,10 @@ export class LeadInputLeadDataComponent implements OnInit {
       if(!this.isAbleToSubmit) return;
     }
 
+    if(this.LeadDataForm.status == CommonConstant.INVALID_FORM){
+      return;
+    }
+    
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -812,6 +824,10 @@ export class LeadInputLeadDataComponent implements OnInit {
     }else{
       this.CheckSubmitForCFNA();
       if(!this.isAbleToSubmit) return;
+    }
+    
+    if(this.LeadDataForm.status == CommonConstant.INVALID_FORM){
+      return;
     }
 
     if (this.typePage == "edit" || this.typePage == "update") {

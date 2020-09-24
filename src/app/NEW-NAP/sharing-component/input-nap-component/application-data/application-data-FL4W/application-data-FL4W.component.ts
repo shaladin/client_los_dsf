@@ -96,7 +96,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     InterestTypeDesc: [''], 
     CharaCredit: ['',[Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
-    WayRestructure: ['', Validators.required],
+    WayRestructure: [''],
     MrSlikSecEcoCode: [''],
   });
 
@@ -302,12 +302,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
           // FloatingPeriod: this.resultResponse.FloatingPeriodCode
-        });
-        if(this.resultResponse.WayRestructure ==null){ 
-          this.NapAppModelForm.patchValue({
-            WayRestructure:  this.applicationDDLitems['WAY_OF_RESTRUCTURE'][0].Key
-          });
-          }
+        }); 
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);

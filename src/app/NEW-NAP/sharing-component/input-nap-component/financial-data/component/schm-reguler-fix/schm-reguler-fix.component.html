@@ -139,7 +139,7 @@
               <label>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate()">
+              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -291,9 +291,19 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode == 'FL4W'">
+              <label>Residual Value Amount</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode == 'FL4W'">
+              <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
+                (keyup)="SetNeedReCalculate(true)" currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'FL4W'">
+            </div>
+            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'FL4W'">
             </div>
             <div class="col-md-3 form-inline">
               <label>Calculate Base</label>

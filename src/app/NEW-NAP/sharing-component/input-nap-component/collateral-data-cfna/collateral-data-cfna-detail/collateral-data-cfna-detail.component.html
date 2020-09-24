@@ -143,7 +143,7 @@
               </lib-ucSubsection>
               <div class="form-body" id="AddCollAttribute" formArrayName="ListAttr">
                 <div class="col-md-6 form-group row"
-                  *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
+                  *ngFor="let item of AddCollForm.controls.ListAttr['controls']; let i = index" [formGroupName]="i">
                   <label class="col-md-5 adins-required-label" translate>Attr</label>
                   <div class="col-md-7">
                     <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
@@ -166,7 +166,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of AddCollForm.controls.ListDoc.controls; let i = index" [formGroupName]="i">
+                    <tr *ngFor="let item of AddCollForm.controls.ListDoc['controls']; let i = index" [formGroupName]="i">
                       <td>{{item.controls.AssetDocName.value}}</td>
                       <td>
                         <input type="checkbox" class="border-primary" formControlName="IsReceived">
@@ -199,7 +199,7 @@
                   <div class="form-group row">
                     <label class="col-md-5" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-7">
-                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage($event)" [disabled]="isExisting"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage()" [disabled]="isExisting"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -238,7 +238,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner($event)" [disabled]="isExisting"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()" [disabled]="isExisting"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -315,7 +315,7 @@
                 <label class="col-md-2" translate>Copy Address From</label>
                 <div class="col-md-4">
                   <div class="input-group mb-0">
-                    <select class="form-control" formControlName="CopyFromLegal" [(ngModel)]="copyFromLegal">
+                    <select class="form-control" formControlName="CopyFromLegal">
                       <option value="LEGAL"> Legal </option>
                     </select>
                     <div class="input-group-append">
