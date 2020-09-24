@@ -737,14 +737,18 @@ export class CollateralAddEditComponent implements OnInit {
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
     const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+    const currCollPrcnt = this.AddCollForm.controls["CollPercentage"].value;
 
     if(fullAssetCode && assetType && serialNo1){
       this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
         (response) => {
           var outCollPrcnt = 100;
-          if(response["CollateralPrcnt"] && response["CollateralPrcnt"] > 0){
-            outCollPrcnt = response["CollateralPrcnt"]; 
+          if(response){
+            if(response["CollateralPrcnt"] && response["CollateralPrcnt"] > 0){
+              outCollPrcnt = response["CollateralPrcnt"]; 
+            }
           }
+          outCollPrcnt -= currCollPrcnt;
           var collPortionAmt = this.AddCollForm.controls["CollateralValueAmt"].value * (this.AddCollForm.controls["CollateralPrcnt"].value / 100);
           this.AddCollForm.patchValue({
             OutstandingCollPrcnt: outCollPrcnt,
@@ -874,6 +878,26 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   SaveNewCollateral() {
+    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
+    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
+    var serialNoForm = this.items.controls[0] as FormGroup;
+    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+    if(!fullAssetCode){
+      this.toastr.warningMessage("Full Asset Code Must be Filled");
+      return false;
+    }
+    if(!assetType){
+      this.toastr.warningMessage("Asset Type Code Must be Filled");
+      return false;
+    }
+    if(!serialNo1){
+      this.toastr.warningMessage("Serial No 1 Must be Filled");
+      return false;
+    }
+    if(this.AddCollForm.controls["OutstandingCollPrcnt"].value < 0){
+      this.toastr.warningMessage("Collateral Portion Usage Cannot Exceed Outstanding Collateral Percentage");
+      return false;
+    }
     if (this.AddCollForm.valid) {
       if (this.mode == 'addColl') {
         this.appCollateralDataObj = new AppCollateralDataObj();

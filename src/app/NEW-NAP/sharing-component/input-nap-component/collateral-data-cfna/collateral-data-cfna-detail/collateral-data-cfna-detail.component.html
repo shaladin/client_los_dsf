@@ -65,7 +65,7 @@
                         [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
                         {{item.controls.SerialNoLabel.value}} </label>
                       <div class="col-md-7">
-                        <input type="text" class="form-control adInsInput" *ngIf="i == 0" formControlName="SerialNoValue" (change)="collateralPortionHandler()"
+                        <input type="text" class="form-control adInsInput" *ngIf="i == 0" formControlName="SerialNoValue" (blur)="collateralPortionHandler()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                         <input type="text" class="form-control adInsInput" *ngIf="i != 0" formControlName="SerialNoValue"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
@@ -80,7 +80,7 @@
                   <label class="col-md-5 adins-required-label" translate>Portion Percentage (%)</label>
                   <div class="col-md-7"> 
                     <input type="" currencyMask class="form-control" id="CollateralPrcnt" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}"> 
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}" (blur)="collateralPortionHandler()" /> 
                     <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
