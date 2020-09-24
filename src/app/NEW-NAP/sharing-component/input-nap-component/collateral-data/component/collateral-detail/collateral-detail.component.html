@@ -103,6 +103,14 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Portion Amount</label>
+                  <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Outstanding Portion Percentage (%)</label>
+                  <label class="col-md-7">{{AddCollForm.controls.OutstandingCollPrcnt.value}}</label>
+                </div>
+                <div class="form-group row">
                   <label class="col-md-4 adins-label" translate>Collateral Notes</label>
                   <div class="col-md-8">
                     <textarea type="textarea" row="5" class="form-control" formControlName="CollateralNotes"
@@ -128,7 +136,9 @@
                         [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
                         {{item.controls.SerialNoLabel.value}} </label>
                       <div class="col-md-8">
-                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue" *ngIf="i == 0" (change)="collateralPortionHandler()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue" *ngIf="i != 0" 
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                         <lib-uc-show-errors
                           [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"

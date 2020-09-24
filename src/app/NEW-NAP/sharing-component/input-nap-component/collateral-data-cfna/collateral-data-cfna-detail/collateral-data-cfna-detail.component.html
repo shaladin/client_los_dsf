@@ -65,7 +65,9 @@
                         [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
                         {{item.controls.SerialNoLabel.value}} </label>
                       <div class="col-md-7">
-                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                        <input type="text" class="form-control adInsInput" *ngIf="i == 0" formControlName="SerialNoValue" (change)="collateralPortionHandler()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                        <input type="text" class="form-control adInsInput" *ngIf="i != 0" formControlName="SerialNoValue"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                         <lib-uc-show-errors
                           [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
@@ -80,8 +82,15 @@
                     <input type="" currencyMask class="form-control" id="CollateralPrcnt" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}"> 
                     <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    
                   </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Portion Amount</label>
+                  <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Outstanding Portion Percentage (%)</label>
+                  <label class="col-md-7">{{AddCollForm.controls.OutstandingCollPrcnt.value}}</label>
                 </div>
               </div>
               <div class="col-md-6">

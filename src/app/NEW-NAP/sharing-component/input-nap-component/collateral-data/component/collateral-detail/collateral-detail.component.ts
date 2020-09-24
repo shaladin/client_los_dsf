@@ -93,6 +93,8 @@ export class CollateralDetailComponent implements OnInit {
     AppAttrName: [''],
     SelfUsage: [false],
     SelfOwner: [false],
+    CollateralPortionAmt: [0],
+    OutstandingCollPrcnt: [0],
     items: this.fb.array([]),
   });
 
@@ -427,6 +429,8 @@ export class CollateralDetailComponent implements OnInit {
           })
         }
 
+        this.collateralPortionHandler();
+
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
         this.onItemChange(this.appCollateralObj.AssetTypeCode);
         this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
@@ -458,6 +462,33 @@ export class CollateralDetailComponent implements OnInit {
       })
   }
 
+  collateralPortionHandler(){
+    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
+    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
+    var serialNoForm = this.items.controls[0] as FormGroup;
+    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+
+    if(fullAssetCode && assetType && serialNo1){
+      this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
+        (response) => {
+          var outCollPrcnt = 100;
+          if(response["CollateralPrcnt"] && response["CollateralPrcnt"] > 0){
+            outCollPrcnt = response["CollateralPrcnt"]; 
+          }
+          var collPortionAmt = this.AddCollForm.controls["CollateralValueAmt"].value * (this.AddCollForm.controls["CollateralPrcnt"].value / 100);
+          this.AddCollForm.patchValue({
+            OutstandingCollPrcnt: outCollPrcnt,
+            CollateralPortionAmt: collPortionAmt
+          });
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
   getExistingColl(event) {
     this.getAppCollData(0, event.AppCollateralId, true);
   }
@@ -468,6 +499,7 @@ export class CollateralDetailComponent implements OnInit {
       FullAssetName: e.FullAssetName,
       AssetCategoryCode: e.AssetCategoryCode
     });
+    this.collateralPortionHandler();
   }
 
   onItemChange(AssetTypeCode: string) {
@@ -517,6 +549,7 @@ export class CollateralDetailComponent implements OnInit {
             }
           }
         }
+        this.collateralPortionHandler();
       });
   }
 

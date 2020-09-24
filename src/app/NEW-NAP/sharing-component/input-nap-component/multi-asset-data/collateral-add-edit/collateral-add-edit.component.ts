@@ -160,6 +160,8 @@ export class CollateralAddEditComponent implements OnInit {
     LocationAddrType: [''],
 
     CollPercentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+    CollateralPortionAmt: [0],
+    OutstandingCollPrcnt: [0],
     items: this.fb.array([])
   });
   inputAddressObjForColl: any;
@@ -225,6 +227,7 @@ export class CollateralAddEditComponent implements OnInit {
           AssetCategoryCode: response.AssetCategoryCode,
           CollateralName: response.FullAssetName
         });
+        this.collateralPortionHandler();
       }
     ).catch((error) => {
     });
@@ -313,6 +316,7 @@ export class CollateralAddEditComponent implements OnInit {
          }
        }
      }
+     this.collateralPortionHandler();
    });
     // bookmark
     // const component = this.collateralModal.createComponent(componentFactory);
@@ -726,6 +730,33 @@ export class CollateralAddEditComponent implements OnInit {
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
 
     this.bindUcAddToTempData();
+  }
+
+  collateralPortionHandler(){
+    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
+    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
+    var serialNoForm = this.items.controls[0] as FormGroup;
+    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+
+    if(fullAssetCode && assetType && serialNo1){
+      this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
+        (response) => {
+          var outCollPrcnt = 100;
+          if(response["CollateralPrcnt"] && response["CollateralPrcnt"] > 0){
+            outCollPrcnt = response["CollateralPrcnt"]; 
+          }
+          var collPortionAmt = this.AddCollForm.controls["CollateralValueAmt"].value * (this.AddCollForm.controls["CollateralPrcnt"].value / 100);
+          this.AddCollForm.patchValue({
+            OutstandingCollPrcnt: outCollPrcnt,
+            CollateralPortionAmt: collPortionAmt
+          });
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   showModalTaxCityIssuer() {

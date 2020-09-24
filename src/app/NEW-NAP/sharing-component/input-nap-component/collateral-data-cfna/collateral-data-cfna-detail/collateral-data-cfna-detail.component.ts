@@ -94,6 +94,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     AppAttrName: [''],
     SelfUsage: [false],
     SelfOwner: [false],
+    CollateralPortionAmt: [0],
+    OutstandingCollPrcnt: [0],
     items: this.fb.array([]),
   });
 
@@ -445,6 +447,33 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   //     })
   // }
 
+  collateralPortionHandler(){
+    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
+    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
+    var serialNoForm = this.items.controls[0] as FormGroup;
+    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+
+    if(fullAssetCode && assetType && serialNo1){
+      this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
+        (response) => {
+          var outCollPrcnt = 100;
+          if(response["CollateralPrcnt"] && response["CollateralPrcnt"] > 0){
+            outCollPrcnt = response["CollateralPrcnt"]; 
+          }
+          var collPortionAmt = this.AddCollForm.controls["CollateralValueAmt"].value * (this.AddCollForm.controls["CollateralPrcnt"].value / 100);
+          this.AddCollForm.patchValue({
+            OutstandingCollPrcnt: outCollPrcnt,
+            CollateralPortionAmt: collPortionAmt
+          });
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
   getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean, response: object) {
     if (IsFromLookup) {
       this.AddCollForm.patchValue({
@@ -457,7 +486,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         CollateralValueAmt: response["CollateralPriceAmt"],
         CollateralNotes: response["Notes"],
         AssetTaxDt: response["AssetTaxDate"] ? formatDate(response["AssetTaxDate"], 'yyyy-MM-dd', 'en-US') : "",
-        // CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
+        CollateralPrcnt: response["CollateralPrcnt"],
         // IsMainCollateral: this.appCollateralObj.IsMainCollateral,
         // ManufacturingYear: this.appCollateralObj.ManufacturingYear,
         // RowVersionCollateral: this.appCollateralObj.RowVersion,
@@ -473,6 +502,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         SelfOwner: response["MrOwnerRelationshipCode"] == "SELF" ? true : false
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
+
+      this.collateralPortionHandler();
 
       for (var i = 0; i < this.items.controls.length; i++) {
         var formGroupItem = this.items.controls[i] as FormGroup;
@@ -579,6 +610,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               SelfOwner: (this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
             });
 
+            this.collateralPortionHandler();
+
             if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
               this.AddCollForm.patchValue({
                 SelfUsage: true
@@ -654,6 +687,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       FullAssetName: e.FullAssetName,
       AssetCategoryCode: e.AssetCategoryCode
     });
+    this.collateralPortionHandler();
   }
 
   onItemChange(AssetTypeCode: string, isInit: boolean = false) {
@@ -712,6 +746,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
           listDocExisting.removeAt(0);
         }
         this.getRefAssetDocList(isInit);
+        this.collateralPortionHandler();
       });
   }
 
