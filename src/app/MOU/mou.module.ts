@@ -63,6 +63,7 @@ import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-compan
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
+import { MouViewComponentsModule } from "app/components/general/mou-view/mou-view.components.module";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -92,6 +93,7 @@ export const customCurrencyMaskConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    MouViewComponentsModule
   ],
   declarations: [
     DocSignerComponent,
