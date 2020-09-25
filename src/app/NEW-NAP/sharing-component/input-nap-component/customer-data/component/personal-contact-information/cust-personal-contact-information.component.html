@@ -74,12 +74,6 @@
             </lib-ucSubsection>
             <div id="addContactInfomation">
               <div class="px-3">
-                <div class="form-group row">
-                  <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
-                    <div class="col-md-4">
-                      <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor">
-                    </div>               
-                </div>
                 <div class="row">
                   <!-- left -->
                   <div class="col-md-6 ">
@@ -91,7 +85,7 @@
                         <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.ContactPersonName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="{'adins-required' : ContactInfoPersonalForm.controls.IsGuarantor.value}">
                       <label class="col-md-4" for="idType" translate>ID Type</label>
                       <div class="col-md-8">
                         <select class="form-control" id="idType" formControlName="MrIdTypeCode"
@@ -100,21 +94,26 @@
                             {{item.Value}}
                           </option>
                         </select>
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="{'adins-required' : ContactInfoPersonalForm.controls.IsGuarantor.value}">
                       <label class="col-md-4" for="IdNo" translate>Id No</label>
                       <div class="col-md-8">
-                        <input type="text" id="IdNo" class="form-control" formControlName="IdNo">
+                        <input type="text" id="IdNo" class="form-control" formControlName="IdNo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.IdNo.invalid }">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="{'adins-required' : ContactInfoPersonalForm.controls.IsGuarantor.value}">
                       <label class="col-md-4" translate>Birth Place</label>
                       <div class="col-md-8">
-                        <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace">
+                        <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoPersonalForm.controls.BirthPlace.invalid }">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="{'adins-required' : ContactInfoPersonalForm.controls.IsGuarantor.value}">
                       <label class="col-md-4" *ngIf="ContactInfoPersonalForm.controls.MrCustRelationshipCode.value != 'SPOUSE'" translate>Birth Date</label>
                       <label class="col-md-4 adins-required-label" *ngIf="ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == 'SPOUSE'" translate>Birth Date</label>
                       <div class="col-md-8">
@@ -170,6 +169,13 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label class="col-md-4" for="Email" translate>Email</label>
+                      <div class="col-md-8">
+                        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" id="email" formControlName="Email">
+                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.Email" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-md-4" for="emergencyContact" translate>Emergency Contact</label>
                       <div class="col-md-8">
                         <input class="border-primary" type="checkbox" data-md-icheck id="emergencyContact" formControlName="IsEmergencyContact">
@@ -182,11 +188,10 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4" for="Email" translate>Email</label>
-                      <div class="col-md-8">
-                        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" id="email" formControlName="Email">
-                        <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.Email" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                      </div>
+                      <label class="col-md-4 adInsLabel" for="IsGuarantor" translate>As Guarantor</label>
+                        <div class="col-md-8">
+                          <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor" (change)="CheckGuarantor()">
+                        </div>               
                     </div>
                   </div>
                 </div>
