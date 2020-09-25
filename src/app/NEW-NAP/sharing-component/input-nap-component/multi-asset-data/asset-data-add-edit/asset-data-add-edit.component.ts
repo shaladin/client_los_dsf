@@ -167,7 +167,7 @@ export class AssetDataAddEditComponent implements OnInit {
     ChassisNo: [''],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     EngineNo: [''],
-    Notes: ['', Validators.required],
+    Notes: [''],
 
     TaxIssueDt: [''],
     Color: [''],
@@ -287,7 +287,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.locationAddrObj.AreaCode2 = this.returnAppCustAddrObj.AreaCode2;
         this.locationAddrObj.City = this.returnAppCustAddrObj.City;
 
-        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false; 
+        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
         this.inputAddressObjForLoc.default = this.locationAddrObj;
@@ -491,7 +491,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.title = "Asset Location";
-    this.inputAddressObjForLoc.showSubsection = false; 
+    this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
     this.inputAddressObjForLoc.showOwnership = false;
 
@@ -499,7 +499,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-
+    this.AssetDataForm.controls.MrAssetConditionCode.disable();
     if (this.mode == 'editAsset') {
       // this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
       // this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
@@ -702,7 +702,7 @@ export class AssetDataAddEditComponent implements OnInit {
             MrAssetConditionCode: assetCond["CompntValue"],
             MrAssetConditionCodeView: assetCond["CompntValue"]
           });
-        } 
+        }
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           AssetTypeCode: assetType["CompntValue"]
@@ -736,6 +736,8 @@ export class AssetDataAddEditComponent implements OnInit {
                 }
               }
             }
+            this.UcAddressHandler();
+
           });
 
         var arrCritSuppl = new Array<CriteriaObj>();
@@ -1039,40 +1041,40 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
 
-      if(this.originalAssetAccs && this.allAssetDataObj.AppAssetAccessoryObjs && this.originalAssetAccs.length > 0 && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0){
+      if (this.originalAssetAccs && this.allAssetDataObj.AppAssetAccessoryObjs && this.originalAssetAccs.length > 0 && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
         for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
-          if(!this.allAssetDataObj.IsAppAssetAccessoryChanged){
+          if (!this.allAssetDataObj.IsAppAssetAccessoryChanged) {
             for (const oriAcc of this.originalAssetAccs) {
-              if(newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode){
-                if(newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName){
+              if (newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode) {
+                if (newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
-                if(newAcc.SupplCode != oriAcc.SupplCode){
+                if (newAcc.SupplCode != oriAcc.SupplCode) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
-                if(newAcc.SupplName != oriAcc.SupplName){
+                if (newAcc.SupplName != oriAcc.SupplName) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
-                if(newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt){
+                if (newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
-                if(newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt){
+                if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
-                if(newAcc.AccessoryNotes != oriAcc.AccessoryNotes){
+                if (newAcc.AccessoryNotes != oriAcc.AccessoryNotes) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
               }
             }
-  
+
           }
-          else{
+          else {
             break;
           }
         }
@@ -1107,45 +1109,45 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
 
-      if(this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0){
-        if(this.originalAssetAccs && this.originalAssetAccs.length > 0){
+      if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
+        if (this.originalAssetAccs && this.originalAssetAccs.length > 0) {
           for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
-            if(!this.allAssetDataObj.IsAppAssetAccessoryChanged){
+            if (!this.allAssetDataObj.IsAppAssetAccessoryChanged) {
               for (const oriAcc of this.originalAssetAccs) {
-                if(newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode){
-                  if(newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName){
+                if (newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode) {
+                  if (newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
-                  if(newAcc.SupplCode != oriAcc.SupplCode){
+                  if (newAcc.SupplCode != oriAcc.SupplCode) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
-                  if(newAcc.SupplName != oriAcc.SupplName){
+                  if (newAcc.SupplName != oriAcc.SupplName) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
-                  if(newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt){
+                  if (newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
-                  if(newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt){
+                  if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
-                  if(newAcc.AccessoryNotes != oriAcc.AccessoryNotes){
+                  if (newAcc.AccessoryNotes != oriAcc.AccessoryNotes) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
                 }
               }
             }
-            else{
+            else {
               break;
             }
           }
         }
-        else{
+        else {
           this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
         }
       }
@@ -1158,16 +1160,16 @@ export class AssetDataAddEditComponent implements OnInit {
         });
     }
 
-    this.inputAddressObjForLoc = new InputAddressObj();
-    this.inputAddressObjForLoc.title = "Asset Location";
-    this.inputAddressObjForLoc.showSubsection = false; 
-    this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = false;
+    // this.inputAddressObjForLoc = new InputAddressObj();
+    // this.inputAddressObjForLoc.title = "Asset Location";
+    // this.inputAddressObjForLoc.showSubsection = false; 
+    // this.inputAddressObjForLoc.showAllPhn = false;
+    // this.inputAddressObjForLoc.showOwnership = false;
 
-    var datePipe = new DatePipe("en-US");
-    this.inputFieldLocationAddrObj = new InputFieldObj();
-    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
+    // var datePipe = new DatePipe("en-US");
+    // this.inputFieldLocationAddrObj = new InputFieldObj();
+    // this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    // this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
 
   }
   addGroup(appAssetAccessoriesObj, i) {
@@ -1179,7 +1181,7 @@ export class AssetDataAddEditComponent implements OnInit {
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: ['', Validators.required],
-        AccessoryDownPaymentAmt: ['', Validators.required],
+        AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
       })
     } else {
@@ -1278,6 +1280,7 @@ export class AssetDataAddEditComponent implements OnInit {
       return this.toastr.warningMessage("Please Choose Asset First");
     }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+    // appAccessoryObj.controls[0]["AccessoryDownPaymentAmt"].value = 0;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
     var max = 0;
     if (length > 0) {
@@ -1285,6 +1288,12 @@ export class AssetDataAddEditComponent implements OnInit {
     }
 
     appAccessoryObj.push(this.addGroup(undefined, max + 1));
+    if (max != 0) {
+      appAccessoryObj.controls[max + 1]["controls"]["AccessoryDownPaymentAmt"].value = 0;
+    }
+    else {
+      appAccessoryObj.controls[max]["controls"]["AccessoryDownPaymentAmt"].value = 0;
+    }
 
     var InputLookupAccObj = this.initLookupAcc();
     var InputLookupAccSupObj = this.initLookupSuppAcc();
@@ -1368,13 +1377,27 @@ export class AssetDataAddEditComponent implements OnInit {
 
   }
 
-  UcAddressHandler(){
-    if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed){
+  UcAddressHandler() {
+
+    console.log(this.AssetDataForm);
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
       this.inputAddressObjForLoc.isRequired = false;
-    }else{
+      for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
+        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.required]);
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
+        }
+      }
+    } else {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
       this.inputAddressObjForLoc.isRequired = true;
+      for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
+        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].clearValidators();
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
+        }
+      }
     }
   }
 }

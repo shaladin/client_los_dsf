@@ -10,6 +10,7 @@ import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/Result
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-subsidy-add-edit',
@@ -169,6 +170,25 @@ export class SubsidyAddEditComponent implements OnInit {
               }
             }
           });
+
+        // Check Ins Type if contain Off System or By Cust
+        let insIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeIns);
+        if(insIndex != -1)
+        {
+          let resAssetIns =  this.http.post<AppObj>(URLConstant.GetAppAssetListForInsuranceByAppId, { AppId: this.AppId });
+          let resCollateralIns = this.http.post<AppObj>(URLConstant.GetAppCollateralListForInsuranceByAppId, { AppId: this.AppId });          
+          forkJoin([resAssetIns, resCollateralIns]).subscribe
+          (
+            (response) => {
+              let allIns = [];
+              if (response[0]['ReturnObject']) allIns = allIns.concat(response[0]['ReturnObject']);
+              if (response[1]['ReturnObject']) allIns = allIns.concat(response[1]['ReturnObject']);
+              let allNotIns = allIns.filter(x => x.InsuredByCode == undefined || [CommonConstant.InsuredByOffSystem, CommonConstant.InsuredByCustomer].includes(x.InsuredByCode));
+              if(allIns.length == allNotIns.length) 
+                this.FromTypeCodeOptions.splice(insIndex, 1);
+            }
+          );
+        }
       }
     );
   }
@@ -221,9 +241,13 @@ export class SubsidyAddEditComponent implements OnInit {
     if (selected_type != 'MF') {
       this.showFromValue = true;
       this.LoadDDLFromValue(selected_type);
+      this.FormAppSubsidy.controls.fromValueCode.setValidators([Validators.required]);
+      this.FormAppSubsidy.controls.fromValueCode.updateValueAndValidity();
     }
     else {
       this.showFromValue = false;
+      this.FormAppSubsidy.controls.fromValueCode.clearValidators();
+      this.FormAppSubsidy.controls.fromValueCode.updateValueAndValidity();
     }
 
     this.FormAppSubsidy.patchValue({

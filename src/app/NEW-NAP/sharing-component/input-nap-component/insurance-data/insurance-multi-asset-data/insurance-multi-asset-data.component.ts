@@ -1389,18 +1389,23 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.appCollateralObj = response["AppCollateralObj"];
         this.appCollateralAccessoryObjs = response["AppCollateralAccessoryObjs"];
         this.defaultInsAssetRegion = response["DefaultInsAssetRegion"];
-        var totalAccessoryPriceAmt = 0;
 
-        for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
-          totalAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
+        if(this.appCollateralAccessoryObjs.length > 0){
+          var totalAccessoryPriceAmt = 0;
+
+          for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
+            totalAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
+          }
+  
+          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt + totalAccessoryPriceAmt;
+        }else{
+          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
         }
-
-        this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt;
-
+        
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
-            CvgAmt: this.totalAssetPriceAmt,
-            CustCvgAmt: this.totalAssetPriceAmt
+            CvgAmt: this.appCollateralObj.CollateralValueAmt,
+            CustCvgAmt: this.appCollateralObj.CollateralValueAmt
           });
         }
         if (this.appAssetObj != undefined) {

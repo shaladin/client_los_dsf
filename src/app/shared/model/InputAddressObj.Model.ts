@@ -10,6 +10,7 @@ export class InputAddressObj {
     inputField: InputFieldObj;
     showAllPhn: boolean;
     showPhn1: boolean;
+    requiredPhn1: boolean;
     showPhn2: boolean;
     showPhn3: boolean;
     showFax: boolean;
@@ -27,6 +28,7 @@ export class InputAddressObj {
         this.showPhn1 = true;
         this.showPhn2 = true;
         this.showPhn3 = true;
+        this.requiredPhn1 = false;
         this.showFax = true;
         this.showOwnership = false;
         this.showSubsection = true;
