@@ -171,7 +171,7 @@
                     <div class="form-group row">
                       <label class="col-md-4" for="Email" translate>Email</label>
                       <div class="col-md-8">
-                        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" id="email" formControlName="Email">
+                        <input type="text" class="form-control" id="email" formControlName="Email">
                         <lib-uc-show-errors [control]="ContactInfoPersonalForm.controls.Email" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
