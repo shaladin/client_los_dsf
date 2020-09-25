@@ -139,7 +139,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   InsDiscAmt: number = 0;
   TotalPremiumToCust: number = 0;
   PaidAmtByCust: number = 0;
-
+  textTitle : string;
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
   });
@@ -154,12 +154,15 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("a");
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
     this.BindMultiInsGridData();
     if (this.BLCode == CommonConstant.FCTR) {
       this.GetExistingAppCollateralWithInsurance();
+      this.textTitle = "Collateral";
     }
+
   }
 
   CancelHandler() {
@@ -203,6 +206,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
+        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.FCTR){
+          this.textTitle = "Collateral";
+        }
+        else if(this.BizTemplateCode == CommonConstant.FL4W){
+          this.textTitle = "Asset";
+        }
       });
 
     this.appAssetObj.AppId = this.appId;
@@ -1393,7 +1402,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
         }
         
-
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
             CvgAmt: this.appCollateralObj.CollateralValueAmt,

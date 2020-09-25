@@ -22,6 +22,7 @@ export class AgrmntFinancialComponent implements OnInit {
   agrmntFinDataObj : AgrmntFinDataObj = new AgrmntFinDataObj();
   agrmntObj: AgrmntObj = new AgrmntObj();
   listInstallment: Array<InstallmentObj> = new Array<InstallmentObj>();
+  appFinDataObj: any;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
