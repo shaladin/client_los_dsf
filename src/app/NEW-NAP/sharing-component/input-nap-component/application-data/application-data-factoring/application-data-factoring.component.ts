@@ -55,7 +55,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     InterestType: ['', Validators.required],
     CharaCredit: ['', [Validators.required, Validators.maxLength(50)]],
     PrevAgrNo: [''],
-    WayRestructure: ['', Validators.required],
+    WayRestructure: [''],
     MrSlikSecEcoCode: [''],
   })
 

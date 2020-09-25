@@ -1,0 +1,49 @@
+<form class="form form-horizontal">
+  <lib-ucSubsection [id]="'SrvyOrderId'" [title]="'Survey Result'" [panel]="'SrvyOrder'">
+  </lib-ucSubsection>
+  <div class="form-body" id="SrvyOrder">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>        
+        <tr class="table-header">
+          <th><span class="thead-header" name='srvyTaskNo' translate>Survey Task No</span>
+          </th>
+          <th><span class="thead-header" name='surveyeeName' translate>Surveyee Name</span>
+          </th>
+          <th><span class="thead-header" name='objectSurvey' translate>Object Survey</span>
+          </th>
+          <th><span class="thead-header" name='addr' translate>Address</span>
+          </th>
+          <th><span class="thead-header" name='surveyType' translate>Survey Type</span>
+          </th>
+          <th><span class="thead-header" name='surveyorCode' translate>Surveyor Name</span>
+          </th>
+          <th><span class="thead-header" name='surveyTaskStatus' translate>Survey Task Status</span></th>
+          <th><span class="thead-header" name='resultDt' translate>Result Date</span></th>
+          <th><span class="thead-header" name='reviewBy' translate>Review By</span></th>
+          <th><span class="thead-header" translate>View Result</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listSrvyOrder?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let item of listSrvyOrder let i = index">
+          <td>{{item.SurveyTaskNo}}</td>
+          <td>{{item.SurveyeeName}}</td>
+          <td>{{item.ObjectSurvey}}</td>
+          <td>{{item.Addr}}</td>
+          <td>{{item.SurveyType}}</td>
+          <td>{{item.SurveyorCode}}</td>
+          <td>{{item.SurveyTaskStatus}}</td>
+          <td>{{item.ResultDt | date: 'dd-MMMM-yyyy'}}</td>
+          <td>{{item.ReviewBy}}</td>
+          <td>
+            <a>View</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
