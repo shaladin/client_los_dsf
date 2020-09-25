@@ -1266,7 +1266,7 @@ export class InsuranceDataComponent implements OnInit {
           totalAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
         }
 
-        this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt + totalAccessoryPriceAmt;
+        this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt;
 
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({

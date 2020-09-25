@@ -1019,4 +1019,9 @@ export class AdInsConstant {
 
   //REF PAY FREQ
   public static GetRefPayFreqByPayFreqCode = environment.FoundationR3Url + "/RefPayFreq/GetRefPayFreqByPayFreqCode";
+
+  //Serial Item
+  public static Chassis_No = "Chassis No";
+  public static License_Plate_No = "License Plate No";
+  public static Engine_No = "Engine No";
 }
