@@ -81,10 +81,6 @@ export class GuarantorCompanyComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
   async ngOnInit(): Promise<void> {
-    this.inputAddressObjForCoy = new InputAddressObj();
-    this.inputAddressObjForCoy.title = "Address";
-    this.inputAddressObjForCoy.showAllPhn = false;
-
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.initLookup();
@@ -127,6 +123,7 @@ export class GuarantorCompanyComponent implements OnInit {
           this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs = this.resultData.AppGuarantorCompanyObj.ListAppGuarantorCompanyLegalDoc;
           this.listLegalDoc = this.guarantorCompanyObj.AppGuarantorCompanyObj.LegalDocObjs;
           this.ChangeContactInfo();
+          if(this.resultData.AppGuarantorObj.CustNo) this.disableAllFields();
         });
         // if (this.resultData.AppGuarantorObj.CustNo) {
         //   this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
@@ -254,10 +251,13 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   initAddr() {
-
+    this.AddrObj = new AddrObj();
     this.inputFieldObj = new InputFieldObj();
     this.inputFieldObj.inputLookupObj = new InputLookupObj();
-
+    
+    this.inputAddressObjForCoy = new InputAddressObj();
+    this.inputAddressObjForCoy.title = "Address";
+    this.inputAddressObjForCoy.showAllPhn = false;
   }
 
   // GuarantorName="";
@@ -346,26 +346,7 @@ export class GuarantorCompanyComponent implements OnInit {
         );
       }
     ); 
-
-    this.CompanyForm.controls["MrCustRelationshipCode"].disable();
-    this.CompanyForm.controls["TaxIdNo"].disable();
-    this.CompanyForm.controls["MrCompanyTypeCode"].disable();
-    this.CompanyForm.controls["ContactName"].disable();
-    this.CompanyForm.controls["MrJobPositionCode"].disable();
-    this.CompanyForm.controls["MobilePhnNo1"].disable();
-    this.CompanyForm.controls["ContactEmail"].disable();
-    this.CompanyForm.controls["MobilePhnNo2"].disable();
-    this.CompanyForm.controls["FaxArea"].disable();
-    this.CompanyForm.controls["Fax"].disable();
-    this.CompanyForm.controls["PhnArea1"].disable();
-    this.CompanyForm.controls["Phn1"].disable();
-    this.CompanyForm.controls["PhnExt1"].disable();
-    this.CompanyForm.controls["PhnArea2"].disable();
-    this.CompanyForm.controls["Phn2"].disable();
-    this.CompanyForm.controls["PhnExt2"].disable();
-    this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
-    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
-    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+    this.disableAllFields();
   }
 
   // IndustryTypeCode="";
@@ -378,7 +359,6 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   setAddrLegalObj() {
-    this.AddrObj = new AddrObj();
     this.AddrObj.Addr = this.resultData.AppGuarantorCompanyObj.Addr;
     this.AddrObj.AreaCode1 = this.resultData.AppGuarantorCompanyObj.AreaCode1;
     this.AddrObj.AreaCode2 = this.resultData.AppGuarantorCompanyObj.AreaCode2;
@@ -386,11 +366,11 @@ export class GuarantorCompanyComponent implements OnInit {
     this.AddrObj.AreaCode4 = this.resultData.AppGuarantorCompanyObj.AreaCode4;
     this.AddrObj.City = this.resultData.AppGuarantorCompanyObj.City;
 
+    this.inputFieldObj.inputLookupObj.isReadonly = false;
     this.inputFieldObj.inputLookupObj.nameSelect = this.resultData.AppGuarantorCompanyObj.Zipcode;
     this.inputFieldObj.inputLookupObj.jsonSelect = { Zipcode: this.resultData.AppGuarantorCompanyObj.Zipcode };
-    
     this.inputAddressObjForCoy.default = this.AddrObj;
-    this.inputAddressObjForCoy.inputField = this.inputFieldObj;
+    this.inputAddressObjForCoy.inputField = this.inputFieldObj;    
   }
 
   Add() {
@@ -605,13 +585,45 @@ export class GuarantorCompanyComponent implements OnInit {
     if (
       this.CompanyForm.controls.ContactName.value == '' && 
       this.CompanyForm.controls.MobilePhnNo1.value == '' &&
+      this.CompanyForm.controls.MobilePhnNo2.value == '' &&
       this.CompanyForm.controls.ContactEmail.value == '' &&
       this.CompanyForm.controls.MrJobPositionCode.value == '' &&
       this.CompanyForm.controls.PhnArea1.value == '' &&
-      this.CompanyForm.controls.Phn1.value == ''
+      this.CompanyForm.controls.Phn1.value == '' &&
+      this.CompanyForm.controls.PhnExt1.value == '' &&
+      this.CompanyForm.controls.PhnArea2.value == '' &&
+      this.CompanyForm.controls.Phn2.value == '' &&
+      this.CompanyForm.controls.PhnExt2.value == '' &&
+      this.CompanyForm.controls.FaxArea.value == '' &&
+      this.CompanyForm.controls.Fax.value == ''
     )
       this.clearValidatorContactInfo();
     else if(!this.isContactMandatory)
       this.setValidatorContactInfo();
   }
+
+  disableAllFields()
+  {
+    this.CompanyForm.controls["MrCustRelationshipCode"].disable();
+    this.CompanyForm.controls["TaxIdNo"].disable();
+    this.CompanyForm.controls["MrCompanyTypeCode"].disable();
+    this.CompanyForm.controls["ContactName"].disable();
+    this.CompanyForm.controls["MrJobPositionCode"].disable();
+    this.CompanyForm.controls["MobilePhnNo1"].disable();
+    this.CompanyForm.controls["ContactEmail"].disable();
+    this.CompanyForm.controls["MobilePhnNo2"].disable();
+    this.CompanyForm.controls["FaxArea"].disable();
+    this.CompanyForm.controls["Fax"].disable();
+    this.CompanyForm.controls["PhnArea1"].disable();
+    this.CompanyForm.controls["Phn1"].disable();
+    this.CompanyForm.controls["PhnExt1"].disable();
+    this.CompanyForm.controls["PhnArea2"].disable();
+    this.CompanyForm.controls["Phn2"].disable();
+    this.CompanyForm.controls["PhnExt2"].disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].Addr.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+    this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+    this.inputFieldObj.inputLookupObj.isReadonly = true;
+  }
+  
 }
