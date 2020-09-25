@@ -224,10 +224,10 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline">
               <label>Subsidy Amount from Diff Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SubsidyAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SubsidyAmtFromDiffRate.invalid}"
@@ -272,10 +272,10 @@
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline">
               <label>Commission Amount from Diff Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="CommissionAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CommissionAmtFromDiffRate.invalid}"
