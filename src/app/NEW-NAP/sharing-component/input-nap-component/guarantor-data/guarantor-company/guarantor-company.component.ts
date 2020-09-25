@@ -624,6 +624,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.controls["AddrObj"]["controls"].AreaCode3.disable();
     this.CompanyForm.controls["AddrObj"]["controls"].AreaCode4.disable();
     this.inputFieldObj.inputLookupObj.isReadonly = true;
+    this.inputLookupObj.isReadonly = true;
   }
   
 }
