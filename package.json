@@ -1,13 +1,13 @@
 {
   "name": "apex",
-  "version": "1.0.0-305",
+  "version": "1.0.0-311",
   "license": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod --aot --base-href /LOSR3/",
     "sit": "ng build --configuration=sit --base-href /LOS_SIT/",
-    "demo": "ng build --configuration=demo_env --base-href /LOS_DEMO/",
+    "demo": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=demo_env --base-href /LOS_DEMO/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "^1.0.1",
     "@adins/uc-subsection": "^1.0.5",
-    "@adins/ucaddress": "^1.0.35",
+    "@adins/ucaddress": "^1.0.50",
     "@adins/ucaddtotemp": "^1.0.14",
     "@adins/ucapproval": "^1.0.9",
     "@adins/ucapprovalhist": "^1.0.15",

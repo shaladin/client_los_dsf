@@ -8,8 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "view-asset-data",
-  templateUrl: "./view-asset-data.component.html",
-  providers: [NGXToastrService]
+  templateUrl: "./view-asset-data.component.html"
 })
 export class ViewAssetDataComponent implements OnInit {
 
@@ -26,7 +25,7 @@ export class ViewAssetDataComponent implements OnInit {
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
      if (params['AppId'] != null) {
