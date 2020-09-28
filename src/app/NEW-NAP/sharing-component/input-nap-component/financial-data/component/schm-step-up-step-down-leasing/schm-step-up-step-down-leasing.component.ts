@@ -149,7 +149,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value ; i++){
+    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value-1 ; i++){
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
