@@ -160,6 +160,8 @@ export class CollateralAddEditComponent implements OnInit {
     LocationAddrType: [''],
 
     CollPercentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+    CollateralPortionAmt: [0],
+    OutstandingCollPrcnt: [0],
     items: this.fb.array([])
   });
   inputAddressObjForColl: any;
@@ -225,6 +227,7 @@ export class CollateralAddEditComponent implements OnInit {
           AssetCategoryCode: response.AssetCategoryCode,
           CollateralName: response.FullAssetName
         });
+        this.collateralPortionHandler();
       }
     ).catch((error) => {
     });
@@ -313,6 +316,7 @@ export class CollateralAddEditComponent implements OnInit {
          }
        }
      }
+     this.collateralPortionHandler();
    });
     // bookmark
     // const component = this.collateralModal.createComponent(componentFactory);
@@ -728,6 +732,38 @@ export class CollateralAddEditComponent implements OnInit {
     this.bindUcAddToTempData();
   }
 
+  collateralPortionHandler(){
+    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
+    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
+    var serialNoForm = this.items.controls[0] as FormGroup;
+    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    const currCollPrcnt = this.AddCollForm.controls["CollPercentage"].value;
+    const collValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
+
+    if(fullAssetCode && assetType && serialNo1 && collValueAmt && currCollPrcnt){
+      this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
+        (response) => {
+          var outCollPrcnt = 100;
+          if(response){
+            if(response["CollateralPrcnt"]){
+              outCollPrcnt = response["CollateralPrcnt"]; 
+            }
+          }
+          outCollPrcnt -= currCollPrcnt;
+          var collPortionAmt = collValueAmt * (currCollPrcnt / 100);
+          this.AddCollForm.patchValue({
+            OutstandingCollPrcnt: outCollPrcnt,
+            CollateralPortionAmt: collPortionAmt
+          });
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
   showModalTaxCityIssuer() {
     const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
     modalTaxCityIssuer.result.then(
@@ -843,6 +879,26 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   SaveNewCollateral() {
+    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
+    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
+    var serialNoForm = this.items.controls[0] as FormGroup;
+    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    if(!fullAssetCode){
+      this.toastr.warningMessage("Full Asset Code Must be Filled");
+      return false;
+    }
+    if(!assetType){
+      this.toastr.warningMessage("Asset Type Code Must be Filled");
+      return false;
+    }
+    if(!serialNo1){
+      this.toastr.warningMessage("Serial No 1 Must be Filled");
+      return false;
+    }
+    if(this.AddCollForm.controls["OutstandingCollPrcnt"].value < 0){
+      this.toastr.warningMessage("Collateral Portion Usage Cannot Exceed Outstanding Collateral Percentage");
+      return false;
+    }
     if (this.AddCollForm.valid) {
       if (this.mode == 'addColl') {
         this.appCollateralDataObj = new AppCollateralDataObj();

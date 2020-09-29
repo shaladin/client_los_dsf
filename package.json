@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-311",
+  "version": "1.0.0-315",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -29,10 +29,10 @@
     "@adins/uclookupgeneric": "^2.0.23",
     "@adins/ucpaging": "^2.0.29",
     "@adins/ucreport": "^1.0.8",
-    "@adins/ucsearch": "^2.0.38",
+    "@adins/ucsearch": "^2.0.39",
     "@adins/ucthingstodo": "^1.0.4",
     "@adins/ucupload": "^1.7.2",
-    "@adins/ucviewgeneric": "^2.0.40",
+    "@adins/ucviewgeneric": "^2.0.60",
     "@agm/core": "1.0.0-beta.5",
     "@angular/animations": "^7.2.16",
     "@angular/cdk": "^7.3.7",
