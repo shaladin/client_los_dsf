@@ -102,6 +102,12 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
       this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
         InstAmt: 0
       });
+      if(this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].setValidators([Validators.max(100)]);
+      else
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].clearValidators();
+
+      this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].updateValueAndValidity();
     }
 
     this.SetNeedReCalculate(true);
@@ -152,7 +158,7 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
-        InstAmt: [0]
+        InstAmt: [0, this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt ? [Validators.max(100)] : []]
       });
       (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }
