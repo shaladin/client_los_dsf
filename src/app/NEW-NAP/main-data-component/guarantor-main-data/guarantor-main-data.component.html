@@ -1,3 +1,34 @@
-<p>
-  guarantor-main-data works!
-</p>
+<div class="card-body">
+  <div class="px-3">
+    <lib-ucSubsection [id]="'AddEditGuarantorId'" [title]="'Add / Edit Guarantor'" [panel]="'AddEditGuarantor'">
+    </lib-ucSubsection>
+    <div id="AddEditGuarantor">
+      <div *ngIf="CustDataForm.controls.MrCustTypeCode.value">
+        <form class="form form-horizontal" [formGroup]="CustDataForm" (ngSubmit)="CustDataForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <div class="px-3">
+            <div class="form-group row">
+              <label class="col-md-2" translate>Customer Type</label>
+              <div class="col-md-10">
+                <mat-radio-group formControlName="MrCustTypeCode">
+                  <mat-radio-button class="custom-control custom-radio display-inline-block"
+                    *ngFor="let item of CustTypeObj" [value]="item.Key">
+                    {{item.Value}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="CustMainDataPersonal" *ngIf="CustDataForm.controls.MrCustTypeCode.value == 'PERSONAL'">
+          <app-guarantor-personal [AppGuarantorId]=AppGuarantorId [mode]=mode [AppId]="AppId" (close)="close($event)">
+          </app-guarantor-personal>
+        </div>
+        <div id="CustMainDataCompany" *ngIf="CustDataForm.controls.MrCustTypeCode.value == 'COMPANY'">
+          <app-guarantor-company [AppGuarantorId]=AppGuarantorId [mode]=mode [AppId]="AppId" (close)="close($event)">
+          </app-guarantor-company>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

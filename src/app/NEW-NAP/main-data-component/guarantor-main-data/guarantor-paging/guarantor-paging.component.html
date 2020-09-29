@@ -1,0 +1,63 @@
+<div class="button-right margin-15">
+  <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
+    <i class="ft-plus-circle"></i> Add
+  </button>
+</div>
+<div *ngIf="result.length == 0">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th style="text-align: center;">
+          <span class="thead-header" name="NoName" translate>
+            No
+          </span>
+        </th>
+        <th style="text-align: center;">
+          <span class="thead-header" name="GuarantorName" translate>Guarantor Name </span>
+        </th>
+        <th style="text-align: center;">
+          <span class="thead-header" name="MrGuarantorTypeCode" translate>
+            Guarantor Type
+          </span>
+        </th>
+        <th style="text-align: center;">
+          <span class="thead-header" name="Relationship" translate>
+            Relationship
+          </span>
+        </th>
+        <th style="text-align: center;">
+          <span class="thead-header" name="Action" translate>
+            Action
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="result.length > 0">
+  <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
+</div>
+<div class="pull-right margin-15">
+  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary">
+    <i class="far fa-check-square"></i> Save
+  </button>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Guarantor</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-guarantor-main-data [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"
+                 (closeX)="close($event)"></app-guarantor-main-data>
+</ng-template>
