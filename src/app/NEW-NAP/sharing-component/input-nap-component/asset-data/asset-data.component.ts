@@ -877,11 +877,15 @@ export class AssetDataComponent implements OnInit {
   DpTypeChange() {
     if (this.AssetDataForm.controls.selectedDpType.value != '') {
       if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
+        this.AssetDataForm.controls["DownPaymentAmt"].enable()
         this.AssetDataForm.patchValue({
           DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
         });
+        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+        this.AssetDataForm.controls["DownPaymentAmt"].updateValueAndValidity();
       }
       else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
+        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
         if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
           this.AssetDataForm.patchValue({
             DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
@@ -892,6 +896,8 @@ export class AssetDataComponent implements OnInit {
             DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
           });
         }
+        this.AssetDataForm.controls["DownPaymentAmt"].disable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
       };
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
     }
@@ -1611,7 +1617,7 @@ export class AssetDataComponent implements OnInit {
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: ['', Validators.required],
-        AccessoryDownPaymentAmt: ['', Validators.required],
+        AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
       })
     } else {

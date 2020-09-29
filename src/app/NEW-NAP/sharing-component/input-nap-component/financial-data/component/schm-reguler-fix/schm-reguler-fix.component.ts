@@ -44,8 +44,7 @@ export class SchmRegulerFixComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
-        console.log("HELEP")
-        if (this.result.BizTemplateCode == CommonConstant.CF4W) {
+        if(this.result.BizTemplateCode == CommonConstant.CF4W || this.result.BizTemplateCode == CommonConstant.CFRFN4W){
           this.PriceLabel = "Financing Amount";
         }
       });
