@@ -78,8 +78,7 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.title = "Address";
     this.inputAddressObj.showOwnership = true;
-    this.inputFieldAddressObj = new InputFieldObj();
-    this.inputFieldAddressObj.inputLookupObj = new InputLookupObj();
+    this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.isUcAddressReady = true;
 
     this.GetRefMasterPersonal();
@@ -278,27 +277,26 @@ export class CustMainDataComponent implements OnInit {
     this.CopyLegalAddr(response["CustAddrLegalObj"]);
   }
 
-  CopyLegalAddr(reponse){
-    if (reponse != undefined) {
-      this.legalAddrObj.Addr = reponse.Addr;
-      this.legalAddrObj.AreaCode1 = reponse.AreaCode1;
-      this.legalAddrObj.AreaCode2 = reponse.AreaCode2;
-      this.legalAddrObj.AreaCode3 = reponse.AreaCode3;
-      this.legalAddrObj.AreaCode4 = reponse.AreaCode4;
-      this.legalAddrObj.City = reponse.City;
-      this.legalAddrObj.Fax = reponse.Fax;
-      this.legalAddrObj.FaxArea = reponse.FaxArea;
-      this.legalAddrObj.Phn1 = reponse.Phn1;
-      this.legalAddrObj.Phn2 = reponse.Phn2;
-      this.legalAddrObj.PhnArea1 = reponse.PhnArea1;
-      this.legalAddrObj.PhnArea2 = reponse.PhnArea2;
-      this.legalAddrObj.PhnExt1 = reponse.PhnExt1;
-      this.legalAddrObj.PhnExt2 = reponse.PhnExt2;
+  CopyLegalAddr(response){
+    if (response != undefined) {
+      this.legalAddrObj.Addr = response.Addr;
+      this.legalAddrObj.AreaCode1 = response.AreaCode1;
+      this.legalAddrObj.AreaCode2 = response.AreaCode2;
+      this.legalAddrObj.AreaCode3 = response.AreaCode3;
+      this.legalAddrObj.AreaCode4 = response.AreaCode4;
+      this.legalAddrObj.City = response.City;
+      this.legalAddrObj.Fax = response.Fax;
+      this.legalAddrObj.FaxArea = response.FaxArea;
+      this.legalAddrObj.Phn1 = response.Phn1;
+      this.legalAddrObj.Phn2 = response.Phn2;
+      this.legalAddrObj.PhnArea1 = response.PhnArea1;
+      this.legalAddrObj.PhnArea2 = response.PhnArea2;
+      this.legalAddrObj.PhnExt1 = response.PhnExt1;
+      this.legalAddrObj.PhnExt2 = response.PhnExt2;
 
-      this.inputFieldAddressObj.inputLookupObj.nameSelect = reponse.Zipcode;
-      this.inputFieldAddressObj.inputLookupObj.jsonSelect = { Zipcode: reponse.Zipcode };
+      this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
+      this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
       this.inputAddressObj.default = this.legalAddrObj;
-      this.inputAddressObj.inputField = this.inputFieldAddressObj;
     }
   }
 
