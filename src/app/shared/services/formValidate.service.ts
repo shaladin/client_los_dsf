@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 
-export class AdInsService {
+export class FormValidateService {
 
     formValidate(form: any){
         this.scrollIfFormHasErrors(form).then(() => {
