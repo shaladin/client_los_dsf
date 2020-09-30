@@ -5,26 +5,33 @@
         <form class="form form-horizontal" [formGroup]="CustMainDataForm"
           (ngSubmit)="CustMainDataForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
           <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-2" translate>Customer Type</label>
+              <div class="col-md-10">
+                <mat-radio-group formControlName="MrCustTypeCode" (change)="CheckBox($event.value)">
+                  <mat-radio-button [disabled]="isExisting" class="custom-control custom-radio display-inline-block"
+                    *ngFor="let item of CustTypeObj" [value]="item.Key">
+                    {{item.Value}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
             <lib-ucSubsection [id]="'CustMainDataId'" [title]="'Customer Main Data'" [panel]="'CustMainData'">
             </lib-ucSubsection>
             <div id="CustMainData">
               <div class="form-group row">
-                <label class="col-md-2" translate>Customer Type</label>
-                <div class="col-md-10">
-                  <mat-radio-group formControlName="MrCustTypeCode" (change)="CheckBox($event.value)">
-                    <mat-radio-button [disabled]="isExisting" class="custom-control custom-radio display-inline-block"
-                      *ngFor="let item of CustTypeObj" [value]="item.Key">
-                      {{item.Value}}
-                    </mat-radio-button>
-                  </mat-radio-group>
-                </div>
-              </div>
-              <div class="form-group row">                  
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>{{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }} Legal Name</label>
+                    <!-- {{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }}  -->
+                    <label class="col-md-4 adins-required-label"
+                      translate>Customer Legal Name</label>
                     <div class="col-md-8">
-                      <lib-uclookupgeneric *ngIf="InputLookupCustomerObj.isReady" [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustMainDataForm" [identifier]="'lookupCustomer'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
+                      <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL' && InputLookupPersonalObj.isReady"
+                        [enjiForm]="enjiForm" [lookupInput]="InputLookupPersonalObj" [parentForm]="CustMainDataForm"
+                        [identifier]="'lookupCustomer'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
+                      <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'COMPANY' && InputLookupCompanyObj.isReady"
+                        [enjiForm]="enjiForm" [lookupInput]="InputLookupCompanyObj" [parentForm]="CustMainDataForm"
+                        [identifier]="'lookupCustomer'" (lookup)="CopyCustomerEvent($event)"></lib-uclookupgeneric>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -35,35 +42,44 @@
                           {{item.Value}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.CustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.CustModelCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
                     <div class="col-md-4">
-                      <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change) = "clearExpDt()"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdTypeCode.invalid }">      
+                      <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change)="clearExpDt()"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdTypeCode.invalid }">
                         <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
                           {{item.Descr}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdTypeCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Id No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="IdNo"
-                      [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
-                    <label class="col-md-4" [ngClass]="{'adins-required-label': CustMainDataForm.controls.MrIdTypeCode.value == 'KITAS' || CustMainDataForm.controls.MrIdTypeCode.value == 'SIM'}" translate>Id Expired Date</label>
+                    <label class="col-md-4"
+                      [ngClass]="{'adins-required-label': CustMainDataForm.controls.MrIdTypeCode.value == 'KITAS' || CustMainDataForm.controls.MrIdTypeCode.value == 'SIM'}"
+                      translate>Id Expired Date</label>
                     <div class="col-md-8">
-                      <input *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)" readonly type="date" class="form-control" formControlName="IdExpiredDt">
-                      <input *ngIf="!['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <input *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
+                        readonly type="date" class="form-control" formControlName="IdExpiredDt">
+                      <input *ngIf="!['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
+                        min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control"
+                        formControlName="IdExpiredDt">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdTypeCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                 </div>
@@ -76,7 +92,8 @@
                           {{item.Value}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrGenderCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrGenderCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'COMPANY'">
@@ -87,53 +104,61 @@
                           {{item.Value}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCompanyTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCompanyTypeCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Birth Place</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="BirthPlace"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthPlace.invalid}">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthPlace.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthPlace"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Birth Date</label>
                     <div class="col-md-8">
-                      <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>          
+                      <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
+                        formControlName="BirthDt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthDt" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}" translate>Tax Id No</label>
+                    <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}"
+                      translate>Tax Id No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="TaxIdNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.TaxIdNo.invalid}">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.TaxIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.TaxIdNo.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.TaxIdNo" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Mother Maiden Name</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="MotherMaidenName"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MotherMaidenName.invalid}">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MotherMaidenName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MotherMaidenName.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MotherMaidenName"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
-            [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
+              [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
           </div>
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+
+            <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm) class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square-o"></i> Save
             </button>
           </div>
         </form>
