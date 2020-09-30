@@ -55,7 +55,7 @@ export class CustMainDataComponent implements OnInit {
   CustMainDataForm = this.fb.group({
     MrCustTypeCode: [],
     CustName: ['', Validators.required],
-    CompanyType: ['', Validators.required],
+    CompanyType: [''],
     CustModelCode: ['', Validators.required],
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', Validators.required],
@@ -194,9 +194,7 @@ export class CustMainDataComponent implements OnInit {
     this.SetLookup(value);
     
     if (!firstInit) {
-      this.CustMainDataForm.reset();
-      this.CustMainDataForm.clearValidators();
-      this.CustMainDataForm.updateValueAndValidity();
+      this.CustMainDataForm.enable();
       if (value == CommonConstant.CustTypePersonal) {
         this.GetRefMasterPersonal();
         this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
@@ -212,6 +210,7 @@ export class CustMainDataComponent implements OnInit {
         this.CustMainDataForm.controls.BirthDt.clearValidators();
         this.CustMainDataForm.controls.BirthPlace.clearValidators();
         this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
+        this.CustMainDataForm.controls.MrGenderCode.clearValidators();
         this.CustMainDataForm.controls.IdNo.clearValidators();
       }
       this.CustMainDataForm.updateValueAndValidity();
@@ -232,13 +231,31 @@ export class CustMainDataComponent implements OnInit {
             this.CopyCustomerCompany(response);
         });
     }
-    this.CustMainDataForm.disable();
+    this.DisableInput();
+  }
+
+  DisableInput(){
+    this.CustMainDataForm.controls.MrCustTypeCode.disable();
+    this.CustMainDataForm.controls.CustName.disable();
+    this.CustMainDataForm.controls.CompanyType.disable();
+    this.CustMainDataForm.controls.CustModelCode.disable();
+    this.CustMainDataForm.controls.MrIdTypeCode.disable();
+    this.CustMainDataForm.controls.IdNo.disable();
+    this.CustMainDataForm.controls.IdExpiredDt.disable();
+    this.CustMainDataForm.controls.TaxIdNo.disable();
+    this.CustMainDataForm.controls.MrGenderCode.disable();
+    this.CustMainDataForm.controls.BirthPlace.disable();
+    this.CustMainDataForm.controls.BirthDt.disable();
+    this.CustMainDataForm.controls.MotherMaidenName.disable();
+    this.CustMainDataForm.controls.MrCompanyTypeCode.disable();
   }
 
   CopyCustomerPersonal(response) {
     if (response["CustObj"] != undefined) {
       this.CustMainDataForm.patchValue({
+        CustName: response["CustObj"].CustName,
         MrIdTypeCode: response["CustObj"].MrIdTypeCode,
+        CustModelCode: response["CustObj"].MrCustModelCode,
         IdNo: response["CustObj"].IdNo,
         IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
         TaxIdNo: response["CustObj"].TaxIdNo
@@ -256,14 +273,14 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls["BirthPlace"].disable();
       this.CustMainDataForm.controls["BirthDt"].disable();
     }
-
     this.CopyLegalAddr(response["CustAddrLegalObj"]);
   }
 
   CopyCustomerCompany(response) {
     if (response["CustObj"] != undefined) {
       this.CustMainDataForm.patchValue({
-        MrIdTypeCode: response["CustObj"].MrIdTypeCode,
+        CustName: response["CustObj"].CustName,
+        CustModelCode: response["CustObj"].MrCustModelCode,
         TaxIdNo: response["CustObj"].TaxIdNo,
       });
       this.InputLookupPersonalObj.jsonSelect = { CustName: response["CustObj"].CustName };
@@ -296,6 +313,7 @@ export class CustMainDataComponent implements OnInit {
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
+      this.inputAddressObj.isReadonly = true;
       this.inputAddressObj.default = this.legalAddrObj;
     }
   }
@@ -306,11 +324,12 @@ export class CustMainDataComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     enjiForm.resetForm();
+    this.CheckBox();
     console.log(this.CustMainDataForm)
   }
 
   Cancel() {
-    console.log(this.CustMainDataForm.value)
+    console.log(this.CustMainDataForm)
 
   }
 }
