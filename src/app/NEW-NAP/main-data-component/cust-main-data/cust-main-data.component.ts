@@ -28,17 +28,17 @@ export class CustMainDataComponent implements OnInit {
   isUcAddressReady: boolean = false;
   MrCustTypeCode: string;
   MaxDate: Date;
-  InputLookupPersonalObj: InputLookupObj;
-  InputLookupCompanyObj: InputLookupObj;
+  InputLookupPersonalObj: InputLookupObj = new InputLookupObj();
+  InputLookupCompanyObj: InputLookupObj = new InputLookupObj();
   inputAddressObj: InputAddressObj;
   inputFieldAddressObj: InputFieldObj;
   legalAddrObj: AddrObj;
-  CustTypeObj: Array<KeyValueObj>;
-  IdTypeObj: Array<KeyValueObj>;
-  GenderObj: Array<KeyValueObj>;
-  CustModelObj: Array<KeyValueObj>;
-  CompanyTypeObj: Array<KeyValueObj>;
-  ArrAddCrit: Array<CriteriaObj>;
+  CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CompanyTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
 
   constructor(
@@ -53,19 +53,19 @@ export class CustMainDataComponent implements OnInit {
   }
 
   CustMainDataForm = this.fb.group({
-    MrCustTypeCode: [Validators.required],
-    CustName: [Validators.required],
-    CompanyType: [Validators.required],
-    CustModelCode: [Validators.required],
-    MrIdTypeCode: [Validators.required],
-    IdNo: [Validators.required],
-    IdExpiredDt: [],
-    TaxIdNo: [],
-    MrGenderCode: [Validators.required],
-    BirthPlace: [Validators.required],
-    BirthDt: [Validators.required],
-    MotherMaidenName: [Validators.required],
-    MrCompanyTypeCode: [],
+    MrCustTypeCode: [],
+    CustName: ['', Validators.required],
+    CompanyType: ['', Validators.required],
+    CustModelCode: ['', Validators.required],
+    MrIdTypeCode: ['', Validators.required],
+    IdNo: ['', Validators.required],
+    IdExpiredDt: [''],
+    TaxIdNo: [''],
+    MrGenderCode: ['', Validators.required],
+    BirthPlace: ['', Validators.required],
+    BirthDt: ['', Validators.required],
+    MotherMaidenName: ['', Validators.required],
+    MrCompanyTypeCode: [''],
   });
 
   ngOnInit() {
@@ -192,23 +192,23 @@ export class CustMainDataComponent implements OnInit {
 
   CheckBox(value: string = 'PERSONAL', firstInit: boolean = false) {
     this.MrCustTypeCode = value;
-    this.CustMainDataForm.reset();
-    this.CustMainDataForm.clearValidators();
-    this.CustMainDataForm.enable();
-
     this.SetLookup(value);
+    
     if (!firstInit) {
+      this.CustMainDataForm.clearValidators();
+      this.CustMainDataForm.reset();
+      this.CustMainDataForm.enable();
       if (value == CommonConstant.CustTypePersonal) {
         this.GetRefMasterPersonal();
-        this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
-        this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
-        this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
-        this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
-        this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MotherMaidenName.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.BirthDt.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.BirthPlace.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.MrIdTypeCode.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.IdNo.setValidators([Validators.required]);
         this.CustMainDataForm.controls.TaxIdNo.clearValidators();
       } else {
         this.GetRefMasterCompany();
-        this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
+        this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required]);
         this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
         this.CustMainDataForm.controls.BirthDt.clearValidators();
         this.CustMainDataForm.controls.BirthPlace.clearValidators();
