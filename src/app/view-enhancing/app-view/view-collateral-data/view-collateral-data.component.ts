@@ -65,6 +65,8 @@ export class ViewCollateralDataComponent implements OnInit {
         (response) => {
           this.AppCollateralObj = response;        
           this.arrValue.push(this.AppCollateralObj.AppCollateralId);
+          this.viewGenericObj.whereValue = this.arrValue;
+          this.viewUOLObj.whereValue = this.arrValue;
           this.IsReady = true;
           this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
             (response) => {
