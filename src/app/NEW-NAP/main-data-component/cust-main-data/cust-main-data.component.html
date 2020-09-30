@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="CustMainDataForm"
-          (ngSubmit)="CustMainDataForm.valid && SaveForm()" #enjiForm="ngForm">
+          (ngSubmit)="CustMainDataForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'CustMainDataId'" [title]="'Customer Main Data'" [panel]="'CustMainData'">
             </lib-ucSubsection>
@@ -35,6 +35,7 @@
                           {{item.Value}}
                         </option>
                       </select>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.CustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
@@ -53,7 +54,7 @@
                     <label class="col-md-4 adins-required-label" translate>Id No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="IdNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
+                      [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
                       <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
@@ -62,7 +63,7 @@
                     <div class="col-md-8">
                       <input *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)" readonly type="date" class="form-control" formControlName="IdExpiredDt">
                       <input *ngIf="!['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.IdExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                 </div>
@@ -75,6 +76,7 @@
                           {{item.Value}}
                         </option>
                       </select>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrGenderCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'COMPANY'">
@@ -85,6 +87,7 @@
                           {{item.Value}}
                         </option>
                       </select>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCompanyTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
@@ -104,7 +107,7 @@
                     </div>          
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Tax Id No</label>
+                    <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}" translate>Tax Id No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="TaxIdNo"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.TaxIdNo.invalid}">
@@ -124,6 +127,14 @@
             </div>
             <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
             [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i> Save
+            </button>
           </div>
         </form>
       </div>

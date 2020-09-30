@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroupDirective, FormGroup, ControlContainer, Validators } from '@angular/forms';
+import { FormBuilder, FormGroupDirective, FormGroup, ControlContainer, Validators, NgForm } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
@@ -8,11 +8,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { formatDate } from '@angular/common';
+import { formatDate, KeyValue } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -20,8 +22,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class CustMainDataComponent implements OnInit {
-  @Input() identifier: string;
-  @Input() ParentForm: FormGroup;
   AppId: number;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
@@ -30,12 +30,13 @@ export class CustMainDataComponent implements OnInit {
   InputLookupCustomerObj: InputLookupObj;
   inputAddressObj: InputAddressObj;
   inputFieldAddressObj: InputFieldObj;
-  CustTypeObj: Array<Object>;
-  IdTypeObj: Array<Object>;
-  GenderObj: Array<Object>;
-  CustModelObj: Array<Object>;
-  CompanyTypeObj: Array<Object>;
-  UserAccess: Object;
+  legalAddrObj: AddrObj;
+  CustTypeObj: Array<KeyValueObj>;
+  IdTypeObj: Array<KeyValueObj>;
+  GenderObj: Array<KeyValueObj>;
+  CustModelObj: Array<KeyValueObj>;
+  CompanyTypeObj: Array<KeyValueObj>;
+  UserAccess: any;
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +56,7 @@ export class CustMainDataComponent implements OnInit {
     MrIdTypeCode: [Validators.required],
     IdNo: [Validators.required],
     IdExpiredDt: [],
-    TaxIdNo: [Validators.required],
+    TaxIdNo: [],
     MrGenderCode: [Validators.required],
     BirthPlace: [Validators.required],
     BirthDt: [Validators.required],
@@ -65,10 +66,11 @@ export class CustMainDataComponent implements OnInit {
 
   ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    this.MaxDate = this.UserAccess["BusinessDt"];
+    this.MaxDate = this.UserAccess.BusinessDt;
 
     this.SetLookup();
 
+    this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.title = "Address";
     this.inputAddressObj.showOwnership = true;
@@ -103,15 +105,15 @@ export class CustMainDataComponent implements OnInit {
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         this.CustMainDataForm.patchValue({
-          MrCustTypeCode: this.CustTypeObj[0]["Key"]
+          MrCustTypeCode: this.CustTypeObj[0].Key
         })
-        this.CheckBox(this.CustTypeObj[0]["Key"], true);
+        this.CheckBox(this.CustTypeObj[0].Key, true);
       }
     );
 
     this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType}).subscribe(
       (response) => {
-        this.IdTypeObj = response["RefMasterObjs"];
+        this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if(this.IdTypeObj.length > 0){
           var idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
           this.CustMainDataForm.patchValue({
@@ -127,7 +129,7 @@ export class CustMainDataComponent implements OnInit {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
           this.CustMainDataForm.patchValue({
-            MrGenderCode: this.GenderObj[0]["Key"]
+            MrGenderCode: this.GenderObj[0].Key
           });
         }
       }
@@ -138,11 +140,11 @@ export class CustMainDataComponent implements OnInit {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0){
           this.CustMainDataForm.patchValue({
-            CustModelCode: this.CustModelObj[0]["Key"]
+            CustModelCode: this.CustModelObj[0].Key
           });
         }
       }
-    );
+    );  
   }
 
   GetRefMasterCompany(){
@@ -151,7 +153,7 @@ export class CustMainDataComponent implements OnInit {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if(this.CustModelObj.length > 0){
           this.CustMainDataForm.patchValue({
-            CustModelCode: this.CustModelObj[0]["Key"]
+            CustModelCode: this.CustModelObj[0].Key
           });
         }
       }
@@ -162,7 +164,7 @@ export class CustMainDataComponent implements OnInit {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0) {
           this.CustMainDataForm.patchValue({
-            MrCompanyTypeCode: this.CompanyTypeObj[0]["Key"]
+            MrCompanyTypeCode: this.CompanyTypeObj[0].Key
           });
         }
       }
@@ -179,107 +181,23 @@ export class CustMainDataComponent implements OnInit {
     if(!firstInit){
       if(value == CommonConstant.CustTypePersonal){
         this.GetRefMasterPersonal();
+        this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+        this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
+        this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
+        this.CustMainDataForm.controls.TaxIdNo.clearValidators();
       }else{
         this.GetRefMasterCompany();
+        this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
+        this.CustMainDataForm.controls.BirthDt.clearValidators();
+        this.CustMainDataForm.controls.BirthPlace.clearValidators();
+        this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
+        this.CustMainDataForm.controls.IdNo.clearValidators();
       }
+      this.CustMainDataForm.updateValueAndValidity();
     }
-
-    // // clearing if not edit
-    // if (!this.isExisting) {
-    //   if (ev.value == CommonConstant.CustTypePersonal) {
-    //     this.CustDataForm.controls['personalMainData'].patchValue({
-    //       CustFullName: [''],
-    //       MrIdTypeCode: [''],
-    //       MrGenderCode: [''],
-    //       IdNo: [''],
-    //       MotherMaidenName: [''],
-    //       IdExpiredDt: [''],
-    //       MrMaritalStatCode: [''],
-    //       BirthPlace: [''],
-    //       BirthDt: [''],
-    //       MrNationalityCode: [''],
-    //       TaxIdNo: [''],
-    //       MobilePhnNo1: [''],
-    //       MrEducationCode: [''],
-    //       MobilePhnNo2: [''],
-    //       MrReligionCode: [''],
-    //       MobilePhnNo3: [''],
-    //       IsVip: [false],
-    //       Email1: [''],
-    //       FamilyCardNo: [''],
-    //       Email2: [''],
-    //       NoOfResidence: [''],
-    //       Email3: [''],
-    //       NoOfDependents: ['0'],
-    //     });
-
-    //     // this.legalAddrObj = new AddrObj();
-    //     // this.inputFieldLegalObj.inputLookupObj.nameSelect = "";
-    //     // this.inputFieldLegalObj.inputLookupObj.jsonSelect = {};
-    //     // this.inputAddressObjForLegal.default = null;
-    //     // this.inputAddressObjForLegal.inputField = new InputFieldObj();
-
-    //     // this.mailingAddrObj = new AddrObj();
-    //     // this.inputFieldMailingObj.inputLookupObj.nameSelect = "";
-    //     // this.inputFieldMailingObj.inputLookupObj.jsonSelect = {};
-    //     // this.inputAddressObjForMailing.default = null;
-    //     // this.inputAddressObjForMailing.inputField = new InputFieldObj();
-
-    //     // this.residenceAddrObj = new AddrObj();
-    //     // this.inputFieldResidenceObj.inputLookupObj.nameSelect = "";
-    //     // this.inputFieldResidenceObj.inputLookupObj.jsonSelect = {};
-    //     // this.inputAddressObjForResidence.default = null;
-    //     // this.inputAddressObjForResidence.inputField = new InputFieldObj();
-
-    //     // this.listAppCustPersonalContactInformation = new Array<AppCustPersonalContactPersonObj>();
-    //     // this.listAppCustBankAcc = new Array<AppCustBankAccObj>();
-    //     // this.custDataPersonalObj.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
-    //     // this.custDataPersonalObj.AppCustPersonalFinDataObj= new AppCustPersonalFinDataObj();
-    //     // this.custDataPersonalObj.AppCustGrpObjs=new Array<AppCustGrpObj>();
-    //     // this.custDataPersonalObj.AppCustPersonalJobDataObj=new AppCustPersonalJobDataObj();
-
-    //     // this.CustDataForm.controls['personalMainData']['controls']["MrIdTypeCode"].enable();
-    //     // this.CustDataForm.controls['personalMainData']['controls']["IdNo"].enable();
-    //     // this.CustDataForm.controls['personalMainData']['controls']["TaxIdNo"].enable();
-    //     // this.CustDataForm.controls['personalMainData']['controls']["BirthPlace"].enable();
-    //     // this.CustDataForm.controls['personalMainData']['controls']["BirthDt"].enable();
-    //   }
-    //   if (ev.value == CommonConstant.CustTypeCompany) {
-    //     this.CustDataCompanyForm.controls['companyMainData'].patchValue({
-    //       CustNo: [''],
-    //       IndustryTypeCode: [''],
-    //       CustModelCode: [''],
-    //       CompanyBrandName: [''],
-    //       MrCompanyTypeCode: [''],
-    //       NumOfEmp: [0],
-    //       IsAffiliated: [false],
-    //       EstablishmentDt: [''],
-    //       TaxIdNo: [''],
-    //       IsVip: [false]
-    //     });
-        
-    //     // this.legalAddrCompanyObj = new AddrObj();
-    //     // this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
-    //     // this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
-    //     // this.inputAddressObjForLegalCoy.default = null;
-    //     // this.inputAddressObjForLegalCoy.inputField = new InputFieldObj();
-
-    //     // this.mailingAddrCompanyObj = new AddrObj();
-    //     // this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = "";
-    //     // this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = {};
-    //     // this.inputAddressObjForMailingCoy.default = null;
-    //     // this.inputAddressObjForMailingCoy.inputField = new InputFieldObj();
-
-    //     // this.listShareholder = new Array<AppCustCompanyMgmntShrholderObj>();
-    //     // this.listContactPersonCompany = new Array<AppCustCompanyContactPersonObj>();
-    //     // this.custDataCompanyObj.AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
-    //     // this.listAppCustBankAccCompany = new Array<AppCustBankAccObj>();
-    //     // this.listLegalDoc = new Array<AppCustCompanyLegalDocObj>();
-    //     // this.custDataCompanyObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
-
-    //     // this.CustDataCompanyForm.controls['companyMainData']['controls']["TaxIdNo"].enable();
-    //   }
-    // }
   }
 
   CopyCustomerEvent(event) {
@@ -287,11 +205,14 @@ export class CustMainDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {CustId: event.CustId}).subscribe(
       (response) => {
-        this.CopyCustomer(response);
+        if(event.MrCustTypeCode == CommonConstant.CustTypePersonal)
+        this.CopyCustomerPersonal(response);
+        else
+        this.CopyCustomerCompany(response);
       });
   }
 
-  CopyCustomer(response){
+  CopyCustomerPersonal(response){
     if(response["CustObj"] != undefined){
       this.CustMainDataForm.patchValue({
         MrIdTypeCode: response["CustObj"].MrIdTypeCode,
@@ -315,9 +236,44 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls["BirthPlace"].disable();
       this.CustMainDataForm.controls["BirthDt"].disable();
     }
+
+    if (response["CustAddrLegalObj"] != undefined) {
+      this.legalAddrObj.Addr = response["CustAddrLegalObj"].Addr;
+      this.legalAddrObj.AreaCode1 = response["CustAddrLegalObj"].AreaCode1;
+      this.legalAddrObj.AreaCode2 = response["CustAddrLegalObj"].AreaCode2;
+      this.legalAddrObj.AreaCode3 = response["CustAddrLegalObj"].AreaCode3;
+      this.legalAddrObj.AreaCode4 = response["CustAddrLegalObj"].AreaCode4;
+      this.legalAddrObj.City = response["CustAddrLegalObj"].City;
+      this.legalAddrObj.Fax = response["CustAddrLegalObj"].Fax;
+      this.legalAddrObj.FaxArea = response["CustAddrLegalObj"].FaxArea;
+      this.legalAddrObj.Phn1 = response["CustAddrLegalObj"].Phn1;
+      this.legalAddrObj.Phn2 = response["CustAddrLegalObj"].Phn2;
+      this.legalAddrObj.PhnArea1 = response["CustAddrLegalObj"].PhnArea1;
+      this.legalAddrObj.PhnArea2 = response["CustAddrLegalObj"].PhnArea2;
+      this.legalAddrObj.PhnExt1 = response["CustAddrLegalObj"].PhnExt1;
+      this.legalAddrObj.PhnExt2 = response["CustAddrLegalObj"].PhnExt2;
+
+      this.inputFieldAddressObj.inputLookupObj.nameSelect = response["CustAddrLegalObj"].Zipcode;
+      this.inputFieldAddressObj.inputLookupObj.jsonSelect = { Zipcode: response["CustAddrLegalObj"].Zipcode };
+      this.inputAddressObj.default = this.legalAddrObj;
+      this.inputAddressObj.inputField = this.inputFieldAddressObj;
+    }
+  }
+  
+  CopyCustomerCompany(response){
   }
 
   ClearExpDt(){
+
+  }
+
+  SaveForm(enjiForm: NgForm){
+    enjiForm.reset();
+    console.log(this.CustMainDataForm)
+  }
+
+  Cancel(){
+    console.log(this.CustMainDataForm.value)
 
   }
 }
