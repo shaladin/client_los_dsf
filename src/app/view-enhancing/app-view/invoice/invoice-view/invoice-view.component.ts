@@ -14,7 +14,7 @@ export class InvoiceViewComponent implements OnInit {
   invoiceDataList: Object;
   @Input() AppId: number;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
 
   }
 

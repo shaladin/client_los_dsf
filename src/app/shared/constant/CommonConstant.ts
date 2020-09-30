@@ -448,6 +448,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
+  public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -466,7 +467,7 @@ export class CommonConstant {
   //SUBSIDY FROM TYPE
   public static SubsidyFromTypeAtpm = "ATPM";
   public static SubsidyFromTypeSupplier = "SUPPLIER";
-
+  public static SubsidyFromTypeIns = "INS";
 
   //SCORE TYPE
   public static ScoreTypeScoring = "SCORING";

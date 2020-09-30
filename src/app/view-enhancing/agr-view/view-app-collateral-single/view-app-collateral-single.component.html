@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
       </div>
       <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
-      <div *ngIf="this.AppCollateralDocs?.length">
+      <div *ngIf="AppCollateralDocs?.length">
         <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
         </lib-ucSubsection>
         <div class="form-body" id="AddCollDocument">

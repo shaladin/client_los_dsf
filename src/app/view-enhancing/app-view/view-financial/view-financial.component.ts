@@ -12,8 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "view-financial",
-  templateUrl: "./view-financial.component.html",
-  providers: [NGXToastrService]
+  templateUrl: "./view-financial.component.html"
 })
 
 export class ViewFinancialComponent implements OnInit {
@@ -24,7 +23,7 @@ export class ViewFinancialComponent implements OnInit {
   appObj: NapAppModel = new NapAppModel();
   listInstallment: Array<InstallmentObj> = new Array<InstallmentObj>();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
   }
 
   ngOnInit() {

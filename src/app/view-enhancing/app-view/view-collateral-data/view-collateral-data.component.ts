@@ -19,7 +19,7 @@ export class ViewCollateralDataComponent implements OnInit {
   AppId: number;  @Input() appId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  AppCollateralDocs: AppCollateralDocObj = new AppCollateralDocObj();
+  AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
   IsHidden: boolean = true;
   arrValue = [];
   @Output() outputTab: EventEmitter<boolean> = new EventEmitter();
@@ -65,6 +65,8 @@ export class ViewCollateralDataComponent implements OnInit {
         (response) => {
           this.AppCollateralObj = response;        
           this.arrValue.push(this.AppCollateralObj.AppCollateralId);
+          this.viewGenericObj.whereValue = this.arrValue;
+          this.viewUOLObj.whereValue = this.arrValue;
           this.IsReady = true;
           this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
             (response) => {

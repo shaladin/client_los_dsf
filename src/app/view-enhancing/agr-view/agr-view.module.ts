@@ -32,6 +32,9 @@ import { ViewDeviationComponent } from "./view-deviation/view-deviation.componen
 import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-order.component";
 import { ViewAgrmntDocumentComponent } from "./view-document/view-document.component";
 import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.component";
+import { AgrMainInfoComponent } from "../agr-main-info/agr-main-info.component";
+import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
+import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
 
 
 @NgModule({
@@ -54,6 +57,8 @@ import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.componen
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
+        AppCustViewComponentsModule,
+        AppViewComponentsModule
     ],
     declarations: [
         AgreementViewContainerComponent,
@@ -70,7 +75,8 @@ import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.componen
         ViewDeviationComponent,
         ViewDeliveryOrderComponent,
         ViewAgrmntSummaryComponent,
-        ViewAgrmntDocumentComponent
+        ViewAgrmntDocumentComponent,
+        AgrMainInfoComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

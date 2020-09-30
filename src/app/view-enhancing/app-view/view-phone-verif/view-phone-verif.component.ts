@@ -10,8 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "view-phone-verif",
-  templateUrl: "./view-phone-verif.component.html",
-  providers: [NGXToastrService]
+  templateUrl: "./view-phone-verif.component.html"
 })
 export class ViewPhoneVerifComponent implements OnInit {
 
@@ -25,7 +24,7 @@ export class ViewPhoneVerifComponent implements OnInit {
   AppObj: any;
   phoneVerifObj: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
 
     //this.route.queryParams.subscribe(params => {
     //  if (params['AppId'] != null) {

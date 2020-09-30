@@ -27,7 +27,7 @@ export class InvoiceDataComponent implements OnInit {
   IsDisableCustFctr: boolean = true;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   arrAddCrit;
-  
+
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
   }
@@ -52,15 +52,15 @@ export class InvoiceDataComponent implements OnInit {
 
     this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
-          this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
-            (response2) => {
-              if (response2["mouCustListedCustFctrObjs"]["length"] > 0) {
-                this.IsDisableCustFctr = false;
-              } else {
-                this.IsDisableCustFctr = true;
-              }
-            });
-        });
+        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
+          (response2) => {
+            if (response2["length"] > 0) {
+              this.IsDisableCustFctr = false;
+            } else {
+              this.IsDisableCustFctr = true;
+            }
+          });
+      });
 
     var obj = {
       AppId: this.AppId,

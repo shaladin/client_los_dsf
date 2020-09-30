@@ -7,7 +7,7 @@
         </span>
       </div>
       <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
-      <div *ngIf="this.AppCollateralDocs?.length">
+      <div *ngIf="AppCollateralDocs?.length">
         <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
         </lib-ucSubsection>
         <div class="form-body" id="AddCollDocument">

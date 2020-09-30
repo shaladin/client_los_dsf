@@ -82,21 +82,19 @@
               <div class="row" id="contactInfo">
                 <div class="col-md-6">
                   <!-- left -->
-                  <div class="form-group row">
+                  <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
                     <label class="col-md-4 adInsLabel">Contact Name </label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="ContactName" (change)="ChangeNameValue()"
+                      <input type="text" class="form-control adInsInput width-100-per" formControlName="ContactName" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactName.invalid }">
                       <lib-uc-show-errors [control]="CompanyForm.controls.ContactName"
                                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Mobile Phone 1</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Mobile Phone 1</label> -->
+                  <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
                     <label class="col-md-4 adInsLabel">Mobile Phone 1</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1"
+                      <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
                       <lib-uc-show-errors [control]="CompanyForm.controls.MobilePhnNo1"
                                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -105,18 +103,16 @@
                   <div class="form-group row">
                     <label class="col-md-4 adInsLabel">Mobile Phone 2</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo2"
+                      <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo2" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo2.invalid }">
                       <lib-uc-show-errors [control]="CompanyForm.controls.MobilePhnNo2"
                                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Email</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Email</label> -->
+                  <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
                     <label class="col-md-4 adInsLabel">Email</label>
                     <div class="col-md-8">
-                      <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="ContactEmail"
+                      <input type="text" class="form-control" formControlName="ContactEmail" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactEmail.invalid }">
                       <lib-uc-show-errors [control]="CompanyForm.controls.ContactEmail"
                                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -125,12 +121,10 @@
                 </div>
                 <!-- right -->
                 <div class="col-md-6">
-                  <div class="form-group row">
-                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Position</label>
-                    <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Position</label> -->
+                  <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
                     <label class="col-md-4 adInsLabel">Position</label>
                     <div class="col-md-8">
-                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode"
+                      <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode" (change)="ChangeContactInfo()"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrJobPositionCode.invalid }">
                         <option value="">-Select One-</option>
                         <option *ngFor="let it of MrJobPositionCode" value="{{it.MasterCode}}">
@@ -141,26 +135,26 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
                     <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Phone No 1</label> -->
                     <!-- <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Phone No (Fix Line) 1</label> -->
                     <label class="col-md-4 adInsLabel">Phone No 1</label>
                     <div class="col-md-8">
                       <div class="form-group row">
                         <div class="col-md-3" style="border-right: 1px solid grey">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea1"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea1" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnArea1.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.PhnArea1" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
                         <div class="col-md-6" style="border-right: 1px solid grey">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn1"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn1" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Phn1.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.Phn1" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
                         <div class="col-md-3">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt1"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt1" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnExt1.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.PhnExt1" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -173,19 +167,19 @@
                     <div class="col-md-8">
                       <div class="form-group row ">
                         <div class="col-md-3" style="border-right: 1px solid grey">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea2"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnArea2" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnArea2.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.PhnArea2" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
                         <div class="col-md-6" style="border-right: 1px solid grey">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn2"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Phn2" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Phn2.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.Phn2" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
                         <div class="col-md-3">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt2"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="PhnExt2" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.PhnExt2.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.PhnExt2" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -198,13 +192,13 @@
                     <div class="col-md-8">
                       <div class="form-group row ">
                         <div class="col-md-3" style="border-right: 1px solid grey">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="FaxArea"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="FaxArea" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.FaxArea.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.FaxArea" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
                         <div class="col-md-6">
-                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Fax"
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Fax" (focusout)="ChangeContactInfo()"
                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.Fax.invalid }">
                           <lib-uc-show-errors [control]="CompanyForm.controls.Fax" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
