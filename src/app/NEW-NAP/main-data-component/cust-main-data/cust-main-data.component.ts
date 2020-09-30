@@ -78,8 +78,7 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.title = "Address";
     this.inputAddressObj.showOwnership = true;
-    this.inputFieldAddressObj = new InputFieldObj();
-    this.inputFieldAddressObj.inputLookupObj = new InputLookupObj();
+    this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.isUcAddressReady = true;
 
     this.GetRefMasterPersonal();
@@ -195,20 +194,20 @@ export class CustMainDataComponent implements OnInit {
     this.SetLookup(value);
     
     if (!firstInit) {
-      this.CustMainDataForm.clearValidators();
       this.CustMainDataForm.reset();
-      this.CustMainDataForm.enable();
+      this.CustMainDataForm.clearValidators();
+      this.CustMainDataForm.updateValueAndValidity();
       if (value == CommonConstant.CustTypePersonal) {
         this.GetRefMasterPersonal();
-        this.CustMainDataForm.controls.MotherMaidenName.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.BirthDt.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.BirthPlace.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.MrIdTypeCode.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.IdNo.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+        this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
+        this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
         this.CustMainDataForm.controls.TaxIdNo.clearValidators();
       } else {
         this.GetRefMasterCompany();
-        this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
         this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
         this.CustMainDataForm.controls.BirthDt.clearValidators();
         this.CustMainDataForm.controls.BirthPlace.clearValidators();
@@ -220,21 +219,20 @@ export class CustMainDataComponent implements OnInit {
   }
 
   CopyCustomerEvent(event) {
-    if (event.MrCustTypeCode == CommonConstant.CustTypePersonal)
+    if (event.MrCustTypeCode == CommonConstant.CustTypePersonal){
       this.InputLookupPersonalObj.isReadonly = true;
-    else
+      this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+        (response) => {
+            this.CopyCustomerPersonal(response);
+        });
+    }else{
       this.InputLookupCompanyObj.isReadonly = true;
-
-
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
-      (response) => {
-        if (event.MrCustTypeCode == CommonConstant.CustTypePersonal)
-          this.CopyCustomerPersonal(response);
-        else
-          this.CopyCustomerCompany(response);
-
-        this.CustMainDataForm.disable();
-      });
+      this.http.post(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
+        (response) => {
+            this.CopyCustomerCompany(response);
+        });
+    }
+    this.CustMainDataForm.disable();
   }
 
   CopyCustomerPersonal(response) {
@@ -273,33 +271,32 @@ export class CustMainDataComponent implements OnInit {
 
     if (response["CustCompanyObj"] != undefined){
       this.CustMainDataForm.patchValue({
-        MrCompanyTypeCode: response["CustCompanyObj"].MrIdTypeCode,
+        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
       });
     }
     this.CopyLegalAddr(response["CustAddrLegalObj"]);
   }
 
-  CopyLegalAddr(reponse){
-    if (reponse != undefined) {
-      this.legalAddrObj.Addr = reponse.Addr;
-      this.legalAddrObj.AreaCode1 = reponse.AreaCode1;
-      this.legalAddrObj.AreaCode2 = reponse.AreaCode2;
-      this.legalAddrObj.AreaCode3 = reponse.AreaCode3;
-      this.legalAddrObj.AreaCode4 = reponse.AreaCode4;
-      this.legalAddrObj.City = reponse.City;
-      this.legalAddrObj.Fax = reponse.Fax;
-      this.legalAddrObj.FaxArea = reponse.FaxArea;
-      this.legalAddrObj.Phn1 = reponse.Phn1;
-      this.legalAddrObj.Phn2 = reponse.Phn2;
-      this.legalAddrObj.PhnArea1 = reponse.PhnArea1;
-      this.legalAddrObj.PhnArea2 = reponse.PhnArea2;
-      this.legalAddrObj.PhnExt1 = reponse.PhnExt1;
-      this.legalAddrObj.PhnExt2 = reponse.PhnExt2;
+  CopyLegalAddr(response){
+    if (response != undefined) {
+      this.legalAddrObj.Addr = response.Addr;
+      this.legalAddrObj.AreaCode1 = response.AreaCode1;
+      this.legalAddrObj.AreaCode2 = response.AreaCode2;
+      this.legalAddrObj.AreaCode3 = response.AreaCode3;
+      this.legalAddrObj.AreaCode4 = response.AreaCode4;
+      this.legalAddrObj.City = response.City;
+      this.legalAddrObj.Fax = response.Fax;
+      this.legalAddrObj.FaxArea = response.FaxArea;
+      this.legalAddrObj.Phn1 = response.Phn1;
+      this.legalAddrObj.Phn2 = response.Phn2;
+      this.legalAddrObj.PhnArea1 = response.PhnArea1;
+      this.legalAddrObj.PhnArea2 = response.PhnArea2;
+      this.legalAddrObj.PhnExt1 = response.PhnExt1;
+      this.legalAddrObj.PhnExt2 = response.PhnExt2;
 
-      this.inputFieldAddressObj.inputLookupObj.nameSelect = reponse.Zipcode;
-      this.inputFieldAddressObj.inputLookupObj.jsonSelect = { Zipcode: reponse.Zipcode };
+      this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
+      this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
       this.inputAddressObj.default = this.legalAddrObj;
-      this.inputAddressObj.inputField = this.inputFieldAddressObj;
     }
   }
 
