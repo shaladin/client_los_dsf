@@ -195,20 +195,20 @@ export class CustMainDataComponent implements OnInit {
     this.SetLookup(value);
     
     if (!firstInit) {
-      this.CustMainDataForm.clearValidators();
       this.CustMainDataForm.reset();
-      this.CustMainDataForm.enable();
+      this.CustMainDataForm.clearValidators();
+      this.CustMainDataForm.updateValueAndValidity();
       if (value == CommonConstant.CustTypePersonal) {
         this.GetRefMasterPersonal();
-        this.CustMainDataForm.controls.MotherMaidenName.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.BirthDt.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.BirthPlace.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.MrIdTypeCode.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.IdNo.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+        this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
+        this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
         this.CustMainDataForm.controls.TaxIdNo.clearValidators();
       } else {
         this.GetRefMasterCompany();
-        this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
         this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
         this.CustMainDataForm.controls.BirthDt.clearValidators();
         this.CustMainDataForm.controls.BirthPlace.clearValidators();
@@ -220,21 +220,20 @@ export class CustMainDataComponent implements OnInit {
   }
 
   CopyCustomerEvent(event) {
-    if (event.MrCustTypeCode == CommonConstant.CustTypePersonal)
+    if (event.MrCustTypeCode == CommonConstant.CustTypePersonal){
       this.InputLookupPersonalObj.isReadonly = true;
-    else
+      this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+        (response) => {
+            this.CopyCustomerPersonal(response);
+        });
+    }else{
       this.InputLookupCompanyObj.isReadonly = true;
-
-
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
-      (response) => {
-        if (event.MrCustTypeCode == CommonConstant.CustTypePersonal)
-          this.CopyCustomerPersonal(response);
-        else
-          this.CopyCustomerCompany(response);
-
-        this.CustMainDataForm.disable();
-      });
+      this.http.post(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
+        (response) => {
+            this.CopyCustomerCompany(response);
+        });
+    }
+    this.CustMainDataForm.disable();
   }
 
   CopyCustomerPersonal(response) {
@@ -273,7 +272,7 @@ export class CustMainDataComponent implements OnInit {
 
     if (response["CustCompanyObj"] != undefined){
       this.CustMainDataForm.patchValue({
-        MrCompanyTypeCode: response["CustCompanyObj"].MrIdTypeCode,
+        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
       });
     }
     this.CopyLegalAddr(response["CustAddrLegalObj"]);
