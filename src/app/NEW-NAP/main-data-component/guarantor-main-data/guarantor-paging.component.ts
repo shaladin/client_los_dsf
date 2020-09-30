@@ -17,21 +17,21 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class GuarantorPagingComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputGridObj: any;
-  result: any = new Array();
-  resultData: any;
+  result: Array<any> = new Array();
+  resultData: Array<any> = new Array();
   closeResult: any;
-  AppGuarantorId: any;
-  MrGuarantorTypeCode: any;
-  mode: any;
+  AppGuarantorId: number;
+  MrGuarantorTypeCode: string;
+  mode: string;
   appWizardObj: AppWizardObj;
   closeChk: any;
-  MrCustRelationshipCode: any = new Array();
+  MrCustRelationshipCode: Array<any> = new Array();
   guarantorObj: GuarantorObj;
   custMainDataMode: string;
 
@@ -63,6 +63,7 @@ export class GuarantorPagingComponent implements OnInit {
     this.open(content);
     this.AppGuarantorId = null;
   }
+
   open(content) {
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

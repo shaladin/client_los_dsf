@@ -24,7 +24,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 })
 export class CustMainDataComponent implements OnInit {
   @Input() CustMainDataMode: string;
-  AppId: number;
+  @Input() AppId: number;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
@@ -32,9 +32,9 @@ export class CustMainDataComponent implements OnInit {
   MaxDate: Date;
   InputLookupPersonalObj: InputLookupObj = new InputLookupObj();
   InputLookupCompanyObj: InputLookupObj = new InputLookupObj();
-  inputAddressObj: InputAddressObj;
-  inputFieldAddressObj: InputFieldObj;
-  legalAddrObj: AddrObj;
+  inputAddressObj: InputAddressObj = new InputAddressObj();
+  inputFieldAddressObj: InputFieldObj = new InputFieldObj();;
+  legalAddrObj: AddrObj = new AddrObj();;
   CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -81,9 +81,9 @@ export class CustMainDataComponent implements OnInit {
         
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
+    this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.title = "Address";
     this.inputAddressObj.showOwnership = true;
-    this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.isUcAddressReady = true;
 
     this.GetRefMasterPersonal();
@@ -311,6 +311,8 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.BirthDt.disable();
     this.CustMainDataForm.controls.MotherMaidenName.disable();
     this.CustMainDataForm.controls.MrCompanyTypeCode.disable();
+    this.inputAddressObj.isReadonly = true;
+    this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
   }
 
   CopyCustomerPersonal(response) {
@@ -373,10 +375,11 @@ export class CustMainDataComponent implements OnInit {
       this.legalAddrObj.PhnArea2 = response.PhnArea2;
       this.legalAddrObj.PhnExt1 = response.PhnExt1;
       this.legalAddrObj.PhnExt2 = response.PhnExt2;
+      this.legalAddrObj.MrHouseOwnershipCode = response.MrBuildingOwnershipCode;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
-      this.inputAddressObj.isReadonly = true;
+      this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].disable();
       this.inputAddressObj.default = this.legalAddrObj;
     }
   }
@@ -387,6 +390,9 @@ export class CustMainDataComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     enjiForm.resetForm();
+    this.inputAddressObj.isReadonly = false;
+    this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;
+    this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].enable();
     this.CheckBox();
     console.log(this.CustMainDataForm)
   }
