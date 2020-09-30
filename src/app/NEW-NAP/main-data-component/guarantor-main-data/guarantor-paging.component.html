@@ -58,6 +58,10 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <app-guarantor-main-data [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"
-                 (closeX)="close($event)"></app-guarantor-main-data>
+  <div class="modal-body px-3">
+    <lib-ucSubsection [id]="'AddEditGuarantorId'" [title]="'Add / Edit Guarantor'" [panel]="'AddEditGuarantor'"></lib-ucSubsection>
+    <div id="AddEditGuarantor">
+      <app-cust-main-data (closeX)="close($event)" [CustMainDataMode]="custMainDataMode"></app-cust-main-data>
+    </div>
+  </div>
 </ng-template>

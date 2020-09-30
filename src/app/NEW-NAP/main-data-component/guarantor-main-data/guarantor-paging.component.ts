@@ -33,6 +33,7 @@ export class GuarantorPagingComponent implements OnInit {
   closeChk: any;
   MrCustRelationshipCode: any = new Array();
   guarantorObj: GuarantorObj;
+  custMainDataMode: string;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -41,6 +42,7 @@ export class GuarantorPagingComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
+    this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
 
     this.guarantorObj = new GuarantorObj();
     this.guarantorObj.AppId = this.AppId;
