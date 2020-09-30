@@ -23,9 +23,11 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class CustMainDataComponent implements OnInit {
+  @Input() CustMainDataMode: string;
   AppId: number;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
+  isIncludeCustRelation: boolean = false;
   MrCustTypeCode: string;
   MaxDate: Date;
   InputLookupPersonalObj: InputLookupObj = new InputLookupObj();
@@ -37,6 +39,7 @@ export class CustMainDataComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  MrCustRelationshipObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   CompanyTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
@@ -54,6 +57,7 @@ export class CustMainDataComponent implements OnInit {
 
   CustMainDataForm = this.fb.group({
     MrCustTypeCode: [],
+    MrCustRelationshipCode: ['', Validators.maxLength(50)],
     CustName: ['', Validators.required],
     CompanyType: [''],
     CustModelCode: ['', Validators.required],
@@ -72,8 +76,9 @@ export class CustMainDataComponent implements OnInit {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
+    this.InitCustMainDataMode();
     this.SetLookup();
-
+        
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.title = "Address";
@@ -82,6 +87,26 @@ export class CustMainDataComponent implements OnInit {
     this.isUcAddressReady = true;
 
     this.GetRefMasterPersonal();
+  }
+
+  InitCustMainDataMode()
+  {
+    switch(this.CustMainDataMode) {
+      case CommonConstant.CustMainDataModeCust:
+        this.isIncludeCustRelation = false;
+        this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+      break;
+      case CommonConstant.CustMainDataModeGuarantor:    
+        this.isIncludeCustRelation = true;
+        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+      break;
+      case CommonConstant.CustMainDataModeFamily:
+        this.isIncludeCustRelation = true;
+        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+      break;
+      default:
+        this.isIncludeCustRelation = false;    
+    }
   }
 
   SetLookup(value: string = "PERSONAL") {
@@ -163,6 +188,23 @@ export class CustMainDataComponent implements OnInit {
         }
       }
     );
+    
+    if(this.isIncludeCustRelation)
+    {
+      var refCustRelObj = {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
+        ReserveField1: CommonConstant.CustTypePersonal,
+        RowVersion: ""
+      }
+      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        (response) => {
+          this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
+          //if (this.mode != "edit") 
+            this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipObj[0].Key });
+        }
+      );
+    }
+  
   }
 
   GetRefMasterCompany() {
@@ -187,6 +229,22 @@ export class CustMainDataComponent implements OnInit {
         }
       }
     );
+  
+    if(this.isIncludeCustRelation)
+    {
+      var refCustRelObj = {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+        ReserveField1: CommonConstant.CustTypePersonal,
+        RowVersion: ""
+      }
+      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        (response) => {
+          this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
+          //if (this.mode != "edit") 
+            this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipObj[0].Key });
+        }
+      );
+    }
   }
 
   CheckBox(value: string = 'PERSONAL', firstInit: boolean = false) {
@@ -213,6 +271,11 @@ export class CustMainDataComponent implements OnInit {
         this.CustMainDataForm.controls.MrGenderCode.clearValidators();
         this.CustMainDataForm.controls.IdNo.clearValidators();
       }
+      if(this.isIncludeCustRelation)
+        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+      else
+       this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+       
       this.CustMainDataForm.updateValueAndValidity();
     }
   }

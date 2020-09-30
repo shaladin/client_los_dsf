@@ -52,6 +52,12 @@ export class CommonConstant {
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
+  //CUST MAIN DATA MODE
+  public static CustMainDataModeCust = "CUST";
+  public static CustMainDataModeGuarantor = "GUARANTOR";
+  public static CustMainDataModeFamily = "FAMILY";
+  
+
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
 

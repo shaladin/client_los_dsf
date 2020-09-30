@@ -8,14 +8,12 @@ import { MainDataComponentRoutingModule } from "./main-data-component-routing.mo
 import { MainDataComponentComponent } from "./main-data-component.component";
 import { CustMainDataComponent } from "./cust-main-data/cust-main-data.component";
 import { FamilyMainDataComponent } from "./family-main-data/family-main-data.component";
-import { GuarantorMainDataComponent } from "./guarantor-main-data/guarantor-main-data.component";
 
 @NgModule({
     declarations: [
         MainDataComponentComponent,
         CustMainDataComponent,
         FamilyMainDataComponent,
-        GuarantorMainDataComponent
     ],
     imports: [
         CommonModule,
