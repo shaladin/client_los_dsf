@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 
 @Component({
   selector: 'app-los-error-data-monitoring',
@@ -28,11 +27,10 @@ export class LOSErrorDataMonitoringComponent implements OnInit {
     console.log(ev);
 
     if (ev.Key == "ReSend") {
-      var tempObj: any = {
-        Key: ev.RowObj.AppNo,
-        Value: ev.RowObj.ErrorMessage
+      var LosAppObj = {
+        AppNo: ev.RowObj.AppNo
       };
-      await this.http.post(URLConstant.TestReceivedError, { "json": JSON.stringify(tempObj) }).toPromise().then(
+      await this.http.post(URLConstant.InsertToR2AppStaging, LosAppObj).toPromise().then(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

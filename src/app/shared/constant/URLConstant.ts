@@ -1135,5 +1135,5 @@ export class URLConstant {
     public static GetDocIsExpDtMandatory = environment.losUrl + "/DocumentExpDt/GetDocIsExpDtMandatory";
 
     // INTEGRATION
-    public static TestReceivedError = environment.losUrl + "/LmsTest/TestReceivedError";
+    public static InsertToR2AppStaging = environment.losUrl + "/LmsTest/InsertToR2AppStaging";
 }
