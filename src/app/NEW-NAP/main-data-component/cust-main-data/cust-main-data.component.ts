@@ -36,7 +36,8 @@ export class CustMainDataComponent implements OnInit {
   GenderObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj>;
   CompanyTypeObj: Array<KeyValueObj>;
-  UserAccess: any;
+  ArrAddCrit: Array<CriteriaObj>;
+  UserAccess: Object;
 
   constructor(
     private fb: FormBuilder,
@@ -66,9 +67,17 @@ export class CustMainDataComponent implements OnInit {
 
   ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    this.MaxDate = this.UserAccess.BusinessDt;
+    this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
-    this.SetLookup();
+    
+    this.InputLookupCustomerObj = new InputLookupObj();
+    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
+    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
+    this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+    this.InputLookupCustomerObj.isReadonly = false;
+    this.SetCritLookup();
 
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
@@ -81,22 +90,16 @@ export class CustMainDataComponent implements OnInit {
     this.GetRefMasterPersonal();
   }
 
-  SetLookup(value: string = "PERSONAL"){
-    this.InputLookupCustomerObj = new InputLookupObj();
-    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+  SetCritLookup(value: string = "PERSONAL"){
     this.InputLookupCustomerObj.isReady = false;
-    this.InputLookupCustomerObj.addCritInput = new Array();
-    this.InputLookupCustomerObj.isReadonly = false;
-
+    this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();
+    critObj.DataType = "text";
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
     critObj.value = value;
-    this.InputLookupCustomerObj.addCritInput.push(critObj);
+    this.ArrAddCrit.push(critObj);
+    this.InputLookupCustomerObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustomerObj.isReady = true;
   }
 
@@ -177,7 +180,7 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.clearValidators();
     this.CustMainDataForm.enable();
 
-    this.SetLookup(value);
+    this.SetCritLookup(value);
     if(!firstInit){
       if(value == CommonConstant.CustTypePersonal){
         this.GetRefMasterPersonal();
@@ -209,6 +212,8 @@ export class CustMainDataComponent implements OnInit {
         this.CopyCustomerPersonal(response);
         else
         this.CopyCustomerCompany(response);
+
+        this.CustMainDataForm.disable();
       });
   }
 
@@ -221,9 +226,6 @@ export class CustMainDataComponent implements OnInit {
         TaxIdNo: response["CustObj"].TaxIdNo
       });
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
-      this.CustMainDataForm.controls["MrIdTypeCode"].disable();
-      this.CustMainDataForm.controls["IdNo"].disable();
-      this.CustMainDataForm.controls["TaxIdNo"].disable();
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -268,7 +270,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   SaveForm(enjiForm: NgForm){
-    enjiForm.reset();
+    enjiForm.resetForm();
     console.log(this.CustMainDataForm)
   }
 
