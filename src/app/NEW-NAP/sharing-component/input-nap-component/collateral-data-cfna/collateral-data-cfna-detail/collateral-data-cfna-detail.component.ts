@@ -165,6 +165,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.http.post(URLConstant.GetListKeyValueByCode, {}).subscribe(
       (response) => {
         this.CollTypeList = response[CommonConstant.ReturnObj];
+        this.CollTypeList.sort((a,b) => a.Key.localeCompare(b.Key));
         if (this.mode != "edit") {
           this.AddCollForm.patchValue({
             AssetTypeCode: this.CollTypeList[0].Key
