@@ -66,7 +66,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     GetAppSubsidy(){
-      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
+      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(  // get biasa
         (response) => {
           var subdObj = response;
 
@@ -100,7 +100,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     {
       this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
         (response) => {
-          this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
+          this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];   /// ini gaktau buat apa
         }
       );
     }
@@ -174,7 +174,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
     
     LoadDDLSubsidyAlloc(fromTypeCode: string) {
-      this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode }).subscribe(
+      this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode, AppId : this.AppId }).subscribe(
         (response) => {
           this.AllocCodeOptions = response[CommonConstant.ReturnObj];
         }
@@ -182,18 +182,19 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-      this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
+      this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode, AppId : this.AppId }).subscribe(
         (response) => {
           this.SourceCodeOptions = response[CommonConstant.ReturnObj];
         }
       );
     }
   
-    LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) {
+    LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) { // ud ditamb
       this.http.post(URLConstant.GetListSubsidyValueType, 
                       { SubsidyFromType: fromTypeCode, 
                         SubsidyAllocCode: allocCode,
-                        SubsidySourceCode: sourceCode
+                        SubsidySourceCode: sourceCode,
+                        AppId : this.AppId
                       }).subscribe(
         (response) => {
           this.ValueTypeOptions = response[CommonConstant.ReturnObj];
