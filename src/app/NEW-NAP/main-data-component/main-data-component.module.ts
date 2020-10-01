@@ -8,6 +8,7 @@ import { MainDataComponentRoutingModule } from "./main-data-component-routing.mo
 import { MainDataComponentComponent } from "./main-data-component.component";
 import { CustMainDataComponent } from "./cust-main-data/cust-main-data.component";
 import { FamilyMainDataComponent } from "./family-main-data/family-main-data.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { FamilyMainDataComponent } from "./family-main-data/family-main-data.com
         MatRadioModule,
         MainDataComponentRoutingModule,
         AdInsModule,
-        UcSubsectionModule
+        UcSubsectionModule,
+        TranslateModule,
     ],
     exports: [],
     providers: [
