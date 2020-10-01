@@ -149,7 +149,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLFromTypeCode() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSubsidyFromType }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId}).subscribe(
       (response) => {
         this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
 

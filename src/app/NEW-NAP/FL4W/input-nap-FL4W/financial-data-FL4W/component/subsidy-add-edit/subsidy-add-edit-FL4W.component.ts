@@ -66,7 +66,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     GetAppSubsidy(){
-      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(  // get biasa
+      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
         (response) => {
           var subdObj = response;
 
@@ -100,7 +100,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     {
       this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
         (response) => {
-          this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];   /// ini gaktau buat apa
+          this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
         }
       );
     }
@@ -150,7 +150,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
   
     LoadDDLFromTypeCode() {
-      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
+      this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId }).subscribe(
         (response) => {
           this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
 
@@ -189,7 +189,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       );
     }
   
-    LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) { // ud ditamb
+    LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) {
       this.http.post(URLConstant.GetListSubsidyValueType, 
                       { SubsidyFromType: fromTypeCode, 
                         SubsidyAllocCode: allocCode,
