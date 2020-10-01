@@ -13,6 +13,7 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { replaceAll } from 'chartist';
 
 
 
@@ -264,12 +265,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     //window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
 
-  Verif(VerifResultHid, SubjectName, SubjectType, IdSource) {
+  Verif(VerifResultHid, SubjectName, SubjectType, IdSource, SubjectRelation) {
     if (this.isReturnHandling == false) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource + "&WfTaskListId=" + this.wfTaskListId);
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Relation=" + SubjectRelation + "&Source=" + IdSource + "&WfTaskListId=" + this.wfTaskListId);
     }
     if (this.isReturnHandling == true) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Source=" + IdSource + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject/Verif?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName + "&Type=" + SubjectType + "&Relation=" + SubjectRelation + "&Source=" + IdSource + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
     }
   }
 

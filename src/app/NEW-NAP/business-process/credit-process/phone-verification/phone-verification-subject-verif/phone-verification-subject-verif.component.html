@@ -28,12 +28,22 @@
                 <label class="col-md-2  adInsLabel" translate>Customer Name</label>
                 <label class="col-md-4  " translate
                   >{{this.AppCustObj?.CustName}}</label>
-                <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
+                <!-- <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
                 <div class="col-md-4">
                   <select *ngIf="SubjectRelationObj" class="form-control" id="subjectRelationId"
                     formControlName="MrVerfSubjectRelationCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfSubjectRelationCode.invalid }">
                     <option *ngFor="let item of SubjectRelationObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div> -->
+                <label class="col-md-2  adins-required-label" translate>Result</label>
+                <div class="col-md-4">
+                  <select *ngIf="ResultObj" class="form-control" id="subjectResultId" (change)="ChangeResult()"
+                    formControlName="MrVerfResultHStatCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
+                    <option *ngFor="let item of ResultObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
@@ -47,16 +57,6 @@
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
                     <option *ngFor="let item of PhoneNumberObj" [value]="item.PhoneNumber">
                       {{item.PhoneType}}: {{item.PhoneNumber}}
-                    </option>
-                  </select>
-                </div>
-                <label class="col-md-2  adins-required-label" translate>Result</label>
-                <div class="col-md-4">
-                  <select *ngIf="ResultObj" class="form-control" id="subjectResultId" (change)="ChangeResult()"
-                    formControlName="MrVerfResultHStatCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
-                    <option *ngFor="let item of ResultObj" [value]="item.Key">
-                      {{item.Value}}
                     </option>
                   </select>
                 </div>
