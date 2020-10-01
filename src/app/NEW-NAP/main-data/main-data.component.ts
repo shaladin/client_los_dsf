@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -13,8 +12,7 @@ import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-main-data',
-  templateUrl: './main-data.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './main-data.component.html'
 })
 export class MainDataComponent implements OnInit {
   
@@ -86,7 +84,7 @@ export class MainDataComponent implements OnInit {
         if (response) {
           this.NapObj = response;
           //this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.AppStepIndex = 1;
+          this.AppStepIndex = 2;
           this.stepper.to(this.AppStepIndex);
         }
         else {
@@ -99,7 +97,6 @@ export class MainDataComponent implements OnInit {
       linear: false,
       animation: true
     })
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx => '+this.AppStepIndex)
     this.MakeViewReturnInfoObj();
   }
 

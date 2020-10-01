@@ -44,7 +44,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#customer-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
-                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab(CommonConstant.CustMainDataModeCust)">
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Customer Data</span>
               </button>
@@ -52,7 +52,7 @@
             <div class="line"></div>
             <div class="step" data-target="#guarantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab(CommonConstant.CustMainDataModeGuarantor)">
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('GUARANTOR')">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Guarantor Data</span>
               </button>
@@ -60,7 +60,7 @@
             <div class="line"></div>
             <div class="step" data-target="#family-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="family-tab"
-                id="family-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab(CommonConstant.CustMainDataModeFamily)">
+                id="family-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('FAMILY')">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Family Data</span>
               </button>
@@ -86,9 +86,9 @@
         </div>
 
         <div class="form-actions text-right">
-          <button type="button" class="btn btn-raised btn-warning" [routerLink]="['/Nap/CF2W/Paging']" [queryParams]="{LobCode:'CF2W'}" translate>
+          <!--button type="button" class="btn btn-raised btn-warning" [routerLink]="['/Nap/CF2W/Paging']" [queryParams]="{LobCode:'CF2W'}" translate>
             <i class="fa fa-check-square-o"></i> Cancel
-          </button>
+          </button-->
           <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
             [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
             <i class="fa fa-check-square-o"></i> Back
