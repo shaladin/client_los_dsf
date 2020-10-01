@@ -11,11 +11,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
-  selector: 'app-guarantor-paging',
-  templateUrl: './guarantor-paging.component.html',
+  selector: 'app-guarantor-main-data-paging',
+  templateUrl: './guarantor-main-data-paging.component.html',
   styleUrls: []
 })
-export class GuarantorPagingComponent implements OnInit {
+export class GuarantorMainDataPagingComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() showCancel: boolean = true;

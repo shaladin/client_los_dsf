@@ -4,23 +4,24 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
-import { MainDataComponentRoutingModule } from "./main-data-component-routing.module";
-import { MainDataComponentComponent } from "./main-data-component.component";
-import { CustMainDataComponent } from "./cust-main-data/cust-main-data.component";
-import { FamilyMainDataComponent } from "./family-main-data/family-main-data.component";
+import { MainDataComponent } from "./main-data.component";
+import { MainDataRoutingModule } from "./main-data-routing.module";
+import { CustMainDataComponent } from "../sharing-component/main-data-component/cust-main-data/cust-main-data.component";
+import { GuarantorMainDataPagingComponent } from "../sharing-component/main-data-component/guarantor-main-data/guarantor-main-data-paging.component";
+
 
 @NgModule({
     declarations: [
-        MainDataComponentComponent,
+        MainDataComponent,
         CustMainDataComponent,
-        FamilyMainDataComponent,
+        GuarantorMainDataPagingComponent,
     ],
     imports: [
         CommonModule,
         MatRadioModule,
-        MainDataComponentRoutingModule,
         AdInsModule,
-        UcSubsectionModule
+        UcSubsectionModule,
+        MainDataRoutingModule
     ],
     exports: [],
     providers: [
@@ -28,4 +29,4 @@ import { FamilyMainDataComponent } from "./family-main-data/family-main-data.com
       ]
 })
 
-export class MainDataComponentModule { }
+export class MainDataModule { }

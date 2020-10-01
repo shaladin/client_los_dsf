@@ -70,10 +70,9 @@ import { CollateralDataCfnaComponent } from './collateral-data-cfna/collateral-d
 import { CollateralDataCfnaPagingComponent } from './collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging.component';
 import { CollateralDataCfnaDetailComponent } from './collateral-data-cfna/collateral-data-cfna-detail/collateral-data-cfna-detail.component';
 import { GuarantorComponent } from "./guarantor-data/guarantor.component";
-import { GuarantorPagingComponent } from "app/NEW-NAP/main-data-component/guarantor-main-data/guarantor-paging.component";
-import { CustMainDataComponent } from "app/NEW-NAP/main-data-component/cust-main-data/cust-main-data.component";
-import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
+import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
+import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -101,7 +100,6 @@ export const customCurrencyMaskConfig = {
     CustCompanyContactInformationComponent,
     CustCompanyFinancialDataComponent,
     CustLegalDocComponent,
-    CustMainDataComponent,
     TcSharingComponentModule,
     GuarantorComponent,
     GuarantorLegalDocComponent,
@@ -180,7 +178,6 @@ export const customCurrencyMaskConfig = {
     CustCompanyContactInformationComponent,
     CustCompanyFinancialDataComponent,
     CustLegalDocComponent,
-    CustMainDataComponent,
     GuarantorComponent,
     GuarantorLegalDocComponent,
     GuarantorPagingComponent,
