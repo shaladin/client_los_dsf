@@ -64,12 +64,16 @@ export class TermConditionsComponent implements OnInit {
                   Notes: this.AppTcList[i].Notes,
                   IsAdditional: this.AppTcList[i].IsAdditional,
                   IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
+                  IsWaivable: this.AppTcList[i].IsWaivable,
+                  IsWaived: [{value: this.AppTcList[i].IsWaived, disabled: this.AppTcList[i].IsWaivable}],
                   RowVersion: this.AppTcList[i].RowVersion
                 }) as FormGroup;
     
                 if (this.AppTcList[i].IsMandatory == true) {
                   if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep){
-                    TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                    if(!this.AppTcList[i].IsWaived){
+                      TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                    }
                   }
                 }
                 if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
@@ -111,12 +115,16 @@ export class TermConditionsComponent implements OnInit {
                       Notes: this.AppTcList[i].Notes,
                       IsAdditional: this.AppTcList[i].IsAdditional,
                       IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
+                      IsWaivable: this.AppTcList[i].IsWaivable,
+                      IsWaived: [{value: this.AppTcList[i].IsWaived, disabled: this.AppTcList[i].IsWaivable}],
                       RowVersion: this.AppTcList[i].RowVersion
                     }) as FormGroup;
     
                     if (this.AppTcList[i].IsMandatory == true) {
                       if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep){
-                        TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                        if(!this.AppTcList[i].IsWaived){
+                          TCDetail.controls.PromisedDt.setValidators([Validators.required]);
+                        }
                       }
                     }
                     if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
@@ -162,45 +170,87 @@ export class TermConditionsComponent implements OnInit {
 
       if (isMandatory) {
         if (isChecked) {
-          if(isExpDtMandatory){
-            item.get("ExpiredDt").enable();
-          }
-          
-          item.get("PromisedDt").disable();
           item.patchValue({
-            PromisedDt: null
-          });
-          // item.get("ExpiredDt").setValidators([Validators.required]);
-          item.get("ExpiredDt").updateValueAndValidity();
-          this.totalCheckAll++;
-        } else {
-          item.get("ExpiredDt").disable();
-          item.get("PromisedDt").enable();
-          item.patchValue({
+            PromisedDt: null,
             ExpiredDt: null
           });
-          item.get("PromisedDt").setValidators([Validators.required]);
+          if(isExpDtMandatory){
+            item.get("ExpiredDt").enable();
+            item.get("ExpiredDt").setValidators([Validators.required]);
+            item.get("ExpiredDt").updateValueAndValidity();
+          }
+          else{
+            item.get("ExpiredDt").disable();
+            item.get("ExpiredDt").clearValidators();
+            item.get("ExpiredDt").updateValueAndValidity();
+          }
+          item.get("PromisedDt").disable();
+          item.get("PromisedDt").clearValidators();
           item.get("PromisedDt").updateValueAndValidity();
+          // item.get("ExpiredDt").setValidators([Validators.required]);
+          this.totalCheckAll++;
+        } 
+        else {
+          item.patchValue({
+            ExpiredDt: null,
+            PromisedDt: null
+          });
+          if(item.get("IsWaived").value){
+            item.get("PromisedDt").disable();
+            item.get("PromisedDt").clearValidators();
+            item.get("PromisedDt").updateValueAndValidity();
+          }
+          else{
+            item.get("PromisedDt").enable();
+            item.get("PromisedDt").setValidators([Validators.required]);
+            item.get("PromisedDt").updateValueAndValidity();
+          }
+          item.get("ExpiredDt").disable();
+          item.get("ExpiredDt").clearValidators();
+          item.get("ExpiredDt").updateValueAndValidity();
+          
           this.IsCheckedAll = false;
         }
-      } else {
+      } 
+      else {
         if (isChecked) {
-          if(isExpDtMandatory){
-            item.get("ExpiredDt").enable();
-          }
-          
-          item.get("PromisedDt").disable();
           item.patchValue({
-            PromisedDt: null
-          });
-          // item.get("ExpiredDt").setValidators([Validators.required]);
-          item.get("ExpiredDt").updateValueAndValidity();
-        } else {
-          item.get("ExpiredDt").disable();
-          item.get("PromisedDt").enable();
-          item.patchValue({
+            PromisedDt: null,
             ExpiredDt: null
           });
+          if(isExpDtMandatory){
+            item.get("ExpiredDt").enable();
+            item.get("ExpiredDt").setValidators([Validators.required]);
+            item.get("ExpiredDt").updateValueAndValidity();
+          }
+          else{
+            item.get("ExpiredDt").disable();
+            item.get("ExpiredDt").clearValidators();
+            item.get("ExpiredDt").updateValueAndValidity();
+          }
+          item.get("PromisedDt").disable();
+          item.get("PromisedDt").clearValidators();
+          item.get("PromisedDt").updateValueAndValidity();
+          // item.get("ExpiredDt").setValidators([Validators.required]);
+        } 
+        else {
+          item.patchValue({
+            ExpiredDt: null,
+            PromisedDt: null
+          });
+          if(item.get("IsWaived").value){
+            item.get("PromisedDt").disable();
+            item.get("PromisedDt").clearValidators();
+            item.get("PromisedDt").updateValueAndValidity();
+          }
+          else{
+            item.get("PromisedDt").enable();
+            item.get("PromisedDt").setValidators([Validators.required]);
+            item.get("PromisedDt").updateValueAndValidity();
+          }
+          item.get("ExpiredDt").disable();
+          item.get("ExpiredDt").clearValidators();
+          item.get("ExpiredDt").updateValueAndValidity();
         }
       }
     }
