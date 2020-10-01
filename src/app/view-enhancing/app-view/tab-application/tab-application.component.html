@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewGenericObj]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+    <lib-ucviewgeneric *ngIf="isReady" [viewGenericObj]="viewProdMainInfoObj"> </lib-ucviewgeneric>
     <lib-ucSubsection *ngIf="ListCrossAppData?.length" [id]="'formListCrossAppsId'" [title]="'Cross Application'" [panel]="'formListCrossApps'">
     </lib-ucSubsection>
     <div *ngIf="ListCrossAppData?.length" class="form-body" [id]="'formListCrossApps'">
@@ -21,7 +21,7 @@
         </tbody>
       </table>
     </div>
-    <div class="px-3">
+    <div class="px-3" *ngIf="isLoanObjectNeeded"> 
       <lib-ucSubsection [id]="'viewLoanObjId'" [title]="'Loan Object'" [panel]="'viewLoanObjInfo'">
       </lib-ucSubsection>
       <div class="form-body" id="viewLoanObjInfo">

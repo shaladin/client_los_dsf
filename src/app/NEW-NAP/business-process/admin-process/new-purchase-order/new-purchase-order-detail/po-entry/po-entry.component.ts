@@ -35,6 +35,8 @@ export class PoEntryComponent implements OnInit {
   AppData: any;
   Date: Date;
   ExpirationDate: string;
+  arrValue = [];
+
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
@@ -56,6 +58,7 @@ export class PoEntryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.AgrmntId);
     var datePipe = new DatePipe("en-US");
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context["BusinessDt"]);

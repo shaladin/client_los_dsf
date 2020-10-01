@@ -13,7 +13,7 @@
         </lib-ucSubsection>
         <div id="MOUMainInfoSection" class="col-md-12">
           <form class="form form-horizontal" [formGroup]="MOUMainInfoForm" #enjiForm="ngForm" novalidate
-            (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+            (ngSubmit)="enjiForm.form.valid && Save()">
             <div class="form-body">
               <div class="form-group row" *ngIf="pageType == 'edit' || pageType == 'return'">
                 <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>
@@ -84,9 +84,6 @@
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.PlafondAmt.invalid }" />
                 <lib-uc-show-errors [control]="MOUMainInfoForm.controls.PlafondAmt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
-                <!-- <lib-ucinputnumber   [parentForm]="MOUMainInfoForm" [identifier]="'PlafondAmt'"
-              [enjiForm]="enjiForm" [isRequired]="false"
-              ucNumber="MOUMainInfoForm.controls.PlafondAmt.value"></lib-ucinputnumber>  -->
               </div>
             </div>
             <div class="form-group row">

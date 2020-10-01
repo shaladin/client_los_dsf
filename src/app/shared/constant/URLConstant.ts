@@ -43,6 +43,7 @@ export class URLConstant {
     // App Collateral
     public static GetAppCollateralRegistrationByAppId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
     public static GetAppCollateralRegistrationByAgrmntId = environment.losUrl + "/AppCollateralRegistration/GetAppCollateralRegistrationByAgrmntId";
+    public static GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral = environment.FoundationR3Url + "/Collateral/GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral";
 
     // App Asset Suppl Emp
     //public static GetListAppAssetSupplEmpByAppAssetId = "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -786,6 +787,7 @@ export class URLConstant {
     public static GetAppCollateralByAgrmntId = environment.losUrl + "/AppCollateral/GetAppCollateralByAgrmntId";
     public static GetListNegativeCollateralByAppId = environment.losUrl + "/AppCollateral/GetListNegativeCollateralByAppId";
     public static GetListExistingAppCollateralWithInsurance = environment.losUrl + "/AppCollateral/GetListExistingAppCollateralWithInsurance";
+    public static GetAppCollateralByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppAssetId";
 
     // App Collateral Suppl Emp
     public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";
@@ -1131,4 +1133,7 @@ export class URLConstant {
 
     // DocExpDt
     public static GetDocIsExpDtMandatory = environment.losUrl + "/DocumentExpDt/GetDocIsExpDtMandatory";
+
+    // INTEGRATION
+    public static InsertToR2AppStaging = environment.losUrl + "/LmsTest/InsertToR2AppStaging";
 }

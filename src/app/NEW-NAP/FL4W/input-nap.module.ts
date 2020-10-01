@@ -9,7 +9,6 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms"; 
 import { UcShowErrorsModule } from "@adins/uc-show-errors"; 
-import { UcinputnumberModule } from "@adins/ucinputnumber"; 
 import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapPagingComponent } from './nap-paging/nap-paging.component';
 import { NapViewComponent } from './nap-view/nap-view.component';   
@@ -72,7 +71,6 @@ export const customCurrencyMaskConfig = {
     NgbModule, 
     ReactiveFormsModule,
     FormsModule, 
-    UcinputnumberModule, 
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,

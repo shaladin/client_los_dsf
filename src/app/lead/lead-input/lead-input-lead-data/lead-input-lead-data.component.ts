@@ -99,7 +99,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   isDataLoad: boolean = false;
   SerialNoList: any;
   items: FormArray;
-
+  isAbleToSubmit: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -461,72 +461,6 @@ export class LeadInputLeadDataComponent implements OnInit {
                         }
                       });
                   });
-                this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
-                var assetType = new AssetTypeObj();
-                assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
-                  (response: any) => {
-                    if (response.IsMndtrySerialNo1 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-                      this.LeadDataForm.controls['SerialNo1'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-                      this.serial1Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo1'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo1'].updateValueAndValidity();
-                      this.serial1Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo2 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-                      this.LeadDataForm.controls['SerialNo2'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-                      this.serial2Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo2'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo2'].updateValueAndValidity();
-                      this.serial2Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo3 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-                      this.LeadDataForm.controls['SerialNo3'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-                      this.serial3Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo3'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo3'].updateValueAndValidity();
-                      this.serial3Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo4 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-                      this.LeadDataForm.controls['SerialNo4'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-                      this.serial4Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo4'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo4'].updateValueAndValidity();
-                      this.serial4Mandatory = false;
-                    }
-
-                    if (response.IsMndtrySerialNo5 == "1" && this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-                      this.LeadDataForm.controls['SerialNo5'].setValidators([Validators.required]);
-                      this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-                      this.serial5Mandatory = true;
-                    }
-                    else {
-                      this.LeadDataForm.controls['SerialNo5'].clearValidators();
-                      this.LeadDataForm.controls['SerialNo5'].updateValueAndValidity();
-                      this.serial5Mandatory = false;
-                    }
-
-                    this.serial1Disabled = response.SerialNo1Label == null ? true : false;
-                    this.serial2Disabled = response.SerialNo2Label == null ? true : false;
-                    this.serial3Disabled = response.SerialNo3Label == null ? true : false;
-                    this.serial4Disabled = response.SerialNo4Label == null ? true : false;
-                    this.serial5Disabled = response.SerialNo5Label == null ? true : false;
-                  });
               });
             this.reqLeadAppObj = new LeadAppObj();
             this.reqLeadAppObj.LeadId = this.LeadId;
@@ -634,32 +568,53 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.NTFAmt = this.AssetPrice - this.DPAmount;
+    var minAmt = this.NTFAmt / this.Tenor;
+    this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
+    if(this.NTFAmt > 0){
+      if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
+        this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+        return;
+      }
+    }
+
+    if (this.AssetPrice <= 0) {
+      this.toastr.warningMessage("Please input Asset Price!");
+      return;
+    }
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
     }
     if (this.DPAmount <= 0) {
-      this.toastr.warningMessage("Please Check Down Payment Amount!");
+      this.toastr.warningMessage("Please input Down Payment Amount!");
       return;
     }
     if (this.Tenor == '') {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    this.NTFAmt = this.AssetPrice - this.DPAmount;
-    this.InstAmt = this.NTFAmt / this.Tenor;
-    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-      this.TotalDownPayment = this.DPAmount + this.InstAmt;
-    }
-    else {
-      this.TotalDownPayment = this.DPAmount;
-    }
+
     this.LeadDataForm.patchValue({
-      NTFAmt: this.NTFAmt,
-      TotalDownPayment: this.TotalDownPayment,
-      InstallmentAmt: this.InstAmt,
+      NTFAmt: this.NTFAmt
     });
+
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      return;
+    }else{
+      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+        this.TotalDownPayment = this.DPAmount + this.InstAmt;
+      }
+      else {
+        this.TotalDownPayment = this.DPAmount;
+      }
+      this.LeadDataForm.patchValue({
+        TotalDownPayment: this.TotalDownPayment
+      });
+    }
+
     this.Calculate = true;
   }
 
@@ -667,7 +622,16 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.Tenor = this.LeadDataForm.controls["Tenor"].value;
     this.AssetPrice = this.LeadDataForm.controls["AssetPrice"].value;
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
+    this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
+    var minAmt = this.NTFAmt / this.Tenor;
+    this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
+    if(this.NTFAmt > 0){
+    if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      return;
+    }
+  }
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
@@ -676,11 +640,21 @@ export class LeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
-    this.InstAmt = this.NTFAmt / this.Tenor;
-    this.LeadDataForm.patchValue({
-      InstallmentAmt: this.InstAmt,
-    });
+
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      return;
+    }else{
+      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+        this.TotalDownPayment = this.DPAmount + this.InstAmt;
+      }
+      else {
+        this.TotalDownPayment = this.DPAmount;
+      }
+      this.LeadDataForm.patchValue({
+        TotalDownPayment: this.TotalDownPayment
+      });
+    }
     this.Calculate = true;
   }
 
@@ -697,7 +671,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
-
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
@@ -727,7 +700,15 @@ export class LeadInputLeadDataComponent implements OnInit {
     if (this.Calculate == false &&  this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
+    }else{
+      this.CheckSubmitForCFNA();
+      if(!this.isAbleToSubmit) return;
     }
+
+    if(this.LeadDataForm.status == CommonConstant.INVALID_FORM){
+      return;
+    }
+    
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
@@ -839,6 +820,13 @@ export class LeadInputLeadDataComponent implements OnInit {
   SaveForm() {
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
+      return;
+    }else{
+      this.CheckSubmitForCFNA();
+      if(!this.isAbleToSubmit) return;
+    }
+    
+    if(this.LeadDataForm.status == CommonConstant.INVALID_FORM){
       return;
     }
 
@@ -954,6 +942,31 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
         );
       }
+    }
+  }
+
+  InstAmtCheck(){
+    if(this.returnLobCode != CommonConstant.CFNA){
+      this.Calculate = false;
+      this.InstAmt = this.LeadDataForm.controls.InstallmentAmt.value;
+      this.LeadDataForm.patchValue({
+        InstallmentAmt: this.InstAmt,
+      });
+    }
+  }
+
+  CheckSubmitForCFNA(){
+    var minAmt = this.LeadDataForm.controls["NTFAmt"].value / this.LeadDataForm.controls["Tenor"].value;
+    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
+      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
+      this.isAbleToSubmit = false;
+      return;
+    }else if(this.LeadDataForm.controls["InstallmentAmt"].value > this.LeadDataForm.controls["NTFAmt"].value ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      this.isAbleToSubmit = false;
+      return;
+    }else{
+      this.isAbleToSubmit = true;
     }
   }
 }

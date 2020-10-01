@@ -137,7 +137,7 @@
               <label>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate()">
+              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -336,7 +336,7 @@
     </div>
 
     <div class="margin-b-5" formArrayName="ListEntryInst">
-      <table *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0"
+      <table *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0"
         class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -371,7 +371,7 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="ParentForm.controls.ListEntryInst.controls.length > 0" class="form-inline-right">
+    <div *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0" class="form-inline-right">
       <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalculateAmortization()">
         Calculate Amortization
       </button>

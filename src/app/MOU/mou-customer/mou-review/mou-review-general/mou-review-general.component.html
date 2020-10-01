@@ -57,7 +57,7 @@
               [panel]="'ApvRecommendation'">
             </lib-ucSubsection>
             <div class="form-body" id="ApvRecommendation" formArrayName="ApvRecommendation">
-              <div [formGroupName]="i" *ngFor="let item of MouReviewDataForm.controls.ApvRecommendation.controls; let i = index" class="form-group row">
+              <div [formGroupName]="i" *ngFor="let item of MouReviewDataForm.controls.ApvRecommendation['controls']; let i = index" class="form-group row">
                 <label class="col-md-2 adins-required-label">{{MouReviewDataForm.value.ApvRecommendation[i].RecommendationName}}</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="RecommendationValue"

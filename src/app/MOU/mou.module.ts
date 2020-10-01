@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
-import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { MouRoutingModule } from "./mou-routing.module";
 import { DocSignerComponent } from "./doc-signer/doc-signer.component";
 import { MouCustomerRequestComponent } from './mou-customer-request/mou-customer-request.component';
@@ -10,13 +9,6 @@ import { MouCustomerDetailComponent } from "./mou-customer-request/mou-customer-
 import { CustomerDocPrintingDetailComponent } from "./customer-doc-printing/customer-doc-printing-detail/customer-doc-printing-detail.component";
 import { CustomerDocPrintingPagingComponent } from "./customer-doc-printing/customer-doc-printing-paging/customer-doc-printing-paging.component";
 import { MouReviewPagingComponent } from './mou-customer/mou-review/mou-review-paging/mou-review-paging.component';
-import { MouViewDetailComponent } from './mou-customer/mou-view/mou-view-detail/mou-view-detail.component';
-import { MouViewFeeComponent } from './mou-customer/mou-view/mou-view-fee/mou-view-fee.component';
-import { MouViewAddcollComponent } from './mou-customer/mou-view/mou-view-addcoll/mou-view-addcoll.component';
-import { MouViewTcComponent } from './mou-customer/mou-view/mou-view-tc/mou-view-tc.component';
-import { MouViewDocComponent } from './mou-customer/mou-view/mou-view-doc/mou-view-doc.component';
-import { MouViewSurveyComponent } from './mou-customer/mou-view/mou-view-survey/mou-view-survey.component';
-import { MouViewLegalComponent } from './mou-customer/mou-view/mou-view-legal/mou-view-legal.component';
 import { MouDetailGeneralComponent } from './mou-customer-request/mou-detail-general/mou-detail-general.component';
 import { MouDetailFactoringComponent } from './mou-customer-request/mou-detail-factoring/mou-detail-factoring.component';
 import { MouCustAssetComponent } from './mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component';
@@ -30,13 +22,11 @@ import { MouRequestAddcollComponent } from './mou-customer-request/mou-request-a
 import { DocSignerDetailComponent } from "./doc-signer/doc-signer-detail/doc-signer-detail.component";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { EditMouCustomerComponent } from "./mou-customer/edit-mou-customer/edit-mou-customer.component";
-import { MouViewComponent } from "./mou-customer/mou-view/mou-view.component"; 
 import { MouCustomerApprovalComponent } from './mou-customer/mou-customer-approval/mou-customer-approval.component';
 import { MouApprovalGeneralComponent } from './mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general.component';
 import { MouApprovalFactoringComponent } from './mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring.component';
 import { MouReviewFactoringComponent } from "./mou-customer/mou-review/mou-review-factoring/mou-review-factoring.component";
 import { MouReviewGeneralComponent } from "./mou-customer/mou-review/mou-review-general/mou-review-general.component";
-import { MouViewApprovalHistoryComponent } from './mou-customer/mou-view-approval-history/mou-view-approval-history.component';
 import { LegalReviewPagingComponent } from './legal-review/legal-review-paging/legal-review-paging.component';
 import { LegalReviewDetailComponent } from './legal-review/legal-review-detail/legal-review-detail.component';
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
@@ -46,7 +36,6 @@ import { MouCancelComponent } from "./mou-cancel/mou-cancel.component";
 import { MouOsTcPagingComponent } from './mou-os-tc/mou-os-tc-paging/mou-os-tc-paging.component';
 import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-detail.component';
 import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
-import { MouViewListedCustFactoringComponent } from './mou-customer/mou-view/mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component';
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { MatTabsModule } from "@angular/material";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -74,16 +63,17 @@ import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-compan
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
+import { MouViewComponentsModule } from "app/components/general/mou-view/mou-view.components.module";
 
-export const customCurrencyMaskConfig = {     
-  align: "left",     
-  allowNegative: true,     
-  allowZero: true,     
-  decimal: ".",     
-  precision: 2,     
-  prefix: "",     
-  suffix: "",     
-  thousands: ",",     
+export const customCurrencyMaskConfig = {
+  align: "left",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
   nullable: false,
   inputMode: CurrencyMaskInputMode.NATURAL
 };
@@ -103,6 +93,7 @@ export const customCurrencyMaskConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    MouViewComponentsModule
   ],
   declarations: [
     DocSignerComponent,
@@ -111,18 +102,8 @@ export const customCurrencyMaskConfig = {
     MouCustomerDetailComponent,
     CustomerDocPrintingDetailComponent,
     CustomerDocPrintingPagingComponent,
-    MainInfoComponent,
     DocSignerComponent,
-    MouReviewPagingComponent, 
-    MouViewDetailComponent,
-    MouViewFeeComponent,
-    MouViewAddcollComponent,
-    MouViewTcComponent,
-    MouViewDocComponent,
-    MouViewSurveyComponent,
-    MouViewLegalComponent, 
-    MouViewComponent, 
-    MouViewLegalComponent,
+    MouReviewPagingComponent,
     MouReviewFactoringComponent,
     MouDetailGeneralComponent,
     MouDetailFactoringComponent,
@@ -143,13 +124,11 @@ export const customCurrencyMaskConfig = {
     MouApprovalFactoringComponent,
     MouReviewGeneralComponent,
     MouDetailFactoringComponent,
-    MouViewApprovalHistoryComponent,
     MouCustomerInquiryComponent,
     MouDetailGeneralComponent,
     MouDetailFactoringComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
-    MouViewApprovalHistoryComponent,
     MouCustAssetComponent,
     MouCustAssetDetailComponent,
     MouDetailGeneralComponent,
@@ -158,7 +137,6 @@ export const customCurrencyMaskConfig = {
     MouOsTcPagingComponent,
     MouOsTcDetailComponent,
     UnauthorizedPageComponent,
-    MouViewListedCustFactoringComponent,
     MouExecutionPagingComponent,
     MouExecutionDetailComponent,
     MouCustTabComponent,
@@ -190,8 +168,7 @@ export const customCurrencyMaskConfig = {
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouCustListedCustFctrDetailComponent,
-    MouViewListedCustFactoringComponent
+    MouCustListedCustFctrDetailComponent
   ]
 })
 

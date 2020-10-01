@@ -65,7 +65,9 @@
                         [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
                         {{item.controls.SerialNoLabel.value}} </label>
                       <div class="col-md-7">
-                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                        <input type="text" class="form-control adInsInput" *ngIf="i == 0" formControlName="SerialNoValue" (blur)="collateralPortionHandler()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                        <input type="text" class="form-control adInsInput" *ngIf="i != 0" formControlName="SerialNoValue"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                         <lib-uc-show-errors
                           [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
@@ -78,10 +80,17 @@
                   <label class="col-md-5 adins-required-label" translate>Portion Percentage (%)</label>
                   <div class="col-md-7"> 
                     <input type="" currencyMask class="form-control" id="CollateralPrcnt" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}"> 
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}" (blur)="collateralPortionHandler()" /> 
                     <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    
                   </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Portion Amount</label>
+                  <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Outstanding Portion Percentage (%)</label>
+                  <label class="col-md-7">{{AddCollForm.controls.OutstandingCollPrcnt.value}}</label>
                 </div>
               </div>
               <div class="col-md-6">
@@ -143,7 +152,7 @@
               </lib-ucSubsection>
               <div class="form-body" id="AddCollAttribute" formArrayName="ListAttr">
                 <div class="col-md-6 form-group row"
-                  *ngFor="let item of AddCollForm.controls.ListAttr.controls; let i = index" [formGroupName]="i">
+                  *ngFor="let item of AddCollForm.controls.ListAttr['controls']; let i = index" [formGroupName]="i">
                   <label class="col-md-5 adins-required-label" translate>Attr</label>
                   <div class="col-md-7">
                     <input type="text" class=" form-control width-100-per" formControlName="AppAttrValue">
@@ -166,7 +175,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of AddCollForm.controls.ListDoc.controls; let i = index" [formGroupName]="i">
+                    <tr *ngFor="let item of AddCollForm.controls.ListDoc['controls']; let i = index" [formGroupName]="i">
                       <td>{{item.controls.AssetDocName.value}}</td>
                       <td>
                         <input type="checkbox" class="border-primary" formControlName="IsReceived">
@@ -199,7 +208,7 @@
                   <div class="form-group row">
                     <label class="col-md-5" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-7">
-                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage($event)" [disabled]="isExisting"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfUsage" (change)="CopyUserForSelfUsage()" [disabled]="isExisting"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -238,7 +247,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner($event)" [disabled]="isExisting"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()" [disabled]="isExisting"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -315,7 +324,7 @@
                 <label class="col-md-2" translate>Copy Address From</label>
                 <div class="col-md-4">
                   <div class="input-group mb-0">
-                    <select class="form-control" formControlName="CopyFromLegal" [(ngModel)]="copyFromLegal">
+                    <select class="form-control" formControlName="CopyFromLegal">
                       <option value="LEGAL"> Legal </option>
                     </select>
                     <div class="input-group-append">

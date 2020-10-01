@@ -21,7 +21,6 @@ import { ViewFinancialComponent } from "./view-financial/view-financial.componen
 import { AppInsuranceComponent } from './app-insurance/app-insurance.component';
 import { AppInsuranceDetailComponent } from './app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { ViewSharingComponentModule } from "./view-sharing-component.module";
-import { ViewAppFraudVerificationComponent } from './view-app-fraud-verification/view-app-fraud-verification.component';
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ApprovalHistComponent } from './approval-hist/approval-hist.component';
@@ -111,7 +110,6 @@ import { ViewSummaryAppROSComponent } from "./view-summary-app-ros/view-summary-
     ViewFinancialComponent,
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
-    //ViewAppFraudVerificationComponent,
     TabDeviationComponent,
     InvoiceViewComponent,
     ViewCollateralDataComponent,

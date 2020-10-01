@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <div class="CF2W">
-          <form class="form form-horizontal" [formGroup]="appForm" (ngSubmit)="appForm.valid && SaveForm()"
+          <form class="form form-horizontal" [formGroup]="appForm" (ngSubmit)="appForm.valid"
             #enjiForm="ngForm">
             <div class="form-body">
               <lib-ucSubsection [id]="'salesInformmationId'" [title]="'Sales Information'"
@@ -394,9 +394,6 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Insurance Capitalized Amount</label>
                   <div class="col-md-4">
-                    <lib-ucinputnumber [parentForm]="appForm" [identifier]="'InsuranceCapitalizedAmount'"
-                      [enjiForm]="enjiForm" [isRequired]="false"
-                      ucNumber="appForm.controls.InsuranceCapitalizedAmount.value"></lib-ucinputnumber>
                   </div>
                 </div>
               </div>
@@ -420,9 +417,6 @@
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Life Insurance Capitalized Amount</label>
                   <div class="col-md-4">
-                    <lib-ucinputnumber [parentForm]="appForm" [identifier]="'InsuranceCapitalizedAmount'"
-                      [enjiForm]="enjiForm" [isRequired]="false"
-                      ucNumber="appForm.controls.InsuranceCapitalizedAmount.value"></lib-ucinputnumber>
                   </div>
                 </div>
               </div>
@@ -670,11 +664,6 @@
                   <label class="col-md-2  adInsLabel" translate>Installment Amount</label>
                   <div class="col-md-4">
                      
-                      <lib-ucinputnumber [parentForm]="appForm" [identifier]="'InstAmt'"
-                      [enjiForm]="enjiForm" [isRequired]="false"
-                      ucNumber="appForm.controls.InsuranceCapitalizedAmount.value"></lib-ucinputnumber>
-                      <lib-uc-show-errors [control]="appForm.controls.InstAmt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
                   </div>
                 </div>
 

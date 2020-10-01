@@ -8,11 +8,11 @@
   </div>
   <div class="modal-body">
     <div class="form-body">
-      <div class="form-group row">
+      <div class="form-group row adins-required">
         <label class="col-md-4 adInsLabel">Subsidy From Type</label>
         <div class="col-md-3">
           <select formControlName="fromTypeCode" class="form-control full-width" id="result" name="result"
-            (change)="DDLFromTypeCode_OnChange($event);">
+            (change)="DDLFromTypeCode_OnChange($event);" [ngClass]="{ 'is-invalid': enjiForm.submitted && FormAppSubsidy.controls.fromTypeCode.invalid }">
             <option value="">--Select--</option>
             <option *ngFor="let m of FromTypeCodeOptions" value={{m.Key}}>{{m.Value}}</option>
           </select>
@@ -20,11 +20,11 @@
           </lib-uc-show-errors>
         </div>
       </div>
-      <div class="form-group row" *ngIf="showFromValue">
+      <div class="form-group row adins-required" *ngIf="showFromValue">
         <label class="col-md-4 adInsLabel">Subsidy From Value</label>
         <div class="col-md-3">
           <select formControlName="fromValueCode" class="form-control full-width" id="result" name="result"
-            (change)="DDLFromValue_OnChange($event);">
+            (change)="DDLFromValue_OnChange($event);" [ngClass]="{ 'is-invalid': enjiForm.submitted && FormAppSubsidy.controls.fromValueCode.invalid }">
             <option value="">--Select--</option>
             <option *ngFor="let m of FromValueOptions" value={{m.Key}}>{{m.Value}}</option>
           </select>
@@ -32,22 +32,22 @@
           </lib-uc-show-errors>
         </div>
       </div>
-      <div class="form-group row">
+      <div class="form-group row adins-required">
         <label class="col-md-4 adInsLabel">Allocation From</label>
         <div class="col-md-3">
           <select formControlName="allocCode" class="form-control full-width" id="result" name="result"
-            (change)="DDLAllocCode_OnChange($event);">
+            (change)="DDLAllocCode_OnChange($event);" [ngClass]="{ 'is-invalid': enjiForm.submitted && FormAppSubsidy.controls.allocCode.invalid }">
             <option value="">--Select--</option>
             <option *ngFor="let m of AllocCodeOptions" value={{m.Key}}>{{m.Value}}</option>
           </select>
           <lib-uc-show-errors [control]="FormAppSubsidy.controls.allocCode" [submit]="isSubmitted"></lib-uc-show-errors>
         </div>
       </div>
-      <div class="form-group row">
+      <div class="form-group row adins-required">
         <label class="col-md-4 adInsLabel">Subsidy Source</label>
         <div class="col-md-3">
           <select formControlName="sourceCode" class="form-control full-width" id="result" name="result"
-            (change)="DDLSourceCode_OnChange($event);">
+            (change)="DDLSourceCode_OnChange($event);" [ngClass]="{ 'is-invalid': enjiForm.submitted && FormAppSubsidy.controls.sourceCode.invalid }">
             <option value="">--Select--</option>
             <option *ngFor="let m of SourceCodeOptions" value={{m.Key}}>{{m.Value}}</option>
           </select>
@@ -60,7 +60,7 @@
         <label class="col-md-4 adInsLabel">Subsidy Value Type</label>
         <div class="col-md-3">
           <select formControlName="valueType" class="form-control full-width"
-            (change)="DDLValueType_OnChange($event);">
+            (change)="DDLValueType_OnChange();">
             <option value="">--Select--</option>
             <option *ngFor="let m of ValueTypeOptions" value={{m.Key}}>{{m.Value}}</option>
           </select>

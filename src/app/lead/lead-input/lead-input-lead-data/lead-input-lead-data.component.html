@@ -87,7 +87,7 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Down Payment Percentage</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control adInsInput" (change)="DPPrcntChange()" formControlName="DownPaymentPercent" disabled required
+                  <input type="" currencyMask [options]="{min: 0, max:100, suffix:' %'}" class="form-control adInsInput" (focusout)="DPPrcntChange()" formControlName="DownPaymentPercent" disabled required
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPaymentPercent.invalid}">
                   <lib-uc-show-errors [control]="LeadDataForm.controls.DownPaymentPercent"
                     [submit]="enjiForm.submitted">
@@ -117,7 +117,7 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Tenor</label>
                 <div class="col-md-4">
-                  <input type="number" class="form-control adInsInput" (change)="TenorChange()" id="tenor" min="0"
+                  <input type="number" class="form-control adInsInput" (focusout)="TenorChange()" id="tenor" min="0"
                     max="maxTenor" formControlName="Tenor"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
                   <lib-uc-show-errors [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
@@ -155,11 +155,8 @@
                 <div class="col-md-5">
                   <!-- <label class="col-md-5 adInsLabel"
                     style="font-size: 13px;">{{LeadDataForm.controls.InstallmentAmt.value | number:'.2':'en-US'}}</label> -->
-                  <input type="text" currencyMask class="form-control adInsInput text-right col-md-5 adInsLabel"
-                    formControlName="InstallmentAmt">
-                  <!-- <lib-ucinputnumber [parentForm]="LeadDataForm" [identifier]="'InstallmentAmt'"
-                    [enjiForm]="enjiForm" [isRequired]="false"
-                    ucNumber="LeadDataForm.controls.InstallmentAmt.value"></lib-ucinputnumber>  -->
+                  <input type="" currencyMask class="form-control col-md-5"
+                    formControlName="InstallmentAmt" (focusout)="InstAmtCheck()">
                 </div>
               </div>
               <div class="form-group row">
@@ -183,7 +180,7 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Tenor</label>
                 <div class="col-md-4">
-                  <input type="number" min="0" (change)="TenorChange()" class="form-control adInsInput"
+                  <input type="number" min="0" (focusout)="TenorChange()" class="form-control adInsInput"
                     formControlName="Tenor"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
                   <lib-uc-show-errors [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
@@ -210,7 +207,7 @@
                   <!-- <label class="col-md-5 adInsLabel"
                       style="font-size: 13px;">{{LeadDataForm.controls.NTFAmt.value | number:'.2':'en-US'}}</label> -->
                   <input type="" currencyMask class="form-control adInsInput" min="0" formControlName="NTFAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}" (focusout)="InstAmtCheck()">
                   <lib-uc-show-errors [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -218,15 +215,10 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Installment Amount</label>
                 <div class="col-md-5">
-                
-
-                    <input type="text" currencyMask class="form-control adInsInput text-right col-md-5 adInsLabel"
-                    formControlName="InstallmentAmt">
+                    <input type="" currencyMask class="form-control adInsInput text-right col-md-5 adInsLabel"
+                    formControlName="InstallmentAmt" (focusout)="InstAmtCheck()">
                     <lib-uc-show-errors [control]="LeadDataForm.controls.InstallmentAmt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-                  <!-- <lib-ucinputnumber [parentForm]="LeadDataForm" [identifier]="'InstallmentAmt'"
-                    [enjiForm]="enjiForm" [isRequired]="false"
-                    ucNumber="LeadDataForm.controls.InstallmentAmt.value"></lib-ucinputnumber>  -->
                 </div>
               </div>
               <div class="form-group row" style="text-align: right;" *ngIf="returnLobCode != 'CFNA'">

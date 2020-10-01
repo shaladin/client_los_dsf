@@ -66,6 +66,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   GenderObj: any;
   IdTypeObj: any;
   CustRelationshipObj: any;
+  CustContactRelationshipObj: any;
+  CustGuarantorRelationshipObj: any;
   InputLookupProfessionObj: any;
   defaultGender: any;
   defaultIdType: any;
@@ -76,6 +78,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
   defaultRelationshipName: any;
   UserAccess: any;
   MaxDate: Date;
+
+  
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -89,7 +93,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
     IsFamily: [false],
-    Email: ['', Validators.maxLength(100)],
+    Email: ['', [Validators.maxLength(100), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
     CopyFromContactPerson: [''],
     IsGuarantor: [false]
   });
@@ -136,6 +140,12 @@ export class CustPersonalContactInformationComponent implements OnInit {
     }
 
     this.setAppCustPersonalContactPerson();
+    if(this.appCustPersonalContactPersonObj.IsGuarantor){
+      if(this.appCustPersonalContactPersonObj.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse){
+        this.toastr.warningMessage("Guarantor cannot have spouse relationship");
+        return false;
+      }
+    }
     if (this.mode == "Add") {
       this.listContactPersonPersonal.push(this.appCustPersonalContactPersonObj);
     }
@@ -189,6 +199,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
+    this.CheckGuarantor();
     this.CheckSpouse();
     this.open(content);
   }
@@ -221,7 +232,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
-      Email: ['', Validators.maxLength(100)],
+      Email: ['', [Validators.maxLength(100),Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       CopyFromContactPerson: [''],
       IsGuarantor: [false]
     });
@@ -377,11 +388,19 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
-        this.CustRelationshipObj = response[CommonConstant.ReturnObj];
+        this.CustContactRelationshipObj = response[CommonConstant.ReturnObj];
+        this.CustRelationshipObj = this.CustContactRelationshipObj;
         if (this.CustRelationshipObj.length > 0) {
           this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
           this.defaultRelationshipName = this.CustRelationshipObj[0].Value;
         }
+      }
+    );
+
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGuarPersonalRelationship;
+    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+      (response) => {
+        this.CustGuarantorRelationshipObj = response[CommonConstant.ReturnObj];
       }
     );
   }
@@ -431,9 +450,50 @@ export class CustPersonalContactInformationComponent implements OnInit {
       }
     }
     else {
-      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
-      this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+      if(!this.ContactInfoPersonalForm.controls.IsGuarantor.value)
+      {
+        this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+        this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
+      }      
       this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+    }
+  }
+
+  CheckGuarantor(){
+    if(this.ContactInfoPersonalForm.controls.IsGuarantor.value)
+    {
+      this.CustRelationshipObj = this.CustGuarantorRelationshipObj;
+      this.ContactInfoPersonalForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.ContactInfoPersonalForm.controls.IdNo.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.ContactInfoPersonalForm.controls.BirthPlace.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
+    }
+    else 
+    {
+      this.CustRelationshipObj = this.CustContactRelationshipObj;
+      this.ContactInfoPersonalForm.controls.MrIdTypeCode.clearValidators();
+      this.ContactInfoPersonalForm.controls.IdNo.clearValidators();
+      this.ContactInfoPersonalForm.controls.BirthPlace.clearValidators();
+      this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+    }
+    this.ContactInfoPersonalForm.controls.MrIdTypeCode.updateValueAndValidity();
+    this.ContactInfoPersonalForm.controls.IdNo.updateValueAndValidity();
+    this.ContactInfoPersonalForm.controls.BirthPlace.updateValueAndValidity();
+    this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();      
+
+    if (this.CustRelationshipObj.length > 0) {
+      this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
+      this.defaultRelationshipName = this.CustRelationshipObj[0].Value;
+
+      var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
+      if(selectedRelationship == undefined)
+      {
+        this.ContactInfoPersonalForm.patchValue({
+          MrCustRelationshipCode: this.defaultCustRelationship,
+        });
+        this.setCustRelationShip(this.defaultCustRelationship);
+        this.CheckSpouse();
+      }
     }
   }
 

@@ -39,13 +39,13 @@
         {
             "type": "label",
             "position": "right",
-            "label": "Main Premi",
+            "label": "Main Premium",
             "name": "MainPremi"
         },
         {
             "type": "label",
             "position": "right",
-            "label": "Additional Premi",
+            "label": "Additional Premium",
             "name": "AddPremi"
         },
         {

@@ -1,5 +1,7 @@
 
 export class CommonConstant {
+  //FORM
+  public static INVALID_FORM = "INVALID";
 
   // ADD EDIT DELETE UPDATE
   public static ADD = 'Add';
@@ -126,7 +128,6 @@ export class CommonConstant {
   public static HeadOffice = "HO";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
-
 
   public static GENERAL = "GENERAL";
   public static FACTORING = "FACTORING";
@@ -447,6 +448,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
+  public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -465,7 +467,7 @@ export class CommonConstant {
   //SUBSIDY FROM TYPE
   public static SubsidyFromTypeAtpm = "ATPM";
   public static SubsidyFromTypeSupplier = "SUPPLIER";
-
+  public static SubsidyFromTypeIns = "INS";
 
   //SCORE TYPE
   public static ScoreTypeScoring = "SCORING";
@@ -504,4 +506,7 @@ export class CommonConstant {
   
   //ASSET ATTRIBUTE
   public static AttrTypeCodeTrx = "TRX";
+
+  //CHARACTERISTIC OF CREDIT
+  public static CharacteristicOfCreditTypeCredit = "CREDIT";
 }

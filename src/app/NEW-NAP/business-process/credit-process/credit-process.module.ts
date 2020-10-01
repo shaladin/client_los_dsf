@@ -27,7 +27,6 @@ import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection
 import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
 import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
-import { UcinputnumberModule } from "@adins/ucinputnumber";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovebyModule } from "@adins/ucapproveby";
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
@@ -39,7 +38,6 @@ import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
-import { ViewAppFraudVerificationComponent } from "app/NEW-NAP/sharing-component/view-app-component/view-app-fraud-verification/view-app-fraud-verification.component";
 import { ViewApplicationDataMultiComponent } from "./credit-investigation/component/view-application-data-multi/view-application-data-multi.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 import { NewCreditInvestigationComponent } from './new-credit-investigation/new-credit-investigation.component';
@@ -71,7 +69,6 @@ export const customCurrencyMaskConfig = {
 
 @NgModule({
   exports: [
-    ViewAppFraudVerificationComponent
   ],
   imports: [
     CommonModule,
@@ -87,7 +84,6 @@ export const customCurrencyMaskConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
-    UcinputnumberModule,
     UcapprovalModule,
     UcapprovebyModule,
     UcSubsectionModule ,
@@ -121,7 +117,6 @@ export const customCurrencyMaskConfig = {
     CreditInquiryComponent, 
     FraudVerificationMultiAssetComponent, 
     CreditApprovalDetailComponent,
-    ViewAppFraudVerificationComponent,
     ViewApplicationDataMultiComponent,
     NewCreditInvestigationComponent,
     NewCreditInvestigationDetailComponent,

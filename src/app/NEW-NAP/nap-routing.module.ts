@@ -6,9 +6,9 @@ import { CollateralAddEditComponent } from "./sharing-component/input-nap-compon
 import { MultiAssetLeasingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/multi-asset-leasing.component";
 import { MultiAssetDataComponent } from "./sharing-component/input-nap-component/multi-asset-data/multi-asset-data.component";
 import { AssetLeasingPagingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
-import { CollateralFctrComponent } from "./sharing-component/input-nap-component/multi-asset-data/collateral-fctr/collateral-fctr.component";
 import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-component/single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
 import { ViewAssetDataComponent } from "./sharing-component/view-app-component/view-asset-data/view-asset-data.component";
+import { MainDataComponentComponent } from "./main-data-component/main-data-component.component";
 
 const routes: Routes = [
   {
@@ -72,14 +72,11 @@ const routes: Routes = [
         data: {
           title: 'View Asset Data'
         }
+      },
+      {
+        path: 'Testing',
+        loadChildren: './main-data-component/main-data-component.module#MainDataComponentModule'
       }
-      // {
-      //     path: 'AssetData/Paging',
-      //     component: MultiAssetDataComponent,
-      //     data: {
-      //       title: 'Asset Registration Summary'
-      //     }
-      // },
       // {
       //   path: 'Single',
       //   component: CollateralAddEditSingleComponent,
@@ -94,13 +91,6 @@ const routes: Routes = [
       //     title: 'Collateral Registration Form'
       //   }
       // },
-      // {
-      //     path: 'Collateral/Paging',
-      //     component: CollateralFctrComponent,
-      //     data: {
-      //       title: 'Collateral Registration Form'
-      //     }
-      //   },
       // {
       //     path: 'AssetLeasing/Paging',
       //     component: MultiAssetLeasingComponent,

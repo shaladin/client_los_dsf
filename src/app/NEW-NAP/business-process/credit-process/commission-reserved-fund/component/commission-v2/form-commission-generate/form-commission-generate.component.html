@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <div *ngFor="let item of parentForm.controls[identifier].controls; let i = index;" style="margin-bottom: 2em;">
+    <div *ngFor="let item of parentForm.controls[identifier]['controls']; let i = index;" style="margin-bottom: 2em;">
       <div [formGroupName]="i">
 
         <div class="form-group row">

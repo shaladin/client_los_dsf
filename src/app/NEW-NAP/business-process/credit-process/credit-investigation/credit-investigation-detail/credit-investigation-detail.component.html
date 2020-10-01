@@ -48,7 +48,7 @@
             #enjiForm="ngForm">
           <div class="form-body">
             <div formArrayName="AppCrdInvstgDs">
-              <div *ngFor="let item of CreditInvestigationForm.controls.AppCrdInvstgDs.controls;let i = index;">
+              <div *ngFor="let item of CreditInvestigationForm.controls.AppCrdInvstgDs['controls'];let i = index;">
                 <div class="form-group row" [formGroupName]="i">
                   <label class="col-md-2" translate>{{item.controls.AnalysisItemName.value}}</label>
                   <div class="col-md-4">

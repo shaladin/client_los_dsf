@@ -86,7 +86,7 @@
                       <label class="col-md-4 adInsLabel" translate>Asset Condition</label>
                       <div class="col-md-8">
                         <select class="form-control adInsInput" style="width: auto"
-                          formControlName="MrAssetConditionCodeView"
+                          formControlName="MrAssetConditionCode" (change)="UcAddressHandler()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetConditionCode.invalid }">
                           <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
                             {{it.Value}}
@@ -114,7 +114,7 @@
                       <label class="col-md-4 adInsLabel adins-required-label" translate>Asset Price</label>
                       <div class="col-md-8">
                         <input type="" currencyMask class="form-control adInsInput" formControlName="AssetPrice"
-                          (keyup)="updateValueDownPayment($event)"
+                          (keyup)="updateValueDownPayment()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPrice.invalid}">
                         <lib-uc-show-errors [control]="AssetDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
@@ -187,7 +187,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel adins-required-label" translate>Notes</label>
+                      <label class="col-md-4 adInsLabel" translate>Notes</label>
                       <div class="col-md-8">
                         <textarea type="text" class="form-control adInsInput" formControlName="Notes"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.Notes.invalid }"></textarea>
@@ -201,7 +201,7 @@
                       <div *ngFor="let item of items.controls; let i = index;">
                         <div class="form-group row" [formGroupName]="i">
                           <label class="col-md-4 "
-                            [ngClass]="{'adins-required-label': item.controls.IsMandatory.value == true}" translate>
+                            [ngClass]="{'adins-required-label': AssetDataForm.controls.MrAssetConditionCode.value == 'USED'}" translate>
                             {{item.controls.SerialNoLabel.value}} </label>
                           <div class="col-md-8">
                             <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
@@ -239,10 +239,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs'].controls == 0">
+                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs']['controls'] == 0">
                         <td align="center" colspan="7">No data available</td>
                       </tr>
-                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
+                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs']['controls'];let i = index">
                         <td [formGroupName]="i" class="text-center">
                           {{i + 1}}
                         </td>

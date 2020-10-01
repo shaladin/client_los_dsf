@@ -52,7 +52,7 @@
                   </tr>
                 </thead>
                 <tbody formArrayName="DOAssetList">
-                  <tr *ngFor="let item of DOAssetForm.get('DOAssetList').controls; index as i" [formGroupName]="i">
+                  <tr *ngFor="let item of DOAssetForm.get('DOAssetList')['controls']; index as i" [formGroupName]="i">
                     <td style="text-align: left;">
                       <input type="checkbox" formControlName="IsSelected"
                         *ngIf="DOAssetForm.get('DOAssetList').at(i).controls.IsAvailable.value == true" />
@@ -155,7 +155,11 @@
         <div class="px-3" style="margin-top: 20px;">
           <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && SaveForm()"
             #enjiForm="ngForm">
-            <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm"></app-term-conditions>
+            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
+            </lib-ucSubsection>
+            <div id="TCList">
+              <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm"></app-term-conditions>
+            </div>
             <div class="form-actions right">
               <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
                 <i class="ft-x"></i> Cancel

@@ -94,6 +94,7 @@ export class AssetDataAddEditComponent implements OnInit {
   resAssetMasterObj: any;
   getAssetMasterForLookupEmployee: any;
   getAppCollateralByAppId: any;
+  getAppCollateralByAppAssetId: string;
   getAppCollateralRegistByAppCollateralId: any;
   getListAppAssetSupplEmpByAppAssetId: any;
   getVendorForLookup: any;
@@ -119,6 +120,7 @@ export class AssetDataAddEditComponent implements OnInit {
   grossDPPrcnt: number = 0;
   items: FormArray;
   SerialNoList: any;
+  originalAssetAccs: Array<AppAssetAccessoryObj>;
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -136,6 +138,7 @@ export class AssetDataAddEditComponent implements OnInit {
     VendorCode: "",
   };
   vendorSchmCode: any;
+  AssetValidationResult: any;
   AssetDataForm = this.fb.group({
     SupplName: [''],
     SupplCode: [''],
@@ -160,13 +163,12 @@ export class AssetDataAddEditComponent implements OnInit {
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
     DownPayment: ['', Validators.required],
     MrAssetConditionCode: [''],
-    MrAssetConditionCodeView: [''],
     AssetUsage: [''],
     LicensePlate: [''],
     ChassisNo: [''],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     EngineNo: [''],
-    Notes: ['', Validators.required],
+    Notes: [''],
 
     TaxIssueDt: [''],
     Color: [''],
@@ -211,10 +213,12 @@ export class AssetDataAddEditComponent implements OnInit {
     this.getAllAssetDataByAppAssetId = URLConstant.GetAllAssetDataByAppAssetId;
     this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
     this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
+    this.getAppCollateralByAppAssetId = URLConstant.GetAppCollateralByAppAssetId;
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
     this.getVendorForLookup = URLConstant.GetVendorForLookup;
     this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
+    this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {
@@ -284,9 +288,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.locationAddrObj.AreaCode2 = this.returnAppCustAddrObj.AreaCode2;
         this.locationAddrObj.City = this.returnAppCustAddrObj.City;
 
-        this.inputFieldLocationAddrObj = new InputFieldObj();
-        this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false; 
+        this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
         this.inputAddressObjForLoc.default = this.locationAddrObj;
@@ -428,6 +430,25 @@ export class AssetDataAddEditComponent implements OnInit {
     });
   }
 
+  AssetValidationForSave() {
+    var CheckValidObj = {
+      AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
+      ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
+      Tenor: this.appData.Tenor,
+      AssetCategoryCode: this.AssetDataForm.controls["AssetCategoryCode"].value,
+      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value
+    }
+    this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
+      (response) => {
+        this.AssetValidationResult = response;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   AssetValidation() {
     var CheckValidObj = {
       AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
@@ -440,59 +461,119 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   CheckDP() {
-    let getAssetValidationRule = this.AssetValidation();
-    getAssetValidationRule.subscribe(
-      (response) => {
-        var assetValidationRule = response;
-        this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
-        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypePrcnt) {
-          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
-            this.AssetDataForm.patchValue({
-              DownPayment: assetValidationRule["GrossDPPrctg"]
-            });
-            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(assetValidationRule["GrossDPPrctg"]), Validators.max(100)]);
-            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    const assetCondition = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    const manufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
+    const assetCategory = this.AssetDataForm.controls["AssetCategoryCode"].value;
+    const assetUsage = this.AssetDataForm.controls["AssetUsage"].value;
+    if(assetCondition && manufacturingYear && assetCategory && assetUsage){
+      let getAssetValidationRule = this.AssetValidation();
+      getAssetValidationRule.subscribe(
+        (response) => {
+          var assetValidationRule = response;
+          this.AssetValidationResult = response;
+          this.grossDPPrcnt = assetValidationRule["DPPrcnt"];
+          this.AssetDataForm.patchValue({
+            DownPaymentPrctg: assetValidationRule["DPPrcnt"],
+            DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
+          });
+          if(assetValidationRule["DPBhv"] == CommonConstant.RuleBehaviourLock){
+            if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
+              this.AssetDataForm.controls.DownPaymentPrctg.disable();
+              this.AssetDataForm.controls["DownPaymentPrctg"].clearValidators();
+              this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+            }
+            else{
+              this.AssetDataForm.controls.DownPayment.disable();
+              this.AssetDataForm.controls["DownPayment"].clearValidators();
+              this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+            }
           }
-        }
-        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
-          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
-            var minDP = this.AssetDataForm.controls["AssetPrice"].value * assetValidationRule["GrossDPPrctg"] / 100;
-            this.AssetDataForm.patchValue({
-              DownPayment: minDP
-            });
-            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
-            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          else{
+            if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
+              this.AssetDataForm.controls.DownPaymentPrctg.enable();
+              this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+              this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+            }
+            else{
+              this.AssetDataForm.controls.DownPayment.enable();
+              this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+              this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+            }
           }
-        }
-      });
+          // this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
+          // if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypePrcnt) {
+          //   if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+          //     this.AssetDataForm.patchValue({
+          //       DownPayment: assetValidationRule["GrossDPPrctg"]
+          //     });
+          //     this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(assetValidationRule["GrossDPPrctg"]), Validators.max(100)]);
+          //     this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          //   }
+          // }
+          // if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
+          //   if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+          //     var minDP = this.AssetDataForm.controls["AssetPrice"].value * assetValidationRule["GrossDPPrctg"] / 100;
+          //     this.AssetDataForm.patchValue({
+          //       DownPayment: minDP
+          //     });
+          //     this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
+          //     this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          //   }
+          // }
+        });
+    }
   }
 
   downPaymentChange() {
     var value = this.AssetDataForm.controls["MrDownPaymentTypeCode"].value;
-    if (value == "AMT") {
-      this.AssetDataForm.controls["DownPayment"].enable()
-      var minDP = this.AssetDataForm.controls["AssetPrice"].value * this.grossDPPrcnt / 100;
-      this.AssetDataForm.controls["DownPayment"].setValidators(Validators.min(minDP));
-      this.AssetDataForm.controls["DownPaymentPrctg"].disable();
-      this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    if(this.AssetValidationResult && this.AssetValidationResult["DPBhv"]){
+      if(this.AssetValidationResult["DPBhv"] == CommonConstant.RuleBehaviourLock){
+        if(value == "AMT"){
+          this.AssetDataForm.controls["DownPayment"].disable();
+          this.AssetDataForm.controls["DownPayment"].clearValidators();
+          this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+        }
+        else{
+          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].clearValidators();
+          this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+        }
+      }
+      else{
+        if (value == "AMT") {
+          this.AssetDataForm.controls["DownPayment"].enable();
+          this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+          this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+        }
+        else{
+          this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+          this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+        }
+      }
     }
-    else {
-      this.AssetDataForm.controls["DownPaymentPrctg"].enable();
-      this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.min(this.grossDPPrcnt), Validators.max(100)]);
-      this.AssetDataForm.controls["DownPayment"].disable();
-      this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
-    }
+    // if (value == "AMT") {
+    //   this.AssetDataForm.controls["DownPayment"].enable()
+    //   var minDP = this.AssetDataForm.controls["AssetPrice"].value * this.grossDPPrcnt / 100;
+    //   this.AssetDataForm.controls["DownPayment"].setValidators(Validators.min(minDP));
+    //   this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+    //   this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+    // }
+    // else {
+    //   this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+    //   this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.min(this.grossDPPrcnt), Validators.max(100)]);
+    //   this.AssetDataForm.controls["DownPayment"].disable();
+    //   this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+    // }
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("aaaa")
-    this.AssetDataForm.controls.MrAssetConditionCodeView.disable();
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.title = "Asset Location";
-    this.inputAddressObjForLoc.showSubsection = false; 
+    this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
     this.inputAddressObjForLoc.showOwnership = false;
 
@@ -500,7 +581,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-
+    this.AssetDataForm.controls.MrAssetConditionCode.disable();
     if (this.mode == 'editAsset') {
       // this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
       // this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
@@ -512,6 +593,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.returnAppAssetObj.MrAssetConditionCode,
+            MrAssetConditionCodeView: this.returnAppAssetObj.MrAssetConditionCode,
             AssetUsage: this.returnAppAssetObj.MrAssetUsageCode,
             AssetPrice: this.returnAppAssetObj.AssetPriceAmt,
             DownPayment: this.returnAppAssetObj.DownPaymentAmt,
@@ -616,8 +698,8 @@ export class AssetDataAddEditComponent implements OnInit {
 
         });
       this.appCollateralObj = new AppCollateralObj();
-      this.appCollateralObj.AppId = this.AppId;
-      this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
+      this.appCollateralObj.AppAssetId = this.AppAssetId;
+      this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
 
@@ -651,8 +733,6 @@ export class AssetDataAddEditComponent implements OnInit {
               this.locationAddrObj.AreaCode2 = this.returnAppCollateralRegistObj.LocationAreaCode2;
               this.locationAddrObj.City = this.returnAppCollateralRegistObj.LocationCity;
 
-              this.inputFieldLocationAddrObj = new InputFieldObj();
-              this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
               this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
               this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
               this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
@@ -699,6 +779,13 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetSchm = response[3];
         var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
+        if (this.mode != 'editAsset') {
+          this.AssetDataForm.patchValue({
+            MrAssetConditionCode: assetCond["CompntValue"],
+            MrAssetConditionCodeView: assetCond["CompntValue"]
+          });
+        }
+
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           AssetTypeCode: assetType["CompntValue"]
         }).subscribe(
@@ -731,6 +818,8 @@ export class AssetDataAddEditComponent implements OnInit {
                 }
               }
             }
+            this.UcAddressHandler();
+
           });
 
         var arrCritSuppl = new Array<CriteriaObj>();
@@ -773,14 +862,15 @@ export class AssetDataAddEditComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
+        if (this.mode != 'editAsset') {
           this.AssetDataForm.patchValue(
             {
-              MrAssetConditionCode: this.returnAssetConditionObj[1].Key,
-              MrAssetConditionCodeView: this.returnAssetConditionObj[1].Key
+              MrAssetConditionCode: this.returnAssetConditionObj[0].Key
             }
           )
         }
+
+        this.UcAddressHandler();
       }
     );
 
@@ -833,8 +923,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     );
   }
-  checkForm() {
-  }
+
   showModalTaxCityIssuer() {
     const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
     modalTaxCityIssuer.result.then(
@@ -879,6 +968,7 @@ export class AssetDataAddEditComponent implements OnInit {
   // MrDownPaymentTypeCode:[''],
 
   setAssetInfo() {
+    var assetForm = this.AssetDataForm.getRawValue();
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
@@ -893,10 +983,12 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
 
     if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
     }
     else {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
+      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * assetForm["DownPaymentPrctg"] / 100;
     }
 
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
@@ -926,7 +1018,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
-    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
@@ -1017,6 +1109,43 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   SaveForm() {
+    var assetForm = this.AssetDataForm.getRawValue();
+    var confirmMsg = "";
+    var isValidOk = true;
+    this.AssetValidationForSave();
+    if(this.AssetValidationResult){
+      if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG') {
+        if(assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin){
+          isValidOk = false;
+          confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
+        }
+        else if(assetForm.DownPaymentPrctg > this.AssetValidationResult.DPMax){
+          isValidOk = false;
+          confirmMsg = "Down Payment Percentage is Higher than Maximum Percentage";
+        }
+      }
+      else{
+        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.DownPaymentAmt;
+        var assetDPMax = this.AssetValidationResult.DPMax * assetForm.DownPaymentAmt;
+        if(assetForm.DownPaymentAmt < assetDPMin){
+          isValidOk = false;
+          confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
+        }
+        else if(assetForm.DownPaymentAmt > assetDPMax){
+          isValidOk = false;
+          confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
+        }
+      }
+    }
+
+    if(!isValidOk){
+      confirmMsg += ", Are You Sure to Save This Data ?";
+      var confirmation = confirm(confirmMsg);
+      if(!confirmation){
+        return false;
+      }
+    }
+
     if (this.mode == 'addAsset') {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setSupplierInfo();
@@ -1034,9 +1163,49 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
 
+      if (this.originalAssetAccs && this.allAssetDataObj.AppAssetAccessoryObjs && this.originalAssetAccs.length > 0 && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
+        for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
+          if (!this.allAssetDataObj.IsAppAssetAccessoryChanged) {
+            for (const oriAcc of this.originalAssetAccs) {
+              if (newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode) {
+                if (newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.SupplCode != oriAcc.SupplCode) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.SupplName != oriAcc.SupplName) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.AccessoryNotes != oriAcc.AccessoryNotes) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+              }
+            }
+
+          }
+          else {
+            break;
+          }
+        }
+      }
+
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
+          this.AssetDataForm.reset();
           //this.router.navigate(["/Nap/AssetData/Paging"]);
           this.assetValue.emit({ mode: 'paging' });
         });
@@ -1062,13 +1231,68 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
 
+      if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
+        if (this.originalAssetAccs && this.originalAssetAccs.length > 0) {
+          for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
+            if (!this.allAssetDataObj.IsAppAssetAccessoryChanged) {
+              for (const oriAcc of this.originalAssetAccs) {
+                if (newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode) {
+                  if (newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName) {
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if (newAcc.SupplCode != oriAcc.SupplCode) {
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if (newAcc.SupplName != oriAcc.SupplName) {
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if (newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt) {
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                  if (newAcc.AccessoryNotes != oriAcc.AccessoryNotes) {
+                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                    break;
+                  }
+                }
+              }
+            }
+            else {
+              break;
+            }
+          }
+        }
+        else {
+          this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+        }
+      }
+
       this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
+          this.AssetDataForm.reset();
           this.assetValue.emit({ mode: 'paging' });
         });
     }
+
+    // this.inputAddressObjForLoc = new InputAddressObj();
+    // this.inputAddressObjForLoc.title = "Asset Location";
+    // this.inputAddressObjForLoc.showSubsection = false; 
+    // this.inputAddressObjForLoc.showAllPhn = false;
+    // this.inputAddressObjForLoc.showOwnership = false;
+
+    // var datePipe = new DatePipe("en-US");
+    // this.inputFieldLocationAddrObj = new InputFieldObj();
+    // this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    // this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
+
   }
   addGroup(appAssetAccessoriesObj, i) {
     if (appAssetAccessoriesObj == undefined) {
@@ -1079,7 +1303,7 @@ export class AssetDataAddEditComponent implements OnInit {
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: ['', Validators.required],
-        AccessoryDownPaymentAmt: ['', Validators.required],
+        AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
       })
     } else {
@@ -1178,6 +1402,7 @@ export class AssetDataAddEditComponent implements OnInit {
       return this.toastr.warningMessage("Please Choose Asset First");
     }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+    // appAccessoryObj.controls[0]["AccessoryDownPaymentAmt"].value = 0;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
     var max = 0;
     if (length > 0) {
@@ -1185,6 +1410,12 @@ export class AssetDataAddEditComponent implements OnInit {
     }
 
     appAccessoryObj.push(this.addGroup(undefined, max + 1));
+    if (max != 0) {
+      appAccessoryObj.controls[max + 1]["controls"]["AccessoryDownPaymentAmt"].value = 0;
+    }
+    else {
+      appAccessoryObj.controls[max]["controls"]["AccessoryDownPaymentAmt"].value = 0;
+    }
 
     var InputLookupAccObj = this.initLookupAcc();
     var InputLookupAccSupObj = this.initLookupSuppAcc();
@@ -1207,6 +1438,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   bindAccessories() {
     if (this.appAssetAccessoriesObjs != undefined) {
+      this.originalAssetAccs = [...this.appAssetAccessoriesObjs];
       for (let i = 0; i < this.appAssetAccessoriesObjs.length; i++) {
         var listAppAccessories = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
         listAppAccessories.push(this.addGroup(this.appAssetAccessoriesObjs[i], i));
@@ -1265,5 +1497,29 @@ export class AssetDataAddEditComponent implements OnInit {
       AssetAccessoryCode: event.AssetAccessoryCode
     });
 
+  }
+
+  UcAddressHandler() {
+
+    console.log(this.AssetDataForm);
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
+      this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
+      this.inputAddressObjForLoc.isRequired = false;
+      for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
+        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.required]);
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
+        }
+      }
+    } else {
+      this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
+      this.inputAddressObjForLoc.isRequired = true;
+      for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
+        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].clearValidators();
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
+        }
+      }
+    }
   }
 }

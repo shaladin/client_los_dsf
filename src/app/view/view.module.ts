@@ -38,7 +38,6 @@ import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.co
 import { TabReferantorComponent } from "./app-view/tab-referantor/tab-referantor.component";
 // import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAppCustDataPersonalComponent } from "./app-view/view-app-cust-data-personal/view-app-cust-data-personal.component";
-import { ViewAppFraudVerificationComponent } from "./app-view/view-app-fraud-verification/view-app-fraud-verification.component";
 import { ViewAppScoreGradeDsrComponent } from "./app-view/view-app-score-grade-dsr/view-app-score-grade-dsr.component";
 import { ViewAppScoreGradeDukcapilComponent } from "./app-view/view-app-score-grade-dukcapil/view-app-score-grade-dukcapil.component";
 import { ViewAppScoreGradeScoringComponent } from "./app-view/view-app-score-grade-scoring/view-app-score-grade-scoring.component";
@@ -93,6 +92,7 @@ import { SurveyViewComponent } from "./survey-view-prototype/survey-view.compone
 import { AgreementViewContainerComponent } from "./agr-view/agreement-view-container.component";
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
+import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -141,7 +141,6 @@ import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-c
     TabReferantorComponent,
     ViewAppCustDataCompanyComponent,
     ViewAppCustDataPersonalComponent,
-    ViewAppFraudVerificationComponent,
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
     ViewAppScoreGradeScoringComponent,
@@ -171,6 +170,7 @@ import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-c
     AgrmntFinancialComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
+    ListDataCommissionAgrmntComponent,
     ViewDeviationComponent,
     ViewCollateralComponent,
     ViewAgrmntInsuranceComponent,

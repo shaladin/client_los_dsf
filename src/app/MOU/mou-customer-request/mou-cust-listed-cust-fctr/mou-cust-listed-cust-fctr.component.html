@@ -3,7 +3,7 @@
 <div id="MouCustListedCustFctrSection">
 
   <form class="form form-horizontal" [formGroup]="MouCustIsListedForm" #enjiForm="ngForm" novalidate
-    (ngSubmit)="enjiForm.form.valid && Save(enjiForm)"> 
+    (ngSubmit)="enjiForm.form.valid"> 
     <div class="form-group row">
       <label class="col-md-3 adInsLabel adins-required-label" for="IsListedCust" translate>Listed Customer
         Factoring</label>
@@ -37,12 +37,12 @@
             </th>
           </tr>
         </thead>
-        <tbody *ngIf = "MouCustIsListedForm.controls['ListCust'].controls.length == 0">
+        <tbody *ngIf = "MouCustIsListedForm.controls['ListCust']['controls'].length == 0">
           <tr>
             <td colspan="100%">No Data Available</td>
           </tr>
         </tbody>
-        <tbody *ngIf = "MouCustIsListedForm.controls['ListCust'].controls.length > 0">
+        <tbody *ngIf = "MouCustIsListedForm.controls['ListCust']['controls'].length > 0">
           <tr *ngFor="let item of MouCustIsListedForm.controls['ListCust'].controls; let i = index">
             <td style="text-align: left;">
               <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictLookup[MouCustIsListedForm.controls['ListCust'].value[i].No]" [parentForm]="MouCustIsListedForm" [identifier]="'lookupCustomerForGrp' + MouCustIsListedForm.controls['ListCust'].value[i].No" (lookup)="CopyCustomer($event, i)"></lib-uclookupgeneric>

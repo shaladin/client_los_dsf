@@ -9,6 +9,7 @@ export class AppInsObjObj {
     InscoBranchName: string;
     InsSeqNo: number;
     MrInsRateTypeCode: string;
+    InsAssetCoveredByCode: string;
     InsAssetCoverPeriod: string;
     InsAssetCoverPeriodName: string;
     InsAssetCoveredBy: string;
@@ -56,6 +57,7 @@ constructor() {
     this.InscoBranchName = "";
     this.InsSeqNo = 0;
     this.MrInsRateTypeCode = "";
+    this.InsAssetCoveredByCode = "";
     this.InsAssetCoverPeriod = "-";
     this.InsAssetCoverPeriodName = "";
     this.InsAssetCoveredBy = "";

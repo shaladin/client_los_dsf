@@ -23,6 +23,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   MouType : string = "FACTORING";
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   resultData: any;
+  MrCustTypeCode: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -56,6 +57,7 @@ export class MouApprovalFactoringComponent implements OnInit {
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.MrCustTypeCode = response.MrCustTypeCode;
       }
     );
   }

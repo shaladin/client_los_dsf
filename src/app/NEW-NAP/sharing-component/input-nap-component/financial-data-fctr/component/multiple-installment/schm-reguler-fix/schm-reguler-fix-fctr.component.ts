@@ -185,7 +185,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  SetNeedReCalculate(value) {
+  SetNeedReCalculate(value: boolean) {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
