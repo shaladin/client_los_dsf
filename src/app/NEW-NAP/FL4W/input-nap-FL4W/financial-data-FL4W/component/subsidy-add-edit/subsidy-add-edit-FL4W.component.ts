@@ -150,7 +150,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
   
     LoadDDLFromTypeCode() {
-      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "SUBSIDY_FROM_TYPE" }).subscribe(
+      this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId }).subscribe(
         (response) => {
           this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
 
@@ -174,7 +174,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
     
     LoadDDLSubsidyAlloc(fromTypeCode: string) {
-      this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode }).subscribe(
+      this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode, AppId : this.AppId }).subscribe(
         (response) => {
           this.AllocCodeOptions = response[CommonConstant.ReturnObj];
         }
@@ -182,7 +182,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     }
 
     LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-      this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
+      this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode, AppId : this.AppId }).subscribe(
         (response) => {
           this.SourceCodeOptions = response[CommonConstant.ReturnObj];
         }
@@ -193,7 +193,8 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       this.http.post(URLConstant.GetListSubsidyValueType, 
                       { SubsidyFromType: fromTypeCode, 
                         SubsidyAllocCode: allocCode,
-                        SubsidySourceCode: sourceCode
+                        SubsidySourceCode: sourceCode,
+                        AppId : this.AppId
                       }).subscribe(
         (response) => {
           this.ValueTypeOptions = response[CommonConstant.ReturnObj];

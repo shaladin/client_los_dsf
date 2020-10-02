@@ -18,6 +18,8 @@ export class AppAssetObj {
   AssetPriceAmt: number;
   DownPaymentAmt: number;
   DownPaymentPrcnt: number;
+  MinDownPaymentPrcnt: number;
+  MaxDownPaymentPrcnt: number;
   AssetTypeCode: string;
   AssetCategoryCode: string;
   AssetTaxDt: Date;

@@ -149,7 +149,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLFromTypeCode() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSubsidyFromType }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId}).subscribe(
       (response) => {
         this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
 
@@ -194,7 +194,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLFromValue(fromTypeCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId, SubsidyFromType: fromTypeCode }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyFromValue, { AppId: this.AppId, SubsidyFromType: fromTypeCode }).subscribe(
       (response) => {
         this.FromValueOptions = response[CommonConstant.ReturnObj];
       }
@@ -202,7 +202,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLSubsidyAlloc(fromTypeCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation", { SubsidyFromType: fromTypeCode }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode, AppId : this.AppId }).subscribe(
       (response) => {
         this.AllocCodeOptions = response[CommonConstant.ReturnObj];
       }
@@ -210,7 +210,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidySource", { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
+    this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode, AppId : this.AppId }).subscribe(
       (response) => {
         this.SourceCodeOptions = response[CommonConstant.ReturnObj];
       }
@@ -218,11 +218,12 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyValueType",
+    this.http.post(URLConstant.GetListSubsidyValueType,
       {
         SubsidyFromType: fromTypeCode,
         SubsidyAllocCode: allocCode,
-        SubsidySourceCode: sourceCode
+        SubsidySourceCode: sourceCode,
+        AppId : this.AppId
       }).subscribe(
         (response) => {
           this.ValueTypeOptions = response[CommonConstant.ReturnObj];

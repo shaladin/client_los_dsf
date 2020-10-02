@@ -333,8 +333,15 @@ export class CustShareholderComponent implements OnInit {
               MrIdTypeCode: response["CustObj"].MrIdTypeCode,
               IdNo: response["CustObj"].IdNo,
               TaxIdNo: response["CustObj"].TaxIdNo,
-              IdExpiredDt: response["CustObj"].IdExpiredDt != undefined ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : ''
+              // IdExpiredDt: response["CustObj"].IdExpiredDt != undefined || response["CustObj"].MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : ''
             });
+            if(response["CustObj"].IdExpiredDt){
+              if(response["CustObj"].MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP){
+                this.CustShareholderForm.patchValue({
+                  IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US')
+                });
+              }
+            }
             this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
           }
 
@@ -407,14 +414,17 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.TaxIdNo = this.CustShareholderForm.controls.TaxIdNo.value;
       this.appCustCompanyMgmntShrholderObj.IdExpiredDt = this.CustShareholderForm.controls.IdExpiredDt.value;
       this.appCustCompanyMgmntShrholderObj.IsGuarantor = this.CustShareholderForm.controls.IsGuarantor.value;
-      let d1 = new Date(this.appCustCompanyMgmntShrholderObj.IdExpiredDt);
+      let d1 = this.appCustCompanyMgmntShrholderObj.IdExpiredDt ? new Date(this.appCustCompanyMgmntShrholderObj.IdExpiredDt) : new Date();
       let d2 = new Date(this.MaxDate);
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
-      if(d1<d2){
-        this.toastr.warningMessage( ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
-        flag = false;
+      if(this.appCustCompanyMgmntShrholderObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP){
+        if(d1<d2){
+          this.toastr.warningMessage( ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
+          flag = false;
+        }
       }
+     
       if(d3>d4){
         // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
         this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);

@@ -82,7 +82,7 @@ export class SubsidyFL4WComponent implements OnInit {
       }
     );
   }
-
+ 
   LoadSubsidyDataWithoutRule()
   {
     this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(

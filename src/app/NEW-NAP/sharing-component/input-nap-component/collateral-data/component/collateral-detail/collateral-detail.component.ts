@@ -466,7 +466,7 @@ export class CollateralDetailComponent implements OnInit {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
     const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
     const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
 
@@ -693,7 +693,7 @@ export class CollateralDetailComponent implements OnInit {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
     if(!fullAssetCode){
       this.toastr.warningMessage("Full Asset Code Must be Filled");
       return false;

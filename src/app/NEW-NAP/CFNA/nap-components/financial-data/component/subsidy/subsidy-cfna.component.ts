@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SubsidyAddEditCFNAComponent } from '../subsidy-add-edit/subsidy-add-edit-cfna.component';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
@@ -64,7 +63,7 @@ export class SubsidyCFNAComponent implements OnInit {
   deleteSubsidy(obj)
   {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
+        this.http.post(URLConstant.DeleteSubsidy, { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);

@@ -105,6 +105,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   PhoneNumberObj: any;
   QuestionObj: any;
   isQuestionLoaded: boolean = true;
+  subjectRelation: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -113,6 +114,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.verfResultHId = params["VerfResultHId"];
       this.subjectName = params["Name"];
       this.subjectType = params["Type"];
+      this.subjectRelation = params["Relation"];
       this.idSource = params["Source"];
       if (params['ReturnHandlingHId'] != null) {
         this.returnHandlingHId = params['ReturnHandlingHId'];
@@ -418,13 +420,17 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
       (response) => {
         this.SubjectRelationObj = response[CommonConstant.ReturnObj];
-        if (this.SubjectRelationObj.length > 0) {
-          this.PhoneDataForm.patchValue({
-            MrVerfSubjectRelationCode: this.SubjectRelationObj[0].Key
-          });
-        }
+        // if (this.SubjectRelationObj.length > 0) {
+        //   this.PhoneDataForm.patchValue({
+        //     MrVerfSubjectRelationCode: this.SubjectRelationObj[0].Key
+        //   });
+        // }
       }
     );
+
+    this.PhoneDataForm.patchValue({
+      MrVerfSubjectRelationCode: this.subjectRelation
+    });
   }
 
   //PhoneChange(phnNumber, phnType) {
