@@ -1012,6 +1012,7 @@ export class URLConstant {
     // APP SUBSIDY
     public static GetListAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId";
     public static GetListSubsidyFromValue = environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue";
+    public static GetListSubsidyFromTypeCode = environment.losUrl + "/AppSubsidy/GetListSubsidyFromTypeCode";
     public static GetListSubsidyAllocation = environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation"
     public static GetListSubsidySource = environment.losUrl + "/AppSubsidy/GetListSubsidySource";
     public static GetListSubsidyValueType = environment.losUrl + "/AppSubsidy/GetListSubsidyValueType";
@@ -1133,4 +1134,7 @@ export class URLConstant {
 
     // DocExpDt
     public static GetDocIsExpDtMandatory = environment.losUrl + "/DocumentExpDt/GetDocIsExpDtMandatory";
+
+    // INTEGRATION
+    public static InsertToR2AppStaging = environment.losUrl + "/LmsTest/InsertToR2AppStaging";
 }

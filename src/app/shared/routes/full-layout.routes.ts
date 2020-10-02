@@ -49,6 +49,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './lead/lead.module#LeadModule'
   },
   {
+    path: 'Integration',
+    loadChildren: './integration/integration.module#IntegrationModule'
+  },
+  {
     path: 'Backdoor',
     component: BackdoorComponent,
     data: {

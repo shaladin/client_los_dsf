@@ -985,11 +985,15 @@ export class AssetDataAddEditComponent implements OnInit {
     if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
       // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
       this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
+      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm["DownPayment"] / assetForm["AssetPrice"]) * 100;
     }
     else {
       // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * assetForm["DownPaymentPrctg"] / 100;
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * (assetForm["DownPaymentPrctg"] / 100);
+      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm["DownPaymentPrctg"];
     }
+    this.allAssetDataObj.AppAssetObj.MinDownPaymentPrcnt = this.AssetValidationResult && this.AssetValidationResult.DPMin ? this.AssetValidationResult.DPMin : 0;
+    this.allAssetDataObj.AppAssetObj.MaxDownPaymentPrcnt = this.AssetValidationResult && this.AssetValidationResult.DPMax ? this.AssetValidationResult.DPMax : 0;
 
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
