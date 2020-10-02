@@ -70,7 +70,6 @@ export class CustMainDataComponent implements OnInit {
     MrCustTypeCode: [],
     MrRelationshipCustCode: ['', Validators.maxLength(50)],
     CustNo: [],
-    CustName: ['', Validators.required],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
     MrIdTypeCode: ['', Validators.required],
@@ -141,6 +140,7 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.isReadonly = false;
+    this.InputLookupCustObj.isRequired = true;
 
     this.ArrAddCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
@@ -316,7 +316,6 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput(){
     this.CustMainDataForm.controls.MrCustTypeCode.disable();
-    this.CustMainDataForm.controls.CustName.disable();
     this.CustMainDataForm.controls.CompanyType.disable();
     this.CustMainDataForm.controls.MrMaritalStatCode.disable();
     this.CustMainDataForm.controls.MrIdTypeCode.disable();
@@ -348,7 +347,6 @@ export class CustMainDataComponent implements OnInit {
   setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
-        CustName: CustObj.CustName,
         CustNo: CustObj.CustNo,
         MrIdTypeCode: CustObj.MrIdTypeCode,
         IdNo: CustObj.IdNo,
@@ -381,7 +379,6 @@ export class CustMainDataComponent implements OnInit {
   setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
-        CustName: CustObj.CustName,
         CustNo: CustObj.CustNo,
         TaxIdNo: CustObj.TaxIdNo,
       });
