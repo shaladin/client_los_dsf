@@ -10,11 +10,11 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 
 @Component({
-  selector: 'app-guarantor-main-data-paging',
-  templateUrl: './guarantor-main-data-paging.component.html',
+  selector: 'app-family-main-data-paging',
+  templateUrl: './family-main-data-paging.component.html',
   styleUrls: []
 })
-export class GuarantorMainDataPagingComponent implements OnInit {
+export class FamilyMainDataPagingComponent implements OnInit {
 
   @Input() appId: number;
   @Input() showCancel: boolean = true;
@@ -35,15 +35,15 @@ export class GuarantorMainDataPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantorMainData.json";
-    this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
+    this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
+    this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
     this.loadGuarantorListData();
   }
 
   add(content) {
     this.inputMode = "ADD";
+    this.open(content);
     this.appCustId = null;
-    this.open(content);    
   }
 
   open(content) {
@@ -102,7 +102,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   loadGuarantorListData() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
-    this.custDataObj.IsGuarantor = true;
+    this.custDataObj.IsFamily = true;
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
       (response) => {
         this.inputGridObj.resultData = {

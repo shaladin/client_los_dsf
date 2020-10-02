@@ -1,6 +1,11 @@
 
 export class CustDataObj {
-    AppId: any;
+    AppId: number;
+    AppCustId: number;
+    IsCustomer: boolean;
+    IsFamily: boolean;
+    IsGuarantor: boolean;
+    IsShareholder: boolean;
     RowVersion: any;
 
     constructor() { 

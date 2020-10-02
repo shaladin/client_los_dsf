@@ -84,7 +84,7 @@ export class MainDataComponent implements OnInit {
         if (response) {
           this.NapObj = response;
           //this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.AppStepIndex = 2;
+          this.AppStepIndex = 1;
           this.stepper.to(this.AppStepIndex);
         }
         else {

@@ -8,6 +8,7 @@ import { MainDataComponent } from "./main-data.component";
 import { MainDataRoutingModule } from "./main-data-routing.module";
 import { CustMainDataComponent } from "../sharing-component/main-data-component/cust-main-data/cust-main-data.component";
 import { GuarantorMainDataPagingComponent } from "../sharing-component/main-data-component/guarantor-main-data/guarantor-main-data-paging.component";
+import { FamilyMainDataPagingComponent } from "../sharing-component/main-data-component/family-main-data/family-main-data-paging.component";
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { GuarantorMainDataPagingComponent } from "../sharing-component/main-data
         MainDataComponent,
         CustMainDataComponent,
         GuarantorMainDataPagingComponent,
+        FamilyMainDataPagingComponent
     ],
     imports: [
         CommonModule,

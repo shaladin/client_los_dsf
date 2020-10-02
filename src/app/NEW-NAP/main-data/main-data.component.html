@@ -70,17 +70,19 @@
           <div class="bs-stepper-content">
 
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-cust-main-data *ngIf="AppStepIndex == 1" [AppId]="appId" (outputTab)="NextStep('GUARANTOR')" [CustMainDataMode]="CUST">
+              <app-cust-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'" [inputMode]="'EDIT'"
+              (outputAfterSave)="NextStep('GUARANTOR')" (outputCancel)="Cancel()">
               </app-cust-main-data>
             </div>
 
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-main-data-paging *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FAMILY')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              <app-guarantor-main-data-paging *ngIf="AppStepIndex == 2" [appId]="appId" (outputTab)="NextStep('FAMILY')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-guarantor-main-data-paging>
             </div>
 
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
-              Family
+              <app-family-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-family-main-data-paging>
             </div>
           </div>
         </div>
