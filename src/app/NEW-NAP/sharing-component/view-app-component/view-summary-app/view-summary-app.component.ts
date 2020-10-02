@@ -21,7 +21,7 @@ export class ViewSummaryAppComponent implements OnInit {
   LoanObjectData: Array<Object>;
   InputGridColl: InputGridObj;
   IsGridCollReady: boolean;
-
+bizTemplateCode : string = "";
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
   }
 
@@ -34,6 +34,7 @@ export class ViewSummaryAppComponent implements OnInit {
     this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryAppObj = response;
+        this.bizTemplateCode = this.SummaryAppObj["AppObj"]["BizTemplateCode"];
         if(this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs != null && this.SummaryAppObj.AppAssetObjs.length == 1){
           for(let i = 0; i < this.SummaryAppObj.AssetTypeSerialNoLabelCustomObjs.length; i++){
             var serialNoObj = new SerialNoObj();
