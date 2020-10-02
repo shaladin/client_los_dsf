@@ -133,6 +133,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   setLookup(value: string = CommonConstant.CustTypePersonal) {
+    this.InputLookupCustObj.isReady = false;
     this.InputLookupCustObj = new InputLookupObj();
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -150,7 +151,7 @@ export class CustMainDataComponent implements OnInit {
     this.ArrAddCrit.push(critObj);
     
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
-    this.InputLookupCustObj.isReady = true;
+    setTimeout(()=>{ this.InputLookupCustObj.isReady = true; }, 1);
   }
 
   getRefMasterPersonal() {
