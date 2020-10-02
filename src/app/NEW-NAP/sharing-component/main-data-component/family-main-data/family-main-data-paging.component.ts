@@ -3,36 +3,31 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 
 @Component({
-  selector: 'app-guarantor-paging',
-  templateUrl: './guarantor-paging.component.html',
+  selector: 'app-family-main-data-paging',
+  templateUrl: './family-main-data-paging.component.html',
   styleUrls: []
 })
-export class GuarantorPagingComponent implements OnInit {
+export class FamilyMainDataPagingComponent implements OnInit {
 
-  @Input() AppId: number;
+  @Input() appId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-  inputGridObj: any;
+  inputGridObj: InputGridObj;
   result: Array<any> = new Array();
   resultData: Array<any> = new Array();
-  closeResult: any;
-  AppGuarantorId: number;
-  MrGuarantorTypeCode: string;
-  mode: string;
-  appWizardObj: AppWizardObj;
-  closeChk: any;
-  MrCustRelationshipCode: Array<any> = new Array();
-  guarantorObj: GuarantorObj;
+  closeResult: string;
+  appCustId: number;
+  inputMode: string;
+  custDataObj: CustDataObj;
   custMainDataMode: string;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
@@ -40,28 +35,15 @@ export class GuarantorPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantor.json";
-    this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
-    this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
-
-    this.guarantorObj = new GuarantorObj();
-    this.guarantorObj.AppId = this.AppId;
-    this.http.post(URLConstant.GetAppGuarantorList, this.guarantorObj).subscribe(
-      (response) => {
-        this.inputGridObj.resultData = {
-          Data: ""
-        }
-        this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
-        this.result = this.inputGridObj.resultData.Data;
-      });
-    this.loadGuarantorListData(this.AppId);
+    this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
+    this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
+    this.loadGuarantorListData();
   }
 
   add(content) {
-    this.mode = "add";
+    this.inputMode = "ADD";
     this.open(content);
-    this.AppGuarantorId = null;
+    this.appCustId = null;
   }
 
   open(content) {
@@ -82,28 +64,18 @@ export class GuarantorPagingComponent implements OnInit {
     }
   }
 
-  SaveAndContinue() {
-    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, this.guarantorObj).subscribe(
-      (response) => {
-        for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-          if (response[CommonConstant.ReturnObj][i].MrMaritalStatCode == null || response[CommonConstant.ReturnObj][i].MrNationalityCode == null) {
-            this.toastr.errorMessage(ExceptionConstant.PLEASE_COMPLETE_MANDATORY_INPUT);
-            return;
-          }
-        }
-        this.outputTab.emit();
-      });
-
+  saveAndContinue() {
+    this.outputTab.emit();
   }
 
-  Cancel() {
+  cancel() {
     this.outputCancel.emit();
   }
 
   event(content, ev) {
     if (ev.Key == "edit") {
-      this.AppGuarantorId = ev.RowObj.AppGuarantorId;
-      this.MrGuarantorTypeCode = ev.RowObj.MrGuarantorTypeCode;
+      this.inputMode="EDIT";
+      this.appCustId = ev.RowObj.AppCustId;
       this.open(content);
     }
 
@@ -111,7 +83,7 @@ export class GuarantorPagingComponent implements OnInit {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var guarantorObj = new GuarantorObj();
         guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
-        guarantorObj.AppGuarantorObj.AppId = this.AppId;
+        guarantorObj.AppGuarantorObj.AppId = this.appId;
         this.http.post(URLConstant.DeleteAppGuarantor, guarantorObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -127,26 +99,25 @@ export class GuarantorPagingComponent implements OnInit {
     }
   }
 
-  loadGuarantorListData(appId: number) {
-    var guarantorObj = new AppGuarantorObj();
-    guarantorObj.AppId = appId;
-    this.http.post(URLConstant.GetAppGuarantorList, guarantorObj).subscribe(
+  loadGuarantorListData() {
+    this.custDataObj = new CustDataObj();
+    this.custDataObj.AppId = this.appId;
+    this.custDataObj.IsFamily = true;
+    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.result = this.inputGridObj.resultData.Data;
-      }); 
+      }
+    );
   }
 
-  close(event) {
-    this.closeChk = event;
-    if (this.closeChk) {
-      this.loadGuarantorListData(this.AppId);
-      this.modalService.dismissAll();
-    }
+  close() {
+    this.loadGuarantorListData();
+    this.modalService.dismissAll();
   }
 
 }

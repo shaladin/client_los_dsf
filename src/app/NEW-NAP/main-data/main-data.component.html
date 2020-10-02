@@ -1,0 +1,106 @@
+<div class="col-md-12 text-left">
+  
+  <div class="card">
+    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
+          [panel]="'formReturnInfo'">
+        </lib-ucSubsection>
+        <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
+          <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+            #enjiForm="ngForm">
+            <div class="form-body">
+
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Execution Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="px-3">
+        <div id="stepper1" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <!-- your steps here -->
+            <div class="step" data-target="#customer-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Customer Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#guarantor-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('GUARANTOR')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Guarantor Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#family-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="family-tab"
+                id="family-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('FAMILY')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Family Data</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+
+            <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
+              <app-cust-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'" [inputMode]="'EDIT'"
+              (outputAfterSave)="NextStep('GUARANTOR')" (outputCancel)="Cancel()">
+              </app-cust-main-data>
+            </div>
+
+            <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
+              <app-guarantor-main-data-paging *ngIf="AppStepIndex == 2" [appId]="appId" (outputTab)="NextStep('FAMILY')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-guarantor-main-data-paging>
+            </div>
+
+            <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
+              <app-family-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-family-main-data-paging>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions text-right">
+          <!--button type="button" class="btn btn-raised btn-warning" [routerLink]="['/Nap/CF2W/Paging']" [queryParams]="{LobCode:'CF2W'}" translate>
+            <i class="fa fa-check-square-o"></i> Cancel
+          </button-->
+          <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
+            [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
+            <i class="fa fa-check-square-o"></i> Back
+          </button>
+          <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="fa fa-check-square-o"></i> Submit Return Handling
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
