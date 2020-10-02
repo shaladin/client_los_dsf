@@ -297,7 +297,7 @@ export class ApplicationDataComponent implements OnInit {
         
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
-        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
+        // this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
         this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
         this.getPayFregData();
