@@ -160,7 +160,7 @@
                   </div>
                   <div class="col-md-8">
                     <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
-                    <!-- <select *ngIf="interestTypeShow == 'ALL'" class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                    <select  class="form-control adInsInput" style="width: auto" formControlName="InterestType"
               (change)="ChangeInterestType()"
               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
               <option value="">-Select One-</option>
@@ -168,7 +168,7 @@
                 {{it.Value}} </option>
             </select>
             <lib-uc-show-errors [control]="NapAppModelForm.controls.InterestType"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors> -->
+              [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
 
