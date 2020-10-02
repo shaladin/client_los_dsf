@@ -37,6 +37,7 @@ export class CustMainDataComponent implements OnInit {
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
   MrCustTypeCode: string;
+  subjectTitle: string = 'Customer';
   MaxDate: Date;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   inputAddressObj: InputAddressObj = new InputAddressObj();
@@ -51,8 +52,6 @@ export class CustMainDataComponent implements OnInit {
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
   custDataObj: CustDataObj;
-  subjectTitle: string = 'Customer';
-
   custDataPersonalObj: CustMainDataPersonalObj;
   custDataCompanyObj: CustMainDataCompanyObj;
 
@@ -63,7 +62,7 @@ export class CustMainDataComponent implements OnInit {
     private route: ActivatedRoute,
     public formValidate: FormValidateService) {
     this.route.queryParams.subscribe(params => {
-      this.appId = params["appId"];
+      this.appId = params["AppId"];
     })
   }
 
@@ -125,13 +124,11 @@ export class CustMainDataComponent implements OnInit {
       case CommonConstant.CustMainDataModeFamily:
         this.isIncludeCustRelation = true;
         this.custDataObj.IsFamily = true;
-        this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrRelationshipCustCode.setValidators(Validators.required);
       break;
       default:
         this.isIncludeCustRelation = false;
-        this.subjectTitle = 'Customer';
-      
+        this.subjectTitle = 'Customer'; 
     }
   }
 
@@ -176,7 +173,6 @@ export class CustMainDataComponent implements OnInit {
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
         }
-        this.clearExpDt();
       }
     );
 
@@ -273,6 +269,7 @@ export class CustMainDataComponent implements OnInit {
     this.setLookup(value);
     
     if (!firstInit) {
+      this.CustMainDataForm.reset();
       this.CustMainDataForm.enable();
       if (value == CommonConstant.CustTypePersonal) {
         this.getRefMasterPersonal();
@@ -298,7 +295,6 @@ export class CustMainDataComponent implements OnInit {
        this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
        
       this.CustMainDataForm.updateValueAndValidity();
-      this.clearInput();
     }
   }
 
@@ -335,21 +331,6 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
-  }
-
-  clearInput(){
-    this.CustMainDataForm.patchValue({
-      BirthDt: '',
-      BirthPlace: '',
-      IdNo: '',
-      IdExpiredDt: '',
-      TaxIdNo: '',
-      MotherMaidenName: '',
-    });
-  }
-
-  clearExpDt() {
-
   }
 
   setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj) {

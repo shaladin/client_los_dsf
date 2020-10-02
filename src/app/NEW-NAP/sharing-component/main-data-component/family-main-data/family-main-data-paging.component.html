@@ -13,11 +13,11 @@
           </span>
         </th>
         <th style="text-align: center;">
-          <span class="thead-header" name="GuarantorName" translate>Guarantor Name </span>
+          <span class="thead-header" name="FamilyName" translate>Family Name </span>
         </th>
         <th style="text-align: center;">
-          <span class="thead-header" name="MrGuarantorTypeCode" translate>
-            Guarantor Type
+          <span class="thead-header" name="MrFamilyTypeCode" translate>
+            Family Type
           </span>
         </th>
         <th style="text-align: center;">
@@ -53,14 +53,14 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Guarantor</h4>
+    <h4 class="modal-title">Family</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body px-3">
-    <lib-ucSubsection [id]="'AddEditGuarantorId'" [title]="'Add / Edit Guarantor'" [panel]="'AddEditGuarantor'"></lib-ucSubsection>
-    <div id="AddEditGuarantor">
+    <lib-ucSubsection [id]="'AddEditFamilyId'" [title]="'Add / Edit Family'" [panel]="'AddEditFamily'"></lib-ucSubsection>
+    <div id="AddEditFamily">
       <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId" [inputMode]="inputMode" 
       (outputCancel)="close()" (afterSave)="close()">
       </app-cust-main-data>

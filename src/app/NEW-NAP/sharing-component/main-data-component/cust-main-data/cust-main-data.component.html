@@ -5,7 +5,7 @@
         <form class="form form-horizontal" [formGroup]="CustMainDataForm"
           (ngSubmit)="CustMainDataForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
           <div class="form-body">
-            <div class="form-group row">
+            <div class="form-group row" *ngIf="!custDataObj?.IsFamily">
               <label class="col-md-2" translate>{{subjectTitle}} Type</label>
               <div class="col-md-10">
                 <mat-radio-group formControlName="MrCustTypeCode" (change)="custTypeChange($event.value)">
@@ -45,7 +45,7 @@
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Marital Status</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <select class="form-control" formControlName="MrMaritalStatCode" style="width:100%;">
                         <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
                           {{item.Value}}
@@ -57,7 +57,7 @@
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change)="clearExpDt()" style="width:100%;"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdTypeCode.invalid }">
                         <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
@@ -81,7 +81,7 @@
                     <label class="col-md-4"
                       [ngClass]="{'adins-required-label': CustMainDataForm.controls.MrIdTypeCode.value == 'KITAS' || CustMainDataForm.controls.MrIdTypeCode.value == 'SIM'}"
                       translate>Id Expired Date</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <input *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
                         readonly type="date" class="form-control" formControlName="IdExpiredDt">
                       <input *ngIf="!['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
@@ -95,7 +95,7 @@
                 <div class="col-md-6">
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Gender</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <select class="form-control" formControlName="MrGenderCode" style="width:100%;">
                         <option *ngFor="let item of GenderObj" [value]="item.Key">
                           {{item.Value}}
@@ -107,7 +107,7 @@
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'COMPANY'">
                     <label class="col-md-4 adins-required-label" translate>Company Type</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <select class="form-control" formControlName="MrCompanyTypeCode" style="width:100%;">
                         <option *ngFor="let item of CompanyTypeObj" [value]="item.Key">
                           {{item.Value}}
@@ -128,7 +128,7 @@
                   </div>
                   <div class="form-group row" *ngIf="MrCustTypeCode == 'PERSONAL'">
                     <label class="col-md-4 adins-required-label" translate>Birth Date</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
                         formControlName="BirthDt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
