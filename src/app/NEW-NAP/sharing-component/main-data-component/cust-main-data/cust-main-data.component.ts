@@ -36,7 +36,6 @@ export class CustMainDataComponent implements OnInit {
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
-  isDisabled: boolean = false;
   MrCustTypeCode: string;
   subjectTitle: string = 'Customer';
   MaxDate: Date;
@@ -315,12 +314,23 @@ export class CustMainDataComponent implements OnInit {
   }
 
   disableInput(){
-    this.isDisabled = true;
+    this.CustMainDataForm.controls.MrCustTypeCode.disable();
+    this.CustMainDataForm.controls.CustName.disable();
+    this.CustMainDataForm.controls.CompanyType.disable();
+    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+    this.CustMainDataForm.controls.MrIdTypeCode.disable();
+    this.CustMainDataForm.controls.IdNo.disable();
+    this.CustMainDataForm.controls.IdExpiredDt.disable();
+    this.CustMainDataForm.controls.TaxIdNo.disable();
+    this.CustMainDataForm.controls.MrGenderCode.disable();
+    this.CustMainDataForm.controls.BirthPlace.disable();
+    this.CustMainDataForm.controls.BirthDt.disable();
+    this.CustMainDataForm.controls.MotherMaidenName.disable();
+    this.CustMainDataForm.controls.MrCompanyTypeCode.disable();
     this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
-    this.inputAddressObj.inputField.inputLookupObj.isDisable = true;
   }
 
   clearInput(){
@@ -335,7 +345,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj) {
-    if (CustObj) {
+    if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
         CustName: CustObj.CustName,
         CustNo: CustObj.CustNo,
@@ -348,7 +358,7 @@ export class CustMainDataComponent implements OnInit {
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
     }
 
-    if (CustPersonalObj) {
+    if (CustPersonalObj != undefined) {
       this.CustMainDataForm.patchValue({
         MrGenderCode: CustPersonalObj.MrGenderCode,
         MotherMaidenName: CustPersonalObj.MotherMaidenName,

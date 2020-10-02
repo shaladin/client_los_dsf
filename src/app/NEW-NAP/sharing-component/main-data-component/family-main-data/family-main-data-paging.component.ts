@@ -6,6 +6,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 
 @Component({
   selector: 'app-family-main-data-paging',
@@ -35,7 +37,6 @@ export class FamilyMainDataPagingComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
-    this.inputGridObj.deleteUrl = URLConstant.DeleteAppCustMainData;
 
     this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
     this.loadGuarantorListData();
@@ -85,6 +86,22 @@ export class FamilyMainDataPagingComponent implements OnInit {
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
       this.open(content);
+    }
+    
+    if (ev.Key == "delete") {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+        this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.inputGridObj.resultData = {
+              Data: ""
+            }
+            this.inputGridObj.resultData["Data"] = new Array();
+            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
+            this.result = this.inputGridObj.resultData.Data;
+          }
+        );
+      }
     }
   }
 

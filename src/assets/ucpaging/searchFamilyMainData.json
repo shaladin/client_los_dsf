@@ -64,8 +64,15 @@
           ]
         },
         {
-          "type": "delete",
-          "property": "AppCustId"
+          "type": "callback",
+          "key": "delete",
+          "property": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            }
+          ],
+          "icon" : "ft-trash-2"
         }
       ]
     }

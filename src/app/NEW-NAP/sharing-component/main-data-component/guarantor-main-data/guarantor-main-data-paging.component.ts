@@ -79,6 +79,22 @@ export class GuarantorMainDataPagingComponent implements OnInit {
       this.appCustId = ev.RowObj.AppCustId;
       this.open(content);
     }
+
+    if (ev.Key == "delete") {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+        this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.inputGridObj.resultData = {
+              Data: ""
+            }
+            this.inputGridObj.resultData["Data"] = new Array();
+            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
+            this.result = this.inputGridObj.resultData.Data;
+          }
+        );
+      }
+    }
   }
 
   loadGuarantorListData() {
