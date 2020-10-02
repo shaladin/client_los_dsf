@@ -320,6 +320,7 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
+    this.inputAddressObj.inputField.inputLookupObj.isDisable = true;
   }
 
   clearInput(){
