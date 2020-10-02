@@ -64,7 +64,7 @@
           ]
         },
         {
-          "key": "delete",
+          "type": "delete",
           "property": "AppCustId"
         }
       ]

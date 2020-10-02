@@ -36,6 +36,7 @@ export class CustMainDataComponent implements OnInit {
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
+  isDisabled: boolean = false;
   MrCustTypeCode: string;
   subjectTitle: string = 'Customer';
   MaxDate: Date;
@@ -314,19 +315,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   disableInput(){
-    this.CustMainDataForm.controls.MrCustTypeCode.disable();
-    this.CustMainDataForm.controls.CustName.disable();
-    this.CustMainDataForm.controls.CompanyType.disable();
-    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
-    this.CustMainDataForm.controls.MrIdTypeCode.disable();
-    this.CustMainDataForm.controls.IdNo.disable();
-    this.CustMainDataForm.controls.IdExpiredDt.disable();
-    this.CustMainDataForm.controls.TaxIdNo.disable();
-    this.CustMainDataForm.controls.MrGenderCode.disable();
-    this.CustMainDataForm.controls.BirthPlace.disable();
-    this.CustMainDataForm.controls.BirthDt.disable();
-    this.CustMainDataForm.controls.MotherMaidenName.disable();
-    this.CustMainDataForm.controls.MrCompanyTypeCode.disable();
+    this.isDisabled = true;
     this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
@@ -350,7 +339,6 @@ export class CustMainDataComponent implements OnInit {
         CustName: CustObj.CustName,
         CustNo: CustObj.CustNo,
         MrIdTypeCode: CustObj.MrIdTypeCode,
-        MrRelationshipCustCode: this.isIncludeCustRelation ? CustObj.MrRelationshipCustCode : '',
         IdNo: CustObj.IdNo,
         IdExpiredDt: formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
         TaxIdNo: CustObj.TaxIdNo
@@ -367,7 +355,14 @@ export class CustMainDataComponent implements OnInit {
         BirthDt: formatDate(CustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
         MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode,
       });
+      
+      if(this.inputMode == 'EDIT'){
+        this.CustMainDataForm.patchValue({
+          MrRelationshipCustCode: this.isIncludeCustRelation ? CustObj.MrRelationshipCustCode : '',
+        }) 
+      }
     }
+    
     this.setDataLegalAddr(CustAddrLegalObj);
   }
 
@@ -377,7 +372,6 @@ export class CustMainDataComponent implements OnInit {
         CustName: CustObj.CustName,
         CustNo: CustObj.CustNo,
         TaxIdNo: CustObj.TaxIdNo,
-        MrRelationshipCustCode: this.isIncludeCustRelation ? CustObj.MrRelationshipCustCode : '',
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
@@ -387,6 +381,12 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.patchValue({
         MrCompanyTypeCode: CustCompanyObj.MrCompanyTypeCode,
       });
+
+      if(this.inputMode == 'EDIT'){
+        this.CustMainDataForm.patchValue({
+          MrRelationshipCustCode: this.isIncludeCustRelation ? CustCompanyObj.MrRelationshipCustCode : '',
+        }) 
+      }
     }
     this.setDataLegalAddr(CustAddrLegalObj);
   }

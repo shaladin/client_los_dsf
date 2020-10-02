@@ -68,7 +68,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
   saveAndContinue() {
     if(this.isMarried){
       this.loadGuarantorListData();
-      if(this.result == undefined || this.result.find(x=>x.MrRelationshipCustCode == 'SPOUSE') == null){
+      if(this.result.length == 0 || this.result.find(x=>x.MrRelationshipCustCode == 'SPOUSE') == null){
         this.toastr.warningMessage("Please Input Spouse Data!")
         return;
       }
