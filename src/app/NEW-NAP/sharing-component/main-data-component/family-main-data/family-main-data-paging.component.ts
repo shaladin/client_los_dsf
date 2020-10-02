@@ -69,8 +69,8 @@ export class FamilyMainDataPagingComponent implements OnInit {
 
   saveAndContinue() {
     if(this.isMarried){
-
     }
+    this.outputTab.emit();
   }
 
   cancel() {
