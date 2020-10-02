@@ -71,8 +71,7 @@
               "type": "AppCustId",
               "property": "AppCustId"
             }
-          ],
-          "icon" : "ft-trash-2"
+          ]
         }
       ]
     }

@@ -62,7 +62,7 @@ export class CustMainDataComponent implements OnInit {
     private route: ActivatedRoute,
     public formValidate: FormValidateService) {
     this.route.queryParams.subscribe(params => {
-      this.appId = params["AppId"];
+      this.appId = params["appId"];
     })
   }
 
@@ -128,19 +128,11 @@ export class CustMainDataComponent implements OnInit {
       break;
       default:
         this.isIncludeCustRelation = false;
-        this.subjectTitle = 'Customer'; 
+        this.subjectTitle = 'Customer';
     }
   }
 
-  setLookup(value: string = "PERSONAL") {
-    this.ArrAddCrit = new Array<CriteriaObj>();
-    let critObj = new CriteriaObj();
-    critObj.DataType = "text";
-    critObj.propName = 'C.MR_CUST_TYPE_CODE';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.value = value;
-    this.ArrAddCrit.push(critObj);
-
+  setLookup(value: string = CommonConstant.CustTypePersonal) {
     this.InputLookupCustObj = new InputLookupObj();
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -149,6 +141,14 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.isReadonly = false;
 
+    this.ArrAddCrit = new Array<CriteriaObj>();
+    var critObj = new CriteriaObj();
+    critObj.DataType = "text";
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.value = value;
+    this.ArrAddCrit.push(critObj);
+    
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustObj.isReady = true;
   }
@@ -264,12 +264,11 @@ export class CustMainDataComponent implements OnInit {
     );
   }
 
-  custTypeChange(value: string = 'PERSONAL', firstInit: boolean = false) {
+  custTypeChange(value: string = CommonConstant.CustTypePersonal, firstInit: boolean = false) {
     this.MrCustTypeCode = value;
     this.setLookup(value);
     
     if (!firstInit) {
-      this.CustMainDataForm.reset();
       this.CustMainDataForm.enable();
       if (value == CommonConstant.CustTypePersonal) {
         this.getRefMasterPersonal();
@@ -295,6 +294,7 @@ export class CustMainDataComponent implements OnInit {
        this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
        
       this.CustMainDataForm.updateValueAndValidity();
+      this.clearInput();
     }
   }
 
@@ -331,6 +331,17 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
+  }
+
+  clearInput(){
+    this.CustMainDataForm.patchValue({
+      BirthDt: '',
+      BirthPlace: '',
+      IdNo: '',
+      IdExpiredDt: '',
+      TaxIdNo: '',
+      MotherMaidenName: '',
+    });
   }
 
   setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj) {
@@ -499,7 +510,6 @@ export class CustMainDataComponent implements OnInit {
 
   
   SaveForm(enjiForm: NgForm) {
-   
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal)
     {
       this.setDataCustomerPersonalForSave();
@@ -507,7 +517,7 @@ export class CustMainDataComponent implements OnInit {
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputAfterSave.emit(this.MrCustTypeCode);
+            this.outputAfterSave.emit(this.custDataPersonalObj.AppCustPersonalObj);
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
@@ -523,7 +533,6 @@ export class CustMainDataComponent implements OnInit {
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputAfterSave.emit(this.MrCustTypeCode);
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {

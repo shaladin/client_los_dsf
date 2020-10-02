@@ -17,6 +17,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 export class FamilyMainDataPagingComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isMarried: boolean = false;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -36,6 +37,8 @@ export class FamilyMainDataPagingComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
+    this.inputGridObj.deleteUrl = URLConstant.DeleteAppCustMainData;
+
     this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
     this.loadGuarantorListData();
   }
@@ -65,7 +68,9 @@ export class FamilyMainDataPagingComponent implements OnInit {
   }
 
   saveAndContinue() {
-    this.outputTab.emit();
+    if(this.isMarried){
+
+    }
   }
 
   cancel() {
@@ -77,25 +82,6 @@ export class FamilyMainDataPagingComponent implements OnInit {
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
       this.open(content);
-    }
-
-    if (ev.Key == "delete") {
-      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        var guarantorObj = new GuarantorObj();
-        guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
-        guarantorObj.AppGuarantorObj.AppId = this.appId;
-        this.http.post(URLConstant.DeleteAppGuarantor, guarantorObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.inputGridObj.resultData = {
-              Data: ""
-            }
-            this.inputGridObj.resultData["Data"] = new Array();
-            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
-            this.result = this.inputGridObj.resultData.Data;
-          }
-        );
-      }
     }
   }
 
@@ -119,5 +105,4 @@ export class FamilyMainDataPagingComponent implements OnInit {
     this.loadGuarantorListData();
     this.modalService.dismissAll();
   }
-
 }

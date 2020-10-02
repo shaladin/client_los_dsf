@@ -62,7 +62,7 @@
     <lib-ucSubsection [id]="'AddEditFamilyId'" [title]="'Add / Edit Family'" [panel]="'AddEditFamily'"></lib-ucSubsection>
     <div id="AddEditFamily">
       <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId" [inputMode]="inputMode" 
-      (outputCancel)="close()" (afterSave)="close()">
+      (outputCancel)="close()" (outputAfterSave)="close()">
       </app-cust-main-data>
     </div>
   </div>

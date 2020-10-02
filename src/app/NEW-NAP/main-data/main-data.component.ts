@@ -26,13 +26,13 @@ export class MainDataComponent implements OnInit {
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
- 
+  isMarried: boolean = false;
 
   AppStep = {
     "NEW": 1,
     "CUST": 1,
-    "GUARANTOR": 2,
-    "FAMILY": 3,
+    "FAMILY": 2,
+    "GUARANTOR": 3,
   };
 
   ResponseReturnInfoObj;
@@ -142,15 +142,20 @@ export class MainDataComponent implements OnInit {
       case CommonConstant.CustMainDataModeCust:
         this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeCust];
         break;
+      case CommonConstant.CustMainDataModeFamily:
+          this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeFamily];
+          break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeGuarantor];
-        break;
-      case CommonConstant.CustMainDataModeFamily:
-        this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeFamily];
         break;
       default:
         break;
     }
+  }
+
+  CheckMaritalStat(event){
+    this.isMarried = event.MrMaritalStatCode;
+    this.NextStep('FAMILY')
   }
 
   NextStep(Step) {
@@ -161,6 +166,7 @@ export class MainDataComponent implements OnInit {
         this.stepper.next();
       }
     )
+
   }
 
   LastStepHandler() {

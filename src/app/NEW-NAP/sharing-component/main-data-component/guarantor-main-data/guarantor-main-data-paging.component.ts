@@ -36,6 +36,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantorMainData.json";
+    this.inputGridObj.deleteUrl = URLConstant.DeleteAppCustMainData;
     this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
     this.loadGuarantorListData();
   }
@@ -77,25 +78,6 @@ export class GuarantorMainDataPagingComponent implements OnInit {
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
       this.open(content);
-    }
-
-    if (ev.Key == "delete") {
-      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        var guarantorObj = new GuarantorObj();
-        guarantorObj.AppGuarantorObj.AppGuarantorId = ev.RowObj.AppGuarantorId;
-        guarantorObj.AppGuarantorObj.AppId = this.appId;
-        this.http.post(URLConstant.DeleteAppGuarantor, guarantorObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.inputGridObj.resultData = {
-              Data: ""
-            }
-            this.inputGridObj.resultData["Data"] = new Array();
-            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
-            this.result = this.inputGridObj.resultData.Data;
-          }
-        );
-      }
     }
   }
 
