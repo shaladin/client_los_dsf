@@ -174,6 +174,7 @@ export class CustMainDataComponent implements OnInit {
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
         }
+        this.clearExpDt()
       }
     );
 
@@ -259,7 +260,10 @@ export class CustMainDataComponent implements OnInit {
           else
             this.setDataCustomerCompany(response['AppCustObj'], response['AppCustCompanyObj'], response['AppCustAddrLegalObj']);
 
-          if(response['AppCustObj']['IsExistingCust']) this.disableInput();
+          if(response['AppCustObj']['IsExistingCust']){
+            this.isExisting = true;
+            this.disableInput();
+          }
         }
       }
     );
@@ -300,6 +304,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   copyCustomerEvent(event) {
+    this.isExisting = true;
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal){
       this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
@@ -314,19 +319,12 @@ export class CustMainDataComponent implements OnInit {
     this.disableInput();
   }
 
+  clearExpDt(){
+    this.CustMainDataForm.controls.IdExpiredDt.reset();
+    this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
+  }
+
   disableInput(){
-    this.CustMainDataForm.controls.MrCustTypeCode.disable();
-    this.CustMainDataForm.controls.CompanyType.disable();
-    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
-    this.CustMainDataForm.controls.MrIdTypeCode.disable();
-    this.CustMainDataForm.controls.IdNo.disable();
-    this.CustMainDataForm.controls.IdExpiredDt.disable();
-    this.CustMainDataForm.controls.TaxIdNo.disable();
-    this.CustMainDataForm.controls.MrGenderCode.disable();
-    this.CustMainDataForm.controls.BirthPlace.disable();
-    this.CustMainDataForm.controls.BirthDt.disable();
-    this.CustMainDataForm.controls.MotherMaidenName.disable();
-    this.CustMainDataForm.controls.MrCompanyTypeCode.disable();
     this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
@@ -449,7 +447,8 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustMainDataForm.controls.MrGenderCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustMainDataForm.controls.BirthPlace.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustMainDataForm.controls.BirthDt.value;
-
+    this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustMainDataForm.controls.MotherMaidenName.value;
+    
     this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode3.value;

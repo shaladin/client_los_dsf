@@ -3,7 +3,7 @@
     <i class="ft-plus-circle"></i> Add
   </button>
 </div>
-<div *ngIf="result.length == 0">
+<div *ngIf="result?.length == 0">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -39,7 +39,7 @@
     </tbody>
   </table>
 </div>
-<div *ngIf="result.length > 0">
+<div *ngIf="result?.length > 0">
   <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
 </div>
 <div class="pull-right margin-15">
