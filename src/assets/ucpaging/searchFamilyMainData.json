@@ -64,14 +64,8 @@
           ]
         },
         {
-          "type": "callback",
           "key": "delete",
-          "property": [
-            {
-              "type": "AppCustId",
-              "property": "AppCustId"
-            }
-          ]
+          "property": "AppCustId"
         }
       ]
     }
