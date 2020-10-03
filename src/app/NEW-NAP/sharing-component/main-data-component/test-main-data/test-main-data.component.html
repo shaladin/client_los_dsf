@@ -168,9 +168,8 @@
                       [ngClass]="{'adins-required-label': CustMainDataForm.controls.MrIdTypeCode.value == 'KITAS' || CustMainDataForm.controls.MrIdTypeCode.value == 'SIM'}"
                       translate>Id Expired Date</label>
                     <div class="col-md-8">
-                      <input [attr.readonly]="isExisting ? 'true' : null"
-                        *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)" readonly
-                        type="date" class="form-control" formControlName="IdExpiredDt">
+                      <input *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
+                        readonly type="date" class="form-control" formControlName="IdExpiredDt">
                       <input [attr.readonly]="isExisting ? 'true' : null"
                         *ngIf="!['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
                         min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control"
