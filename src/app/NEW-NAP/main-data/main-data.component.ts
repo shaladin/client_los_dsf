@@ -15,7 +15,7 @@ import { environment } from 'environments/environment';
   templateUrl: './main-data.component.html'
 })
 export class MainDataComponent implements OnInit {
-  
+
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -30,9 +30,10 @@ export class MainDataComponent implements OnInit {
 
   AppStep = {
     "NEW": 1,
-    "CUST": 1,
-    "FAMILY": 2,
-    "GUARANTOR": 3,
+    "TEST": 1,
+    "CUST": 2,
+    "FAMILY": 3,
+    "GUARANTOR": 4,
   };
 
   ResponseReturnInfoObj;
@@ -50,10 +51,6 @@ export class MainDataComponent implements OnInit {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
-        this.CheckMultiAsset();
-      }
-      if (params["WfTaskListId"] != null) {
-        this.wfTaskListId = params["WfTaskListId"];
       }
     });
   }
@@ -121,30 +118,17 @@ export class MainDataComponent implements OnInit {
     }
   }
 
-  CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
-    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
-      (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
-            this.IsMultiAsset = 'True';
-          else
-            this.IsMultiAsset = 'False';
-        }
-        else
-          this.IsMultiAsset = 'False';
-      })
-  }
-
   ChangeTab(AppStep) {
     switch (AppStep) {
+      case "TEST":
+        this.AppStepIndex = this.AppStep["TEST"];
+        break;
       case CommonConstant.CustMainDataModeCust:
         this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeCust];
         break;
       case CommonConstant.CustMainDataModeFamily:
-          this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeFamily];
-          break;
+        this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeFamily];
+        break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeGuarantor];
         break;
@@ -153,7 +137,7 @@ export class MainDataComponent implements OnInit {
     }
   }
 
-  getEvent(event){
+  getEvent(event) {
     this.isMarried = event.isMarried;
     this.NextStep('FAMILY')
   }
@@ -161,51 +145,15 @@ export class MainDataComponent implements OnInit {
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) =>{
+      (response) => {
         this.ChangeTab(Step);
         this.stepper.next();
       }
     )
   }
 
-  LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
-      (response) => {
-        this.router.navigate(["/Nap/CF2W/Paging"], { queryParams: { LobCode: "CF2W" } })
-      })
-  }
-
-  Submit() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
-      var obj = {
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
-
-      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
-        (response) => {
-        })
-    }
-  }
-
-  // ClaimTask(){
-  //   var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-  //   var wfClaimObj = new AppObj();
-  //   wfClaimObj.AppId = this.appId;
-  //   wfClaimObj.Username = currentUserContext["UserName"];
-  //   wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-  //   this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-  //     (response) => {
-    
-  //     });
-  // }
-
-  GetCallback(ev){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
 }

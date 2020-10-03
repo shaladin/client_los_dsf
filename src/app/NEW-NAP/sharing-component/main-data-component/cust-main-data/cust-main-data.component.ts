@@ -7,7 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { formatDate, KeyValue } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -92,7 +92,7 @@ export class CustMainDataComponent implements OnInit {
 
     this.initcustMainDataMode();
     this.setLookup();
-        
+
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();

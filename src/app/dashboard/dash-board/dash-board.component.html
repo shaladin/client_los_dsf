@@ -1,3 +1,8 @@
+<button type="button" class="btn btn-raised btn-primary mr-1" [routerLink]="['/Nap/TestMainData/MainDataContainer']"
+  [queryParams]="{'AppId': 11801}" translate>
+  <i class="far fa-check-square"></i> Main Data
+</button>
+
 <div class="row">
   <div class="col-md-4 col-xl-4 col-lg-12" style="margin-top : 10px !important">
     <lib-ucthingstodo [ThingsToDoObj]="Item">
@@ -11,7 +16,8 @@
 </div>
 
 <div class="row" style="margin-top:15px;">
-  <lib-front-dash2 class="col-md-12" [inUsername]="username" [inOfficeCode]="officeCode" [inRoleCode]="roleCode" [inUrl]="url">
+  <lib-front-dash2 class="col-md-12" [inUsername]="username" [inOfficeCode]="officeCode" [inRoleCode]="roleCode"
+    [inUrl]="url">
   </lib-front-dash2>
 
 </div>

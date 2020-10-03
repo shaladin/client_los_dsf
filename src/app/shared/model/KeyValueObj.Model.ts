@@ -2,5 +2,8 @@ export class KeyValueObj {
     Key: string;
     Value: string;
 
-    constructor() { }
+    constructor() {
+        this.Key = "";
+        this.Value = "";
+    }
 }

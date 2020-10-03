@@ -5,8 +5,8 @@
         <form class="form form-horizontal" [formGroup]="CustMainDataForm"
           (ngSubmit)="CustMainDataForm.valid && SaveForm()" #enjiForm="ngForm">
           <div class="form-body">
-            <div class="form-group row" *ngIf="!custDataObj?.IsFamily">
-              <label class="col-md-2" translate>{{subjectTitle}} Type</label>
+            <div class="form-group row">
+              <label class="col-md-2" translate>Customer Type</label>
               <div class="col-md-10">
                 <mat-radio-group [disabled]="isExisting" formControlName="MrCustTypeCode"
                   (change)="custTypeChange($event.value)">
@@ -17,32 +17,17 @@
                 </mat-radio-group>
               </div>
             </div>
-            <lib-ucSubsection [id]="'CustMainDataId'" [title]="subjectTitle+' Main Data'" [panel]="'CustMainData'">
+            <lib-ucSubsection [id]="'CustMainDataId'" [title]="'Main Data'" [panel]="'CustMainData'">
             </lib-ucSubsection>
             <div id="CustMainData">
               <div class="row">
-                <div class="col-md-12" *ngIf="isIncludeCustRelation">
-                  <div class="form-group row ">
-                    <label class="col-md-2 adins-required-label" translate>Customer Relationship </label>
-                    <div class="col-md-2">
-                      <select class="form-control adInsInput full-width" style="width: 100%"
-                        formControlName="MrRelationshipCustCode"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrRelationshipCustCode.invalid }">
-                        <option *ngFor="let it of MrCustRelationshipObj" value="{{it.Key}}">{{it.Value}}</option>
-                      </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrRelationshipCustCode"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
-                  </div>
-                </div>
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <!-- {{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }}  -->
-                    <label class="col-md-4 adins-required-label" translate>{{subjectTitle}} Legal Name</label>
-                    <div class="col-md-8" *ngIf="this.InputLookupCustObj.isReady">
+                    <label class="col-md-4 adins-required-label" translate>Customer Legal Name</label>
+                    <div class="col-md-8">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
-                        [parentForm]="CustMainDataForm" [identifier]="'lookupCustomer'"
-                        (lookup)="copyCustomerEvent($event)" #LookupCust>
+                        *ngIf="this.InputLookupCustObj.isReady" [parentForm]="CustMainDataForm"
+                        [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
                       </lib-uclookupgeneric>
                     </div>
                   </div>
@@ -52,7 +37,7 @@
                     <label class="col-md-4 adins-required-label" translate>Gender</label>
                     <div class="col-md-6">
                       <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                        formControlName="MrGenderCode" style="width:100%;">
+                        formControlName="MrGenderCode">
                         <option *ngFor="let item of GenderObj" [value]="item.Key">
                           {{item.Value}}
                         </option>
@@ -68,7 +53,7 @@
                     <label class="col-md-4 adins-required-label" translate>Company Type</label>
                     <div class="col-md-6">
                       <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                        formControlName="MrCompanyTypeCode" style="width:100%;">
+                        formControlName="MrCompanyTypeCode">
                         <option *ngFor="let item of CompanyTypeObj" [value]="item.Key">
                           {{item.Value}}
                         </option>
@@ -99,7 +84,7 @@
                     <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                     <div class="col-md-6">
                       <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                        formControlName="MrMaritalStatCode" style="width:100%;">
+                        formControlName="MrMaritalStatCode">
                         <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
                           {{item.Value}}
                         </option>
@@ -128,7 +113,7 @@
                     <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
                     <div class="col-md-6">
                       <select [attr.disabled]="isExisting ? 'true' : null" class="form-control" id="idType"
-                        formControlName="MrIdTypeCode" (change)="clearExpDt()" style="width:100%;"
+                        formControlName="MrIdTypeCode" (change)="clearExpDt()"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdTypeCode.invalid }">
                         <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
                           {{item.Descr}}
@@ -211,14 +196,10 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
-              [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
+              [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
           </div>
           <div class="form-actions right">
-            <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1"
-              (click)="cancel()" translate>
-              <i class="ft-x"></i> Cancel
-            </button>
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm)
               class="btn btn-raised btn-primary">
               <i class="fa fa-check-square"></i> Save
@@ -228,4 +209,11 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="form-actions right">
+  <button type="submit" (click)="Next()" class="btn btn-raised btn-primary">
+    <i class="fa fa-check-square"></i> Next
+  </button>
 </div>
