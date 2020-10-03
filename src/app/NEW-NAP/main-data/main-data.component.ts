@@ -153,8 +153,8 @@ export class MainDataComponent implements OnInit {
     }
   }
 
-  CheckMaritalStat(event){
-    this.isMarried = event.MrMaritalStatCode;
+  getEvent(event){
+    this.isMarried = event.isMarried;
     this.NextStep('FAMILY')
   }
 
@@ -166,7 +166,6 @@ export class MainDataComponent implements OnInit {
         this.stepper.next();
       }
     )
-
   }
 
   LastStepHandler() {

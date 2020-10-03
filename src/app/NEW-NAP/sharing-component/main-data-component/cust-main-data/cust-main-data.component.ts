@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroupDirective, FormGroup, ControlContainer, Validators, NgForm } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -18,6 +18,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -25,6 +26,8 @@ import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalOb
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class CustMainDataComponent implements OnInit {
+  
+  @ViewChild('LookupCust') ucLookupCust: UclookupgenericComponent;
   @Input() custMainDataMode: string;
   @Input() appId: number;
   @Input() appCustId: number;
@@ -131,8 +134,7 @@ export class CustMainDataComponent implements OnInit {
     }
   }
 
-  setLookup(value: string = CommonConstant.CustTypePersonal) {
-    this.InputLookupCustObj.isReady = false;
+  setLookup(value: string = CommonConstant.CustTypePersonal, firstInit: boolean = true) {
     this.InputLookupCustObj = new InputLookupObj();
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -141,7 +143,6 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
-
     this.ArrAddCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.DataType = "text";
@@ -151,7 +152,11 @@ export class CustMainDataComponent implements OnInit {
     this.ArrAddCrit.push(critObj);
     
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
-    setTimeout(()=>{ this.InputLookupCustObj.isReady = true; }, 1);
+
+    if(!firstInit) {
+      this.ucLookupCust.setAddCritInput();
+    }
+    this.InputLookupCustObj.isReady = true;
   }
 
   getRefMasterPersonal() {
@@ -271,9 +276,9 @@ export class CustMainDataComponent implements OnInit {
 
   custTypeChange(value: string = CommonConstant.CustTypePersonal, firstInit: boolean = false) {
     this.MrCustTypeCode = value;
-    this.setLookup(value);
     
     if (!firstInit) {
+      this.setLookup(value, false);
       this.CustMainDataForm.enable();
       if (value == CommonConstant.CustTypePersonal) {
         this.getRefMasterPersonal();

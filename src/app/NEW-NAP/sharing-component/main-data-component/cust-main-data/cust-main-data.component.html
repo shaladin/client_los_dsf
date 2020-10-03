@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="CustMainDataForm"
-          (ngSubmit)="CustMainDataForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
+          (ngSubmit)="CustMainDataForm.valid && SaveForm()" #enjiForm="ngForm">
           <div class="form-body">
             <div class="form-group row" *ngIf="!custDataObj?.IsFamily">
               <label class="col-md-2" translate>{{subjectTitle}} Type</label>
@@ -38,10 +38,10 @@
                   <div class="form-group row">
                     <!-- {{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }}  -->
                     <label class="col-md-4 adins-required-label" translate>{{subjectTitle}} Legal Name</label>
-                    <div class="col-md-6">
-                      <lib-uclookupgeneric *ngIf="InputLookupCustObj.isReady" [enjiForm]="enjiForm"
+                    <div class="col-md-8" *ngIf="this.InputLookupCustObj.isReady">
+                      <lib-uclookupgeneric [enjiForm]="enjiForm"
                         [lookupInput]="InputLookupCustObj" [parentForm]="CustMainDataForm"
-                        [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)">
+                        [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupCust>
                       </lib-uclookupgeneric>
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}"
                       translate>Tax Id No</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control" formControlName="TaxIdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.TaxIdNo.invalid}">
                       <lib-uc-show-errors [control]="CustMainDataForm.controls.TaxIdNo" [submit]="enjiForm.submitted">
@@ -108,7 +108,7 @@
                 <div class="col-md-6" >
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Birth Place</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control" formControlName="BirthPlace"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthPlace.invalid}">
                       <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthPlace"
@@ -137,7 +137,7 @@
                 <div class="col-md-6" >
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Birth Date</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
                         formControlName="BirthDt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
@@ -149,7 +149,7 @@
                 <div class="col-md-6" >
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Id No</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control" formControlName="IdNo"
                         [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
                       <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
@@ -161,7 +161,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}"
                       translate>Tax Id No</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control" formControlName="TaxIdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.TaxIdNo.invalid}">
                       <lib-uc-show-errors [control]="CustMainDataForm.controls.TaxIdNo" [submit]="enjiForm.submitted">
@@ -174,7 +174,7 @@
                     <label class="col-md-4"
                       [ngClass]="{'adins-required-label': CustMainDataForm.controls.MrIdTypeCode.value == 'KITAS' || CustMainDataForm.controls.MrIdTypeCode.value == 'SIM'}"
                       translate>Id Expired Date</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
                         readonly type="date" class="form-control" formControlName="IdExpiredDt">
                       <input [attr.readonly]="isExisting ? 'true' : null" *ngIf="!['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)"
@@ -189,7 +189,7 @@
                 <div class="col-md-6" >
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Mother Maiden Name</label>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control" formControlName="MotherMaidenName"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MotherMaidenName.invalid}">
                       <lib-uc-show-errors [control]="CustMainDataForm.controls.MotherMaidenName"
@@ -199,13 +199,12 @@
                   </div>
                 </div>
               </div>
-              
             </div>
             <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
               [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
+            <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
               <i class="ft-x"></i> Cancel
             </button>
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm)

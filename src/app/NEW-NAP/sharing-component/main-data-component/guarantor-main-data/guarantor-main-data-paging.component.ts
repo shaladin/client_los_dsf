@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
-import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -21,8 +20,9 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  isDetail: boolean = false;
   inputGridObj: InputGridObj;
-  result: Array<any> = new Array();
+  listGuarantor: Array<any> = new Array();
   resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
@@ -43,26 +43,8 @@ export class GuarantorMainDataPagingComponent implements OnInit {
 
   add(content) {
     this.inputMode = "ADD";
-    this.appCustId = null;
-    this.open(content);    
-  }
-
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+    this.isDetail = true;
+    this.appCustId = null; 
   }
 
   saveAndContinue() {
@@ -75,22 +57,16 @@ export class GuarantorMainDataPagingComponent implements OnInit {
 
   event(content, ev) {
     if (ev.Key == "edit") {
+      this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-      this.open(content);
     }
 
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
           (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.inputGridObj.resultData = {
-              Data: ""
-            }
-            this.inputGridObj.resultData["Data"] = new Array();
-            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
-            this.result = this.inputGridObj.resultData.Data;
+            this.loadGuarantorListData();
           }
         );
       }
@@ -108,14 +84,14 @@ export class GuarantorMainDataPagingComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
-        this.result = this.inputGridObj.resultData.Data;
+        this.listGuarantor = this.inputGridObj.resultData.Data;
       }
     );
   }
 
   close() {
     this.loadGuarantorListData();
-    this.modalService.dismissAll();
+    this.isDetail = false;
   }
 
 }

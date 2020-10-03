@@ -7,8 +7,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
-
 @Component({
   selector: 'app-family-main-data-paging',
   templateUrl: './family-main-data-paging.component.html',
@@ -22,8 +20,9 @@ export class FamilyMainDataPagingComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  isDetail: boolean = false;
   inputGridObj: InputGridObj;
-  result: Array<any> = new Array();
+  listFamily: Array<any> = new Array();
   resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
@@ -42,63 +41,46 @@ export class FamilyMainDataPagingComponent implements OnInit {
     this.loadGuarantorListData();
   }
 
-  add(content) {
+  add() {
     this.inputMode = "ADD";
-    this.open(content);
+    this.isDetail = true;
     this.appCustId = null;
-  }
-
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   saveAndContinue() {
     if(this.isMarried){
       this.loadGuarantorListData();
-      if(this.result.length == 0 || this.result.find(x=>x.MrRelationshipCustCode == 'SPOUSE') == null){
-        this.toastr.warningMessage("Please Input Spouse Data!")
+      if(this.listFamily.length == 0 || this.listFamily.find(x=>x.MrRelationshipCustCode == 'SPOUSE') == null){
+        this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
         return;
       }
     }
     this.outputTab.emit();
   }
 
+  
+  close() {
+    this.loadGuarantorListData();
+    this.isDetail = false;
+  }
+
   cancel() {
     this.outputCancel.emit();
   }
 
-  event(content, ev) {
+  event(ev) {
     if (ev.Key == "edit") {
+      this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-      this.open(content);
+
     }
     
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
           (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.inputGridObj.resultData = {
-              Data: ""
-            }
-            this.inputGridObj.resultData["Data"] = new Array();
-            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj]
-            this.result = this.inputGridObj.resultData.Data;
+            this.loadGuarantorListData();
           }
         );
       }
@@ -116,13 +98,8 @@ export class FamilyMainDataPagingComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
-        this.result = this.inputGridObj.resultData.Data;
+        this.listFamily = this.inputGridObj.resultData.Data;
       }
     );
-  }
-
-  close() {
-    this.loadGuarantorListData();
-    this.modalService.dismissAll();
   }
 }
