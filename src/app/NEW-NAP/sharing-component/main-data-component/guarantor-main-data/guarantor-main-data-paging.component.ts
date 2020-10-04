@@ -41,7 +41,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
     this.loadGuarantorListData();
   }
 
-  add(content) {
+  add() {
     this.inputMode = "ADD";
     this.isDetail = true;
     this.appCustId = null; 
@@ -55,7 +55,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  event(content, ev) {
+  event(ev) {
     if (ev.Key == "edit") {
       this.isDetail = true;
       this.inputMode="EDIT";

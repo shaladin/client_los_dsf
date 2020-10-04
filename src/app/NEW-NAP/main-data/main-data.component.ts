@@ -1,5 +1,6 @@
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -16,6 +17,7 @@ import { environment } from 'environments/environment';
 })
 export class MainDataComponent implements OnInit {
 
+  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -23,6 +25,7 @@ export class MainDataComponent implements OnInit {
   mode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
+  MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
@@ -30,10 +33,9 @@ export class MainDataComponent implements OnInit {
 
   AppStep = {
     "NEW": 1,
-    "TEST": 1,
-    "CUST": 2,
-    "FAMILY": 3,
-    "GUARANTOR": 4,
+    "CUST": 1,
+    "FAMILY": 2,
+    "GUARANTOR": 3,
   };
 
   ResponseReturnInfoObj;
@@ -80,12 +82,20 @@ export class MainDataComponent implements OnInit {
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
-          //this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.AppStepIndex = 1;
           this.stepper.to(this.AppStepIndex);
         }
         else {
           this.AppStepIndex = 0;
+        }
+      }
+    );
+
+    this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+      (response) => {
+        if (response['AppCustObj']) 
+        {
+          this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
         }
       }
     );
@@ -135,19 +145,21 @@ export class MainDataComponent implements OnInit {
       default:
         break;
     }
+    this.ucViewMainProd.initiateForm();
   }
 
   getEvent(event) {
-    this.isMarried = event.isMarried;
-    this.NextStep('FAMILY')
+    this.isMarried = event.isMarried != undefined? event.isMarried : false;
+    this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
+    this.NextStep(this.MrCustTypeCode == 'PERSONAL' ? 'FAMILY' : 'GUARANTOR');
   }
 
-  NextStep(Step) {
+  async NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) => {
-        this.ChangeTab(Step);
-        this.stepper.next();
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
+      async (response) => {
+        await this.ChangeTab(Step);
+        this.stepper.to(this.AppStepIndex);
       }
     )
   }

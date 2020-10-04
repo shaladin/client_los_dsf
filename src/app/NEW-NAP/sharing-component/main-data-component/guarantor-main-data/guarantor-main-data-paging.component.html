@@ -1,6 +1,6 @@
 <div *ngIf="!isDetail">
   <div class="button-right margin-15">
-    <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
+    <button type="button" class="btn btn-raised btn-primary" (click)="add()" translate>
       <i class="ft-plus-circle"></i> Add
     </button>
   </div>
@@ -41,7 +41,7 @@
     </table>
   </div>
   <div *ngIf="listGuarantor?.length > 0">
-    <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
+    <lib-ucgridview [gridInput]="inputGridObj" (callback)="event($event)"></lib-ucgridview>
   </div>
   <div class="pull-right margin-15">
     <button type="button" (click)="saveAndContinue()" class="btn btn-raised btn-primary">

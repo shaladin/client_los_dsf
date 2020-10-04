@@ -9,7 +9,7 @@
               <label class="col-md-2" translate>{{subjectTitle}} Type</label>
               <div class="col-md-10">
                 <mat-radio-group [disabled]="isExisting" formControlName="MrCustTypeCode"
-                  (change)="custTypeChange($event.value)">
+                  (change)="custTypeChange($event.value, false)">
                   <mat-radio-button class="custom-control custom-radio display-inline-block"
                     *ngFor="let item of CustTypeObj" [value]="item.Key">
                     {{item.Value}}
@@ -39,10 +39,10 @@
                   <div class="form-group row">
                     <!-- {{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }}  -->
                     <label class="col-md-4 adins-required-label" translate>{{subjectTitle}} Legal Name</label>
-                    <div class="col-md-8" *ngIf="this.InputLookupCustObj.isReady">
+                    <div class="col-md-8">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
-                        [parentForm]="CustMainDataForm" [identifier]="'lookupCustomer'"
-                        (lookup)="copyCustomerEvent($event)" #LookupCust>
+                      *ngIf="this.InputLookupCustObj.isReady" [parentForm]="CustMainDataForm" 
+                      [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
                       </lib-uclookupgeneric>
                     </div>
                   </div>
@@ -183,7 +183,7 @@
                       [ngClass]="{'adins-required-label': CustMainDataForm.controls.MrIdTypeCode.value == 'KITAS' || CustMainDataForm.controls.MrIdTypeCode.value == 'SIM'}"
                       translate>Id Expired Date</label>
                     <div class="col-md-8">
-                      <input [attr.readonly]="isExisting ? 'true' : null"
+                      <input
                         *ngIf="['NPWP','AKTA','EKTP'].includes(CustMainDataForm.controls.MrIdTypeCode.value)" readonly
                         type="date" class="form-control" formControlName="IdExpiredDt">
                       <input [attr.readonly]="isExisting ? 'true' : null"
