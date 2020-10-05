@@ -939,8 +939,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
         for (let i = 0; i < this.ruleObj["AdditionalCoverageType"].length; i++) {
           if(this.ruleObj["AdditionalCoverageType"][i] == CommonConstant.MrAddCvgTypeCodeLoading){
-            var assetAgeMin = this.ruleObj["AssetAgeMin"][i] ? parseInt(this.ruleObj["AssetAgeMin"][i], 10) : 0;
-            var assetAgeMax = this.ruleObj["AssetAgeMax"][i] ? parseInt(this.ruleObj["AssetAgeMax"][i], 10) : 0;
+            var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
+            var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
             if(ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax){
               checkboxValue = true;
               const control = this.fb.group({
@@ -1038,8 +1038,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
         for (let i = 0; i < this.ruleObj["AdditionalCoverageType"].length; i++) {
           if(this.ruleObj["AdditionalCoverageType"][i] == CommonConstant.MrAddCvgTypeCodeLoading){
-            var assetAgeMin = this.ruleObj["AssetAgeMin"][i] ? parseInt(this.ruleObj["AssetAgeMin"][i], 10) : 0;
-            var assetAgeMax = this.ruleObj["AssetAgeMax"][i] ? parseInt(this.ruleObj["AssetAgeMax"][i], 10) : 0;
+            var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
+            var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
             if(ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax){
               const control = this.fb.group({
                 MrAddCvgTypeCode: o.Key,
