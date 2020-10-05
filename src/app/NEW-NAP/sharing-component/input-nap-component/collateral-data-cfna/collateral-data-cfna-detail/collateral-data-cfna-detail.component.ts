@@ -452,20 +452,21 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
     const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
+    const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
 
-    if(fullAssetCode && assetType && serialNo1){
+    if(fullAssetCode && assetType && serialNo1 && currCollPrcnt && currCollValue){
       this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
         (response) => {
           var outCollPrcnt = 100;
           if(response){
-            if(response["CollateralPrcnt"] && response["CollateralPrcnt"] > 0){
+            if(response["CollateralPrcnt"]){
               outCollPrcnt = response["CollateralPrcnt"]; 
             }
           }
           outCollPrcnt -= currCollPrcnt;
-          var collPortionAmt = this.AddCollForm.controls["CollateralValueAmt"].value * (this.AddCollForm.controls["CollateralPrcnt"].value / 100);
+          var collPortionAmt = currCollValue * (currCollPrcnt / 100);
           this.AddCollForm.patchValue({
             OutstandingCollPrcnt: outCollPrcnt,
             CollateralPortionAmt: collPortionAmt
@@ -886,7 +887,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNo1"].value;
+    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
+    const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
     if(!fullAssetCode){
       this.toastr.warningMessage("Full Asset Code Must be Filled");
       return false;
@@ -897,6 +900,14 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     }
     if(!serialNo1){
       this.toastr.warningMessage("Serial No 1 Must be Filled");
+      return false;
+    }
+    if(!currCollPrcnt){
+      this.toastr.warningMessage("Collateral Portion Percentage Must be Filled");
+      return false;
+    }
+    if(!currCollValue){
+      this.toastr.warningMessage("Collateral Amount Must be Filled");
       return false;
     }
     if(this.AddCollForm.controls["OutstandingCollPrcnt"].value < 0){
