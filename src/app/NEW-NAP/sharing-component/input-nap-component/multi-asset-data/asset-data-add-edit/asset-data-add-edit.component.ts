@@ -702,6 +702,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
+          this.appCollateralObj.IsMainCollateral = this.returnAppCollateralObj.IsMainCollateral;
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
@@ -1004,10 +1005,17 @@ export class AssetDataAddEditComponent implements OnInit {
     if (this.AppAssetId == 0) {
       this.allAssetDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
+      this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
     }
     else {
       this.allAssetDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
+      if(this.appCollateralObj != null){
+      this.allAssetDataObj.AppCollateralObj.IsMainCollateral = this.appCollateralObj.IsMainCollateral;
+      }
+      else {
+        this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
+      }
     }
 
     this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;

@@ -1,38 +1,59 @@
-  <div class="ucSearch-Button-Right">
-    <span class="mr-1">
-      <button type="button" class="addButton" (click)="addAsset()" translate>
-        <i class="ft-plus-circle"></i> Add Asset
-      </button>
-    </span>
-  </div>
-  <lib-ucSubsection [id]="'assetListId'" [title]="'Asset List'" [panel]="'assetList'">
-  </lib-ucSubsection>
-   <div id="assetList">
-    <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
-  </div>
-  <br>
-  <br>
-  <br>
-  <div class="ucSearch-Button-Right">
-    <span class="mr-1">
-      <button type="button" class="addButton" (click)="addColl()" translate>
-        <i class="ft-plus-circle"></i> Add Collateral
-      </button>
-    </span>
-  </div>
-  <lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
-  </lib-ucSubsection>
-  <div id="collateral">
-    <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="eventColl($event)"></lib-ucgridview>
-  </div>
-  <br>
-  <br>
-  <br>
-  <div class="form-actions right" style="text-align: right;">
-    <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-      <i class="ft-x"></i> Cancel
+<div class="ucSearch-Button-Right">
+  <span class="mr-1">
+    <button type="button" class="addButton" (click)="addAsset()" translate>
+      <i class="ft-plus-circle"></i> Add Asset
     </button>
-    <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
-      <i class="far fa-check-square"></i> Save  
-    </button>
+  </span>
+</div>
+<lib-ucSubsection [id]="'assetListId'" [title]="'Asset List'" [panel]="'assetList'">
+</lib-ucSubsection>
+<div id="assetList">
+
+  <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
+</div>
+<div *ngIf="listDataAsset.length > 0" class="form-group row">
+  <div class="col-md-4">
+
   </div>
+  <label class="col-md-2" translate>Copy Asset</label>
+  <div class="col-md-2">
+    <select class="form-control" style="width: inherit" [(ngModel)]="selectedAsset" name="selectAsset">
+      <option *ngFor="let item of listDataAsset" [value]="item.Code">
+        {{item.Descr}}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <input class="form-control" type="number" [(ngModel)]="units" name="unit">
+  </div>
+  <label class="col-md-1" translate>Unit</label>
+  <button type="button" class="btn btn-raised btn-primary" (click)="CopyAsset()" translate>
+    Copy
+  </button>
+</div>
+<br>
+<br>
+<br>
+<div class="ucSearch-Button-Right">
+  <span class="mr-1">
+    <button type="button" class="addButton" (click)="addColl()" translate>
+      <i class="ft-plus-circle"></i> Add Collateral
+    </button>
+  </span>
+</div>
+<lib-ucSubsection [id]="'collateralId'" [title]="'Additional Collateral'" [panel]="'collateral'">
+</lib-ucSubsection>
+<div id="collateral">
+  <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="eventColl($event)"></lib-ucgridview>
+</div>
+<br>
+<br>
+<br>
+<div class="form-actions right" style="text-align: right;">
+  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+  <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
+    <i class="far fa-check-square"></i> Save
+  </button>
+</div>
