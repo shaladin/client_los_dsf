@@ -15,5 +15,6 @@ export class AppFeeObj {
     FeeCapitalizeType : string;
     FeeCapitalizeAmt : number;
     FeeCapitalizePrcntg : number;
+    FeeNotFoundList: Array<string>;
     constructor() { }
 }

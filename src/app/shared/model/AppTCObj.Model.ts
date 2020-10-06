@@ -12,6 +12,8 @@ export class AppTCObj{
     ExpiredDt: any;
     IsAdditional: any;
     IsExpDtMandatory: any;
+    IsWaivable: any;
+    IsWaived: any;
     RowVersion: any;
     constructor() { }
 }
