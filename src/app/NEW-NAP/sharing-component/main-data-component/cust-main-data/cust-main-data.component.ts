@@ -83,16 +83,16 @@ export class CustMainDataComponent implements OnInit {
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
     MrIdTypeCode: ['', Validators.required],
-    IdNo: ['', Validators.required],
+    IdNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IdExpiredDt: [''],
-    TaxIdNo: [''],
+    TaxIdNo: ['', Validators.pattern("^[0-9]+$")],
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
     MotherMaidenName: ['', Validators.required],
     MrCompanyTypeCode: [''],
-    CustGrp: [''],
-    FamilyCardNo: ['']
+    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    Email1: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
   });
 
   async ngOnInit() {
@@ -260,7 +260,7 @@ export class CustMainDataComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
-        this.removeSpouse();
+        if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) this.removeSpouse();
         if (this.inputMode != "EDIT")
           this.CustMainDataForm.patchValue({ MrRelationshipCustCode: this.MrCustRelationshipObj[0].Key });
       }
@@ -304,10 +304,12 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
-      this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
+      this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
     } else {
-      this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
@@ -315,7 +317,20 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.clearValidators();
       this.CustMainDataForm.controls.MrMaritalStatCode.clearValidators();
       this.CustMainDataForm.controls.IdNo.clearValidators();
+      this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
+      this.CustMainDataForm.controls.Email1.clearValidators();
     }
+
+    if (this.isIncludeCustRelation) {
+      this.getCustRelationship();
+      this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
+      this.CustMainDataForm.controls.Email1.clearValidators();
+      this.CustMainDataForm.controls.MrRelationshipCustCode.setValidators(Validators.required);
+    }
+    else{
+      this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
+    }
+
     this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
     this.CustMainDataForm.controls.BirthDt.updateValueAndValidity();
     this.CustMainDataForm.controls.BirthPlace.updateValueAndValidity();
@@ -324,16 +339,8 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
     this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
-
-    if (this.isIncludeCustRelation) {
-      this.getCustRelationship();
-      this.CustMainDataForm.controls.MrRelationshipCustCode.setValidators(Validators.required);
-    }
-    else{
-      this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
-    }
-
-    this.CustMainDataForm.updateValueAndValidity();
+    this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
+    this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
   }
 
@@ -404,6 +411,8 @@ export class CustMainDataComponent implements OnInit {
       IdExpiredDt: '',
       TaxIdNo: '',
       MotherMaidenName: '',
+      MobilePhnNo1: '',
+      Email1: ''
     });
   }
 
@@ -428,6 +437,8 @@ export class CustMainDataComponent implements OnInit {
         BirthPlace: CustPersonalObj.BirthPlace,
         BirthDt: formatDate(CustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
         MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode,
+        MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
+        Email1: CustPersonalObj.Email1,
       });
       
       if(this.inputMode == 'EDIT'){
@@ -514,7 +525,8 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustMainDataForm.controls.BirthPlace.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustMainDataForm.controls.BirthDt.value;
     this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustMainDataForm.controls.MotherMaidenName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustMainDataForm.controls.FamilyCardNo.value;
+    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustMainDataForm.controls.MobilePhnNo1.value,
+    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustMainDataForm.controls.Email1.value,
 
     this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;
@@ -580,7 +592,6 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
   }
-
 
   SaveForm() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
