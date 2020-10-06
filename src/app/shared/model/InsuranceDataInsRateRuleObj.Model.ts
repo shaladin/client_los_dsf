@@ -6,6 +6,7 @@ export class InsuranceDataInsRateRuleObj {
     ProdOfferingCode: string;
     ProdOfferingVersion: string;
     RegionCode: string;
+    AppCollateralId: number;
     RowVersion: string;
 
 constructor() { 
