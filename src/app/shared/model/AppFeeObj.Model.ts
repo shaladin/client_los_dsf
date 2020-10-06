@@ -20,5 +20,6 @@ export class AppFeeObj {
     MaxSellFeeAmt: number;
     MinSellFeePrcnt: number;
     MaxSellFeePrcnt: number;
+    FeeNotFoundList: Array<string>;
     constructor() { }
 }

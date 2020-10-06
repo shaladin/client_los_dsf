@@ -470,7 +470,7 @@ export class CollateralDetailComponent implements OnInit {
     const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
     const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
 
-    if(fullAssetCode && assetType && serialNo1 && currCollValue){
+    if(fullAssetCode && assetType && serialNo1 && currCollValue && currCollPrcnt){
       this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
         (response) => {
           var outCollPrcnt = 100;
@@ -694,6 +694,8 @@ export class CollateralDetailComponent implements OnInit {
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
     const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
+    const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
     if(!fullAssetCode){
       this.toastr.warningMessage("Full Asset Code Must be Filled");
       return false;
@@ -704,6 +706,14 @@ export class CollateralDetailComponent implements OnInit {
     }
     if(!serialNo1){
       this.toastr.warningMessage("Serial No 1 Must be Filled");
+      return false;
+    }
+    if(!currCollPrcnt){
+      this.toastr.warningMessage("Collateral Portion Percentage Must be Filled");
+      return false;
+    }
+    if(!currCollValue){
+      this.toastr.warningMessage("Collateral Amount Must be Filled");
       return false;
     }
     if(this.AddCollForm.controls["OutstandingCollPrcnt"].value < 0){
