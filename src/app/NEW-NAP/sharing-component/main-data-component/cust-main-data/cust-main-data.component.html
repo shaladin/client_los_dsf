@@ -82,9 +82,6 @@
               </div>
               <div class="row" *ngIf="MrCustTypeCode == 'COMPANY'">
                 <div class="col-md-6">
-                  <div class="form-group row"></div>
-                </div>
-                <div class="col-md-6" *ngIf="MrCustTypeCode == 'COMPANY'">
                   <div class="form-group row">
                     <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}"
                       translate>Tax Id No</label>
@@ -184,8 +181,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group row" *ngIf="!isIncludeCustRelation">
+                <div class="col-md-6" *ngIf="!isIncludeCustRelation">
+                  <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                     <div class="col-md-6">
                       <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
@@ -214,24 +211,26 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group row" *ngIf="!isIncludeCustRelation">
-                    <label class="col-md-4" translate>Customer Group</label>
+                  <div class="form-group row">
+                    <label class="col-md-4" [ngClass]="{'adins-required-label' : !isIncludeCustRelation}" translate>Mobile Phone</label>
                     <div class="col-md-8">
-                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustGrpObj"
-                      *ngIf="this.InputLookupCustGrpObj.isReady" [parentForm]="CustMainDataForm"
-                      [identifier]="'lookupCustomerGrp'" (lookup)="getCustGrpData($event)">
-                    </lib-uclookupgeneric>
+                      <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                        formControlName="MobilePhnNo1"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MobilePhnNo1.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MobilePhnNo1"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group row" *ngIf="!isIncludeCustRelation">
-                    <label class="col-md-4" translate>Customer Family No</label>
+                  <div class="form-group row">
+                    <label class="col-md-4" [ngClass]="{'adins-required-label' : !isIncludeCustRelation}" translate>Email</label>
                     <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
-                        formControlName="FamilyCardNo"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.FamilyCardNo.invalid}">
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.FamilyCardNo"
+                        formControlName="Email1"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.Email1.invalid}">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.Email1"
                         [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
