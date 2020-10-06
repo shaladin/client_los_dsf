@@ -210,7 +210,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfUsage"[disabled]="isExisting" (change)="CopyUserForSelfUsage()"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfUsage"[disabled]="true" (change)="CopyUserForSelfUsage()"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -249,7 +249,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner"[disabled]="isExisting" (change)="CopyUserForSelfOwner()"></mat-checkbox>
+                      <mat-checkbox formControlName="SelfOwner"[disabled]="true" (change)="CopyUserForSelfOwner()"></mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -326,12 +326,12 @@
                 <label class="col-md-2" translate>Copy Address From</label>
                 <div class="col-md-4">
                   <div class="input-group mb-0">
-                    <select class="form-control" formControlName="CopyFromLegal">
+                    <select class="form-control" formControlName="CopyFromLegal" disabled>
                       <option value="LEGAL"> Legal </option>
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
+                        <button class="btn btn-raised btn-primary" type="button" disabled>
                           <i class="fa fa-check-square-o"></i>Copy
                         </button>
                       </span>
