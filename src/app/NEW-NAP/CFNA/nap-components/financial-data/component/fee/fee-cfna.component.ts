@@ -220,7 +220,7 @@ export class FeeCFNAComponent implements OnInit {
       // CptlzAmt : obj.CptlzAmt,
       FeeCapitalizeType : obj.FeeCapitalizeType,
       FeeCapitalizeAmt : obj.FeeCapitalizeAmt,
-      FeeCapitalizePrcntg : obj.FeeCapitalizePrcntg,
+      FeeCapitalizePrcnt : obj.FeeCapitalizePrcnt,
       CalculateBaseAmt : 0,
       CalculateBase : '',
       FeeType : feeType,

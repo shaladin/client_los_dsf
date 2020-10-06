@@ -97,9 +97,7 @@ export class FinancialDataCFNAComponent implements OnInit {
         TotalInterestAmt: 0,
         TotalAR: 0,
 
-        StdGrossYieldPrcnt: 0,
         GrossYieldPrcnt: 0,
-        GrossYieldBhv: "",
 
         NumOfStep: 0,
         MrInstSchemeCode: "",
@@ -160,9 +158,7 @@ export class FinancialDataCFNAComponent implements OnInit {
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 
-          StdGrossYieldPrcnt: this.appFinDataObj.StdGrossYieldPrcnt,
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
-          GrossYieldBhv: this.appFinDataObj.GrossYieldBhv,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,

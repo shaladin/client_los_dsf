@@ -15,7 +15,8 @@
               <div class="col-md-3">
                 <input class="form-control" formControlName="AppFeeAmt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeeAmt.invalid}"
-                  (keyup)="AppFeeAmt_OnChange()" currencyMask>
+                  (keyup)="AppFeeAmt_OnChange()"
+                  [readonly]="ParentForm.controls[identifier].value[i].SellFeeBhv == 'LOCK'" currencyMask>
                 <lib-uc-show-errors [control]="appfees.controls.AppFeeAmt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
@@ -75,7 +76,7 @@
                       <input type="text" class="form-control" formControlName="AppFeePrcnt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeePrcnt.invalid}"
                         (focusout)="ProvisionFeeInput_FocusOut()"
-                        [readonly]="ParentForm.controls[identifier].value[i].FeeType == 'AMT'"
+                        [readonly]="ParentForm.controls[identifier].value[i].FeeType == 'AMT' || ParentForm.controls[identifier].value[i].SellFeeBhv == 'LOCK'"
                         currencyMask>
                         <!-- (keyup)="AppFeePrcnt_OnChange(ParentForm.controls['AppFee'].value[i].MrFeeTypeCode)" -->
                       <lib-uc-show-errors [control]="appfees.controls.AppFeePrcnt" [submit]="enjiForm.submitted">
@@ -89,7 +90,7 @@
                     <input type="text" class="form-control" formControlName="AppFeeAmt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeeAmt.invalid}"
                       (focusout)="ProvisionFeeInput_FocusOut()"
-                      [readonly]="ParentForm.controls[identifier].value[i].FeeType != 'AMT'"
+                      [readonly]="ParentForm.controls[identifier].value[i].FeeType != 'AMT' || ParentForm.controls[identifier].value[i].SellFeeBhv == 'LOCK'"
                       currencyMask>
                       <!-- (keyup)="AppFeeAmt_OnChange()" -->
                     <lib-uc-show-errors [control]="appfees.controls.AppFeeAmt" [submit]="enjiForm.submitted">
@@ -118,6 +119,3 @@
 
 </form>
 </div>
-<!-- <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="xxx()">
-  XXX
-</button> -->
