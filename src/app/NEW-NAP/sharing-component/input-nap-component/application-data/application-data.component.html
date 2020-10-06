@@ -159,7 +159,6 @@
                     <label class="adInsLabel"> Interest Type </label>
                   </div>
                   <div class="col-md-8">
-                    <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
                     <select  class="form-control adInsInput" style="width: auto" formControlName="InterestType"
               (change)="ChangeInterestType()"
               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
