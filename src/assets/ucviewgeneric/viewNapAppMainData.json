@@ -1,0 +1,132 @@
+{
+  "title": "Customer Main Data",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "position": "left",
+          "path": "/View/AppView",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "AppId",
+              "property": "AppId" 
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "name": "MouCustNo",
+          "isHide": true,
+          "path": "/View/Mou/CustView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions" : [ 
+                {
+                  "property" : "BizTemplateCode", 
+                  "value" : "CFRFN4W",
+                  "restriction": "EQ"
+                }
+              ],
+                "result" : {
+                  "type": "text",
+                  "label": "Collateral Data",
+                  "property": "CollateralData"
+              }
+            },
+            {
+              "conditions" : [ 
+                {
+                  "property" : "BizTemplateCode", 
+                  "value" : "CFRFN4W",
+                  "restriction": "NEQ"
+                }
+              ],
+                "result" : {
+                  "type": "text",
+                  "label": "Asset Data",
+                  "property": "AssetData"
+                }
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Lead No.",
+          "property": "LeadNo",
+          "name": "LeadNo",
+          "isHide": true,
+          "position": "left",
+          "path": "/View/Lead",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "LeadId",
+              "property": "LeadId" 
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Application Status",
+          "property": "Stat"
+        },
+        {
+          "type": "text",
+          "label": "Application Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Application Last Step",
+          "property": "LastStep"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT a.APP_NO AS AppNo, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, AC.FULL_ASSET_NAME AS CollateralData , a.APP_ID AS AppId, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS AssetData, d.LEAD_NO AS LeadNo, d.LEAD_ID AS LeadId, E.MOU_CUST_NO AS MouCustNo, E.MOU_CUST_ID AS MouCustId, StatDescr.DESCR AS Stat, CurrStepDescr.DESCR AS CurrStep, LastStepDescr.DESCR AS LastStep",
+        "from": "FROM dbo.APP a WITH (NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.APP_COLLATERAL AC ON AC.APP_ID = a.APP_ID LEFT JOIN dbo.AGRMNT AG WITH (NOLOCK) ON A.APP_ID = AG.APP_ID LEFT JOIN dbo.LEAD d WITH (NOLOCK) ON a.LEAD_ID = d.LEAD_ID LEFT JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = a.MOU_CUST_ID LEFT JOIN MOU_CUST_FCTR f ON f.MOU_CUST_ID = E.MOU_CUST_ID LEFT JOIN dbo.V_REF_STATUS StatDescr WITH (NOLOCK) ON a.APP_STAT = StatDescr.REF_STATUS_CODE AND StatDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS CurrStepDescr WITH (NOLOCK) ON ISNULL(AG.AGRMNT_CURR_STEP, A.APP_CURR_STEP) = CurrStepDescr.REF_STATUS_CODE AND CurrStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS LastStepDescr WITH (NOLOCK) ON ISNULL(AG.AGRMNT_LAST_STEP, A.APP_LAST_STEP) = LastStepDescr.REF_STATUS_CODE AND LastStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC'",
+        "where": "WHERE a.APP_ID = {0}"
+      }
+    }
+  ]
+}
