@@ -106,7 +106,6 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.title = "Legal Address";
-    this.inputAddressObj.showOwnership = true;
     this.isUcAddressReady = true;
 
     await this.getRefMaster();
@@ -383,7 +382,6 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput() {
     this.isExisting = true;
-    this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
@@ -392,7 +390,6 @@ export class CustMainDataComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
-    this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].enable();
     this.inputAddressObj.isReadonly = false;
     this.InputLookupCustObj.isReadonly = false;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;
@@ -484,7 +481,6 @@ export class CustMainDataComponent implements OnInit {
       this.legalAddrObj.PhnArea2 = response.PhnArea2;
       this.legalAddrObj.PhnExt1 = response.PhnExt1;
       this.legalAddrObj.PhnExt2 = response.PhnExt2;
-      this.legalAddrObj.MrHouseOwnershipCode = response.MrBuildingOwnershipCode;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
@@ -539,7 +535,6 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt3 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt3.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.FaxArea = this.CustMainDataForm.controls["Address"]["controls"].FaxArea.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.MrHouseOwnershipCode = this.CustMainDataForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
   }
 
@@ -583,7 +578,6 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.PhnExt3 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt3.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.FaxArea = this.CustMainDataForm.controls["Address"]["controls"].FaxArea.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.MrHouseOwnershipCode = this.CustMainDataForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
   }
 
