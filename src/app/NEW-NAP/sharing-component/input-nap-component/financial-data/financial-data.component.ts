@@ -120,7 +120,6 @@ export class FinancialDataComponent implements OnInit {
             MrLcCalcMethodCode: '',
             LcGracePeriod: 0,
             PrepaymentPenaltyRate: 0,
-            SellEffectiveRatePrcnt: 0,
     
             ApvAmt: 0,
             TotalDpAmt: 0,
@@ -188,7 +187,6 @@ export class FinancialDataComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
           TotalDpAmt: this.appFinDataObj.TotalDpAmt,
           VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
           BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
@@ -213,7 +211,6 @@ export class FinancialDataComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    //var isValidGrossYield = this.ValidateGrossYield();
     var isValidGracePeriod = this.ValidateGracePeriode();
 
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;

@@ -114,7 +114,18 @@ export class FinancialDataFctrComponent implements OnInit {
         TotalDisbAmt: 0,
         Tenor: 0,
         InterestType: "",
-        RefundInterestAmt: 0
+        RefundInterestAmt: 0,
+
+        MinEffectiveRatePrcnt: 0,
+        MaxEffectiveRatePrcnt: 0,
+        MinInterestIncomeAmt: 0,
+        MinGrossYieldPrcnt: 0,
+        MaxGrossYieldPrcnt: 0,
+        MinBalloonAmt: 0,
+        MaxBalloonAmt: 0,
+        BalloonBhv: '',
+        MinDownPaymentNettPrcnt: 0,
+        MaxDownPaymentNettPrcnt: 0,
       }
     );
     this.LoadAppFinData();
@@ -177,7 +188,18 @@ export class FinancialDataFctrComponent implements OnInit {
           TotalRetentionAmt: this.appFinDataObj.TotalRetentionAmt,
           TotalDisbAmt: this.appFinDataObj.TotalDisbAmt,
           Tenor: this.appFinDataObj.Tenor,
-          RefundInterestAmt: this.appFinDataObj.RefundInterestAmt
+          RefundInterestAmt: this.appFinDataObj.RefundInterestAmt,
+
+          MinEffectiveRatePrcnt: this.appFinDataObj.MinEffectiveRatePrcnt,
+          MaxEffectiveRatePrcnt: this.appFinDataObj.MaxEffectiveRatePrcnt,
+          MinInterestIncomeAmt: this.appFinDataObj.MinInterestIncomeAmt,
+          MinGrossYieldPrcnt: this.appFinDataObj.MinGrossYieldPrcnt,
+          MaxGrossYieldPrcnt: this.appFinDataObj.MaxGrossYieldPrcnt,
+          MinBalloonAmt: this.appFinDataObj.MinBalloonAmt,
+          MaxBalloonAmt: this.appFinDataObj.MaxBalloonAmt,
+          BalloonBhv: this.appFinDataObj.BalloonBhv,
+          MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
+          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt
         });
 
         this.IsParentLoaded = true;
@@ -186,7 +208,6 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   SaveAndContinue() {
-      var isValidGrossYield = this.ValidateGrossYield();
       var isValidGracePeriod = this.ValidateGracePeriode();
   
       var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
@@ -195,7 +216,7 @@ export class FinancialDataFctrComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
         return;
       }
-      if (isValidGrossYield && isValidGracePeriod) {
+      if (isValidGracePeriod) {
   
         this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
           (response) => {

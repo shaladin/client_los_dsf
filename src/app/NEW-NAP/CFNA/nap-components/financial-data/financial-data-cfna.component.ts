@@ -78,6 +78,7 @@ export class FinancialDataCFNAComponent implements OnInit {
         NtfAmt: 0,
         RateType: "EFCTV",
         EffectiveRatePrcnt: 0, //eff rate to cust
+        EffectiveRateBhv: "",
         StdEffectiveRatePrcnt: 0, //base eff rate to cust
         FlatRatePrcnt: 0, //flat rate to cust
         InstAmt: 0,
@@ -115,11 +116,21 @@ export class FinancialDataCFNAComponent implements OnInit {
         MrLcCalcMethodCode: '',
         LcGracePeriod: 0,
         PrepaymentPenaltyRate: 0,
-        SellEffectiveRatePrcnt: 0,
 
         ApvAmt: 0,
         TotalDpAmt: 0,
         VendorAtpmCode: '',
+
+        MinEffectiveRatePrcnt: 0,
+        MaxEffectiveRatePrcnt: 0,
+        MinInterestIncomeAmt: 0,
+        MinGrossYieldPrcnt: 0,
+        MaxGrossYieldPrcnt: 0,
+        MinBalloonAmt: 0,
+        MaxBalloonAmt: 0,
+        BalloonBhv: '',
+        MinDownPaymentNettPrcnt: 0,
+        MaxDownPaymentNettPrcnt: 0,
 
         CalcBase: '',
         NeedReCalculate: true
@@ -150,6 +161,7 @@ export class FinancialDataCFNAComponent implements OnInit {
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
+          EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
 
           NumOfInst: this.appFinDataObj.NumOfInst,
@@ -170,9 +182,20 @@ export class FinancialDataCFNAComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
           TotalDpAmt: this.appFinDataObj.TotalDpAmt,
-          VendorAtpmCode: this.appFinDataObj.VendorAtpmCode
+          VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
+
+          MinEffectiveRatePrcnt: this.appFinDataObj.MinEffectiveRatePrcnt,
+          MaxEffectiveRatePrcnt: this.appFinDataObj.MaxEffectiveRatePrcnt,
+          MinInterestIncomeAmt: this.appFinDataObj.MinInterestIncomeAmt,
+          MinGrossYieldPrcnt: this.appFinDataObj.MinGrossYieldPrcnt,
+          MaxGrossYieldPrcnt: this.appFinDataObj.MaxGrossYieldPrcnt,
+          MinBalloonAmt: this.appFinDataObj.MinBalloonAmt,
+          MaxBalloonAmt: this.appFinDataObj.MaxBalloonAmt,
+          BalloonBhv: this.appFinDataObj.BalloonBhv,
+          MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
+          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
+          BalloonValueAmt: this.appFinDataObj.BalloonValueAmt
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
@@ -182,7 +205,6 @@ export class FinancialDataCFNAComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    var isValidGrossYield = this.ValidateGrossYield();
     var isValidGracePeriod = this.ValidateGracePeriode();
 
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
@@ -191,7 +213,7 @@ export class FinancialDataCFNAComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       return;
     }
-    if (isValidGrossYield && isValidGracePeriod) {
+    if (isValidGracePeriod) {
       this.SetDiffRateAmt();
       this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
