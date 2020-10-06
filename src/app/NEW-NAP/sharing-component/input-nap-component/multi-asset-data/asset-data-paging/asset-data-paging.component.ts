@@ -22,6 +22,7 @@ export class AssetDataPagingComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IdCust: any;
   appAssetObj: any;
+  listDataAsset : any;
   listAppAssetObj: any;
   appCollateralObj: any;
   listAppCollateralObj: any;
@@ -33,9 +34,11 @@ export class AssetDataPagingComponent implements OnInit {
   AppCollateralId: number;
   editAsset: string;
   editColl: string;
+  selectedAsset : any;
+  units : number = 0;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListAppAssetData = URLConstant.GetAppAssetListByAppId;
-    this.getListAppCollateral = URLConstant.GetListAppCollateralByAppId;
+    this.getListAppCollateral = URLConstant.GetListAdditionalCollateralByAppId;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
@@ -122,15 +125,27 @@ export class AssetDataPagingComponent implements OnInit {
       }
     }
   }
-
-  ngOnInit() {
-    this.gridAssetDataObj = new InputGridObj();
-    this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
-    this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;
-
-    this.appAssetObj = new AppAssetObj();
-    // this.appAssetObj.AppAssetId = "-";
-    this.appAssetObj.AppId = this.AppId;
+  CopyAsset(){
+    if(this.units == 0){
+      this.toastr.warningMessage("Unit cannot be 0.");
+    }
+    else{
+    this.http.post(URLConstant.CopyAppAsset, {AppId : this.AppId, Code : this.selectedAsset, count : this.units}).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.ngOnInit();
+      }
+    );
+    }
+  }
+  getListDataForDDLCopy(){
+    this.http.post(URLConstant.GetListAppAssetForCopyByAppId, this.appAssetObj).subscribe(
+      (response) => {
+        this.listDataAsset = response[CommonConstant.ReturnObj];
+        this.selectedAsset = this.listDataAsset[0].Code;
+      });
+  }
+  getListDataAsset(){
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
@@ -141,8 +156,21 @@ export class AssetDataPagingComponent implements OnInit {
         }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
+        this.getListDataForDDLCopy();
       });
+  }
+  ngOnInit() {
+    console.log("AAAAAAAAAAA");
+    this.gridAssetDataObj = new InputGridObj();
+    this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
+    this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;
+    
+    this.appAssetObj = new AppAssetObj();
+    // this.appAssetObj.AppAssetId = "-";
+    this.appAssetObj.AppId = this.AppId;
+this.getListDataAsset();
 
+  
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
     this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;

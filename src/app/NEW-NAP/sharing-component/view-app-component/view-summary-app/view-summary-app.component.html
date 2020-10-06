@@ -7,7 +7,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Customer Name </label>
+            <label class="adInsLabel"> Customer Name</label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.CustName}}</label>
@@ -222,7 +222,7 @@
             <label class="adInsLabel"> {{SummaryAppObj?.AppObj?.SalesOfficerName}} </label>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="bizTemplateCode != 'CFRFN4W'" class="row">
           <div class="col-md-6">
             <label class="adInsLabel"> Sales Dealer </label>
           </div>
@@ -230,7 +230,7 @@
             <label class="adInsLabel"> {{SummaryAppObj?.SalesDealerName}} </label>            
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="bizTemplateCode != 'CFRFN4W'" class="row">
           <div class="col-md-6">
             <label class="adInsLabel"> Dealer </label>
           </div>
