@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -48,7 +49,8 @@ export class MainDataComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -165,7 +167,12 @@ export class MainDataComponent implements OnInit {
   }
 
   LastStep(){
-    this.router.navigate(["/Nap/ConsumerFinance/Add/Detail"], { queryParams: { AppId: this.appId } });
+    this.http.post(URLConstant.CopyAllExistingCustByAppId, {AppId:this.appId}).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.router.navigate(["/Nap/ConsumerFinance/Add/Detail"], { queryParams: { AppId: this.appId } });
+      }
+    );
   }
 
   GetCallback(ev) {
