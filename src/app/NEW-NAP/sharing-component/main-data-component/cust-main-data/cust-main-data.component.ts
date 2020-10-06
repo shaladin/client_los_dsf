@@ -38,6 +38,7 @@ export class CustMainDataComponent implements OnInit {
   @Input() appCustId: number;
   @Input() bizTemplateCode: string = "";
   @Input() inputMode: string = "ADD";
+  @Input() isMarried: boolean = false;
   @Output() outputAfterSave: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -48,6 +49,7 @@ export class CustMainDataComponent implements OnInit {
   subjectTitle: string = 'Customer';
   MaxDate: Date;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
+  InputLookupCustGrpObj: InputLookupObj = new InputLookupObj();
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();;
   legalAddrObj: AddrObj = new AddrObj();;
@@ -89,25 +91,27 @@ export class CustMainDataComponent implements OnInit {
     BirthDt: ['', Validators.required],
     MotherMaidenName: ['', Validators.required],
     MrCompanyTypeCode: [''],
+    CustGrp: [''],
+    FamilyCardNo: ['']
   });
 
-  ngOnInit() {
+  async ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
-    this.initcustMainDataMode();
-    this.setLookup();
+    await this.initcustMainDataMode();
+    await this.setLookup();
 
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
-    this.inputAddressObj.title = "Address";
+    this.inputAddressObj.title = "Legal Address";
     this.inputAddressObj.showOwnership = true;
     this.isUcAddressReady = true;
 
-    this.getRefMaster();
+    await this.getRefMaster();
     if (this.inputMode != 'ADD') {
-      this.getCustMainData();
+      await this.getCustMainData();
     }
   }
 
@@ -150,6 +154,21 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
     this.InputLookupCustObj.nameSelect = "";
+
+    this.InputLookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
+    this.InputLookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
+    this.InputLookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
+    this.InputLookupCustGrpObj.isRequired = false;
+    this.InputLookupCustGrpObj.nameSelect = "";
+    this.InputLookupCustGrpObj.ddlEnvironments = [
+      {
+        name: "C.MR_CUST_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      },
+    ];
+
     this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();
     critObj.DataType = "text";
@@ -164,9 +183,17 @@ export class CustMainDataComponent implements OnInit {
       this.ucLookupExistingCust.setAddCritInput();
     } else {
       this.InputLookupCustObj.isReady = true;
+      this.InputLookupCustGrpObj.isReady = true;
     }
   }
 
+  getCustGrpData(event){
+    this.CustMainDataForm.patchValue({
+      CustNo: event.CustNo,
+      CustName: event.CustName
+    });
+  }
+  
   getRefMaster() {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
       (response) => {
@@ -234,10 +261,18 @@ export class CustMainDataComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
+        this.removeSpouse();
         if (this.inputMode != "EDIT")
           this.CustMainDataForm.patchValue({ MrRelationshipCustCode: this.MrCustRelationshipObj[0].Key });
       }
     );
+  }
+
+  removeSpouse(){
+    let SpouseRelationship = this.MrCustRelationshipObj[0]
+    if(!this.isMarried && SpouseRelationship.Key == "SPOUSE"){
+      this.MrCustRelationshipObj = this.MrCustRelationshipObj.slice(1, this.MrCustRelationshipObj.length);
+    }
   }
 
   getCustMainData() {
@@ -253,10 +288,7 @@ export class CustMainDataComponent implements OnInit {
           else
             this.setDataCustomerCompany(response['AppCustObj'], response['AppCustCompanyObj'], response['AppCustAddrLegalObj']);
           
-          if (response['AppCustObj']['IsExistingCust']) {
-            this.isExisting = true;
-            this.disableInput();
-          }
+          if (response['AppCustObj']['IsExistingCust']) this.disableInput();
         }
       }
     );
@@ -264,6 +296,7 @@ export class CustMainDataComponent implements OnInit {
 
   custTypeChange(custType: string = CommonConstant.CustTypePersonal) {
     this.MrCustTypeCode = custType;
+    this.CustMainDataForm.controls.MrCustTypeCode.setValue(this.MrCustTypeCode);
 
     if (custType == CommonConstant.CustTypePersonal) {
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
@@ -277,13 +310,21 @@ export class CustMainDataComponent implements OnInit {
     } else {
       this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
-      this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
+      this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrGenderCode.clearValidators();
       this.CustMainDataForm.controls.MrMaritalStatCode.clearValidators();
       this.CustMainDataForm.controls.IdNo.clearValidators();
     }
+    this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
+    this.CustMainDataForm.controls.BirthDt.updateValueAndValidity();
+    this.CustMainDataForm.controls.BirthPlace.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrIdTypeCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
+    this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
 
     if (this.isIncludeCustRelation) {
       this.getCustRelationship();
@@ -291,7 +332,6 @@ export class CustMainDataComponent implements OnInit {
     }
     else{
       this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
-      this.resetInput();
     }
 
     this.CustMainDataForm.updateValueAndValidity();
@@ -299,7 +339,6 @@ export class CustMainDataComponent implements OnInit {
   }
 
   async copyCustomerEvent(event) {
-    this.isExisting = true;
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
@@ -320,13 +359,13 @@ export class CustMainDataComponent implements OnInit {
   }
 
 
-  resetInput() {
+  resetInput(custType: string = CommonConstant.CustTypePersonal) {
     this.CustMainDataForm.reset();
     let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
     this.CustMainDataForm.patchValue({
-      MrCustTypeCode: this.MrCustTypeCode
+      MrCustTypeCode: custType
     });
-    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if (custType == CommonConstant.CustTypePersonal) {
       this.CustMainDataForm.patchValue({
         MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"],
         MrGenderCode: this.GenderObj[0].Key,
@@ -337,13 +376,27 @@ export class CustMainDataComponent implements OnInit {
         MrCompanyTypeCode: this.CompanyTypeObj[0].Key
       });
     }
+    this.enableInput();
+
+    this.custTypeChange(custType);
   }
 
   disableInput() {
+    this.isExisting = true;
     this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
+    this.inputAddressObj.inputField.inputLookupObj.isDisable = true;
+  }
+
+  enableInput() {
+    this.isExisting = false;
+    this.CustMainDataForm.controls.Address["controls"]["MrHouseOwnershipCode"].enable();
+    this.inputAddressObj.isReadonly = false;
+    this.InputLookupCustObj.isReadonly = false;
+    this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;
+    this.inputAddressObj.inputField.inputLookupObj.isDisable = false;
   }
 
   clearInput() {
@@ -465,6 +518,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustMainDataForm.controls.BirthPlace.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustMainDataForm.controls.BirthDt.value;
     this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustMainDataForm.controls.MotherMaidenName.value;
+    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustMainDataForm.controls.FamilyCardNo.value;
 
     this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;

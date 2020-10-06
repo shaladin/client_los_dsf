@@ -16,7 +16,6 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 export class GuarantorMainDataPagingComponent implements OnInit {
 
   @Input() appId: number;
-  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -26,7 +25,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
-  inputMode: string;
+  inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
 
@@ -36,7 +35,6 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantorMainData.json";
-    this.inputGridObj.deleteUrl = URLConstant.DeleteAppCustMainData;
     this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
     this.loadGuarantorListData();
   }
@@ -48,6 +46,14 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   }
 
   saveAndContinue() {
+    for (let i = 0; i < this.listGuarantor.length; i++) {
+      for (let j = i+1; j < this.listGuarantor.length; j++) {
+        if (this.listGuarantor[i]["CustName"] == this.listGuarantor[j]["CustName"] ) {
+          this.toastr.warningMessage("Guarantor No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_GUARANTOR_MEMBER + (j+1));
+          return;
+        }
+      }
+    }
     this.outputTab.emit();
   }
 
@@ -66,6 +72,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
           (response) => {
+            this.toastr.successMessage(response["message"]);
             this.loadGuarantorListData();
           }
         );

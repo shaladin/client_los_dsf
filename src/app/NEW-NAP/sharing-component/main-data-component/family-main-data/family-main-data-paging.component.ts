@@ -16,7 +16,6 @@ export class FamilyMainDataPagingComponent implements OnInit {
 
   @Input() appId: number;
   @Input() isMarried: boolean = false;
-  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -26,7 +25,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
   resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
-  inputMode: string;
+  inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
 
@@ -80,6 +79,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
           (response) => {
+            this.toastr.successMessage(response["message"]);
             this.loadGuarantorListData();
           }
         );

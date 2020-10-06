@@ -87,7 +87,7 @@ export class ExceptionConstant {
     public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
     public static NO_SIGNER_AVAILABLE = "No Signer Available, Please Input Signer at Document Signer";
-    public static MUST_INPUT_SPOUSE_DATA = "Please Input Spouse Data!";
-
+    public static MUST_INPUT_SPOUSE_DATA = "Please Input Spouse Data in Family!";
+    public static CANT_HAVE_THE_SAME_GUARANTOR_MEMBER = " cannot have the same name as Guarantor No ";
 }
 

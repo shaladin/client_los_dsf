@@ -63,13 +63,13 @@
 
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
               <app-family-main-data-paging *ngIf="AppStepIndex == 2" [appId]="appId" [isMarried]="isMarried"
-                (outputTab)="NextStep('GUARANTOR')" (outputCancel)="Cancel()" [showCancel]="'true'">
+                (outputTab)="NextStep('GUARANTOR')" (outputCancel)="Cancel()">
               </app-family-main-data-paging>
             </div>
 
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
-                [showCancel]="'true'">
+                (outputTab)="LastStep()">
               </app-guarantor-main-data-paging>
             </div>
           </div>

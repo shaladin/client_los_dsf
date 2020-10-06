@@ -72,7 +72,8 @@
               "property": "AppCustId"
             }
           ],
-          "icon" : "ft-trash-2"
+          "icon" : "ft-trash-2",
+          "anchor" : "warning"
         }
       ]
     }

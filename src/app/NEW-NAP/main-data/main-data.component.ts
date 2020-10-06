@@ -30,7 +30,7 @@ export class MainDataComponent implements OnInit {
   IsMultiAsset: string;
   ListAsset: any;
   isMarried: boolean = false;
-
+  
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -149,7 +149,7 @@ export class MainDataComponent implements OnInit {
   }
 
   getEvent(event) {
-    this.isMarried = event.isMarried != undefined? event.isMarried : false;
+    this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == 'PERSONAL' ? 'FAMILY' : 'GUARANTOR');
   }
@@ -162,6 +162,10 @@ export class MainDataComponent implements OnInit {
         this.stepper.to(this.AppStepIndex);
       }
     )
+  }
+
+  LastStep(){
+    this.router.navigate(["/Nap/ConsumerFinance/Add/Detail"], { queryParams: { AppId: this.appId } });
   }
 
   GetCallback(ev) {

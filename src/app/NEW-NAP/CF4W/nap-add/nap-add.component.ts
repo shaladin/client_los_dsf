@@ -229,7 +229,8 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        //this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/TestMainData/MainDataContainer"], { queryParams: { "AppId": response["AppId"] } });
       });
   }
 
