@@ -739,6 +739,7 @@ export class URLConstant {
     public static AddEditCustMainDataCompany = environment.losUrl + "/AppCust/AddEditCustMainDataCompany";
     public static DeleteAppCustMainData = environment.losUrl + "/AppCust/DeleteAppCustMainData";
     public static CopyAllExistingCustByAppId = environment.losUrl + "/AppCust/CopyAllExistingCustByAppId";
+    public static GetListAppCustCompletion = environment.losUrl + "/AppCust/GetListAppCustCompletion";
     
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";

@@ -75,6 +75,10 @@ const routes: Routes = [
       {
         path: 'TestMainData',
         loadChildren: './main-data/main-data.module#MainDataModule'
+      },
+      {
+        path: 'TestCustCompletion',
+        loadChildren: './cust-completion/cust-completion.module#CustCompletionModule'
       }
       // {
       //   path: 'Single',
