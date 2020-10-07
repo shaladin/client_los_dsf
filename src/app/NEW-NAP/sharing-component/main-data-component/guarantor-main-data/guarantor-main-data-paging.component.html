@@ -1,0 +1,60 @@
+<div *ngIf="!isDetail">
+  <div class="button-right margin-15">
+    <button type="button" class="btn btn-raised btn-primary" (click)="add()" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </div>
+  <div *ngIf="listGuarantor?.length == 0">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;">
+            <span class="thead-header" name="NoName" translate>
+              No
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="GuarantorName" translate>Guarantor Name </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="MrGuarantorTypeCode" translate>
+              Guarantor Type
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Relationship" translate>
+              Relationship
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Action" translate>
+              Action
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="listGuarantor?.length > 0">
+    <lib-ucgridview [gridInput]="inputGridObj" (callback)="event($event)"></lib-ucgridview>
+  </div>
+  <div class="pull-right margin-15">
+    <button type="button" (click)="saveAndContinue()" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+</div>
+<div *ngIf="isDetail">
+  <lib-ucSubsection [id]="'AddEditGuarantorId'" [title]="'Add / Edit Guarantor'" [panel]="'AddEditGuarantor'">
+  </lib-ucSubsection>
+  <div id="AddEditGuarantor">
+    <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId"
+      [inputMode]="inputMode" (outputCancel)="close()" (outputAfterSave)="close()">
+    </app-cust-main-data>
+  </div>
+</div>

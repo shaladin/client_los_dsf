@@ -17,6 +17,9 @@ export class AppCustAddrObj {
     PhnArea2: string;
     Phn2: string;
     PhnExt2: string;
+    PhnArea3: string;
+    Phn3: string;
+    PhnExt3: string;
     FaxArea: string;
     Fax: string;
     FullAddr: string;

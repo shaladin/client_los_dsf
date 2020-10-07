@@ -1,0 +1,81 @@
+{
+  "isSeq": true,
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Family Name",
+      "name": "sortId1"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Family Type",
+      "name": "sortId2"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Relationship",
+      "name": "sortId3"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustTypeCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrRelationshipCustCode"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "edit",
+          "property": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            },
+            {
+              "type": "MrCustTypeCode",
+              "property": "MrCustTypeCode"
+            },
+            {
+              "type": "mode",
+              "property": "edit"
+            }
+          ]
+        },
+        {
+          "type": "callback",
+          "key": "delete",
+          "property": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            }
+          ],
+          "icon" : "ft-trash-2",
+          "anchor" : "warning"
+        }
+      ]
+    }
+  ]
+}

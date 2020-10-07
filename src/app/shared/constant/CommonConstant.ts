@@ -52,6 +52,12 @@ export class CommonConstant {
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
+  //CUST MAIN DATA MODE
+  public static CustMainDataModeCust = "CUST";
+  public static CustMainDataModeGuarantor = "GUARANTOR";
+  public static CustMainDataModeFamily = "FAMILY";
+  
+
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
 
@@ -376,6 +382,7 @@ export class CommonConstant {
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
   public static TitleReferantor = "List Referantor Commission Data";
   public static ReturnObj = "ReturnObject";
+  public static RefMasterObjs = "RefMasterObjs";
 
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
