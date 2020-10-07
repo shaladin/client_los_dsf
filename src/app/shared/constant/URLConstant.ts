@@ -50,10 +50,11 @@ export class URLConstant {
 
     // App Asset
     public static GetAppAssetListByAppIdForCommision = "/AppAsset/GetAppAssetListByAppIdForCommision";
+    public static GetListAppAssetForCopyByAppId = environment.losUrl + "/AppAsset/GetListAppAssetForCopyByAppId";
     //public static GetAppAssetByAppAssetId = "/AppAsset/GetAppAssetByAppAssetId";
     public static GetAppAssetByAppAssetIdWithSerialNoDefinition = environment.losUrl + "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
     public static GetAppAssetByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetByAppAssetId"
-
+public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // App Asset Suppl Emp
     public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
     public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl + "/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";

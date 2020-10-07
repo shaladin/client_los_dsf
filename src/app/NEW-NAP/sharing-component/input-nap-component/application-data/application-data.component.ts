@@ -125,7 +125,6 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
-    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInstSchm);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);

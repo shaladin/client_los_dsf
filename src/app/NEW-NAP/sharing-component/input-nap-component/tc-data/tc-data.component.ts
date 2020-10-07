@@ -200,6 +200,8 @@ export class TcDataComponent implements OnInit {
       appTC.Notes = this.AppTcForm.value.TCList[i].Notes;
       appTC.IsAdditional = this.AppTcForm.value.TCList[i].IsAdditional;
       appTC.IsExpDtMandatory = this.AppTcForm.value.TCList[i].IsExpDtMandatory;
+      appTC.IsWaivable = this.AppTcForm.value.TCList[i].IsWaivable;
+      appTC.IsWaived = this.AppTcForm.value.TCList[i].IsWaived;
 
       var prmsDt = new Date(appTC.PromisedDt);
       var prmsDtForm = this.AppTcForm.value.TCList[i].PromisedDt;

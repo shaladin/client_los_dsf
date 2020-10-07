@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, ValidationErrors } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -14,17 +14,18 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
-  selector: 'app-nap-add',
-  templateUrl: './nap-add.component.html',
+  selector: 'app-nap-1-add',
+  templateUrl: './nap-1-add.component.html',
   providers: [NGXToastrService]
 })
-export class NapAddComponent implements OnInit {
+export class Nap1AddComponent implements OnInit {
 
   @ViewChild('LookupOffering') ucLookupOffering: UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
+  bizTemplateCode: string;
   user: any;
 
   NapAppForm = this.fb.group({
@@ -77,8 +78,13 @@ export class NapAddComponent implements OnInit {
     RsvField5: ['']
   });
 
-  constructor(private fb: FormBuilder, private router: Router,
-    private http: HttpClient, private toastr: NGXToastrService) { }
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
+    private http: HttpClient, private toastr: NGXToastrService) 
+  { 
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
+    });
+  }
 
   isCopyData: boolean = false;
   ngOnInit() {
@@ -136,7 +142,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = CommonConstant.CF4W;
+    critObj.value = this.bizTemplateCode;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
@@ -152,7 +158,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = CommonConstant.CF4W;
+    addCritBizTempalte.value = this.bizTemplateCode;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
@@ -219,7 +225,7 @@ export class NapAddComponent implements OnInit {
     napAppObj.IsAppInitDone = false;
     napAppObj.AppStat = CommonConstant.AppStepNew;
     napAppObj.AppCurrStep = CommonConstant.AppStepNew;
-    napAppObj.BizTemplateCode = CommonConstant.CF4W;
+    napAppObj.BizTemplateCode = this.bizTemplateCode;
     napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
@@ -229,7 +235,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/TestMainData/NAP1/Detail"], { queryParams: { "AppId": response["AppId"] } });
       });
   }
 
@@ -320,7 +326,7 @@ export class NapAddComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = CommonConstant.CF4W;
+    critObj.value = this.bizTemplateCode;
     arrCopyLookupCrit.push(critObj);
 
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
@@ -338,7 +344,7 @@ export class NapAddComponent implements OnInit {
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = CommonConstant.CF4W;
+    addCritBizTempalte.value = this.bizTemplateCode;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
