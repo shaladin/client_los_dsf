@@ -190,7 +190,7 @@ export class MainDataComponent implements OnInit {
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
       () => {
       });
   }

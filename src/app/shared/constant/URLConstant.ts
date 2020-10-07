@@ -1054,6 +1054,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // Workflow Engine
     public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
     public static ClaimTaskNap = environment.losUrl + "/Application/ClaimTaskNap";
+    public static ClaimTaskNapCustmainData = environment.losUrl + "/Application/ClaimTaskNapCustmainData";
 
     //Application Data
     public static SaveApplicationData = environment.losUrl + "/ApplicationData/SaveApplicationData"
