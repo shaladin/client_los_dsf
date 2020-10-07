@@ -177,7 +177,6 @@ export class MainDataComponent implements OnInit {
     this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.NextStep(CommonConstant.AppStepNew);
         this.router.navigate(["/Nap/TestMainData/CustMainData/Paging"], { queryParams: { "AppId": this.appId, "BizTemplateCode": this.bizTemplateCode } });
       }
     );

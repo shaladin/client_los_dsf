@@ -65,7 +65,13 @@ export class NapDetailPagingComponent implements OnInit {
       switch(this.bizTemplateCode)
       {
         case CommonConstant.CF4W :
-          this.router.navigate(["Nap/ConsumerFinance/NapDetail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
+          this.router.navigate(["Nap/ConsumerFinance/NapDetail"], { 
+            queryParams: { 
+              "AppId": ev.RowObj.AppId, 
+              "WfTaskListId": ev.RowObj.WfTaskListId, 
+              "IsMainData": true, //for application data with mailing address
+            } 
+          });
         break;
       }
     }
