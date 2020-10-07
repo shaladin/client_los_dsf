@@ -159,7 +159,7 @@ export class MainDataComponent implements OnInit {
   getEvent(event) {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
-    this.NextStep(this.MrCustTypeCode == 'PERSONAL' ? 'FAMILY' : 'GUARANTOR');
+    this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepGuar);
   }
 
   async NextStep(Step) {
