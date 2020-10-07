@@ -31,12 +31,13 @@ export class MainDataComponent implements OnInit {
   IsMultiAsset: string;
   ListAsset: any;
   isMarried: boolean = false;
+  bizTemplateCode: string;
   
   AppStep = {
     "NEW": 1,
     "CUST": 1,
     "FAMILY": 2,
-    "GUARANTOR": 3,
+    "GUAR": 3,
   };
 
   ResponseReturnInfoObj;
@@ -56,11 +57,14 @@ export class MainDataComponent implements OnInit {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
       }
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
     });
   }
 
   ngOnInit() {
-    //this.ClaimTask();
+    this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainData.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -84,7 +88,9 @@ export class MainDataComponent implements OnInit {
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
-          this.AppStepIndex = 1;
+          //this.AppStepIndex = 1;
+          this.bizTemplateCode = this.NapObj.BizTemplateCode;
+          this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
         }
         else {
@@ -135,14 +141,14 @@ export class MainDataComponent implements OnInit {
       case "TEST":
         this.AppStepIndex = this.AppStep["TEST"];
         break;
-      case CommonConstant.CustMainDataModeCust:
-        this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeCust];
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
-      case CommonConstant.CustMainDataModeFamily:
-        this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeFamily];
+      case CommonConstant.AppStepFamily:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFamily];
         break;
-      case CommonConstant.CustMainDataModeGuarantor:
-        this.AppStepIndex = this.AppStep[CommonConstant.CustMainDataModeGuarantor];
+      case CommonConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
         break;
       default:
         break;
@@ -167,12 +173,26 @@ export class MainDataComponent implements OnInit {
   }
 
   LastStep(){
-    this.http.post(URLConstant.CopyAllExistingCustByAppId, {AppId:this.appId}).subscribe(
+    this.NapObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/ConsumerFinance/Add/Detail"], { queryParams: { AppId: this.appId } });
+        this.NextStep(CommonConstant.AppStepNew);
+        this.router.navigate(["/Nap/TestMainData/CustMainData/Paging"], { queryParams: { "AppId": this.appId, "BizTemplateCode": this.bizTemplateCode } });
       }
     );
+  }
+
+  ClaimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      () => {
+      });
   }
 
   GetCallback(ev) {
