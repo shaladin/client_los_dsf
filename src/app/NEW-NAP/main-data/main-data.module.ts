@@ -6,15 +6,17 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { MainDataComponent } from "./main-data.component";
 import { MainDataRoutingModule } from "./main-data-routing.module";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
-import { Nap1PagingComponent } from "./nap-1/nap-1-paging/nap-1-paging.component";
-import { Nap1AddComponent } from "./nap-1/nap-1-add/nap-1-add.component";
+import { CustMainDataPagingComponent } from "./cust-main-data/cust-main-data-paging/cust-main-data-paging.component";
+import { CustMainDataAddComponent } from "./cust-main-data/cust-main-data-add/cust-main-data-add.component";
+import { NapDetailPagingComponent } from "./nap-detail/nap-detail-paging/nap-detail-paging.component";
 
 
 @NgModule({
     declarations: [
         MainDataComponent,
-        Nap1PagingComponent,
-        Nap1AddComponent
+        CustMainDataPagingComponent,
+        CustMainDataAddComponent,
+        NapDetailPagingComponent
     ],
     imports: [
         CommonModule,

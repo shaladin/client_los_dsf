@@ -14,6 +14,7 @@ export class URLConstant {
 
     // APP Application
     public static AddApp = environment.losUrl + "/Application/AddApp";
+    public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
     public static EditApp = "/Application/EditApp";
     public static GetAppById = environment.losUrl + "/Application/GetAppById";
     public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
@@ -23,6 +24,7 @@ export class URLConstant {
     public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
     public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
     public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
+    public static SubmitNapCustMainData = environment.losUrl + "/Application/SubmitNapCustMainData";
     public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
     public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
     public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";
@@ -1052,6 +1054,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // Workflow Engine
     public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
     public static ClaimTaskNap = environment.losUrl + "/Application/ClaimTaskNap";
+    public static ClaimTaskNapCustmainData = environment.losUrl + "/Application/ClaimTaskNapCustmainData";
 
     //Application Data
     public static SaveApplicationData = environment.losUrl + "/ApplicationData/SaveApplicationData"

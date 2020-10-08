@@ -14,11 +14,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
-  selector: 'app-nap-1-add',
-  templateUrl: './nap-1-add.component.html',
+  selector: 'cust-main-data-add',
+  templateUrl: './cust-main-data-add.component.html',
   providers: [NGXToastrService]
 })
-export class Nap1AddComponent implements OnInit {
+export class CustMainDataAddComponent implements OnInit {
 
   @ViewChild('LookupOffering') ucLookupOffering: UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
@@ -231,11 +231,10 @@ export class Nap1AddComponent implements OnInit {
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
 
-    var url = URLConstant.AddApp;
-    this.http.post(url, napAppObj).subscribe(
+    this.http.post(URLConstant.AddAppMaindata, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/TestMainData/NAP1/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        this.router.navigate(["Nap/TestMainData/CustMainData/Detail"], { queryParams: { "AppId": response["AppId"] } });
       });
   }
 
