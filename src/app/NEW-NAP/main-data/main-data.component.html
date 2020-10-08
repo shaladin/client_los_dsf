@@ -40,7 +40,7 @@
             <div class="line"></div>
             <div class="step" data-target="#guarantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('GUARANTOR')">
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('GUAR')">
                 <span class="bs-stepper-circle">{{MrCustTypeCode != 'PERSONAL' ? 2 : 3}}</span>
                 <span class="bs-stepper-label">Guarantor Data</span>
               </button>
@@ -63,7 +63,7 @@
 
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
               <app-family-main-data-paging *ngIf="AppStepIndex == 2" [appId]="appId" [isMarried]="isMarried"
-                (outputTab)="NextStep('GUARANTOR')" (outputCancel)="Cancel()">
+                (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
               </app-family-main-data-paging>
             </div>
 

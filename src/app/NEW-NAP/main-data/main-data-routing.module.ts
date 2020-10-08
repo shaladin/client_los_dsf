@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { CustMainDataAddComponent } from "./cust-main-data/cust-main-data-add/cust-main-data-add.component";
+import { CustMainDataPagingComponent } from "./cust-main-data/cust-main-data-paging/cust-main-data-paging.component";
 import { MainDataComponent } from "./main-data.component";
-import { Nap1AddComponent } from "./nap-1/nap-1-add/nap-1-add.component";
-import { Nap1PagingComponent } from "./nap-1/nap-1-paging/nap-1-paging.component";
+import { NapDetailPagingComponent } from "./nap-detail/nap-detail-paging/nap-detail-paging.component";
 
 const routes: Routes = [
   {
@@ -16,24 +17,31 @@ const routes: Routes = [
         }
       },
       {
-        path: 'NAP1/Paging',
-        component: Nap1PagingComponent,
+        path: 'CustMainData/Paging',
+        component: CustMainDataPagingComponent,
         data: {
-          title: 'Paging'
+          title: 'Cust Main Data Paging'
         }
       },
       {
-        path: 'NAP1/Add',
-        component: Nap1AddComponent,
+        path: 'CustMainData/Add',
+        component: CustMainDataAddComponent,
         data: {
-          title: 'Add'
+          title: 'Add Cust Main Data'
         }
       },
       {
-        path: 'NAP1/Detail',
+        path: 'CustMainData/Detail',
         component: MainDataComponent,
         data: {
-          title: 'MainDataContainer'
+          title: 'Cust Main Data Detail'
+        }
+      },
+      {
+        path: 'NapDetail/Paging',
+        component: NapDetailPagingComponent,
+        data: {
+          title: 'NAP Detail Paging'
         }
       },
     ]
