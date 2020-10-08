@@ -33,69 +33,15 @@
         {
             "type": "label",
             "position": "center",
-            "label": "Ngeative Customer",
-            "name": "IsNegativeCust"
-        },
-        {
-            "type": "label",
-            "position": "center",
             "label": "Action",
             "name": "Action"
         }
     ],
     "bodyList": [
         {
-            "type" : "action",
-            "position" : "center",
-            "action" : [
-                {
-                    "type" : "switch",
-                    "case" : [
-                        {
-                            "conditions" : [
-                                {
-                                    "property" : "isCustomer",
-                                    "value" : "true",
-                                    "restriction" : "EQ"
-                                }
-                            ],
-                            "result" : {
-                                "type": "text",
-                                "property" : "Customer",
-                                "isText" : true
-                            }
-                        },
-                        {
-                            "conditions" : [
-                                {
-                                    "property" : "isFamily",
-                                    "value" : "true",
-                                    "restriction" : "EQ"
-                                }
-                            ],
-                            "result" : {
-                                "type": "text",
-                                "property" : "Spouse",
-                                "isText" : true
-                            }
-                        },
-                        {
-                            "conditions" : [
-                                {
-                                    "property" : "isGuarantor",
-                                    "value" : "true",
-                                    "restriction" : "EQ"
-                                }
-                            ],
-                            "result" : {
-                                "type": "text",
-                                "property" : "Guarantor",
-                                "isText" : true
-                            }
-                        }
-                    ]
-                }
-            ]
+            "type": "text",
+            "position": "left",
+            "property": "SubjectDescr"
         },
         {
             "type": "text",
@@ -105,7 +51,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrCustRelationshipCode"
+            "property": "MrRelationshipCustDescr"
         },
         {
             "type": "text",
@@ -118,21 +64,49 @@
             "property": "ApplicantNo"
         },
         {
-            "type": "text",
-            "position": "center",
-            "property": "IsNegative"
-        },
-        {
             "type": "action",
             "position": "center",
             "action": [
                 {
-                    "type": "callback",
-                    "key": "detail",
-                    "property": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppCustId",
-                            "property": "AppCustId"
+                            "conditions": [
+                                {
+                                    "property": "MrCustTypeCode",
+                                    "value": "PERSONAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../Detail/Personal",
+                                "param": [
+                                    {
+                                        "type": "AppCustId",
+                                        "property": "AppCustId"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MrCustTypeCode",
+                                    "value": "COMPANY",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../Detail/Company",
+                                "param": [
+                                    {
+                                        "type": "AppCustId",
+                                        "property": "AppCustId"
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }

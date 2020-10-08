@@ -6,18 +6,24 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { CustCompletionPagingComponent } from "./cust-completion-paging/cust-completion-paging.component";
 import { CustCompletionDetailComponent } from "./cust-completion-detail/cust-completion-detail.component";
 import { CustCompletionRoutingModule } from "./cust-completion-routing.module";
+import { CustCompletionComponentModule } from "../sharing-component/cust-completion-component/cust-completion-component.module";
+import { CustCompletionDetailPersonalComponent } from './cust-completion-detail/cust-completion-detail-personal/cust-completion-detail-personal.component';
+import { CustCompletionDetailCompanyComponent } from './cust-completion-detail/cust-completion-detail-company/cust-completion-detail-company.component';
 
 
 @NgModule({
     declarations: [
         CustCompletionPagingComponent,
-        CustCompletionDetailComponent
+        CustCompletionDetailComponent,
+        CustCompletionDetailPersonalComponent,
+        CustCompletionDetailCompanyComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
         UcSubsectionModule,
-        CustCompletionRoutingModule
+        CustCompletionRoutingModule,
+        CustCompletionComponentModule
     ],
     exports: [],
     providers: [

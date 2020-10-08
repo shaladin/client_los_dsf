@@ -25,6 +25,11 @@ export class CustCompletionDetailComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: NGXToastrService) {
+      this.route.queryParams.subscribe(params => {
+        if (params['AppId'] != null) {
+          this.AppId = params['AppId'];
+        }
+      });
   }
 
   ngOnInit() {
@@ -38,7 +43,9 @@ export class CustCompletionDetailComponent implements OnInit {
     ];
     
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucpaging/gridCustCompletionData.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+    
+    this.loadCustCompletionListData();
   }
 
   loadCustCompletionListData() {

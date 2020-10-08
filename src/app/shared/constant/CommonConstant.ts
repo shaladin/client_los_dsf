@@ -400,6 +400,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeIdType = "ID_TYPE";
   public static RefMasterTypeCodeRateType = "RATE_TYPE";
   public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
+  public static RefMasterTypeCustAddrType = "CUST_ADDR_TYPE"
   public static RefMasterTypeCodeGracePeriodType = "GRACE_PERIOD_TYPE";
   public static RefMasterTypeLegalReview = "LGL_REVIEW";
   public static RefMasterTypeCodeFeeType = "FEE_TYPE";
@@ -456,6 +457,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
+
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";

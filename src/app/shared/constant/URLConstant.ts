@@ -931,8 +931,12 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetAppFinDataWithRuleByAppId = environment.losUrl + "/AppFinData/GetAppFinDataWithRuleByAppId";
 
     //App Cust Addr
+    public static AddAppCustAddr = environment.losUrl + "/AppCustAddr/AddAppCustAddr";
+    public static EditAppCustAddr = environment.losUrl + "/AppCustAddr/EditAppCustAddr";
     public static GetListAppCustAddrByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppId";
     public static GetAppCustAddrByAppCustAddrId = environment.losUrl + "/AppCustAddr/GetAppCustAddrByAppCustAddrId"
+    public static GetListAppCustAddrByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppCustId";
+    public static GetListAppCustAddrData = environment.losUrl + "/AppCustAddr/GetListAppCustAddrData";
 
     //App Fee
     public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
