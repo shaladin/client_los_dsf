@@ -220,11 +220,16 @@ export class FeeCFNAComponent implements OnInit {
       // CptlzAmt : obj.CptlzAmt,
       FeeCapitalizeType : obj.FeeCapitalizeType,
       FeeCapitalizeAmt : obj.FeeCapitalizeAmt,
-      FeeCapitalizePrcntg : obj.FeeCapitalizePrcntg,
+      FeeCapitalizePrcnt : obj.FeeCapitalizePrcnt,
       CalculateBaseAmt : 0,
       CalculateBase : '',
       FeeType : feeType,
       FeeSource : feeSource,
+      SellFeeBhv: obj.SellFeeBhv,
+      MinSellFeeAmt: obj.MinSellFeeAmt,
+      MaxSellFeeAmt: obj.MaxSellFeeAmt,
+      MinSellFeePrcnt: obj.MinSellFeePrcnt,
+      MaxSellFeePrcnt: obj.MaxSellFeePrcnt
     })
   }
 
@@ -264,9 +269,6 @@ export class FeeCFNAComponent implements OnInit {
           this.CalculateTotalFeeAndCaptlzAmt();
       }
     );
-  }
-
-  xxx(){
   }
 
 }
