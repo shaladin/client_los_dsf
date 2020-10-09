@@ -139,7 +139,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
 
           SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
           CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-          SupplEffectiveRatePrcnt: response.SupplEffectiveRatePrcnt
+          SupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
         })
         this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
         this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
