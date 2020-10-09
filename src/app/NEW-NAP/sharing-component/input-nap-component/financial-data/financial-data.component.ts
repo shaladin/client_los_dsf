@@ -172,7 +172,7 @@ export class FinancialDataComponent implements OnInit {
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
           EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
-          SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
+          SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
           AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
@@ -205,7 +205,6 @@ export class FinancialDataComponent implements OnInit {
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
         });
-
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
       }

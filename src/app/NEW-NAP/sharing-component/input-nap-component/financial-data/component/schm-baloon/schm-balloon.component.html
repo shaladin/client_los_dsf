@@ -184,7 +184,14 @@
               <label>Supplier Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
-              <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+              <input type="" class="form-control full-width" formControlName="AppSupplEffectiveRatePrcnt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.AppSupplEffectiveRatePrcnt.invalid}"
+                (focusout)="SupplEffectiveRatePrcnt_FocusOut()" (keyup)="SupplRate_Keyup($event)"
+                (paste)="SupplRate_Paste($event)"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.AppSupplEffectiveRatePrcnt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
