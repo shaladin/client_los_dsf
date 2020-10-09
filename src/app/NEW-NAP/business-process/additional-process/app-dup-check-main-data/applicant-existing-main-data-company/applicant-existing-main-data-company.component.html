@@ -1,0 +1,164 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <!-- <div class="ucSearch-Button-Right">
+        <span class="mr-1">
+          <button type="button" class="backButton" (click)="Back()" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+        </span>
+      </div> -->
+      <div class="card-body">
+        <div class="px-3">
+
+          <!-- Main Info -->
+          <div class="form-body">
+            <lib-ucSubsection [id]="'custMainId'" [title]="'Customer Main Info'" [panel]="'custMain'">
+            </lib-ucSubsection>
+            <div id="custMain">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer No</label>  
+                <a href="javascript:void(0);" (click)="OpenView('cust', AppCustObj.CustNo)" class="label-control col-md-3" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj.CustNo}}</a>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
+                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName != ''">{{AppCustObj?.CustName}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName == ''">- </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'appGuaId'" [title]="'Applicant As Guarantor'" [panel]="'appGua'">
+            </lib-ucSubsection>
+            <div id="appGua">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllGuarantor"
+                             (change)="SelectAllGuarantor($event.target.checked)" id="checkAll" name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" name='appNo' translate>Application No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    <th><span class="thead-header" name='IdType' translate>Id Type</span></th>
+                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListAppGuarantorDuplicate?.length == 0">
+                    <td align="center" colspan="5">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListAppGuarantorDuplicate; let i = index">
+                    <td>
+                      <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) >- 1">
+                        <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
+                               (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]="true">
+                      </div>
+                      <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) < 0">
+                        <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
+                               (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCodeDesc}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'appShareId'" [title]="'Applicant As Shareholder'" [panel]="'appShare'">
+            </lib-ucSubsection>
+            <div id="appShare">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <input type="checkbox" [checked]="checkboxAllShareholder"
+                             (change)="SelectAllShareholder($event.target.checked)" id="checkAll" name="CheckAll">
+                    </th>
+                    <th>
+                      <span class="thead-header" name='appNo' translate>Application No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListAppShareholderDuplicate?.length == 0">
+                    <td align="center" colspan="5">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListAppShareholderDuplicate; let i = index">
+                    <td>
+                      <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
+                        <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
+                               (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
+                               [checked]="true">
+                      </div>
+                      <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) < 0">
+                        <input type="checkbox" id="checkDiffShareholder" name="itemDiffShareholder"
+                               (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                      </div>
+                    </td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
+                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

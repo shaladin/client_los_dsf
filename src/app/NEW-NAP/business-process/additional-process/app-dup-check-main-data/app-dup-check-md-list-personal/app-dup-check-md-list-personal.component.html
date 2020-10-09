@@ -1,0 +1,328 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-body">
+        <div class="px-3">
+
+          <!-- Main Info -->
+          <div class="form-body">
+            <lib-ucSubsection [id]="'custMainId'" [title]="'Customer Main Info'" [panel]="'custMain'">
+            </lib-ucSubsection>
+            <div id="custMain">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj?.CustNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
+                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo == ''">- </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName != ''">{{AppCustObj?.CustName}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName == ''">- </label>
+                <label class="col-md-3 adInsLabel">ID No</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.IdNo != ''">{{AppCustObj?.IdNo}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.IdNo == ''">- </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Gender</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustPersonalObj?.MrGenderCode != ''">{{AppCustPersonalObj?.MrGenderCode}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustPersonalObj?.MrGenderCode == ''">- </label>
+                <label class="col-md-3 adInsLabel">Birth Place / Date</label>
+                <label class="col-md-3 adInsLabel">{{AppCustPersonalObj?.BirthPlace}} / {{AppCustPersonalObj?.BirthDt | date: 'dd-MM-yyyy'}} </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'addrId'" [title]="'Address'" [panel]="'addr'">
+            </lib-ucSubsection>
+            <div id="addr">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Address</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Addr != ''">{{AppCustAddrObj?.Addr}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Addr == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">RT / RW</label>
+                <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.AreaCode4}} / {{AppCustAddrObj?.AreaCode3}} </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Zipcode</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Zipcode != ''">{{AppCustAddrObj?.Zipcode}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Zipcode == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Kelurahan</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode2 != ''">{{AppCustAddrObj?.AreaCode2}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode2 == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Kecamatan</label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode1 != ''">{{AppCustAddrObj?.AreaCode1}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode1 == ''">- </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">City </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.City != ''">{{AppCustAddrObj?.City}} </label>
+                <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.City == ''">- </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="pull-right">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="NewCustomer()" translate>
+              New Customer
+            </button>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simExistId'" [title]="'Match/Similar Existing Customer'" [panel]="'simExist'">
+            </lib-ucSubsection>
+            <div id="simExist">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListCustomerDuplicate?.length == 0">
+                    <td align="center" colspan="10">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListCustomerDuplicate">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdType}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simNegId'" [title]="'Match/Similar Negative Customer'" [panel]="'simNeg'">
+            </lib-ucSubsection>
+            <div id="simNeg">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" name='negativeStat' translate>
+                        Negative
+                        Status
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='negativeSrc' translate>
+                        Negative
+                        Source
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListNegativeCust?.length == 0">
+                    <td align="center" colspan="12">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListNegativeCust">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCode}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.NegativeStat}}</td>
+                    <td>{{item.NegativeSrc}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <lib-ucSubsection [id]="'simAppId'" [title]="'Match/Similar In Progress Application'" [panel]="'simApp'">
+            </lib-ucSubsection>
+            <div id="simApp">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" name='custNo' translate>Customer No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='custName' translate>
+                        Customer
+                        Name
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='idType' translate>ID Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='idNo' translate>ID Number</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='birthDt' translate>Birth Date</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='mobilePhoneNo' translate>
+                        Mobile
+                        Phone
+                        Number
+                      </span>
+                    </th>
+                    <th>
+                      <span class="thead-header" name='motherMaidenName' translate>
+                        Mother
+                        Maiden Name
+                      </span>
+                    </th>
+                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
+                    <th>
+                      <span class="thead-header" name='duplicateItem' translate>
+                        Duplicate
+                        Item
+                      </span>
+                    </th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListAppCustDuplicate?.length == 0">
+                    <td align="center" colspan="10">No data found</td>
+                  </tr>
+                  <tr *ngFor="let item of ListAppCustDuplicate">
+                    <td>{{item.CustNo}}</td>
+                    <td>{{item.CustName}}</td>
+                    <td>{{item.MrIdTypeCode}}</td>
+                    <td>{{item.IdNo}}</td>
+                    <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.MobilePhnNo1}}</td>
+                    <td>{{item.MotherMaidenName}}</td>
+                    <td>{{item.TaxIdNo}}</td>
+                    <td>{{item.DuplicateItem}}</td>
+                    <td>
+                      <a class="danger p-0" (click)="SelectCust(item)">
+                        Select
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="pull-right">
+      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="back()">
+        <i class="ft-x"></i> Cancel
+      </button>
+    </div>
+  </div>
+</div>

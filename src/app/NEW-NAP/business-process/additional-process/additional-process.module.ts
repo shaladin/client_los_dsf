@@ -32,6 +32,11 @@ import { AssetInquiryComponent } from "./credit-apv-result-ext/asset-inquiry/ass
 import { ReturnHandlingAdditionalTcPagingComponent } from './return-handling/return-handling-additional-tc-paging/return-handling-additional-tc-paging.component';
 import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/return-handling-additional-tc-detail/return-handling-additional-tc-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
+import { AppDupCheckMdListCompanyComponent } from "./app-dup-check-main-data/app-dup-check-md-list-company/app-dup-check-md-list-company.component";
+import { AppDupCheckMdListPersonalComponent } from "./app-dup-check-main-data/app-dup-check-md-list-personal/app-dup-check-md-list-personal.component";
+import { AppDupCheckMdPagingComponent } from "./app-dup-check-main-data/app-dup-check-md-paging/app-dup-check-md-paging.component";
+import { ApplicantExistingMainDataPersonalComponent } from "./app-dup-check-main-data/applicant-existing-main-data-personal/applicant-existing-main-data-personal.component";
+import { ApplicantExistingMainDataCompanyComponent } from "./app-dup-check-main-data/applicant-existing-main-data-company/applicant-existing-main-data-company.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -82,7 +87,12 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingCollateralDetailComponent,
     CopyCancelledApplicationComponent,
     ReturnHandlingAdditionalTcPagingComponent,
-    ReturnHandlingAdditionalTcDetailComponent
+    ReturnHandlingAdditionalTcDetailComponent,
+    AppDupCheckMdPagingComponent,
+    AppDupCheckMdListPersonalComponent,
+    AppDupCheckMdListCompanyComponent,
+    ApplicantExistingMainDataPersonalComponent,
+    ApplicantExistingMainDataCompanyComponent,
   ],
   providers: [
     NGXToastrService
