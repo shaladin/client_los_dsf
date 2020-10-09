@@ -159,7 +159,7 @@ export class MainDataComponent implements OnInit {
   getEvent(event) {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
-    this.NextStep(this.MrCustTypeCode == 'PERSONAL' ? 'FAMILY' : 'GUARANTOR');
+    this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepGuar);
   }
 
   async NextStep(Step) {
@@ -177,7 +177,6 @@ export class MainDataComponent implements OnInit {
     this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.NextStep(CommonConstant.AppStepNew);
         this.router.navigate(["/Nap/TestMainData/CustMainData/Paging"], { queryParams: { "AppId": this.appId, "BizTemplateCode": this.bizTemplateCode } });
       }
     );

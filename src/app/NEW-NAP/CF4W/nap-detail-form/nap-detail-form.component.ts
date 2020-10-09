@@ -38,9 +38,10 @@ export class NapDetailFormComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
+  bizTemplateCode: string;
 
   AppStep = {
-    "NEW": 1,
+    "NAPD": 1,
     "REF": 1,
     "APP": 2,
     "ASSET": 3,
@@ -113,6 +114,7 @@ export class NapDetailFormComponent implements OnInit {
               this.custType = this.NapObj.MrCustTypeCode;
 
             this.ChangeStepper();
+            this.bizTemplateCode = this.NapObj.BizTemplateCode;
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
           }
@@ -132,7 +134,7 @@ export class NapDetailFormComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
-        "NEW": 1,
+        "NAPD": 1,
         "REF": 1,
         "APP": 2,
         "ASSET": 3,
@@ -150,7 +152,7 @@ export class NapDetailFormComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
-        "NEW": 1,
+        "NAPD": 1,
         "REF": 1,
         "APP": 2,
         "ASSET": 3,
@@ -271,13 +273,13 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })
+          this.router.navigate(["/Nap/TestMainData/NapDetail/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } })
         })
     }
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/ConsumerFinance/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } });
+    this.router.navigate(["/Nap/TestMainData/NapDetail/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } });
   }
 
   Submit() {
