@@ -83,6 +83,10 @@
                                 "path": "../Detail/Personal",
                                 "param": [
                                     {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
                                         "type": "AppCustId",
                                         "property": "AppCustId"
                                     }
@@ -101,6 +105,10 @@
                                 "type": "url",
                                 "path": "../Detail/Company",
                                 "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
                                     {
                                         "type": "AppCustId",
                                         "property": "AppCustId"

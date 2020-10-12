@@ -74,19 +74,16 @@
           <br><br>
           <div class="bs-stepper-content">
             <div id="customer-detail-tab" class="content" role="tabpanel" aria-labelledby="customer-detail-tab-trigger">
-              <app-cust-detail-personal *ngIf="stepIndex == 1" (OutputTab)="NextStep()"> </app-cust-detail-personal>
+              <app-cust-detail-personal *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="NextStep('Address')"> </app-cust-detail-personal>
             </div>
             <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
-              <app-address-tab *ngIf="stepIndex == 2" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="NextStep()"> </app-address-tab>
+              <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="NextStep('Family')"> </app-address-tab>
             </div>
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
-              <!-- <app-customer-contact-person (outputTab)="getValue($event)" *ngIf="stepIndex == 3">
-            </app-customer-contact-person> -->
+              <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab>
             </div>
             <div id="job-data-tab" class="content" role="tabpanel" aria-labelledby="job-data-tab-trigger">
-              <!-- <app-cust-group-tab [MrCustTypeCode]="'PERSONAL'" [CustId]="IdCust" (outputTab)="getValue($event)"
-              *ngIf="stepIndex == 4">
-            </app-cust-group-tab> -->
+              <app-job-tab *ngIf="stepIndex == 4"> </app-job-tab>
             </div>
             <div id="emergency-contact-tab" class="content" role="tabpanel"
               aria-labelledby="emergency-contact-tab-trigger">

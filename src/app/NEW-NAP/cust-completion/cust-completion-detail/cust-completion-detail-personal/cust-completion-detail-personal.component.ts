@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
@@ -10,6 +14,11 @@ import { environment } from 'environments/environment';
   styleUrls: ['./cust-completion-detail-personal.component.scss']
 })
 export class CustCompletionDetailPersonalComponent implements OnInit {
+  
+  @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
+  AppId: number;
+  AppCustId: number;
+  isMarried: boolean;
   private stepper: Stepper;
   stepIndex: number = 1;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -22,7 +31,18 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Financial": 6,
     "CustAttr": 7,
   }
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
+      }
+      if (params['AppCustId'] != null) {
+        this.AppCustId = params['AppCustId'];
+      }
+    });
+  }
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionPersonalData.json";
@@ -38,6 +58,15 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       linear: false,
       animation: true
     })
+
+    this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+      (response) => {
+        if (response["MrMaritalStatCode"] != null) 
+        {
+          if(response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
+        }
+      }
+    );
   }
 
   EnterTab(type: string) {
@@ -67,7 +96,8 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     this.stepper.to(this.stepIndex);
   }
 
-  NextStep(){
-    this.stepper.next();
+  NextStep(Step: any){
+    this.EnterTab(Step);
+    this.ucViewMainProd.initiateForm();
   }
 }

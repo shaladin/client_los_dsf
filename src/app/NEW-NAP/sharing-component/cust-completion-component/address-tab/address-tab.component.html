@@ -90,7 +90,7 @@
       <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
       <i class="ft-x"></i> Cancel
       </button>
-      <button type="submit" class="btn btn-raised btn-primary mr-1">
+      <button type="submit" class="btn btn-raised btn-primary mr-1" (click)=formValidate.scrollIfFormHasErrors(AddressForm)>
         <i class="far fa-check-square"></i> Save
       </button>
     </div>

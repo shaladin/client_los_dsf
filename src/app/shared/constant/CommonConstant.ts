@@ -458,6 +458,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
+  public static RefMasterTypeCodeSalutation = "SALUTATION";
 
   //RATE TYPE
   public static RateTypeFlat = "FLT";
@@ -519,4 +520,7 @@ export class CommonConstant {
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+
+  //GENERAL SETTING
+  public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
 }

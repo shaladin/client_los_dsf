@@ -9,6 +9,7 @@ import { CustCompletionRoutingModule } from "./cust-completion-routing.module";
 import { CustCompletionComponentModule } from "../sharing-component/cust-completion-component/cust-completion-component.module";
 import { CustCompletionDetailPersonalComponent } from './cust-completion-detail/cust-completion-detail-personal/cust-completion-detail-personal.component';
 import { CustCompletionDetailCompanyComponent } from './cust-completion-detail/cust-completion-detail-company/cust-completion-detail-company.component';
+import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CustCompletionDetailCompanyComponent } from './cust-completion-detail/c
         AdInsModule,
         UcSubsectionModule,
         CustCompletionRoutingModule,
-        CustCompletionComponentModule
+        CustCompletionComponentModule,
+        MainDataComponentModule
     ],
     exports: [],
     providers: [

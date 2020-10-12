@@ -6,22 +6,30 @@ import { MatRadioModule } from "@angular/material";
 import { AddressTabComponent } from './address-tab/address-tab.component';
 import { CustDetailPersonalComponent } from './cust-detail-tab/cust-detail-personal/cust-detail-personal.component';
 import { CustDetailCompanyComponent } from './cust-detail-tab/cust-detail-company/cust-detail-company.component';
+import { FamilyTabComponent } from './family-tab/family-tab.component';
+import { JobTabComponent } from './job-tab/job-tab.component';
+import { MainDataComponentModule } from "../main-data-component/main-data-component.module";
 
 @NgModule({
     exports: [
         AddressTabComponent,
         CustDetailPersonalComponent,
         CustDetailCompanyComponent,
+        FamilyTabComponent,
+        JobTabComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
-        MatRadioModule
+        MatRadioModule,
+        MainDataComponentModule
     ],
     declarations: [
     AddressTabComponent,
     CustDetailPersonalComponent,
-    CustDetailCompanyComponent],
+    CustDetailCompanyComponent,
+    FamilyTabComponent,
+    JobTabComponent],
     providers: [
         NGXToastrService
     ]

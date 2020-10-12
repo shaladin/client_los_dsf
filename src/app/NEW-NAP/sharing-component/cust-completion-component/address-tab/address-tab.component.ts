@@ -12,6 +12,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
   selector: 'app-address-tab',
@@ -21,9 +22,9 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 export class AddressTabComponent implements OnInit {
 
   @Input() MrCustTypeCode: string;
+  @Input() AppCustId: number;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   mode: string = "add";
-  AppCustId: number;
   AppCustAddrId: number;
   isDetail: boolean = false;
   inputGridObj: InputGridObj = new InputGridObj();
@@ -44,12 +45,8 @@ export class AddressTabComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toastr: NGXToastrService) {
-    this.route.queryParams.subscribe(params => {
-      if (params['AppCustId'] != null) {
-        this.AppCustId = params['AppCustId'];
-      }
-    });
+    private toastr: NGXToastrService,
+    public formValidate: FormValidateService) {
   }
 
   ngOnInit() {
@@ -95,6 +92,8 @@ export class AddressTabComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj.nameSelect = event.RowObj["Zipcode"];
     this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: event.RowObj["Zipcode"] };
     this.inputAddressObj.default = this.AddrObj;
+    this.AddressForm.controls.MrCustAddrTypeCode.disable();
+    this.AddressForm.updateValueAndValidity();
   }
 
   Add() {

@@ -7,12 +7,13 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+
 @Component({
-  selector: 'app-family-main-data-paging',
-  templateUrl: './family-main-data-paging.component.html',
-  styleUrls: []
+  selector: 'app-family-tab',
+  templateUrl: './family-tab.component.html',
+  styleUrls: ['./family-tab.component.scss']
 })
-export class FamilyMainDataPagingComponent implements OnInit {
+export class FamilyTabComponent implements OnInit {
 
   @Input() appId: number;
   @Input() isMarried: boolean = false;
@@ -37,7 +38,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
 
     this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
-    this.loadGuarantorListData();
+    this.loadFamilyListData();
   }
 
   add() {
@@ -48,7 +49,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
 
   saveAndContinue() {
     if(this.isMarried){
-      this.loadGuarantorListData();
+      this.loadFamilyListData();
       if(this.listFamily.length == 0 || this.listFamily.find(x=>x.MrCustRelationship == 'SPOUSE') == null){
         this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
         return;
@@ -59,7 +60,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
 
   
   close() {
-    this.loadGuarantorListData();
+    this.loadFamilyListData();
     this.isDetail = false;
   }
 
@@ -80,24 +81,21 @@ export class FamilyMainDataPagingComponent implements OnInit {
         this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.loadGuarantorListData();
+            this.loadFamilyListData();
           }
         );
       }
     }
   }
 
-  loadGuarantorListData() {
-    this.custDataObj = new CustDataObj();
-    this.custDataObj.AppId = this.appId;
-    this.custDataObj.IsFamily = true;
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
+  loadFamilyListData() {
+    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, {AppId: this.appId}).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
+        this.inputGridObj.resultData.Data = response;
         this.listFamily = this.inputGridObj.resultData.Data;
       }
     );
