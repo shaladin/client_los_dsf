@@ -255,6 +255,7 @@ export class AssetDataComponent implements OnInit {
   ListAttrAnswer = [];
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
+  isDiffWithRefAttr: any;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -299,7 +300,7 @@ export class AssetDataComponent implements OnInit {
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
     await this.getAllAssetData();
-    this.GenerataAppAssetAttr();
+    this.GenerataAppAssetAttr(false);
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
       RefProdCompntCode: CommonConstant.RefProdCompntAssetCond,
@@ -1862,18 +1863,29 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  GenerataAppAssetAttr() {
+  GenerataAppAssetAttr(isRefresh : boolean) {
     var GenObj =
     {
       AppAssetId: this.appAssetId,
       AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
-      AttrTypeCode : CommonConstant.AttrTypeCodeTrx
+      AttrTypeCode : CommonConstant.AttrTypeCodeTrx,
+      IsRefresh : isRefresh
     };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
-        this.AppAssetAttrObj = response[CommonConstant.ReturnObj];
+        this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
+        if(response['IsDiffWithRefAttr']){
+          this.isDiffWithRefAttr = true;
+          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
+        }
+
         this.GenerateAppAssetAttrForm();
       });
+  }
+
+  refreshAttr(){
+    this.isAssetAttrReady = false;
+    this.GenerataAppAssetAttr(true);
   }
 
   GenerateAppAssetAttrForm() {
@@ -1899,8 +1911,11 @@ export class AssetDataComponent implements OnInit {
         this.appAssetAttrObjs.push(appAssetAttrObj);
 
       }
+      var listAppRsvFunds = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;      
+      while(listAppRsvFunds.length !== 0){
+        listAppRsvFunds.removeAt(0);
+      }
       for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
-        var listAppRsvFunds = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;        
         listAppRsvFunds.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
       }
       this.isAssetAttrReady = true;

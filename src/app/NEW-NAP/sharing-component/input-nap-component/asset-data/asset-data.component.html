@@ -259,6 +259,12 @@
                 <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
                 </lib-ucSubsection>
                 <div [id]="assetAttr">
+                  <div class="form-actions right">
+                    <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
+                      class="btn btn-raised btn-primary">
+                      Refresh Attribute
+                    </button>
+                  </div>
                   <div formArrayName="AppAssetAttrObjs">
                     <div *ngFor="let item of AssetDataForm.controls['AppAssetAttrObjs'].controls;let i = index">
                       <div [formGroupName]="i" class="form-group row">

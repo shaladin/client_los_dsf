@@ -38,6 +38,8 @@ export class ExceptionConstant {
     public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
     public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
     public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
+    public static REF_ATTR_CHANGE = "Ref Attribute have changed, Please refresh to get latest ref attribute";
+
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";
