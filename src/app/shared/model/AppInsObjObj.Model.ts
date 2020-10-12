@@ -22,6 +22,8 @@ export class AppInsObjObj {
     TotalInscoAddPremiAmt: number;
     CustAdminFeeAmt: number;
     InscoAdminFeeAmt: number;
+    InscoStampDutyFee : number;
+    CustStampDutyFee : number;
     Notes: string;
     InsStat: string;
     CustCoverStartDt: Date;
@@ -70,6 +72,8 @@ constructor() {
     this.TotalInscoAddPremiAmt = 0;
     this.CustAdminFeeAmt= 0;
     this.InscoAdminFeeAmt = 0;
+    this.CustStampDutyFee = 0;
+    this.InscoStampDutyFee = 0;
     this.Notes = "";
     this.InsStat = "";
     this.CustCoverStartDt = null;
