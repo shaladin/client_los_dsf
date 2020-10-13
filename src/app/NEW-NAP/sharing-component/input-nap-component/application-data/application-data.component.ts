@@ -14,6 +14,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -42,7 +47,8 @@ export class ApplicationDataComponent implements OnInit {
   resMouCustObj;  
   mouCustObj;
   CustNo: string;
-
+  isMainData: boolean = false;
+  
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
     LeadId: [''],
@@ -103,13 +109,17 @@ export class ApplicationDataComponent implements OnInit {
     MrSlikSecEcoCode: [''],
     WayRestructure: [''],
     EconomicSector: [''],
-    ApplicationNotes: ['']
+    ApplicationNotes: [''],
+    CopyFromMailing: [''],
   });
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
       this.route.queryParams.subscribe(params => {
         this.AppId = params["AppId"];
+      });  
+      this.route.queryParams.subscribe(params => {
+        if (params["IsMainData"] != undefined && params["IsMainData"]) this.isMainData = params["IsMainData"];
       });  
     }
 
@@ -133,6 +143,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
+    this.initMailingAddress();
     var AppObj = {
       AppId: this.appId
     }
@@ -576,8 +587,9 @@ export class ApplicationDataComponent implements OnInit {
               appObj: tempAppObj,
               listAppCrossObj: tempListAppCrossObj,
               appFinData: tempAppFindDataObj,
-              RowVersion: ""
+              RowVersion: "",
             };
+            if(this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
             this.http.post(url, obj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
@@ -601,6 +613,7 @@ export class ApplicationDataComponent implements OnInit {
         appFinData: tempAppFindDataObj,
         RowVersion: ""
       };
+      if(this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(url, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data');
@@ -679,5 +692,88 @@ export class ApplicationDataComponent implements OnInit {
       this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
+  }
+
+  isIncludeMailingAddress: boolean = false;
+  inputAddressObj: InputAddressObj = new InputAddressObj();
+  inputFieldAddressObj: InputFieldObj = new InputFieldObj();
+  mailingAddrObj: AddrObj = new AddrObj();
+  AppCustAddrObj: any;
+  copyToMailingTypeObj: Array<KeyValueObj> = [
+    {Key: "LEGAL", Value: "Legal"},
+    {Key: "RESIDENCE", Value: "Residence"}
+  ];
+  async initMailingAddress(){
+    if (!this.isMainData) return;
+
+    this.isIncludeMailingAddress = true;
+    this.mailingAddrObj = new AddrObj();
+    this.inputAddressObj = new InputAddressObj();
+    this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
+    this.inputAddressObj.showSubsection = false;
+   
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, {'AppId': this.AppId}).toPromise().then(
+      (response) => {
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+        this.copyToMailing(CommonConstant.AddrTypeMailing);
+      }
+    );
+  }
+
+  copyToMailing(addrType:string = ''){
+    if(!this.isIncludeMailingAddress) return;
+    if(!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
+    if(!addrType) return;
+
+    let address = this.AppCustAddrObj.filter(emp => emp.MrCustAddrTypeCode === addrType);
+    if(address.length && address[0] != undefined)
+    {
+      address = address[0];
+      this.mailingAddrObj.Addr = address.Addr;
+      this.mailingAddrObj.AreaCode1 = address.AreaCode1;
+      this.mailingAddrObj.AreaCode2 = address.AreaCode2;
+      this.mailingAddrObj.AreaCode3 = address.AreaCode3;
+      this.mailingAddrObj.AreaCode4 = address.AreaCode4;
+      this.mailingAddrObj.City = address.City;
+      this.mailingAddrObj.Fax = address.Fax;
+      this.mailingAddrObj.FaxArea = address.FaxArea;
+      this.mailingAddrObj.Phn1 = address.Phn1;
+      this.mailingAddrObj.Phn2 = address.Phn2;
+      this.mailingAddrObj.PhnArea1 = address.PhnArea1;
+      this.mailingAddrObj.PhnArea2 = address.PhnArea2;
+      this.mailingAddrObj.PhnExt1 = address.PhnExt1;
+      this.mailingAddrObj.PhnExt2 = address.PhnExt2;
+
+      this.inputAddressObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
+      this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
+      this.inputAddressObj.default = this.mailingAddrObj;
+    }   
+  }
+
+  getMailingAddrForSave()
+  {
+    if(!this.isIncludeMailingAddress) return null;
+    let mailingAddr : AppCustAddrObj = new AppCustAddrObj();
+    mailingAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
+    mailingAddr.Addr = this.NapAppModelForm.controls["Address"]["controls"].Addr.value;
+    mailingAddr.AreaCode3 = this.NapAppModelForm.controls["Address"]["controls"].AreaCode3.value;
+    mailingAddr.AreaCode4 = this.NapAppModelForm.controls["Address"]["controls"].AreaCode4.value;
+    mailingAddr.Zipcode = this.NapAppModelForm.controls["AddressZipcode"]["controls"].value.value;
+    mailingAddr.AreaCode1 = this.NapAppModelForm.controls["Address"]["controls"].AreaCode1.value;
+    mailingAddr.AreaCode2 = this.NapAppModelForm.controls["Address"]["controls"].AreaCode2.value;
+    mailingAddr.City = this.NapAppModelForm.controls["Address"]["controls"].City.value;
+    mailingAddr.PhnArea1 = this.NapAppModelForm.controls["Address"]["controls"].PhnArea1.value;
+    mailingAddr.Phn1 = this.NapAppModelForm.controls["Address"]["controls"].Phn1.value;
+    mailingAddr.PhnExt1 = this.NapAppModelForm.controls["Address"]["controls"].PhnExt1.value;
+    mailingAddr.PhnArea2 = this.NapAppModelForm.controls["Address"]["controls"].PhnArea2.value;
+    mailingAddr.Phn2 = this.NapAppModelForm.controls["Address"]["controls"].Phn2.value;
+    mailingAddr.PhnExt2 = this.NapAppModelForm.controls["Address"]["controls"].PhnExt2.value;
+    mailingAddr.PhnArea3 = this.NapAppModelForm.controls["Address"]["controls"].PhnArea3.value;
+    mailingAddr.Phn3 = this.NapAppModelForm.controls["Address"]["controls"].Phn3.value;
+    mailingAddr.PhnExt3 = this.NapAppModelForm.controls["Address"]["controls"].PhnExt3.value;
+    mailingAddr.FaxArea = this.NapAppModelForm.controls["Address"]["controls"].FaxArea.value;
+    mailingAddr.Fax = this.NapAppModelForm.controls["Address"]["controls"].Fax.value;
+    mailingAddr.SubZipcode = this.NapAppModelForm.controls["Address"]["controls"].SubZipcode.value;
+    return mailingAddr;
   }
 }

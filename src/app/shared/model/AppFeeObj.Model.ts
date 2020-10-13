@@ -14,7 +14,12 @@ export class AppFeeObj {
     // CptlzAmt : number;
     FeeCapitalizeType : string;
     FeeCapitalizeAmt : number;
-    FeeCapitalizePrcntg : number;
+    FeeCapitalizePrcnt : number;
+    SellFeeBhv: string;
+    MinSellFeeAmt: number;
+    MaxSellFeeAmt: number;
+    MinSellFeePrcnt: number;
+    MaxSellFeePrcnt: number;
     FeeNotFoundList: Array<string>;
     constructor() { }
 }

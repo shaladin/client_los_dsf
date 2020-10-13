@@ -157,7 +157,7 @@
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
+                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     currencyMask>
@@ -287,7 +287,8 @@
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="BalloonValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.BalloonValueAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
+                (keyup)="SetNeedReCalculate(true)" 
+                [readonly]="ParentForm.controls.BalloonBhv.value == 'LOCK'" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.BalloonValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

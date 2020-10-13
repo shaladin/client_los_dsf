@@ -11,11 +11,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-nap-1-paging',
-  templateUrl: './nap-1-paging.component.html',
+  selector: 'cust-main-data-paging',
+  templateUrl: './cust-main-data-paging.component.html',
   styleUrls: []
 })
-export class Nap1PagingComponent implements OnInit {
+export class CustMainDataPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
@@ -37,7 +37,7 @@ export class Nap1PagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "NAP_" + this.bizTemplateCode;
+    critObj.value = "CUST_MD_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
   }
 
@@ -67,7 +67,7 @@ export class Nap1PagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          this.router.navigate(["Nap/TestMainData/NAP1/Add"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+          this.router.navigate(["Nap/TestMainData/CustMainData/Add"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -79,7 +79,7 @@ export class Nap1PagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      this.router.navigate(["Nap/TestMainData/NAP1/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
+      this.router.navigate(["Nap/TestMainData/CustMainData/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
     }
   }
 }
