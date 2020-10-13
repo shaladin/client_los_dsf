@@ -1148,5 +1148,5 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetDocIsExpDtMandatory = environment.losUrl + "/DocumentExpDt/GetDocIsExpDtMandatory";
 
     // INTEGRATION
-    public static InsertToR2AppStaging = environment.losUrl + "/Integration/SendLosR3DataToR2";
+    public static ReSendLosR3DataToR2 = environment.losUrl + "/Integration/ReSendLosR3DataToR2";
 }
