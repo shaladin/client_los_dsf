@@ -98,6 +98,8 @@ export class AddressTabComponent implements OnInit {
 
   Add() {
     this.ResetForm();
+    this.AddressForm.controls.MrCustAddrTypeCode.enable();
+    this.AddressForm.updateValueAndValidity();
     this.mode == "add"
     this.isDetail = true;
     this.isUcAddressReady = true;

@@ -43,7 +43,6 @@ export class CustDetailPersonalComponent implements OnInit {
   ReligionObj: Array<KeyValueObj> = new Array();
 
   CustDetailForm = this.fb.group({
-    CustModelCode: ['', Validators.required],
     FamilyCardNo: [''],
     NoOfDependents: [''],
     NoOfResidence: [''],
@@ -81,15 +80,6 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   GetRefMaster(){
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, {MrCustTypeCode: CommonConstant.CustTypePersonal}).subscribe(
-      (response) => {
-        this.CustModelObj = response[CommonConstant.ReturnObj];
-        this.CustDetailForm.patchValue({
-          CustModelCode: this.CustModelObj[0].Key
-        });
-      }
-    );
-
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeSalutation}).subscribe(
       (response) => {
         this.SalutationObj = response[CommonConstant.ReturnObj];
@@ -190,7 +180,6 @@ export class CustDetailPersonalComponent implements OnInit {
           MrEducationCode : response["MrEducationCode"] != "" ? response["MrEducationCode"] : this.EducationObj[0].Key,
           MrReligionCode : response["MrReligionCode"] != "" ? response["MrReligionCode"] : this.ReligionObj[0].Key,
           MrSalutationCode : response["MrSalutationCode"] != "" ? response["MrSalutationCode"] : this.SalutationObj[0].Key,
-          CustModelCode : response["CustModelCode"] != "" ? response["CustModelCode"] : this.CustModelObj[0].Key,
         })
         this.AppCustObj.RowVersion = response["AppCustRowVersion"];
         this.AppCustPersonalObj.RowVersion = response["AppCustPersonalRowVersion"];
@@ -222,7 +211,6 @@ export class CustDetailPersonalComponent implements OnInit {
 
   SetData(){
     this.AppCustObj.AppCustId = this.AppCustId;
-    this.AppCustObj.CustModelCode = this.CustDetailForm.controls.CustModelCode.value;
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value;
     this.AppCustObj.VIPNotes = this.CustDetailForm.controls.VIPNotes.value;
@@ -253,7 +241,6 @@ export class CustDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.UpdateAppCustCompletionPersonal, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
       },
       error => {
         console.log(error);

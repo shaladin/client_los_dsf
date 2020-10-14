@@ -18,9 +18,9 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
-  isMarried: boolean;
-  private stepper: Stepper;
   stepIndex: number = 1;
+  isMarried: boolean = false;
+  private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   CustStep = {
     "Detail": 1,
@@ -61,10 +61,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if (response["MrMaritalStatCode"] != null) 
-        {
-          if(response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
-        }
+        if(response["MrMaritalStatCode"] != null || response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
       }
     );
   }

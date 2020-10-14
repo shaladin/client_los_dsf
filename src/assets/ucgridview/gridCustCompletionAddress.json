@@ -68,8 +68,23 @@
             "position": "center",
             "action": [
                 {
-                    "type" : "callback",
-                    "key" : "edit"
+                  "type": "switch",
+                  "case": [
+                    {
+                      "conditions": [
+                        {
+                          "property": "MrCustAddrTypeCode",
+                          "value": "LEGAL",
+                          "restriction": "NEQ"
+                        }
+                      ],
+                      "result": {
+                        "type": "callback",
+                        "key": "edit"
+                      },
+                      "isHide": false
+                    }
+                  ]
                 }
             ]
         }

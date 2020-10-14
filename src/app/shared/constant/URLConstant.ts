@@ -1079,6 +1079,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetAppCustAndAppCustPersonalDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustAndAppCustPersonalDataByAppCustId";
     public static UpdateAppCustCompletionPersonal = environment.losUrl + "/AppCust/UpdateAppCustCompletionPersonal";
 
+    // App Cust Personal Job Data
+    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCust/AddAppCustPersonalJobAndAppCustAddr";
+    
     //Verf Question Answer
     public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
 

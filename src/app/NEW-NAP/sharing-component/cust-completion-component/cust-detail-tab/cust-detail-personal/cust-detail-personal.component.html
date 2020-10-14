@@ -9,22 +9,19 @@
           <div id="CustDetail">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group row ">
-                  <label class="col-md-4 adins-required-label" translate>Customer Model Code</label>
-                  <div class="col-md-6">
-                    <select class="form-control adInsInput full-width" style="width: 100%"
-                      formControlName="CustModelCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.CustModelCode.invalid }">
-                      <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="CustDetailForm.controls.CustModelCode"
-                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                  </div>
-                </div>
                 <div class="form-group row">
                   <label class="col-md-4" translate>Full Name</label>
                   <div class="col-md-8">
                     <label>{{CustFullName}}</label>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Customer Group</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupCustGrpObj"
+                      *ngIf="lookupCustGrpObj.isReady" [parentForm]="CustDetailForm"
+                      [identifier]="'CustomerGrp'" (lookup)="GetCustGrpData($event)">
+                    </lib-uclookupgeneric>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -79,15 +76,6 @@
                   <label class="col-md-4" translate>Affiliation with Multifinance</label>
                   <div class="col-md-8">
                     <input type="checkbox" formControlName="IsAffiliateWithMF"/>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Customer Group</label>
-                  <div class="col-md-8">
-                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupCustGrpObj"
-                      *ngIf="lookupCustGrpObj.isReady" [parentForm]="CustDetailForm"
-                      [identifier]="'CustomerGrp'" (lookup)="GetCustGrpData($event)">
-                    </lib-uclookupgeneric>
                   </div>
                 </div>
               </div>
@@ -178,7 +166,7 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(CustDetailForm)"
+            <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustDetailForm)
               class="btn btn-raised btn-primary">
               <i class="fa fa-check-square"></i> Save
             </button>

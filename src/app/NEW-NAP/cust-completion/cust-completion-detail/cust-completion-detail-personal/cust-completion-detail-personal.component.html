@@ -83,7 +83,7 @@
               <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab>
             </div>
             <div id="job-data-tab" class="content" role="tabpanel" aria-labelledby="job-data-tab-trigger">
-              <app-job-tab *ngIf="stepIndex == 4"> </app-job-tab>
+              <app-job-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId"> </app-job-tab>
             </div>
             <div id="emergency-contact-tab" class="content" role="tabpanel"
               aria-labelledby="emergency-contact-tab-trigger">
