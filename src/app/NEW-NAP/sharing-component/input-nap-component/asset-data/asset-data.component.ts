@@ -1911,12 +1911,12 @@ export class AssetDataComponent implements OnInit {
         this.appAssetAttrObjs.push(appAssetAttrObj);
 
       }
-      var listAppRsvFunds = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;      
-      while(listAppRsvFunds.length !== 0){
-        listAppRsvFunds.removeAt(0);
+      var listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;      
+      while(listAppAssetAttrs.length !== 0){
+        listAppAssetAttrs.removeAt(0);
       }
       for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
-        listAppRsvFunds.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
+        listAppAssetAttrs.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
       }
       this.isAssetAttrReady = true;
     }
