@@ -22,11 +22,9 @@ import { CreditApvResultExtPagingComponent } from './credit-apv-result-ext/credi
 import { RouterModule, Routes } from '@angular/router';
 import { ReturnHandlingAdditionalTcPagingComponent } from './return-handling/return-handling-additional-tc-paging/return-handling-additional-tc-paging.component';
 import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/return-handling-additional-tc-detail/return-handling-additional-tc-detail.component';
-import { AppDupCheckMdPagingComponent } from './app-dup-check-main-data/app-dup-check-md-paging/app-dup-check-md-paging.component';
-import { AppDupCheckMdListPersonalComponent } from './app-dup-check-main-data/app-dup-check-md-list-personal/app-dup-check-md-list-personal.component';
-import { AppDupCheckMdListCompanyComponent } from './app-dup-check-main-data/app-dup-check-md-list-company/app-dup-check-md-list-company.component';
-import { ApplicantExistingMainDataPersonalComponent } from './app-dup-check-main-data/applicant-existing-main-data-personal/applicant-existing-main-data-personal.component';
-import { ApplicantExistingMainDataCompanyComponent } from './app-dup-check-main-data/applicant-existing-main-data-company/applicant-existing-main-data-company.component';
+import { DupCheckMdPagingComponent } from './app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component';
+import { DupCheckMdSubjListComponent } from './app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component';
+import { DupCheckMdSubjMatchComponent } from './app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component';
 
 const routes: Routes = [
   {
@@ -189,38 +187,18 @@ const routes: Routes = [
       // App Dup Check Main Data
       {
         path: 'AppDupCheckMainData/Paging',
-        component: AppDupCheckMdPagingComponent,
-        data: {
-          title: 'App Duplicate Check'
-        }
+        component: DupCheckMdPagingComponent,
+        data: {title: 'App Duplicate Check'}
       },
       {
-        path: 'AppDupCheckMainData/Personal',
-        component: AppDupCheckMdListPersonalComponent,
-        data: {
-          title: 'App Duplicate Check Customer Personal'
-        }
+        path: 'AppDupCheckMainData/SubjList',
+        component: DupCheckMdSubjListComponent,
+        data: {title: 'App Duplicate Check Subject List'}
       },
       {
-        path: 'AppDupCheckMainData/Company',
-        component: AppDupCheckMdListCompanyComponent,
-        data: {
-          title: 'App Duplicate Check Customer Company'
-        }
-      },
-      {
-        path: 'AppDupCheckMainData/ApplicantExistingData/Personal',
-        component: ApplicantExistingMainDataPersonalComponent,
-        data: {
-          title: 'Applicant Existing Data Personal'
-        }
-      },
-      {
-        path: 'AppDupCheckMainData/ApplicantExistingData/Company',
-        component: ApplicantExistingMainDataCompanyComponent,
-        data: {
-          title: 'Applicant Existing Data Company'
-        }
+        path: 'AppDupCheckMainData/SubjMatch',
+        component: DupCheckMdSubjMatchComponent,
+        data: {title: 'App Duplicate Check Subject Match'}
       },
     ]
   }
