@@ -10,7 +10,7 @@
               <label class="col-md-2 adins-required-label" translate>Customer Model Code</label>
               <div class="col-md-4">
                 <select class="form-control adInsInput full-width" style="width: 100%"
-                  formControlName="CustModelCode" (change)="SetCriteriaAndRequired($event.target.value)"
+                  formControlName="CustModelCode" (change)="SetCriteriaAndRequired($event.target.value, true)"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.CustModelCode.invalid }">
                   <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
                 </select>
@@ -23,7 +23,7 @@
               <div class="col-md-4">
                 <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
                   [lookupInput]="InputLookupProfessionObj" [parentForm]="JobDataForm"
-                  [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)">
+                  [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                 </lib-uclookupgeneric>
               </div>
               <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>Industry

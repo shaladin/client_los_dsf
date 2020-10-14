@@ -1080,7 +1080,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static UpdateAppCustCompletionPersonal = environment.losUrl + "/AppCust/UpdateAppCustCompletionPersonal";
 
     // App Cust Personal Job Data
-    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCust/AddAppCustPersonalJobAndAppCustAddr";
+    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
     
     //Verf Question Answer
     public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
