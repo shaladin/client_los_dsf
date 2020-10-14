@@ -9,7 +9,7 @@
   </div>
 
   
-  <div class="card-body px-3">
+  <div class="card-body px-3 pb-3">
 
     <div class="text-right px-5" *ngIf="!isLock">
       <button type="button" class="btn btn-raised btn-primary" (click)="buttonNewCustOnClick()" translate>New Customer</button>
@@ -87,44 +87,5 @@
       </table>
     </div>
 
-    <lib-ucSubsection [id]="'subSecNegListId'" [title]="'Negative List'" [panel]="'subSecNegListId'"></lib-ucSubsection>
-    <div id="subSecNegListId">
-      <table class="table table-responsive-md text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th><span class="thead-header" name='custtNo' translate>Cust No</span></th>
-            <th><span class="thead-header" name='custName' translate>Name</span></th>
-            <th><span class="thead-header" name='idType' translate>ID Type</span></th>
-            <th><span class="thead-header" name='idNo' translate>ID No</span></th>
-            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span class="thead-header" name='birthDt' translate>Birth Date</span></th>
-            <th *ngIf="mrCustTypeCode == 'COMPANY'"><span class="thead-header" name='birthDt' translate>Establishment Date</span></th>
-            <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
-            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span class="thead-header" name='mobilePhoneNo' translate>Mobile Phone No</span></th>
-            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span class="thead-header" name='motherMaidenName' translate>Mother Maiden Name</span></th>
-            <th><span class="thead-header" name='negativeStat' translate>Negative Status</span></th>
-            <th><span class="thead-header" name='negativeSrc' translate>Negative Source</span></th>
-            <th><span class="thead-header" name='duplicateItem' translate>Duplicate Item</span></th>
-            <th>ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="listNegativeCustDuplicate?.length == 0"><td align="center" colspan="12">No data found</td></tr>
-          <tr *ngFor="let item of listNegativeCustDuplicate">
-            <td>{{item.CustNo}}</td>
-            <td>{{item.CustName}}</td>
-            <td>{{item.MrIdTypeCode}}</td>
-            <td>{{item.IdNo}}</td>
-            <td>{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
-            <td>{{item.TaxIdNo}}</td>
-            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>
-            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>            
-            <td>{{item.NegativeStat}}</td>
-            <td>{{item.NegativeSrc}}</td>
-            <td>{{item.DuplicateItem}}</td>
-            <td><a class="danger p-0" (click)="selectNegativeCust(item)">Select</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </div>

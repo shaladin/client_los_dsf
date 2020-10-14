@@ -81,7 +81,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
             'CustNo': row.CustNo,
             'IsAppCustChecked': row.IsAppCustChecked,
             'IsExistingCust': row.IsExistingCust,
-            'Negative': '?',
+            'Negative': '-',
             'IsShowEdit': !row.ApplicantNo && !row.CustNo ? 1 : 0,
           });
         });

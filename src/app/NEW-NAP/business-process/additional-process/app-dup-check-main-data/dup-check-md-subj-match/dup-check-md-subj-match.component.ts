@@ -94,11 +94,10 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           }
         }
 
-        //List Cust Duplicate And List Negative Cust Duplicate Checking
-        this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(
+        //List Cust Duplicate Duplicate Checking
+        this.http.post(URLConstant.GetCustomerDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.listMasterCustDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
-            this.listNegativeCustDuplicate = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
             if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) 
             {
               this.isMasterLock = true;
@@ -139,11 +138,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     );
   }
   
-  selectNegativeCust(item)
-  {
-
-  }
-
   buttonNewCustOnClick() {
     var AppDupCheckObj = {"AppCustId": this.appCustId};
     this.http.post(URLConstant.MD_CreateApplicantNoAppCust, AppDupCheckObj).subscribe(
