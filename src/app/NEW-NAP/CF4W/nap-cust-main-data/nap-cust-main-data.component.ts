@@ -13,10 +13,10 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-main-data',
-  templateUrl: './main-data.component.html'
+  selector: 'app-nap-cust-main-data',
+  templateUrl: './nap-cust-main-data.component.html'
 })
-export class MainDataComponent implements OnInit {
+export class NapCustMainDataComponent implements OnInit {
 
   @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepper: Stepper;
@@ -115,8 +115,8 @@ export class MainDataComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
-  Cancel() {
-    this.router.navigate(["/Nap/CF2W/Paging"]);
+  Back() {
+    this.router.navigate(["/Nap/MainData/NAP1/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
   }
 
   MakeViewReturnInfoObj() {
@@ -177,7 +177,7 @@ export class MainDataComponent implements OnInit {
     this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/TestMainData/CustMainData/Paging"], { queryParams: { "AppId": this.appId, "BizTemplateCode": this.bizTemplateCode } });
+        this.router.navigate(["/Nap/MainData/NAP1/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
       }
     );
   }

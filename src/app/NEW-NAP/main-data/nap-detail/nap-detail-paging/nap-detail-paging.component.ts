@@ -44,6 +44,7 @@ export class NapDetailPagingComponent implements OnInit {
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
+    this.inputPagingObj.title = "New Application Detail";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -65,12 +66,8 @@ export class NapDetailPagingComponent implements OnInit {
       switch(this.bizTemplateCode)
       {
         case CommonConstant.CF4W :
-          this.router.navigate(["Nap/ConsumerFinance/NapDetail"], { 
-            queryParams: { 
-              "AppId": ev.RowObj.AppId, 
-              "WfTaskListId": ev.RowObj.WfTaskListId, 
-              "IsMainData": true, //for application data with mailing address
-            } 
+          this.router.navigate(["Nap/ConsumerFinance/NAP2"], { 
+            queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true} 
           });
         break;
       }

@@ -204,20 +204,6 @@ export class CustMainDataAddComponent implements OnInit {
     return obj;
   }
 
-  testData() {
-    this.getFormValidationErrors();
-  }
-
-  getFormValidationErrors() {
-    const invalid = [];
-    const controls = this.NapAppForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-  }
-
   SaveForm() {
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
@@ -234,7 +220,14 @@ export class CustMainDataAddComponent implements OnInit {
     this.http.post(URLConstant.AddAppMaindata, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/TestMainData/CustMainData/Detail"], { queryParams: { "AppId": response["AppId"] } });
+
+        switch(this.bizTemplateCode) {
+          case CommonConstant.CF4W :
+            this.router.navigate(["Nap/ConsumerFinance/NAP1"], {
+              queryParams: { "AppId": response["AppId"]} 
+            });
+          break;
+        }
       });
   }
 
@@ -348,6 +341,10 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
+  }
+
+  buttonCancelClick(){
+    this.router.navigate(["Nap/MainData/NAP1/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
   }
 
 }
