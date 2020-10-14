@@ -75,7 +75,8 @@ export class FinancialDataFctrComponent implements OnInit {
 
         NumOfInst: 0,
         RoundingAmt: 0,
-        SupplEffectiveRatePrcnt: 0,
+        SellSupplEffectiveRatePrcnt: 0,
+        AppSupplEffectiveRatePrcnt: 0,
         SupplFlatRatePrcnt: 0,
         DiffRateAmt: 0,
 
@@ -162,7 +163,8 @@ export class FinancialDataFctrComponent implements OnInit {
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
-          SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
+          SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
+          AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 
