@@ -17,7 +17,22 @@
                       [parentForm]='AssetDataForm' (lookup)="SetSupplier($event)">
                     </lib-uclookupgeneric>
                   </div>
-                  <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
+                  <label class="col-md-2 adInsLabel adins-required-label" translate>Sales Person Name</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="SalesPersonId"
+                      (change)="SalesPersonChanged($event)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of listSalesObj" [value]="it.VendorEmpId">
+                        {{it.VendorEmpName}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+
+                  </div>
+                  <!-- <div class="form-group row"> -->
+                  <!-- <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="BranchManagerNo"
                       (change)="BranchChanged($event)"
@@ -26,22 +41,8 @@
                         {{it.Value}}
                       </option>
                     </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-2 adInsLabel adins-required-label" translate>Sales Person Name</label>
-                  <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="SalesPersonNo"
-                      (change)="SalesChanged($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonNo.invalid }">
-                      <option *ngFor="let it of listSalesObj" [value]="it.Key">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonNo" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                  <label class="col-md-2 adInsLabel" translate>Admin Head</label>
+                  </div> -->
+                  <!-- <label class="col-md-2 adInsLabel" translate>Admin Head</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="AdminHeadNo"
                       (change)="AdminChanged($event)"
@@ -50,7 +51,7 @@
                         {{it.Value}}
                       </option>
                     </select>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset Info'" [panel]="'assetInfo'">
@@ -201,7 +202,8 @@
                       <div *ngFor="let item of items.controls; let i = index;">
                         <div class="form-group row" [formGroupName]="i">
                           <label class="col-md-4 "
-                            [ngClass]="{'adins-required-label': AssetDataForm.controls.MrAssetConditionCode.value == 'USED'}" translate>
+                            [ngClass]="{'adins-required-label': AssetDataForm.controls.MrAssetConditionCode.value == 'USED'}"
+                            translate>
                             {{item.controls.SerialNoLabel.value}} </label>
                           <div class="col-md-8">
                             <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
