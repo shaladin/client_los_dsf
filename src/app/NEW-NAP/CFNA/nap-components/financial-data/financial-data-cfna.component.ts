@@ -166,7 +166,7 @@ export class FinancialDataCFNAComponent implements OnInit {
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
-          SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
+          SupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 

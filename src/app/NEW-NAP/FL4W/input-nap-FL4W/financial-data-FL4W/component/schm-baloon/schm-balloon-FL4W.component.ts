@@ -132,7 +132,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
 
           SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
           CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-          SupplEffectiveRatePrcnt: response.SupplEffectiveRatePrcnt          
+          SupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt          
 
         })
         this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);

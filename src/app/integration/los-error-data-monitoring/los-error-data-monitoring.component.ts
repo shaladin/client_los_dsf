@@ -30,7 +30,7 @@ export class LOSErrorDataMonitoringComponent implements OnInit {
       var LosAppObj = {
         AppNo: ev.RowObj.AppNo
       };
-      await this.http.post(URLConstant.InsertToR2AppStaging, LosAppObj).toPromise().then(
+      await this.http.post(URLConstant.ReSendLosR3DataToR2, LosAppObj).toPromise().then(
         (response) => {
           console.log(response);
           this.toastr.successMessage(response["message"]);

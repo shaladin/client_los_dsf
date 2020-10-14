@@ -90,9 +90,10 @@ export class FinancialDataComponent implements OnInit {
     
             NumOfInst: 0,
             RoundingAmt: 0,
-            SupplEffectiveRatePrcnt: 0,
+            SellSupplEffectiveRatePrcnt: 0,
             SupplFlatRatePrcnt: 0,
-    
+            AppSupplEffectiveRatePrcnt: 0,
+
             DiffRateAmt: 0,
             SubsidyAmtFromDiffRate: {value: 0, disabled: true},
             CommissionAmtFromDiffRate: 0,
@@ -171,7 +172,8 @@ export class FinancialDataComponent implements OnInit {
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
           EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
-          SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
+          SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
+          AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 
@@ -203,7 +205,6 @@ export class FinancialDataComponent implements OnInit {
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
         });
-
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
       }
@@ -246,11 +247,14 @@ export class FinancialDataComponent implements OnInit {
           IsSubsidyRateExist: true
         });
         this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
+        this.FinDataForm.get("AppSupplEffectiveRatePrcnt").disable();
       }else{
         this.FinDataForm.patchValue({
+          SubsidyAmtFromDiffRate: 0,
           IsSubsidyRateExist: false
         });
         this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
+        this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }  
   }

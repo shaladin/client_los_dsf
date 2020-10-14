@@ -24,7 +24,7 @@ export class AppFinDataObj {
     EffectiveRatePrcnt: number;
     EffectiveRateBhv: string;
     FlatRatePrcnt: number;
-    SupplEffectiveRatePrcnt: number;
+    SellSupplEffectiveRatePrcnt: number;
     SupplFlatRatePrcnt: number;
     MrGracePeriodTypeCode: string;
     GracePeriodTypeName: string;
@@ -86,6 +86,7 @@ export class AppFinDataObj {
     BalloonBhv: string;
     MinDownPaymentNettPrcnt: number;
     MaxDownPaymentNettPrcnt: number;
+    AppSupplEffectiveRatePrcnt: number;
     
     constructor() {
     }
