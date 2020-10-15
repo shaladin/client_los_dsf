@@ -36,7 +36,7 @@
                 <div class="form-group row">
                   <label class="col-md-4" translate>Id No</label>
                   <div class="col-md-8">
-                    <input type="text" class="form-control" formControlName="IdNo"
+                    <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control" formControlName="IdNo"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.IdNo.invalid}">
                     <lib-uc-show-errors [control]="EmergencyContactForm.controls.IdNo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>

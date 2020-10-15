@@ -28,6 +28,7 @@ export class EmergencyContactTabComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() isMarried: boolean;
   isUcAddressReady: boolean;
+  isExisting: boolean = false;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputUcAddressObj: InputAddressObj = new InputAddressObj();
   InputFieldUcAddressObj: InputFieldObj = new InputFieldObj();
@@ -35,10 +36,10 @@ export class EmergencyContactTabComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array();
   GenderObj: Array<KeyValueObj> = new Array();
   MrCustRelationshipObj: Array<KeyValueObj> = new Array();
-  ArrAddCrit : Array<CriteriaObj> = new Array();
+  ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCnctObj = new AppCustEmrgncCnctObj();
-  
+
   EmergencyContactForm = this.fb.group({
     MrIdTypeCode: [''],
     MrGenderCode: ['', Validators.required],
@@ -143,8 +144,16 @@ export class EmergencyContactTabComponent implements OnInit {
     }
   }
 
-  copyCustomerEvent(event) {
+  DisableInput() {
+    this.isExisting = true;
+    this.InputUcAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
+    this.InputUcAddressObj.inputField.inputLookupObj.isReadonly = true;
+    this.InputUcAddressObj.inputField.inputLookupObj.isDisable = true;
+  }
+
+  copyCustomerEvent(event) {
+    this.DisableInput();
     this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
         if (response["CustObj"] != undefined) {
@@ -228,7 +237,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.BirthPlace = this.EmergencyContactForm.controls.BirthPlace.value;
     this.appCustEmrgncCntctObj.IdExpiredDt = this.EmergencyContactForm.controls.IdExpiredDt.value;
     this.appCustEmrgncCntctObj.BirthDt = this.EmergencyContactForm.controls.BirthDt.value;
-    //this.appCustEmrgncCntctObj.MrCustRelationship = this.EmergencyContactForm.controls.MrCustRelationship.value;
+    this.appCustEmrgncCntctObj.MrCustRelationship = this.EmergencyContactForm.controls.MrCustRelationship.value;
     this.appCustEmrgncCntctObj.MobilePhnNo1 = this.EmergencyContactForm.controls.MobilePhnNo1.value;
     this.appCustEmrgncCntctObj.MobilePhnNo2 = this.EmergencyContactForm.controls.MobilePhnNo2.value;
     this.appCustEmrgncCntctObj.Email = this.EmergencyContactForm.controls.Email1.value;
@@ -247,7 +256,8 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt1 = this.UcAddrObj.PhnExt1;
     this.appCustEmrgncCntctObj.PhnExt2 = this.UcAddrObj.PhnExt2;
     this.appCustEmrgncCntctObj.PhnExt3 = this.UcAddrObj.PhnExt3;
+    this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
 
-    
+    console.log(this.appCustEmrgncCntctObj);
   }
 }
