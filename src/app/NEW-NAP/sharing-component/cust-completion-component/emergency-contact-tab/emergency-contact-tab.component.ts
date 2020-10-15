@@ -39,6 +39,7 @@ export class EmergencyContactTabComponent implements OnInit {
   ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCnctObj = new AppCustEmrgncCnctObj();
+  MaxDate: Date;
 
   EmergencyContactForm = this.fb.group({
     MrIdTypeCode: [''],
@@ -63,6 +64,9 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   ngOnInit() {
+    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.MaxDate = UserAccess.BusinessDt;
+
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
