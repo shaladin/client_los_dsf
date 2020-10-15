@@ -1077,7 +1077,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
     public static AddNegativeCustByAppId = environment.losUrl + "/AppCust/AddNegativeCustByAppId";
     public static GetAppCustAndAppCustPersonalDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustAndAppCustPersonalDataByAppCustId";
+    public static GetAppCustAndAppCustCompanyDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustAndAppCustCompanyDataByAppCustId";
     public static UpdateAppCustCompletionPersonal = environment.losUrl + "/AppCust/UpdateAppCustCompletionPersonal";
+    public static UpdateAppCustCompletionCompany = environment.losUrl + "/AppCust/UpdateAppCustCompletionCompany";
 
     // App Cust Personal Job Data
     public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
