@@ -74,21 +74,19 @@
           <br><br>
           <div class="bs-stepper-content">
             <div id="customer-detail-tab" class="content" role="tabpanel" aria-labelledby="customer-detail-tab-trigger">
-              <app-cust-detail-personal *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="NextStep('Address')"> </app-cust-detail-personal>
+              <app-cust-detail-personal *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event, 'Address')"> </app-cust-detail-personal>
             </div>
             <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
-              <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="NextStep('Family')"> </app-address-tab>
+              <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="GetEvent($event, 'Family')"> </app-address-tab>
             </div>
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
-              <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab>
+              <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Job')"> </app-family-tab>
             </div>
             <div id="job-data-tab" class="content" role="tabpanel" aria-labelledby="job-data-tab-trigger">
-              <app-job-tab *ngIf="stepIndex == 4" [appId]="AppId" [AppCustId]="AppCustId"> </app-job-tab>
+              <app-job-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" [CustModelCode]="CustModelCode" (OutputTab)="GetEvent($event, 'Emergency')"> </app-job-tab>
             </div>
-            <div id="emergency-contact-tab" class="content" role="tabpanel"
-              aria-labelledby="emergency-contact-tab-trigger">
-              <!-- <app-customer-personal-job-data (outputTab)="getValue($event)" *ngIf="stepIndex == 5">
-            </app-customer-personal-job-data> -->
+            <div id="emergency-contact-tab" class="content" role="tabpanel" aria-labelledby="emergency-contact-tab-trigger">
+              <app-emergency-contact-tab *ngIf="stepIndex == 5" [appId]="AppId" [AppCustId]="AppCustId" [isMarried]="isMarried" > </app-emergency-contact-tab>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <!-- <app-cust-fin-data-tab [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" (outputTab)="getValue($event)"

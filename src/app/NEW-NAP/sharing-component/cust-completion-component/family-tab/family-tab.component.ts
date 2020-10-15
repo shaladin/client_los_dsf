@@ -35,7 +35,7 @@ export class FamilyTabComponent implements OnInit {
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridFamilyCustCompletion.json";
 
     this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
     this.loadFamilyListData();

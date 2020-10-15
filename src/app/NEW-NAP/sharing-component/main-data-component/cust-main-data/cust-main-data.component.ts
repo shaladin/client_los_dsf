@@ -51,8 +51,8 @@ export class CustMainDataComponent implements OnInit {
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputLookupCustGrpObj: InputLookupObj = new InputLookupObj();
   inputAddressObj: InputAddressObj = new InputAddressObj();
-  inputFieldAddressObj: InputFieldObj = new InputFieldObj();;
-  legalAddrObj: AddrObj = new AddrObj();;
+  inputFieldAddressObj: InputFieldObj = new InputFieldObj();
+  legalAddrObj: AddrObj = new AddrObj();
   CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
