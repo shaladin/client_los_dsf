@@ -63,13 +63,13 @@ export class JobTabComponent implements OnInit {
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
     CoyName: ['', Validators.required],
-    MrJobPositionCode:[''],
-    MrJobStatCode:[''],
-    MrCoyScaleCode:[''],
+    MrJobPositionCode: [''],
+    MrJobStatCode: [''],
+    MrCoyScaleCode: [''],
     EmploymentEstablishmentDt: [''],
     NumOfEmployee: [''],
     JobTitleName: [''],
-    IsMfEmp:[false],
+    IsMfEmp: [false],
     MrInvestmentTypeCode: [''],
     ProfessionalNo: [''],
     PrevCoyName: [''],
@@ -80,7 +80,7 @@ export class JobTabComponent implements OnInit {
     OthBizJobPosition: [''],
     OthBizEstablishmentDt: [''],
   })
-  
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -92,10 +92,10 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
 
     await this.InitLookup();
-    if(this.CustModelCode != CommonConstant.CustModelNonProfessional){
-      this.SetDropdown(); 
+    if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
+      this.SetDropdown();
     }
-    
+
     this.InputJobAddrObj.showPhn3 = false;
     this.InputJobAddrObj.title = "Job Address";
     this.InputPrevJobAddrObj.title = "Previous Job Address";
@@ -113,53 +113,53 @@ export class JobTabComponent implements OnInit {
     this.GetData();
   }
 
-  GetData(){
-    this.http.post(URLConstant.GetAppCustPersonalJobData, {AppCustId: this.AppCustId}).subscribe(
+  GetData() {
+    this.http.post(URLConstant.GetAppCustPersonalJobData, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
         this.JobDataForm.patchValue({
-          MrProfessionCode : response["AppCustPersonalJobDataObj"].MrProfessionCode,
-          IndustryTypeCode : response["AppCustPersonalJobDataObj"].IndustryTypeCode,
-          CoyName : response["AppCustPersonalJobDataObj"].CoyName,
-          MrJobPositionCode : response["AppCustPersonalJobDataObj"].MrJobPositionCode,
-          MrJobStatCode : response["AppCustPersonalJobDataObj"].MrJobStatCode,
-          MrCoyScaleCode : response["AppCustPersonalJobDataObj"].MrCoyScaleCode,
-          EmploymentEstablishmentDt : response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt != "" ? formatDate(response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
-          NumOfEmployee : response["AppCustPersonalJobDataObj"].NumOfEmployee,
-          JobTitleName : response["AppCustPersonalJobDataObj"].JobTitleName,
-          IsMfEmp : response["AppCustPersonalJobDataObj"].IsMfEmp,
-          MrInvestmentTypeCode : response["AppCustPersonalJobDataObj"].MrInvestmentTypeCode,
-          ProfessionalNo : response["AppCustPersonalJobDataObj"].ProfessionalNo != "" ? response["AppCustPersonalJobDataObj"].ProfessionalNo : "",
-          PrevCoyName : response["AppCustPersonalJobDataObj"].PrevCoyName != "" ? response["AppCustPersonalJobDataObj"].PrevCoyName : "",
-          PrevEmploymentDt : response["AppCustPersonalJobDataObj"].PrevEmploymentDt != null ? response["AppCustPersonalJobDataObj"].PrevEmploymentDt : "",
-          OthBizName : response["AppCustPersonalJobDataObj"].OthBizName != "" ? response["AppCustPersonalJobDataObj"].OthBizName : "",
-          OthBizType : response["AppCustPersonalJobDataObj"].OthBizType != "" ? response["AppCustPersonalJobDataObj"].OthBizType : "",
-          OthBizIndustryTypeCode : response["AppCustPersonalJobDataObj"].OthBizIndustryTypeCode != "" ? response["AppCustPersonalJobDataObj"].OthBizIndustryTypeCode : "",
-          OthBizJobPosition : response["AppCustPersonalJobDataObj"].OthBizJobPosition != "" ? response["AppCustPersonalJobDataObj"].OthBizJobPosition : "",
-          OthBizEstablishmentDt : response["AppCustPersonalJobDataObj"].OthBizEstablishmentDt != null ? response["AppCustPersonalJobDataObj"].OthBizEstablishmentD : ""
+          MrProfessionCode: response["AppCustPersonalJobDataObj"].MrProfessionCode,
+          IndustryTypeCode: response["AppCustPersonalJobDataObj"].IndustryTypeCode,
+          CoyName: response["AppCustPersonalJobDataObj"].CoyName,
+          MrJobPositionCode: response["AppCustPersonalJobDataObj"].MrJobPositionCode,
+          MrJobStatCode: response["AppCustPersonalJobDataObj"].MrJobStatCode,
+          MrCoyScaleCode: response["AppCustPersonalJobDataObj"].MrCoyScaleCode,
+          EmploymentEstablishmentDt: response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt != "" ? formatDate(response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
+          NumOfEmployee: response["AppCustPersonalJobDataObj"].NumOfEmployee,
+          JobTitleName: response["AppCustPersonalJobDataObj"].JobTitleName,
+          IsMfEmp: response["AppCustPersonalJobDataObj"].IsMfEmp,
+          MrInvestmentTypeCode: response["AppCustPersonalJobDataObj"].MrInvestmentTypeCode,
+          ProfessionalNo: response["AppCustPersonalJobDataObj"].ProfessionalNo != "" ? response["AppCustPersonalJobDataObj"].ProfessionalNo : "",
+          PrevCoyName: response["AppCustPersonalJobDataObj"].PrevCoyName != "" ? response["AppCustPersonalJobDataObj"].PrevCoyName : "",
+          PrevEmploymentDt: response["AppCustPersonalJobDataObj"].PrevEmploymentDt != null ? response["AppCustPersonalJobDataObj"].PrevEmploymentDt : "",
+          OthBizName: response["AppCustPersonalJobDataObj"].OthBizName != "" ? response["AppCustPersonalJobDataObj"].OthBizName : "",
+          OthBizType: response["AppCustPersonalJobDataObj"].OthBizType != "" ? response["AppCustPersonalJobDataObj"].OthBizType : "",
+          OthBizIndustryTypeCode: response["AppCustPersonalJobDataObj"].OthBizIndustryTypeCode != "" ? response["AppCustPersonalJobDataObj"].OthBizIndustryTypeCode : "",
+          OthBizJobPosition: response["AppCustPersonalJobDataObj"].OthBizJobPosition != "" ? response["AppCustPersonalJobDataObj"].OthBizJobPosition : "",
+          OthBizEstablishmentDt: response["AppCustPersonalJobDataObj"].OthBizEstablishmentDt != null ? response["AppCustPersonalJobDataObj"].OthBizEstablishmentD : ""
         })
         this.InputLookupProfessionObj.nameSelect = response["AppCustPersonalJobDataObj"].MrProfessionName;
-        this.InputLookupProfessionObj.jsonSelect = { ProfessionName:  response["AppCustPersonalJobDataObj"].MrProfessionName};
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["AppCustPersonalJobDataObj"].MrProfessionName };
         this.InputLookupIndustryTypeObj.nameSelect = response["AppCustPersonalJobDataObj"].IndustryTypeName;
-        this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName:  response["AppCustPersonalJobDataObj"].IndustryTypeName};
-        
-        if(response["JobAddr"].AppCustAddrId != 0){
+        this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response["AppCustPersonalJobDataObj"].IndustryTypeName };
+
+        if (response["JobAddr"].AppCustAddrId != 0) {
           this.JobAddrObj = response["JobAddr"];
           this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response["JobAddr"].Zipcode;
-          this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode:  response["JobAddr"].Zipcode};
+          this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["JobAddr"].Zipcode };
           this.InputJobAddrObj.default = this.JobAddrObj;
         }
 
-        if(response["PrevJobAddr"].AppCustAddrId != 0){
+        if (response["PrevJobAddr"].AppCustAddrId != 0) {
           this.PrevJobAddrObj = response["PrevJobAddr"];
           this.InputPrevJobAddrObj.inputField.inputLookupObj.nameSelect = response["PrevJobAddr"].Zipcode;
-          this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode:  response["PrevJobAddr"].Zipcode};
+          this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["PrevJobAddr"].Zipcode };
           this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
         }
-        
-        if(response["OthBizAddr"].AppCustAddrId != 0){
+
+        if (response["OthBizAddr"].AppCustAddrId != 0) {
           this.OthBizAddrObj = response["OthBizAddr"];
           this.InputOthBizAddrObj.inputField.inputLookupObj.nameSelect = response["OthBizAddr"].Zipcode;
-          this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode:  response["OthBizAddr"].Zipcode};
+          this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["OthBizAddr"].Zipcode };
           this.InputOthBizAddrObj.default = this.OthBizAddrObj;
         }
         this.isUcAddrReady = true;
@@ -169,48 +169,47 @@ export class JobTabComponent implements OnInit {
       });
   }
 
-  SaveForm(){
-      this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
-      this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
-      this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
-      this.JobDataObj.MrJobPositionCode = this.JobDataForm.controls.MrJobPositionCode.value;
-      this.JobDataObj.MrJobStatCode = this.JobDataForm.controls.MrJobStatCode.value;
-      this.JobDataObj.MrCoyScaleCode = this.JobDataForm.controls.MrCoyScaleCode.value;
-      this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
-      this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
-      this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
-      this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
-      this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
-      this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
-      this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
-      this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
-      this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
-      this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
-      this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
-      this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
-      this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value
+  SaveForm() {
+    this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
+    this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
+    this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
+    this.JobDataObj.MrJobPositionCode = this.JobDataForm.controls.MrJobPositionCode.value;
+    this.JobDataObj.MrJobStatCode = this.JobDataForm.controls.MrJobStatCode.value;
+    this.JobDataObj.MrCoyScaleCode = this.JobDataForm.controls.MrCoyScaleCode.value;
+    this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
+    this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
+    this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
+    this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
+    this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
+    this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
+    this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
+    this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
+    this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
+    this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
+    this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
+    this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
+    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value
 
-      if(this.CustModelCode != CommonConstant.CustModelNonProfessional){
-        this.JobDataAddrObj.Addr = this.JobDataForm.controls["JobAddr"]["controls"]["Addr"].value;
-        this.JobDataAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
-        this.JobDataAddrObj.AreaCode4 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode4"].value;
-        this.JobDataAddrObj.AreaCode3 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode3"].value;
-        this.JobDataAddrObj.PhnArea1 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea1"].value;
-        this.JobDataAddrObj.Phn1 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn1"].value;
-        this.JobDataAddrObj.PhnExt1 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt1"].value;
-        this.JobDataAddrObj.PhnArea2 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea2"].value;
-        this.JobDataAddrObj.Phn2 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn2"].value;
-        this.JobDataAddrObj.PhnExt2 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt2"].value;
-        this.JobDataAddrObj.FaxArea = this.JobDataForm.controls["JobAddr"]["controls"]["FaxArea"].value;
-        this.JobDataAddrObj.Fax = this.JobDataForm.controls["JobAddr"]["controls"]["Fax"].value;
-        this.JobDataAddrObj.SubZipcode = this.JobDataForm.controls["JobAddr"]["controls"]["SubZipcode"].value;
-        this.JobDataAddrObj.AreaCode2 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode2"].value;
-        this.JobDataAddrObj.AreaCode1 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode1"].value;
-        this.JobDataAddrObj.City = this.JobDataForm.controls["JobAddr"]["controls"]["City"].value;
-        this.JobDataAddrObj.Zipcode = this.JobDataForm.controls["JobAddrZipcode"]["value"].value;
-      }
+    if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
+      this.JobDataAddrObj.Addr = this.JobDataForm.controls["JobAddr"]["controls"]["Addr"].value;
+      this.JobDataAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
+      this.JobDataAddrObj.AreaCode4 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode4"].value;
+      this.JobDataAddrObj.AreaCode3 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode3"].value;
+      this.JobDataAddrObj.PhnArea1 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea1"].value;
+      this.JobDataAddrObj.Phn1 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn1"].value;
+      this.JobDataAddrObj.PhnExt1 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt1"].value;
+      this.JobDataAddrObj.PhnArea2 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea2"].value;
+      this.JobDataAddrObj.Phn2 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn2"].value;
+      this.JobDataAddrObj.PhnExt2 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt2"].value;
+      this.JobDataAddrObj.FaxArea = this.JobDataForm.controls["JobAddr"]["controls"]["FaxArea"].value;
+      this.JobDataAddrObj.Fax = this.JobDataForm.controls["JobAddr"]["controls"]["Fax"].value;
+      this.JobDataAddrObj.SubZipcode = this.JobDataForm.controls["JobAddr"]["controls"]["SubZipcode"].value;
+      this.JobDataAddrObj.AreaCode2 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode2"].value;
+      this.JobDataAddrObj.AreaCode1 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode1"].value;
+      this.JobDataAddrObj.City = this.JobDataForm.controls["JobAddr"]["controls"]["City"].value;
+      this.JobDataAddrObj.Zipcode = this.JobDataForm.controls["JobAddrZipcode"]["value"].value;
 
-      this.OthBizDataAddrObj.Addr = this.JobDataForm.controls["OthBizAddr"]["controls"]["Addr"].value == null ? "" : this.JobDataForm.controls["OthBizAddr"]["controls"]["Addr"].value;
+      this.OthBizDataAddrObj.Addr = this.JobDataForm.controls["OthBizAddr"]["controls"]["Addr"].value;
       this.OthBizDataAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeOthBiz;
       this.OthBizDataAddrObj.AreaCode4 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode4"].value;
       this.OthBizDataAddrObj.AreaCode3 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode3"].value;
@@ -245,11 +244,12 @@ export class JobTabComponent implements OnInit {
       this.PrevJobDataAddrObj.AreaCode1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode1"].value;
       this.PrevJobDataAddrObj.City = this.JobDataForm.controls["PrevJobAddr"]["controls"]["City"].value;
       this.PrevJobDataAddrObj.Zipcode = this.JobDataForm.controls["PrevJobAddrZipcode"]["value"].value;
+    }
 
-    let requestObj={
+    let requestObj = {
       AppId: this.appId,
       AppCustId: this.AppCustId,
-      CustModelCode : this.CustModelCode,
+      CustModelCode: this.CustModelCode,
       JobDataObj: this.JobDataObj,
       JobDataAddrObj: this.JobDataAddrObj,
       PrevJobAddrObj: this.PrevJobDataAddrObj,
@@ -264,14 +264,14 @@ export class JobTabComponent implements OnInit {
         console.log(error);
       });
 
-    
+
   }
-  
-  SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false){
+
+  SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false) {
     this.InputLookupProfessionObj.nameSelect = "";
-    this.InputLookupProfessionObj.jsonSelect = { ProfessionName:  ""};
+    this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
     this.InputLookupIndustryTypeObj.nameSelect = "";
-    this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName:  ""};
+    this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: "" };
 
     this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();
@@ -281,13 +281,13 @@ export class JobTabComponent implements OnInit {
     critObj.value = CustModelCode;
     this.ArrAddCrit.push(critObj);
     this.InputLookupProfessionObj.addCritInput = this.ArrAddCrit;
-    if(isChange) this.ucLookupProfession.setAddCritInput();
+    if (isChange) this.ucLookupProfession.setAddCritInput();
     this.InputLookupProfessionObj.isReady = true;
 
-    if(CustModelCode == CommonConstant.CustModelNonProfessional){
+    if (CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
       this.JobDataForm.controls.CoyName.clearValidators();
-    }else{
+    } else {
       this.InputLookupIndustryTypeObj.isRequired = true;
       this.JobDataForm.controls.CoyName.setValidators(Validators.required);
     }
@@ -295,8 +295,8 @@ export class JobTabComponent implements OnInit {
     this.JobDataForm.updateValueAndValidity();
   }
 
-  SetDropdown(){
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale}).subscribe(
+  SetDropdown() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).subscribe(
       (response) => {
         this.CompanyScaleObj = response[CommonConstant.ReturnObj];
         this.JobDataForm.patchValue({
@@ -305,7 +305,7 @@ export class JobTabComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
         this.JobDataForm.patchValue({
@@ -314,7 +314,7 @@ export class JobTabComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).subscribe(
       (response) => {
         this.JobStatObj = response[CommonConstant.ReturnObj];
         this.JobDataForm.patchValue({
@@ -323,7 +323,7 @@ export class JobTabComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).subscribe(
       (response) => {
         this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
         this.JobDataForm.patchValue({
@@ -333,7 +333,7 @@ export class JobTabComponent implements OnInit {
     );
   }
 
-  InitLookup(){
+  InitLookup() {
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
@@ -350,13 +350,13 @@ export class JobTabComponent implements OnInit {
     this.InputLookupIndustryTypeObj.isReady = true;
   }
 
-  GetProfession(event){
+  GetProfession(event) {
     this.JobDataForm.patchValue({
       MrProfessionCode: event.ProfessionCode
     });
   }
 
-  GetIndustryType(event){
+  GetIndustryType(event) {
     this.JobDataForm.patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
