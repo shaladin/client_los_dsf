@@ -1,0 +1,82 @@
+{
+  "title": "Application Duplicate Checking Subject Match",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "position": "left",
+          "path": "/View/AppView",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "AppId",
+              "property": "AppId" 
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Cust No",
+          "property": "CustNo",
+          "name": "CustNo",
+          "isHide": true,
+          "path": "/View/Mou/CustView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Applicant No",
+          "property": "ApplicantNo"
+        },
+        {
+          "type": "text",
+          "label": "Subject Type",
+          "property": "SubjectType"
+        },
+        {
+          "type": "text",
+          "label": "Subject Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "ID Type",
+          "property": "IdTypeDescr"
+        },
+        {
+          "type": "text",
+          "label": "ID No",
+          "property": "IdNo"
+        },
+        {
+          "type": "text",
+          "label": "Tax No",
+          "property": "TaxIdNo"
+        },
+        {
+          "type": "text",
+          "label": "Establishment Date",
+          "property": "EstablishmentDt"
+        }
+      ],
+      "querystring": {
+        "select": "SELECT b.APP_NO AS AppNo, b.APP_ID AS AppId, a.APP_CUST_ID AS AppCustId, a.APPLICANT_NO AS ApplicantNo, a.CUST_NO AS CustNo, a.CUST_NAME AS CustName, d.DESCR AS IdTypeDescr, a.ID_NO AS IdNo, a.TAX_ID_NO AS TaxIdNo, c.ESTABLISHMENT_DT AS EstablishmentDt, CASE WHEN a.IS_CUSTOMER = 1 THEN 'CUSTOMER' WHEN a.IS_GUARANTOR = 1 THEN 'GUARANTOR' WHEN a.IS_FAMILY = 1 THEN 'FAMILY' WHEN a.IS_SHAREHOLDER = 1 THEN 'SHARE HOLDER' ELSE '' END AS SubjectType",
+        "from": "FROM dbo.APP_CUST a WITH (NOLOCK) JOIN dbo.APP b WITH (NOLOCK) ON a.APP_ID = b.APP_ID JOIN dbo.APP_CUST_COMPANY c WITH (NOLOCK) ON c.APP_CUST_ID = a.APP_CUST_ID LEFT JOIN dbo.V_REF_MASTER d WITH (NOLOCK) ON d.REF_MASTER_TYPE_CODE = 'ID_TYPE' AND d.MASTER_CODE = a.MR_ID_TYPE_CODE",
+        "where": "WHERE a.APP_CUST_ID = {0}"
+      }
+    }
+  ]
+}
