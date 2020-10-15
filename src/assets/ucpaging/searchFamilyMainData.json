@@ -39,41 +39,67 @@
     {
       "type": "text",
       "position": "left",
-      "property": "MrRelationshipCustCode"
+      "property": "MrCustRelationship"
     },
     {
       "type": "action",
       "position": "center",
       "action": [
         {
-          "type": "callback",
-          "key": "edit",
-          "property": [
+          "type": "switch",
+          "case": [
             {
-              "type": "AppCustId",
-              "property": "AppCustId"
+              "conditions": [
+                {
+                  "property": "IsFamily",
+                  "value": "1",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "icon": "ft-edit-2",
+                "key": "edit",
+                "property": [
+                  {
+                    "type": "AppCustId",
+                    "property": "AppCustId"
+                  },
+                  {
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "edit"
+                  }
+                ]
+              },
+              "isHide": false
             },
             {
-              "type": "MrCustTypeCode",
-              "property": "MrCustTypeCode"
-            },
-            {
-              "type": "mode",
-              "property": "edit"
+              "conditions": [
+                {
+                  "property": "IsFamily",
+                  "value": "1",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "icon": "ft-trash-2",
+                "key": "delete",
+                "property": [
+                  {
+                    "type": "AppCustId",
+                    "property": "AppCustId"
+                  }
+                ],
+                "anchor": "warning"
+              },
+              "isHide": false
             }
           ]
-        },
-        {
-          "type": "callback",
-          "key": "delete",
-          "property": [
-            {
-              "type": "AppCustId",
-              "property": "AppCustId"
-            }
-          ],
-          "icon" : "ft-trash-2",
-          "anchor" : "warning"
         }
       ]
     }

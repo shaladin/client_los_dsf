@@ -742,6 +742,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static AddEditCustMainDataCompany = environment.losUrl + "/AppCust/AddEditCustMainDataCompany";
     public static DeleteAppCustMainData = environment.losUrl + "/AppCust/DeleteAppCustMainData";
     public static CopyAllExistingCustByAppId = environment.losUrl + "/AppCust/CopyAllExistingCustByAppId";
+    public static GetListAppCustCompletion = environment.losUrl + "/AppCust/GetListAppCustCompletion";
+    public static GetAppCustAndListFamilyByAppId = environment.losUrl + "/AppCust/GetAppCustAndListFamilyByAppId";
     
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
@@ -932,8 +934,12 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetAppFinDataWithRuleByAppId = environment.losUrl + "/AppFinData/GetAppFinDataWithRuleByAppId";
 
     //App Cust Addr
+    public static AddAppCustAddr = environment.losUrl + "/AppCustAddr/AddAppCustAddr";
+    public static EditAppCustAddr = environment.losUrl + "/AppCustAddr/EditAppCustAddr";
     public static GetListAppCustAddrByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppId";
     public static GetAppCustAddrByAppCustAddrId = environment.losUrl + "/AppCustAddr/GetAppCustAddrByAppCustAddrId"
+    public static GetListAppCustAddrByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppCustId";
+    public static GetListAppCustAddrData = environment.losUrl + "/AppCustAddr/GetListAppCustAddrData";
 
     //App Fee
     public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
@@ -1081,7 +1087,14 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // App Cust
     public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
     public static AddNegativeCustByAppId = environment.losUrl + "/AppCust/AddNegativeCustByAppId";
+    public static GetAppCustAndAppCustPersonalDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustAndAppCustPersonalDataByAppCustId";
+    public static GetAppCustAndAppCustCompanyDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustAndAppCustCompanyDataByAppCustId";
+    public static UpdateAppCustCompletionPersonal = environment.losUrl + "/AppCust/UpdateAppCustCompletionPersonal";
+    public static UpdateAppCustCompletionCompany = environment.losUrl + "/AppCust/UpdateAppCustCompletionCompany";
 
+    // App Cust Personal Job Data
+    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
+    
     //Verf Question Answer
     public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"
 
