@@ -4,7 +4,7 @@
     <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
     <div class="ucSearch-Button-Right">
       <span class="mr-1">
-        <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../Paging']">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
           <i class="fa fa-arrow-left"></i> Back
         </button>
       </span>
@@ -13,15 +13,6 @@
       <div class="px-3">
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
-            <!-- your steps here -->
-            <!-- <div class="step" data-target="#test-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="test-tab" id="test-tab-trigger"
-                [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('TEST')">
-                <span class="bs-stepper-circle">1</span>
-                <span class="bs-stepper-label">Test Customer Data</span>
-              </button>
-            </div>
-            <div class="line"></div> -->
             <div class="step" data-target="#customer-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
                 id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
@@ -48,12 +39,6 @@
           </div>
           <br><br>
           <div class="bs-stepper-content">
-
-            <!-- <div id="test-tab" class="content" role="tabpanel" aria-labelledby="test-tab-trigger">
-              <app-test-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'"
-                (outputAfterSave)="getEvent($event)" (outputCancel)="Cancel()">
-              </app-test-main-data>
-            </div> -->
 
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-cust-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'"

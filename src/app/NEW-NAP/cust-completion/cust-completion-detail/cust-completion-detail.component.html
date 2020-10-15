@@ -1,0 +1,12 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="card-body">
+      <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+      <div class="px-3">
+        <div *ngIf="listCustCompletion?.length > 0">
+          <lib-ucgridview [gridInput]="inputGridObj" (callback)="GetEvent($event)"></lib-ucgridview>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

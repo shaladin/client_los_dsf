@@ -2,8 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header header-title">
-        <div class="row">
-        </div>
+        <h4 class="card-title ucSearch-title" translate>Customer Main Data</h4>
       </div>
       <div class="card-body">
         <div class="px-3">
@@ -52,11 +51,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <!-- <button type="button" (click)="testData()" class="btn btn-raised btn-warning mr-1" translate>
-                <i class="fa fa-arrow-circle-left"></i> testData
-              </button> -->
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['../Paging']"
-                [queryParams]="{LobCode:'CF4W'}" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelClick()" translate>
                 <i class="fa fa-arrow-circle-left"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary">

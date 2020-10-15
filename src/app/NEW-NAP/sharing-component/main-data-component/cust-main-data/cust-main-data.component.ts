@@ -51,8 +51,8 @@ export class CustMainDataComponent implements OnInit {
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputLookupCustGrpObj: InputLookupObj = new InputLookupObj();
   inputAddressObj: InputAddressObj = new InputAddressObj();
-  inputFieldAddressObj: InputFieldObj = new InputFieldObj();;
-  legalAddrObj: AddrObj = new AddrObj();;
+  inputFieldAddressObj: InputFieldObj = new InputFieldObj();
+  legalAddrObj: AddrObj = new AddrObj();
   CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -78,7 +78,7 @@ export class CustMainDataComponent implements OnInit {
 
   CustMainDataForm = this.fb.group({
     MrCustTypeCode: [],
-    MrRelationshipCustCode: ['', Validators.maxLength(50)],
+    MrCustRelationship: ['', Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -124,19 +124,19 @@ export class CustMainDataComponent implements OnInit {
         this.isIncludeCustRelation = false;
         this.custDataObj.IsCustomer = true;
         this.subjectTitle = 'Customer';
-        this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
+        this.CustMainDataForm.controls.MrCustRelationship.clearValidators();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.isIncludeCustRelation = true;
         this.custDataObj.IsGuarantor = true;
         this.subjectTitle = 'Guarantor';
-        this.CustMainDataForm.controls.MrRelationshipCustCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationship.setValidators(Validators.required);
         break;
       case CommonConstant.CustMainDataModeFamily:
         this.isIncludeCustRelation = true;
         this.custDataObj.IsFamily = true;
         this.subjectTitle = 'Family';
-        this.CustMainDataForm.controls.MrRelationshipCustCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationship.setValidators(Validators.required);
         break;
       default:
         this.isIncludeCustRelation = false;
@@ -262,7 +262,7 @@ export class CustMainDataComponent implements OnInit {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) this.removeSpouse();
         if (this.inputMode != "EDIT")
-          this.CustMainDataForm.patchValue({ MrRelationshipCustCode: this.MrCustRelationshipObj[0].Key });
+          this.CustMainDataForm.patchValue({ MrCustRelationship: this.MrCustRelationshipObj[0].Key });
       }
     );
   }
@@ -325,10 +325,10 @@ export class CustMainDataComponent implements OnInit {
       this.getCustRelationship();
       this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
       this.CustMainDataForm.controls.Email1.clearValidators();
-      this.CustMainDataForm.controls.MrRelationshipCustCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCustRelationship.setValidators(Validators.required);
     }
     else{
-      this.CustMainDataForm.controls.MrRelationshipCustCode.clearValidators();
+      this.CustMainDataForm.controls.MrCustRelationship.clearValidators();
     }
 
     this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
@@ -443,7 +443,7 @@ export class CustMainDataComponent implements OnInit {
       
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
-          MrRelationshipCustCode: this.isIncludeCustRelation ? CustObj.MrRelationshipCustCode : '',
+          MrCustRelationship: this.isIncludeCustRelation ? CustObj.MrCustRelationship : '',
         }) 
       }
     }
@@ -469,7 +469,7 @@ export class CustMainDataComponent implements OnInit {
 
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
-          MrRelationshipCustCode: this.isIncludeCustRelation ? CustCompanyObj.MrRelationshipCustCode : '',
+          MrCustRelationship: this.isIncludeCustRelation ? CustCompanyObj.MrCustRelationship : '',
         }) 
       }
     }
@@ -517,7 +517,7 @@ export class CustMainDataComponent implements OnInit {
     if (this.appCustId)
       this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId;
     if (this.isIncludeCustRelation)
-      this.custDataPersonalObj.AppCustObj.MrRelationshipCustCode = this.CustMainDataForm.controls.MrRelationshipCustCode.value;
+      this.custDataPersonalObj.AppCustObj.MrCustRelationship = this.CustMainDataForm.controls.MrCustRelationship.value;
 
     this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustMainDataForm.controls.MrMaritalStatCode.value;
@@ -566,7 +566,7 @@ export class CustMainDataComponent implements OnInit {
     if (this.appCustId)
       this.custDataCompanyObj.AppCustObj.AppCustId = this.appCustId;
     if (this.isIncludeCustRelation)
-      this.custDataCompanyObj.AppCustObj.MrRelationshipCustCode = this.CustMainDataForm.controls.MrRelationshipCustCode.value;
+      this.custDataCompanyObj.AppCustObj.MrCustRelationship = this.CustMainDataForm.controls.MrCustRelationship.value;
 
     this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode = this.CustMainDataForm.controls.MrCompanyTypeCode.value;

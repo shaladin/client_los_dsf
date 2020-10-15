@@ -3,6 +3,7 @@ import { CriteriaObj } from "./CriteriaObj.model";
 export class UcPagingObj {
     _url: string;
     enviromentUrl: string;
+    title: string;
     apiQryPaging: string;
     deleteUrl: string;
     pagingJson: string;
@@ -16,6 +17,7 @@ export class UcPagingObj {
 
     constructor() {
         this._url = "";
+        this.title = "";
         this.enviromentUrl = "";
         this.apiQryPaging = "";
         this.deleteUrl = "";

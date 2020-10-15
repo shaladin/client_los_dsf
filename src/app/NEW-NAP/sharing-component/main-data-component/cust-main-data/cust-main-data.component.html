@@ -26,11 +26,11 @@
                     <label class="col-md-2 adins-required-label" translate>Customer Relationship </label>
                     <div class="col-md-3">
                       <select class="form-control adInsInput full-width" style="width: 100%"
-                        formControlName="MrRelationshipCustCode"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrRelationshipCustCode.invalid }">
+                        formControlName="MrCustRelationship"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrCustRelationship.invalid }">
                         <option *ngFor="let it of MrCustRelationshipObj" value="{{it.Key}}">{{it.Value}}</option>
                       </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrRelationshipCustCode"
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCustRelationship"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>

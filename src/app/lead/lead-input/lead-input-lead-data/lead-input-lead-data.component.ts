@@ -194,7 +194,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.gsCode = "LOB_KTA";
+    this.generalSettingObj.GsCode = "LOB_KTA";
     this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;

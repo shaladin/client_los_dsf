@@ -265,6 +265,8 @@ export class CommonConstant {
   public static AddrTypeResidence = "RESIDENCE";
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
+  public static AddrTypePrevJob = "PREV_JOB";
+  public static AddrTypeOthBiz = "OTHERBIZ";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -378,6 +380,7 @@ export class CommonConstant {
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
+  public static ReturnStatus = "Status";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
@@ -401,6 +404,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeIdType = "ID_TYPE";
   public static RefMasterTypeCodeRateType = "RATE_TYPE";
   public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
+  public static RefMasterTypeCustAddrType = "CUST_ADDR_TYPE"
   public static RefMasterTypeCodeGracePeriodType = "GRACE_PERIOD_TYPE";
   public static RefMasterTypeLegalReview = "LGL_REVIEW";
   public static RefMasterTypeCodeFeeType = "FEE_TYPE";
@@ -457,6 +461,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
+  public static RefMasterTypeCodeSalutation = "SALUTATION";
+
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -517,4 +523,7 @@ export class CommonConstant {
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+
+  //GENERAL SETTING
+  public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
 }

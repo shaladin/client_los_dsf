@@ -1,0 +1,106 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="row">
+          <div class="ucSearch-Button-Right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
+              <i class="fa fa-arrow-left"></i> Back
+            </button>
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Save()" translate>
+              <i class="fa fa-check-square-o"></i> Save
+            </button>
+          </div>
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" #viewMainInfo> </lib-ucviewgeneric>
+        </div>
+        <div id="stepper1" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <div class="step" data-target="#customer-detail-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="customer-detail-tab"
+                id="customer-detail-tab-trigger" (click)="EnterTab('Detail')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Customer Detail</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#address-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="address-tab" id="address-tab-trigger" (click)="EnterTab('Address')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Address Information</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#managementShareholder-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="managementShareholder-tab" id="managementShareholder-tab-trigger"
+                (click)="EnterTab('ManagementShareholder')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Management / Shareholder</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#Contact-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="Contact-tab"
+                id="Contact-tab-trigger" (click)="EnterTab('Contact')">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Contact Information</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#Financial-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="Financial-tab"
+                id="Financial-tab-trigger" (click)="EnterTab('Financial')">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Financial Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#legal-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="legal-tab"
+                id="legal-tab-trigger" (click)="EnterTab('Legal')">
+                <span class="bs-stepper-circle">6</span>
+                <span class="bs-stepper-label">Legal Document</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#other-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="other-tab"
+                id="other-tab-trigger" (click)="EnterTab('Other')">
+                <span class="bs-stepper-circle">7</span>
+                <span class="bs-stepper-label">Other Attribute</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <div id="customer-detail-tab" class="content" role="tabpanel" aria-labelledby="customer-detail-tab-trigger">
+              <app-cust-detail-company *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="NextStep('Address')"> </app-cust-detail-company>
+            </div>
+            <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
+              <!-- <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="NextStep('Family')"> </app-address-tab> -->b
+            </div>
+            <div id="managementShareholder-tab" class="content" role="tabpanel" aria-labelledby="managementShareholder-tab-trigger">
+              <!-- <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab> -->c
+            </div>
+            <div id="Contact-tab" class="content" role="tabpanel" aria-labelledby="Contact-tab-trigger">
+              <!-- <app-job-tab *ngIf="stepIndex == 4" [appId]="AppId" [AppCustId]="AppCustId"> </app-job-tab> -->
+            </div>
+            <div id="Financial-tab" class="content" role="tabpanel"
+              aria-labelledby="Financial-tab-trigger">
+              <!-- <app-customer-personal-job-data (outputTab)="getValue($event)" *ngIf="stepIndex == 5">
+            </app-customer-personal-job-data> -->
+            </div>
+            <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
+              <!-- <app-cust-fin-data-tab [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" (outputTab)="getValue($event)"
+              *ngIf="stepIndex == 6">
+            </app-cust-fin-data-tab> -->
+            </div>
+            <div id="other-tab" class="content" role="tabpanel" aria-labelledby="other-tab-trigger">
+              <!-- <app-cust-attr-section [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 7">
+            </app-cust-attr-section> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

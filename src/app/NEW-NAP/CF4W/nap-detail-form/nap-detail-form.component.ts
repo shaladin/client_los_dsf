@@ -81,7 +81,7 @@ export class NapDetailFormComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -273,13 +273,13 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/TestMainData/NapDetail/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } })
+          this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } })
         })
     }
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/TestMainData/NapDetail/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } });
+    this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } });
   }
 
   Submit() {

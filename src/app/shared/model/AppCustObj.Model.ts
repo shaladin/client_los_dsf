@@ -18,8 +18,11 @@ export class AppCustObj {
     IsFamily: boolean;
     IsGuarantor: boolean;
     IsShareholder: boolean;
-    MrRelationshipCustCode: string;
+    IsAffiliateWithMF: boolean;
+    MrCustRelationship: string;
+    VIPNotes: string;
     Age: number;
+    RowVersion: any;
 
 constructor() { 
         this.AppCustId = 0; 
@@ -39,6 +42,8 @@ constructor() {
         this.IsFamily = false;
         this.IsGuarantor = false;
         this.IsShareholder = false;
-        this.MrRelationshipCustCode = "";
+        this.IsAffiliateWithMF = false;
+        this.MrCustRelationship = "";
+        this.VIPNotes = "";
     }
 }

@@ -16,6 +16,17 @@ export class AppCustPersonalJobDataObj {
     ProfessionalNo: string;
     MrInvestmentTypeCode: string;
     NumOfEmployee: number;
+    CoyName: string;
+    MrCoyScaleCode: string;
+    EmploymentEstablishmentDt: Date;
+    JobTitleName: string;
+    PrevCoyName : string;
+    PrevEmploymentDt : Date;
+    OthBizName : string;
+    OthBizType : string;
+    OthBizIndustryTypeCode : string;
+    OthBizJobPosition : string;
+    OthBizEstablishmentDt : Date;
     AppCustAddrJobObj: AppCustAddrObj;
 
 
