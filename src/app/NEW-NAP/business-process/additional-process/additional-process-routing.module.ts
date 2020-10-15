@@ -22,6 +22,9 @@ import { CreditApvResultExtPagingComponent } from './credit-apv-result-ext/credi
 import { RouterModule, Routes } from '@angular/router';
 import { ReturnHandlingAdditionalTcPagingComponent } from './return-handling/return-handling-additional-tc-paging/return-handling-additional-tc-paging.component';
 import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/return-handling-additional-tc-detail/return-handling-additional-tc-detail.component';
+import { DupCheckMdPagingComponent } from './app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component';
+import { DupCheckMdSubjListComponent } from './app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component';
+import { DupCheckMdSubjMatchComponent } from './app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component';
 
 const routes: Routes = [
   {
@@ -180,7 +183,23 @@ const routes: Routes = [
         data: {
           title: 'Return Handling Additional Tc Detail'
         }
-      }
+      },
+      // App Dup Check Main Data
+      {
+        path: 'AppDupCheckMainData/Paging',
+        component: DupCheckMdPagingComponent,
+        data: {title: 'App Duplicate Check'}
+      },
+      {
+        path: 'AppDupCheckMainData/SubjList',
+        component: DupCheckMdSubjListComponent,
+        data: {title: 'App Duplicate Check Subject List'}
+      },
+      {
+        path: 'AppDupCheckMainData/SubjMatch',
+        component: DupCheckMdSubjMatchComponent,
+        data: {title: 'App Duplicate Check Subject Match'}
+      },
     ]
   }
 ];

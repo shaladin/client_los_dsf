@@ -1,0 +1,21 @@
+<div class="card">
+  <lib-ucviewgeneric [viewGenericObj]="viewMainInfoObj" (callback)="viewMainInfoCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+  <div class="ucSearch-Button-Right">
+    <span class="mr-1">
+      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonBackOnClick()">
+        <i class="fa fa-arrow-left"></i> Back
+      </button>
+    </span>
+  </div>
+
+  
+  <div class="card-body px-3">
+    <lib-ucSubsection [id]="'ListSubjId'" [title]="'List Subject'" [panel]="'ListSubjId'"></lib-ucSubsection>
+    <div id="ListSubjId">
+      <lib-ucgridview [gridInput]="gridSubjectObj" (callback)="gridSubjOnClick($event)"></lib-ucgridview>
+      <div class="text-right px-5 py-2">
+        <button type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
