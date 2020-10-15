@@ -64,6 +64,10 @@ export class CustMainDataComponent implements OnInit {
   custDataObj: CustDataObj;
   custDataPersonalObj: CustMainDataPersonalObj;
   custDataCompanyObj: CustMainDataCompanyObj;
+  rowVersionAppCust: string;
+  rowVersionAppCustPersonal: string;
+  rowVersionAppCustCompany: string;
+  rowVersionAppCustAddr: string;
 
   constructor(
     private fb: FormBuilder,
@@ -288,7 +292,8 @@ export class CustMainDataComponent implements OnInit {
             this.setDataCustomerCompany(response['AppCustObj'], response['AppCustCompanyObj'], response['AppCustAddrLegalObj']);
           
           if (response['AppCustObj']['IsExistingCust']) this.disableInput();
-        }
+        } else 
+          this.custTypeChange(CommonConstant.CustTypePersonal);
       }
     );
   }
@@ -428,6 +433,7 @@ export class CustMainDataComponent implements OnInit {
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
+      this.rowVersionAppCust = CustObj.RowVersion;
     }
 
     if (CustPersonalObj != undefined) {
@@ -440,6 +446,7 @@ export class CustMainDataComponent implements OnInit {
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
+      this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
@@ -460,16 +467,18 @@ export class CustMainDataComponent implements OnInit {
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
+      this.rowVersionAppCust = CustObj.RowVersion;
     }
 
     if (CustCompanyObj != undefined){
       this.CustMainDataForm.patchValue({
         MrCompanyTypeCode: CustCompanyObj.MrCompanyTypeCode,
       });
+      this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
 
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
-          MrCustRelationship: this.isIncludeCustRelation ? CustCompanyObj.MrCustRelationship : '',
+          MrCustRelationship: this.isIncludeCustRelation ? CustObj.MrCustRelationship : '',
         }) 
       }
     }
@@ -496,6 +505,8 @@ export class CustMainDataComponent implements OnInit {
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
       this.inputAddressObj.default = this.legalAddrObj;
+
+      this.rowVersionAppCustAddr = response.RowVersion;
     }
   }
 
@@ -548,6 +559,10 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrLegalObj.FaxArea = this.CustMainDataForm.controls["Address"]["controls"].FaxArea.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
+
+    this.custDataPersonalObj.AppCustObj.RowVersion = this.rowVersionAppCust;
+    this.custDataPersonalObj.AppCustPersonalObj.RowVersion = this.rowVersionAppCustCompany;
+    this.custDataPersonalObj.AppCustAddrLegalObj.RowVersion = this.rowVersionAppCustAddr;
   }
 
   setDataCustomerCompanyForSave() {
@@ -591,6 +606,10 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.FaxArea = this.CustMainDataForm.controls["Address"]["controls"].FaxArea.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
+    
+    this.custDataCompanyObj.AppCustObj.RowVersion = this.rowVersionAppCust;
+    this.custDataCompanyObj.AppCustCompanyObj.RowVersion = this.rowVersionAppCustCompany;
+    this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion = this.rowVersionAppCustAddr;
   }
 
   SaveForm() {

@@ -39,7 +39,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "MrRelationshipCustCode"
+      "property": "MrCustRelationship"
     },
     {
       "type": "action",
