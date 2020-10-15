@@ -6,6 +6,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
+import { AnyCnameRecord } from 'dns';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -19,9 +20,12 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   AppId: number;
   AppCustId: number;
   stepIndex: number = 1;
+  CustModelCode: string;
+  isChange: boolean = false;
   isMarried: boolean = false;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -62,6 +66,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
         if(response["MrMaritalStatCode"] != null || response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
+        this.CustModelCode = response["CustModelCode"]
       }
     );
   }
@@ -93,7 +98,12 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     this.stepper.to(this.stepIndex);
   }
 
-  NextStep(Step: any){
+  GetEvent(event: any, Step: string){
+    if(event!=null){
+      if(event.Key = "Detail"){
+        this.CustModelCode = event.CustModelCode;
+      }
+    }
     this.EnterTab(Step);
     this.ucViewMainProd.initiateForm();
   }

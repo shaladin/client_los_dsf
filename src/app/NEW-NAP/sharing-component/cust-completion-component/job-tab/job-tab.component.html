@@ -6,18 +6,6 @@
           #enjiForm="ngForm">
           <lib-ucSubsection [id]="'jobDataId'" [title]="'Job Data'" [panel]="'jobData'"></lib-ucSubsection>
           <div id="jobData">
-            <div class="form-group row ">
-              <label class="col-md-2 adins-required-label" translate>Customer Model Code</label>
-              <div class="col-md-4">
-                <select class="form-control adInsInput full-width" style="width: 100%"
-                  formControlName="CustModelCode" (change)="SetCriteriaAndRequired($event.target.value, true)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.CustModelCode.invalid }">
-                  <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
-                </select>
-                <lib-uc-show-errors [control]="JobDataForm.controls.CustModelCode"
-                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-            </div>
             <div class="form-group row">
               <label class="col-md-2 adins-required-label" translate>Profession Name</label>
               <div class="col-md-4">
@@ -196,9 +184,9 @@
                 </lib-uc-show-errors>
               </div>  
             </div>
-            <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOtherBusinessObj" [enjiForm]="enjiForm" [identifier]="'OtherBusinessAddr'"
-            [UCAddrForm]="JobDataForm"></lib-ucaddress>
           </div>
+          <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm" [identifier]="'OthBizAddr'"
+          [UCAddrForm]="JobDataForm"></lib-ucaddress>
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)
               class="btn btn-raised btn-primary">

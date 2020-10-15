@@ -54,6 +54,11 @@
                   "property": "IsFamily",
                   "value": "1",
                   "restriction": "EQ"
+                },
+                {
+                  "property": "MrCustRelationship",
+                  "value": "SPOUSE",
+                  "restriction": "NEQ"
                 }
               ],
               "result": {
@@ -83,6 +88,11 @@
                   "property": "IsFamily",
                   "value": "1",
                   "restriction": "EQ"
+                },
+                {
+                  "property": "MrCustRelationship",
+                  "value": "SPOUSE",
+                  "restriction": "NEQ"
                 }
               ],
               "result": {
