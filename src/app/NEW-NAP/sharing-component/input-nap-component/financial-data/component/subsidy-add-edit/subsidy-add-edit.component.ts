@@ -163,7 +163,7 @@ export class SubsidyAddEditComponent implements OnInit {
 
         this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
           (response) => {
-            if (response.BizTemplateCode == CommonConstant.CFRFN4W) {
+            if (response.BizTemplateCode == CommonConstant.CFRFN4W || response.BizTemplateCode == CommonConstant.CFNA) {
               let supplierIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeSupplier);
               if (supplierIndex != -1) {
                 this.FromTypeCodeOptions.splice(supplierIndex, 1);

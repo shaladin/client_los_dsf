@@ -380,6 +380,7 @@ export class CommonConstant {
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
+  public static ReturnStatus = "Status";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";

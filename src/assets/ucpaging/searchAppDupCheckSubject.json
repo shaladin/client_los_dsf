@@ -1,0 +1,92 @@
+{
+  "isSeq": true,
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Subject Name",
+      "name": "sortId1"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Subject Type",
+      "name": "sortId2"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Applicant No",
+      "name": "sortId3"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Cust No",
+      "name": "sortId4"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Negative",
+      "name": "sortId5"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SubjectType"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ApplicantNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "Negative"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "IsShowEdit",
+                  "value": "1",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "property": "AppCustId"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+  }
+  ]
+}

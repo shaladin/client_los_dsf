@@ -73,7 +73,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'TestMainData',
+        path: 'MainData',
         loadChildren: './main-data/main-data.module#MainDataModule'
       },
       {

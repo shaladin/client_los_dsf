@@ -48,6 +48,7 @@ export class CustMainDataPagingComponent implements OnInit {
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
+    this.inputPagingObj.title = "Customer Main Data";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -67,7 +68,7 @@ export class CustMainDataPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          this.router.navigate(["Nap/TestMainData/CustMainData/Add"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+          this.router.navigate(["Nap/MainData/NAP1/Add"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -79,7 +80,13 @@ export class CustMainDataPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      this.router.navigate(["Nap/TestMainData/CustMainData/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
+      switch(this.bizTemplateCode) {
+        case CommonConstant.CF4W :
+          this.router.navigate(["Nap/ConsumerFinance/NAP1"], {
+            queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} 
+          });
+        break;
+      }
     }
   }
 }

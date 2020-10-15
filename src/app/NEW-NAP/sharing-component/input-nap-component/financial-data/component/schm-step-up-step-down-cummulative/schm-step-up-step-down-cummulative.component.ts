@@ -49,7 +49,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA){
           this.PriceLabel = "Financing Amount";
         }
       });
