@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -27,6 +27,7 @@ export class EmergencyContactTabComponent implements OnInit {
   @Input() appId: number;
   @Input() AppCustId: number;
   @Input() isMarried: boolean;
+  @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   isUcAddressReady: boolean;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputUcAddressObj: InputAddressObj = new InputAddressObj();
@@ -305,7 +306,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.http.post(URLConstant.AddEditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        //this.OutputTab.emit();
+        this.OutputTab.emit();
       },
       error => {
         console.log(error);

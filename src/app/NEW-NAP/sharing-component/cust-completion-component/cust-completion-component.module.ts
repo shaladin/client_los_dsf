@@ -10,6 +10,7 @@ import { FamilyTabComponent } from './family-tab/family-tab.component';
 import { JobTabComponent } from './job-tab/job-tab.component';
 import { MainDataComponentModule } from "../main-data-component/main-data-component.module";
 import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-contact-tab.component';
+import { FinancialTabComponent } from './financial-tab/financial-tab.component';
 
 @NgModule({
     exports: [
@@ -18,7 +19,8 @@ import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-
         CustDetailCompanyComponent,
         FamilyTabComponent,
         JobTabComponent,
-        EmergencyContactTabComponent
+        EmergencyContactTabComponent,
+        FinancialTabComponent
     ],
     imports: [
         CommonModule,
@@ -32,7 +34,8 @@ import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-
     CustDetailCompanyComponent,
     FamilyTabComponent,
     JobTabComponent,
-    EmergencyContactTabComponent],
+    EmergencyContactTabComponent,
+    FinancialTabComponent],
     providers: [
         NGXToastrService
     ]
