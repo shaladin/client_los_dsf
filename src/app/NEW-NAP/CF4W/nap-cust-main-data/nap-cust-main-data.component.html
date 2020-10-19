@@ -42,7 +42,7 @@
 
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-cust-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'"
-                [inputMode]="'EDIT'" (outputAfterSave)="getEvent($event)" (outputCancel)="Cancel()">
+                [inputMode]="appCustId ? 'EDIT' : 'ADD'" [appCustId]='appCustId' (outputAfterSave)="getEvent($event)" (outputCancel)="Cancel()">
               </app-cust-main-data>
             </div>
 

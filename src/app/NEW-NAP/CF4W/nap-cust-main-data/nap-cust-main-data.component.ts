@@ -32,6 +32,7 @@ export class NapCustMainDataComponent implements OnInit {
   ListAsset: any;
   isMarried: boolean = false;
   bizTemplateCode: string;
+  appCustId: number = 0;
   
   AppStep = {
     "NEW": 1,
@@ -104,6 +105,7 @@ export class NapCustMainDataComponent implements OnInit {
         if (response['AppCustObj']) 
         {
           this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
+          this.appCustId = response['AppCustObj'].AppCustId;
         }
       }
     );
