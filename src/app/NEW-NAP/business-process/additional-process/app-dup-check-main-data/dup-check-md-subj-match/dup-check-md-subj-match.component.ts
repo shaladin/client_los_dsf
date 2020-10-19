@@ -18,6 +18,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 export class DupCheckMdSubjMatchComponent implements OnInit {
 
   appCustId: number;
+  rowVersion: any;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   listMasterCustDuplicate: any;
   listNegativeCustDuplicate: any;
@@ -38,6 +39,12 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   ngOnInit() {
     this.getDupCheckData();
+
+    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
+      response => {
+        this.rowVersion = response['AppCustObj']['RowVersion'];
+      }
+    );
   }
 
   initViewMainInfo()
@@ -52,7 +59,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   getDupCheckData(){
-    this.http.post(URLConstant.GetAppCustMainDataByAppId, {"AppCustId": this.appCustId}).subscribe(
+    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
       response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;
@@ -121,8 +128,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   selectMasterCust(item){
-    var AppDupCheckObj = {"AppCustId": this.appCustId, "CustNo": item.CustNo};
-    this.http.post(URLConstant.MD_EditCustNoAppCust, AppDupCheckObj).subscribe(
+    var AppDupCheckObj = {"AppCustId": this.appCustId, "CustNo": item.CustNo, RowVersion:this.rowVersion};
+    this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.buttonCancelOnClick();
       }
@@ -130,8 +137,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   selectAppCust(item){
-    var AppDupCheckObj = {"AppCustId": this.appCustId, "ApplicantNo": item.ApplicantNo};
-    this.http.post(URLConstant.MD_EditApplicantNoAppCust, AppDupCheckObj).subscribe(
+    var AppDupCheckObj = {"AppCustId": this.appCustId, "ApplicantNo": item.ApplicantNo, RowVersion:this.rowVersion};
+    this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.buttonCancelOnClick();
       }
@@ -139,8 +146,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
   
   buttonNewCustOnClick() {
-    var AppDupCheckObj = {"AppCustId": this.appCustId};
-    this.http.post(URLConstant.MD_CreateApplicantNoAppCust, AppDupCheckObj).subscribe(
+    var AppDupCheckObj = {"AppCustId": this.appCustId, RowVersion:this.rowVersion};
+    this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
         this.buttonCancelOnClick();
       }

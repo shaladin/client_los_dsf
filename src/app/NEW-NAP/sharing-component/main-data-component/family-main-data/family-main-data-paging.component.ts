@@ -97,7 +97,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
+        this.inputGridObj.resultData.Data = response['ListAppCustObj'];
         this.listFamily = this.inputGridObj.resultData.Data;
       }
     );

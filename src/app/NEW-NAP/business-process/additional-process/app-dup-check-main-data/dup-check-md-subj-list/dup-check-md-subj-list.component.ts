@@ -63,10 +63,10 @@ export class DupCheckMdSubjListComponent implements OnInit {
   getSubjectList(){
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, {"AppId": this.appId}).subscribe(
       (response) => {
-        if(!response[CommonConstant.ReturnObj] || response[CommonConstant.ReturnObj].length <= 0) return;
+        if(!response['ListAppCustObj'] || response['ListAppCustObj'].length <= 0) return;
         let arSubject = new Array();
         
-        response[CommonConstant.ReturnObj].forEach(row => {
+        response['ListAppCustObj'].forEach(row => {
           let subjectType = '';
           if(row.IsCustomer) subjectType = 'CUSTOMER';
           else if(row.IsGuarantor) subjectType = 'GUARANTOR';
@@ -90,10 +90,6 @@ export class DupCheckMdSubjListComponent implements OnInit {
     );
   }
 
-  gridSubjOnClick(ev){
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/SubjMatch"], { queryParams: { "AppCustId": ev.RowObj.AppCustId } });
-  }
-
   buttonBackOnClick() {
     var bizTemplateCode = localStorage.getItem("BizTemplateCode")
     this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { queryParams: { "BizTemplateCode": bizTemplateCode } });
@@ -102,15 +98,8 @@ export class DupCheckMdSubjListComponent implements OnInit {
   buttonSubmitOnClick(){
     this.http.post(URLConstant.MD_SubmitAppDupCheck, {"AppId": this.appId}).subscribe(
       response => {
-        if (response["StatusCode"] == 200) {
-          this.toastr.successMessage(response["Message"]);
-          this.buttonBackOnClick();
-        }
-        else {
-          response["ErrorMessages"].forEach((message: string) => {
-            this.toastr.errorMessage(message["Message"]);
-          });
-        }
+        this.toastr.successMessage(response["Message"]);
+        this.buttonBackOnClick();
       }
     );
   }
