@@ -130,7 +130,18 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage("Unit cannot be 0.");
     }
     else{
-    this.http.post(URLConstant.CopyAppAsset, {AppId : this.AppId, Code : this.selectedAsset, count : this.units}).subscribe(
+    var splitted = this.selectedAsset.split(";");
+
+    this.http.post(URLConstant.CopyAppAsset, {
+      AppId : this.AppId, 
+      Code : this.selectedAsset, 
+      count : this.units,
+      FullAssetCode: splitted[0],
+      ManufacturingYear: splitted[1],
+      Color: splitted[2],
+      MrAssetConditionCode: splitted[3],
+      AssetPriceAmt: +splitted[4]
+    }).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.ngOnInit();
