@@ -192,10 +192,13 @@ export class AddressTabComponent implements OnInit {
         this.AddrObj.FaxArea = response["FaxArea"];
         this.AddrObj.Phn1 = response["Phn1"];
         this.AddrObj.Phn2 = response["Phn2"];
+        this.AddrObj.Phn3 = response["Phn3"];
         this.AddrObj.PhnArea1 = response["PhnArea1"];
         this.AddrObj.PhnArea2 = response["PhnArea2"];
+        this.AddrObj.PhnArea3 = response["PhnArea3"];
         this.AddrObj.PhnExt1 = response["PhnExt1"];
         this.AddrObj.PhnExt2 = response["PhnExt2"];
+        this.AddrObj.PhnExt3 = response["PhnExt3"];
 
         this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
         this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
