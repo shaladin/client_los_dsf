@@ -49,7 +49,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
   saveAndContinue() {
     if(this.isMarried){
       this.loadGuarantorListData();
-      if(this.listFamily.length == 0 || this.listFamily.find(x=>x.MrCustRelationship == 'SPOUSE') == null){
+      if(this.listFamily.length == 0 || this.listFamily.find(x=>x.MrCustRelationshipCode == 'SPOUSE') == null){
         this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
         return;
       }
@@ -97,7 +97,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
+        this.inputGridObj.resultData.Data = response['ListAppCustObj'];
         this.listFamily = this.inputGridObj.resultData.Data;
       }
     );

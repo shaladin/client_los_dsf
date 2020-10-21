@@ -2,34 +2,29 @@
   "isSeq": true,
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
-      "label": "Subject Name",
-      "name": "sortId1"
+      "label": "Subject Name"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
-      "label": "Subject Type",
-      "name": "sortId2"
+      "label": "Subject Type"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
-      "label": "Applicant No",
-      "name": "sortId3"
+      "label": "Applicant No"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
-      "label": "Cust No",
-      "name": "sortId4"
+      "label": "Cust No"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
-      "label": "Negative",
-      "name": "sortId5"
+      "label": "Negative"
     },
     {
       "type": "label",
@@ -79,8 +74,11 @@
                 }
               ],
               "result": {
-                "type": "callback",
-                "property": "AppCustId"
+                "type" : "url",
+                "path" : "/Nap/AdditionalProcess/AppDupCheckMainData/SubjMatch", 
+                "param" : [ {"type": "AppCustId", "property" : "AppCustId"}],
+                "icon" : "ft-edit-2", 
+                "tooltip": "Select Dupplicate Customer"
               },
               "isHide": false
             }

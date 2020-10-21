@@ -987,7 +987,7 @@ export class AssetDataComponent implements OnInit {
         OwnerName: this.AppCustObj.CustName,
         MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
         OwnerIdNo: this.AppCustObj.IdNo,
-        MrOwnerRelationshipCode: "SELF",
+        MrOwnerRelationshipCode: CommonConstant.SelfCustomer,
         OwnerAddr: this.AddrLegalObj[0].Addr,
         OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
         OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
@@ -995,7 +995,8 @@ export class AssetDataComponent implements OnInit {
         OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
         OwnerCity: this.AddrLegalObj[0].City,
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
-        OwnerMobilePhnNo: typeof(this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : ''
+        OwnerMobilePhnNo: typeof(this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
+        OwnerAddrType: CommonConstant.AddrTypeLegal,
       });
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -1011,19 +1012,23 @@ export class AssetDataComponent implements OnInit {
       this.inputAddressObjForOwner.default = this.ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
 
+      this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
       this.AssetDataForm.controls["OwnerName"].disable();
       this.AssetDataForm.controls["MrIdTypeCode"].disable();
       this.AssetDataForm.controls["OwnerIdNo"].disable();
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].disable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].disable();
       this.AssetDataForm.controls["ownerData"].disable();
+      this.AssetDataForm.controls["OwnerAddrType"].disable();
     } else {
+      this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
       this.AssetDataForm.controls["OwnerName"].enable();
       this.AssetDataForm.controls["MrIdTypeCode"].enable();
       this.AssetDataForm.controls["OwnerIdNo"].enable();
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].enable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].enable();
       this.AssetDataForm.controls["ownerData"].enable();
+      this.AssetDataForm.controls["OwnerAddrType"].enable();
 
     };
   }
