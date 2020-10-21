@@ -26,6 +26,7 @@ export class AppCustCompanyFinDataObj {
     LongTemrLiablts: any;
     ShareholderEquity: any;
     CurrRatio: any;
+    RowVersion: string;
 
 constructor() { 
     this.AppCustCompanyFinDataId = 0;
@@ -54,5 +55,6 @@ constructor() {
     this.LongTemrLiablts = 0;
     this.ShareholderEquity = 0;
     this.CurrRatio = 0;
+    this.RowVersion = "";
     }
 }

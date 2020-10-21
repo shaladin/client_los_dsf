@@ -28,12 +28,14 @@ export class AppCustPersonalJobDataObj {
     OthBizJobPosition : string;
     OthBizEstablishmentDt : Date;
     AppCustAddrJobObj: AppCustAddrObj;
+    RowVersion: string;
 
 
 constructor() { 
         this.AppCustPersonalJobDataId = 0;
         this.AppCustPersonalId = 0;
         this.IsMfEmp = false;
+        this.RowVersion = "";
         // this.MrProfessionCode = "";
         // this.CompanyName = "";
         // this.MrJobPositionCode = "";
