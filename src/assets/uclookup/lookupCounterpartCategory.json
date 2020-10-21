@@ -1,0 +1,87 @@
+{
+    "sectionTitle": "Counterpart Category",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "DESCR",
+            "id": "DescrId",
+            "value": "",
+            "label": "Counterpart Category",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "BI_CODE",
+            "id": "BiCodeId",
+            "value": "",
+            "label": "BI Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "LBPP_CODE",
+            "id": "LbppCodeId",
+            "value": "",
+            "label": "LBPP Code",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT LBPPMS_CNTRPRT_ID AS LbppmsCntrprtId, DESCR AS Descr, BI_CODE AS BiCode, LBPP_CODE AS LbppCode",
+        "from": "FROM dbo.LBPPMS_CNTRPRT  WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Counterpart Category",
+            "name": "DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "BI Code",
+            "name": "BI_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LBPP Code",
+            "name": "LBPP_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BiCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LbppCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "LbppmsCntrprtId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "LbppmsCntrprtId",
+    "propertyName": "Descr"
+}

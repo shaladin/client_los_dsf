@@ -1,0 +1,108 @@
+{
+    "sectionTitle": "Debitor Group",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "LBPPMS_DEBT_GRP_CODE",
+            "id": "LbppmsDebtGrpCodeId",
+            "value": "",
+            "label": "Debitor Group Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DESCR",
+            "id": "DescrId",
+            "value": "",
+            "label": "Debitor Group Name",
+            "placeholder": "Placeholder"
+        },{
+            "type": "textbox",
+            "name": "BI_CODE",
+            "id": "BiCodeId",
+            "value": "",
+            "label": "BI Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "LBPP_CODE",
+            "id": "LbppCodeId",
+            "value": "",
+            "label": "LBPP Code",
+            "placeholder": "Placeholder"
+        }
+
+
+
+    ],
+    "querystring": {
+        "select": "SELECT LBPPMS_DEBT_GRP_CODE AS LbppmsDebtGrpCode, DESCR AS Descr, BI_CODE AS BiCode, LBPP_CODE AS LbppCode",
+        "from": "FROM dbo.LBPPMS_DEBT_GRP WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Debitor Group Code",
+            "name": "LBPPMS_DEBT_GRP_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Debitor Group Name",
+            "name": "DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "BI Code",
+            "name": "BI_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LBPP Code",
+            "name": "LBPP_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LbppmsDebtGrpCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BiCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LbppCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "LbppmsDebtGrpCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "LbppmsDebtGrpCode",
+    "propertyName": "Descr"  
+}

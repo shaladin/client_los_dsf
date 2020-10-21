@@ -747,6 +747,12 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListAppCustCompletion = environment.losUrl + "/AppCust/GetListAppCustCompletion";
     public static GetAppCustAndListFamilyByAppId = environment.losUrl + "/AppCust/GetAppCustAndListFamilyByAppId";
     
+    // APP CUST ATTR CONTENT 
+    public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl +"/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
+    
+    // APP CUST OTHER INFO
+    public static AddEditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddEditCustCompletionOtherInfo";
+    public static GetAppCustOtherInfoByAppCustId = environment.losUrl + "/AppCustOtherInfo/GetAppCustOtherInfoByAppCustId"
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
     public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
