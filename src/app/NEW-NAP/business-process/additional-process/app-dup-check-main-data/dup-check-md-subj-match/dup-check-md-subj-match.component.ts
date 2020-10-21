@@ -20,9 +20,9 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   appCustId: number;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
-  listMasterCustDuplicate: any;
-  listNegativeCustDuplicate: any;
-  listAppCustDuplicate: any;
+  listMasterCustDuplicate: Array<Object>;
+  listNegativeCustDuplicate: Array<Object>;
+  listAppCustDuplicate: Array<Object>;
   appCustObj: AppCustObj;
   appCustPersonalObj: AppCustPersonalObj;
   appCustCompanyObj: AppCustCompanyObj;
@@ -40,13 +40,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   ngOnInit() {
     this.getDupCheckData();
-
-    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
-      response => {
-        this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
-        this.reqDupCheckAppCustObj.RowVersion = response['AppCustObj']['RowVersion'];
-      }
-    );
   }
 
   initViewMainInfo()
@@ -65,6 +58,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
       response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;
+        this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
+        this.reqDupCheckAppCustObj.RowVersion = this.appCustObj.RowVersion;
 
         if(this.mrCustTypeCode == CommonConstant.CustTypePersonal)
         {
@@ -122,9 +117,13 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
             this.listNegativeCustDuplicate = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
             this.isNegativeLock = (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) ;
             if(this.isNegativeLock && this.listNegativeCustDuplicate.length > 0) this.listNegativeCustDuplicate.forEach(item => {
-              this.reqDupCheckAppCustObj.ListAppNegativeCustObj.push(item)
+              this.reqDupCheckAppCustObj.ListAppNegativeCustObj.push({
+                'NegativeCustNo': item['NegativeCustNo'],
+                'MrNegCustTypeCode': item['MrNegCustTypeCode'],
+                'MrNegCustSourceCode': item['MrNegCustSourceCode'],
+                'NegCustCause': item['NegCustCause'],
+              })
             });
-            
           }
         );
 

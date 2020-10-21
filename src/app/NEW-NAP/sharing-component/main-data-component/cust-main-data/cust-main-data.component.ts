@@ -64,10 +64,10 @@ export class CustMainDataComponent implements OnInit {
   custDataObj: CustDataObj;
   custDataPersonalObj: CustMainDataPersonalObj;
   custDataCompanyObj: CustMainDataCompanyObj;
-  rowVersionAppCust: any;
-  rowVersionAppCustPersonal: any;
-  rowVersionAppCustCompany: any;
-  rowVersionAppCustAddr: any;
+  rowVersionAppCust: string;
+  rowVersionAppCustPersonal: string;
+  rowVersionAppCustCompany: string;
+  rowVersionAppCustAddr: string;
 
   constructor(
     private fb: FormBuilder,
