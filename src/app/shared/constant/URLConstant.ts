@@ -734,6 +734,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
     public static GetCustDataCompanyForViewByAppId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppId";
     public static GetAppCustCompanyByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyByAppCustId";
+    public static GetAppCustCompanyContactPersonByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyContactPersonByAppCustId";
+    public static AddOrEditAppCustCompanyContactPerson = environment.losUrl + "/AppCust/AddOrEditAppCustCompanyContactPerson";
 
     //CUST MAIN DATA
     public static GetAppCustMainDataByAppId = environment.losUrl + "/AppCust/GetAppCustMainDataByAppId";
