@@ -29,11 +29,11 @@ export class CcContactInformationTabComponent implements OnInit {
   IsUcAddrReady: boolean = false;
   TempAppCustCompanyContactPersonObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
   DictRefMaster: any = {};
-  private readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
-  private readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
-  private readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
-  private readonly MasterCustRelationCode: string = CommonConstant.RefMasterTypeCodeCustRelationship;
-  private readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
+  readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
+  readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
+  readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
+  readonly MasterCustRelationCode: string = CommonConstant.RefMasterTypeCodeCustRelationship;
+  readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
