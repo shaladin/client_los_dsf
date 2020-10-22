@@ -12,6 +12,7 @@ import { MainDataComponentModule } from "../main-data-component/main-data-compon
 import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-contact-tab.component';
 import { OtherInfoTabComponent } from './other-info-tab/other-info-tab.component';
 import { NgxCurrencyModule } from "ngx-currency";
+import { AttrContentComponentComponent } from './attr-content-component/attr-content-component.component';
 
 
 export const customCurrencyMaskConfig = {     
@@ -49,7 +50,8 @@ export const customCurrencyMaskConfig = {
     FamilyTabComponent,
     JobTabComponent,
     EmergencyContactTabComponent,
-    OtherInfoTabComponent],
+    OtherInfoTabComponent,
+    AttrContentComponentComponent],
     providers: [
         NGXToastrService
     ]
