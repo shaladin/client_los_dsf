@@ -24,7 +24,6 @@ import { environment } from 'environments/environment';
 })
 export class EmergencyContactTabComponent implements OnInit {
 
-  @Input() appId: number;
   @Input() AppCustId: number;
   @Input() isMarried: boolean;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();

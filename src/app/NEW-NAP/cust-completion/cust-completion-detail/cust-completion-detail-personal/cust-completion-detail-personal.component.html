@@ -80,16 +80,16 @@
               <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="GetEvent($event, 'Family')"> </app-address-tab>
             </div>
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
-              <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Job')"> </app-family-tab>
+              <app-family-tab *ngIf="stepIndex == 3" [AppId]="AppId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Job')"> </app-family-tab>
             </div>
             <div id="job-data-tab" class="content" role="tabpanel" aria-labelledby="job-data-tab-trigger">
               <app-job-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" [CustModelCode]="CustModelCode" (OutputTab)="GetEvent($event, 'Emergency')"> </app-job-tab>
             </div>
             <div id="emergency-contact-tab" class="content" role="tabpanel" aria-labelledby="emergency-contact-tab-trigger">
-              <app-emergency-contact-tab *ngIf="stepIndex == 5" [appId]="AppId" [AppCustId]="AppCustId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Financial')"> </app-emergency-contact-tab>
+              <app-emergency-contact-tab *ngIf="stepIndex == 5" [AppCustId]="AppCustId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Financial')"> </app-emergency-contact-tab>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-tab *ngIf="stepIndex == 6"> </app-financial-tab>
+              <app-financial-tab *ngIf="stepIndex == 6" [AppCustId]="AppCustId" [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'CustAttr')"> </app-financial-tab>
               <!-- <app-cust-fin-data-tab [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" (outputTab)="getValue($event)"
               *ngIf="stepIndex == 6">
             </app-cust-fin-data-tab> -->

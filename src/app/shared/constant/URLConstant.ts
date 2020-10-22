@@ -725,8 +725,6 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCustDataByAppId = environment.losUrl + "/AppCust/GetCustDataByAppId";
     public static GetAppCustPersonalContactPersonsByAppCustPersonalId = environment.losUrl + "/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
     public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
-    public static GetAppCustBankAccsByAppCustId = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccsByAppCustId";
-
     public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
 
     //CUST DATA COMPANY
@@ -743,7 +741,12 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static DeleteAppCustMainData = environment.losUrl + "/AppCust/DeleteAppCustMainData";
     public static CopyAllExistingCustByAppId = environment.losUrl + "/AppCust/CopyAllExistingCustByAppId";
     public static GetListAppCustCompletion = environment.losUrl + "/AppCust/GetListAppCustCompletion";
-    public static GetAppCustAndListFamilyByAppId = environment.losUrl + "/AppCust/GetAppCustAndListFamilyByAppId";
+    public static GetAppCustAndListFamilyByAppId = environment.losUrl + "/AppCust/GetAppCustAndListFamilyByAppId";    
+    public static GetAppCustBankAccAndStatementForView = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccAndStatementForView";
+    public static AddAppCustBankAccAndStmnt = environment.losUrl + "/AppCustBankAcc/AddAppCustBankAccAndStmnt";
+    public static EditAppCustBankAccAndStmnt = environment.losUrl + "/AppCustBankAcc/EditAppCustBankAccAndStmnt";
+    public static DeleteAppCustBankAccAndStmnt = environment.losUrl + "/AppCustBankAcc/DeleteAppCustBankAccAndStmnt";
+    public static DeleteAppCustBankStmnt = environment.losUrl + "/AppCustBankStmnt/DeleteAppCustBankStmnt";
     
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
@@ -1099,6 +1102,10 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     //App Cust Emergency Contact
     public static AddEditAppCustEmrgncCntct = environment.losUrl + "/AppCustEmrgncCntct/AddEditAppCustEmrgncCntct";
     public static GetAppCustEmrgncCntctByAppCustId = environment.losUrl + "/AppCustEmrgncCntct/GetAppCustEmrgncCntctByAppCustId";
+    
+    //App Cust Personal Fin Data
+    public static GetAppCustPersonalFinDataByAppCustPersonalId = environment.losUrl + "/AppCustPersonalFinData/GetAppCustPersonalFinDataByAppCustPersonalId";
+    public static AddEditAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/AddEditAppCustPersonalFinData";
     
     //Verf Question Answer
     public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"

@@ -10,9 +10,11 @@ export class AppCustBankAccObj {
     BankBranchRegRptCode: string;
     BalanceAmt: number;
     IsDefault: boolean;
+    IsActive: boolean;
     BankInfo: string;
     AppCustBankStmntObjs: Array<any>;
-
+    RowVersion: string[];
+    
 constructor() { 
         this.AppCustBankAccId = 0;      
     }

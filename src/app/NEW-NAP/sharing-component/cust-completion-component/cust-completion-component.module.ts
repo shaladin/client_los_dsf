@@ -11,7 +11,21 @@ import { JobTabComponent } from './job-tab/job-tab.component';
 import { MainDataComponentModule } from "../main-data-component/main-data-component.module";
 import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-contact-tab.component';
 import { FinancialTabComponent } from './financial-tab/financial-tab.component';
+import { BankSectionComponent } from './financial-tab/bank-section/bank-section.component';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 
+export const customCurrencyMaskConfig = {     
+    align: "right",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false,
+    inputMode: CurrencyMaskInputMode.NATURAL };
+    
 @NgModule({
     exports: [
         AddressTabComponent,
@@ -26,7 +40,8 @@ import { FinancialTabComponent } from './financial-tab/financial-tab.component';
         CommonModule,
         AdInsModule,
         MatRadioModule,
-        MainDataComponentModule
+        MainDataComponentModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
     AddressTabComponent,
@@ -35,7 +50,8 @@ import { FinancialTabComponent } from './financial-tab/financial-tab.component';
     FamilyTabComponent,
     JobTabComponent,
     EmergencyContactTabComponent,
-    FinancialTabComponent],
+    FinancialTabComponent,
+    BankSectionComponent],
     providers: [
         NGXToastrService
     ]
