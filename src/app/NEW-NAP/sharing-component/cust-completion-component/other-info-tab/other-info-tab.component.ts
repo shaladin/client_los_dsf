@@ -49,6 +49,7 @@ export class OtherInfoTabComponent implements OnInit {
   attrGroup: string;
   ResponseCustOtherInfo : any;
   appCustOtherInfo : AppCustOtherInfoObj;
+  custAttrRequest = new Array<Object>();
   async ngOnInit() {
     this.attrGroup = this.CustTypeCode == CommonConstant.CustTypeCompany ? CommonConstant.AttrGroupCustCompanyOther:CommonConstant.AttrGroupCustPersonalOther;
  
@@ -114,9 +115,27 @@ export class OtherInfoTabComponent implements OnInit {
  
   }
 
-  SaveForm(){ 
+  SaveForm() {
+    this.setAttrContent();
+    this.setAppCustOtherInfoData();
+
+    var RequestAppCustOtherInfoObj = {
+      ListRequestAppCustAttrObject: this.custAttrRequest,
+      RequestAppCustOtherInfoObj: this.appCustOtherInfo
+    }
+    this.httpClient.post(URLConstant.AddEditCustCompletionOtherInfo, RequestAppCustOtherInfoObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }
+  setAttrContent(){
     var formValue = this.OtherInformationForm['controls']['AttrList'].value;
-    var custAttrRequest = new Array<Object>();
+    this.custAttrRequest = new Array<Object>();
      
     if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
       for (const key in formValue) {
@@ -128,25 +147,10 @@ export class OtherInfoTabComponent implements OnInit {
           AttrValue: formValue[key]["AttrValue"],
           AttrGroup: this.attrGroup
         };
-        custAttrRequest.push(custAttr);}
+        this.custAttrRequest.push(custAttr);}
 
       }  
     }
-        this.setAppCustOtherInfoData();
-
-        var RequestAppCustOtherInfoObj= {
-          ListRequestAppCustAttrObject: custAttrRequest,
-          RequestAppCustOtherInfoObj: this.appCustOtherInfo
-        }
-        this.httpClient.post(URLConstant.AddEditCustCompletionOtherInfo, RequestAppCustOtherInfoObj).subscribe(
-          (response) => { 
-            this.toastr.successMessage(response["Message"]);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-     
   }
   setAppCustOtherInfoData() {
     this.appCustOtherInfo = new AppCustOtherInfoObj();
