@@ -1,4 +1,4 @@
-export class AppCustEmrgncCnctObj {
+export class AppCustEmrgncCntctObj {
     AppCustEmrgncCntctId : number;
     AppCustId : number;
     ContactPersonName : string;
@@ -15,7 +15,7 @@ export class AppCustEmrgncCnctObj {
     MrMaritalStatCode : string;
     MrNationalityCode : string;
     NationalityCountryCode : string;
-    MrCustRelationship : string;
+    MrCustRelationshipCode : string;
     MobilePhnNo1 : string;
     MobilePhnNo2 : string;
     Email : string;
@@ -36,6 +36,7 @@ export class AppCustEmrgncCnctObj {
     PhnArea3 : string;
     Phn3 : string;
     PhnExt3 : string;
+    RowVersion : string[];
 
     constructor() {
         this.AppCustEmrgncCntctId = 0,
@@ -54,7 +55,7 @@ export class AppCustEmrgncCnctObj {
         this.MrMaritalStatCode = "",
         this.MrNationalityCode = "",
         this.NationalityCountryCode = "",
-        this.MrCustRelationship = "",
+        this.MrCustRelationshipCode = "",
         this.MobilePhnNo1 = "",
         this.MobilePhnNo2 = "",
         this.Email = "",
@@ -74,6 +75,7 @@ export class AppCustEmrgncCnctObj {
         this.PhnExt2 = "",
         this.PhnArea3 = "",
         this.Phn3 = "",
-        this.PhnExt3 = ""
+        this.PhnExt3 = "",
+        this.RowVersion = []
     }
 }

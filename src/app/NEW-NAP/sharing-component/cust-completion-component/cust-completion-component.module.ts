@@ -10,7 +10,22 @@ import { FamilyTabComponent } from './family-tab/family-tab.component';
 import { JobTabComponent } from './job-tab/job-tab.component';
 import { MainDataComponentModule } from "../main-data-component/main-data-component.module";
 import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-contact-tab.component';
+import { OtherInfoTabComponent } from './other-info-tab/other-info-tab.component';
+import { NgxCurrencyModule } from "ngx-currency";
+import { AttrContentComponentComponent } from './attr-content-component/attr-content-component.component';
 
+
+export const customCurrencyMaskConfig = {     
+    align: "left",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false 
+  };
 @NgModule({
     exports: [
         AddressTabComponent,
@@ -18,13 +33,15 @@ import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-
         CustDetailCompanyComponent,
         FamilyTabComponent,
         JobTabComponent,
-        EmergencyContactTabComponent
+        EmergencyContactTabComponent,
+        OtherInfoTabComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
         MatRadioModule,
-        MainDataComponentModule
+        MainDataComponentModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
     AddressTabComponent,
@@ -32,7 +49,9 @@ import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-
     CustDetailCompanyComponent,
     FamilyTabComponent,
     JobTabComponent,
-    EmergencyContactTabComponent],
+    EmergencyContactTabComponent,
+    OtherInfoTabComponent,
+    AttrContentComponentComponent],
     providers: [
         NGXToastrService
     ]
