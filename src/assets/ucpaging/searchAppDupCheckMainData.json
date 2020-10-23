@@ -1,5 +1,5 @@
 {
-    "title": "Applicant Duplicate Checking Main Data Paging",
+    "title": "Applicant Duplicate Checking Paging",
     "exportExcel": false,
     "component": [
         {
@@ -116,7 +116,7 @@
     ],
     "querystring": {
         "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat, RL.BIZ_TMPLT_CODE AS BizTmpltCode, WTL.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID AND ac.IS_CUSTOMER=1 JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'DUP_CHECK' JOIN [dbo].[V_REF_LOB] RL WITH(NOLOCK) ON a.LOB_CODE = RL.LOB_CODE",
+        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID AND ac.IS_CUSTOMER=1 JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MAN_DUP_CHECK' JOIN [dbo].[V_REF_LOB] RL WITH(NOLOCK) ON a.LOB_CODE = RL.LOB_CODE",
         "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND ac.IS_APP_CUST_CHECKED = 0"
     },
     "bodyList": [

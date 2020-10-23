@@ -11,7 +11,22 @@ import { JobTabComponent } from './job-tab/job-tab.component';
 import { MainDataComponentModule } from "../main-data-component/main-data-component.module";
 import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-contact-tab.component';
 import { CcContactInformationTabComponent } from './cc-contact-information-tab/cc-contact-information-tab.component';
+import { OtherInfoTabComponent } from './other-info-tab/other-info-tab.component';
+import { NgxCurrencyModule } from "ngx-currency";
+import { AttrContentComponentComponent } from './attr-content-component/attr-content-component.component';
 
+
+export const customCurrencyMaskConfig = {
+    align: "left",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false
+};
 @NgModule({
     exports: [
         AddressTabComponent,
@@ -20,22 +35,27 @@ import { CcContactInformationTabComponent } from './cc-contact-information-tab/c
         FamilyTabComponent,
         JobTabComponent,
         EmergencyContactTabComponent,
-        CcContactInformationTabComponent
+        CcContactInformationTabComponent,
+        OtherInfoTabComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
         MatRadioModule,
-        MainDataComponentModule
+        MainDataComponentModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
-    AddressTabComponent,
-    CustDetailPersonalComponent,
-    CustDetailCompanyComponent,
-    FamilyTabComponent,
-    JobTabComponent,
-    EmergencyContactTabComponent,
-    CcContactInformationTabComponent,],
+        AddressTabComponent,
+        CustDetailPersonalComponent,
+        CustDetailCompanyComponent,
+        FamilyTabComponent,
+        JobTabComponent,
+        EmergencyContactTabComponent,
+        CcContactInformationTabComponent,
+        OtherInfoTabComponent,
+        AttrContentComponentComponent
+    ],
     providers: [
         NGXToastrService
     ]

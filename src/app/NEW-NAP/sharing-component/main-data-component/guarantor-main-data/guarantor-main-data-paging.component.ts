@@ -90,7 +90,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
+        this.inputGridObj.resultData.Data = response['ListAppCustObj'];
         this.listGuarantor = this.inputGridObj.resultData.Data;
       }
     );

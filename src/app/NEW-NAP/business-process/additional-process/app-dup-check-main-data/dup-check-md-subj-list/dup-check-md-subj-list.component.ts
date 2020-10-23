@@ -61,12 +61,13 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   getSubjectList(){
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, {"AppId": this.appId}).subscribe(
+    this.http.post(URLConstant.MD_GetSubjectDuplicateCheckByAppId, {"AppId": this.appId}).subscribe(
       (response) => {
-        if(!response[CommonConstant.ReturnObj] || response[CommonConstant.ReturnObj].length <= 0) return;
+        let keyProp : string = 'ListSubject';
+        if(!response[keyProp] || response[keyProp].length <= 0) return;
         let arSubject = new Array();
         
-        response[CommonConstant.ReturnObj].forEach(row => {
+        response[keyProp].forEach(row => {
           let subjectType = '';
           if(row.IsCustomer) subjectType = 'CUSTOMER';
           else if(row.IsGuarantor) subjectType = 'GUARANTOR';
@@ -81,17 +82,13 @@ export class DupCheckMdSubjListComponent implements OnInit {
             'CustNo': row.CustNo,
             'IsAppCustChecked': row.IsAppCustChecked,
             'IsExistingCust': row.IsExistingCust,
-            'Negative': '-',
+            'Negative': row.MrNegCustTypeDescr ? row.MrNegCustTypeDescr : '-',
             'IsShowEdit': !row.ApplicantNo && !row.CustNo ? 1 : 0,
           });
         });
         this.gridSubjectObj.resultData = {Data: arSubject}
       }
     );
-  }
-
-  gridSubjOnClick(ev){
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/SubjMatch"], { queryParams: { "AppCustId": ev.RowObj.AppCustId } });
   }
 
   buttonBackOnClick() {
@@ -102,15 +99,8 @@ export class DupCheckMdSubjListComponent implements OnInit {
   buttonSubmitOnClick(){
     this.http.post(URLConstant.MD_SubmitAppDupCheck, {"AppId": this.appId}).subscribe(
       response => {
-        if (response["StatusCode"] == 200) {
-          this.toastr.successMessage(response["Message"]);
-          this.buttonBackOnClick();
-        }
-        else {
-          response["ErrorMessages"].forEach((message: string) => {
-            this.toastr.errorMessage(message["Message"]);
-          });
-        }
+        this.toastr.successMessage(response["Message"]);
+        this.buttonBackOnClick();
       }
     );
   }
