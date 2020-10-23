@@ -2,7 +2,6 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-        <div class="row">
           <div class="ucSearch-Button-Right">
             <button type="button" class="btn btn-raised btn-warning mr-1" translate>
               <i class="fa fa-arrow-left"></i> Back
@@ -12,7 +11,6 @@
             </button>
           </div>
           <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" #viewMainInfo> </lib-ucviewgeneric>
-        </div>
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <div class="step" data-target="#customer-detail-tab">
@@ -97,6 +95,7 @@
             <div id="cust-attr-tab" class="content" role="tabpanel" aria-labelledby="cust-attr-tab-trigger">
               <!-- <app-cust-attr-section [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 7">
             </app-cust-attr-section> -->
+            <app-other-info-tab [CustTypeCode]="'PERSONAL'"  *ngIf="stepIndex == 7"> </app-other-info-tab>
             </div>
           </div>
         </div>

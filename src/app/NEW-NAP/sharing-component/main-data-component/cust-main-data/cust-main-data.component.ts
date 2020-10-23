@@ -18,6 +18,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -60,12 +61,13 @@ export class CustMainDataComponent implements OnInit {
   CompanyTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
+  custDataObj: CustDataObj;
   custDataPersonalObj: CustMainDataPersonalObj;
   custDataCompanyObj: CustMainDataCompanyObj;
-  rowVersionAppCust: any;
-  rowVersionAppCustPersonal: any;
-  rowVersionAppCustCompany: any;
-  rowVersionAppCustAddr: any;
+  rowVersionAppCust: string;
+  rowVersionAppCustPersonal: string;
+  rowVersionAppCustCompany: string;
+  rowVersionAppCustAddr: string;
 
   constructor(
     private fb: FormBuilder,
@@ -117,19 +119,26 @@ export class CustMainDataComponent implements OnInit {
   }
 
   initcustMainDataMode() {
+    this.custDataObj = new CustDataObj();
+    this.custDataObj.AppId = this.appId;
+    if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
+
     switch (this.custMainDataMode) {
       case CommonConstant.CustMainDataModeCust:
         this.isIncludeCustRelation = false;
+        this.custDataObj.IsCustomer = true;
         this.subjectTitle = 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.isIncludeCustRelation = true;
+        this.custDataObj.IsGuarantor = true;
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         break;
       case CommonConstant.CustMainDataModeFamily:
         this.isIncludeCustRelation = true;
+        this.custDataObj.IsFamily = true;
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         break;

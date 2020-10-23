@@ -2,7 +2,6 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -18,7 +17,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   AppCustId: number;
   AppCustCompanyId: number;
   stepIndex: number = 1;
-  isMarried: boolean = false;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   CustStep = {
@@ -95,5 +93,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   NextStep(Step: any){
     this.EnterTab(Step);
     this.ucViewMainProd.initiateForm();
+    
   }
 }
