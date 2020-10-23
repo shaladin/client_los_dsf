@@ -5,7 +5,7 @@
         <form class="form form-horizontal" [formGroup]="CustMainDataForm"
           (ngSubmit)="CustMainDataForm.valid && SaveForm()" #enjiForm="ngForm">
           <div class="form-body">
-            <div class="form-group row">
+            <div class="form-group row" *ngIf="!custDataObj?.IsFamily">
               <label class="col-md-2" translate>{{subjectTitle}} Type</label>
               <div class="col-md-10">
                 <mat-radio-group formControlName="MrCustTypeCode"

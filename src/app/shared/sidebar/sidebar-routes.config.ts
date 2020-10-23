@@ -53,6 +53,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Nap/MainData/NAP1/Paging', Title: 'Cust Main Data', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }]},
       { Path: '/Nap/AdditionalProcess/AppDupCheckMainData/Paging', Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: '/Nap/MainData/NAP2/Paging', Title: 'NAP Detail', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }]},      
+      { Path: '/Nap/CustCompletion/Paging', Title: 'Customer Data Completion', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }]},      
     ], Params: []
   },
   {

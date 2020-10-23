@@ -91,8 +91,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
             "IdNo": this.appCustObj.IdNo,
             "TaxIdNo": this.appCustObj.TaxIdNo,
             "BirthDt" : this.appCustCompanyObj.EstablishmentDt,
-            "MotherMaidenName" : "-",
-            "MobilePhnNo1" : "-",
+            "MotherMaidenName" : "",
+            "MobilePhnNo1" : "",
             "RowVersion": response['AppCustObj'].RowVersion,
             "AppId": this.appCustObj.AppId
           }
