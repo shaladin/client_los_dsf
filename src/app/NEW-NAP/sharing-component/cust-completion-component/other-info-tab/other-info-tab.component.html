@@ -10,14 +10,14 @@
               <div class="row" *ngIf="IsLookupReady" >
                 <div class="col-md-6"> 
                   <div class="form-group row">
-                    <label class="col-md-4" translate>Debitor Group</label>
+                    <label class="col-md-4 adins-required-label" translate>Debitor Group</label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputDebitorGroupLookupObj"     [parentForm]="OtherInformationForm" [identifier]="'DebitorGroup'" (lookup)="getLookupDebitorGroup($event)">
                       </lib-uclookupgeneric>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4" translate>Counterpart Catetgory</label>
+                    <label class="col-md-4 adins-required-label" translate>Counterpart Catetgory</label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputCounterpartCategoryLookupObj" [parentForm]="OtherInformationForm" [identifier]="'CounterpartCategry'" (lookup)="getLookupCounterpartCategory($event)">
                       </lib-uclookupgeneric>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4" translate>Debitor Business Scale</label>
+                    <label class="col-md-4 adins-required-label" translate>Debitor Business Scale</label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputDebitorBusinessScaleLookupObj"
                          [parentForm]="OtherInformationForm" [identifier]="'DebitorBusinessScale'"
@@ -35,7 +35,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4" translate>Sustainable Financial Business</label>
+                    <label class="col-md-4 adins-required-label" translate>Sustainable Financial Business</label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputSustaianableFinancialBusinessLookupObj"
                          [parentForm]="OtherInformationForm" [identifier]="'SustainableFinancialBusiness'"(lookup)="getLookupSustainableFinancialBusiness($event)">
