@@ -13,6 +13,8 @@ import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-
 import { FinancialTabComponent } from './financial-tab/financial-tab.component';
 import { BankSectionComponent } from './financial-tab/bank-section/bank-section.component';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { LegalDocTabComponent } from "./legal-doc-tab/legal-doc-tab.component";
+import { LegalDocDetailComponent } from "./legal-doc-tab/legal-doc-detail/legal-doc-detail.component";
 
 export const customCurrencyMaskConfig = {     
     align: "right",     
@@ -34,7 +36,8 @@ export const customCurrencyMaskConfig = {
         FamilyTabComponent,
         JobTabComponent,
         EmergencyContactTabComponent,
-        FinancialTabComponent
+        FinancialTabComponent,
+        LegalDocTabComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +54,9 @@ export const customCurrencyMaskConfig = {
     JobTabComponent,
     EmergencyContactTabComponent,
     FinancialTabComponent,
-    BankSectionComponent],
+    BankSectionComponent,
+    LegalDocTabComponent,
+    LegalDocDetailComponent],
     providers: [
         NGXToastrService
     ]

@@ -16,6 +16,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
+  AppCustCompanyId: number;
   stepIndex: number = 1;
   isMarried: boolean = false;
   private stepper: Stepper;
@@ -56,6 +57,12 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       linear: false,
       animation: true
     })
+
+    this.http.post(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+      (response) => {
+        this.AppCustCompanyId = response["AppCustCompanyId"];
+      }
+    );
   }
 
   EnterTab(type: string) { 
