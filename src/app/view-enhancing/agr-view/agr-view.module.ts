@@ -35,6 +35,7 @@ import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.componen
 import { AgrMainInfoComponent } from "../agr-main-info/agr-main-info.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
+import { AppAssetDataDetailFl4wComponent } from 'app/NEW-NAP/FL4W/view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 
 
 @NgModule({
@@ -76,10 +77,12 @@ import { AppViewComponentsModule } from "app/components/general/app-view/app-vie
         ViewDeliveryOrderComponent,
         ViewAgrmntSummaryComponent,
         ViewAgrmntDocumentComponent,
-        AgrMainInfoComponent
+        AgrMainInfoComponent,
+        AppAssetDataDetailFl4wComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
+        AppAssetDataDetailFl4wComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,

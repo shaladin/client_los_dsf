@@ -30,7 +30,6 @@ export class AppMainInfoComponent implements OnInit {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
         this.viewGenericObj.viewEnvironment = environment.losUrl;
-        this.viewGenericObj.whereValue = this.arrValue;
         this.viewGenericObj.ddlEnvironments = [
           {
             name: "AppNo",
