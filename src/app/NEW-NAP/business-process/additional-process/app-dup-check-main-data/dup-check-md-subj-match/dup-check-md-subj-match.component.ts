@@ -9,6 +9,7 @@ import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -19,16 +20,17 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   appCustId: number;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
-  listMasterCustDuplicate: any;
-  listNegativeCustDuplicate: any;
-  listAppCustDuplicate: any;
+  listMasterCustDuplicate: Array<Object>;
+  listNegativeCustDuplicate: Array<Object>;
+  listAppCustDuplicate: Array<Object>;
   appCustObj: AppCustObj;
   appCustPersonalObj: AppCustPersonalObj;
   appCustCompanyObj: AppCustCompanyObj;
+  reqDupCheckAppCustObj: ReqDupCheckAppCustObj = new ReqDupCheckAppCustObj();
   mrCustTypeCode: string;
-
   isLock: boolean = true;
   isMasterLock: boolean = false;
+  isNegativeLock: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.queryParams.subscribe(params => {
@@ -52,10 +54,12 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   getDupCheckData(){
-    this.http.post(URLConstant.GetAppCustMainDataByAppId, {"AppCustId": this.appCustId}).subscribe(
+    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
       response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;
+        this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
+        this.reqDupCheckAppCustObj.RowVersion = this.appCustObj.RowVersion;
 
         if(this.mrCustTypeCode == CommonConstant.CustTypePersonal)
         {
@@ -87,14 +91,14 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
             "IdNo": this.appCustObj.IdNo,
             "TaxIdNo": this.appCustObj.TaxIdNo,
             "BirthDt" : this.appCustCompanyObj.EstablishmentDt,
-            "MotherMaidenName" : "-",
-            "MobilePhnNo1" : "-",
+            "MotherMaidenName" : "",
+            "MobilePhnNo1" : "",
             "RowVersion": response['AppCustObj'].RowVersion,
             "AppId": this.appCustObj.AppId
           }
         }
 
-        //List Cust Duplicate Duplicate Checking
+        //List Master Cust Duplicate Checking
         this.http.post(URLConstant.GetCustomerDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.listMasterCustDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
@@ -107,10 +111,26 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           }
         );
 
+        //List Negative Cust Checking
+        this.http.post(URLConstant.GetNegativeCustomerDuplicateCheck, requestDupCheck).subscribe(
+          response => {
+            this.listNegativeCustDuplicate = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
+            this.isNegativeLock = (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) ;
+            if(this.isNegativeLock && this.listNegativeCustDuplicate.length > 0) this.listNegativeCustDuplicate.forEach(item => {
+              this.reqDupCheckAppCustObj.ListAppNegativeCustObj.push({
+                'NegativeCustNo': item['NegativeCustNo'],
+                'MrNegCustTypeCode': item['MrNegCustTypeCode'],
+                'MrNegCustSourceCode': item['MrNegCustSourceCode'],
+                'NegCustCause': item['NegCustCause'],
+              })
+            });
+          }
+        );
+
         //List App Cust Duplicate Checking
         this.http.post(URLConstant.MD_GetAppCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
-            this.listAppCustDuplicate = response[CommonConstant.ReturnObj];
+            this.listAppCustDuplicate = response["ListDuplicateAppCust"];
             if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) this.isLock = true;
             else if(!this.isMasterLock) this.isLock = false;
           }
@@ -121,8 +141,9 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   selectMasterCust(item){
-    var AppDupCheckObj = {"AppCustId": this.appCustId, "CustNo": item.CustNo};
-    this.http.post(URLConstant.MD_EditCustNoAppCust, AppDupCheckObj).subscribe(
+    this.reqDupCheckAppCustObj.ApplicantNo = "";
+    this.reqDupCheckAppCustObj.CustNo = item.CustNo;
+    this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, this.reqDupCheckAppCustObj).subscribe(
       response => {
         this.buttonCancelOnClick();
       }
@@ -130,17 +151,30 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   selectAppCust(item){
-    var AppDupCheckObj = {"AppCustId": this.appCustId, "ApplicantNo": item.ApplicantNo};
-    this.http.post(URLConstant.MD_EditApplicantNoAppCust, AppDupCheckObj).subscribe(
+    this.reqDupCheckAppCustObj.CustNo = "";
+    this.reqDupCheckAppCustObj.ApplicantNo = item.ApplicantNo;
+    this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, this.reqDupCheckAppCustObj).subscribe(
       response => {
         this.buttonCancelOnClick();
       }
     );
   }
+
+  checkNegCustOnChange(event, item)
+  {
+    if(event.checked) 
+      this.reqDupCheckAppCustObj.ListAppNegativeCustObj.push(item)
+    else 
+    {
+      var index = this.reqDupCheckAppCustObj.ListAppNegativeCustObj.indexOf(item);
+      if(index >= 0) this.reqDupCheckAppCustObj.ListAppNegativeCustObj.splice(index, 1);
+    }
+  }
   
   buttonNewCustOnClick() {
-    var AppDupCheckObj = {"AppCustId": this.appCustId};
-    this.http.post(URLConstant.MD_CreateApplicantNoAppCust, AppDupCheckObj).subscribe(
+    this.reqDupCheckAppCustObj.ApplicantNo = "";
+    this.reqDupCheckAppCustObj.CustNo = "";
+    this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, this.reqDupCheckAppCustObj).subscribe(
       response => {
         this.buttonCancelOnClick();
       }

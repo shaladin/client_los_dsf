@@ -10,22 +10,24 @@ import { FamilyTabComponent } from './family-tab/family-tab.component';
 import { JobTabComponent } from './job-tab/job-tab.component';
 import { MainDataComponentModule } from "../main-data-component/main-data-component.module";
 import { EmergencyContactTabComponent } from './emergency-contact-tab/emergency-contact-tab.component';
+import { CcContactInformationTabComponent } from './cc-contact-information-tab/cc-contact-information-tab.component';
+import { OtherInfoTabComponent } from './other-info-tab/other-info-tab.component';
+import { AttrContentComponentComponent } from './attr-content-component/attr-content-component.component';
 import { FinancialTabComponent } from './financial-tab/financial-tab.component';
 import { BankSectionComponent } from './financial-tab/bank-section/bank-section.component';
-import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule } from "ngx-currency";
 
-export const customCurrencyMaskConfig = {     
-    align: "right",     
-    allowNegative: true,     
-    allowZero: true,     
-    decimal: ".",     
-    precision: 2,     
-    prefix: "",     
-    suffix: "",     
-    thousands: ",",     
-    nullable: false,
-    inputMode: CurrencyMaskInputMode.NATURAL };
-    
+export const customCurrencyMaskConfig = {
+    align: "left",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false
+};
 @NgModule({
     exports: [
         AddressTabComponent,
@@ -34,7 +36,9 @@ export const customCurrencyMaskConfig = {
         FamilyTabComponent,
         JobTabComponent,
         EmergencyContactTabComponent,
-        FinancialTabComponent
+        FinancialTabComponent,
+        CcContactInformationTabComponent,
+        OtherInfoTabComponent
     ],
     imports: [
         CommonModule,
@@ -44,14 +48,18 @@ export const customCurrencyMaskConfig = {
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
-    AddressTabComponent,
-    CustDetailPersonalComponent,
-    CustDetailCompanyComponent,
-    FamilyTabComponent,
-    JobTabComponent,
-    EmergencyContactTabComponent,
-    FinancialTabComponent,
-    BankSectionComponent],
+        AddressTabComponent,
+        CustDetailPersonalComponent,
+        CustDetailCompanyComponent,
+        FamilyTabComponent,
+        JobTabComponent,
+        EmergencyContactTabComponent,
+        CcContactInformationTabComponent,
+        OtherInfoTabComponent,
+        AttrContentComponentComponent,
+        FinancialTabComponent,
+        BankSectionComponent
+    ],
     providers: [
         NGXToastrService
     ]

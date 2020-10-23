@@ -354,6 +354,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode"
     public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode"
 
+    //REF ATTR
+    public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
     //REF PROV DISTRICT
     public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
     public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -732,9 +734,12 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
     public static GetCustDataCompanyForViewByAppId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppId";
     public static GetAppCustCompanyByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyByAppCustId";
+    public static GetAppCustCompanyContactPersonByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyContactPersonByAppCustId";
+    public static AddOrEditAppCustCompanyContactPerson = environment.losUrl + "/AppCust/AddOrEditAppCustCompanyContactPerson";
 
     //CUST MAIN DATA
     public static GetAppCustMainDataByAppId = environment.losUrl + "/AppCust/GetAppCustMainDataByAppId";
+    public static GetAppCustMainDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustMainDataByAppCustId";
     public static GetListAppCustMainDataByAppId = environment.losUrl + "/AppCust/GetListAppCustMainDataByAppId";
     public static AddEditCustMainDataPersonal = environment.losUrl + "/AppCust/AddEditCustMainDataPersonal";
     public static AddEditCustMainDataCompany = environment.losUrl + "/AppCust/AddEditCustMainDataCompany";
@@ -748,6 +753,12 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static DeleteAppCustBankAccAndStmnt = environment.losUrl + "/AppCustBankAcc/DeleteAppCustBankAccAndStmnt";
     public static DeleteAppCustBankStmnt = environment.losUrl + "/AppCustBankStmnt/DeleteAppCustBankStmnt";
     
+    // APP CUST ATTR CONTENT 
+    public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl +"/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
+    
+    // APP CUST OTHER INFO
+    public static AddEditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddEditCustCompletionOtherInfo";
+    public static GetAppCustOtherInfoByAppCustId = environment.losUrl + "/AppCustOtherInfo/GetAppCustOtherInfoByAppCustId"
     // APP TC
     public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
     public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
@@ -1008,14 +1019,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static SubmitAppDupCheck = environment.losUrl + "/AppDupCheck/SubmitAppDupCheck";
 
     //Cust Main Data Dup Checking
+    public static MD_GetSubjectDuplicateCheckByAppId = environment.losUrl + "/AppDupCheckMainData/GetSubjectDuplicateCheckByAppId";
     public static MD_GetAppCustDuplicateCheck = environment.losUrl + "/AppDupCheckMainData/GetAppCustDuplicateCheck";
-    public static MD_GetAppGuarantorDuplicateCheck = environment.losUrl + "/AppDupCheckMainData/GetAppGuarantorDuplicateCheck";
-    public static MD_GetSpouseDuplicateCheck = environment.losUrl + "/AppDupCheckMainData/GetSpouseDuplicateCheck";
-    public static MD_GetAppShareholderDuplicateCheck = environment.losUrl + "/AppDupCheckMainData/GetAppShareholderDuplicateCheck";
-    public static MD_AddAppDupCheckCust = environment.losUrl + "/AppDupCheckMainData/AddAppDupCheckCust";
-    public static MD_EditCustNoAppCust = environment.losUrl + "/AppDupCheckMainData/EditCustNoAppCust";
-    public static MD_EditApplicantNoAppCust = environment.losUrl + "/AppDupCheckMainData/EditApplicantNoAppCust";
-    public static MD_CreateApplicantNoAppCust = environment.losUrl + "/AppDupCheckMainData/CreateApplicantNoAppCust";
+    public static MD_EditApplicantNoCustNoAppCust = environment.losUrl + "/AppDupCheckMainData/EditApplicantNoCustNoAppCust";
     public static MD_SubmitAppDupCheck = environment.losUrl + "/AppDupCheckMainData/SubmitAppDupCheck";
 
     // Product Offering
