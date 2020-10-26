@@ -23,7 +23,7 @@ export class AppCustCompanyFinDataObj {
     NetFixedAsset: number;
     TotalAsset: number;
     CurrLiablts: number;
-    LongTemrLiablts: number;
+    LongTermLiablts: number;
     ShareholderEquity: number;
     CurrRatio: number;
     RowVersion: string[];
@@ -52,7 +52,7 @@ constructor() {
     this.NetFixedAsset = 0;
     this.TotalAsset = 0;
     this.CurrLiablts = 0;
-    this.LongTemrLiablts = 0;
+    this.LongTermLiablts = 0;
     this.ShareholderEquity = 0;
     this.CurrRatio = 0;
     this.RowVersion = [];
