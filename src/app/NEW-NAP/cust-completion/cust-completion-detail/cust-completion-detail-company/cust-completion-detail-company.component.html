@@ -85,8 +85,7 @@
             </div>
             <div id="Financial-tab" class="content" role="tabpanel"
               aria-labelledby="Financial-tab-trigger">
-              <!-- <app-customer-personal-job-data (outputTab)="getValue($event)" *ngIf="stepIndex == 5">
-            </app-customer-personal-job-data> -->
+              <app-financial-company *ngIf="stepIndex == 5" [AppCustId]="AppCustId" (OutputTab)="NextStep('Legal')"> </app-financial-company>
             </div>
             <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
               <app-legal-doc-tab *ngIf="stepIndex == 6" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="NextStep('Other')"> </app-legal-doc-tab>

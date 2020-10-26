@@ -10,11 +10,11 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
-  selector: 'app-financial-tab',
-  templateUrl: './financial-tab.component.html',
-  styleUrls: ['./financial-tab.component.scss']
+  selector: 'app-financial-personal',
+  templateUrl: './financial-personal.component.html',
+  styleUrls: ['./financial-personal.component.scss']
 })
-export class FinancialTabComponent implements OnInit {
+export class FinancialPersonalComponent implements OnInit {
 
   @Input() AppCustId: number;
   @Input() AppCustPersonalId: number;
@@ -25,6 +25,7 @@ export class FinancialTabComponent implements OnInit {
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
 
   FinancialForm = this.fb.group({
+    AppCustPersonalId: [0],
     MonthlyIncomeAmt: ['', Validators.required],
     MrSourceOfIncomeTypeCode: [''],
     OtherIncomeAmt: [0],
@@ -34,7 +35,8 @@ export class FinancialTabComponent implements OnInit {
     OtherMonthlyInstAmt: [0],
     SpouseMonthlyIncomeAmt: [0],
     TotalIncomeAmt: [0],
-    NettIncomeAmt: [0]
+    NettIncomeAmt: [0],
+    RowVersion: ['']
   })
 
   constructor(private fb: FormBuilder,
@@ -70,9 +72,9 @@ export class FinancialTabComponent implements OnInit {
             MonthlyExpenseAmt: response["MonthlyExpenseAmt"],
             MonthlyInstallmentAmt: response["MonthlyInstallmentAmt"],
             OtherMonthlyInstAmt: response["OtherMonthlyInstAmt"],
-            SpouseMonthlyIncomeAmt: response["SpouseMonthlyIncomeAmt"]
+            SpouseMonthlyIncomeAmt: response["SpouseMonthlyIncomeAmt"],
+            RowVersion: response["RowVersion"]
           });
-          this.AppCustPersonalFinData.RowVersion = response["RowVersion"];
           await this.CalculateFinData();
         }
       }
@@ -111,17 +113,8 @@ export class FinancialTabComponent implements OnInit {
   }
 
   SaveForm() {
+    this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
-    this.AppCustPersonalFinData.MonthlyIncomeAmt = this.FinancialForm.controls.MonthlyIncomeAmt.value;
-    this.AppCustPersonalFinData.MrSourceOfIncomeTypeCode = this.FinancialForm.controls.MrSourceOfIncomeTypeCode.value;
-    this.AppCustPersonalFinData.OtherIncomeAmt = this.FinancialForm.controls.OtherIncomeAmt.value;
-    this.AppCustPersonalFinData.IsJoinIncome = this.FinancialForm.controls.IsJoinIncome.value;
-    this.AppCustPersonalFinData.MonthlyExpenseAmt = this.FinancialForm.controls.MonthlyExpenseAmt.value;
-    this.AppCustPersonalFinData.MonthlyInstallmentAmt = this.FinancialForm.controls.MonthlyInstallmentAmt.value;
-    this.AppCustPersonalFinData.OtherMonthlyInstAmt = this.FinancialForm.controls.OtherMonthlyInstAmt.value;
-    this.AppCustPersonalFinData.SpouseMonthlyIncomeAmt = this.FinancialForm.controls.SpouseMonthlyIncomeAmt.value;
-    this.AppCustPersonalFinData.TotalIncomeAmt = this.FinancialForm.controls.TotalIncomeAmt.value;
-    this.AppCustPersonalFinData.NettIncomeAmt = this.FinancialForm.controls.NettIncomeAmt.value;
 
     this.http.post(URLConstant.AddEditAppCustPersonalFinData, this.AppCustPersonalFinData).subscribe(
       (response) => {
