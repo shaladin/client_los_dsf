@@ -2,6 +2,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -15,6 +16,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
+  AppCustCompanyId: number;
   stepIndex: number = 1;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -54,6 +56,12 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       linear: false,
       animation: true
     })
+
+    this.http.post(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+      (response) => {
+        this.AppCustCompanyId = response["AppCustCompanyId"];
+      }
+    );
   }
 
   EnterTab(type: string) { 

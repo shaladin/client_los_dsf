@@ -89,9 +89,7 @@
             </app-customer-personal-job-data> -->
             </div>
             <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
-              <!-- <app-cust-fin-data-tab [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" (outputTab)="getValue($event)"
-              *ngIf="stepIndex == 6">
-            </app-cust-fin-data-tab> -->
+              <app-legal-doc-tab *ngIf="stepIndex == 6" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="NextStep('Other')"> </app-legal-doc-tab>
             </div>
             <div id="other-tab" class="content" role="tabpanel" aria-labelledby="other-tab-trigger">
               <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 7"> </app-other-info-tab>

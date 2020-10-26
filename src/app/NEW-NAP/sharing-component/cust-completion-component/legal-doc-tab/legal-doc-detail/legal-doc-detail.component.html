@@ -1,0 +1,100 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="LegalDocForm" (ngSubmit)="LegalDocForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <lib-ucSubsection [id]="'LegalDocId'" [title]="'Legal Document Detail'" [panel]="'LegalDoc'">
+          </lib-ucSubsection>
+          <div id="LegalDoc">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Legal Document Type</label>
+                  <div class="col-md-6">
+                    <select class="form-control" formControlName="MrLegalDocTypeCode" style="width:100%;" (change)="ChangeLegalDocType($event.target)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.MrLegalDocTypeCode.invalid }">
+                      <option *ngFor="let item of LegalDocTypeObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.MrLegalDocTypeCode"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Issued Date</label>
+                  <div class="col-md-8">
+                    <input type="date" class="form-control" formControlName="DocDt" [min]="BusinessDt | date: 'yyyy-MM-dd'"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocDt.invalid}">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Notary Name</label>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" formControlName="NotaryName"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.NotaryName.invalid}">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.NotaryName" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Notes</label>
+                  <div class="col-md-8">
+                    <textarea class="form-control adInsInput" formControlName="DocNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNotes.invalid }">
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Document No</label>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" formControlName="DocNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocNo.invalid}">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" [ngClass]="{ 'adins-required-label': IsExpDateMandatory }" translate>Expired Date</label>
+                  <div class="col-md-8">
+                    <input type="date" class="form-control" formControlName="DocExpiredDt" [min]="BusinessDt | date: 'yyyy-MM-dd'"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid}">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Notary Location</label>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" formControlName="NotaryLocation"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.NotaryLocation.invalid}">
+                    <lib-uc-show-errors [control]="LegalDocForm.controls.NotaryLocation" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="button" (click)="Cancel()"
+              class="btn btn-raised btn-warning mr-1">
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" (click)=formValidate.scrollIfFormHasErrors(LegalDocForm)
+              class="btn btn-raised btn-primary mr-1">
+              <i class="fa fa-check-square"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
