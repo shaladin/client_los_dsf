@@ -1,0 +1,85 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Legal Document Type",
+            "name": "MrLegalDocTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Document No",
+            "name": "DocNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Issued Date",
+            "name": "DocDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Expired Date",
+            "name": "DocExpiredDt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Notary Name",
+            "name": "NotaryName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action",
+            "name": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrLegalDocTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "DocNo"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "DocDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "DocExpiredDt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "NotaryName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type" : "callback",
+                    "key" : "edit",
+                    "property" : "AppCustCompanyLegalDocId"
+                },
+                {
+                    "type" : "callback",
+                    "key" : "delete",
+                    "property" : "AppCustCompanyLegalDocId",
+                    "icon" : "ft-trash-2",     
+                    "anchor" : "warning"
+                }
+            ]
+        }
+    ]
+}
