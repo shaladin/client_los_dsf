@@ -78,7 +78,7 @@
                 "path" : "/Nap/AdditionalProcess/AppDupCheckMainData/SubjMatch", 
                 "param" : [ {"type": "AppCustId", "property" : "AppCustId"}],
                 "icon" : "ft-edit-2", 
-                "tooltip": "Select Dupplicate Customer"
+                "tooltip": "Select Duplicate Customer"
               },
               "isHide": false
             }
