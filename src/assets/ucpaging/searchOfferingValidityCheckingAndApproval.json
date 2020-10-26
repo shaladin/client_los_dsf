@@ -23,7 +23,7 @@
       "name": "agr.AGRMNT_NO",
       "id": "AgrmntNoId",
       "value": "",
-      "label": "Transaction Number",
+      "label": "Agreement No",
       "placeholder": "Placeholder"
     },
     {
