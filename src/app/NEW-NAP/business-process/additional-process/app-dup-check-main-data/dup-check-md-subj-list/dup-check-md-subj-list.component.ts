@@ -61,12 +61,13 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   getSubjectList(){
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, {"AppId": this.appId}).subscribe(
+    this.http.post(URLConstant.MD_GetSubjectDuplicateCheckByAppId, {"AppId": this.appId}).subscribe(
       (response) => {
-        if(!response['ListAppCustObj'] || response['ListAppCustObj'].length <= 0) return;
+        let keyProp : string = 'ListSubject';
+        if(!response[keyProp] || response[keyProp].length <= 0) return;
         let arSubject = new Array();
         
-        response['ListAppCustObj'].forEach(row => {
+        response[keyProp].forEach(row => {
           let subjectType = '';
           if(row.IsCustomer) subjectType = 'CUSTOMER';
           else if(row.IsGuarantor) subjectType = 'GUARANTOR';
@@ -81,7 +82,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
             'CustNo': row.CustNo,
             'IsAppCustChecked': row.IsAppCustChecked,
             'IsExistingCust': row.IsExistingCust,
-            'Negative': '-',
+            'Negative': row.MrNegCustTypeDescr ? row.MrNegCustTypeDescr : '-',
             'IsShowEdit': !row.ApplicantNo && !row.CustNo ? 1 : 0,
           });
         });

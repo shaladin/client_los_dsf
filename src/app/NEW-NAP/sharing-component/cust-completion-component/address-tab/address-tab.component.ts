@@ -43,7 +43,6 @@ export class AddressTabComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder,
-    private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService) {

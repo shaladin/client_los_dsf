@@ -138,6 +138,7 @@ export class JobTabComponent implements OnInit {
             OthBizJobPosition: response["AppCustPersonalJobDataObj"].OthBizJobPosition != "" ? response["AppCustPersonalJobDataObj"].OthBizJobPosition : "",
             OthBizEstablishmentDt: response["AppCustPersonalJobDataObj"].OthBizEstablishmentDt != null ? response["AppCustPersonalJobDataObj"].OthBizEstablishmentD : ""
           })
+          this.JobDataObj.RowVersion = response["AppCustPersonalJobDataObj"].RowVersion;
           this.InputLookupProfessionObj.nameSelect = response["AppCustPersonalJobDataObj"].MrProfessionName;
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["AppCustPersonalJobDataObj"].MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response["AppCustPersonalJobDataObj"].IndustryTypeName;

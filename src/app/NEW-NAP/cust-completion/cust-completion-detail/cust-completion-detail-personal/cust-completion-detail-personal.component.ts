@@ -19,6 +19,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
+  AppCustPersonalId: number;
   stepIndex: number = 1;
   CustModelCode: string;
   isChange: boolean = false;
@@ -66,7 +67,8 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
         if(response["MrMaritalStatCode"] != null && response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
-        this.CustModelCode = response["CustModelCode"]
+        this.CustModelCode = response["CustModelCode"];
+        this.AppCustPersonalId = response["AppCustPersonalId"];
       }
     );
   }

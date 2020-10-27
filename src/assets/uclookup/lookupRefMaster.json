@@ -1,0 +1,67 @@
+{
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MASTER_CODE",
+            "id": "MasterCodeId",
+            "value": "",
+            "label": "Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DESCR",
+            "id": "DescrId",
+            "value": "",
+            "label": "Description",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT MASTER_CODE AS MasterCode, DESCR AS Descr, REF_MASTER_TYPE_CODE AS RefMasterTypeCode",
+        "from": "FROM dbo.REF_MASTER WITH(NOLOCK)"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CODE",
+            "name": "MASTER_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Description",
+            "name": "DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MasterCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "MasterCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "MasterCode",
+    "propertyName": "Descr"  
+}

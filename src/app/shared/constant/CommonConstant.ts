@@ -206,6 +206,9 @@ export class CommonConstant {
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
 
+  //APP CUST 
+  public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
+  public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -267,6 +270,7 @@ export class CommonConstant {
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
   public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeCompanyContactInfo = "COMPANY";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -526,4 +530,6 @@ export class CommonConstant {
 
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
+
+
 }

@@ -36,7 +36,6 @@ import { AgrMainInfoComponent } from "../agr-main-info/agr-main-info.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
 
-
 @NgModule({
     imports: [
         AgrViewRoutingModule,

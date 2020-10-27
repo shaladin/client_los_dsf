@@ -162,6 +162,15 @@ export class NapCustMainDataComponent implements OnInit {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepGuar);
+    
+    //Fix untuk data kosong saat kembai ke step cust jika save new cust
+    if(!this.appCustId){
+      this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+        (response) => {
+          if (response['AppCustObj'])  this.appCustId = response['AppCustObj'].AppCustId;
+        }
+      );
+    }
   }
 
   async NextStep(Step) {

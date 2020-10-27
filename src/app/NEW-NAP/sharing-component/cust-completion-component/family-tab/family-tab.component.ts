@@ -15,7 +15,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class FamilyTabComponent implements OnInit {
 
-  @Input() appId: number;
+  @Input() AppId: number;
   @Input() isMarried: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -89,7 +89,7 @@ export class FamilyTabComponent implements OnInit {
   }
 
   loadFamilyListData() {
-    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, {AppId: this.appId}).subscribe(
+    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, {AppId: this.AppId}).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

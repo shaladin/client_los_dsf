@@ -1,8 +1,7 @@
 <div class="col-md-12">
   <div class="card">
     <div class="card-body">
-      <div class="px-3">
-        <div class="row">
+      <div class="px-3"> 
           <div class="ucSearch-Button-Right">
             <button type="button" class="btn btn-raised btn-warning mr-1" translate>
               <i class="fa fa-arrow-left"></i> Back
@@ -11,8 +10,7 @@
               <i class="fa fa-check-square-o"></i> Save
             </button>
           </div>
-          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" #viewMainInfo> </lib-ucviewgeneric>
-        </div>
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" #viewMainInfo> </lib-ucviewgeneric> 
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <div class="step" data-target="#customer-detail-tab">
@@ -82,6 +80,7 @@
               <!-- <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab> -->c
             </div>
             <div id="Contact-tab" class="content" role="tabpanel" aria-labelledby="Contact-tab-trigger">
+              <app-cc-contact-information-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" (OutputTab)="NextStep('Financial')"></app-cc-contact-information-tab>
               <!-- <app-job-tab *ngIf="stepIndex == 4" [appId]="AppId" [AppCustId]="AppCustId"> </app-job-tab> -->
             </div>
             <div id="Financial-tab" class="content" role="tabpanel"
@@ -90,13 +89,10 @@
             </app-customer-personal-job-data> -->
             </div>
             <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
-              <!-- <app-cust-fin-data-tab [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" (outputTab)="getValue($event)"
-              *ngIf="stepIndex == 6">
-            </app-cust-fin-data-tab> -->
+              <app-legal-doc-tab *ngIf="stepIndex == 6" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="NextStep('Other')"> </app-legal-doc-tab>
             </div>
             <div id="other-tab" class="content" role="tabpanel" aria-labelledby="other-tab-trigger">
-              <!-- <app-cust-attr-section [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 7">
-            </app-cust-attr-section> -->
+              <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 7"> </app-other-info-tab>
             </div>
           </div>
         </div>
