@@ -1,15 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -19,12 +15,12 @@ import { environment } from 'environments/environment';
 })
 export class CustCompletionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  BizTemplateCode: string;
+  bizTemplateCode: string;
   
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
+        this.bizTemplateCode = params['BizTemplateCode'];
       }
     });
   }
@@ -46,8 +42,28 @@ export class CustCompletionPagingComponent implements OnInit {
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
     critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
-    critLobObj.value = this.BizTemplateCode;
+    critLobObj.value = this.bizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
+
+    var critWorflowAct = new CriteriaObj();
+    critWorflowAct.restriction = AdInsConstant.RestrictionEq;
+    critWorflowAct.propName = 'WTL.ACT_CODE';
+    critWorflowAct.value = "CDC_MD_" + this.bizTemplateCode;
+    this.inputPagingObj.addCritInput.push(critWorflowAct);
+  }
+
+  getUcPagingCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
+    }
+    if (ev.Key == "Edit") {
+      switch(this.bizTemplateCode)
+      {
+        case CommonConstant.CF4W :
+          this.router.navigate(["Nap/CustCompletion/Detail"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+        break;
+      }
+    }
   }
 
 }

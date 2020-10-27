@@ -1,9 +1,12 @@
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
@@ -18,16 +21,22 @@ export class CustCompletionDetailComponent implements OnInit {
   inputGridObj: InputGridObj = new InputGridObj();
   listCustCompletion: Array<any> = new Array(); 
   AppId: number;
+  wfTaskListId: number;
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
+    private location: Location,
     private toastr: NGXToastrService) {
       this.route.queryParams.subscribe(params => {
         if (params['AppId'] != null) {
           this.AppId = params['AppId'];
+        }
+
+        if (params["WfTaskListId"] != null) {
+          this.wfTaskListId = params["WfTaskListId"];
         }
       });
   }
@@ -46,6 +55,7 @@ export class CustCompletionDetailComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
     
     this.loadCustCompletionListData();
+    this.claimTask();
   }
 
   loadCustCompletionListData() {
@@ -57,6 +67,25 @@ export class CustCompletionDetailComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response;
         this.listCustCompletion = this.inputGridObj.resultData.Data;
+      }
+    );
+  }
+
+  async claimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
+  }
+
+  buttonBackOnClick() {
+    this.location.back();
+  }
+
+  buttonSubmitOnClick(){
+    this.http.post(URLConstant.SubmitAppCustCompletion, {"AppId": this.AppId, "WfTaskListId":this.wfTaskListId}).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        this.buttonBackOnClick();
       }
     );
   }
