@@ -149,11 +149,11 @@
           [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrLiablts.invalid }" [(ngModel)]="appCustCompanyFinDataObj.CurrLiablts">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrLiablts" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
-      <label class="col-md-2" for="longTemrLiablts" translate>Long Term Liabilities </label>
+      <label class="col-md-2" for="LongTermLiablts" translate>Long Term Liabilities </label>
       <div class="col-md-4">
-        <input type="" currencyMask id="longTemrLiablts" class="form-control" formControlName="LongTemrLiablts"
-          [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].LongTemrLiablts.invalid }" [(ngModel)]="appCustCompanyFinDataObj.LongTemrLiablts">
-        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].LongTemrLiablts" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <input type="" currencyMask id="LongTermLiablts" class="form-control" formControlName="LongTermLiablts"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].LongTermLiablts.invalid }" [(ngModel)]="appCustCompanyFinDataObj.LongTermLiablts">
+        <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].LongTermLiablts" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">

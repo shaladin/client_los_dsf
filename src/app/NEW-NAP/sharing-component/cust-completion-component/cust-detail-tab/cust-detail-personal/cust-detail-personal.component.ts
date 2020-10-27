@@ -41,9 +41,9 @@ export class CustDetailPersonalComponent implements OnInit {
   ReligionObj: Array<KeyValueObj> = new Array();
   CustDetailForm = this.fb.group({
     CustModelCode: [''],
-    FamilyCardNo: [''],
-    NoOfDependents: [''],
-    NoOfResidence: [''],
+    FamilyCardNo: ['', Validators.pattern("^[0-9]+$")],
+    NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
+    NoOfResidence: ['', Validators.pattern("^[0-9]+$")],
     IsVip: [false],
     IsAffiliateWithMF: [false],
     NickName: [''],
@@ -167,13 +167,14 @@ export class CustDetailPersonalComponent implements OnInit {
   GetData() {
     this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
+        console.log("DISINI")
         this.CustFullName = response["CustFullName"];
         this.CustDetailForm.patchValue({
           FamilyCardNo: response["FamilyCardNo"],
           NoOfDependents: response["NoOfDependents"],
           NoOfResidence: response["NoOfResidence"],
           IsVip: response["IsVip"],
-          IsAffiliateWithMF: response["IsAffiliateWithMF"],
+          IsAffiliateWithMF: response["IsAffiliateWithMf"],
           NickName: response["NickName"],
           VIPNotes: response["VipNotes"],
           CustPrefixName: response["CustPrefixName"],

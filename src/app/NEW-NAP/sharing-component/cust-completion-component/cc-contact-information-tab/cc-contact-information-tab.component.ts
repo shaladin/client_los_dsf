@@ -1,8 +1,10 @@
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
@@ -29,10 +31,14 @@ export class CcContactInformationTabComponent implements OnInit {
   IsUcAddrReady: boolean = false;
   TempAppCustCompanyContactPersonObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
   DictRefMaster: any = {};
+  BusinessDate: Date;
   readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
   readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
   readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
   readonly MasterCustRelationCode: string = CommonConstant.RefMasterTypeCodeCustRelationship;
+  readonly IdTypeNpwp: string = CommonConstant.MrIdTypeCodeNPWP;
+  readonly IdTypeKitas: string = CommonConstant.MrIdTypeCodeKITAS;
+  readonly IdTypeSim: string = CommonConstant.MrIdTypeCodeSIM;
   readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
   constructor(
     private fb: FormBuilder,
@@ -67,19 +73,20 @@ export class CcContactInformationTabComponent implements OnInit {
   });
 
   async ngOnInit() {
+    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
+
     this.SetAddrForm();
     await this.GetListActiveRefMaster(this.MasterGenderCode);
     await this.GetListActiveRefMaster(this.MasterIdTypeCode);
     await this.GetListActiveRefMaster(this.MasterJobPosCode);
     await this.GetListActiveRefMaster(this.MasterCustRelationCode);
     await this.GetAppCustCompanyContactPersonByAppCustId();
-    console.log(this.DictRefMaster);
   }
 
   async GetListActiveRefMaster(RefMasterTypeCode: string) {
     await this.http.post<any>(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": RefMasterTypeCode }).toPromise().then(
       (response) => {
-        // console.log(response);
         this.DictRefMaster[RefMasterTypeCode] = response["ReturnObject"];
       }
     );
@@ -88,7 +95,6 @@ export class CcContactInformationTabComponent implements OnInit {
   async GetAppCustCompanyContactPersonByAppCustId() {
     await this.http.post<AppCustCompanyContactPersonObj>(URLConstant.GetAppCustCompanyContactPersonByAppCustId, { "appCustId": this.AppCustId }).toPromise().then(
       (response) => {
-        console.log(response);
         if (response.AppCustCompanyContactPersonId != 0) {
           this.TempAppCustCompanyContactPersonObj = response;
           this.CcForm.patchValue({
@@ -139,6 +145,7 @@ export class CcContactInformationTabComponent implements OnInit {
             this.inputAddressObjForCc.default = this.CcAddrObj;
             this.inputAddressObjForCc.inputField = this.inputFieldCcObj;
           }
+          this.ChangeIdType();
         }
         this.IsUcAddrReady = true;
       }
@@ -151,23 +158,36 @@ export class CcContactInformationTabComponent implements OnInit {
     this.inputAddressObjForCc.showPhn3 = false;
   }
 
+  ChangeIdType() {
+    let IdTypeCode = this.CcForm.get("MrIdTypeCode").value;
+    if (IdTypeCode == this.IdTypeNpwp) {
+      this.CcForm.get("IdNo").setValidators(Validators.required);
+    } else {
+      this.CcForm.get("IdNo").clearValidators();
+    }
+    this.CcForm.get("IdNo").updateValueAndValidity();
+
+    if (IdTypeCode == this.IdTypeKitas || IdTypeCode == this.IdTypeSim) {
+      this.CcForm.get("IdExpiredDt").setValidators(Validators.required);
+    } else {
+      this.CcForm.get("IdExpiredDt").clearValidators();
+    }
+    this.CcForm.get("IdExpiredDt").updateValueAndValidity();
+  }
+
   async SaveForm() {
-    console.log("save");
-    console.log(this.CcForm.getRawValue());
-    var temp = this.CcForm.getRawValue();
-    console.log(temp);
-    await this.SetReqCcObj(temp);
-    await this.SetReqAddrObj(temp);
+    let temp = this.CcForm.getRawValue();
+    let ReqAddr = await this.SetReqAddrObj(temp);
+    await this.SetReqCcObj(temp, ReqAddr);
 
     this.OutputTab.emit();
   }
 
   async SetReqAddrObj(obj: any) {
-    var TempAddr = obj[this.InputAddressObjForCc_Identifier];
-    var TempZipVal = obj[this.InputAddressObjForCc_Identifier + "Zipcode"];
-    console.log(TempAddr);
+    let TempAddr = obj[this.InputAddressObjForCc_Identifier];
+    let TempZipVal = obj[this.InputAddressObjForCc_Identifier + "Zipcode"];
 
-    var ReqAddr: AppCustAddrObj = new AppCustAddrObj();
+    let ReqAddr: AppCustAddrObj = new AppCustAddrObj();
     ReqAddr.Phn1 = TempAddr.Phn1;
     ReqAddr.Phn2 = TempAddr.Phn2;
     ReqAddr.PhnArea1 = TempAddr.PhnArea1;
@@ -187,37 +207,53 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqAddr.MrHouseOwnershipCode = "";
     ReqAddr.Zipcode = TempZipVal.value;
     ReqAddr.SubZipcode = TempAddr.SubZipcode;
-    console.log(ReqAddr);
 
-    let url: string = "";
     if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0) {
       ReqAddr.AppCustAddrId = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.AppCustAddrId;
       ReqAddr.RowVersion = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.RowVersion;
-      url = URLConstant.EditAppCustAddr;
-    } else {
-      url = URLConstant.AddAppCustAddr;
     }
 
-    await this.http.post(url, ReqAddr).toPromise().then(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-      }
-    );
-
+    return ReqAddr;
   }
 
-  async SetReqCcObj(obj: any) {
-    var ReqCcObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
+  CheckDt(inputDate: Date, type: string) {
+    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let max17Yodt = new Date(Max17YO);
+    let d1 = new Date(inputDate);
+    let d2 = new Date(MaxDate);
+    max17Yodt.setFullYear(d2.getFullYear() - 17);
+
+    if (type == ExceptionConstant.DateErrorMessageIdExpiredDate) {
+      d2.setDate(d2.getDate() - 1);
+      if (d1 < d2) {
+        throw this.toastr.warningMessage(type + "  can not be less than " + MaxDate);
+      }
+      return;
+    }
+
+    if (d1 > d2) {
+      throw this.toastr.warningMessage(type + "  can not be more than " + MaxDate);
+    } else if (type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt) {
+      throw this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+    }
+  }
+
+  async SetReqCcObj(obj: any, ReqAddr: AppCustAddrObj) {
+    let ReqCcObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
     ReqCcObj.AppCustId = this.AppCustId;
     ReqCcObj.AppCustCompanyId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyId;
     ReqCcObj.AppCustCompanyContactPersonId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId;
     ReqCcObj.RowVersion = this.TempAppCustCompanyContactPersonObj.RowVersion;
     ReqCcObj.BirthDt = obj.BirthDt
+    if(ReqCcObj.BirthDt != "" && ReqCcObj.BirthDt != null) this.CheckDt(new Date(ReqCcObj.BirthDt), ExceptionConstant.DateErrorMessageBirthDate);
     ReqCcObj.BirthPlace = obj.BirthPlace;
     ReqCcObj.ContactPersonName = obj.ContactPersonName;
     ReqCcObj.Email1 = obj.Email1;
     ReqCcObj.Email2 = obj.Email2;
     ReqCcObj.IdExpiredDt = obj.IdExpiredDt;
+    if(ReqCcObj.IdExpiredDt != "" && ReqCcObj.IdExpiredDt != null) this.CheckDt(new Date(ReqCcObj.IdExpiredDt), ExceptionConstant.DateErrorMessageIdExpiredDate);
     ReqCcObj.IdNo = obj.IdNo;
     ReqCcObj.JobTitleName = obj.JobTitleName;
     ReqCcObj.MobilePhnNo1 = obj.MobilePhnNo1;
@@ -232,7 +268,7 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqCcObj.PhnArea2 = obj[this.InputAddressObjForCc_Identifier].PhnArea2;
     ReqCcObj.PhnExt1 = obj[this.InputAddressObjForCc_Identifier].PhnExt1;
     ReqCcObj.PhnExt2 = obj[this.InputAddressObjForCc_Identifier].PhnExt2;
-    console.log(ReqCcObj);
+    ReqCcObj.AppCustAddrObj = ReqAddr;
 
     await this.http.post(URLConstant.AddOrEditAppCustCompanyContactPerson, ReqCcObj).toPromise().then(
       (response) => {

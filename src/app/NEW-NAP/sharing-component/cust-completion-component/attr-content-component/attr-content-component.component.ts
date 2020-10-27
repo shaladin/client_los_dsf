@@ -19,18 +19,17 @@ export class AttrContentComponentComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
-  @Input() attrGroup: any;
-  @Input() AppCustId: any;
+  @Input() AttrGroup: string;
+  @Input() AppCustId: number;
   @Input() title: any;
   ListAttrContent: any;
   RefAttrList: any;
   ListInputLookUpObj = new Array(); 
   IsFormReady: boolean = false;
   async ngOnInit() {
-    
     var AttrContent = {
       AppCustId: this.AppCustId,
-      AttrGroup: this.attrGroup
+      AttrGroup: this.AttrGroup
     };
 
     await this.httpClient.post(URLConstant.GetListAppCustAttrContentByAppCustIdAndAttrGroup, AttrContent).toPromise().then(
@@ -38,7 +37,7 @@ export class AttrContentComponentComponent implements OnInit {
         this.ListAttrContent = response["ResponseAppCustAttrContentObjs"]
         if (this.ListAttrContent.length < 1) {
           var custGrp = {
-            AttrGroup: this.attrGroup
+            AttrGroup: this.AttrGroup
           };
           this.httpClient.post(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
             async (response: any) => {
@@ -63,6 +62,9 @@ export class AttrContentComponentComponent implements OnInit {
                 else if (refAttr["AttrInputType"] == 'L') {
                   var temp = refAttr["AttrValue"].split(";");
                   formGroupObject["AttrValue"] = [temp[0]];
+                }
+                else if (refAttr["AttrInputType"] == 'P' || refAttr["AttrInputType"] == 'N'){
+                  formGroupObject["AttrValue"] = [0];
                 }
                 else {
                   formGroupObject["AttrValue"] = [''];
@@ -123,7 +125,7 @@ export class AttrContentComponentComponent implements OnInit {
           let tempLookup = {};
 
           var custGrp = {
-            AttrGroup: this.attrGroup
+            AttrGroup: this.AttrGroup
           };
           this.httpClient.post(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
             async (response: any) => {
@@ -146,7 +148,11 @@ export class AttrContentComponentComponent implements OnInit {
                   else if (refAttr["AttrInputType"] == 'L') {
                     var temp = refAttr["AttrValue"].split(";");
                     formGroupObject["AttrValue"] = [temp[0]];
-                  } else {
+                  }
+                  else if (refAttr["AttrInputType"] == 'P' || refAttr["AttrInputType"] == 'N'){
+                    formGroupObject["AttrValue"] = [0];
+                  }
+                   else {
                     formGroupObject["AttrValue"] = [''];
                   }
                   if (refAttr["DefaultValue"] != null) {
