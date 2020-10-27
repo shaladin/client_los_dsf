@@ -72,6 +72,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdInvstgStat = "DONE";
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdRiskEmpNo = user.EmpNo;
     reqAppCrdInvstg.AppCrdInvstgHObj.SubmitDt = user.BusinessDt;
+    reqAppCrdInvstg.AppCrdInvstgHObj.RowVersion = this.appCrdInvstgHObj.RowVersion;
 
     for(let i = 0; i < this.CreditInvestigationForm.controls["AppCrdInvstgDs"]["controls"].length; i++){
       var appCrdInvstgD = new AppCrdInvstgDObj();
@@ -134,6 +135,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     await this.http.post<AppCrdInvstgHObj>(URLConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
       (response) => {
         this.appCrdInvstgHObj = response;
+        console.log(this.appCrdInvstgHObj);
       }
     );
     if(this.appCrdInvstgHObj.AppId == 0){

@@ -53,6 +53,7 @@ export class AppObj {
     Username: string;
     BizTemplateCode: string;
     MrCustTypeCode: string;
+    RowVersion: string;
 
     constructor() {
         this.AppId = 0;
@@ -106,5 +107,6 @@ export class AppObj {
         this.WfTaskListId = 0;
         this.BizTemplateCode = "";
         this.MrCustTypeCode = "";
+        this.RowVersion = "";
     }
 }
