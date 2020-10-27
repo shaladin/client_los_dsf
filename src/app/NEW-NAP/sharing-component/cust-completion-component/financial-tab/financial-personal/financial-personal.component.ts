@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
@@ -10,21 +11,24 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
-  selector: 'app-financial-tab',
-  templateUrl: './financial-tab.component.html',
-  styleUrls: ['./financial-tab.component.scss']
+  selector: 'app-financial-personal',
+  templateUrl: './financial-personal.component.html',
+  styleUrls: ['./financial-personal.component.scss']
 })
-export class FinancialTabComponent implements OnInit {
+export class FinancialPersonalComponent implements OnInit {
 
   @Input() AppCustId: number;
   @Input() AppCustPersonalId: number;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsDetail: boolean = false;
+  AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+  CustAttrRequest: Array<Object>;
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
 
   FinancialForm = this.fb.group({
+    AppCustPersonalId: [0],
     MonthlyIncomeAmt: ['', Validators.required],
     MrSourceOfIncomeTypeCode: [''],
     OtherIncomeAmt: [0],
@@ -34,7 +38,8 @@ export class FinancialTabComponent implements OnInit {
     OtherMonthlyInstAmt: [0],
     SpouseMonthlyIncomeAmt: [0],
     TotalIncomeAmt: [0],
-    NettIncomeAmt: [0]
+    NettIncomeAmt: [0],
+    RowVersion: ['']
   })
 
   constructor(private fb: FormBuilder,
@@ -70,9 +75,9 @@ export class FinancialTabComponent implements OnInit {
             MonthlyExpenseAmt: response["MonthlyExpenseAmt"],
             MonthlyInstallmentAmt: response["MonthlyInstallmentAmt"],
             OtherMonthlyInstAmt: response["OtherMonthlyInstAmt"],
-            SpouseMonthlyIncomeAmt: response["SpouseMonthlyIncomeAmt"]
+            SpouseMonthlyIncomeAmt: response["SpouseMonthlyIncomeAmt"],
+            RowVersion: response["RowVersion"]
           });
-          this.AppCustPersonalFinData.RowVersion = response["RowVersion"];
           await this.CalculateFinData();
         }
       }
@@ -110,20 +115,36 @@ export class FinancialTabComponent implements OnInit {
     });
   }
 
-  SaveForm() {
-    this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
-    this.AppCustPersonalFinData.MonthlyIncomeAmt = this.FinancialForm.controls.MonthlyIncomeAmt.value;
-    this.AppCustPersonalFinData.MrSourceOfIncomeTypeCode = this.FinancialForm.controls.MrSourceOfIncomeTypeCode.value;
-    this.AppCustPersonalFinData.OtherIncomeAmt = this.FinancialForm.controls.OtherIncomeAmt.value;
-    this.AppCustPersonalFinData.IsJoinIncome = this.FinancialForm.controls.IsJoinIncome.value;
-    this.AppCustPersonalFinData.MonthlyExpenseAmt = this.FinancialForm.controls.MonthlyExpenseAmt.value;
-    this.AppCustPersonalFinData.MonthlyInstallmentAmt = this.FinancialForm.controls.MonthlyInstallmentAmt.value;
-    this.AppCustPersonalFinData.OtherMonthlyInstAmt = this.FinancialForm.controls.OtherMonthlyInstAmt.value;
-    this.AppCustPersonalFinData.SpouseMonthlyIncomeAmt = this.FinancialForm.controls.SpouseMonthlyIncomeAmt.value;
-    this.AppCustPersonalFinData.TotalIncomeAmt = this.FinancialForm.controls.TotalIncomeAmt.value;
-    this.AppCustPersonalFinData.NettIncomeAmt = this.FinancialForm.controls.NettIncomeAmt.value;
+  SetAttrContent(){
+    var formValue = this.FinancialForm['controls']['AttrList'].value;
+    this.CustAttrRequest = new Array<Object>();
+     
+    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
+      for (const key in formValue) {
+        if(formValue[key]["AttrValue"]!=null ) { 
+        var custAttr = {
+          CustAttrContentId: formValue[key]["CustAttrContentId"],
+          AppCustId: this.AppCustId,
+          RefAttrCode: formValue[key]["AttrCode"],
+          AttrValue: formValue[key]["AttrValue"],
+          AttrGroup: this.AttrGroup
+        };
+        this.CustAttrRequest.push(custAttr);}
 
-    this.http.post(URLConstant.AddEditAppCustPersonalFinData, this.AppCustPersonalFinData).subscribe(
+      }  
+    }
+  }
+
+  SaveForm() {
+    this.SetAttrContent();
+    this.AppCustPersonalFinData = this.FinancialForm.value;
+    this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
+
+    let request = {
+      ListAppCustAttrObj: this.CustAttrRequest,
+      AppCustPersonalFinDataObj: this.AppCustPersonalFinData
+    }
+    this.http.post(URLConstant.AddEditAppCustPersonalFinData, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.OutputTab.emit();

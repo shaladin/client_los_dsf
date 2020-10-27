@@ -87,7 +87,7 @@
               <app-emergency-contact-tab *ngIf="stepIndex == 5" [AppCustId]="AppCustId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Financial')"> </app-emergency-contact-tab>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-tab *ngIf="stepIndex == 6" [AppCustId]="AppCustId" [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'CustAttr')"> </app-financial-tab>
+              <app-financial-personal *ngIf="stepIndex == 6" [AppCustId]="AppCustId" [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'CustAttr')"> </app-financial-personal>
               <!-- <app-cust-fin-data-tab [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" (outputTab)="getValue($event)"
               *ngIf="stepIndex == 6">
             </app-cust-fin-data-tab> -->

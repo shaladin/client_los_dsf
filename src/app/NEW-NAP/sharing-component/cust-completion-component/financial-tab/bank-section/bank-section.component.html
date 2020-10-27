@@ -1,6 +1,6 @@
 <form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm()"
   #enjiForm="ngForm">
-  <span class="mr-1 pull-right">
+  <span class="mr-1 pull-right" *ngIf="!IsDetail">
     <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
       translate>
       <i class="ft-plus-circle"></i> Add
