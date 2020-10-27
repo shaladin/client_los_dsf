@@ -28,18 +28,10 @@
               </button>
             </div>
             <div class="line"></div>
-            <div class="step" data-target="#managementShareholder-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="managementShareholder-tab" id="managementShareholder-tab-trigger"
-                (click)="EnterTab('ManagementShareholder')">
-                <span class="bs-stepper-circle">3</span>
-                <span class="bs-stepper-label">Management / Shareholder</span>
-              </button>
-            </div>
-            <div class="line"></div>
             <div class="step" data-target="#Contact-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="Contact-tab"
                 id="Contact-tab-trigger" (click)="EnterTab('Contact')">
-                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Contact Information</span>
               </button>
             </div>
@@ -47,7 +39,7 @@
             <div class="step" data-target="#Financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="Financial-tab"
                 id="Financial-tab-trigger" (click)="EnterTab('Financial')">
-                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-circle">4</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
             </div>
@@ -55,7 +47,7 @@
             <div class="step" data-target="#legal-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="legal-tab"
                 id="legal-tab-trigger" (click)="EnterTab('Legal')">
-                <span class="bs-stepper-circle">6</span>
+                <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Legal Document</span>
               </button>
             </div>
@@ -63,7 +55,7 @@
             <div class="step" data-target="#other-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="other-tab"
                 id="other-tab-trigger" (click)="EnterTab('Other')">
-                <span class="bs-stepper-circle">7</span>
+                <span class="bs-stepper-circle">6</span>
                 <span class="bs-stepper-label">Other Attribute</span>
               </button>
             </div>
@@ -74,14 +66,10 @@
               <app-cust-detail-company *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="NextStep('Address')"> </app-cust-detail-company>
             </div>
             <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
-              <!-- <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="NextStep('Family')"> </app-address-tab> -->b
-            </div>
-            <div id="managementShareholder-tab" class="content" role="tabpanel" aria-labelledby="managementShareholder-tab-trigger">
-              <!-- <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab> -->c
+              <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Contact')"> </app-address-tab>
             </div>
             <div id="Contact-tab" class="content" role="tabpanel" aria-labelledby="Contact-tab-trigger">
-              <app-cc-contact-information-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" (OutputTab)="NextStep('Financial')"></app-cc-contact-information-tab>
-              <!-- <app-job-tab *ngIf="stepIndex == 4" [appId]="AppId" [AppCustId]="AppCustId"> </app-job-tab> -->
+              <app-cc-contact-information-tab *ngIf="stepIndex == 3" [AppCustId]="AppCustId" (OutputTab)="NextStep('Financial')"></app-cc-contact-information-tab>
             </div>
             <div id="Financial-tab" class="content" role="tabpanel"
               aria-labelledby="Financial-tab-trigger">
