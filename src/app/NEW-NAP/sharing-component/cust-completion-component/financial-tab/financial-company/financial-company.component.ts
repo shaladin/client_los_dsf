@@ -19,7 +19,9 @@ export class FinancialCompanyComponent implements OnInit {
   @Input() AppCustId: number;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsDetail: boolean = false;
+  AttrGroup: string = CommonConstant.AttrGroupCustCompanyFinData;
   AppCustCompanyFinData: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
+  CustAttrRequest: Array<Object>;
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
 
@@ -104,11 +106,37 @@ export class FinancialCompanyComponent implements OnInit {
     }
   }
 
+  SetAttrContent(){
+    var formValue = this.FinancialForm['controls']['AttrList'].value;
+    this.CustAttrRequest = new Array<Object>();
+     
+    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
+      for (const key in formValue) {
+        if(formValue[key]["AttrValue"]!=null ) { 
+        var custAttr = {
+          CustAttrContentId: formValue[key]["CustAttrContentId"],
+          AppCustId: this.AppCustId,
+          RefAttrCode: formValue[key]["AttrCode"],
+          AttrValue: formValue[key]["AttrValue"],
+          AttrGroup: this.AttrGroup
+        };
+        this.CustAttrRequest.push(custAttr);}
+
+      }  
+    }
+  }
+
   SaveForm() {
+    this.SetAttrContent();
     this.AppCustCompanyFinData = this.FinancialForm.value;
     this.AppCustCompanyFinData.AppCustId = this.AppCustId;
 
-    this.http.post(URLConstant.AddEditAppCustCompanyFinData, this.AppCustCompanyFinData).subscribe(
+    let request = {
+      ListAppCustAttrObj: this.CustAttrRequest,
+      AppCustCompanyFinDataObj: this.AppCustCompanyFinData
+    }
+    
+    this.http.post(URLConstant.AddEditAppCustCompanyFinData, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.OutputTab.emit();

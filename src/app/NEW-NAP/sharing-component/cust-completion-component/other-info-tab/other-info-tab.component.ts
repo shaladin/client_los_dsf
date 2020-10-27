@@ -46,12 +46,12 @@ export class OtherInfoTabComponent implements OnInit {
   InputSustaianableFinancialBusinessLookupObj: InputLookupObj;
   IsLookupReady: boolean;
   AppCustId : number; 
-  attrGroup: string;
+  AttrGroup: string;
   ResponseCustOtherInfo : any;
   appCustOtherInfo : AppCustOtherInfoObj;
   custAttrRequest = new Array<Object>();
   async ngOnInit() {
-    this.attrGroup = this.CustTypeCode == CommonConstant.CustTypeCompany ? CommonConstant.AttrGroupCustCompanyOther:CommonConstant.AttrGroupCustPersonalOther;
+    this.AttrGroup = this.CustTypeCode == CommonConstant.CustTypeCompany ? CommonConstant.AttrGroupCustCompanyOther:CommonConstant.AttrGroupCustPersonalOther;
  
     var AppcustOtherInfo = {
         AppCustId : this.AppCustId
@@ -145,7 +145,7 @@ export class OtherInfoTabComponent implements OnInit {
           AppCustId: this.AppCustId,
           RefAttrCode: formValue[key]["AttrCode"],
           AttrValue: formValue[key]["AttrValue"],
-          AttrGroup: this.attrGroup
+          AttrGroup: this.AttrGroup
         };
         this.custAttrRequest.push(custAttr);}
 

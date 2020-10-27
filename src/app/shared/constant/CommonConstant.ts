@@ -209,6 +209,9 @@ export class CommonConstant {
   //APP CUST 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
   public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
+  public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
+  public static AttrGroupCustPersonalFinData= "CUST_PERSONAL_FINDATA"
+
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 

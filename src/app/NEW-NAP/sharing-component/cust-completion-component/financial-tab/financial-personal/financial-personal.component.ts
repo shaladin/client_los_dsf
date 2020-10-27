@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
@@ -20,7 +21,9 @@ export class FinancialPersonalComponent implements OnInit {
   @Input() AppCustPersonalId: number;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsDetail: boolean = false;
+  AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+  CustAttrRequest: Array<Object>;
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
 
@@ -112,11 +115,36 @@ export class FinancialPersonalComponent implements OnInit {
     });
   }
 
+  SetAttrContent(){
+    var formValue = this.FinancialForm['controls']['AttrList'].value;
+    this.CustAttrRequest = new Array<Object>();
+     
+    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
+      for (const key in formValue) {
+        if(formValue[key]["AttrValue"]!=null ) { 
+        var custAttr = {
+          CustAttrContentId: formValue[key]["CustAttrContentId"],
+          AppCustId: this.AppCustId,
+          RefAttrCode: formValue[key]["AttrCode"],
+          AttrValue: formValue[key]["AttrValue"],
+          AttrGroup: this.AttrGroup
+        };
+        this.CustAttrRequest.push(custAttr);}
+
+      }  
+    }
+  }
+
   SaveForm() {
+    this.SetAttrContent();
     this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
-    this.http.post(URLConstant.AddEditAppCustPersonalFinData, this.AppCustPersonalFinData).subscribe(
+    let request = {
+      ListAppCustAttrObj: this.CustAttrRequest,
+      AppCustPersonalFinDataObj: this.AppCustPersonalFinData
+    }
+    this.http.post(URLConstant.AddEditAppCustPersonalFinData, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.OutputTab.emit();

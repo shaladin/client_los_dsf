@@ -243,6 +243,8 @@
               </div>
             </div>
           </div>
+          <app-attr-content-component [title]="'Financial Attribute'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+            [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup"></app-attr-content-component>
           <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-bank-section>
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(FinancialForm)"
