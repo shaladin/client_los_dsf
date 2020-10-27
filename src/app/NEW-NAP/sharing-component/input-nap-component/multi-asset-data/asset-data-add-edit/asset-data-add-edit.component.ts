@@ -636,7 +636,6 @@ export class AssetDataAddEditComponent implements OnInit {
           this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
             (response) => {
               this.salesAppAssetSupplEmpObj = response;
-              console.log(this.salesAppAssetSupplEmpObj);
               this.salesObj = new VendorEmpObj();
               this.salesObj.VendorId = this.returnVendorObj.VendorId;
               this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
