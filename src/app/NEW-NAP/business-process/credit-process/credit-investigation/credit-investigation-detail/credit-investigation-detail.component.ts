@@ -135,7 +135,6 @@ export class CreditInvestigationDetailComponent implements OnInit {
     await this.http.post<AppCrdInvstgHObj>(URLConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
       (response) => {
         this.appCrdInvstgHObj = response;
-        console.log(this.appCrdInvstgHObj);
       }
     );
     if(this.appCrdInvstgHObj.AppId == 0){

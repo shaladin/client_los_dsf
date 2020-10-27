@@ -69,7 +69,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.PlafondAmt = response["PlafondAmt"];
 
       this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
-        console.log(response);
         this.listInvoice = response["AppInvoiceFctrObjs"];
         var totalInvoice = 0;
         for (let i = 0; i < this.listInvoice.length; i++) {

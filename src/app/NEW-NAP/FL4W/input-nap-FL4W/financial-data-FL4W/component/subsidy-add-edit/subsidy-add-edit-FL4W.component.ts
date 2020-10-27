@@ -41,11 +41,9 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
   
     ngOnInit() {
   
-      console.log(this.mode);
       this.InitForm();
       this.LoadDDLFromTypeCode();
 
-      console.log(this.mode);
       if(this.mode == "edit"){
         this.GetAppSubsidy();
       }
