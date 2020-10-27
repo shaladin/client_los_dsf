@@ -33,7 +33,7 @@
                 <div class="form-group row">
                   <label class="col-md-4 adInsLabel" translate>Id Type</label>
                   <div class="col-md-8">                    
-                    <select class="form-control adInsInput" formControlName="MrIdTypeCode">
+                    <select class="form-control adInsInput" formControlName="MrIdTypeCode" (change) = "ChangeIdType()">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterIdTypeCode]" value="{{it.Key}}">
                         {{it.Value}} </option>
@@ -41,19 +41,21 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Id No</label>
+                  <label class="col-md-4" 
+                  [ngClass]="{ 'adins-required-label': CcForm.controls.MrIdTypeCode.value == IdTypeNpwp, 'adInsLabel': CcForm.controls.MrIdTypeCode.value != IdTypeNpwp }" translate>Id No</label>
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="IdNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdNo.invalid}">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdNo.invalid }">
                     <lib-uc-show-errors [control]="CcForm.controls.IdNo"
                       [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Id Expired Date</label>
+                  <label class="col-md-4"
+                  [ngClass]="{ 'adins-required-label': CcForm.controls.MrIdTypeCode.value == IdTypeKitas || CcForm.controls.MrIdTypeCode.value == IdTypeSim, 'adInsLabel': CcForm.controls.MrIdTypeCode.value != IdTypeKitas || CcForm.controls.MrIdTypeCode.value != IdTypeSim }" translate>Id Expired Date</label>
                   <div class="col-md-8">
-                    <input type="date" class="form-control" formControlName="IdExpiredDt"
+                    <input type="date" class="form-control" formControlName="IdExpiredDt" min="{{BusinessDate | date:'yyyy-MM-dd'}}"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdExpiredDt.invalid}">
                     <lib-uc-show-errors [control]="CcForm.controls.IdExpiredDt"
                       [submit]="enjiForm.submitted">
@@ -116,7 +118,7 @@
                 <div class="form-group row">
                   <label class="col-md-4 adInsLabel" translate>Birth Date</label>
                   <div class="col-md-8">
-                    <input type="date" class="form-control" formControlName="BirthDt"
+                    <input type="date" class="form-control" formControlName="BirthDt" max="{{BusinessDate | date:'yyyy-MM-dd'}}"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.BirthDt.invalid}">
                     <lib-uc-show-errors [control]="CcForm.controls.BirthDt"
                       [submit]="enjiForm.submitted">
