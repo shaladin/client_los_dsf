@@ -64,19 +64,19 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   GetFinData(){
-    this.http.post(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { AppCustPersonalId: this.AppCustPersonalId }).subscribe(
+    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { AppCustPersonalId: this.AppCustPersonalId }).subscribe(
       async (response) => {
-        if(response["AppCustPersonalFinDataId"] != 0){
+        if(response.AppCustPersonalFinDataId != 0){
           await this.FinancialForm.patchValue({
-            MonthlyIncomeAmt: response["MonthlyIncomeAmt"],
-            MrSourceOfIncomeTypeCode: response["MrSourceOfIncomeTypeCode"],
-            OtherIncomeAmt: response["OtherIncomeAmt"],
-            IsJoinIncome: response["IsJoinIncome"],
-            MonthlyExpenseAmt: response["MonthlyExpenseAmt"],
-            MonthlyInstallmentAmt: response["MonthlyInstallmentAmt"],
-            OtherMonthlyInstAmt: response["OtherMonthlyInstAmt"],
-            SpouseMonthlyIncomeAmt: response["SpouseMonthlyIncomeAmt"],
-            RowVersion: response["RowVersion"]
+            MonthlyIncomeAmt: response.MonthlyIncomeAmt,
+            MrSourceOfIncomeTypeCode: response.MrSourceOfIncomeTypeCode,
+            OtherIncomeAmt: response.OtherIncomeAmt,
+            IsJoinIncome: response.IsJoinIncome,
+            MonthlyExpenseAmt: response.MonthlyExpenseAmt,
+            MonthlyInstallmentAmt: response.MonthlyInstallmentAmt,
+            OtherMonthlyInstAmt: response.OtherMonthlyInstAmt,
+            SpouseMonthlyIncomeAmt: response.SpouseMonthlyIncomeAmt,
+            RowVersion: response.RowVersion
           });
           await this.CalculateFinData();
         }
