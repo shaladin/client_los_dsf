@@ -3,10 +3,10 @@
     <div class="card-body">
       <div class="px-3"> 
           <div class="ucSearch-Button-Right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" translate>
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
               <i class="fa fa-arrow-left"></i> Back
             </button>
-            <button type="button" class="btn btn-raised btn-primary mr-1" translate>
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Back()"  translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
           </div>
@@ -73,13 +73,13 @@
             </div>
             <div id="Financial-tab" class="content" role="tabpanel"
               aria-labelledby="Financial-tab-trigger">
-              <app-financial-company *ngIf="stepIndex == 5" [AppCustId]="AppCustId" (OutputTab)="NextStep('Legal')"> </app-financial-company>
+              <app-financial-company *ngIf="stepIndex == 4" [AppCustId]="AppCustId" (OutputTab)="NextStep('Legal')"> </app-financial-company>
             </div>
             <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
-              <app-legal-doc-tab *ngIf="stepIndex == 6" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="NextStep('Other')"> </app-legal-doc-tab>
+              <app-legal-doc-tab *ngIf="stepIndex == 5" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="NextStep('Other')"> </app-legal-doc-tab>
             </div>
             <div id="other-tab" class="content" role="tabpanel" aria-labelledby="other-tab-trigger">
-              <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 7"> </app-other-info-tab>
+              <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 6"> </app-other-info-tab>
             </div>
           </div>
         </div>
