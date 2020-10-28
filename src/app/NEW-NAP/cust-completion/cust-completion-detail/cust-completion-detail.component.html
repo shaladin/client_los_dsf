@@ -2,9 +2,19 @@
   <div class="card">
     <div class="card-body">
       <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+      <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:0px">
+        <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()">
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </div>
+
       <div class="px-3">
         <div *ngIf="listCustCompletion?.length > 0">
           <lib-ucgridview [gridInput]="inputGridObj" (callback)="GetEvent($event)"></lib-ucgridview>
+        </div>
+
+        <div class="text-right py-2">
+          <button type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>Submit</button>
         </div>
       </div>
     </div>

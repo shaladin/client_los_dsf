@@ -6,7 +6,7 @@ export class ReqDupCheckAppCustObj {
     CustNo: string;
     ApplicantNo: string;
     ListAppNegativeCustObj: Array<ReqDupCheckAppNegativeCustObj>;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { 
         this.AppCustId = 0;
