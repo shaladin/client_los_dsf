@@ -23,11 +23,10 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   CustStep = {
     "Detail": 1,
     "Address": 2,
-    "ManagementShareholder": 3,
-    "Contact": 4,
-    "Financial": 5,
-    "Legal": 6,
-    "Other": 7,
+    "Contact": 3,
+    "Financial": 4,
+    "Legal": 5,
+    "Other": 6,
   }
   constructor(
     private http: HttpClient,
@@ -71,9 +70,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
         break;
       case "Address":
         this.stepIndex = this.CustStep["Address"];
-        break;
-      case "ManagementShareholder":
-        this.stepIndex = this.CustStep["ManagementShareholder"];
         break;
       case "Contact":
         this.stepIndex = this.CustStep["Contact"];
