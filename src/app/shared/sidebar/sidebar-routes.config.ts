@@ -168,7 +168,6 @@ export const ROUTES: RouteInfo[] = [
       {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
       Submenu: [
         { Path: '/Nap/AddProcess/OutstandingTC/Paging', Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
-        { Path: '/Nap/AddProcess/CreditApprovalResultExt/Paging', Title: 'Credit Approval Result Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
         { Path: '/Nap/AdminProcess/AgreementCancellation/Paging', Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }]},
         { Path: '/Nap/AdminProcess/OfferingValidityApproval/Paging', Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }]},
         { Path: '/Nap/AddProcess/CopyCancelledApplication', Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] }
