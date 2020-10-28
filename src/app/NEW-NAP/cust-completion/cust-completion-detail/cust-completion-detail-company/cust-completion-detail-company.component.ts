@@ -1,7 +1,7 @@
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
@@ -30,7 +30,8 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -63,6 +64,10 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     );
   }
 
+  Back() {
+    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId } });
+  }
+  
   EnterTab(type: string) { 
     switch (type) {
       case "Detail":
