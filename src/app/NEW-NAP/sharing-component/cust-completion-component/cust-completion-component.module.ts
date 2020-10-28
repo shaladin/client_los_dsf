@@ -17,8 +17,10 @@ import { BankSectionComponent } from './financial-tab/bank-section/bank-section.
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { LegalDocTabComponent } from "./legal-doc-tab/legal-doc-tab.component";
 import { LegalDocDetailComponent } from "./legal-doc-tab/legal-doc-detail/legal-doc-detail.component";
-import { FinancialCompanyComponent } from './financial-tab/financial-company/financial-company.component';
-import { FinancialPersonalComponent } from './financial-tab/financial-personal/financial-personal.component';
+import { FinancialCompanyComponent } from "./financial-tab/financial-company/financial-company.component";
+import { FinancialPersonalComponent } from "./financial-tab/financial-personal/financial-personal.component";
+import { CcAddressPagingComponent } from './address-tab/cc-address-paging/cc-address-paging.component';
+import { CcAddressDetailComponent } from './address-tab/cc-address-detail/cc-address-detail.component';
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -33,7 +35,6 @@ export const customCurrencyMaskConfig = {
 };
 @NgModule({
     exports: [
-        AddressTabComponent,
         CustDetailPersonalComponent,
         CustDetailCompanyComponent,
         FamilyTabComponent,
@@ -43,7 +44,8 @@ export const customCurrencyMaskConfig = {
         FinancialPersonalComponent,
         LegalDocTabComponent,
         CcContactInformationTabComponent,
-        OtherInfoTabComponent
+        OtherInfoTabComponent,
+        CcAddressPagingComponent
     ],
     imports: [
         CommonModule,
@@ -53,7 +55,6 @@ export const customCurrencyMaskConfig = {
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
-        AddressTabComponent,
         CustDetailPersonalComponent,
         CustDetailCompanyComponent,
         FamilyTabComponent,
@@ -66,7 +67,9 @@ export const customCurrencyMaskConfig = {
         LegalDocTabComponent,
         LegalDocDetailComponent,
         FinancialCompanyComponent,
-        FinancialPersonalComponent
+        FinancialPersonalComponent,
+        CcAddressPagingComponent,
+        CcAddressDetailComponent
     ],
     providers: [
         NGXToastrService

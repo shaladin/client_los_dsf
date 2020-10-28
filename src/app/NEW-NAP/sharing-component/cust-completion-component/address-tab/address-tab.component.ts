@@ -49,29 +49,8 @@ export class AddressTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionAddress.json";
+    
 
-    this.AddrObj = new AddrObj();
-    this.inputAddressObj = new InputAddressObj();
-    this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
-    this.inputAddressObj.showSubsection = false;
-    this.isUcAddressReady = true;
-
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, ReserveField1: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
-      (response) => {
-        this.AddressTypeObj = response[CommonConstant.ReturnObj];
-        this.AddressForm.patchValue({
-          MrCustAddrTypeCode: this.AddressTypeObj[0].Key
-        })
-      });
-
-    this.http.post(URLConstant.GetListAppCustAddrData, { AppCustId: this.AppCustId }).subscribe(
-      (response) => {
-        this.copyAddressFromObj = response;
-        this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
-      });
-
-    this.LoadListCustAddress();
   }
 
   ChangeAddrType(AddrType: string = CommonConstant.AddrTypeLegal){
@@ -146,7 +125,6 @@ export class AddressTabComponent implements OnInit {
         });
     }
     this.isDetail = false;
-    await this.LoadListCustAddress();
   }
 
   Cancel() {
@@ -161,18 +139,7 @@ export class AddressTabComponent implements OnInit {
     }
   }
 
-  LoadListCustAddress() {
-    this.http.post(URLConstant.GetListAppCustAddrByAppCustId, { AppCustId: this.AppCustId }).subscribe(
-      (response) => {
-        this.inputGridObj.resultData = {
-          Data: ""
-        }
-        this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response;
-        this.listAddress = this.inputGridObj.resultData.Data;
-      }
-    );
-  }
+
 
   CopyAddress() {
     if (this.copyAddressFromObj.length < 1) {

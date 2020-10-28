@@ -1,0 +1,47 @@
+<form class="form form-horizontal" [formGroup]="AddressForm" (ngSubmit)="AddressForm.valid && SaveForm()"
+#enjiForm="ngForm">
+<lib-ucSubsection [id]="'AddressId'" [title]="'Customer Address'" [panel]="'Address'">
+</lib-ucSubsection>
+<div id="Address">
+  <div class="form-group row">
+    <label class="col-md-2 adins-required-label" translate>Address Type Name</label>
+    <div class="col-md-4">
+      <select class="form-control adInsInput" formControlName="MrCustAddrTypeCode" (change)="ChangeAddrType($event.target.value)"
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddressForm.controls.MrCustAddrTypeCode.invalid }">
+        <option *ngFor="let it of AddressTypeObj" value="{{it.Key}}">{{it.Value}}</option>
+      </select>
+      <lib-uc-show-errors [control]="AddressForm.controls.MrCustAddrTypeCode" [submit]="enjiForm.submitted">
+      </lib-uc-show-errors>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" translate>Copy Address From</label>
+    <div class="col-md-4">
+      <div class="input-group">
+        <select class="form-control" formControlName="CopyAddrFrom">
+          <option *ngFor="let item of copyAddressFromObj" [value]="item.AppCustAddrId">
+            {{item.MrCustAddrTypeDescr}}
+          </option>
+        </select>
+        <div class="input-group-append">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
+              <i class="fa fa-files-o"></i> Copy
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+      [identifier]="'Address'" [UCAddrForm]="AddressForm"></lib-ucaddress>
+</div>
+<div class="pull-right margin-15">        
+  <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
+  <i class="ft-x"></i> Cancel
+  </button>
+  <button type="submit" class="btn btn-raised btn-primary mr-1" (click)=formValidate.scrollIfFormHasErrors(AddressForm)>
+    <i class="far fa-check-square"></i> Save
+  </button>
+</div>
+</form>
