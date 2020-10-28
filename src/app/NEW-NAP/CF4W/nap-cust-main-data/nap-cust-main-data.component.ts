@@ -37,7 +37,7 @@ export class NapCustMainDataComponent implements OnInit {
   AppStep = {
     "NEW": 1,
     "CUST": 1,
-    "FAMILY": 2,
+    "FAM": 2,
     "GUAR": 3,
   };
 
