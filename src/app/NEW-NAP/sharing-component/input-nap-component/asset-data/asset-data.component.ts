@@ -489,7 +489,7 @@ export class AssetDataComponent implements OnInit {
         }
       }
 
-      if (this.appAssetObj != null || this.appAssetObj != undefined) {
+      if (this.appAssetObj != null && this.appAssetObj != undefined) {
         console.log(this.appAssetObj);
         this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
         this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
