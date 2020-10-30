@@ -48,7 +48,7 @@ export class CustCompletionPagingComponent implements OnInit {
     var critWorflowAct = new CriteriaObj();
     critWorflowAct.restriction = AdInsConstant.RestrictionEq;
     critWorflowAct.propName = 'WTL.ACT_CODE';
-    critWorflowAct.value = "CDC_MD_" + this.bizTemplateCode;
+    critWorflowAct.value = "CDC";
     this.inputPagingObj.addCritInput.push(critWorflowAct);
   }
 
