@@ -1107,7 +1107,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static UpdateAppCustCompletionCompany = environment.losUrl + "/AppCust/UpdateAppCustCompletionCompany";
 
     // App Cust Personal Job Data
-    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
+    public static AddEditAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
     public static GetAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/GetAppCustPersonalJobData";
     
     //App Cust Emergency Contact

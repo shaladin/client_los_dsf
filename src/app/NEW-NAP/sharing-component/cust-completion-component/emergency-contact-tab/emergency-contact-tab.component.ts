@@ -60,11 +60,11 @@ export class EmergencyContactTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
     public formValidate: FormValidateService) {
   }
 
   ngOnInit() {
+    console.log("HELLO")
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = UserAccess.BusinessDt;
 
@@ -148,8 +148,8 @@ export class EmergencyContactTabComponent implements OnInit {
             MrGenderCode: response["MrGenderCode"],
             IdNo: response["IdNo"],
             BirthPlace: response["BirthPlace"],
-            IdExpiredDt: formatDate(response["IdExpiredDt"], 'yyyy-MM-dd', 'en-US'),
-            BirthDt: formatDate(response["BirthDt"], 'yyyy-MM-dd', 'en-US'),
+            IdExpiredDt: response["IdExpiredDt"] != null ? formatDate(response["IdExpiredDt"], 'yyyy-MM-dd', 'en-US') : "",
+            BirthDt: response["BirthDt"] != null ?  formatDate(response["BirthDt"], 'yyyy-MM-dd', 'en-US')  : "",
             MrCustRelationshipCode: response["MrCustRelationshipCode"],
             MobilePhnNo1: response["MobilePhnNo1"],
             MobilePhnNo2: response["MobilePhnNo2"],
@@ -205,7 +205,7 @@ export class EmergencyContactTabComponent implements OnInit {
             MrCustTypeCode: response["CustObj"].MrCustTypeCode,
             MrIdTypeCode: response["CustObj"].MrIdTypeCode,
             IdNo: response["CustObj"].IdNo,
-            IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+            IdExpiredDt: response["CustObj"].IdExpiredDt != null ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
           });
           this.InputLookupCustObj.nameSelect = response["CustObj"].CustName;
           this.InputLookupCustObj.jsonSelect = { CustName: response["CustObj"].CustName };
@@ -215,7 +215,7 @@ export class EmergencyContactTabComponent implements OnInit {
           this.EmergencyContactForm.patchValue({
             MrGenderCode: response["CustPersonalObj"].MrGenderCode,
             BirthPlace: response["CustPersonalObj"].BirthPlace,
-            BirthDt: formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US'),
+            BirthDt: response["CustPersonalObj"].BirthDt != null ? formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US') : "",
             MobilePhnNo1: response["CustPersonalObj"].MobilePhnNo1,
             MobilePhnNo2: response["CustPersonalObj"].MobilePhnNo2,
             Email1: response["CustPersonalObj"].Email1,
@@ -279,7 +279,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.MrGenderCode = this.EmergencyContactForm.controls.MrGenderCode.value;
     this.appCustEmrgncCntctObj.IdNo = this.EmergencyContactForm.controls.IdNo.value;
     this.appCustEmrgncCntctObj.BirthPlace = this.EmergencyContactForm.controls.BirthPlace.value;
-    this.appCustEmrgncCntctObj.IdExpiredDt = this.EmergencyContactForm.controls.IdExpiredDt.value;
+    this.appCustEmrgncCntctObj.IdExpiredDt = this.EmergencyContactForm.controls.IdExpiredDt.value != null ? this.EmergencyContactForm.controls.IdExpiredDt.value : "";
     this.appCustEmrgncCntctObj.BirthDt = this.EmergencyContactForm.controls.BirthDt.value;
     this.appCustEmrgncCntctObj.MrCustRelationshipCode = this.EmergencyContactForm.controls.MrCustRelationshipCode.value;
     this.appCustEmrgncCntctObj.MobilePhnNo1 = this.EmergencyContactForm.controls.MobilePhnNo1.value;
