@@ -59,8 +59,8 @@
               <div class="col-md-4">
                 <label id="CustName" translate>{{CustName}}</label>
               </div>
-              <label class="col-md-2 adInsLabel" translate>Delivery Date</label>
-              <div class="col-md-4">
+              <label *ngIf="result4.BizTemplateCode != 'CFRFN4W'" class="col-md-2 adInsLabel" translate>Delivery Date</label>
+              <div class="col-md-4" *ngIf="result4.BizTemplateCode != 'CFRFN4W'">
                 <label id="DeliveryDt" translate>{{DeliveryDt}}</label>
               </div>
             </div>

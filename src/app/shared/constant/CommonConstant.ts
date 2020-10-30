@@ -89,7 +89,7 @@ export class CommonConstant {
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
-  public static AppStepFamily = "FAMILY";
+  public static AppStepFamily = "FAM";
   public static AppStepGuar = "GUAR";
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";

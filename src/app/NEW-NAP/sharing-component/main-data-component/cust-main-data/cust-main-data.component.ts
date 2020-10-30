@@ -110,6 +110,8 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.title = "Legal Address";
+    this.inputAddressObj.showAllPhn = false;
+    this.inputAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
     await this.getRefMaster();
@@ -145,6 +147,13 @@ export class CustMainDataComponent implements OnInit {
       default:
         this.isIncludeCustRelation = false;
         this.subjectTitle = 'Customer';
+    }
+
+    if(this.isIncludeCustRelation){
+      this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
+      this.CustMainDataForm.controls.Email1.clearValidators();
+      this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
+      this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     }
   }
 
@@ -264,7 +273,7 @@ export class CustMainDataComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-        if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) this.removeSpouse();
+        if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
         if (this.inputMode != "EDIT")
           this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
       }
@@ -273,7 +282,7 @@ export class CustMainDataComponent implements OnInit {
 
   removeSpouse(){
     let SpouseRelationship = this.MrCustRelationshipCodeObj[0]
-    if(!this.isMarried && SpouseRelationship.Key == "SPOUSE"){
+    if(SpouseRelationship.Key == "SPOUSE"){
       this.MrCustRelationshipCodeObj = this.MrCustRelationshipCodeObj.slice(1, this.MrCustRelationshipCodeObj.length);
     }
   }
@@ -493,14 +502,6 @@ export class CustMainDataComponent implements OnInit {
       this.legalAddrObj.AreaCode3 = response.AreaCode3;
       this.legalAddrObj.AreaCode4 = response.AreaCode4;
       this.legalAddrObj.City = response.City;
-      this.legalAddrObj.Fax = response.Fax;
-      this.legalAddrObj.FaxArea = response.FaxArea;
-      this.legalAddrObj.Phn1 = response.Phn1;
-      this.legalAddrObj.Phn2 = response.Phn2;
-      this.legalAddrObj.PhnArea1 = response.PhnArea1;
-      this.legalAddrObj.PhnArea2 = response.PhnArea2;
-      this.legalAddrObj.PhnExt1 = response.PhnExt1;
-      this.legalAddrObj.PhnExt2 = response.PhnExt2;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
@@ -547,17 +548,6 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode1 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode1.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea1 = this.CustMainDataForm.controls["Address"]["controls"].PhnArea1.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.Phn1 = this.CustMainDataForm.controls["Address"]["controls"].Phn1.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt1 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt1.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea2 = this.CustMainDataForm.controls["Address"]["controls"].PhnArea2.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.Phn2 = this.CustMainDataForm.controls["Address"]["controls"].Phn2.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt2 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt2.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea3 = this.CustMainDataForm.controls["Address"]["controls"].PhnArea3.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.Phn3 = this.CustMainDataForm.controls["Address"]["controls"].Phn3.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt3 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt3.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.FaxArea = this.CustMainDataForm.controls["Address"]["controls"].FaxArea.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
 
     this.custDataPersonalObj.AppCustObj.RowVersion = this.rowVersionAppCust;
@@ -594,17 +584,6 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode1 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode1.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.PhnArea1 = this.CustMainDataForm.controls["Address"]["controls"].PhnArea1.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Phn1 = this.CustMainDataForm.controls["Address"]["controls"].Phn1.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.PhnExt1 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt1.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.PhnArea2 = this.CustMainDataForm.controls["Address"]["controls"].PhnArea2.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Phn2 = this.CustMainDataForm.controls["Address"]["controls"].Phn2.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.PhnExt2 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt2.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.PhnArea3 = this.CustMainDataForm.controls["Address"]["controls"].PhnArea3.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Phn3 = this.CustMainDataForm.controls["Address"]["controls"].Phn3.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.PhnExt3 = this.CustMainDataForm.controls["Address"]["controls"].PhnExt3.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.FaxArea = this.CustMainDataForm.controls["Address"]["controls"].FaxArea.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Fax = this.CustMainDataForm.controls["Address"]["controls"].Fax.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
     
     this.custDataCompanyObj.AppCustObj.RowVersion = this.rowVersionAppCust;

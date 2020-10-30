@@ -319,5 +319,12 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }else if(key == "lead"){
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
+    else if(key == "cust"){
+      var custObj = { CustNo: this.agrmntObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        });
+    }
   }
 }

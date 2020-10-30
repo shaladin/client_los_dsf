@@ -7,5 +7,9 @@ export class ReqDupCheckAppNegativeCustObj {
     NegCustCause: string;
    
     constructor() {
+        this.NegativeCustNo = '';
+        this.MrNegCustTypeCode = '';
+        this.MrNegCustSourceCode = '';
+        this.NegCustCause = '';
     }
 }
