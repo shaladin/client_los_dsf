@@ -127,10 +127,6 @@ export class CcAddressDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    console.log("SaveForm")
-    console.log(this.AddrObj)
-    console.log(this.inputAddressObj)
-    console.log(this.inputAddressObj.inputField)
     let Flag = false;
 
     if (this.InputObj.Mode == "Add") {

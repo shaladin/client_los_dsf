@@ -64,7 +64,6 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("HELLO")
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = UserAccess.BusinessDt;
 
