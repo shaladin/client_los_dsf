@@ -1,7 +1,9 @@
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
@@ -20,6 +22,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   stepIndex: number = 1;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  IsCompleteCustStep:object = {};
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -31,7 +34,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router) {
+    private location: Location,
+    private toastr: NGXToastrService,
+        private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -62,10 +67,15 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
         this.AppCustCompanyId = response["AppCustCompanyId"];
       }
     );
+
+    // set default isComplete untuk all step ke false jika belum ada defaultnya
+    Object.keys(this.CustStep).forEach(stepName => {
+      if(typeof(this.IsCompleteCustStep[stepName]) == 'undefined') this.IsCompleteCustStep[stepName] = false;
+    });
   }
 
   Back() {
-    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId } });
+    this.location.back();
   }
   
   EnterTab(type: string) { 
@@ -92,9 +102,53 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     this.stepper.to(this.stepIndex);
   }
 
-  NextStep(Step: any){
-    this.EnterTab(Step);
-    this.ucViewMainProd.initiateForm();
-    
+  GetEvent(event: any, Step: string){
+    if(event!=null){
+      // set isComplete currStep jika ada event nya
+      if(typeof(event.IsComplete) != 'undefined') {
+        Object.keys(this.CustStep).forEach(stepName => {
+          if(this.CustStep[stepName] == this.stepIndex) 
+            this.IsCompleteCustStep[stepName] = event.IsComplete;
+        });
+      }
+    }
+    if(Step == 'Save')
+    {
+      this.Save();
+    }
+    else
+    {
+      this.EnterTab(Step);
+      this.ucViewMainProd.initiateForm();
+    }    
+  }
+
+  Save(){
+    let isValid = true;
+    let notValidStep = '';
+    Object.keys(this.IsCompleteCustStep).forEach(stepName => {
+      if(!this.IsCompleteCustStep[stepName]) {
+        isValid = false;
+        if(notValidStep == '') notValidStep = stepName;
+      }
+    });
+
+    // auto check not valid step
+
+    if(!isValid){
+      this.toastr.warningMessage('Please complete & save followong data first');
+      if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
+      return;
+    }
+
+    this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        this.Back();
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 }

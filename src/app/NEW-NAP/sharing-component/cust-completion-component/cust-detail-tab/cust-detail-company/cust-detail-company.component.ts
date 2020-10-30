@@ -95,7 +95,7 @@ export class CustDetailCompanyComponent implements OnInit {
     this.http.post(URLConstant.UpdateAppCustCompletionCompany, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
+        this.OutputTab.emit({IsComplete: true});
       },
       error => {
         console.log(error);

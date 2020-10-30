@@ -243,7 +243,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.UpdateAppCustCompletionPersonal, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({Key: "Detail", CustModelCode: this.AppCustObj.CustModelCode});
+        this.OutputTab.emit({Key: "Detail", CustModelCode: this.AppCustObj.CustModelCode, IsComplete: true});
       },
       error => {
         console.log(error);

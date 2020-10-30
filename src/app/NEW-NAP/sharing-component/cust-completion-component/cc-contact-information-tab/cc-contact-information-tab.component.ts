@@ -180,7 +180,7 @@ export class CcContactInformationTabComponent implements OnInit {
     let ReqAddr = await this.SetReqAddrObj(temp);
     await this.SetReqCcObj(temp, ReqAddr);
 
-    this.OutputTab.emit();
+    this.OutputTab.emit({IsComplete: true});
   }
 
   async SetReqAddrObj(obj: any) {

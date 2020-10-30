@@ -65,7 +65,7 @@ export class LegalDocTabComponent implements OnInit {
   }
 
   Continue(){
-    this.OutputTab.emit();
+    this.OutputTab.emit({IsComplete: true});
   }
 
   GetEvent(){

@@ -6,7 +6,7 @@
             <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
               <i class="fa fa-arrow-left"></i> Back
             </button>
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Back()" translate>
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Save()" translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
           </div>
@@ -95,7 +95,7 @@
             <div id="cust-attr-tab" class="content" role="tabpanel" aria-labelledby="cust-attr-tab-trigger">
               <!-- <app-cust-attr-section [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 7">
             </app-cust-attr-section> -->
-            <app-other-info-tab [CustTypeCode]="'PERSONAL'"  *ngIf="stepIndex == 7"> </app-other-info-tab>
+            <app-other-info-tab [CustTypeCode]="'PERSONAL'"  *ngIf="stepIndex == 7" (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
             </div>
           </div>
         </div>

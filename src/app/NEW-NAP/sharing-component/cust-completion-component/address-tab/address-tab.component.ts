@@ -154,11 +154,24 @@ export class AddressTabComponent implements OnInit {
   }
 
   Continue() {
-    if(this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal) != null && this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence) != null) {
-      this.OutputTab.emit();
-    }else{
+
+    if(
+      this.MrCustTypeCode == CommonConstant.CustTypePersonal && 
+      (!this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal) || !this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence))
+    ) {
       this.toastr.warningMessage("Please Input Legal Address or Residence Address Data!")
+      return;
     }
+
+    if(
+      this.MrCustTypeCode == CommonConstant.CustTypeCompany && 
+      !this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal)
+    ) {
+      this.toastr.warningMessage("Please Input Legal Address Data!")
+      return;
+    }
+    
+    this.OutputTab.emit({IsComplete: true});
   }
 
   LoadListCustAddress() {

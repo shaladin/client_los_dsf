@@ -19,6 +19,7 @@ export class AddrObj {
     MrHouseOwnershipCode: string;
     SubZipcode: string;
     StayLength: number;
+    RowVersion: string;
 
 constructor() { 
     this.Addr = '';
@@ -41,5 +42,6 @@ constructor() {
     this.MrHouseOwnershipCode = '';
     this.SubZipcode = '';
     this.StayLength = 0;
+    this.RowVersion = '';
  }
 }
