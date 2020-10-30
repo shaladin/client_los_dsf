@@ -97,7 +97,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   buttonSubmitOnClick(){
-    this.http.post(URLConstant.MD_SubmitAppDupCheck, {"AppId": this.appId}).subscribe(
+    this.http.post(URLConstant.MD_SubmitAppDupCheck, {"AppId": this.appId, "WfTaskListId":this.wfTaskListId}).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.buttonBackOnClick();

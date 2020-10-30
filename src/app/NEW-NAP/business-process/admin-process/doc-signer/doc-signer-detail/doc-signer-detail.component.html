@@ -114,61 +114,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <lib-ucSubsection [id]="'ApproverSignerId'" [title]="'Approver Signer'"
-                                    [panel]="'ApproverSigner'">
-                                </lib-ucSubsection>
-                                <div class="form-body" id="ApproverSigner">
-                                    <div class="form-group row">
-                                        <label class="col-md-5 adInsLabel adins-required-label">Customer Commisioner
-                                            Approver 1</label>
-                                        <div class="col-md-5">
-                                            <lib-uclookupgeneric
-                                                [lookupInput]="inputLookupAppCustCompanyShareHolder2Obj"
-                                                [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                                [identifier]="'lookupAppCustCompanyShareHolder2'"
-                                                (lookup)="getLookupAppCustCompanyShareHolder2($event)"
-                                                *ngIf="inputLookupAppCustCompanyShareHolder2Obj.isReady">
-                                            </lib-uclookupgeneric>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-5 adInsLabel">Customer Commisioner Position Approver
-                                            1</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control adInsInput width-75-per"
-                                                formControlName="MrJobPositionMgmntShrholder2Code">
-                                            <lib-uc-show-errors
-                                                [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder2Code"
-                                                [submit]="enjiForm.submitted">
-                                            </lib-uc-show-errors>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-5 adInsLabel">Customer Commisioner
-                                            Approver 2</label>
-                                        <div class="col-md-5">
-                                            <lib-uclookupgeneric
-                                                [lookupInput]="inputLookupAppCustCompanyShareHolder3Obj"
-                                                [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
-                                                [identifier]="'lookupAppCustCompanyShareHolder3'"
-                                                (lookup)="getLookupAppCustCompanyShareHolder3($event)"
-                                                *ngIf="inputLookupAppCustCompanyShareHolder3Obj.isReady">
-                                            </lib-uclookupgeneric>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-5 adInsLabel">Customer Commisioner Position Approver
-                                            2</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control adInsInput width-75-per"
-                                                formControlName="MrJobPositionMgmntShrholder3Code">
-                                            <lib-uc-show-errors
-                                                [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder3Code"
-                                                [submit]="enjiForm.submitted">
-                                            </lib-uc-show-errors>
-                                        </div>
-                                    </div>
-                                </div>
                         </div>
                         <div *ngIf="MrCustTypeCode == 'PERSONAL'">
                             <div [hidden]="isHidden">

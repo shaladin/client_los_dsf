@@ -65,35 +65,35 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   GetFinData(){
-    this.http.post(URLConstant.GetAppCustCompanyFinDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       async (response) => {
-        if(response["AppCustCompanyFinDataId"] != 0){
+        if(response.AppCustCompanyFinDataId != 0){
           this.FinancialForm.patchValue({
-            GrossMonthlyIncomeAmt: response["GrossMonthlyIncomeAmt"],
-            ReturnOfInvestmentPrcnt: response["ReturnOfInvestmentPrcnt"],
-            ReturnOfAssetPrcnt: response["ReturnOfAssetPrcnt"],
-            CurrentRatioPrcnt: response["CurrentRatioPrcnt"],
-            InvTurnOverPrcnt: response["InvTurnOverPrcnt"],
-            GrowthPrcnt: response["GrowthPrcnt"],
-            OthMonthlyInstAmt: response["OthMonthlyInstAmt"],
-            Revenue: response["Revenue"],
-            ProfitBeforeTax: response["ProfitBeforeTax"],
-            NetFixedAsset: response["NetFixedAsset"],
-            CurrLiablts: response["CurrLiablts"],
-            ShareholderEquity: response["ShareholderEquity"],
-            GrossMonthlyExpenseAmt: response["GrossMonthlyExpenseAmt"],
-            ReturnOfEquityPrcnt: response["ReturnOfEquityPrcnt"],
-            ProfitMarginPrcnt: response["ProfitMarginPrcnt"],
-            DebtEquityRatioPrcnt: response["DebtEquityRatioPrcnt"],
-            ArTurnOverPrcnt: response["ArTurnOverPrcnt"],
-            WorkingCapitalAmt: response["WorkingCapitalAmt"],
-            DateAsOf: response["DateAsOf"] != null? formatDate(response["DateAsOf"], 'yyyy-MM-dd', 'en-US') : "",
-            OprCost: response["OprCost"],
-            CurrAsset: response["CurrAsset"],
-            TotalAsset: response["TotalAsset"],
-            LongTermLiablts: response["LongTemrLiablts"],
-            CurrRatio: response["CurrRatio"],
-            RowVersion: response["RowVersion"]
+            GrossMonthlyIncomeAmt: response.GrossMonthlyIncomeAmt,
+            ReturnOfInvestmentPrcnt: response.ReturnOfInvestmentPrcnt,
+            ReturnOfAssetPrcnt: response.ReturnOfAssetPrcnt,
+            CurrentRatioPrcnt: response.CurrentRatioPrcnt,
+            InvTurnOverPrcnt: response.InvTurnOverPrcnt,
+            GrowthPrcnt: response.GrowthPrcnt,
+            OthMonthlyInstAmt: response.OthMonthlyInstAmt,
+            Revenue: response.Revenue,
+            ProfitBeforeTax: response.ProfitBeforeTax,
+            NetFixedAsset: response.NetFixedAsset,
+            CurrLiablts: response.CurrLiablts,
+            ShareholderEquity: response.ShareholderEquity,
+            GrossMonthlyExpenseAmt: response.GrossMonthlyExpenseAmt,
+            ReturnOfEquityPrcnt: response.ReturnOfEquityPrcnt,
+            ProfitMarginPrcnt: response.ProfitMarginPrcnt,
+            DebtEquityRatioPrcnt: response.DebtEquityRatioPrcnt,
+            ArTurnOverPrcnt: response.ArTurnOverPrcnt,
+            WorkingCapitalAmt: response.WorkingCapitalAmt,
+            DateAsOf: response.DateAsOf != null? formatDate(response.DateAsOf, 'yyyy-MM-dd', 'en-US') : "",
+            OprCost: response.OprCost,
+            CurrAsset: response.CurrAsset,
+            TotalAsset: response.TotalAsset,
+            LongTermLiablts: response.LongTermLiablts,
+            CurrRatio: response.CurrRatio,
+            RowVersion: response.RowVersion
           });
         }
       }
