@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { MatRadioModule } from "@angular/material";
-import { AddressTabComponent } from './address-tab/address-tab.component';
 import { CustDetailPersonalComponent } from './cust-detail-tab/cust-detail-personal/cust-detail-personal.component';
 import { CustDetailCompanyComponent } from './cust-detail-tab/cust-detail-company/cust-detail-company.component';
 import { FamilyTabComponent } from './family-tab/family-tab.component';
@@ -14,7 +13,7 @@ import { CcContactInformationTabComponent } from './cc-contact-information-tab/c
 import { OtherInfoTabComponent } from './other-info-tab/other-info-tab.component';
 import { AttrContentComponentComponent } from './attr-content-component/attr-content-component.component';
 import { BankSectionComponent } from './financial-tab/bank-section/bank-section.component';
-import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule } from "ngx-currency";
 import { LegalDocTabComponent } from "./legal-doc-tab/legal-doc-tab.component";
 import { LegalDocDetailComponent } from "./legal-doc-tab/legal-doc-detail/legal-doc-detail.component";
 import { FinancialCompanyComponent } from "./financial-tab/financial-company/financial-company.component";
