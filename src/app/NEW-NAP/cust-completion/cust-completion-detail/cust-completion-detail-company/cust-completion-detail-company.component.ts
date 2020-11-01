@@ -22,7 +22,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   stepIndex: number = 1;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  IsCompleteCustStep:object = {};
+  IsCompletion: boolean = false;
+  isCompletionCheck = true;
+  isCompleteCustStep:object = {};
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -65,12 +67,13 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
         this.AppCustCompanyId = response["AppCustCompanyId"];
+        this.IsCompletion = response["IsCompletion"];
       }
     );
 
     // set default isComplete untuk all step ke false jika belum ada defaultnya
     Object.keys(this.CustStep).forEach(stepName => {
-      if(typeof(this.IsCompleteCustStep[stepName]) == 'undefined') this.IsCompleteCustStep[stepName] = false;
+      if(typeof(this.isCompleteCustStep[stepName]) == 'undefined') this.isCompleteCustStep[stepName] = false;
     });
   }
 
@@ -108,7 +111,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       if(typeof(event.IsComplete) != 'undefined') {
         Object.keys(this.CustStep).forEach(stepName => {
           if(this.CustStep[stepName] == this.stepIndex) 
-            this.IsCompleteCustStep[stepName] = event.IsComplete;
+            this.isCompleteCustStep[stepName] = event.IsComplete;
         });
       }
     }
@@ -124,21 +127,22 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
 
   Save(){
-    let isValid = true;
-    let notValidStep = '';
-    Object.keys(this.IsCompleteCustStep).forEach(stepName => {
-      if(!this.IsCompleteCustStep[stepName]) {
-        isValid = false;
-        if(notValidStep == '') notValidStep = stepName;
+    if(this.isCompletionCheck && !this.IsCompletion)
+    {
+      let isValid = true;
+      let notValidStep = '';
+      Object.keys(this.isCompleteCustStep).forEach(stepName => {
+        if(!this.isCompleteCustStep[stepName]) {
+          isValid = false;
+          if(notValidStep == '') notValidStep = stepName;
+        }
+      });
+
+      if(!isValid){
+        this.toastr.warningMessage('Please complete & save followong data first');
+        if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
+        return;
       }
-    });
-
-    // auto check not valid step
-
-    if(!isValid){
-      this.toastr.warningMessage('Please complete & save followong data first');
-      if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
-      return;
     }
 
     this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
