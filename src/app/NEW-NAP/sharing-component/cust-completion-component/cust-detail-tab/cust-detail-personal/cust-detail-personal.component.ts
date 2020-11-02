@@ -65,7 +65,6 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Hellow")
     this.GetRefMaster();
 
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
