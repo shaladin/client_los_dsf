@@ -141,7 +141,6 @@ export class OtherInfoTabComponent implements OnInit {
       for (const key in formValue) {
         if(formValue[key]["AttrValue"]!=null ) { 
         var custAttr = {
-          CustAttrContentId: formValue[key]["CustAttrContentId"],
           AppCustId: this.AppCustId,
           RefAttrCode: formValue[key]["AttrCode"],
           AttrValue: formValue[key]["AttrValue"],
