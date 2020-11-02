@@ -124,7 +124,7 @@ export class JobTabComponent implements OnInit {
             MrJobPositionCode: response["AppCustPersonalJobDataObj"].MrJobPositionCode,
             MrJobStatCode: response["AppCustPersonalJobDataObj"].MrJobStatCode,
             MrCoyScaleCode: response["AppCustPersonalJobDataObj"].MrCoyScaleCode,
-            EmploymentEstablishmentDt: response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt != "" ? formatDate(response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
+            EmploymentEstablishmentDt: response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt != null ? formatDate(response["AppCustPersonalJobDataObj"].EmploymentEstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
             NumOfEmployee: response["AppCustPersonalJobDataObj"].NumOfEmployee,
             JobTitleName: response["AppCustPersonalJobDataObj"].JobTitleName,
             IsMfEmp: response["AppCustPersonalJobDataObj"].IsMfEmp,
@@ -144,11 +144,13 @@ export class JobTabComponent implements OnInit {
           this.InputLookupIndustryTypeObj.nameSelect = response["AppCustPersonalJobDataObj"].IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response["AppCustPersonalJobDataObj"].IndustryTypeName };
 
+
           if (response["JobAddr"].AppCustAddrId != 0) {
             this.JobAddrObj = response["JobAddr"];
             this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response["JobAddr"].Zipcode;
             this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["JobAddr"].Zipcode };
             this.InputJobAddrObj.default = this.JobAddrObj;
+            this.JobDataAddrObj.RowVersion = response["JobAddr"].RowVersion;
           }
 
           if (response["PrevJobAddr"].AppCustAddrId != 0) {
@@ -156,6 +158,7 @@ export class JobTabComponent implements OnInit {
             this.InputPrevJobAddrObj.inputField.inputLookupObj.nameSelect = response["PrevJobAddr"].Zipcode;
             this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["PrevJobAddr"].Zipcode };
             this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
+            this.PrevJobDataAddrObj.RowVersion = response["PrevJobAddr"].RowVersion;
           }
 
           if (response["OthBizAddr"].AppCustAddrId != 0) {
@@ -163,6 +166,7 @@ export class JobTabComponent implements OnInit {
             this.InputOthBizAddrObj.inputField.inputLookupObj.nameSelect = response["OthBizAddr"].Zipcode;
             this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["OthBizAddr"].Zipcode };
             this.InputOthBizAddrObj.default = this.OthBizAddrObj;
+            this.OthBizDataAddrObj.RowVersion = response["OthBizAddr"].RowVersion;
           }
         }
         this.isUcAddrReady = true;
@@ -271,7 +275,7 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
 
-    this.http.post(URLConstant.AddAppCustPersonalJobAndAppCustAddr, requestObj).subscribe(
+    this.http.post(URLConstant.AddEditAppCustPersonalJobData, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.OutputTab.emit({IsComplete: true});
@@ -300,7 +304,7 @@ export class JobTabComponent implements OnInit {
     if (isChange) this.ucLookupProfession.setAddCritInput();
     this.InputLookupProfessionObj.isReady = true;
 
-    if (CustModelCode == CommonConstant.CustModelNonProfessional) {
+    if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
       this.JobDataForm.controls.CoyName.clearValidators();
     } else {

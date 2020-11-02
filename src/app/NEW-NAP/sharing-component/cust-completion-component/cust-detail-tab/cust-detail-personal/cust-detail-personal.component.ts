@@ -13,6 +13,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 @Component({
@@ -36,7 +37,7 @@ export class CustDetailPersonalComponent implements OnInit {
   lookupCustGrpObj: InputLookupObj = new InputLookupObj();
   CustModelObj: Array<KeyValueObj> = new Array();
   SalutationObj: Array<KeyValueObj> = new Array();
-  NationalityObj: Array<KeyValueObj> = new Array();
+  NationalityObj: Array<Object> = new Array();
   EducationObj: Array<KeyValueObj> = new Array();
   ReligionObj: Array<KeyValueObj> = new Array();
   CustDetailForm = this.fb.group({
@@ -45,7 +46,7 @@ export class CustDetailPersonalComponent implements OnInit {
     NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
     NoOfResidence: ['', Validators.pattern("^[0-9]+$")],
     IsVip: [false],
-    IsAffiliateWithMF: [false],
+    IsAffiliateWithMf: [false],
     NickName: [''],
     MrNationalityCode: ['', Validators.required],
     MrEducationCode: ['', Validators.required],
@@ -165,45 +166,44 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   GetData() {
-    this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
-        console.log("DISINI")
-        this.CustFullName = response["CustFullName"];
+        this.CustFullName = response.AppCustObj.CustName;
         this.CustDetailForm.patchValue({
-          FamilyCardNo: response["FamilyCardNo"],
-          NoOfDependents: response["NoOfDependents"],
-          NoOfResidence: response["NoOfResidence"],
-          IsVip: response["IsVip"],
-          IsAffiliateWithMF: response["IsAffiliateWithMf"],
-          NickName: response["NickName"],
-          VIPNotes: response["VipNotes"],
-          CustPrefixName: response["CustPrefixName"],
-          CustSuffixName: response["CustSuffixName"],
-          IsRestInPeace: response["IsRestInPeace"],
-          MrNationalityCode: response["MrNationalityCode"] != "" ? response["MrNationalityCode"] : this.NationalityObj[1]["MasterCode"],
-          MrEducationCode: response["MrEducationCode"] != "" ? response["MrEducationCode"] : this.EducationObj[0].Key,
-          MrReligionCode: response["MrReligionCode"] != "" ? response["MrReligionCode"] : this.ReligionObj[0].Key,
-          MrSalutationCode: response["MrSalutationCode"] != "" ? response["MrSalutationCode"] : this.SalutationObj[0].Key,
-          CustModelCode: response["CustModelCode"] != "" ? response["CustModelCode"] : this.CustModelObj[0].Key,
+          FamilyCardNo: response.AppCustPersonalObj.FamilyCardNo,
+          NoOfDependents: response.AppCustPersonalObj.NoOfDependents,
+          NoOfResidence: response.AppCustPersonalObj.NoOfResidence,
+          IsVip: response.AppCustObj.IsVip,
+          IsAffiliateWithMf: response.AppCustObj.IsAffiliateWithMf,
+          NickName: response.AppCustPersonalObj.NickName,
+          VIPNotes: response.AppCustObj.VipNotes,
+          CustPrefixName: response.AppCustPersonalObj.CustPrefixName,
+          CustSuffixName: response.AppCustPersonalObj.CustSuffixName,
+          IsRestInPeace: response.AppCustPersonalObj.IsRestInPeace,
+          MrNationalityCode: response.AppCustPersonalObj.MrNationalityCode != "" ? response.AppCustPersonalObj.MrNationalityCode : this.NationalityObj[1]["MasterCode"],
+          MrEducationCode: response.AppCustPersonalObj.MrEducationCode != "" ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
+          MrReligionCode: response.AppCustPersonalObj.MrReligionCode != "" ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
+          MrSalutationCode: response.AppCustPersonalObj.MrSalutationCode != "" ? response.AppCustPersonalObj.MrSalutationCode : this.SalutationObj[0].Key,
+          CustModelCode: response.AppCustObj.CustModelCode != "" ? response.AppCustObj.CustModelCode : this.CustModelObj[0].Key,
         })
-        this.AppCustObj.RowVersion = response["AppCustRowVersion"];
-        this.AppCustPersonalObj.RowVersion = response["AppCustPersonalRowVersion"];
-        if (response["CustNoParent"] != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response["CustNoParent"] }).subscribe(
+        this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
+        this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
+        if (response.AppCustGrpObj.CustNo != "") {
+          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
-              this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"] };
+              this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};
               this.lookupCustGrpObj.isReady = true;
-              this.GetCustGrpData({ CustNo: responseCustGrp["CustNo"] });
+              this.GetCustGrpData({ CustNo: responseCustGrp["CustNo"]});
             });
         }
-        this.NationalityCountryCode = response["NationalityCountryCode"]
-        if (response["MrNationalityCode"] != CommonConstant.NationalityLocal) {
+        this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
+        if (response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
           this.isLocal = false;
-          this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: response["NationalityCountryCode"] }).subscribe(
+          this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
             (responseCountry) => {
               this.lookupCountryObj.nameSelect = responseCountry["CountryName"];
-              this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"] };
+              this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"]};
               this.lookupCountryObj.isReady = true;
             });
         }
@@ -215,8 +215,8 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.CustModelCode = this.CustDetailForm.controls.CustModelCode.value;
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
-    this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value;
-    this.AppCustObj.VIPNotes = this.CustDetailForm.controls.VIPNotes.value;
+    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
+    this.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
 
     this.AppCustPersonalObj.CustFullName = this.CustFullName;
     this.AppCustPersonalObj.CustPrefixName = this.CustDetailForm.controls.CustPrefixName.value;

@@ -68,6 +68,14 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.ProfessionalNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+                <label class="col-md-2" translate>Establishment Date</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
               </div>
             </div>
             <div class="form-group row" *ngIf="CustModelCode != 'NONPROF'">
@@ -78,11 +86,12 @@
                 <lib-uc-show-errors [control]="JobDataForm.controls.JobTitleName" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
-              <label class="col-md-2" translate>Establishment Date</label>
-              <div class="col-md-4">
-                <!-- max="{{MaxDate | date:'yyyy-MM-dd'}}" -->
-                <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt">
-                <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt" [submit]="enjiForm.submitted">
+              <label class="col-md-2" translate *ngIf="CustModelCode != 'PROF'">Establishment Date</label>
+              <div class="col-md-4" *ngIf="CustModelCode != 'PROF'">
+                <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                  max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
+                  [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
             </div>
@@ -116,12 +125,13 @@
               </div>
             </div>
             <div *ngIf="CustModelCode != 'NONPROF'">
-              <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputJobAddrObj" [enjiForm]="enjiForm" [identifier]="'JobAddr'"
-                [UCAddrForm]="JobDataForm"></lib-ucaddress>
+              <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputJobAddrObj" [enjiForm]="enjiForm"
+                [identifier]="'JobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
             </div>
           </div>
           <div *ngIf="CustModelCode != 'NONPROF'">
-            <lib-ucSubsection [id]="'PrevJobDataId'" [title]="'Previous Job Data'" [panel]="'PrevJobData'"></lib-ucSubsection>
+            <lib-ucSubsection [id]="'PrevJobDataId'" [title]="'Previous Job Data'" [panel]="'PrevJobData'">
+            </lib-ucSubsection>
             <div id="PrevJobData">
               <div class="form-group row">
                 <label class="col-md-2" translate>Previous Company Name</label>
@@ -137,12 +147,13 @@
                   <input type="date" class="form-control" formControlName="PrevEmploymentDt">
                   <lib-uc-show-errors [control]="JobDataForm.controls.PrevEmploymentDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
-                </div>  
+                </div>
               </div>
-              <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputPrevJobAddrObj" [enjiForm]="enjiForm" [identifier]="'PrevJobAddr'"
-              [UCAddrForm]="JobDataForm"></lib-ucaddress>
+              <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputPrevJobAddrObj" [enjiForm]="enjiForm"
+                [identifier]="'PrevJobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
             </div>
-            <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'"></lib-ucSubsection>
+            <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'">
+            </lib-ucSubsection>
             <div id="OtherJobData">
               <div class="form-group row">
                 <label class="col-md-2" translate>Other Business Name</label>
@@ -165,7 +176,8 @@
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizIndustryTypeCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizIndustryTypeCode.invalid }">
-                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizIndustryTypeCode" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizIndustryTypeCode"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" translate>Other Job Type</label>
@@ -181,13 +193,14 @@
                 <div class="col-md-4">
                   <!-- max="{{MaxDate | date:'yyyy-MM-dd'}}" -->
                   <input type="date" class="form-control" formControlName="OthBizEstablishmentDt">
-                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizEstablishmentDt" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizEstablishmentDt"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
-                </div>  
+                </div>
               </div>
             </div>
-            <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm" [identifier]="'OthBizAddr'"
-            [UCAddrForm]="JobDataForm"></lib-ucaddress>
+            <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm"
+              [identifier]="'OthBizAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
           </div>
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)
