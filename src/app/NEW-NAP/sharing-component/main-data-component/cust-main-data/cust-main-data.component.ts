@@ -65,9 +65,9 @@ export class CustMainDataComponent implements OnInit {
   custDataPersonalObj: CustMainDataPersonalObj;
   custDataCompanyObj: CustMainDataCompanyObj;
   rowVersionAppCust: string;
-  rowVersionAppCustPersonal: string;
-  rowVersionAppCustCompany: string;
-  rowVersionAppCustAddr: string;
+  rowVersionAppCustPersonal: string[];
+  rowVersionAppCustCompany: string[];
+  rowVersionAppCustAddr: string[];
 
   constructor(
     private fb: FormBuilder,
@@ -103,8 +103,8 @@ export class CustMainDataComponent implements OnInit {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
-    await this.initcustMainDataMode();
-    await this.setLookup();
+    this.initcustMainDataMode();
+    this.setLookup();
 
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
@@ -114,7 +114,7 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
-    await this.getRefMaster();
+    this.getRefMaster();
     if (this.inputMode != 'ADD') {
       await this.getCustMainData();
     }
@@ -226,8 +226,8 @@ export class CustMainDataComponent implements OnInit {
           this.CustMainDataForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
+          this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
-        // this.clearExpDt();
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
@@ -373,9 +373,16 @@ export class CustMainDataComponent implements OnInit {
     await this.disableInput();
   }
 
-  clearExpDt() {
-    this.CustMainDataForm.controls.IdExpiredDt.reset();
-    this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
+  ChangeIdType(IdType: string){
+    this.CustMainDataForm.controls.IdExpiredDt.patchValue("");
+
+    if(IdType == "KITAS" || IdType == "SIM"){
+      this.CustMainDataForm.controls.IdExpiredDt.setValidators([Validators.required]);
+    }else{
+      this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
+    }
+
+    this.CustMainDataForm.controls.IdExpiredDt.updateValueAndValidity();
   }
 
 

@@ -10,7 +10,9 @@ export class AppCustCompanyLegalDocObj {
     ReleaseBy: string; 
     ReleaseLocation: string; 
     IsExpDtMandatory: boolean;
-    RowVersion: any;
+    NotaryName: string;
+    NotaryLocation: string;
+    RowVersion: string[];
     
-constructor() { this.AppCustCompanyLegalDocId = 0; this.RowVersion="" }
+constructor() { this.AppCustCompanyLegalDocId = 0; this.RowVersion=[] }
 }

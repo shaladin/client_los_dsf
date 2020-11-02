@@ -20,7 +20,7 @@ export class AppCustObj {
     IsShareholder: boolean;
     IsAffiliateWithMF: boolean;
     MrCustRelationshipCode: string;
-    VIPNotes: string;
+    VipNotes: string;
     Age: number;
     RowVersion: any;
 
@@ -44,6 +44,6 @@ constructor() {
         this.IsShareholder = false;
         this.IsAffiliateWithMF = false;
         this.MrCustRelationshipCode = "";
-        this.VIPNotes = "";
+        this.VipNotes = "";
     }
 }

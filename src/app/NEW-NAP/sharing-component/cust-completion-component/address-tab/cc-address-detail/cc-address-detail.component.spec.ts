@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddressTabComponent } from './address-tab.component';
+import { CcAddressDetailComponent } from './cc-address-detail.component';
 
-describe('AddressTabComponent', () => {
-  let component: AddressTabComponent;
-  let fixture: ComponentFixture<AddressTabComponent>;
+describe('CcAddressDetailComponent', () => {
+  let component: CcAddressDetailComponent;
+  let fixture: ComponentFixture<CcAddressDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddressTabComponent ]
+      declarations: [ CcAddressDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddressTabComponent);
+    fixture = TestBed.createComponent(CcAddressDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
