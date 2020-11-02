@@ -41,7 +41,6 @@ export class CustDetailPersonalComponent implements OnInit {
   EducationObj: Array<KeyValueObj> = new Array();
   ReligionObj: Array<KeyValueObj> = new Array();
   CustDetailForm = this.fb.group({
-    CustModelCode: [''],
     FamilyCardNo: ['', Validators.pattern("^[0-9]+$")],
     NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
     NoOfResidence: ['', Validators.pattern("^[0-9]+$")],
@@ -64,9 +63,7 @@ export class CustDetailPersonalComponent implements OnInit {
     public formValidate: FormValidateService) {
   }
 
-  ngOnInit() {
-    this.GetRefMaster();
-
+  async ngOnInit() {
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
@@ -74,26 +71,20 @@ export class CustDetailPersonalComponent implements OnInit {
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
     this.lookupCustGrpObj.isReady = true;
+    await this.GetRefMaster();
     this.GetData();
   }
 
-  GetRefMaster() {
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: CommonConstant.CustTypePersonal }).subscribe(
-      (response) => {
-        this.CustModelObj = response[CommonConstant.ReturnObj];
-        this.CustDetailForm.patchValue({
-          CustModelCode: this.CustModelObj[0].Key
-        });
-      }
-    );
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSalutation }).subscribe(
+  async GetRefMaster() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSalutation }).toPromise().then(
       (response) => {
         this.SalutationObj = response[CommonConstant.ReturnObj];
         this.CustDetailForm.patchValue({
           MrSalutationCode: this.SalutationObj[0].Key
         });
       });
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
+
+      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.RefMasterObjs];
         this.CustDetailForm.patchValue({
@@ -101,7 +92,7 @@ export class CustDetailPersonalComponent implements OnInit {
         });
       });
 
-    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeDefLocalNationality }).subscribe(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
       (response) => {
         this.Country = response;
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";
@@ -110,6 +101,7 @@ export class CustDetailPersonalComponent implements OnInit {
         this.lookupCountryObj.pagingJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.genericJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.addCritInput = new Array();
+
         var criteriaObj = new CriteriaObj();
         criteriaObj.restriction = AdInsConstant.RestrictionNeq;
         criteriaObj.propName = 'COUNTRY_CODE';
@@ -123,7 +115,8 @@ export class CustDetailPersonalComponent implements OnInit {
             this.lookupCountryObj.isReady = true;
           });
       });
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).subscribe(
+
+      await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
         this.CustDetailForm.patchValue({
@@ -131,7 +124,7 @@ export class CustDetailPersonalComponent implements OnInit {
         });
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion }).toPromise().then(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
         this.CustDetailForm.patchValue({
@@ -181,14 +174,13 @@ export class CustDetailPersonalComponent implements OnInit {
           CustSuffixName: response.AppCustPersonalObj.CustSuffixName,
           IsRestInPeace: response.AppCustPersonalObj.IsRestInPeace,
           MrNationalityCode: response.AppCustPersonalObj.MrNationalityCode != "" ? response.AppCustPersonalObj.MrNationalityCode : this.NationalityObj[1]["MasterCode"],
-          MrEducationCode: response.AppCustPersonalObj.MrEducationCode != "" ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
-          MrReligionCode: response.AppCustPersonalObj.MrReligionCode != "" ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
-          MrSalutationCode: response.AppCustPersonalObj.MrSalutationCode != "" ? response.AppCustPersonalObj.MrSalutationCode : this.SalutationObj[0].Key,
-          CustModelCode: response.AppCustObj.CustModelCode != "" ? response.AppCustObj.CustModelCode : this.CustModelObj[0].Key,
+          MrEducationCode: response.AppCustPersonalObj.MrEducationCode != null ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
+          MrReligionCode: response.AppCustPersonalObj.MrReligionCode != null ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
+          MrSalutationCode: response.AppCustPersonalObj.MrSalutationCode != null ? response.AppCustPersonalObj.MrSalutationCode : this.SalutationObj[0].Key
         })
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
-        if (response.AppCustGrpObj.CustNo != "") {
+        if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
           this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
@@ -197,8 +189,12 @@ export class CustDetailPersonalComponent implements OnInit {
               this.GetCustGrpData({ CustNo: responseCustGrp["CustNo"]});
             });
         }
-        this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
-        if (response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
+
+        if(response.AppCustPersonalObj.NationalityCountryCode != null){
+          this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
+        }
+          
+        if (response.AppCustPersonalObj.MrNationalityCode != "" && response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
           this.isLocal = false;
           this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
             (responseCountry) => {
@@ -213,7 +209,6 @@ export class CustDetailPersonalComponent implements OnInit {
   
   SetData() {
     this.AppCustObj.AppCustId = this.AppCustId;
-    this.AppCustObj.CustModelCode = this.CustDetailForm.controls.CustModelCode.value;
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
     this.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
@@ -243,7 +238,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.UpdateAppCustCompletionPersonal, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({Key: "Detail", CustModelCode: this.AppCustObj.CustModelCode, IsComplete: true});
+        this.OutputTab.emit();
       },
       error => {
         console.log(error);

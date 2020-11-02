@@ -362,12 +362,12 @@ export class CustMainDataComponent implements OnInit {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerPersonal(response['CustObj'], response['CustPersonalObj'], response['CustAddrLegalObj']);
+          this.setDataCustomerPersonal(response['CustObj'], response['CustPersonalObj'], response['CustAddrLegalObj'], true);
         });
     } else {
       this.http.post(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerCompany(response['CustObj'], response['CustCompanyObj'], response['CustAddrLegalObj']);
+          this.setDataCustomerCompany(response['CustObj'], response['CustCompanyObj'], response['CustAddrLegalObj'], true);
         });
     }
     await this.disableInput();
@@ -437,19 +437,19 @@ export class CustMainDataComponent implements OnInit {
     });
   }
 
-  setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj) {
+  setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
         MrCustTypeCode: CustObj.MrCustTypeCode,
         CustNo: CustObj.CustNo,
         MrIdTypeCode: CustObj.MrIdTypeCode,
         IdNo: CustObj.IdNo,
-        IdExpiredDt: formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        IdExpiredDt: formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') != null ? formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
         TaxIdNo: CustObj.TaxIdNo
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      this.rowVersionAppCust = CustObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
     }
 
     if (CustPersonalObj != undefined) {
@@ -462,7 +462,7 @@ export class CustMainDataComponent implements OnInit {
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
-      this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
@@ -471,10 +471,10 @@ export class CustMainDataComponent implements OnInit {
       }
     }
     
-    this.setDataLegalAddr(CustAddrLegalObj);
+    this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
-  setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj) {
+  setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
         MrCustTypeCode: CustObj.MrCustTypeCode,
@@ -483,14 +483,14 @@ export class CustMainDataComponent implements OnInit {
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      this.rowVersionAppCust = CustObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
     }
 
     if (CustCompanyObj != undefined){
       this.CustMainDataForm.patchValue({
         MrCompanyTypeCode: CustCompanyObj.MrCompanyTypeCode,
       });
-      this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
 
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
@@ -498,10 +498,10 @@ export class CustMainDataComponent implements OnInit {
         }) 
       }
     }
-    this.setDataLegalAddr(CustAddrLegalObj);
+    this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
-  setDataLegalAddr(response) {
+  setDataLegalAddr(response, IsCopyCust: boolean) {
     if (response != undefined) {
       this.legalAddrObj.Addr = response.Addr;
       this.legalAddrObj.AreaCode1 = response.AreaCode1;
@@ -514,7 +514,7 @@ export class CustMainDataComponent implements OnInit {
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
       this.inputAddressObj.default = this.legalAddrObj;
 
-      this.rowVersionAppCustAddr = response.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCustAddr = response.RowVersion;
     }
   }
 

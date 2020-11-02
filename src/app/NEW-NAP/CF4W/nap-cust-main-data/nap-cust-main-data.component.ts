@@ -106,7 +106,7 @@ export class NapCustMainDataComponent implements OnInit {
         {
           this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
           this.appCustId = response['AppCustObj'].AppCustId;
-          this.isMarried = response['AppCustObj'] != undefined && response['AppCustObj'] == 'MARRIED'? true : false;
+          this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED'? true : false;
         }
       }
     );
@@ -168,7 +168,11 @@ export class NapCustMainDataComponent implements OnInit {
     if(!this.appCustId){
       this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
         (response) => {
-          if (response['AppCustObj'])  this.appCustId = response['AppCustObj'].AppCustId;
+          if (response['AppCustObj']){
+            this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
+            this.appCustId = response['AppCustObj'].AppCustId;
+            this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED'? true : false;
+          }
         }
       );
     }
