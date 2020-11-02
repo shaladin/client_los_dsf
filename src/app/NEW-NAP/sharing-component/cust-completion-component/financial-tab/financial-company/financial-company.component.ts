@@ -139,7 +139,7 @@ export class FinancialCompanyComponent implements OnInit {
     this.http.post(URLConstant.AddEditAppCustCompanyFinData, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
+        this.OutputTab.emit({IsComplete: true});
       });
   }
 }

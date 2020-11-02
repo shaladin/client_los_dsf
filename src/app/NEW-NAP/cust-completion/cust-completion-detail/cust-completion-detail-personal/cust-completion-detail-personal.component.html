@@ -6,7 +6,7 @@
             <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
               <i class="fa fa-arrow-left"></i> Back
             </button>
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Back()" translate>
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Save()" translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
           </div>
@@ -75,7 +75,7 @@
               <app-cust-detail-personal *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event, 'Address')"> </app-cust-detail-personal>
             </div>
             <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
-              <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="GetEvent($event, 'Family')"> </app-address-tab>
+              <app-cc-address-paging *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="GetEvent($event, 'Family')"> </app-cc-address-paging>
             </div>
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
               <app-family-tab *ngIf="stepIndex == 3" [AppId]="AppId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Job')"> </app-family-tab>
@@ -95,7 +95,7 @@
             <div id="cust-attr-tab" class="content" role="tabpanel" aria-labelledby="cust-attr-tab-trigger">
               <!-- <app-cust-attr-section [CustId]="IdCust" [MrCustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 7">
             </app-cust-attr-section> -->
-            <app-other-info-tab [CustTypeCode]="'PERSONAL'"  *ngIf="stepIndex == 7"> </app-other-info-tab>
+            <app-other-info-tab [CustTypeCode]="'PERSONAL'"  *ngIf="stepIndex == 7" (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
             </div>
           </div>
         </div>

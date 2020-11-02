@@ -1,7 +1,9 @@
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
@@ -20,6 +22,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   stepIndex: number = 1;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  IsCompletion: boolean = false;
+  isCompletionCheck = true;
+  isCompleteCustStep:object = {};
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -31,7 +36,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router) {
+    private location: Location,
+    private toastr: NGXToastrService,
+        private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -60,12 +67,18 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
         this.AppCustCompanyId = response["AppCustCompanyId"];
+        this.IsCompletion = response["IsCompletion"];
       }
     );
+
+    // set default isComplete untuk all step ke false jika belum ada defaultnya
+    Object.keys(this.CustStep).forEach(stepName => {
+      if(typeof(this.isCompleteCustStep[stepName]) == 'undefined') this.isCompleteCustStep[stepName] = false;
+    });
   }
 
   Back() {
-    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId } });
+    this.location.back();
   }
   
   EnterTab(type: string) { 
@@ -92,9 +105,54 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     this.stepper.to(this.stepIndex);
   }
 
-  NextStep(Step: any){
-    this.EnterTab(Step);
-    this.ucViewMainProd.initiateForm();
-    
+  GetEvent(event: any, Step: string){
+    if(event!=null){
+      // set isComplete currStep jika ada event nya
+      if(typeof(event.IsComplete) != 'undefined') {
+        Object.keys(this.CustStep).forEach(stepName => {
+          if(this.CustStep[stepName] == this.stepIndex) 
+            this.isCompleteCustStep[stepName] = event.IsComplete;
+        });
+      }
+    }
+    if(Step == 'Save')
+    {
+      this.Save();
+    }
+    else
+    {
+      this.EnterTab(Step);
+      this.ucViewMainProd.initiateForm();
+    }    
+  }
+
+  Save(){
+    if(this.isCompletionCheck && !this.IsCompletion)
+    {
+      let isValid = true;
+      let notValidStep = '';
+      Object.keys(this.isCompleteCustStep).forEach(stepName => {
+        if(!this.isCompleteCustStep[stepName]) {
+          isValid = false;
+          if(notValidStep == '') notValidStep = stepName;
+        }
+      });
+
+      if(!isValid){
+        this.toastr.warningMessage('Please complete & save followong data first');
+        if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
+        return;
+      }
+    }
+
+    this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        this.Back();
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 }

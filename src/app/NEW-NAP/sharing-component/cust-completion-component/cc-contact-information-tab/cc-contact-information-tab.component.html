@@ -88,21 +88,23 @@
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Gender</label>
                   <div class="col-md-8">                    
-                    <select class="form-control adInsInput" formControlName="MrGenderCode">
+                    <select class="form-control adInsInput" formControlName="MrGenderCode" [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.MrGenderCode.invalid}">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterGenderCode]" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
+                    <lib-uc-show-errors [control]="CcForm.controls.MrGenderCode" [submit]="enjiForm.submitted"> </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Job Position</label>
                   <div class="col-md-8">                    
-                    <select class="form-control adInsInput" formControlName="MrJobPositionCode">
+                    <select class="form-control adInsInput" formControlName="MrJobPositionCode" [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.MrJobPositionCode.invalid}">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterJobPosCode]" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
+                    <lib-uc-show-errors [control]="CcForm.controls.MrJobPositionCode" [submit]="enjiForm.submitted"> </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">

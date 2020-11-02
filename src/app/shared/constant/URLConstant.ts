@@ -1106,9 +1106,10 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static UpdateAppCustCompletionPersonal = environment.losUrl + "/AppCust/UpdateAppCustCompletionPersonal";
     public static UpdateAppCustCompletionCompany = environment.losUrl + "/AppCust/UpdateAppCustCompletionCompany";
     public static SubmitAppCustCompletion = environment.losUrl + "/AppCust/SubmitAppCustCompletion";
+    public static SaveAppCustCompletion = environment.losUrl + "/AppCust/SaveAppCustCompletion";
 
     // App Cust Personal Job Data
-    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
+    public static AddEditAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
     public static GetAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/GetAppCustPersonalJobData";
     
     //App Cust Emergency Contact
