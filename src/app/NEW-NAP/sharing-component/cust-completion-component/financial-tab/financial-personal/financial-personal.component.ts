@@ -147,7 +147,7 @@ export class FinancialPersonalComponent implements OnInit {
     this.http.post(URLConstant.AddEditAppCustPersonalFinData, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
+        this.OutputTab.emit({IsComplete: true});
       });
 
   }

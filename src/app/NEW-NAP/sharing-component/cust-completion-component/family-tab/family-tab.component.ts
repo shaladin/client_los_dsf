@@ -17,8 +17,8 @@ export class FamilyTabComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() isMarried: boolean = false;
-  @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @Output() OutputTab: EventEmitter<any> = new EventEmitter();
+  @Output() OutputCancel: EventEmitter<any> = new EventEmitter();
 
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
@@ -55,7 +55,7 @@ export class FamilyTabComponent implements OnInit {
         return;
       }
     }
-    this.outputTab.emit();
+    this.OutputTab.emit({IsComplete: true});
   }
 
   
@@ -65,7 +65,7 @@ export class FamilyTabComponent implements OnInit {
   }
 
   cancel() {
-    this.outputCancel.emit();
+    this.OutputCancel.emit();
   }
 
   event(ev) {
