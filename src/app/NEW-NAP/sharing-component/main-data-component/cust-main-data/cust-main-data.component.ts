@@ -99,7 +99,7 @@ export class CustMainDataComponent implements OnInit {
     Email1: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
   });
 
-  ngOnInit() {
+  async ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
@@ -114,7 +114,7 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
-    this.getRefMaster();
+    await this.getRefMaster();
     if (this.inputMode != 'ADD') {
       this.getCustMainData();
     }
@@ -206,8 +206,8 @@ export class CustMainDataComponent implements OnInit {
     });
   }
   
-  getRefMaster() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
+  async getRefMaster() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         this.MrCustTypeCode = this.CustTypeObj[0].Key;
@@ -218,7 +218,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
@@ -230,7 +230,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -240,7 +240,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
@@ -250,7 +250,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0) {
@@ -444,7 +444,7 @@ export class CustMainDataComponent implements OnInit {
         CustNo: CustObj.CustNo,
         MrIdTypeCode: CustObj.MrIdTypeCode,
         IdNo: CustObj.IdNo,
-        IdExpiredDt: formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') != null ? formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+        IdExpiredDt: CustObj.IdExpiredDt != null ? formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
         TaxIdNo: CustObj.TaxIdNo
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
