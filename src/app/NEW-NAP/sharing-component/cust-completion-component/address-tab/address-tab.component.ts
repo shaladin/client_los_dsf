@@ -157,7 +157,7 @@ export class AddressTabComponent implements OnInit {
     if(this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal) != null && this.listAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence) != null) {
       this.OutputTab.emit();
     }else{
-      this.toastr.warningMessage("Please Input Legal Address or Residence Address Data!")
+      this.toastr.warningMessage("Please Input Legal Address and Residence Address Data!")
     }
   }
 
