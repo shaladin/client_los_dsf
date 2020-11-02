@@ -106,6 +106,7 @@ export class NapCustMainDataComponent implements OnInit {
         {
           this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
           this.appCustId = response['AppCustObj'].AppCustId;
+          this.isMarried = response['AppCustObj'] != undefined && response['AppCustObj'] == 'MARRIED'? true : false;
         }
       }
     );

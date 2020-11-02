@@ -99,12 +99,12 @@ export class CustMainDataComponent implements OnInit {
     Email1: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
   });
 
-  async ngOnInit() {
+  ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
-    await this.initcustMainDataMode();
-    await this.setLookup();
+    this.initcustMainDataMode();
+    this.setLookup();
 
     this.legalAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
@@ -114,9 +114,9 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
-    await this.getRefMaster();
+    this.getRefMaster();
     if (this.inputMode != 'ADD') {
-      await this.getCustMainData();
+      this.getCustMainData();
     }
   }
 
