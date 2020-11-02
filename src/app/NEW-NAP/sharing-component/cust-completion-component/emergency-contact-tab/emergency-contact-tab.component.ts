@@ -38,7 +38,7 @@ export class EmergencyContactTabComponent implements OnInit {
   ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
-  MaxDate: Date;
+  BusinessDt: Date;
 
   EmergencyContactForm = this.fb.group({
     ContactPersonName: [''],
@@ -48,11 +48,11 @@ export class EmergencyContactTabComponent implements OnInit {
     IdNo: [''],
     BirthPlace: [''],
     IdExpiredDt: [''],
-    BirthDt: [''],
+    BirthDt: ['', Validators.required],
     MrCustRelationshipCode: ['', Validators.required],
     MobilePhnNo1: ['', Validators.required],
     MobilePhnNo2: [''],
-    Email1: [''],
+    Email: [''],
     CopyAddrFrom: ['']
   })
 
@@ -60,13 +60,12 @@ export class EmergencyContactTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
     public formValidate: FormValidateService) {
   }
 
   ngOnInit() {
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    this.MaxDate = UserAccess.BusinessDt;
+    this.BusinessDt = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -106,8 +105,8 @@ export class EmergencyContactTabComponent implements OnInit {
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
+          this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
-        this.clearExpDt();
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
@@ -140,20 +139,20 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   getData(){
-    this.http.post(URLConstant.GetAppCustEmrgncCntctByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response["AppCustEmrgncCntctId"] != 0){
+        if(response.AppCustEmrgncCntctId != 0){
           this.EmergencyContactForm.patchValue({
-            MrIdTypeCode: response["MrIdTypeCode"],
-            MrGenderCode: response["MrGenderCode"],
-            IdNo: response["IdNo"],
-            BirthPlace: response["BirthPlace"],
-            IdExpiredDt: formatDate(response["IdExpiredDt"], 'yyyy-MM-dd', 'en-US'),
-            BirthDt: formatDate(response["BirthDt"], 'yyyy-MM-dd', 'en-US'),
-            MrCustRelationshipCode: response["MrCustRelationshipCode"],
-            MobilePhnNo1: response["MobilePhnNo1"],
-            MobilePhnNo2: response["MobilePhnNo2"],
-            Email1: response["Email1"]
+            MrIdTypeCode: response.MrIdTypeCode,
+            MrGenderCode: response.MrGenderCode,
+            IdNo: response.IdNo,
+            BirthPlace: response.BirthPlace,
+            IdExpiredDt: response.IdExpiredDt != null ? formatDate(response.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+            BirthDt: formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US'),
+            MrCustRelationshipCode: response.MrCustRelationshipCode,
+            MobilePhnNo1: response.MobilePhnNo1,
+            MobilePhnNo2: response.MobilePhnNo2,
+            Email: response.Email
           })
         }        
       this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
@@ -184,8 +183,16 @@ export class EmergencyContactTabComponent implements OnInit {
       });
   }
 
-  clearExpDt() {
-    this.EmergencyContactForm.controls.IdExpiredDt.reset();
+  ChangeIdType(IdType: string){
+    this.EmergencyContactForm.controls.IdExpiredDt.patchValue("");
+
+    if(IdType == "KITAS" || IdType == "SIM"){
+      this.EmergencyContactForm.controls.IdExpiredDt.setValidators([Validators.required]);
+    }else{
+      this.EmergencyContactForm.controls.IdExpiredDt.clearValidators();
+    }
+
+    this.EmergencyContactForm.controls.IdExpiredDt.updateValueAndValidity();
   }
 
   removeSpouse() {
@@ -205,7 +212,7 @@ export class EmergencyContactTabComponent implements OnInit {
             MrCustTypeCode: response["CustObj"].MrCustTypeCode,
             MrIdTypeCode: response["CustObj"].MrIdTypeCode,
             IdNo: response["CustObj"].IdNo,
-            IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+            IdExpiredDt: response["CustObj"].IdExpiredDt != null ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
           });
           this.InputLookupCustObj.nameSelect = response["CustObj"].CustName;
           this.InputLookupCustObj.jsonSelect = { CustName: response["CustObj"].CustName };
@@ -215,10 +222,10 @@ export class EmergencyContactTabComponent implements OnInit {
           this.EmergencyContactForm.patchValue({
             MrGenderCode: response["CustPersonalObj"].MrGenderCode,
             BirthPlace: response["CustPersonalObj"].BirthPlace,
-            BirthDt: formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US'),
+            BirthDt: response["CustPersonalObj"].BirthDt != null ? formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US') : "",
             MobilePhnNo1: response["CustPersonalObj"].MobilePhnNo1,
             MobilePhnNo2: response["CustPersonalObj"].MobilePhnNo2,
-            Email1: response["CustPersonalObj"].Email1,
+            Email: response["CustPersonalObj"].Email,
           });
         }
 
@@ -284,7 +291,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.MrCustRelationshipCode = this.EmergencyContactForm.controls.MrCustRelationshipCode.value;
     this.appCustEmrgncCntctObj.MobilePhnNo1 = this.EmergencyContactForm.controls.MobilePhnNo1.value;
     this.appCustEmrgncCntctObj.MobilePhnNo2 = this.EmergencyContactForm.controls.MobilePhnNo2.value;
-    this.appCustEmrgncCntctObj.Email = this.EmergencyContactForm.controls.Email1.value;
+    this.appCustEmrgncCntctObj.Email = this.EmergencyContactForm.controls.Email.value;
     this.appCustEmrgncCntctObj.Addr = this.UcAddrObj.Addr;
     this.appCustEmrgncCntctObj.AreaCode1 = this.UcAddrObj.AreaCode1;
     this.appCustEmrgncCntctObj.AreaCode2 = this.UcAddrObj.AreaCode2;

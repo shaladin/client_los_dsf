@@ -17,7 +17,8 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 export class LegalDocDetailComponent implements OnInit {
 
   @Input() AppCustCompanyId: number;
-  @Input() InputTab: AppCustCompanyLegalDocObj;
+  @Input() ListAppCustCompanyLegalDoc: Array<AppCustCompanyLegalDocObj>;
+  @Input() AppCustCompanyLegalDoc: AppCustCompanyLegalDocObj;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsExpDateMandatory: boolean;
   BusinessDt: Date;
@@ -55,20 +56,22 @@ export class LegalDocDetailComponent implements OnInit {
           MrLegalDocTypeCode : this.LegalDocTypeObj[0].Key
         });
 
-        if(this.InputTab["AppCustCompanyLegalDocId"] != 0){
+        if(this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId != 0){
           this.LegalDocForm.patchValue({
-            AppCustCompanyLegalDocId: this.InputTab["AppCustCompanyLegalDocId"],
-            AppCustCompanyId: this.InputTab["AppCustCompanyId"],
-            MrLegalDocTypeCode: this.InputTab["MrLegalDocTypeCode"],
-            DocNo: this.InputTab["DocNo"],
-            DocDt:  formatDate(this.InputTab["DocDt"], 'yyyy-MM-dd', 'en-US'),
-            DocExpiredDt:  formatDate(this.InputTab["DocExpiredDt"], 'yyyy-MM-dd', 'en-US'),
-            NotaryName: this.InputTab["NotaryName"],
-            NotaryLocation: this.InputTab["NotaryLocation"],
-            DocNotes: this.InputTab["DocNotes"],
-            RowVersion: this.InputTab["RowVersion"]
+            AppCustCompanyLegalDocId: this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId,
+            AppCustCompanyId: this.AppCustCompanyLegalDoc.AppCustCompanyId,
+            MrLegalDocTypeCode: this.AppCustCompanyLegalDoc.MrLegalDocTypeCode,
+            DocNo: this.AppCustCompanyLegalDoc.DocNo,
+            DocDt:  formatDate(this.AppCustCompanyLegalDoc.DocDt, 'yyyy-MM-dd', 'en-US'),
+            DocExpiredDt:  formatDate(this.AppCustCompanyLegalDoc.DocExpiredDt, 'yyyy-MM-dd', 'en-US'),
+            NotaryName: this.AppCustCompanyLegalDoc.NotaryName,
+            NotaryLocation: this.AppCustCompanyLegalDoc.NotaryLocation,
+            DocNotes: this.AppCustCompanyLegalDoc.DocNotes,
+            RowVersion: this.AppCustCompanyLegalDoc.RowVersion
           })
           this.ChangeLegalDocType({selectedIndex : 0}, true);
+          this.LegalDocForm.controls.MrLegalDocTypeCode.disable();
+          this.LegalDocForm.updateValueAndValidity();
         }else{
           this.LegalDocForm = this.fb.group({
             AppCustCompanyLegalDocId: [0],
@@ -101,10 +104,6 @@ export class LegalDocDetailComponent implements OnInit {
   }
 
   IsExpDateHandler(){
-      this.LegalDocForm.patchValue({
-        DocExpiredDt: ""
-    });
-
     if(this.IsExpDateMandatory){
       this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
       this.LegalDocForm.controls["DocExpiredDt"].enable();
@@ -121,14 +120,20 @@ export class LegalDocDetailComponent implements OnInit {
   }
 
   SaveForm(){
-    this.AppCustCompanyLegalDocObj = this.LegalDocForm.value;
-    this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;
-    
-    this.http.post(URLConstant.AddEditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
-      }
-    );
+    if(this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId == 0 && this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value)){
+      let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
+      this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Document")
+    }else{
+      this.AppCustCompanyLegalDocObj = this.LegalDocForm.value;
+      this.AppCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
+      this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;
+      
+      this.http.post(URLConstant.AddEditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit();
+        }
+      );
+    }    
   }
 }

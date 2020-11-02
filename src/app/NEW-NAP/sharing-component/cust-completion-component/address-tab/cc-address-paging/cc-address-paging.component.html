@@ -1,0 +1,18 @@
+<div *ngIf="!IsDetail">
+  <div class="button-right margin-15">
+    <button type="button" class="btn btn-raised btn-primary" (click)="Add()" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </div>
+  <div *ngIf="IsReady && ListAddress?.length > 0">
+    <lib-ucgridview [gridInput]="inputGridObj" (callback)="GetCallback($event)"></lib-ucgridview>
+  </div>
+  <div class="pull-right margin-15">
+    <button type="button" (click)="Continue()" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+</div>
+<div *ngIf="IsDetail">
+<app-cc-address-detail [InputObj]="InputObj" (OutputTab)="GetEvent($event)"> </app-cc-address-detail>
+</div>
