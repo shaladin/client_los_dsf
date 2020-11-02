@@ -32,7 +32,6 @@ export class AttrContentComponentComponent implements OnInit {
   AttrContent: AttrContent;
   
   async ngOnInit() {
-    console.log("aaa")
     var custGrp = {
       AttrGroup: this.AttrGroup
     };
