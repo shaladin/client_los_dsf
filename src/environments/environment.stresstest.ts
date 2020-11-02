@@ -11,7 +11,7 @@ export const environment = {
     DashboardURL: 'http://R3STWEBBE.ad-ins.com/Dashboard',
     WebSocketURL: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
     
-    FoundationR3Web: 'http://R3STWEBFE.ad-ins.com/Foundation',
+    FoundationR3Web: 'http://R3STWEBFE.ad-ins.com/FOUNDATION',
     losR3Web: 'http://R3STWEBFE.ad-ins.com/LOS',
 
     WorkflowR3Url: 'http://r3stengine.ad-ins.com/WORKFLOW',
