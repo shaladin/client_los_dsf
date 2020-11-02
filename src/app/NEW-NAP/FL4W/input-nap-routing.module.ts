@@ -10,6 +10,8 @@ import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-or
 import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
 import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.component';
 import { ViewInsuranceDetailComponent } from '../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component';
+import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
+import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
 
 const routes: Routes = [
   {
@@ -81,7 +83,21 @@ const routes: Routes = [
         data: {
           title: 'View DO'
         }
-      }
+      },
+      {
+        path: 'NAP1',
+        component: NapCustMainDataComponent,
+        data: {
+            title: 'NAP Cust Main Data'
+        }
+      },
+      {
+        path: 'NAP2',
+        component: NapDetailFormComponent,
+        data: {
+            title: 'NAP Detail'
+        }
+    },
     ]
   }
 ];

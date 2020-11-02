@@ -223,9 +223,19 @@ export class CustMainDataAddComponent implements OnInit {
 
         switch(this.bizTemplateCode) {
           case CommonConstant.CF4W :
-            this.router.navigate(["Nap/ConsumerFinance/NAP1"], {
-              queryParams: { "AppId": response["AppId"]} 
-            });
+            this.router.navigate(["Nap/ConsumerFinance/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.CFRFN4W :
+            this.router.navigate(["Nap/CFRefinancing/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.FCTR :
+            this.router.navigate(["Nap/Factoring/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.FL4W :
+            this.router.navigate(["Nap/FinanceLeasing/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.CFNA :
+            this.router.navigate(["Nap/CFNA/NAP1"], {queryParams: { "AppId": response["AppId"]} });
           break;
         }
       });
