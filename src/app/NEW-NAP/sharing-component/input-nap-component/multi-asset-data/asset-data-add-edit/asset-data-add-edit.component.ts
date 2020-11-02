@@ -314,6 +314,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.salesObj.VendorId = event.VendorId;
     this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.GetSalesList();
+this.GetAdminHeadList();
   }
  GetSalesList(){
   var Obj = {
@@ -325,6 +326,19 @@ export class AssetDataAddEditComponent implements OnInit {
       this.EmpObj = response[CommonConstant.ReturnObj];
       this.listSalesObj = this.EmpObj.filter(
         emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE);
+    }
+  );
+ }
+ GetAdminHeadList(){
+  var Obj = {
+    VendorId : this.salesObj.VendorId,
+    MrVendorEmpPositionCodes : [CommonConstant.ADMIN_HEAD_JOB_CODE]
+  }
+  this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes,Obj).subscribe(
+    (response) => {
+      this.EmpObj = response[CommonConstant.ReturnObj];
+      this.listAdminHeadObj = this.EmpObj.filter(
+        emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
     }
   );
  }
@@ -400,7 +414,7 @@ export class AssetDataAddEditComponent implements OnInit {
       //this.GetVendorEmpSupervisi();
 
       var temp: any;
-      temp = this.EmpObj.filter(
+      temp = this.listSalesObj.filter(
         emp => emp.VendorEmpId == event.target.value);
       this.AssetDataForm.patchValue({
         SalesPersonId: temp[0].VendorEmpId,
@@ -419,9 +433,26 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
   AdminChanged(event) {
-    this.AssetDataForm.patchValue({
-      AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
-    });
+    if (event.target.value != "") {
+      //this.vendorEmpObj.VendorEmpId = event.target.value;
+      //this.GetVendorEmpSupervisi();
+
+      var temp: any;
+      temp = this.listAdminHeadObj.filter(
+        emp => emp.VendorEmpId == event.target.value);
+      this.AssetDataForm.patchValue({
+        AdminHeadName: temp[0].VendorEmpName,
+        AdminHeadNo: temp[0].VendorEmpNo,
+        AdminHeadPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+    }
   }
 
   AssetValidationForSave() {
@@ -562,6 +593,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log("ameng");
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 
@@ -630,6 +662,26 @@ export class AssetDataAddEditComponent implements OnInit {
             SupplName: this.returnVendorObj.VendorName,
           });
 
+          this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
+          this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
+          this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
+          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpHeadObj).subscribe(
+            (response) => {
+              this.headAppAssetSupplEmpObj = response;
+
+              this.adminHeadObj = new VendorEmpObj();
+              this.adminHeadObj.VendorId = this.returnVendorObj.VendorId;
+              this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
+              this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
+                (response) => {
+                  this.listAdminHeadObj = response[CommonConstant.ReturnObj];
+                  this.AssetDataForm.patchValue({
+                    AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
+                    AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
+                  });
+                });
+          });
+
           this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
           this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
           this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
@@ -654,6 +706,7 @@ export class AssetDataAddEditComponent implements OnInit {
             });
 
         });
+        
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppAssetId = this.AppAssetId;
       this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
