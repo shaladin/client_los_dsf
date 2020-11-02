@@ -152,6 +152,7 @@ export class AssetDataAddEditComponent implements OnInit {
     SalesPersonNo: ['', [Validators.required, Validators.maxLength(50)]],
     SalesPersonPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
     
+    AdminHeadId : [''],
     AdminHeadName: [''],
     AdminHeadNo: [''],
     AdminHeadCode: [''],
@@ -441,6 +442,7 @@ this.GetAdminHeadList();
       temp = this.listAdminHeadObj.filter(
         emp => emp.VendorEmpId == event.target.value);
       this.AssetDataForm.patchValue({
+        AdminHeadId : temp[0].VendorEmpId,
         AdminHeadName: temp[0].VendorEmpName,
         AdminHeadNo: temp[0].VendorEmpNo,
         AdminHeadPositionCode: temp[0].MrVendorEmpPositionCode,
