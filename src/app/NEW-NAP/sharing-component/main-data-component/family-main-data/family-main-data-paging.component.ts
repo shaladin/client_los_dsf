@@ -72,9 +72,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
       this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-
-    }
-    
+    }    
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(

@@ -114,9 +114,9 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
-    this.getRefMaster();
+    await this.getRefMaster();
     if (this.inputMode != 'ADD') {
-      await this.getCustMainData();
+      this.getCustMainData();
     }
   }
 
@@ -206,8 +206,8 @@ export class CustMainDataComponent implements OnInit {
     });
   }
   
-  getRefMaster() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
+  async getRefMaster() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         this.MrCustTypeCode = this.CustTypeObj[0].Key;
@@ -218,7 +218,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
@@ -230,7 +230,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -240,7 +240,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
@@ -250,7 +250,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0) {
@@ -362,12 +362,12 @@ export class CustMainDataComponent implements OnInit {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerPersonal(response['CustObj'], response['CustPersonalObj'], response['CustAddrLegalObj']);
+          this.setDataCustomerPersonal(response['CustObj'], response['CustPersonalObj'], response['CustAddrLegalObj'], true);
         });
     } else {
       this.http.post(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerCompany(response['CustObj'], response['CustCompanyObj'], response['CustAddrLegalObj']);
+          this.setDataCustomerCompany(response['CustObj'], response['CustCompanyObj'], response['CustAddrLegalObj'], true);
         });
     }
     await this.disableInput();
@@ -437,19 +437,19 @@ export class CustMainDataComponent implements OnInit {
     });
   }
 
-  setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj) {
+  setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
         MrCustTypeCode: CustObj.MrCustTypeCode,
         CustNo: CustObj.CustNo,
         MrIdTypeCode: CustObj.MrIdTypeCode,
         IdNo: CustObj.IdNo,
-        IdExpiredDt: formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        IdExpiredDt: CustObj.IdExpiredDt != null ? formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
         TaxIdNo: CustObj.TaxIdNo
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      this.rowVersionAppCust = CustObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
     }
 
     if (CustPersonalObj != undefined) {
@@ -462,7 +462,7 @@ export class CustMainDataComponent implements OnInit {
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
-      this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
@@ -471,10 +471,10 @@ export class CustMainDataComponent implements OnInit {
       }
     }
     
-    this.setDataLegalAddr(CustAddrLegalObj);
+    this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
-  setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj) {
+  setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
         MrCustTypeCode: CustObj.MrCustTypeCode,
@@ -483,14 +483,14 @@ export class CustMainDataComponent implements OnInit {
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      this.rowVersionAppCust = CustObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
     }
 
     if (CustCompanyObj != undefined){
       this.CustMainDataForm.patchValue({
         MrCompanyTypeCode: CustCompanyObj.MrCompanyTypeCode,
       });
-      this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
 
       if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
@@ -498,10 +498,10 @@ export class CustMainDataComponent implements OnInit {
         }) 
       }
     }
-    this.setDataLegalAddr(CustAddrLegalObj);
+    this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
-  setDataLegalAddr(response) {
+  setDataLegalAddr(response, IsCopyCust: boolean) {
     if (response != undefined) {
       this.legalAddrObj.Addr = response.Addr;
       this.legalAddrObj.AreaCode1 = response.AreaCode1;
@@ -514,7 +514,7 @@ export class CustMainDataComponent implements OnInit {
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
       this.inputAddressObj.default = this.legalAddrObj;
 
-      this.rowVersionAppCustAddr = response.RowVersion;
+      if(!IsCopyCust) this.rowVersionAppCustAddr = response.RowVersion;
     }
   }
 
