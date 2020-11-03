@@ -27,7 +27,7 @@ export class CcAddressDetailComponent implements OnInit {
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();;
   AddrObj: AddrObj = new AddrObj();
   appCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
-  copyAddressFromObj: any;
+  copyAddressFromObj: Array<AppCustAddrObj> = new Array();
   AddressTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
 
   AddressForm = this.fb.group({
@@ -84,7 +84,7 @@ export class CcAddressDetailComponent implements OnInit {
   }
 
   LoadAddrForCopy() {
-    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrData, { AppCustId: this.InputObj.AppCustId }).subscribe(
+    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { AppCustId: this.InputObj.AppCustId }).subscribe(
       (response) => {
         this.copyAddressFromObj = response;
         this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });

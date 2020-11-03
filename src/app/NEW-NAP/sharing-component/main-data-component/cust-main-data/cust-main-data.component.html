@@ -181,7 +181,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6" *ngIf="!isIncludeCustRelation">
+                <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                     <div class="col-md-6">
@@ -212,7 +212,20 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4" [ngClass]="{'adins-required-label' : !isIncludeCustRelation}" translate>Mobile Phone</label>
+                    <label class="col-md-4 adins-required-label" translate>Customer Model Code</label>
+                    <div class="col-md-6">
+                      <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width" style="width: 100%" formControlName="CustModelCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.CustModelCode.invalid }">
+                        <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
+                      </select>
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.CustModelCode" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-4 adins-required-label" translate>Mobile Phone</label>
                     <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                         formControlName="MobilePhnNo1"
@@ -225,7 +238,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4" [ngClass]="{'adins-required-label' : !isIncludeCustRelation}" translate>Email</label>
+                    <label class="col-md-4 adins-required-label" translate>Email</label>
                     <div class="col-md-8">
                       <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                         formControlName="Email1"
@@ -238,8 +251,31 @@
                 </div>
               </div>
             </div>
+            <lib-ucSubsection [id]="'AddressId'" [title]="'Legal Address'" [panel]="'Address'">
+            </lib-ucSubsection>
+            <div id="Address">
+            <div class="form-group row" *ngIf="isIncludeCustRelation">
+              <label class="col-md-2" translate>Copy Address From</label>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <select class="form-control" formControlName="CopyAddrFrom">
+                    <option *ngFor="let item of CopyAddressFromObj" [value]="item.AppCustAddrId">
+                      {{item.MrCustAddrTypeDescr}}
+                    </option>
+                  </select>
+                  <div class="input-group-append">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
+                        <i class="fa fa-files-o"></i> Copy
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
               [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
+            </div>
           </div>
           <div class="form-actions right">
             <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1"
