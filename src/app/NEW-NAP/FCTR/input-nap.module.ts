@@ -8,6 +8,9 @@ import { NapAddComponent } from "./nap-add/nap-add.component";
 import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component";
 import { ArchwizardModule } from "angular-archwizard";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
+import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
+import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
+import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
 
 @NgModule({
   imports: [
@@ -15,12 +18,15 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
     InputNapFCTRRoutingModule,
     AdInsModule,
     InputNapComponentModule,
-    ArchwizardModule
+    ArchwizardModule,
+    MainDataComponentModule
   ],
   declarations: [
     NapPagingComponent,
     NapAddComponent,
     NapAddDetailComponent,
+    NapCustMainDataComponent,
+    NapDetailFormComponent
   ],
   providers: [
     NGXToastrService
