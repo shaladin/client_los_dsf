@@ -614,6 +614,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.MrCollateralConditionCode = "USED";
     this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = "NON_COMM";
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
+    if (this.returnAppCollateralObj != null || this.returnAppCollateralObj != undefined) this.appCollateralDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
   }
 
   setCollateralOwner() {
@@ -629,6 +630,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerCity = this.AddCollForm.controls["collOwnerAddress"]["controls"].City.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AddCollForm.controls["collOwnerAddressZipcode"]["controls"].value.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls["OwnerMobilePhn"].value;
+    if (this.returnAppCollateralRegistObj != null || this.returnAppCollateralRegistObj != undefined) this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
   }
 
   setCollateralAttribute() {

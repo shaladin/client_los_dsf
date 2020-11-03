@@ -60,6 +60,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
           valueType: [''],
           subsidyPrcnt: [0,[Validators.min(0),Validators.max(100)]],
           subsidyAmt: [0],
+          RowVersion: [''],
         }
       );
       this.isSubmitted = false;
@@ -91,6 +92,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
             valueType: subdObj.MrSubsidyValueTypeCode,
             subsidyPrcnt: subdObj.SubsidyPrcnt,
             subsidyAmt: subdObj.SubsidyAmt,
+            RowVersion: subdObj.RowVersion,
           });
         }
       );
@@ -138,6 +140,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
       }
       if(this.mode == "edit"){
         subdObj.AppSubsidyId = this.AppSubsidyId;
+        subdObj.RowVersion = this.FormAppSubsidy.get("RowVersion").value;
         
         this.http.post(URLConstant.EditAppSubsidy, subdObj ).subscribe(
           (response) => {

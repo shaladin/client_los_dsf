@@ -733,6 +733,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       else {
         if (this.lobKta.includes(this.returnLobCode) == true) {
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
           //this.setLeadAsset();
           this.setLeadApp();
           this.http.post(URLConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
@@ -756,7 +757,9 @@ export class LeadInputLeadDataComponent implements OnInit {
             return;
           }
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
           this.setLeadAsset();
+          this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
           this.setLeadApp();
           this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
             (response) => {

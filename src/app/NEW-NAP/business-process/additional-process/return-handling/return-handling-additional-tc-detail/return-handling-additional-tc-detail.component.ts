@@ -194,6 +194,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         appTC.Notes = this.ReturnHandlingForm.value.AppTcs[i].Notes;
         appTC.IsAdditional = this.ReturnHandlingForm.value.AppTcs[i].IsAdditional;
         appTC.IsExpDtMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsExpDtMandatory;
+        appTC.RowVersion = this.ReturnHandlingForm.value.AppTcs[i].RowVersion;
   
         var prmsDt = new Date(appTC.PromisedDt);
         var prmsDtForm = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
@@ -296,6 +297,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         appTC.Notes = this.ReturnHandlingForm.value.AppTcs[i].Notes;
         appTC.IsAdditional = this.ReturnHandlingForm.value.AppTcs[i].IsAdditional;
         appTC.IsExpDtMandatory = this.ReturnHandlingForm.value.AppTcs[i].IsExpDtMandatory;
+        appTC.RowVersion = this.ReturnHandlingForm.value.AppTcs[i].RowVersion;
   
         var prmsDt = new Date(appTC.PromisedDt);
         var prmsDtForm = this.ReturnHandlingForm.value.AppTcs[i].PromisedDt;
@@ -419,6 +421,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
             (response: Array<AppTCObj>) => {
               appTcObj.AppTcId = response[0].AppTcId;
+              appTcObj.RowVersion = response[0].RowVersion;
               fa_apptc.push(this.AddTcControl(appTcObj));
             });
         }
@@ -564,7 +567,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       ExpiredDt: [{value: (obj.ExpiredDt == null) ? '' : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'), disabled: obj.IsExpDtMandatory}],
       Notes: obj.Notes,
       IsExpDtMandatory: obj.IsExpDtMandatory,
-      IsAdditional: obj.IsAdditional
+      IsAdditional: obj.IsAdditional,
+      RowVersion: obj.RowVersion,
     });
 
     if(obj.IsChecked){

@@ -91,7 +91,8 @@ export class InvoiceVerifDetailComponent implements OnInit {
       InvoiceAmt: obj.InvoiceAmt,
       Verification: this.listVerificationStatus[0].Key,
       InvoiceNotes: obj.InvoiceNotes,
-      InvoiceDt: obj.InvoiceDueDt
+      InvoiceDt: obj.InvoiceDueDt,
+      RowVersion: obj.RowVersion,
     })
   }
 
@@ -111,6 +112,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
       this.listInvoice[i].InvoiceStat = item.get("Verification").value;
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
+      this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
 
     var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId };

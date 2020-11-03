@@ -19,6 +19,8 @@ export class ResultInsRateRuleObj {
     AdminFeeFromInsco: number;
     AssetAgeMin: number;
     AssetAgeMax: number;
+    CustStampdutyFeeToCust: number;
+    InscoStampdutyFeeToCust: number;
 
 constructor() { 
 

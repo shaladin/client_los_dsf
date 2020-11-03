@@ -30,7 +30,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result5: any;
   result6: any;
   arrValue = [];
-
+TCList : any;
   AppNo: any;
   NumOfAsset: any;
   Tenor: any;
@@ -46,7 +46,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ProdOfferingVersion: string;
   LeadNo: string;
   MouNo: string;
-  AppTcList: any = [];
   identifier: string = "TCList";
   IsApvReady: boolean = false;
   outstandingTcObj : any;
@@ -107,6 +106,11 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
+
+      this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.TCList = response["AppTcs"];
+        });
 
     var Obj = {
       AgrmntNo: this.TrxNo,

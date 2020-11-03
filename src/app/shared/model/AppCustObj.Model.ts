@@ -5,6 +5,7 @@ export class AppCustObj {
     CustName: string;
     MrCustTypeCode: string;
     CustModelCode: string;
+    MrCustModelCode: string;
     MrIdTypeCode: string;
     IdNo: string;
     IdExpiredDt: Date;
@@ -31,6 +32,7 @@ constructor() {
         this.CustName = "";
         this.MrCustTypeCode = "";
         this.CustModelCode = "";
+        this.MrCustModelCode = "";
         this.MrIdTypeCode = "";
         this.IdNo = "";
         this.TaxIdNo = "";

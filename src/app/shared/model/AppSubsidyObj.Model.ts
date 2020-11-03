@@ -16,6 +16,9 @@ export class AppSubsidyObj {
     SubsidyPrcnt: number;
     SubsidyAmt: number;
     AppFees : Array<AppFeeObj>
+    RowVersion: string;
 
-    constructor() { }
+    constructor() { 
+        this.RowVersion = "";
+    }
 }
