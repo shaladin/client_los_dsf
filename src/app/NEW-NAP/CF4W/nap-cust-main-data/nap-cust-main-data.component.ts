@@ -27,7 +27,7 @@ export class NapCustMainDataComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
-  NapObj: AppObj;
+  NapObj: AppObj = new AppObj();
   IsMultiAsset: string;
   ListAsset: any;
   isMarried: boolean = false;
@@ -83,13 +83,12 @@ export class NapCustMainDataComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    this.NapObj = new AppObj();
+    
     this.NapObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
-          //this.AppStepIndex = 1;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
