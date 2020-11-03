@@ -35,7 +35,6 @@ export class CustDetailPersonalComponent implements OnInit {
   ListAppCustGrpObj: Array<AppCustGrpObj> = new Array<AppCustGrpObj>();
   lookupCountryObj: InputLookupObj = new InputLookupObj();
   lookupCustGrpObj: InputLookupObj = new InputLookupObj();
-  CustModelObj: Array<KeyValueObj> = new Array();
   SalutationObj: Array<KeyValueObj> = new Array();
   NationalityObj: Array<Object> = new Array();
   EducationObj: Array<KeyValueObj> = new Array();

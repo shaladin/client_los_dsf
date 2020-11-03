@@ -56,6 +56,7 @@ export class CommonConstant {
   public static CustMainDataModeCust = "CUST";
   public static CustMainDataModeGuarantor = "GUARANTOR";
   public static CustMainDataModeFamily = "FAMILY";
+  public static CustMainDataModeShareholder = "SHAREHOLDER";
   
 
   //CUST PERSONAL RELATIONSHIP
