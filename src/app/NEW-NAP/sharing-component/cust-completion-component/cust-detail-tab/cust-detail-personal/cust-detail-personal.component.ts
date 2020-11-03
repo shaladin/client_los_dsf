@@ -238,7 +238,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.UpdateAppCustCompletionPersonal, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
+        this.OutputTab.emit({IsComplete: true});
       },
       error => {
         console.log(error);

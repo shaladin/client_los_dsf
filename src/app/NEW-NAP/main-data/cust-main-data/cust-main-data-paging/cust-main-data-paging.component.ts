@@ -48,7 +48,7 @@ export class CustMainDataPagingComponent implements OnInit {
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj.title = "Customer Main Data";
+    this.inputPagingObj.title = "NAP 1 Paging";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
