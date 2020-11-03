@@ -153,6 +153,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   selectAppCust(item){
     this.reqDupCheckAppCustObj.CustNo = "";
     this.reqDupCheckAppCustObj.ApplicantNo = item.ApplicantNo;
+    this.reqDupCheckAppCustObj.SourceAppCustId = item.AppCustId;
     this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, this.reqDupCheckAppCustObj).subscribe(
       response => {
         this.buttonCancelOnClick();
