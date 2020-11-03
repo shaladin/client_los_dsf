@@ -72,7 +72,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
         if(response["MrMaritalStatCode"] != null && response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
-        this.CustModelCode = response["CustModelCode"];
+        this.CustModelCode = response["MrCustModelCode"];
         this.AppCustPersonalId = response["AppCustPersonalId"];
         this.IsCompletion = response["IsCompletion"];
       }
