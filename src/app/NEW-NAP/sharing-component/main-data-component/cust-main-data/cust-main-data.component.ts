@@ -87,7 +87,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   CustMainDataForm = this.fb.group({
-    CustModelCode: ['', Validators.required],
+    MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
     MrCustRelationshipCode: ['', Validators.maxLength(50)],
     CustNo: [],
@@ -152,7 +152,7 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         break;
-      case CommonConstant.CustMainDataModeShareholder:
+      case CommonConstant.CustMainDataModeMgmntShrholder:
         this.isIncludeCustRelation = false;
         this.custDataObj.IsShareholder = true;
         this.subjectTitle = 'Management Shareholder';
@@ -237,7 +237,7 @@ export class CustMainDataComponent implements OnInit {
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         this.CustMainDataForm.patchValue({
-          CustModelCode: this.CustModelObj[0].Key
+          MrCustModelCode: this.CustModelObj[0].Key
         });
       }
     );
@@ -340,14 +340,14 @@ export class CustMainDataComponent implements OnInit {
         (response) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
           this.CustMainDataForm.patchValue({
-            CustModelCode: this.CustModelObj[0].Key
+            MrCustModelCode: this.CustModelObj[0].Key
           });
         }
       );
     }
 
     if (custType == CommonConstant.CustTypePersonal) {
-      this.CustMainDataForm.controls.CustModelCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCustModelCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
@@ -360,7 +360,7 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
     } else {
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.CustMainDataForm.controls.CustModelCode.clearValidators();
+      this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
@@ -380,7 +380,7 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
     }
 
-    this.CustMainDataForm.controls.CustModelCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrCustModelCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
     this.CustMainDataForm.controls.BirthDt.updateValueAndValidity();
     this.CustMainDataForm.controls.BirthPlace.updateValueAndValidity();
@@ -462,12 +462,16 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.patchValue({
         MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"],
         MrGenderCode: this.GenderObj[0].Key,
-        MrMaritalStatCode: this.MaritalStatObj[0].Key,
-        CopyAddrFrom: this.CopyAddressFromObj[0]['AppCustAddrId']
+        MrMaritalStatCode: this.MaritalStatObj[0].Key
       });
     } else {
       this.CustMainDataForm.patchValue({
-        MrCompanyTypeCode: this.CompanyTypeObj[0].Key,
+        MrCompanyTypeCode: this.CompanyTypeObj[0].Key
+      });
+    }
+
+    if(this.isIncludeCustRelation){
+      this.CustMainDataForm.patchValue({
         CopyAddrFrom: this.CopyAddressFromObj[0]['AppCustAddrId']
       });
     }
@@ -508,7 +512,7 @@ export class CustMainDataComponent implements OnInit {
   setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
-        CustModelCode: CustObj.CustModelCode,
+        MrCustModelCode: CustObj.MrCustModelCode,
         MrCustTypeCode: CustObj.MrCustTypeCode,
         CustNo: CustObj.CustNo,
         MrIdTypeCode: CustObj.MrIdTypeCode,
@@ -546,7 +550,6 @@ export class CustMainDataComponent implements OnInit {
   setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.CustMainDataForm.patchValue({
-        CustModelCode: CustObj.CustModelCode,
         MrCustTypeCode: CustObj.MrCustTypeCode,
         CustNo: CustObj.CustNo,
         TaxIdNo: CustObj.TaxIdNo,
@@ -591,7 +594,7 @@ export class CustMainDataComponent implements OnInit {
   setDataCustomerPersonalForSave() {
     if (this.MrCustTypeCode != CommonConstant.CustTypePersonal) return;
     this.custDataPersonalObj = new CustMainDataPersonalObj();
-    this.custDataPersonalObj.AppCustObj.CustModelCode = this.CustMainDataForm.controls.CustModelCode.value;
+    this.custDataPersonalObj.AppCustObj.MrCustModelCode = this.CustMainDataForm.controls.MrCustModelCode.value;
     this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
     this.custDataPersonalObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataPersonalObj.AppCustObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -602,7 +605,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.IsCustomer = (this.custMainDataMode == CommonConstant.CustMainDataModeCust);
     this.custDataPersonalObj.AppCustObj.IsGuarantor = (this.custMainDataMode == CommonConstant.CustMainDataModeGuarantor);
     this.custDataPersonalObj.AppCustObj.IsFamily = (this.custMainDataMode == CommonConstant.CustMainDataModeFamily);
-    this.custDataPersonalObj.AppCustObj.IsShareholder = (this.custMainDataMode == CommonConstant.CustMainDataModeShareholder);
+    this.custDataPersonalObj.AppCustObj.IsShareholder = (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder);
     this.custDataPersonalObj.AppCustObj.IsExistingCust = this.isExisting;
     this.custDataPersonalObj.AppCustObj.AppId = this.appId;
     if (this.appCustId)
@@ -637,7 +640,6 @@ export class CustMainDataComponent implements OnInit {
   setDataCustomerCompanyForSave() {
     if (this.MrCustTypeCode != CommonConstant.CustTypeCompany) return;
     this.custDataCompanyObj = new CustMainDataCompanyObj();
-    this.custDataCompanyObj.AppCustObj.CustModelCode = this.CustMainDataForm.controls.CustModelCode.value;
     this.custDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
     this.custDataCompanyObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataCompanyObj.AppCustObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -646,7 +648,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustObj.TaxIdNo = this.CustMainDataForm.controls.TaxIdNo.value;
     this.custDataCompanyObj.AppCustObj.IsCustomer = (this.custMainDataMode == CommonConstant.CustMainDataModeCust);
     this.custDataCompanyObj.AppCustObj.IsGuarantor = (this.custMainDataMode == CommonConstant.CustMainDataModeGuarantor);
-    this.custDataCompanyObj.AppCustObj.IsShareholder = (this.custMainDataMode == CommonConstant.CustMainDataModeShareholder);
+    this.custDataCompanyObj.AppCustObj.IsShareholder = (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder);
     this.custDataCompanyObj.AppCustObj.AppId = this.appId;
     this.custDataCompanyObj.AppCustObj.IsExistingCust = this.isExisting;
     if (this.appCustId)

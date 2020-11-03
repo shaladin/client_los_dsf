@@ -214,11 +214,11 @@
                   <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Customer Model Code</label>
                     <div class="col-md-6">
-                      <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width" style="width: 100%" formControlName="CustModelCode"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.CustModelCode.invalid }">
+                      <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width" style="width: 100%" formControlName="MrCustModelCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrCustModelCode.invalid }">
                         <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
                       </select>
-                      <lib-uc-show-errors [control]="CustMainDataForm.controls.CustModelCode" [submit]="enjiForm.submitted">
+                      <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCustModelCode" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>
