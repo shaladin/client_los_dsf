@@ -19,6 +19,9 @@ import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
+import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -288,19 +291,19 @@ export class CustMainDataComponent implements OnInit {
   }
 
   getCustMainData() {
-    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {'AppCustId': this.appCustId}).subscribe(
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, {'AppCustId': this.appCustId}).subscribe(
       (response) => {
-        if (response['AppCustObj']) {
-          if (!this.appCustId) this.appCustId = response['AppCustObj']['AppCustId']
-          this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
+        if (response.AppCustObj) {
+          if (!this.appCustId) this.appCustId = response.AppCustObj.AppCustId
+          this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
           this.custTypeChange(this.MrCustTypeCode);
           
           if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) 
-            this.setDataCustomerPersonal(response['AppCustObj'], response['AppCustPersonalObj'], response['AppCustAddrLegalObj']);
+            this.setDataCustomerPersonal(response.AppCustObj, response.AppCustPersonalObj, response.AppCustAddrLegalObj);
           else
-            this.setDataCustomerCompany(response['AppCustObj'], response['AppCustCompanyObj'], response['AppCustAddrLegalObj']);
+            this.setDataCustomerCompany(response.AppCustObj, response.AppCustCompanyObj, response.AppCustAddrLegalObj);
           
-          if (response['AppCustObj']['IsExistingCust']) this.disableInput();
+          if (response.AppCustObj.IsExistingCust) this.disableInput();
         } else 
           this.custTypeChange(CommonConstant.CustTypePersonal);
       }
@@ -360,14 +363,14 @@ export class CustMainDataComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerPersonal(response['CustObj'], response['CustPersonalObj'], response['CustAddrLegalObj'], true);
+          this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, true);
         });
     } else {
-      this.http.post(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerCompany(response['CustObj'], response['CustCompanyObj'], response['CustAddrLegalObj'], true);
+          this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, true);
         });
     }
     await this.disableInput();
