@@ -8,6 +8,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
+import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
+import { CommonConstant } from '../../../../shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -36,7 +38,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Job": 4,
     "Emergency": 5,
     "Financial": 6,
-    "CustAttr": 7,
+    "Other": 7,
   }  
   constructor(
     private http: HttpClient,
@@ -108,8 +110,8 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       case "Financial":
         this.stepIndex = this.CustStep["Financial"];
         break;
-      case "CustAttr":
-        this.stepIndex = this.CustStep["CustAttr"];
+      case "Other":
+        this.stepIndex = this.CustStep["Other"];
         break;
     }
     this.stepper.to(this.stepIndex);
@@ -139,30 +141,22 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }    
   }
-
+  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   Save(){
-    if(this.isCompletionCheck && !this.IsCompletion)
-    {
-      let isValid = true;
-      let notValidStep = '';
-      Object.keys(this.isCompleteCustStep).forEach(stepName => {
-        if(!this.isCompleteCustStep[stepName]) {
-          isValid = false;
-          if(notValidStep == '') notValidStep = stepName;
-        }
-      });
-
-      if(!isValid){
-        this.toastr.warningMessage('Please complete & save followong data first');
-        if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
-        return;
-      }
-    }
-
     this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        this.toastr.successMessage(response["Message"]);
-        this.Back();
+        this.completionCheckingObj.IsCompleted = response["IsCompleted"];
+        this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
+        console.log(this.completionCheckingObj);
+        if (this.completionCheckingObj.IsCompleted != true) {
+          this.toastr.warningMessage('Please complete & save followong data first');
+          this.EnterTab(this.completionCheckingObj.InCompletedStep);
+        }
+        else {
+          this.toastr.successMessage(response["message"]);
+          this.Back();
+        }
+        
       },
       (error) => {
         console.log(error);
