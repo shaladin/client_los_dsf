@@ -68,7 +68,12 @@ export class LegalDocTabComponent implements OnInit {
   }
 
   Continue(){
-    this.OutputTab.emit({IsComplete: true});
+    if(this.ListLegalDoc.length > 0){
+      this.OutputTab.emit({IsComplete: true});
+    }else{
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA)
+      return;
+    }
   }
 
   GetEvent(){

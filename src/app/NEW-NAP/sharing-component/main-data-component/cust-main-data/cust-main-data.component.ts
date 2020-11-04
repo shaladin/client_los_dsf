@@ -298,8 +298,8 @@ export class CustMainDataComponent implements OnInit {
       (response) => {
         this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
         if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
-        if (this.inputMode != "EDIT")
-          this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
+        if (this.inputMode != "EDIT") this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
+        this.RelationshipChange(this.MrCustRelationshipCodeObj[0].Key);
       }
     );
   }
@@ -392,6 +392,16 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
+  }
+
+  RelationshipChange(Relationship: string){
+    if(this.isIncludeCustRelation){
+      if(Relationship == CommonConstant.MasteCodeRelationshipSpouse){
+        this.CustMainDataForm.patchValue({ MrMaritalStatCode: this.MaritalStatObj[0].Key })
+        this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+      }else if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+      this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+    }
   }
 
   async copyCustomerEvent(event) {
@@ -535,6 +545,8 @@ export class CustMainDataComponent implements OnInit {
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
+      this.RelationshipChange(this.CustMainDataForm.controls.MrCustRelationshipCode.value);
+
       if(!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       
       if(this.inputMode == 'EDIT'){

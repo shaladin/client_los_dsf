@@ -10,14 +10,20 @@
       {
         "type": "sort",
         "position": "left",
-        "label": "Family Type",
-        "name": "MrCustTypeCode"
+        "label": "Relationship",
+        "name": "MrCustRelationshipDescr"
       },
       {
         "type": "sort",
         "position": "left",
-        "label": "Relationship",
-        "name": "MrCustRelationshipDescr"
+        "label": "Birth Place",
+        "name": "BirthPlace"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Birth Date",
+        "name": "BirthDt"
       }
     ],
     "bodyList": [
@@ -29,12 +35,17 @@
       {
         "type": "text",
         "position": "left",
-        "property": "MrCustTypeCode"
+        "property": "MrCustRelationshipDescr"
       },
       {
         "type": "text",
         "position": "left",
-        "property": "MrCustRelationshipDescr"
+        "property": "BirthPlace"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "BirthDt"
       }
     ]
   }
