@@ -8,6 +8,19 @@ import { FamilyMainDataPagingComponent } from "./family-main-data/family-main-da
 import { GuarantorMainDataPagingComponent } from "./guarantor-main-data/guarantor-main-data-paging.component";
 import { TestMainDataComponent } from "./test-main-data/test-main-data.component";
 import { MngmntShrhldrMainDataPagingComponent } from "./mngmnt-shrhldr-main-data/mngmnt-shrhldr-main-data-paging.component";
+import { NgxCurrencyModule } from "ngx-currency";
+
+export const customCurrencyMaskConfig = {
+    align: "right",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false
+};
 
 @NgModule({
     exports: [
@@ -20,7 +33,8 @@ import { MngmntShrhldrMainDataPagingComponent } from "./mngmnt-shrhldr-main-data
     imports: [
         CommonModule,
         AdInsModule,
-        MatRadioModule
+        MatRadioModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
         CustMainDataComponent,

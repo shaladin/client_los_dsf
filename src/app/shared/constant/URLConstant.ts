@@ -960,7 +960,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListAppCustAddrByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppCustId";
     public static GetListAppCustAddrDataForCopyByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppCustId";
     public static GetListAppCustAddrDataForCopyByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppId";
-
+    public static GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode = environment.losUrl + "/AppCustAddr/GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode";
     //App Fee
     public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
 
