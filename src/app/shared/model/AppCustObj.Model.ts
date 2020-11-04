@@ -5,6 +5,7 @@ export class AppCustObj {
     CustName: string;
     MrCustTypeCode: string;
     CustModelCode: string;
+    MrCustModelCode: string;
     MrIdTypeCode: string;
     IdNo: string;
     IdExpiredDt: Date;
@@ -18,9 +19,10 @@ export class AppCustObj {
     IsFamily: boolean;
     IsGuarantor: boolean;
     IsShareholder: boolean;
+    IsCompletion: boolean;
     IsAffiliateWithMF: boolean;
     MrCustRelationshipCode: string;
-    VIPNotes: string;
+    VipNotes: string;
     Age: number;
     RowVersion: any;
 
@@ -31,6 +33,7 @@ constructor() {
         this.CustName = "";
         this.MrCustTypeCode = "";
         this.CustModelCode = "";
+        this.MrCustModelCode = "";
         this.MrIdTypeCode = "";
         this.IdNo = "";
         this.TaxIdNo = "";
@@ -42,8 +45,9 @@ constructor() {
         this.IsFamily = false;
         this.IsGuarantor = false;
         this.IsShareholder = false;
+        this.IsCompletion = false;
         this.IsAffiliateWithMF = false;
         this.MrCustRelationshipCode = "";
-        this.VIPNotes = "";
+        this.VipNotes = "";
     }
 }

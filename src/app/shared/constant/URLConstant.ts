@@ -958,8 +958,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListAppCustAddrByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppId";
     public static GetAppCustAddrByAppCustAddrId = environment.losUrl + "/AppCustAddr/GetAppCustAddrByAppCustAddrId"
     public static GetListAppCustAddrByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppCustId";
-    public static GetListAppCustAddrData = environment.losUrl + "/AppCustAddr/GetListAppCustAddrData";
-
+    public static GetListAppCustAddrDataForCopyByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppCustId";
+    public static GetListAppCustAddrDataForCopyByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppId";
+    public static GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode = environment.losUrl + "/AppCustAddr/GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode";
     //App Fee
     public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
 
@@ -1106,9 +1107,10 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static UpdateAppCustCompletionPersonal = environment.losUrl + "/AppCust/UpdateAppCustCompletionPersonal";
     public static UpdateAppCustCompletionCompany = environment.losUrl + "/AppCust/UpdateAppCustCompletionCompany";
     public static SubmitAppCustCompletion = environment.losUrl + "/AppCust/SubmitAppCustCompletion";
+    public static SaveAppCustCompletion = environment.losUrl + "/AppCust/SaveAppCustCompletion";
 
     // App Cust Personal Job Data
-    public static AddAppCustPersonalJobAndAppCustAddr = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
+    public static AddEditAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
     public static GetAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/GetAppCustPersonalJobData";
     
     //App Cust Emergency Contact

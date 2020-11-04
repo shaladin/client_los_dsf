@@ -7,24 +7,41 @@ import { CustMainDataComponent } from "./cust-main-data/cust-main-data.component
 import { FamilyMainDataPagingComponent } from "./family-main-data/family-main-data-paging.component";
 import { GuarantorMainDataPagingComponent } from "./guarantor-main-data/guarantor-main-data-paging.component";
 import { TestMainDataComponent } from "./test-main-data/test-main-data.component";
+import { MngmntShrhldrMainDataPagingComponent } from "./mngmnt-shrhldr-main-data/mngmnt-shrhldr-main-data-paging.component";
+import { NgxCurrencyModule } from "ngx-currency";
+
+export const customCurrencyMaskConfig = {
+    align: "right",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false
+};
 
 @NgModule({
     exports: [
         CustMainDataComponent,
         GuarantorMainDataPagingComponent,
         FamilyMainDataPagingComponent,
-        TestMainDataComponent
+        TestMainDataComponent,
+        MngmntShrhldrMainDataPagingComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
-        MatRadioModule
+        MatRadioModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
         CustMainDataComponent,
         GuarantorMainDataPagingComponent,
         FamilyMainDataPagingComponent,
-        TestMainDataComponent
+        TestMainDataComponent,
+        MngmntShrhldrMainDataPagingComponent
     ],
     providers: [
         NGXToastrService

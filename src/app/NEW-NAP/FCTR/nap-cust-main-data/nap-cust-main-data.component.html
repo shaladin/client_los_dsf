@@ -1,0 +1,68 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="px-3">
+      <div class="col-md-8" style="padding-left: 0px;">
+        <h4 class="form-section card-title" translate>Customer Main Data</h4>
+      </div>
+    </div>
+    <div class="ucSearch-Button-Right">
+      <span class="mr-1">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </span>
+    </div>
+    <div class="card-body">
+      <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
+      </lib-ucviewgeneric>
+      <div class="px-3">
+        <div id="stepper1" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <div class="step" data-target="#customer-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Customer Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#family-tab" [hidden]="MrCustTypeCode != 'PERSONAL'">
+              <button type="button" class="step-trigger" role="tab" aria-controls="family-tab" id="family-tab-trigger"
+                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('FAM')" [hidden]="MrCustTypeCode != 'PERSONAL'">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Family Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#guarantor-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('GUAR')">
+                <span class="bs-stepper-circle">{{MrCustTypeCode != 'PERSONAL' ? 2 : 3}}</span>
+                <span class="bs-stepper-label">Guarantor Data</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
+              <app-cust-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'"
+                [inputMode]="appCustId ? 'EDIT' : 'ADD'" [appCustId]='appCustId' (outputAfterSave)="getEvent($event)"
+                (outputCancel)="Cancel()">
+              </app-cust-main-data>
+            </div>
+            <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
+              <app-family-main-data-paging *ngIf="AppStepIndex == 2" [appId]="appId" [isMarried]="isMarried"
+                (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
+              </app-family-main-data-paging>
+            </div>
+            <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
+              <app-guarantor-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
+                (outputTab)="LastStep()">
+              </app-guarantor-main-data-paging>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,7 +22,7 @@
                   <label class="col-md-4" translate>Id Type</label>
                   <div class="col-md-6">
                     <select class="form-control"
-                      formControlName="MrIdTypeCode" (change)="clearExpDt()" style="width:100%;"
+                      formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.MrIdTypeCode.invalid }">
                       <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
                         {{item.Descr}}
@@ -48,13 +48,11 @@
                     translate>Id Expired Date</label>
                   <div class="col-md-8">
                     <input *ngIf="['NPWP','AKTA','EKTP'].includes(EmergencyContactForm.controls.MrIdTypeCode.value)"
-                      readonly type="date" class="form-control" formControlName="IdExpiredDt">
+                      readonly type="date" class="form-control" formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.IdExpiredDt.invalid}">
                     <input
                       *ngIf="!['NPWP','AKTA','EKTP'].includes(EmergencyContactForm.controls.MrIdTypeCode.value)"
-                      min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control"
-                      formControlName="IdExpiredDt">
-                    <lib-uc-show-errors [control]="EmergencyContactForm.controls.MrIdTypeCode"
-                      [submit]="enjiForm.submitted">
+                      min="{{BusinessDt | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.IdExpiredDt.invalid}">
+                    <lib-uc-show-errors [control]="EmergencyContactForm.controls.IdExpiredDt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -73,9 +71,9 @@
                   <label class="col-md-4" translate>Email</label>
                   <div class="col-md-8">
                     <input type="text" class="form-control"
-                      formControlName="Email1"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.Email1.invalid}">
-                    <lib-uc-show-errors [control]="EmergencyContactForm.controls.Email1" [submit]="enjiForm.submitted">
+                      formControlName="Email"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.Email.invalid}">
+                    <lib-uc-show-errors [control]="EmergencyContactForm.controls.Email" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -107,10 +105,10 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4" translate>Birth Date</label>
+                  <label class="col-md-4 adins-required-label" translate>Birth Date</label>
                   <div class="col-md-8">
                     <input type="date"
-                      max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt"
+                      max="{{BusinessDt | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && EmergencyContactForm.controls.BirthDt.invalid}">
                     <lib-uc-show-errors [control]="EmergencyContactForm.controls.BirthDt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
@@ -170,7 +168,7 @@
           <div class="form-actions right">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(EmergencyContactForm)"
               class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+              <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>
         </form>

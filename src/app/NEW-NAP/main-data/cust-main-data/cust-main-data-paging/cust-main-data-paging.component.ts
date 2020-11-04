@@ -48,7 +48,7 @@ export class CustMainDataPagingComponent implements OnInit {
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj.title = "Customer Main Data";
+    this.inputPagingObj.title = "NAP 1 Paging";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -82,9 +82,19 @@ export class CustMainDataPagingComponent implements OnInit {
     if (ev.Key == "Edit") {
       switch(this.bizTemplateCode) {
         case CommonConstant.CF4W :
-          this.router.navigate(["Nap/ConsumerFinance/NAP1"], {
-            queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} 
-          });
+          this.router.navigate(["Nap/ConsumerFinance/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+        break;
+        case CommonConstant.CFRFN4W :
+          this.router.navigate(["Nap/CFRefinancing/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+        break;
+        case CommonConstant.FCTR :
+          this.router.navigate(["Nap/Factoring/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+        break;
+        case CommonConstant.FL4W :
+          this.router.navigate(["Nap/FinanceLeasing/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+        break;
+        case CommonConstant.CFNA :
+          this.router.navigate(["Nap/CFNA/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
         break;
       }
     }

@@ -312,7 +312,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
               DocNo: response[CommonConstant.ReturnObj][i].DocNo,
               ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
-              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              RowVersion: "",
             }) as FormGroup;
             if(this.isExisting){
               assetDocumentDetail.controls.DocNo.disable();
@@ -340,7 +341,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               DocNo: AppCollateralDocs[i].DocNo,
               DocNotes: AppCollateralDocs[i].DocNotes,
               ACDExpiredDt: formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived
+              IsReceived: AppCollateralDocs[i].IsReceived,
+              RowVersion: AppCollateralDocs[i].RowVersion,
             })
           }
         }
@@ -945,6 +947,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.appCollateralDoc.DocNo = this.AddCollForm.value.ListDoc[i].DocNo;
       this.appCollateralDoc.ExpiredDt = this.AddCollForm.value.ListDoc[i].ACDExpiredDt;
       this.appCollateralDoc.DocNotes = this.AddCollForm.value.ListDoc[i].DocNotes;
+      this.appCollateralDoc.RowVersion = this.AddCollForm.value.ListDoc[i].RowVersion;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;

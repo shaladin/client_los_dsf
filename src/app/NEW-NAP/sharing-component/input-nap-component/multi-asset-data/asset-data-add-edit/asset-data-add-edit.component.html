@@ -42,16 +42,17 @@
                       </option>
                     </select>
                   </div> -->
-                  <!-- <label class="col-md-2 adInsLabel" translate>Admin Head</label>
+                  <label class="col-md-2 adInsLabel" translate>Admin Head</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="AdminHeadNo"
+                    <select class="form-control adInsInput" style="width: auto" formControlName="AdminHeadId"
                       (change)="AdminChanged($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadNo.invalid }">
-                      <option *ngFor="let it of listAdminHeadObj " [value]="it.Key">
-                        {{it.Value}}
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of listAdminHeadObj " [value]="it.VendorEmpId">
+                        {{it.VendorEmpName}}
                       </option>
                     </select>
-                  </div> -->
+                  </div>
                 </div>
               </div>
               <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset Info'" [panel]="'assetInfo'">

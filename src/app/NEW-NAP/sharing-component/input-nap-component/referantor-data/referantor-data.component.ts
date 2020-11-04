@@ -41,7 +41,7 @@ export class ReferantorDataComponent implements OnInit {
 
   ReferantorOn = false;
   NpwpOn: boolean = false;
-  appReferantorObj;
+  appReferantorObj: NapAppReferantorModel;
   ExistedData;
   arrAddCrit;
   async ngOnInit() {
@@ -111,7 +111,7 @@ export class ReferantorDataComponent implements OnInit {
       RowVersion: "",
     }
 
-    this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
+    this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).subscribe(
       (response) => {
         if (response["AppReferantorId"] != 0) {
           this.ReferantorOn = true;

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -40,6 +40,7 @@ export class OtherInfoTabComponent implements OnInit {
   }); 
 
   @Input() CustTypeCode: string;
+  @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   InputDebitorGroupLookupObj : InputLookupObj;
   InputDebitorBusinessScaleLookupObj: InputLookupObj;
   InputCounterpartCategoryLookupObj: InputLookupObj;
@@ -126,6 +127,7 @@ export class OtherInfoTabComponent implements OnInit {
     this.httpClient.post(URLConstant.AddEditCustCompletionOtherInfo, RequestAppCustOtherInfoObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
+        this.OutputTab.emit({IsComplete: true});
       },
       (error) => {
         console.log(error);
@@ -141,7 +143,6 @@ export class OtherInfoTabComponent implements OnInit {
       for (const key in formValue) {
         if(formValue[key]["AttrValue"]!=null ) { 
         var custAttr = {
-          CustAttrContentId: formValue[key]["CustAttrContentId"],
           AppCustId: this.AppCustId,
           RefAttrCode: formValue[key]["AttrCode"],
           AttrValue: formValue[key]["AttrValue"],

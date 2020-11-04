@@ -48,7 +48,7 @@ export class CustCompletionPagingComponent implements OnInit {
     var critWorflowAct = new CriteriaObj();
     critWorflowAct.restriction = AdInsConstant.RestrictionEq;
     critWorflowAct.propName = 'WTL.ACT_CODE';
-    critWorflowAct.value = "CDC_MD_" + this.bizTemplateCode;
+    critWorflowAct.value = "CDC";
     this.inputPagingObj.addCritInput.push(critWorflowAct);
   }
 
@@ -57,12 +57,7 @@ export class CustCompletionPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      switch(this.bizTemplateCode)
-      {
-        case CommonConstant.CF4W :
-          this.router.navigate(["Nap/CustCompletion/Detail"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
-        break;
-      }
+      this.router.navigate(["Nap/CustCompletion/Detail"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
     }
   }
 
