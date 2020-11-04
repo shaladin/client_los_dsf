@@ -63,7 +63,7 @@
             <div class="line"></div>
             <div class="step" data-target="#cust-attr-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="cust-attr-tab"
-                id="cust-attr-tab-trigger" (click)="EnterTab('CustAttr')">
+                id="cust-attr-tab-trigger" (click)="EnterTab('Other')">
                 <span class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Other Attribute</span>
               </button>
@@ -87,7 +87,7 @@
               <app-emergency-contact-tab *ngIf="stepIndex == 5" [AppCustId]="AppCustId" [isMarried]="isMarried" (OutputTab)="GetEvent($event, 'Financial')"> </app-emergency-contact-tab>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-personal *ngIf="stepIndex == 6" [AppCustId]="AppCustId" [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'CustAttr')"> </app-financial-personal>
+              <app-financial-personal *ngIf="stepIndex == 6" [AppCustId]="AppCustId" [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'Other')"> </app-financial-personal>
             </div>
             <div id="cust-attr-tab" class="content" role="tabpanel" aria-labelledby="cust-attr-tab-trigger">
             <app-other-info-tab [CustTypeCode]="'PERSONAL'"  *ngIf="stepIndex == 7" (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>

@@ -9,6 +9,8 @@ import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/Respon
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
+import { AppCustCompletionCheckingObj } from '../../../../shared/model/AppCustCompletionCheckingObj.Model';
+import { CommonConstant } from '../../../../shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-company',
@@ -126,30 +128,22 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }    
   }
-
-  Save(){
-    if(this.isCompletionCheck && !this.IsCompletion)
-    {
-      let isValid = true;
-      let notValidStep = '';
-      Object.keys(this.isCompleteCustStep).forEach(stepName => {
-        if(!this.isCompleteCustStep[stepName]) {
-          isValid = false;
-          if(notValidStep == '') notValidStep = stepName;
-        }
-      });
-
-      if(!isValid){
-        this.toastr.warningMessage('Please complete & save followong data first');
-        if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
-        return;
-      }
-    }
-
-    this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
+  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
+  Save() {
+    this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
-        this.toastr.successMessage(response["Message"]);
-        this.Back();
+        this.completionCheckingObj.IsCompleted = response["IsCompleted"];
+        this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
+        console.log(this.completionCheckingObj);
+        if (this.completionCheckingObj.IsCompleted != true) {
+          this.toastr.warningMessage('Please complete & save followong data first');
+          this.EnterTab(this.completionCheckingObj.InCompletedStep);
+        }
+        else {
+          this.toastr.successMessage(response["message"]);
+          this.Back();
+        }
+
       },
       (error) => {
         console.log(error);
