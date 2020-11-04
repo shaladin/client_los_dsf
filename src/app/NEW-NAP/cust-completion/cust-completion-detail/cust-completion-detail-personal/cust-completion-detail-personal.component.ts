@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
+import { CommonConstant } from '../../../../shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -139,30 +140,38 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }    
   }
-
+  completionCheckingObj: any;
   Save(){
-    if(this.isCompletionCheck && !this.IsCompletion)
-    {
-      let isValid = true;
-      let notValidStep = '';
-      Object.keys(this.isCompleteCustStep).forEach(stepName => {
-        if(!this.isCompleteCustStep[stepName]) {
-          isValid = false;
-          if(notValidStep == '') notValidStep = stepName;
-        }
-      });
-
-      if(!isValid){
-        this.toastr.warningMessage('Please complete & save followong data first');
-        if(this.CustStep['notValidStep'] != this.stepIndex) this.EnterTab(notValidStep);
-        return;
-      }
-    }
-
     this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        this.toastr.successMessage(response["Message"]);
-        this.Back();
+        this.completionCheckingObj = response;
+        console.log(this.completionCheckingObj);
+        if (this.completionCheckingObj.IsCompleted != true) {
+          this.toastr.warningMessage('Please complete & save followong data first');
+          if (this.completionCheckingObj.IsCustDetailCompleted != true) {
+            this.EnterTab("Detail");
+          }
+          else if (this.completionCheckingObj.IsAddressCompleted != true) {
+            this.EnterTab("Address");
+          }
+          else if (this.completionCheckingObj.IsJobDataCompleted != true) {
+            this.EnterTab("Job");
+          }
+          else if (this.completionCheckingObj.IsFinacialCompleted != true) {
+            this.EnterTab("Financial");
+          }
+          else if (this.completionCheckingObj.IsEmergencyContCompleted != true) {
+            this.EnterTab("Emergency");
+          }
+          else if (this.completionCheckingObj.IsOthAttributeCompleted != true) {
+            this.EnterTab("CustAttr");
+          }
+        }
+        else {
+          this.toastr.successMessage(this.completionCheckingObj.Message);
+          this.Back();
+        }
+        
       },
       (error) => {
         console.log(error);
