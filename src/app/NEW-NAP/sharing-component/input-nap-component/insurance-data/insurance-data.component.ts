@@ -765,6 +765,9 @@ export class InsuranceDataComponent implements OnInit {
           if(this.ruleObj["AdditionalCoverageType"][i] == CommonConstant.MrAddCvgTypeCodeLoading){
             var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
             var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
+            console.log("Asset Age Min: " + assetAgeMin);
+            console.log("Asset Age Max: " + assetAgeMax);
+            console.log("Manuf Year Diff: " + ManufYearDiff);
             if(ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax){
               const control = this.fb.group({
                 MrAddCvgTypeCode: o.Key,
@@ -773,12 +776,16 @@ export class InsuranceDataComponent implements OnInit {
                 SumInsuredPercentage: obj.SumInsuredPercentage,
                 SumInsuredAmt: defaultSumInsuredAmt,
                 PremiumType: premiumType,
-                CustAddPremiRate: custAddPremiRate,
+                // CustAddPremiRate: custAddPremiRate,
+                CustAddPremiRate: this.ruleObj["RateToCust"][i],
                 CustAddPremiAmt: 0,
-                BaseCalculation: this.ruleObj.BaseCalc[index],
-                InscoAddPremiRate: inscoAddPremiRate,
+                // BaseCalculation: this.ruleObj.BaseCalc[index],
+                BaseCalculation: this.ruleObj["BaseCalc"][i],
+                // InscoAddPremiRate: inscoAddPremiRate,
+                InscoAddPremiRate: this.ruleObj["RateToInsco"][i],
                 InscoAddPremiAmt: 0,
-                StdAddPremiRate: this.ruleObj.BaseRate[index]
+                // StdAddPremiRate: this.ruleObj.BaseRate[index]
+                StdAddPremiRate: this.ruleObj["BaseRate"][i]
               });
               (group.controls.AppInsAddCvgs as FormArray).push(control);
             }
