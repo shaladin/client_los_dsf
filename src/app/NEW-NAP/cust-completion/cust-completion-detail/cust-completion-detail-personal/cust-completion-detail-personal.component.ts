@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -71,12 +72,12 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       animation: true
     })
 
-    this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response["MrMaritalStatCode"] != null && response["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried) this.isMarried = true;
-        this.CustModelCode = response["MrCustModelCode"];
-        this.AppCustPersonalId = response["AppCustPersonalId"];
-        this.IsCompletion = response["IsCompletion"];
+        if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.isMarried = true;
+        this.CustModelCode = response.AppCustObj.MrCustModelCode;
+        this.AppCustPersonalId = response.AppCustPersonalObj.AppCustPersonalId;
+        this.IsCompletion = response.AppCustObj.IsCompletion;
       }
     );
 

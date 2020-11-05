@@ -15,6 +15,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -58,8 +59,9 @@ export class JobTabComponent implements OnInit {
   InvestmentTypeObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   isUcAddrReady: boolean = false
-  UserAccess: any;
+  MrCustModelDescr: string = "Employee";
   BusinessDt: Date;
+  UserAccess: any;
 
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
@@ -94,6 +96,12 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
 
     await this.InitLookup();
+    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).subscribe(
+      (response) => {
+        this.MrCustModelDescr = response.Descr;
+      }
+    );
+
     if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
       this.SetDropdown();
     }

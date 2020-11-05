@@ -44,24 +44,25 @@ export class AttrContentComponentComponent implements OnInit {
 
             var parentFormGroup = new Object();
              
-            for (const refAttr of this.RefAttrList) { 
-              this.AttrContent = new AttrContent();
-              let isUpdateValue = false;
-              if(this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode) ){
-                this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
-                isUpdateValue = true;
+            if(this.RefAttrList.length > 0){
+              for (const refAttr of this.RefAttrList) { 
+                this.AttrContent = new AttrContent();
+                let isUpdateValue = false;
+                if(this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode) ){
+                  this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                  isUpdateValue = true;
+                }
+  
+                var formGroupObject = new Object();
+                formGroupObject["AttrCode"] = [refAttr.AttrCode];
+                formGroupObject["IsMandatory"] = [refAttr.IsMandatory]; 
+                
+                this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
               }
-
-              var formGroupObject = new Object();
-              formGroupObject["AttrCode"] = [refAttr.AttrCode];
-              formGroupObject["IsMandatory"] = [refAttr.IsMandatory]; 
-              
-              this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
+              this.ListInputLookUpObj.push(this.tempLookup);
+              this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
+              this.IsFormReady = true;
             }
-            this.ListInputLookUpObj.push(this.tempLookup);
-            this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
-            this.IsFormReady = true;
-
           }
         );
 
@@ -128,7 +129,7 @@ export class AttrContentComponentComponent implements OnInit {
       } else {
         this.tempLookup[refAttr.AttrCode].isRequired = false;
       } 
-      if (this.AttrContent == undefined) { 
+      if (isUpdateValue == false) { 
         if (refAttr.DefaultValue != null) {
           var refMaster = {
             RefMasterTypeCode: refAttr.AttrValue,

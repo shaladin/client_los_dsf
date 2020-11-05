@@ -8,6 +8,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -100,13 +101,13 @@ export class NapCustMainDataComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
       (response) => {
-        if (response['AppCustObj']) 
+        if (response.AppCustObj) 
         {
-          this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
-          this.appCustId = response['AppCustObj'].AppCustId;
-          this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED'? true : false;
+          this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
+          this.appCustId = response.AppCustObj.AppCustId;
+          this.isMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
       }
     );

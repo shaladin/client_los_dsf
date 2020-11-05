@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -65,10 +66,10 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       animation: true
     })
 
-    this.http.post(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        this.AppCustCompanyId = response["AppCustCompanyId"];
-        this.IsCompletion = response["IsCompletion"];
+        this.AppCustCompanyId = response.AppCustCompanyObj.AppCustCompanyId;
+        this.IsCompletion = response.AppCustObj.IsCompletion;
       }
     );
 

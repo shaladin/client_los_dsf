@@ -4,7 +4,7 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="JobDataForm" (ngSubmit)="JobDataForm.valid && SaveForm()"
           #enjiForm="ngForm">
-          <lib-ucSubsection [id]="'jobDataId'" [title]="'Job Data'" [panel]="'jobData'"></lib-ucSubsection>
+          <lib-ucSubsection [id]="'jobDataId'" [title]="MrCustModelDescr + ' Job Data'" [panel]="'jobData'"></lib-ucSubsection>
           <div id="jobData">
             <div class="form-group row">
               <label class="col-md-2 adins-required-label" translate>Profession Name</label>
@@ -205,7 +205,7 @@
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)
               class="btn btn-raised btn-primary">
-              <i class="far fa-check-square"></i> Save
+              <i class="far fa-check-square"></i> Save & Continue
             </button>
           </div>
         </form>

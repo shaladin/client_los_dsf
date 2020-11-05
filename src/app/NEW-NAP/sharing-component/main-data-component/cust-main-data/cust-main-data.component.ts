@@ -306,9 +306,9 @@ export class CustMainDataComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-        if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
-        if (this.inputMode != "EDIT")
-          this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
+        if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
+        if (this.inputMode != "EDIT") this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
+        this.RelationshipChange(this.MrCustRelationshipCodeObj[0].Key);
       }
     );
   }
@@ -411,7 +411,17 @@ export class CustMainDataComponent implements OnInit {
     this.setLookup(custType, true);
   }
 
-  async copyCustomerEvent(event) {  
+  RelationshipChange(Relationship: string){
+    if(this.isIncludeCustRelation){
+      if(Relationship == CommonConstant.MasteCodeRelationshipSpouse){
+        this.CustMainDataForm.patchValue({ MrMaritalStatCode: this.MaritalStatObj[0].Key })
+        this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+      }else if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+      this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+    }
+  }
+
+  async copyCustomerEvent(event) {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
@@ -536,9 +546,11 @@ export class CustMainDataComponent implements OnInit {
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
-      if (!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+      this.RelationshipChange(this.CustMainDataForm.controls.MrCustRelationshipCode.value);
 
-      if (this.inputMode == 'EDIT') {
+      if(!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+      
+      if(this.inputMode == 'EDIT'){
         this.CustMainDataForm.patchValue({
           MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
         })
