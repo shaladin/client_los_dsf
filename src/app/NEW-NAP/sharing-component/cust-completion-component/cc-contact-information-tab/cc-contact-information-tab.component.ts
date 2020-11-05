@@ -104,9 +104,9 @@ export class CcContactInformationTabComponent implements OnInit {
             MrJobPositionCode: response.MrJobPositionCode,
             MrIdTypeCode: response.MrIdTypeCode,
             IdNo: response.IdNo,
-            IdExpiredDt: response.IdExpiredDt,
+            IdExpiredDt: response.IdExpiredDt != null ? formatDate(response.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
             BirthPlace: response.BirthPlace,
-            BirthDt: response.BirthDt,
+            BirthDt: response.BirthDt != null ? formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US') : "",
             MrCustRelationshipCode: response.MrCustRelationshipCode,
             MobilePhnNo1: response.MobilePhnNo1,
             MobilePhnNo2: response.MobilePhnNo2,
@@ -145,7 +145,7 @@ export class CcContactInformationTabComponent implements OnInit {
             this.inputAddressObjForCc.default = this.CcAddrObj;
             this.inputAddressObjForCc.inputField = this.inputFieldCcObj;
           }
-          this.ChangeIdType();
+          this.ChangeIdType(true);
         }
         this.IsUcAddrReady = true;
       }
@@ -158,7 +158,7 @@ export class CcContactInformationTabComponent implements OnInit {
     this.inputAddressObjForCc.showPhn3 = false;
   }
 
-  ChangeIdType() {
+  ChangeIdType(FirstInit: boolean = false) {
     let IdTypeCode = this.CcForm.get("MrIdTypeCode").value;
     if (IdTypeCode == this.IdTypeNpwp) {
       this.CcForm.get("IdNo").setValidators(Validators.required);
@@ -172,6 +172,7 @@ export class CcContactInformationTabComponent implements OnInit {
     } else {
       this.CcForm.get("IdExpiredDt").clearValidators();
     }
+    if(!FirstInit) this.CcForm.controls.IdExpiredDt.patchValue("");
     this.CcForm.get("IdExpiredDt").updateValueAndValidity();
   }
 
@@ -203,7 +204,7 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqAddr.City = TempAddr.City;
     ReqAddr.Fax = TempAddr.Fax;
     ReqAddr.FaxArea = TempAddr.FaxArea;
-    ReqAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeCompanyContactInfo;
+    ReqAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeCompany;
     ReqAddr.MrHouseOwnershipCode = "";
     ReqAddr.Zipcode = TempZipVal.value;
     ReqAddr.SubZipcode = TempAddr.SubZipcode;

@@ -11,7 +11,6 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
-import { CommonConstant } from '../../../../shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -26,8 +25,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   AppCustPersonalId: number;
   stepIndex: number = 1;
   CustModelCode: string;
-  isChange: boolean = false;
-  isMarried: boolean = false;
+  IsMarried: boolean = false;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsCompletion: boolean = false;
@@ -75,7 +73,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
     this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.isMarried = true;
+        if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
         this.CustModelCode = response.AppCustObj.MrCustModelCode;
         this.AppCustPersonalId = response.AppCustPersonalObj.AppCustPersonalId;
         this.IsCompletion = response.AppCustObj.IsCompletion;
