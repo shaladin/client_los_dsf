@@ -90,9 +90,10 @@ export class FinancialDataComponent implements OnInit {
     
             NumOfInst: 0,
             RoundingAmt: 0,
-            SupplEffectiveRatePrcnt: 0,
+            SellSupplEffectiveRatePrcnt: 0,
             SupplFlatRatePrcnt: 0,
-    
+            AppSupplEffectiveRatePrcnt: 0,
+
             DiffRateAmt: 0,
             SubsidyAmtFromDiffRate: {value: 0, disabled: true},
             CommissionAmtFromDiffRate: 0,
@@ -102,9 +103,7 @@ export class FinancialDataComponent implements OnInit {
             TotalInterestAmt: 0,
             TotalAR: 0,
     
-            StdGrossYieldPrcnt: 0,
             GrossYieldPrcnt: 0,
-            GrossYieldBhv: "",
     
             NumOfStep: 0,
             MrInstSchemeCode: "",
@@ -122,11 +121,21 @@ export class FinancialDataComponent implements OnInit {
             MrLcCalcMethodCode: '',
             LcGracePeriod: 0,
             PrepaymentPenaltyRate: 0,
-            SellEffectiveRatePrcnt: 0,
     
             ApvAmt: 0,
             TotalDpAmt: 0,
             VendorAtpmCode: '',
+
+            MinEffectiveRatePrcnt: 0,
+            MaxEffectiveRatePrcnt: 0,
+            MinInterestIncomeAmt: 0,
+            MinGrossYieldPrcnt: 0,
+            MaxGrossYieldPrcnt: 0,
+            MinBalloonAmt: 0,
+            MaxBalloonAmt: 0,
+            BalloonBhv: '',
+            MinDownPaymentNettPrcnt: 0,
+            MaxDownPaymentNettPrcnt: 0,
     
             CalcBase: '',
             NeedReCalculate: true
@@ -163,13 +172,12 @@ export class FinancialDataComponent implements OnInit {
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
           EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
-          SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
+          SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
+          AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 
-          StdGrossYieldPrcnt: this.appFinDataObj.StdGrossYieldPrcnt,
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
-          GrossYieldBhv: this.appFinDataObj.GrossYieldBhv,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
@@ -181,13 +189,22 @@ export class FinancialDataComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          SellEffectiveRatePrcnt: this.appFinDataObj.SellEffectiveRatePrcnt,
           TotalDpAmt: this.appFinDataObj.TotalDpAmt,
           VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
           BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
-          ResidualValueAmt: this.appFinDataObj.ResidualValueAmt && this.appFinDataObj.ResidualValueAmt > 0 ? this.appFinDataObj.ResidualValueAmt : 0
-        });
+          ResidualValueAmt: this.appFinDataObj.ResidualValueAmt && this.appFinDataObj.ResidualValueAmt > 0 ? this.appFinDataObj.ResidualValueAmt : 0,
 
+          MinEffectiveRatePrcnt: this.appFinDataObj.MinEffectiveRatePrcnt,
+          MaxEffectiveRatePrcnt: this.appFinDataObj.MaxEffectiveRatePrcnt,
+          MinInterestIncomeAmt: this.appFinDataObj.MinInterestIncomeAmt,
+          MinGrossYieldPrcnt: this.appFinDataObj.MinGrossYieldPrcnt,
+          MaxGrossYieldPrcnt: this.appFinDataObj.MaxGrossYieldPrcnt,
+          MinBalloonAmt: this.appFinDataObj.MinBalloonAmt,
+          MaxBalloonAmt: this.appFinDataObj.MaxBalloonAmt,
+          BalloonBhv: this.appFinDataObj.BalloonBhv,
+          MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
+          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
+        });
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
       }
@@ -195,7 +212,6 @@ export class FinancialDataComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    var isValidGrossYield = this.ValidateGrossYield();
     var isValidGracePeriod = this.ValidateGracePeriode();
 
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
@@ -204,7 +220,7 @@ export class FinancialDataComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       return;
     }
-    if (isValidGrossYield && isValidGracePeriod) {
+    if (isValidGracePeriod) {
       this.SetDiffRateAmt();
       this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
@@ -231,11 +247,14 @@ export class FinancialDataComponent implements OnInit {
           IsSubsidyRateExist: true
         });
         this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
+        this.FinDataForm.get("AppSupplEffectiveRatePrcnt").disable();
       }else{
         this.FinDataForm.patchValue({
+          SubsidyAmtFromDiffRate: 0,
           IsSubsidyRateExist: false
         });
         this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
+        this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }  
   }

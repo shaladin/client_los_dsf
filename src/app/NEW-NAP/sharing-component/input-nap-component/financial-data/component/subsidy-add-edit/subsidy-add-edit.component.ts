@@ -60,6 +60,7 @@ export class SubsidyAddEditComponent implements OnInit {
         valueType: [''],
         subsidyPrcnt: [0, [Validators.min(0), Validators.max(100)]],
         subsidyAmt: [0],
+        RowVersion: [''],
       }
     );
     this.isSubmitted = false;
@@ -91,6 +92,7 @@ export class SubsidyAddEditComponent implements OnInit {
           valueType: subdObj.MrSubsidyValueTypeCode,
           subsidyPrcnt: subdObj.SubsidyPrcnt,
           subsidyAmt: subdObj.SubsidyAmt,
+          RowVersion: subdObj.RowVersion,
         });
       }
     );
@@ -137,6 +139,7 @@ export class SubsidyAddEditComponent implements OnInit {
     }
     if (this.mode == "edit") {
       subdObj.AppSubsidyId = this.AppSubsidyId;
+      subdObj.RowVersion = this.FormAppSubsidy.get("RowVersion").value;
 
       this.http.post(URLConstant.EditAppSubsidy, subdObj).subscribe(
         (response) => {
@@ -163,7 +166,7 @@ export class SubsidyAddEditComponent implements OnInit {
 
         this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
           (response) => {
-            if (response.BizTemplateCode == CommonConstant.CFRFN4W) {
+            if (response.BizTemplateCode == CommonConstant.CFRFN4W || response.BizTemplateCode == CommonConstant.CFNA) {
               let supplierIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeSupplier);
               if (supplierIndex != -1) {
                 this.FromTypeCodeOptions.splice(supplierIndex, 1);

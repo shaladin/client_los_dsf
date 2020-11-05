@@ -20,7 +20,7 @@ export class AppCustCompanyObj {
     PhnExt2: string;
     Email1: string;
     Email2: string;
-
+    RowVersion: any;
 constructor() { 
         this.AppCustCompanyId = 0;
         this.AppCustId = 0;

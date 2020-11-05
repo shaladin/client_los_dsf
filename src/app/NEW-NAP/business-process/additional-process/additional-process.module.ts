@@ -32,6 +32,9 @@ import { AssetInquiryComponent } from "./credit-apv-result-ext/asset-inquiry/ass
 import { ReturnHandlingAdditionalTcPagingComponent } from './return-handling/return-handling-additional-tc-paging/return-handling-additional-tc-paging.component';
 import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/return-handling-additional-tc-detail/return-handling-additional-tc-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
+import { DupCheckMdPagingComponent } from "./app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component";
+import { DupCheckMdSubjListComponent } from "./app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component";
+import { DupCheckMdSubjMatchComponent } from "./app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -82,7 +85,10 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingCollateralDetailComponent,
     CopyCancelledApplicationComponent,
     ReturnHandlingAdditionalTcPagingComponent,
-    ReturnHandlingAdditionalTcDetailComponent
+    ReturnHandlingAdditionalTcDetailComponent,
+    DupCheckMdPagingComponent,
+    DupCheckMdSubjListComponent,
+    DupCheckMdSubjMatchComponent,
   ],
   providers: [
     NGXToastrService

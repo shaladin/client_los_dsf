@@ -1,0 +1,90 @@
+{
+  "isSeq": true,
+  "headerList": [
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Subject Name"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Subject Type"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Applicant No"
+    },
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Cust No"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Negative"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SubjectType"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ApplicantNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "Negative"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "IsShowEdit",
+                  "value": "1",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type" : "url",
+                "path" : "/Nap/AdditionalProcess/AppDupCheckMainData/SubjMatch", 
+                "param" : [ {"type": "AppCustId", "property" : "AppCustId"}],
+                "icon" : "ft-edit-2", 
+                "tooltip": "Select Duplicate Customer"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+  }
+  ]
+}

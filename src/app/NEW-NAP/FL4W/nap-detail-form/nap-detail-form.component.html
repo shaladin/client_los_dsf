@@ -1,0 +1,249 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="px-3">
+      <div class="form-action pull-right">
+        <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
+          <i class="ft-x"></i> Cancel
+        </button>
+        </div>
+        </div>
+    <!-- <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
+    <ng-template #FL4WMainInfoContainer></ng-template>
+    <div class="card-body">
+      <div class="px-3">
+        <div class="card" *ngIf="ReturnHandlingHId > 0">
+          <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+            <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+                  #enjiForm="ngForm">
+              <div class="form-body">
+                <div class="form-group row">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">Return Execution Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="stepperPersonal" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <!-- your steps here -->
+            <div class="step" data-target="#referantor-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
+                      id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('REF')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Referantor Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#application-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
+                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('APP')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Application Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#asset-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('COLL')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Asset & Collateral Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#insurance-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="insurance-tab"
+                      id="insurance-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('INS')">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Insurance Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#lifeInsurance-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="lifeInsurance-tab"
+                      id="lifeInsurance-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('LFI')">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Life Insurance Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#financial-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
+                      id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab('FIN')">
+                <span class="bs-stepper-circle">6</span>
+                <span class="bs-stepper-label">Financial Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#TC-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('TC')">
+                <span class="bs-stepper-circle">7</span>
+                <span class="bs-stepper-label">Term & Conditions</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <!-- your steps content here -->
+            <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
+                                        [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              </app-referantor-data>
+            </div>
+            <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
+              <app-application-data-FL4W *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                                         [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
+              </app-application-data-FL4W>
+            </div>
+            <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
+              <app-multi-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                                    [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
+              </app-multi-asset-data>
+            </div>
+            <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [appId]="appId"
+                                              [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
+              </app-insurance-multi-asset-data>
+            </div>
+            <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
+              <app-life-insurance-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                                       [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-life-insurance-data>
+            </div>
+            <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
+              <!-- <app-financial-data-FL4W *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                                       [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-financial-data-FL4W> -->
+              <app-financial-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data>
+            </div>
+            <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
+              <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                           [showCancel]="showCancel" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+            </div>
+          </div>
+        </div>
+        <div id="stepperCompany" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <!-- your steps here -->
+            <div class="step" data-target="#referantor-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
+                      id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('REF')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Referantor Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#application-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
+                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('APP')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Application Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#asset-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('COLL')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Collateral Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#insurance-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="insurance-tab"
+                      id="insurance-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('INS')">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Insurance Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#financial-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
+                      id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('FIN')">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Financial Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#TC-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab('TC')">
+                <span class="bs-stepper-circle">6</span>
+                <span class="bs-stepper-label">Term & Conditions</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <!-- your steps content here -->
+            <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
+                                        [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              </app-referantor-data>
+            </div>
+            <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
+              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId"
+                                         [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
+              </app-application-data>
+            </div>
+            <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
+              <app-multi-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [AppId]="appId"
+                                    [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
+              </app-multi-asset-data>
+            </div>
+            <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"
+                                              [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
+              </app-insurance-multi-asset-data>
+            </div>
+            <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
+              <!-- <app-financial-data-FL4W *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [AppId]="appId"
+                                       [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data-FL4W> -->
+              <app-financial-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
+                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data>
+            </div>
+            <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
+              <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY'" [AppId]="appId"
+                           [showCancel]="showCancel" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"></app-tc-data>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-md-12">
+  <div class="card" *ngIf="ReturnHandlingHId > 0">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

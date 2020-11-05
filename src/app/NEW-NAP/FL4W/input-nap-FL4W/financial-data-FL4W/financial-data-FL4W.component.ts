@@ -94,9 +94,7 @@ export class FinancialDataFL4WComponent implements OnInit {
         TotalInterestAmt: 0,
         TotalAR: 0,
 
-        StdGrossYieldPrcnt: 0,
         GrossYieldPrcnt: 0,
-        GrossYieldBhv: "",
 
         NumOfStep: 0,
         MrInstSchemeCode: "",
@@ -154,13 +152,11 @@ export class FinancialDataFL4WComponent implements OnInit {
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
-          SupplEffectiveRatePrcnt: this.appFinDataObj.SupplEffectiveRatePrcnt,
+          SupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
           DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
 
-          StdGrossYieldPrcnt: this.appFinDataObj.StdGrossYieldPrcnt,
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
-          GrossYieldBhv: this.appFinDataObj.GrossYieldBhv,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,

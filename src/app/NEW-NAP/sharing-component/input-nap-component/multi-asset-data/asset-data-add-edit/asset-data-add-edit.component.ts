@@ -147,10 +147,12 @@ export class AssetDataAddEditComponent implements OnInit {
     BranchManagerNo: [''],
     BranchManagerCode: [''],
 
-    SalesPersonName: [''],
-    SalesPersonNo: ['', [Validators.required]],
-    SalesPersonCode: [''],
-
+    SalesPersonId: ['', Validators.required],
+    SalesPersonName: ['', [Validators.required, Validators.maxLength(500)]],
+    SalesPersonNo: ['', [Validators.required, Validators.maxLength(50)]],
+    SalesPersonPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
+    
+    AdminHeadId : [''],
     AdminHeadName: [''],
     AdminHeadNo: [''],
     AdminHeadCode: [''],
@@ -200,6 +202,12 @@ export class AssetDataAddEditComponent implements OnInit {
     AppId: 0,
   };
   inputAddressObjForLoc: InputAddressObj;
+  EmpObj: any;
+  vendorEmpSalesObj = {
+    VendorId: 0,
+    VendorEmpId: 0,
+    VendorEmpNo: "",
+  };
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
@@ -302,55 +310,39 @@ export class AssetDataAddEditComponent implements OnInit {
       SupplCode: event.VendorCode
     });
 
-    this.branchObj = new VendorEmpObj();
-    this.branchObj.VendorId = event.VendorId;
-    this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
-    this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
-      (response) => {
-        this.listBranchObj = response[CommonConstant.ReturnObj];
-        if (this.listBranchObj) {
-          if (this.listBranchObj.length > 0) {
-            this.AssetDataForm.patchValue({
-              BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
-              BranchManagerName: response[CommonConstant.ReturnObj][0]['Value']
-            });
-          }
-        }
-      });
 
     this.salesObj = new VendorEmpObj();
     this.salesObj.VendorId = event.VendorId;
     this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
-    this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
-      (response) => {
-        this.listSalesObj = response[CommonConstant.ReturnObj];
-        if (this.listSalesObj) {
-          if (this.listSalesObj.length > 0) {
-            this.AssetDataForm.patchValue({
-              SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
-              SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
-            });
-          }
-        }
-      });
-
-    this.adminHeadObj = new VendorEmpObj();
-    this.adminHeadObj.VendorId = event.VendorId;
-    this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
-    this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
-      (response) => {
-        this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-        if (this.listAdminHeadObj) {
-          if (this.listAdminHeadObj.length > 0) {
-            this.AssetDataForm.patchValue({
-              AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
-              AdminHeadName: response[CommonConstant.ReturnObj][0]['Value']
-            });
-          }
-        }
-      });
+    this.GetSalesList();
+this.GetAdminHeadList();
   }
-
+ GetSalesList(){
+  var Obj = {
+    VendorId : this.salesObj.VendorId,
+    MrVendorEmpPositionCodes : [CommonConstant.SALES_JOB_CODE]
+  }
+  this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes,Obj).subscribe(
+    (response) => {
+      this.EmpObj = response[CommonConstant.ReturnObj];
+      this.listSalesObj = this.EmpObj.filter(
+        emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE);
+    }
+  );
+ }
+ GetAdminHeadList(){
+  var Obj = {
+    VendorId : this.salesObj.VendorId,
+    MrVendorEmpPositionCodes : [CommonConstant.ADMIN_HEAD_JOB_CODE]
+  }
+  this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes,Obj).subscribe(
+    (response) => {
+      this.EmpObj = response[CommonConstant.ReturnObj];
+      this.listAdminHeadObj = this.EmpObj.filter(
+        emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
+    }
+  );
+ }
   GetAppCust() {
     var appObj = {
       AppId: this.AppId,
@@ -417,17 +409,52 @@ export class AssetDataAddEditComponent implements OnInit {
       BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
     });
   }
+  SalesPersonChanged(event) {
+    if (event.target.value != "") {
+      //this.vendorEmpObj.VendorEmpId = event.target.value;
+      //this.GetVendorEmpSupervisi();
 
-  SalesChanged(event) {
-    this.AssetDataForm.patchValue({
-      SalesPersonName: this.listSalesObj.find(x => x.Key == event.target.value).Value
-    });
+      var temp: any;
+      temp = this.listSalesObj.filter(
+        emp => emp.VendorEmpId == event.target.value);
+      this.AssetDataForm.patchValue({
+        SalesPersonId: temp[0].VendorEmpId,
+        SalesPersonName: temp[0].VendorEmpName,
+        SalesPersonNo: temp[0].VendorEmpNo,
+        SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        SalesPersonId: "",
+        SalesPersonName: "",
+        SalesPersonNo: "",
+        SalesPersonPositionCode: "",
+      });
+    }
   }
-
   AdminChanged(event) {
-    this.AssetDataForm.patchValue({
-      AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
-    });
+    if (event.target.value != "") {
+      //this.vendorEmpObj.VendorEmpId = event.target.value;
+      //this.GetVendorEmpSupervisi();
+
+      var temp: any;
+      temp = this.listAdminHeadObj.filter(
+        emp => emp.VendorEmpId == event.target.value);
+      this.AssetDataForm.patchValue({
+        AdminHeadId : temp[0].VendorEmpId,
+        AdminHeadName: temp[0].VendorEmpName,
+        AdminHeadNo: temp[0].VendorEmpNo,
+        AdminHeadPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+    }
   }
 
   AssetValidationForSave() {
@@ -568,6 +595,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log("ameng");
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 
@@ -636,26 +664,6 @@ export class AssetDataAddEditComponent implements OnInit {
             SupplName: this.returnVendorObj.VendorName,
           });
 
-          this.appAssetSupplEmpBranchObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpBranchObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpBranchObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
-          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpBranchObj).subscribe(
-            (response) => {
-              this.branchAppAssetSupplEmpObj = response;
-
-              this.branchObj = new VendorEmpObj();
-              this.branchObj.VendorId = this.returnVendorObj.VendorId;
-              this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
-              this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
-                (response) => {
-                  this.listBranchObj = response[CommonConstant.ReturnObj];
-                  this.AssetDataForm.patchValue({
-                    BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
-                    BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
-                  });
-                });
-            });
-
           this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
           this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
           this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
@@ -674,7 +682,7 @@ export class AssetDataAddEditComponent implements OnInit {
                     AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
                   });
                 });
-            });
+          });
 
           this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
           this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
@@ -682,7 +690,6 @@ export class AssetDataAddEditComponent implements OnInit {
           this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
             (response) => {
               this.salesAppAssetSupplEmpObj = response;
-
               this.salesObj = new VendorEmpObj();
               this.salesObj.VendorId = this.returnVendorObj.VendorId;
               this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
@@ -691,12 +698,16 @@ export class AssetDataAddEditComponent implements OnInit {
                   this.listSalesObj = response[CommonConstant.ReturnObj];
                   this.AssetDataForm.patchValue({
                     SalesPersonNo: this.salesAppAssetSupplEmpObj.SupplEmpNo,
-                    SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName
+                    SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName,
+                    SalesPersonPositionCode : this.salesAppAssetSupplEmpObj.MrSupplEmpPositionCode
                   });
                 });
+                this.GetVendorForView();
+
             });
 
         });
+        
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppAssetId = this.AppAssetId;
       this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
@@ -953,6 +964,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+    this.allAssetDataObj["VendorEmpId"] = this.AssetDataForm.controls.SalesPersonId.value;
 
     // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
     if (!this.AssetDataForm.controls["BranchManagerName"].value) {
@@ -1233,6 +1245,8 @@ export class AssetDataAddEditComponent implements OnInit {
       this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
       this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
+      this.allAssetDataObj.AppAssetObj.RowVersion = this.returnAppAssetObj.RowVersion;
+      if (this.salesAppAssetSupplEmpObj != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.salesAppAssetSupplEmpObj.RowVersion;
       this.allAssetDataObj.AppCollateralObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
 
@@ -1533,5 +1547,39 @@ export class AssetDataAddEditComponent implements OnInit {
         }
       }
     }
+  }
+   GetVendorForView() {
+    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).toPromise().then(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          SupplName: response["VendorName"],
+          SupplCode: response["VendorCode"],
+        });
+        this.vendorEmpSalesObj.VendorId = response["VendorId"];
+          this.vendorEmpSalesObj.VendorEmpNo = this.salesAppAssetSupplEmpObj.SupplEmpNo;
+          this.GetVendorEmpSalesPerson();
+        
+
+        this.salesObj = new VendorEmpObj();
+        this.salesObj.VendorId = response["VendorId"];
+        this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+        this.GetSalesList();
+        
+        this.InputLookupSupplierObj.jsonSelect = response;
+        this.InputLookupSupplierObj.nameSelect = response["VendorName"];
+      }
+    );
+  }
+  GetVendorEmpSalesPerson() {
+    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpSalesObj).subscribe(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          SalesPersonId: response["VendorEmpId"]
+        });
+      }
+    );
+  }
+  checkForm(){
+    console.log(this.AssetDataForm);
   }
 }

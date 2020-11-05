@@ -11,8 +11,6 @@ export class AppFinDataObj {
     TotalAssetPriceAmt: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
-    StdGrossYieldPrcnt: number;
-    GrossYieldBhv: string;
     TdpPaidCoyAmt: number;
     NtfAmt: number;
     InsCptlzAmt: number;
@@ -26,7 +24,7 @@ export class AppFinDataObj {
     EffectiveRatePrcnt: number;
     EffectiveRateBhv: string;
     FlatRatePrcnt: number;
-    SupplEffectiveRatePrcnt: number;
+    SellSupplEffectiveRatePrcnt: number;
     SupplFlatRatePrcnt: number;
     MrGracePeriodTypeCode: string;
     GracePeriodTypeName: string;
@@ -78,6 +76,17 @@ export class AppFinDataObj {
     ExpenseAmount: number;
     ResultRefundRsvFundObjs: Array<ResultRefundObj>;
     VendorAtpmCode: string;
+    MinEffectiveRatePrcnt: number;
+    MaxEffectiveRatePrcnt: number;
+    MinInterestIncomeAmt: number;
+    MinGrossYieldPrcnt: number;
+    MaxGrossYieldPrcnt: number;
+    MinBalloonAmt: number;
+    MaxBalloonAmt: number;
+    BalloonBhv: string;
+    MinDownPaymentNettPrcnt: number;
+    MaxDownPaymentNettPrcnt: number;
+    AppSupplEffectiveRatePrcnt: number;
     
     constructor() {
     }

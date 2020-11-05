@@ -1,0 +1,200 @@
+<form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm()"
+  #enjiForm="ngForm">
+  <span class="mr-1 pull-right" *ngIf="!IsDetail">
+    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
+      translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </span>
+  <lib-ucSubsection [id]="'CustBankAccId'" [title]="'Customer Bank Account'" [panel]="'CustBankAccSection'">
+  </lib-ucSubsection>
+  <div id="CustBankAccSection">
+    <div *ngIf="!IsDetail">
+      <div class="col-md-12" style="padding: 0;">
+        <div class="col-md-12" *ngFor="let item of AppCustBankAccList; let i = index" style="padding: 0; margin-top: 20px;">
+          <div class="col-md-12" style="padding: 0;">
+            <h5 class="col-md-7" style="display: inline-block;">
+              <i class="fas fa-circle" style="color: green" *ngIf="item.IsActive == true"></i>
+              <i class="fas fa-circle" style="color: red" *ngIf="item.IsActive == false"></i>
+              - {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
+            </h5>
+            <div class="col-md-5" style="display: inline-block; text-align: right;">
+              <button type="button" class="btn btn-raised btn-primary mr-1" (click)="CustBankHandler('Edit', AppCustBankAccList[i])" translate>
+                Edit Bank Account
+              </button>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="CustBankHandler('Delete', AppCustBankAccList[i])" translate>
+                Delete Bank Account
+              </button>
+            </div>
+          </div>
+          <div class="col-md-12" style="padding: 0;">
+            <div class="col-md-12">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='month' translate>MONTH</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='year' translate>YEAR</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='debit' translate>DEBIT (-)</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='credit' translate>CREDIT (+)</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='endingBalance' translate>ENDING BALANCE</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let stmnt of item.AppCustBankStmntObjs">
+                    <td style="text-align: left;">{{stmnt.MonthName}}</td>
+                    <td style="text-align: left;">{{stmnt.Year}}</td>
+                    <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>
+                    <td style="text-align: left;">{{stmnt.CreditAmt | number:'.2':'en-US'}}</td>
+                    <td style="text-align: left;">{{stmnt.BalanceAmt | number:'.2':'en-US'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="IsDetail">
+      <lib-ucSubsection [id]="'CustBankAccDetailId'" [title]="Title" [panel]="'CustBankAccDetailSection'">
+      </lib-ucSubsection>
+      <div id="CustBankAccDetailSection">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Bank Name</label>
+              <div class="col-md-8">
+                <lib-uclookupgeneric *ngIf="InputLookupBankObj.isReady" [enjiForm]="enjiForm"
+                  [lookupInput]="InputLookupBankObj" [parentForm]="BankAccStmntForm" [identifier]="'LookupBank'"
+                  (lookup)="GetBank($event)" #LookupProfession>
+                </lib-uclookupgeneric>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Bank Branch</label>
+              <div class="col-md-8">
+                <input type="text" class="form-control" formControlName="BankBranch"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankBranch.invalid}">
+                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankBranch" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Account Name</label>
+              <div class="col-md-8">
+                <input type="text" class="form-control" formControlName="BankAccName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccName.invalid}">
+                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccName" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Account No</label>
+              <div class="col-md-8">
+                <input type="text" class="form-control" formControlName="BankAccNo"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid}">
+                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4" translate>Is Default</label>
+              <div class="col-md-8">
+                <input type="checkbox" formControlName="IsDefault" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4" translate>Is Active</label>
+              <div class="col-md-8">
+                <input type="checkbox" formControlName="IsActive" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" style="text-align: right; margin-top: 10px;">
+          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary">
+            Add New Row
+          </button>
+        </div>
+        <div formArrayName="BankStmntObjs">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">Month</span></th>
+                <th><span translate class="thead-header">Year</span></th>
+                <th><span translate class="thead-header">Debit</span></th>
+                <th><span translate class="thead-header">Credit</span></th>
+                <th><span translate class="thead-header">Balance</span></th>
+                <th><span translate class="thead-header">Action</span></th>
+              </tr>
+            </thead>
+            <tbody *ngIf="BankAccStmntForm.controls['BankStmntObjs'].controls.length == 0">
+              <tr>
+                <td colspan="100%">No Data Available</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="BankAccStmntForm.controls['BankStmntObjs'].controls.length > 0">
+              <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
+                <td [formGroupName]="i"><select class="form-control" formControlName="Month">
+                    <option *ngFor="let item of MonthObj" value="{{item.Key}}">
+                      {{item.Value}}
+                    </option>
+                  </select></td>
+                <td [formGroupName]="i">
+                  <input type="text" class="form-control" formControlName="Year"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year.invalid }">
+                  <lib-uc-show-errors
+                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year"
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </td>
+                <td [formGroupName]="i">
+                  <input type="" currencyMask class="form-control" formControlName="DebitAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt.invalid }">
+                  <lib-uc-show-errors
+                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt"
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </td>
+                <td [formGroupName]="i">
+                  <input type="" currencyMask class="form-control" formControlName="CreditAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt.invalid }">
+                  <lib-uc-show-errors
+                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt"
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </td>
+                <td [formGroupName]="i">
+                  <input type="" currencyMask class="form-control" formControlName="BalanceAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt.invalid }">
+                  <lib-uc-show-errors
+                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt"
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </td>
+                <td [formGroupName]="i">
+                  <a class="danger p-0" (click)="DeleteBankStmnt(i)">
+                    <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="form-actions right">
+            <button type="button" (click)="CustBankHandler('Cancel')" class="btn btn-raised btn-warning mr-1">
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

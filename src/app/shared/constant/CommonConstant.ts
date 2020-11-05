@@ -52,6 +52,13 @@ export class CommonConstant {
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
+  //CUST MAIN DATA MODE
+  public static CustMainDataModeCust = "CUST";
+  public static CustMainDataModeGuarantor = "GUARANTOR";
+  public static CustMainDataModeFamily = "FAMILY";
+  public static CustMainDataModeMgmntShrholder = "SHAREHOLDER";
+  
+
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
 
@@ -83,7 +90,9 @@ export class CommonConstant {
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
+  public static AppStepFamily = "FAM";
   public static AppStepGuar = "GUAR";
+  public static AppStepShr = "SHR";
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
   public static AppStepAsset = "ASSET";
@@ -199,6 +208,12 @@ export class CommonConstant {
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
 
+  //APP CUST 
+  public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
+  public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
+  public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
+  public static AttrGroupCustPersonalFinData= "CUST_PERSONAL_FINDATA"
+
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -258,6 +273,9 @@ export class CommonConstant {
   public static AddrTypeResidence = "RESIDENCE";
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
+  public static AddrTypePrevJob = "PREV_JOB";
+  public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeCompanyContactInfo = "COMPANY";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -371,11 +389,13 @@ export class CommonConstant {
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
+  public static ReturnStatus = "Status";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
   public static TitleReferantor = "List Referantor Commission Data";
   public static ReturnObj = "ReturnObject";
+  public static RefMasterObjs = "RefMasterObjs";
 
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
@@ -393,6 +413,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeIdType = "ID_TYPE";
   public static RefMasterTypeCodeRateType = "RATE_TYPE";
   public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
+  public static RefMasterTypeCustAddrType = "CUST_ADDR_TYPE"
   public static RefMasterTypeCodeGracePeriodType = "GRACE_PERIOD_TYPE";
   public static RefMasterTypeLegalReview = "LGL_REVIEW";
   public static RefMasterTypeCodeFeeType = "FEE_TYPE";
@@ -449,6 +470,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
+  public static RefMasterTypeCodeSalutation = "SALUTATION";
+
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -509,4 +532,9 @@ export class CommonConstant {
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+
+  //GENERAL SETTING
+  public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
+
+
 }

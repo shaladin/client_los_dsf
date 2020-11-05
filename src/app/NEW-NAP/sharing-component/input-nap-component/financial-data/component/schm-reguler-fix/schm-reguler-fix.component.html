@@ -70,7 +70,7 @@
         </div>
       </div>
       <br />
-      <span *ngIf="result.BizTemplateCode != 'CFRFN4W'">
+      <span *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
         <div class="row">
           <div class="col-md-12">
             <div class="row">
@@ -170,7 +170,7 @@
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
+                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="Rate_Keyup($event)"
                     (paste)="Rate_Paste($event)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
@@ -190,11 +190,18 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'CFRFN4W'">
+            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
               <label>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W'">
-              <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+              <input type="" class="form-control full-width" formControlName="AppSupplEffectiveRatePrcnt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.AppSupplEffectiveRatePrcnt.invalid}"
+                (focusout)="SupplEffectiveRatePrcnt_FocusOut()" (keyup)="SupplRate_Keyup($event)"
+                (paste)="SupplRate_Paste($event)"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.AppSupplEffectiveRatePrcnt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Effective Rate To Supplier</label>
@@ -224,10 +231,10 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
               <label>Subsidy Amount from Diff Rate</label>
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SubsidyAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SubsidyAmtFromDiffRate.invalid}"
@@ -276,10 +283,10 @@
                 </div>
               </div>            
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
               <label>Commission Amount from Diff Rate</label>
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W'" class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="CommissionAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CommissionAmtFromDiffRate.invalid}"

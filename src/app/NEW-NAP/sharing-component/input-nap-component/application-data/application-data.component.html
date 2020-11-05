@@ -159,8 +159,7 @@
                     <label class="adInsLabel"> Interest Type </label>
                   </div>
                   <div class="col-md-8">
-                    <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
-                    <!-- <select *ngIf="interestTypeShow == 'ALL'" class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                    <select  class="form-control adInsInput" style="width: auto" formControlName="InterestType"
               (change)="ChangeInterestType()"
               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
               <option value="">-Select One-</option>
@@ -168,7 +167,7 @@
                 {{it.Value}} </option>
             </select>
             <lib-uc-show-errors [control]="NapAppModelForm.controls.InterestType"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors> -->
+              [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
 
@@ -302,6 +301,32 @@
           <!-- Loan Object -->
           <div *ngIf="BizTemplateCode != 'OPL'">
             <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true" *ngIf="IsLoanObject"></app-loan-object>
+          </div>
+
+          
+          
+          <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'" *ngIf="isIncludeMailingAddress">
+          </lib-ucSubsection>
+          <div id="mailingAddr" *ngIf="isIncludeMailingAddress">
+            <div class="form-group row">
+              <label class="col-md-2" translate>Copy Address From</label>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <select class="form-control" formControlName="CopyFromMailing">
+                    <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <span class="input-group-btn">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                        <i class="fa fa-check-square-o"></i>Copy
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+              [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 
           <div>

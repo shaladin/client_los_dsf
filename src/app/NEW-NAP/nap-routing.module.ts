@@ -8,7 +8,6 @@ import { MultiAssetDataComponent } from "./sharing-component/input-nap-component
 import { AssetLeasingPagingComponent } from "./sharing-component/input-nap-component/multi-asset-leasing/asset-leasing-paging/asset-leasing-paging.component";
 import { CollateralAddEditSingleComponent } from "./sharing-component/input-nap-component/single-asset-data/collateral-add-edit-single/collateral-add-edit-single.component";
 import { ViewAssetDataComponent } from "./sharing-component/view-app-component/view-asset-data/view-asset-data.component";
-import { MainDataComponentComponent } from "./main-data-component/main-data-component.component";
 
 const routes: Routes = [
   {
@@ -74,8 +73,12 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Testing',
-        loadChildren: './main-data-component/main-data-component.module#MainDataComponentModule'
+        path: 'MainData',
+        loadChildren: './main-data/main-data.module#MainDataModule'
+      },
+      {
+        path: 'CustCompletion',
+        loadChildren: './cust-completion/cust-completion.module#CustCompletionModule'
       }
       // {
       //   path: 'Single',

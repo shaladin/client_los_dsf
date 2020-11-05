@@ -60,7 +60,7 @@ export class CollateralDetailComponent implements OnInit {
   SerialNoList: any;
   isUsed: boolean = true;
   isCopy: boolean = true;
-  isExisting: boolean = false;
+  // isExisting: boolean = false;
   AddCollForm = this.fb.group({
     AppCollateralId: [''],
     FullAssetCode: ['', Validators.required],
@@ -301,15 +301,15 @@ export class CollateralDetailComponent implements OnInit {
               IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
               DocNo: response[CommonConstant.ReturnObj][i].DocNo,
               ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
-              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              RowVersion: "",
             }) as FormGroup;
-            if(this.isExisting){
-              assetDocumentDetail.controls.DocNo.disable();
-              assetDocumentDetail.controls.IsReceived.disable();
-              assetDocumentDetail.controls.ACDExpiredDt.disable();
-              assetDocumentDetail.controls.DocNotes.disable(); 
-            }
-           
+            // if(this.isExisting){
+            //   assetDocumentDetail.controls.DocNo.disable();
+            //   assetDocumentDetail.controls.IsReceived.disable();
+            //   assetDocumentDetail.controls.ACDExpiredDt.disable();
+            //   assetDocumentDetail.controls.DocNotes.disable(); 
+            // }
             ListDoc.push(assetDocumentDetail);
           }
         }
@@ -328,7 +328,8 @@ export class CollateralDetailComponent implements OnInit {
               DocNo: AppCollateralDocs[i].DocNo,
               DocNotes: AppCollateralDocs[i].DocNotes,
               ACDExpiredDt: formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived
+              IsReceived: AppCollateralDocs[i].IsReceived,
+              RowVersion: AppCollateralDocs[i].RowVersion,
             })
           }
         }
@@ -369,7 +370,7 @@ export class CollateralDetailComponent implements OnInit {
         }
 
         if(IsExisting || response['AppCollateral']['CollateralStat'] == CommonConstant.AssetStatExisting){
-          this.isExisting = true;
+          // this.isExisting = true;
           this.isCopy=false;  
           this.AddCollForm.controls.ManufacturingYear.disable();
           this.AddCollForm.controls.CollateralValueAmt.disable();
@@ -537,9 +538,9 @@ export class CollateralDetailComponent implements OnInit {
             SerialNoValue: [''],
             IsMandatory: [this.SerialNoList[i].IsMandatory]
           }) as FormGroup;
-          if(this.isExisting){ 
-            eachDataDetail.controls.SerialNoValue.disable(); 
-          }
+          // if(this.isExisting){ 
+          //   eachDataDetail.controls.SerialNoValue.disable(); 
+          // }
           this.items.push(eachDataDetail);
           if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
@@ -663,31 +664,31 @@ export class CollateralDetailComponent implements OnInit {
     }
   }
 
-  copyToLocation() {
-    if(this.isCopy == true){
-      this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
-      this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
-      this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
-      this.LocationAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3;
-      this.LocationAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4;
-      this.LocationAddrObj.City = this.AppCustAddrObj.City;
-      this.LocationAddrObj.Fax = this.AppCustAddrObj.Fax;
-      this.LocationAddrObj.FaxArea = this.AppCustAddrObj.FaxArea;
-      this.LocationAddrObj.Phn1 = this.AppCustAddrObj.Phn1;
-      this.LocationAddrObj.Phn2 = this.AppCustAddrObj.Phn2;
-      this.LocationAddrObj.PhnArea1 = this.AppCustAddrObj.PhnArea1;
-      this.LocationAddrObj.PhnArea2 = this.AppCustAddrObj.PhnArea2;
-      this.LocationAddrObj.PhnExt1 = this.AppCustAddrObj.PhnExt1;
-      this.LocationAddrObj.PhnExt2 = this.AppCustAddrObj.PhnExt2;
-      this.LocationAddrObj.SubZipcode = this.AppCustAddrObj.SubZipcode;
+  // copyToLocation() {
+  //   if(this.isCopy == true){
+  //     this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
+  //     this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
+  //     this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
+  //     this.LocationAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3;
+  //     this.LocationAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4;
+  //     this.LocationAddrObj.City = this.AppCustAddrObj.City;
+  //     this.LocationAddrObj.Fax = this.AppCustAddrObj.Fax;
+  //     this.LocationAddrObj.FaxArea = this.AppCustAddrObj.FaxArea;
+  //     this.LocationAddrObj.Phn1 = this.AppCustAddrObj.Phn1;
+  //     this.LocationAddrObj.Phn2 = this.AppCustAddrObj.Phn2;
+  //     this.LocationAddrObj.PhnArea1 = this.AppCustAddrObj.PhnArea1;
+  //     this.LocationAddrObj.PhnArea2 = this.AppCustAddrObj.PhnArea2;
+  //     this.LocationAddrObj.PhnExt1 = this.AppCustAddrObj.PhnExt1;
+  //     this.LocationAddrObj.PhnExt2 = this.AppCustAddrObj.PhnExt2;
+  //     this.LocationAddrObj.SubZipcode = this.AppCustAddrObj.SubZipcode;
   
-      this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
-      this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
-      this.inputAddressObjForLoc.default = this.LocationAddrObj;
-      this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
-    }
+  //     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
+  //     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
+  //     this.inputAddressObjForLoc.default = this.LocationAddrObj;
+  //     this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
+  //   }
 
-  }
+  // }
 
   SaveForm() {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
@@ -740,6 +741,7 @@ export class CollateralDetailComponent implements OnInit {
       this.appCollateralDoc.DocNo = this.AddCollForm.getRawValue().ListDoc[i].DocNo;
       this.appCollateralDoc.ExpiredDt = this.AddCollForm.getRawValue().ListDoc[i].ACDExpiredDt;
       this.appCollateralDoc.DocNotes = this.AddCollForm.getRawValue().ListDoc[i].DocNotes;
+      this.appCollateralDoc.RowVersion = this.AddCollForm.getRawValue().ListDoc[i].RowVersion;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;

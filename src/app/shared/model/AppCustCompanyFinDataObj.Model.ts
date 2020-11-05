@@ -1,31 +1,32 @@
 export class AppCustCompanyFinDataObj {
-    AppCustCompanyFinDataId: any;
-    AppCustId: any;
-    GrossMonthlyIncomeAmt: any;
-    GrossProfitAmt: any;
-    GrossMonthlyExpenseAmt: any;
-    ReturnOfInvestmentPrcnt: any;
-    ReturnOfEquityPrcnt: any;
-    ReturnOfAssetPrcnt: any;
-    ProfitMarginPrcnt: any;
-    CurrentRatioPrcnt: any;
-    DebtEquityRatioPrcnt: any;
-    InvTurnOverPrcnt: any;
-    ArTurnOverPrcnt: any;
-    GrowthPrcnt: any;
-    WorkingCapitalAmt: any;
-    OthMonthlyInstAmt: any;
+    AppCustCompanyFinDataId: number;
+    AppCustId: number;
+    GrossMonthlyIncomeAmt: number;
+    GrossProfitAmt: number;
+    GrossMonthlyExpenseAmt: number;
+    ReturnOfInvestmentPrcnt: number;
+    ReturnOfEquityPrcnt: number;
+    ReturnOfAssetPrcnt: number;
+    ProfitMarginPrcnt: number;
+    CurrentRatioPrcnt: number;
+    DebtEquityRatioPrcnt: number;
+    InvTurnOverPrcnt: number;
+    ArTurnOverPrcnt: number;
+    GrowthPrcnt: number;
+    WorkingCapitalAmt: number;
+    OthMonthlyInstAmt: number;
     DateAsOf: any;
-    Revenue: any;
-    OprCost: any;
-    ProfitBeforeTax: any;
-    CurrAsset: any;
-    NetFixedAsset: any;
-    TotalAsset: any;
-    CurrLiablts: any;
-    LongTemrLiablts: any;
-    ShareholderEquity: any;
-    CurrRatio: any;
+    Revenue: number;
+    OprCost: number;
+    ProfitBeforeTax: number;
+    CurrAsset: number;
+    NetFixedAsset: number;
+    TotalAsset: number;
+    CurrLiablts: number;
+    LongTermLiablts: number;
+    ShareholderEquity: number;
+    CurrRatio: number;
+    RowVersion: string[];
 
 constructor() { 
     this.AppCustCompanyFinDataId = 0;
@@ -51,8 +52,9 @@ constructor() {
     this.NetFixedAsset = 0;
     this.TotalAsset = 0;
     this.CurrLiablts = 0;
-    this.LongTemrLiablts = 0;
+    this.LongTermLiablts = 0;
     this.ShareholderEquity = 0;
     this.CurrRatio = 0;
+    this.RowVersion = [];
     }
 }

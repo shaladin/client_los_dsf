@@ -60,6 +60,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
           valueType: [''],
           subsidyPrcnt: [0,[Validators.min(0),Validators.max(100)]],
           subsidyAmt: [0],
+          RowVersion: [''],
         }
       );
       this.isSubmitted = false;
@@ -68,6 +69,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     GetAppSubsidy(){
       this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
         (response) => {
+          console.log(response)
           var subdObj = response;
 
           this.LoadDDLSubsidyAlloc(subdObj.MrSubsidyFromTypeCode);
@@ -91,6 +93,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
             valueType: subdObj.MrSubsidyValueTypeCode,
             subsidyPrcnt: subdObj.SubsidyPrcnt,
             subsidyAmt: subdObj.SubsidyAmt,
+            RowVersion: subdObj.RowVersion,            
           });
         }
       );
@@ -138,6 +141,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
       }
       if(this.mode == "edit"){
         subdObj.AppSubsidyId = this.AppSubsidyId;
+        subdObj.RowVersion = this.FormAppSubsidy.get("RowVersion").value;
         
         this.http.post(URLConstant.EditAppSubsidy, subdObj ).subscribe(
           (response) => {

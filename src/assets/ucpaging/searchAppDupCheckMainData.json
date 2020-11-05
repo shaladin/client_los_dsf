@@ -1,0 +1,202 @@
+{
+    "title": "Applicant Duplicate Checking Paging",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "a.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ac.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }, 
+        {
+            "type": "textbox",
+            "name": "a.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "a.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "Office",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": [],
+            "isQueryIn": true
+        },
+        {
+            "type": "dropdown",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "Task Claim Status",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "CLAIMED"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "UNCLAIMED"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "claimById",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "SLA",
+            "name": "SlaColor"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ClaimBy"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office",
+            "name": "OfficeName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Product Offering Name",
+            "name": "ProdOfferingName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "querystring": {
+        "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat, RL.BIZ_TMPLT_CODE AS BizTmpltCode, WTL.SLA_COLOR AS SlaColor",
+        "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID AND ac.IS_CUSTOMER=1 JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'DUP_CHECK_MANUAL' JOIN [dbo].[V_REF_LOB] RL WITH(NOLOCK) ON a.LOB_CODE = RL.LOB_CODE",
+        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND ac.IS_APP_CUST_CHECKED = 0"
+    },
+    "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "SlaColor"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "/View/AppView",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

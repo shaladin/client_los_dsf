@@ -255,6 +255,7 @@ export class AssetDataComponent implements OnInit {
   ListAttrAnswer = [];
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
+  isDiffWithRefAttr: any;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -299,7 +300,7 @@ export class AssetDataComponent implements OnInit {
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
     await this.getAllAssetData();
-    this.GenerataAppAssetAttr();
+    this.GenerataAppAssetAttr(false);
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
       RefProdCompntCode: CommonConstant.RefProdCompntAssetCond,
@@ -487,6 +488,16 @@ export class AssetDataComponent implements OnInit {
           this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
         }
       }
+
+      if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
+        console.log(this.appAssetObj);
+        this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
+        this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
+        this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
+        if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
+        if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
+        if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
+      }
       this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -604,7 +615,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
     this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.AssetDataForm.controls.MrAssetUsageCode.value;
-
+    this.allAssetDataObj["VendorEmpId"] = this.AssetDataForm.controls.SalesPersonId.value;
     for (var i = 0; i < this.items.length; i++) {
       if (this.items.controls[i] != null) {
         this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
@@ -654,6 +665,9 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.IsCollateral = this.AssetDataForm.controls.IsCollateral.value;
     this.allAssetDataObj.AppAssetObj.IsInsurance = this.AssetDataForm.controls.IsInsurance.value;
     this.allAssetDataObj.AppAssetObj.IsEditableDp = this.AssetDataForm.controls.IsEditableDp.value;
+    // if(this.appAssetObj.RowVersion != null){
+    // this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.RowVersion;
+    // }
     if (this.AssetDataForm.controls.AdminHeadNo.value != "") {
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls.AdminHeadName.value;
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls.AdminHeadNo.value;
@@ -986,7 +1000,7 @@ export class AssetDataComponent implements OnInit {
         OwnerName: this.AppCustObj.CustName,
         MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
         OwnerIdNo: this.AppCustObj.IdNo,
-        MrOwnerRelationshipCode: "SELF",
+        MrOwnerRelationshipCode: CommonConstant.SelfCustomer,
         OwnerAddr: this.AddrLegalObj[0].Addr,
         OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
         OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
@@ -994,7 +1008,8 @@ export class AssetDataComponent implements OnInit {
         OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
         OwnerCity: this.AddrLegalObj[0].City,
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
-        OwnerMobilePhnNo: typeof(this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : ''
+        OwnerMobilePhnNo: typeof(this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
+        OwnerAddrType: CommonConstant.AddrTypeLegal,
       });
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -1010,19 +1025,23 @@ export class AssetDataComponent implements OnInit {
       this.inputAddressObjForOwner.default = this.ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
 
+      this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
       this.AssetDataForm.controls["OwnerName"].disable();
       this.AssetDataForm.controls["MrIdTypeCode"].disable();
       this.AssetDataForm.controls["OwnerIdNo"].disable();
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].disable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].disable();
       this.AssetDataForm.controls["ownerData"].disable();
+      this.AssetDataForm.controls["OwnerAddrType"].disable();
     } else {
+      this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
       this.AssetDataForm.controls["OwnerName"].enable();
       this.AssetDataForm.controls["MrIdTypeCode"].enable();
       this.AssetDataForm.controls["OwnerIdNo"].enable();
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].enable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].enable();
       this.AssetDataForm.controls["ownerData"].enable();
+      this.AssetDataForm.controls["OwnerAddrType"].enable();
 
     };
   }
@@ -1115,6 +1134,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetConditionChanged();
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
+          this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
             this.setAddrOwnerObj();
             this.setAddrLocationObj();
@@ -1862,18 +1882,29 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  GenerataAppAssetAttr() {
+  GenerataAppAssetAttr(isRefresh : boolean) {
     var GenObj =
     {
       AppAssetId: this.appAssetId,
       AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
-      AttrTypeCode : CommonConstant.AttrTypeCodeTrx
+      AttrTypeCode : CommonConstant.AttrTypeCodeTrx,
+      IsRefresh : isRefresh
     };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
-        this.AppAssetAttrObj = response[CommonConstant.ReturnObj];
+        this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
+        if(response['IsDiffWithRefAttr']){
+          this.isDiffWithRefAttr = true;
+          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
+        }
+
         this.GenerateAppAssetAttrForm();
       });
+  }
+
+  refreshAttr(){
+    this.isAssetAttrReady = false;
+    this.GenerataAppAssetAttr(true);
   }
 
   GenerateAppAssetAttrForm() {
@@ -1899,9 +1930,12 @@ export class AssetDataComponent implements OnInit {
         this.appAssetAttrObjs.push(appAssetAttrObj);
 
       }
+      var listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;      
+      while(listAppAssetAttrs.length !== 0){
+        listAppAssetAttrs.removeAt(0);
+      }
       for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
-        var listAppRsvFunds = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;        
-        listAppRsvFunds.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
+        listAppAssetAttrs.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
       }
       this.isAssetAttrReady = true;
     }

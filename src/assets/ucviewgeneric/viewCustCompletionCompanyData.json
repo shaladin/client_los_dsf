@@ -1,0 +1,57 @@
+{
+    "title": "Customer Company Completion",
+    "subsection": [
+        {
+            "subSectionId": "NewApplication",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "link",
+                    "label": "Application No",
+                    "property": "AppNo",
+                    "name": "AppNo",
+                    "position": "left",
+                    "path": "/View/AppView",
+                    "target": "_blank",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "label": "Original Office",
+                    "property": "OriOfficeName"
+                },
+                {
+                    "type": "text",
+                    "label": "Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "Company Type",
+                    "property": "CompanyType"
+                },
+                {
+                    "type": "text",
+                    "label": "Tax Id No",
+                    "property": "TaxIdNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Model Code",
+                    "property": "CustModelCode"
+                }
+            ],
+            "querystring": {
+                "select": "SELECT A.APP_NO AS AppNo, A.ORI_OFFICE_NAME AS OriOfficeName, AC.CUST_NAME AS CustName, VRM.DESCR AS CompanyType, AC.TAX_ID_NO AS TaxIdNo, CMRM.DESCR AS CustModelCode",
+                "from": "FROM dbo.APP A WITH (NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN DBO.APP_CUST_COMPANY ACP WITH(NOLOCK) ON ACP.APP_CUST_ID = AC.APP_CUST_ID  LEFT JOIN DBO.V_REF_MASTER VRM ON VRM.MASTER_CODE = ACP.MR_COMPANY_TYPE_CODE AND VRM.REF_MASTER_TYPE_CODE = 'COMPANY_TYPE' LEFT JOIN DBO.V_REF_MASTER CMRM ON CMRM.MASTER_CODE = AC.CUST_MODEL_CODE AND CMRM.REF_MASTER_TYPE_CODE = 'CUST_MODEL'",
+                "where": "WHERE AC.APP_CUST_ID = {1}"
+            }
+        }
+    ]
+}

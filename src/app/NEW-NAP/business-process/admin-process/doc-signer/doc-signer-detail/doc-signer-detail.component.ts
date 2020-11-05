@@ -32,8 +32,6 @@ export class DocSignerDetailComponent implements OnInit {
   inputLookupOfficeEmp1Obj: InputLookupObj = new InputLookupObj();
   inputLookupOfficeEmp2Obj: InputLookupObj = new InputLookupObj();
   inputLookupAppCustCompanyShareHolder1Obj: InputLookupObj = new InputLookupObj();
-  inputLookupAppCustCompanyShareHolder2Obj: InputLookupObj = new InputLookupObj();
-  inputLookupAppCustCompanyShareHolder3Obj: InputLookupObj = new InputLookupObj();
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
   ResponseAppCustDataObj: any;
@@ -56,9 +54,7 @@ export class DocSignerDetailComponent implements OnInit {
     MrJobPositionSupplBranchEmpName: [''],
     MrJobPositionMfEmpNo1Name: [''],
     MrJobPositionMfEmpNo2Name: [''],
-    MrJobPositionMgmntShrholder1Code: [''],
-    MrJobPositionMgmntShrholder2Code: [''],
-    MrJobPositionMgmntShrholder3Code: ['']
+    MrJobPositionMgmntShrholder1Code: ['']
   });
 
   async ngOnInit() {
@@ -116,8 +112,6 @@ export class DocSignerDetailComponent implements OnInit {
           this.inputLookupOfficeEmp1Obj.isReady = true;
           this.inputLookupOfficeEmp2Obj.isReady = true;
           this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
@@ -199,38 +193,18 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
 
-    this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder2Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
-    this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
-    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
-
-    this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder3Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
-    this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";
-    this.inputLookupAppCustCompanyShareHolder3Obj.isRequired = false;
-    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
     var crit4Obj = new CriteriaObj();
     crit4Obj.propName = 'AC.APP_ID';
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
     crit4Obj.value = this.AppId.toString();
 
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
-    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(crit4Obj);
-    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(crit4Obj);
 
     if (this.ResponseAgrmntSignerObj != null) {
       this.inputLookupBranchEmpObj.jsonSelect = { VendorEmpName: this.ResponseAgrmntSignerObj.SupplBranchEmpName };
       this.inputLookupOfficeEmp1Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName1 };
       this.inputLookupOfficeEmp2Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName2 };
       this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
-      this.inputLookupAppCustCompanyShareHolder2Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder2Name };
-      this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
 
     if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.FCTR) {
@@ -242,8 +216,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp1Obj.isReady = true;
     this.inputLookupOfficeEmp2Obj.isReady = true;
     this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-    this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-    this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
   }
 
   getLookupBranchEmp(event) {
@@ -283,27 +255,12 @@ export class DocSignerDetailComponent implements OnInit {
     })
   }
 
-  getLookupAppCustCompanyShareHolder2(event) {
-    this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id = event.AppCustCompanyMgmntShrholderId;
-    this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder2Code: event.MrJobPositionCode,
-    })
-  }
-
-  getLookupAppCustCompanyShareHolder3(event) {
-    this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id = event.AppCustCompanyMgmntShrholderId;
-    this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder3Code: event.MrJobPositionCode,
-    })
-  }
 
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder1Code.value;
-      this.agrmntSignerObj.MrJobPositionMgmntShrholder2Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder2Code.value;
-      this.agrmntSignerObj.MrJobPositionMgmntShrholder3Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder3Code.value;
     } else if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.agrmntSignerObj.AppCustPersonalId = this.ResponseAppCustDataObj.AppCustPersonalId;
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
