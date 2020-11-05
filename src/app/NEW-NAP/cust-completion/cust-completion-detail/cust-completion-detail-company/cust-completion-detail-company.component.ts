@@ -9,7 +9,6 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from '../../../../shared/model/AppCustCompletionCheckingObj.Model';
-import { CommonConstant } from '../../../../shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-company',

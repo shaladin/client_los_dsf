@@ -9,7 +9,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
-import { CommonConstant } from '../../../../shared/constant/CommonConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -73,7 +73,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
     this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response["MrMaritalStatCode"] != null && response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
+        if(response["MrMaritalStatCode"] != null && response["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried) this.isMarried = true;
         this.CustModelCode = response["MrCustModelCode"];
         this.AppCustPersonalId = response["AppCustPersonalId"];
         this.IsCompletion = response["IsCompletion"];
