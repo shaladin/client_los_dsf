@@ -1,4 +1,4 @@
-<div *ngIf="listFamily?.length == 0">
+<div *ngIf="ListShareholder?.length == 0">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -8,11 +8,11 @@
           </span>
         </th>
         <th style="text-align: center;">
-          <span class="thead-header" name="FamilyName" translate>Family Name </span>
+          <span class="thead-header" name="ShareholderName" translate>Shareholder Name </span>
         </th>
         <th style="text-align: center;">
-          <span class="thead-header" name="MrFamilyTypeCode" translate>
-            Family Type
+          <span class="thead-header" name="MrShareholderTypeCode" translate>
+            Shareholder Type
           </span>
         </th>
         <th style="text-align: center;">
@@ -29,7 +29,7 @@
     </tbody>
   </table>
 </div>
-<div *ngIf="listFamily?.length > 0">
+<div *ngIf="ListShareholder?.length > 0">
   <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
 </div>
 <div class="pull-right margin-15">
