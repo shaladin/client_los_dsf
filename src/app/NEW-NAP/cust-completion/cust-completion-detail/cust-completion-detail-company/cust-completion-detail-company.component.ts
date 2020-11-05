@@ -5,11 +5,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
-import { AppCustCompletionCheckingObj } from '../../../../shared/model/AppCustCompletionCheckingObj.Model';
 
 @Component({
   selector: 'app-cust-completion-detail-company',
@@ -27,6 +27,8 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   IsCompletion: boolean = false;
   isCompletionCheck = true;
   isCompleteCustStep:object = {};
+  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
+  
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -127,7 +129,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }    
   }
-  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   Save() {
     this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
