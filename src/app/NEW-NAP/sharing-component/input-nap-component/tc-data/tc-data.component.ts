@@ -182,6 +182,11 @@ export class TcDataComponent implements OnInit {
       //appTcObj.Notes = item.get("Notes").value;
      // this.listAppTcObj.push(appTcObj);
     //}
+    if(this.AppTcForm.value.TCList["length"] <= 0)
+    {
+      this.toastr.errorMessage("Term & Conditions not found");
+      return;
+    }   
 
     var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     this.listAppTcObj = new Array<AppTCObj>();
