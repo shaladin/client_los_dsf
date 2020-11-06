@@ -33,11 +33,18 @@
                 <span class="bs-stepper-label">Family Data</span>
               </button>
             </div>
+            <div class="step" data-target="#mgmnt-shrholder-tab" [hidden]="MrCustTypeCode != 'COMPANY'">
+              <button type="button" class="step-trigger" role="tab" aria-controls="mgmnt-shrholder-tab" id="mgmnt-shrholder-tab-trigger" 
+                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('SHR')" [hidden]="MrCustTypeCode != 'COMPANY'">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Management Shareholder Data</span>
+              </button>
+            </div>
             <div class="line"></div>
             <div class="step" data-target="#guarantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('GUAR')">
-                <span class="bs-stepper-circle">{{MrCustTypeCode != 'PERSONAL' ? 2 : 3}}</span>
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('GUAR')">
+                <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Guarantor Data</span>
               </button>
             </div>
@@ -55,8 +62,13 @@
                 (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()">
               </app-family-main-data-paging>
             </div>
+            <div id="mgmnt-shrholder-tab" class="content" role="tabpanel" aria-labelledby="mgmnt-shrholder-tab-trigger">
+              <app-mngmnt-shrhldr-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
+                (outputTab)="NextStep('GUAR')">
+              </app-mngmnt-shrhldr-main-data-paging>
+            </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
+              <app-guarantor-main-data-paging *ngIf="AppStepIndex == 4" [appId]="appId" (outputCancel)="Cancel()"
                 (outputTab)="LastStep()">
               </app-guarantor-main-data-paging>
             </div>
