@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -26,7 +25,7 @@ import { environment } from 'environments/environment';
 export class EmergencyContactTabComponent implements OnInit {
 
   @Input() AppCustId: number;
-  @Input() isMarried: boolean;
+  @Input() IsMarried: boolean;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   isUcAddressReady: boolean;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
@@ -123,7 +122,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
-        if (!this.isMarried) {
+        if (!this.IsMarried) {
           await this.removeSpouse();
         }
         await this.EmergencyContactForm.patchValue({
@@ -198,7 +197,7 @@ export class EmergencyContactTabComponent implements OnInit {
 
   removeSpouse() {
     let SpouseRelationship = this.MrCustRelationshipObj[0]
-    if (!this.isMarried && SpouseRelationship.Key == "SPOUSE") {
+    if (!this.IsMarried && SpouseRelationship.Key == "SPOUSE") {
       this.MrCustRelationshipObj = this.MrCustRelationshipObj.slice(1, this.MrCustRelationshipObj.length);
     }
   }

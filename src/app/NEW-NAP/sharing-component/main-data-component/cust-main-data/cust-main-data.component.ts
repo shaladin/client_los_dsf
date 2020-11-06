@@ -23,6 +23,7 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -306,9 +307,8 @@ export class CustMainDataComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
       (response) => {
         this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-        if(this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
+        if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
         if (this.inputMode != "EDIT") this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
-        this.RelationshipChange(this.MrCustRelationshipCodeObj[0].Key);
       }
     );
   }
@@ -411,21 +411,11 @@ export class CustMainDataComponent implements OnInit {
     this.setLookup(custType, true);
   }
 
-  RelationshipChange(Relationship: string){
-    if(this.isIncludeCustRelation){
-      if(Relationship == CommonConstant.MasteCodeRelationshipSpouse){
-        this.CustMainDataForm.patchValue({ MrMaritalStatCode: this.MaritalStatObj[0].Key })
-        this.CustMainDataForm.controls.MrMaritalStatCode.disable();
-      }else if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
-      this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
-    }
-  }
-
   async copyCustomerEvent(event) {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj,  true);
+          this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     } else {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
@@ -546,18 +536,16 @@ export class CustMainDataComponent implements OnInit {
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
-      this.RelationshipChange(this.CustMainDataForm.controls.MrCustRelationshipCode.value);
+      if (!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
 
-      if(!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
-      
-      if(this.inputMode == 'EDIT'){
+      if (this.inputMode == 'EDIT') {
         this.CustMainDataForm.patchValue({
           MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
         })
       }
     }
 
-    if(this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       this.setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj)
     }
 
@@ -588,15 +576,15 @@ export class CustMainDataComponent implements OnInit {
         })
       }
     }
-    
-    if(this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
+
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       this.setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj)
     }
 
     this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
-  setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false){
+  setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
     if (CustCompanyMgmntShrholderObj != undefined) {
       this.CustMainDataForm.patchValue({
         MrJobPositionCode: CustCompanyMgmntShrholderObj.MrJobPositionCode,
@@ -656,9 +644,9 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustMainDataForm.controls.BirthDt.value;
     this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustMainDataForm.controls.MotherMaidenName.value;
     this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustMainDataForm.controls.MobilePhnNo1.value,
-    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustMainDataForm.controls.Email1.value,
+      this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustMainDataForm.controls.Email1.value,
 
-    this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
+      this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode3.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode4.value;
@@ -668,7 +656,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
 
-    if(this.custDataPersonalObj.AppCustObj.IsShareholder){
+    if (this.custDataPersonalObj.AppCustObj.IsShareholder) {
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MrJobPositionCode = this.CustMainDataForm.controls.MrJobPositionCode.value;
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.IsSigner = this.CustMainDataForm.controls.IsSigner.value;
@@ -716,7 +704,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
 
-    if(this.custDataCompanyObj.AppCustObj.IsShareholder){
+    if (this.custDataCompanyObj.AppCustObj.IsShareholder) {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsSigner = this.CustMainDataForm.controls.IsSigner.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsActive = this.CustMainDataForm.controls.IsActive.value;
@@ -724,13 +712,22 @@ export class CustMainDataComponent implements OnInit {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.EstablishmentDt = this.CustMainDataForm.controls.EstablishmentDt.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.rowVersionMgmntShrholder;
     }
-    
+
     this.custDataCompanyObj.AppCustObj.RowVersion = this.rowVersionAppCust;
     this.custDataCompanyObj.AppCustCompanyObj.RowVersion = this.rowVersionAppCustCompany;
     this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion = this.rowVersionAppCustAddr;
   }
 
   SaveForm() {
+    let max17Yodt = new Date(this.MaxDate);
+    let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
+    let d2 = new Date(this.MaxDate);
+    max17Yodt.setFullYear(d2.getFullYear() - 17);
+
+    if (d1 > max17Yodt) {
+      throw this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+    }
+
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
       this.http.post(URLConstant.AddEditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
