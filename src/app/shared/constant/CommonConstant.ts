@@ -275,7 +275,7 @@ export class CommonConstant {
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
   public static AddrTypeOthBiz = "OTHERBIZ";
-  public static AddrTypeCompanyContactInfo = "COMPANY";
+  public static AddrTypeCompany = "COMPANY";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";

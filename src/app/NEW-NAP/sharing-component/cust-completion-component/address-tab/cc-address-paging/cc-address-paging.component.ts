@@ -82,8 +82,12 @@ export class CcAddressPagingComponent implements OnInit {
       }else{
         this.toastr.warningMessage("Please input Legal Address And Residence Address Data!")
       }
-    }else{
-      this.OutputTab.emit();
+    }else if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
+      if(this.ListAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeCompany) != null) {
+        this.OutputTab.emit();
+      }else{
+        this.toastr.warningMessage("Please input Legal Address And Company Address Data!")
+      }
     }
   }
 }

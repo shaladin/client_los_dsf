@@ -1,21 +1,17 @@
-<div class="col-md-12 text-left">
+<div class="col-md-12">
   <div class="card">
-    <div class="px-3">
-      <div class="col-md-8" style="padding-left: 0px;">
-        <h4 class="form-section card-title" translate>Customer Main Data</h4>
-      </div>
-    </div>
-    <div class="ucSearch-Button-Right">
-      <span class="mr-1">
-        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
-          <i class="fa fa-arrow-left"></i> Back
-        </button>
-      </span>
-    </div>
     <div class="card-body">
-      <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
-      </lib-ucviewgeneric>
       <div class="px-3">
+        <div class="ucSearch-Button-Right">
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+            <i class="fa fa-arrow-left"></i> Back
+          </button>
+        </div>
+        <div class="col-md-8" style="padding-left: 0px;">
+          <h4 class="form-section card-title" translate>Customer Main Data</h4>
+        </div>
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
+        </lib-ucviewgeneric>
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <div class="step" data-target="#customer-tab">
@@ -34,8 +30,9 @@
               </button>
             </div>
             <div class="step" data-target="#mgmnt-shrholder-tab" [hidden]="MrCustTypeCode != 'COMPANY'">
-              <button type="button" class="step-trigger" role="tab" aria-controls="mgmnt-shrholder-tab" id="mgmnt-shrholder-tab-trigger" 
-                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('SHR')" [hidden]="MrCustTypeCode != 'COMPANY'">
+              <button type="button" class="step-trigger" role="tab" aria-controls="mgmnt-shrholder-tab"
+                id="mgmnt-shrholder-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('SHR')"
+                [hidden]="MrCustTypeCode != 'COMPANY'">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Management Shareholder Data</span>
               </button>
