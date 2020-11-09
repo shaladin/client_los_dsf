@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, FormGroup, ControlContainer, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroupDirective, ControlContainer, Validators } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,6 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
