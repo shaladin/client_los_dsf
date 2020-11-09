@@ -216,11 +216,13 @@ export class CustMainDataComponent implements OnInit {
   }
 
   RelationshipChange(relationship: string){
+    let idxMarried = this.MaritalStatObj.findIndex(x => x.Key == CommonConstant.MasteCodeMartialStatsMarried);
+
     if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
-      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatObj[0].Key);
+      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatObj[idxMarried].Key);
       this.CustMainDataForm.controls.MrMaritalStatCode.disable();
     }else{
-      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.MaritalStatObj[0].Key);
+      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.MaritalStatObj[idxMarried].Key);
       if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     }
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
@@ -557,7 +559,7 @@ export class CustMainDataComponent implements OnInit {
           MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode})
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       }
-      
+      this.RelationshipChange(this.CustMainDataForm.controls.MrCustRelationshipCode.value);
 
       if (this.inputMode == 'EDIT') {
         this.CustMainDataForm.patchValue({
