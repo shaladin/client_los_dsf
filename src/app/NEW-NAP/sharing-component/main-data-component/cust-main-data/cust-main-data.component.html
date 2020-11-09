@@ -23,7 +23,7 @@
                 <label class="col-md-2 adins-required-label" translate>Customer Relationship </label>
                 <div class="col-md-3">
                   <select class="form-control adInsInput full-width" style="width: 100%"
-                    formControlName="MrCustRelationshipCode"
+                    formControlName="MrCustRelationshipCode" (change)="RelationshipChange($event.target.value)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrCustRelationshipCode.invalid }">
                     <option *ngFor="let it of MrCustRelationshipCodeObj" value="{{it.Key}}">{{it.Value}}</option>
                   </select>
