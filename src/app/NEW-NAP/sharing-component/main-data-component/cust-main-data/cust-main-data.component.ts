@@ -144,7 +144,7 @@ export class CustMainDataComponent implements OnInit {
       case CommonConstant.CustMainDataModeCust:
         this.isIncludeCustRelation = false;
         this.custDataObj.IsCustomer = true;
-        this.subjectTitle = 'Customer';
+        this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
@@ -168,7 +168,7 @@ export class CustMainDataComponent implements OnInit {
         break;
       default:
         this.isIncludeCustRelation = false;
-        this.subjectTitle = 'Customer';
+        this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
   }
 
@@ -302,7 +302,6 @@ export class CustMainDataComponent implements OnInit {
   getCustRelationship() {
     var refCustRelObj = {
       RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
-      RowVersion: ""
     }
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
       (response) => {
@@ -725,7 +724,8 @@ export class CustMainDataComponent implements OnInit {
     max17Yodt.setFullYear(d2.getFullYear() - 17);
 
     if (d1 > max17Yodt) {
-      throw this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      return;
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
