@@ -148,7 +148,7 @@ export class AttrContentComponentComponent implements OnInit {
       critAssetObj.DataType = 'text';
       critAssetObj.restriction = AdInsConstant.RestrictionEq;
       critAssetObj.propName = 'REF_MASTER_TYPE_CODE';
-      this.AttrContent == undefined ? critAssetObj.value = refAttr.AttrValue : critAssetObj.value = this.AttrContent.MasterCode;
+      critAssetObj.value = this.AttrContent == undefined || this.AttrContent.MasterCode == undefined ? refAttr.AttrValue : this.AttrContent.MasterCode;   
       arrAddCrit.push(critAssetObj);
       this.tempLookup[refAttr.AttrCode].addCritInput = arrAddCrit;
     }

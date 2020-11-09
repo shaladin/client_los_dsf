@@ -20,6 +20,7 @@ import { FinancialCompanyComponent } from "./financial-tab/financial-company/fin
 import { FinancialPersonalComponent } from "./financial-tab/financial-personal/financial-personal.component";
 import { CcAddressPagingComponent } from './address-tab/cc-address-paging/cc-address-paging.component';
 import { CcAddressDetailComponent } from './address-tab/cc-address-detail/cc-address-detail.component';
+import { MgmntShrholderComponent } from './mgmnt-shrholder/mgmnt-shrholder.component';
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -44,7 +45,8 @@ export const customCurrencyMaskConfig = {
         LegalDocTabComponent,
         CcContactInformationTabComponent,
         OtherInfoTabComponent,
-        CcAddressPagingComponent
+        CcAddressPagingComponent,
+        MgmntShrholderComponent
     ],
     imports: [
         CommonModule,
@@ -68,7 +70,8 @@ export const customCurrencyMaskConfig = {
         FinancialCompanyComponent,
         FinancialPersonalComponent,
         CcAddressPagingComponent,
-        CcAddressDetailComponent
+        CcAddressDetailComponent,
+        MgmntShrholderComponent
     ],
     providers: [
         NGXToastrService

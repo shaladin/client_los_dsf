@@ -386,7 +386,7 @@
                           <div formArrayName="AppInsAddCvgs">
                             <div [formGroupName]="j">
                               <label for="">
-                                <input type="checkbox" class="checkboxLabel" [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value == 'Loading' ? true : null" formControlName="Value" (change)="IsAddCvgChanged($event)">{{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
+                                <input type="checkbox" class="checkboxLabel" formControlName="Value" (change)="IsAddCvgChanged($event)">{{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.AddCvgTypeName.value}}
                               </label>
                             </div>
                           </div>

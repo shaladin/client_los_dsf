@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -102,10 +102,6 @@ export class BankSectionComponent implements OnInit {
       case "Cancel":
         this.IsDetail = false;
         break;
-      case "SaveBankAndStmnt":
-        this.IsDetail = false;
-        this.SaveForm();
-        break;
     }
     this.FormValidity(this.IsDetail);
     this.OutputObj.emit({Key: 'IsDetail', Value: this.IsDetail});
@@ -137,16 +133,15 @@ export class BankSectionComponent implements OnInit {
   }
 
   ClearForm(){
-    this.BankAccStmntForm = this.fb.group({
-      BankCode: [''],
-      BankBranch: ['', Validators.required],
-      BankAccName: ['', Validators.required],
-      BankAccNo: ['', Validators.required],
-      IsDefault: [false],
-      IsActive: [false],
-      BankStmntObjs: this.fb.array([])
+    this.BankAccStmntForm.patchValue({
+      BankCode: "",
+      BankBranch: "",
+      BankAccName: "",
+      BankAccNo: "",
+      IsDefault: false,
+      IsActive: false
     })
-    
+
     this.InputLookupBankObj.nameSelect = "";
     this.InputLookupBankObj.jsonSelect = {BankName: ""};
   }
@@ -249,7 +244,7 @@ export class BankSectionComponent implements OnInit {
     }
   }
 
-  SaveForm() {
+  SaveForm(enjiForm: NgForm) {
     this.ListBankStmntObj = new Array();
     this.BankAccObj.AppCustId = this.AppCustId;
     this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
@@ -274,6 +269,7 @@ export class BankSectionComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.OutputObj.emit({Key: 'IsDetail', Value: false});
           this.GetAppCustBankAccList();
+          enjiForm.resetForm();
         });
     }else{
       this.http.post(URLConstant.EditAppCustBankAccAndStmnt, reqObj).subscribe(
@@ -281,6 +277,7 @@ export class BankSectionComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.OutputObj.emit({Key: 'IsDetail', Value: false});
           this.GetAppCustBankAccList();
+          enjiForm.resetForm();
         });
     }
     this.IsDetail = false

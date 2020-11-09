@@ -5,12 +5,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
-import { AppCustCompletionCheckingObj } from '../../../../shared/model/AppCustCompletionCheckingObj.Model';
-import { CommonConstant } from '../../../../shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-company',
@@ -28,13 +27,16 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   IsCompletion: boolean = false;
   isCompletionCheck = true;
   isCompleteCustStep:object = {};
+  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
+  
   CustStep = {
     "Detail": 1,
     "Address": 2,
-    "Contact": 3,
-    "Financial": 4,
-    "Legal": 5,
-    "Other": 6,
+    "Shrholder": 3,
+    "Contact": 4,
+    "Financial": 5,
+    "Legal": 6,
+    "Other": 7,
   }
   constructor(
     private http: HttpClient,
@@ -92,6 +94,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       case "Address":
         this.stepIndex = this.CustStep["Address"];
         break;
+        case "Shrholder":
+          this.stepIndex = this.CustStep["Shrholder"];
+          break;
       case "Contact":
         this.stepIndex = this.CustStep["Contact"];
         break;
@@ -128,7 +133,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }    
   }
-  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   Save() {
     this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
@@ -136,7 +140,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
         console.log(this.completionCheckingObj);
         if (this.completionCheckingObj.IsCompleted != true) {
-          this.toastr.warningMessage('Please complete & save followong data first');
+          this.toastr.warningMessage('Please complete & save following data first');
           this.EnterTab(this.completionCheckingObj.InCompletedStep);
         }
         else {
