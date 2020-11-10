@@ -59,14 +59,10 @@ export class CustMainDataComponent implements OnInit {
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   legalAddrObj: AddrObj = new AddrObj();
-  CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  MaritalStatObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
   MrCustRelationshipCodeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  CompanyTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   CustModelObj: Array<KeyValueObj> = new Array();
-  JobPositionObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
   custDataObj: CustDataObj;
@@ -77,6 +73,11 @@ export class CustMainDataComponent implements OnInit {
   rowVersionAppCustCompany: string[];
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
+  readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
+  readonly MasterCustType = CommonConstant.RefMasterTypeCodeCustType;
+  readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;
+  readonly MasterCompanyType = CommonConstant.RefMasterTypeCodeCompanyType;
+  readonly MasterJobPosition = CommonConstant.RefMasterTypeCodeJobPosition;
 
   constructor(
     private fb: FormBuilder,
@@ -153,12 +154,14 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsGuarantor = true;
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
         break;
       case CommonConstant.CustMainDataModeFamily:
         this.isIncludeCustRelation = true;
         this.custDataObj.IsFamily = true;
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
         this.isIncludeCustRelation = true;
@@ -216,13 +219,13 @@ export class CustMainDataComponent implements OnInit {
   }
 
   RelationshipChange(relationship: string){
-    let idxMarried = this.MaritalStatObj.findIndex(x => x.Key == CommonConstant.MasteCodeMartialStatsMarried);
+    let idxMarried = this.DictRefMaster[this.MasterMaritalStat].findIndex(x => x.Key == CommonConstant.MasteCodeMartialStatsMarried);
 
     if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
-      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatObj[idxMarried].Key);
+      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       this.CustMainDataForm.controls.MrMaritalStatCode.disable();
     }else{
-      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.MaritalStatObj[idxMarried].Key);
+      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     }
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
@@ -235,24 +238,23 @@ export class CustMainDataComponent implements OnInit {
     });
   }
 
-  async getRefMaster() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
+  async GetListActiveRefMaster(RefMasterTypeCode: string){
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
       (response) => {
-        this.CustTypeObj = response[CommonConstant.ReturnObj];
-        this.MrCustTypeCode = this.CustTypeObj[0].Key;
-        if (this.inputMode == 'ADD') {
-          this.CustMainDataForm.patchValue({
-            MrCustTypeCode: this.CustTypeObj[0].Key
-          })
-        }
+        this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
       });
-
+  }
+  
+  async getRefMaster() {
+    await this.GetListActiveRefMaster(this.MasterCustType);
+    await this.GetListActiveRefMaster(this.MasterGender);
+    await this.GetListActiveRefMaster(this.MasterMaritalStat);
+    await this.GetListActiveRefMaster(this.MasterCompanyType);
+    await this.GetListActiveRefMaster(this.MasterJobPosition);
+    
     await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        this.CustMainDataForm.patchValue({
-          MrCustModelCode: this.CustModelObj[0].Key
-        });
       }
     );
 
@@ -261,80 +263,30 @@ export class CustMainDataComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
           let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
-          this.CustMainDataForm.patchValue({
-            MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
-          });
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
       });
 
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
-      (response) => {
-        this.GenderObj = response[CommonConstant.ReturnObj];
-        if (this.GenderObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrGenderCode: this.GenderObj[0].Key
-          });
-        }
-      });
-
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
-      (response) => {
-        this.MaritalStatObj = response[CommonConstant.ReturnObj];
-        if (this.MaritalStatObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrMaritalStatCode: this.MaritalStatObj[0].Key
-          });
-        }
-      });
-
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
-      (response) => {
-        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
-        if (this.CompanyTypeObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrCompanyTypeCode: this.CompanyTypeObj[0].Key
-          });
-        }
-      });
-
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).toPromise().then(
-      (response) => {
-        this.JobPositionObj = response[CommonConstant.ReturnObj];
-        if (this.JobPositionObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrJobPositionCode: this.JobPositionObj[0].Key
-          });
-        }
-      });
-
     if (this.isIncludeCustRelation) {
-      this.getCustRelationship();
+      await this.getCustRelationship();
     }
+
+    if(this.DictRefMaster[this.MasterCustType].length != 0) this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
   }
 
   getCustRelationship() {
-    var refCustRelObj = {
-      RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, {RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship}).subscribe(
       async (response) => {
         this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-        if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
-        if (this.inputMode != "EDIT"){
-          this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
-          this.RelationshipChange(this.MrCustRelationshipCodeObj[0].Key);
-        } 
-        
+        if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();        
       }
     );
   }
 
   removeSpouse() {
-    let SpouseRelationship = this.MrCustRelationshipCodeObj[0]
-    if (SpouseRelationship.Key == "SPOUSE") {
-      this.MrCustRelationshipCodeObj = this.MrCustRelationshipCodeObj.slice(1, this.MrCustRelationshipCodeObj.length);
+    let idxSpouse = this.MrCustRelationshipCodeObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+    if (this.MrCustRelationshipCodeObj[idxSpouse].Key == CommonConstant.MasteCodeRelationshipSpouse) {
+      this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
     }
   }
 
@@ -366,9 +318,6 @@ export class CustMainDataComponent implements OnInit {
       this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: custType == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
         (response) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
-          this.CustMainDataForm.patchValue({
-            MrCustModelCode: this.CustModelObj[0].Key
-          });
         }
       );
     }
@@ -474,7 +423,6 @@ export class CustMainDataComponent implements OnInit {
 
   resetInput(custType: string = CommonConstant.CustTypePersonal) {
     this.CustMainDataForm.reset();
-    let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
     this.CustMainDataForm.patchValue({
       MrCustTypeCode: custType,
       SharePrcnt: 0,
@@ -484,13 +432,14 @@ export class CustMainDataComponent implements OnInit {
     });
     if (custType == CommonConstant.CustTypePersonal) {
       this.CustMainDataForm.patchValue({
-        MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"],
-        MrGenderCode: this.GenderObj[0].Key,
-        MrMaritalStatCode: this.MaritalStatObj[0].Key
+        MrIdTypeCode: "",
+        MrGenderCode: "",
+        MrMaritalStatCode: "",
+        MrCustModelCode: ""
       });
     } else {
       this.CustMainDataForm.patchValue({
-        MrCompanyTypeCode: this.CompanyTypeObj[0].Key
+        MrCompanyTypeCode: ""
       });
     }
 

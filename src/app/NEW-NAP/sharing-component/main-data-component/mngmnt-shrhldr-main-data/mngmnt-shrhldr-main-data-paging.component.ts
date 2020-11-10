@@ -46,13 +46,10 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   }
 
   saveAndContinue() {
-    for (let i = 0; i < this.listMgmntShrholder.length; i++) {
-      for (let j = i+1; j < this.listMgmntShrholder.length; j++) {
-        if (this.listMgmntShrholder[i]["CustName"] == this.listMgmntShrholder[j]["CustName"] ) {
-          this.toastr.warningMessage("Guarantor No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_GUARANTOR_MEMBER + (j+1));
-          return;
-        }
-      }
+    console.log("oke")
+    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsOwner == true) == null){
+      this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
+      return;
     }
     this.outputTab.emit();
   }
