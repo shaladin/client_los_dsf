@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, FormGroup, ControlContainer, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroupDirective, ControlContainer, Validators } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,6 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -146,7 +145,7 @@ export class CustMainDataComponent implements OnInit {
       case CommonConstant.CustMainDataModeCust:
         this.isIncludeCustRelation = false;
         this.custDataObj.IsCustomer = true;
-        this.subjectTitle = 'Customer';
+        this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
@@ -172,7 +171,7 @@ export class CustMainDataComponent implements OnInit {
         break;
       default:
         this.isIncludeCustRelation = false;
-        this.subjectTitle = 'Customer';
+        this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
   }
 
@@ -697,7 +696,8 @@ export class CustMainDataComponent implements OnInit {
     max17Yodt.setFullYear(d2.getFullYear() - 17);
 
     if (d1 > max17Yodt) {
-      throw this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      return;
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
