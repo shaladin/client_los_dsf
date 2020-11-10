@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -57,7 +58,7 @@ export class AttrContentComponentComponent implements OnInit {
                 formGroupObject["AttrCode"] = [refAttr.AttrCode];
                 formGroupObject["IsMandatory"] = [refAttr.IsMandatory]; 
                 
-                this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
+                await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
               }
               this.ListInputLookUpObj.push(this.tempLookup);
               this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
@@ -77,7 +78,7 @@ export class AttrContentComponentComponent implements OnInit {
     });
   }
 
-  setFormGroupValue(refAttr: RefAttr, formGroupObject: object, parentFormGroup, isUpdateValue: boolean ){
+  async setFormGroupValue(refAttr: RefAttr, formGroupObject: object, parentFormGroup, isUpdateValue: boolean ){
     if (isUpdateValue == false) {
       if (refAttr.AttrInputType == 'T' && refAttr.PatternValue != "" && refAttr.PatternValue != null) {
         if (refAttr.IsMandatory == true) {
@@ -135,7 +136,7 @@ export class AttrContentComponentComponent implements OnInit {
             RefMasterTypeCode: refAttr.AttrValue,
             MasterCode: refAttr.DefaultValue
           };
-          this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).subscribe(
+          await this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
             (response) => {
               this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response['Descr'] }
             });
