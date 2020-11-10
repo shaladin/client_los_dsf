@@ -8,7 +8,7 @@
           <div class="col-md-10">
             <mat-radio-group formControlName="MrCustTypeCode" (change)="resetInput($event.value)">
               <mat-radio-button class="custom-control custom-radio display-inline-block"
-                *ngFor="let item of CustTypeObj" [value]="item.Key">
+                *ngFor="let item of DictRefMaster[MasterCustType]" [value]="item.Key">
                 {{item.Value}}
               </mat-radio-button>
             </mat-radio-group>
@@ -25,6 +25,7 @@
                   <select class="form-control adInsInput full-width" style="width: 100%"
                     formControlName="MrCustRelationshipCode" (change)="RelationshipChange($event.target.value)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrCustRelationshipCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let it of MrCustRelationshipCodeObj" value="{{it.Key}}">{{it.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCustRelationshipCode"
@@ -48,8 +49,9 @@
                 <label class="col-md-4 adins-required-label" translate>Gender</label>
                 <div class="col-md-6">
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrGenderCode" style="width:100%;">
-                    <option *ngFor="let item of GenderObj" [value]="item.Key">
+                    formControlName="MrGenderCode" style="width:100%;"  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrGenderCode.invalid}">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of DictRefMaster[MasterGender]" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
@@ -64,7 +66,8 @@
                 <div class="col-md-6">
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
                     formControlName="MrCompanyTypeCode" style="width:100%;">
-                    <option *ngFor="let item of CompanyTypeObj" [value]="item.Key">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of DictRefMaster[MasterCompanyType]" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
@@ -98,6 +101,7 @@
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control" id="idType"
                     formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdTypeCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
                       {{item.Descr}}
                     </option>
@@ -179,13 +183,13 @@
                 <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                 <div class="col-md-6">
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrMaritalStatCode" style="width:100%;">
-                    <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
+                    formControlName="MrMaritalStatCode" style="width:100%;" [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrMaritalStatCode.invalid}">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of DictRefMaster[MasterMaritalStat]" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrMaritalStatCode"
-                    [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrMaritalStatCode" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -210,6 +214,7 @@
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width"
                     style="width: 100%" formControlName="MrCustModelCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrCustModelCode.invalid }">
+                    <option value="">-Select One-</option>
                     <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCustModelCode"
@@ -251,7 +256,8 @@
                   <select class="form-control adInsInput full-width"
                     style="width: 100%" formControlName="MrJobPositionCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrJobPositionCode.invalid }">
-                    <option *ngFor="let item of JobPositionObj" value="{{item.Key}}">{{item.Value}}</option>
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of DictRefMaster[MasterJobPosition]" value="{{item.Key}}">{{item.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.MrJobPositionCode"
                     [submit]="enjiForm.submitted">
