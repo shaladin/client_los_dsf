@@ -123,8 +123,11 @@ export class BankSectionComponent implements OnInit {
     }) 
 
     if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
+      var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
+      // reset bank statement
+      bankStmnObjs.reset();
+      while (bankStmnObjs.length !== 0) bankStmnObjs.removeAt(0)
       for (let i = 0; i < BankAccAndStmntObj.AppCustBankStmntObjs.length; i++) {
-        var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
         bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.AppCustBankStmntObjs[i]));
       }
     }

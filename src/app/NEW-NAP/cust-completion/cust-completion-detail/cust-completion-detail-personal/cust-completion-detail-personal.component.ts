@@ -149,7 +149,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
         console.log(this.completionCheckingObj);
         if (this.completionCheckingObj.IsCompleted != true) {
-          this.toastr.warningMessage('Please complete & save followong data first');
+          this.toastr.warningMessage('To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep);
           this.EnterTab(this.completionCheckingObj.InCompletedStep);
         }
         else {
