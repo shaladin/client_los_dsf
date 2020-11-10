@@ -266,20 +266,40 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
+    if(this.DictRefMaster[this.MasterCustType].length != 0) await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
     if (this.isIncludeCustRelation) {
       await this.getCustRelationship();
     }
-
-    if(this.DictRefMaster[this.MasterCustType].length != 0) this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
   }
 
   getCustRelationship() {
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, {RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship}).subscribe(
-      async (response) => {
-        this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-        if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();        
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
+      if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
+        var refCustRelObj = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+          ReserveField1: CommonConstant.CustTypePersonal,
+          RowVersion: ""
+        }
+      } else {
+        var refCustRelObj = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+          ReserveField1: CommonConstant.CustTypeCompany,
+          RowVersion: ""
+        }
       }
-    );
+      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        (response) => {
+          this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
+        }
+      );
+    } else {
+      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
+        async (response) => {
+          this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
+          if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
+        }
+      );
+    }
   }
 
   removeSpouse() {

@@ -46,7 +46,6 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   }
 
   saveAndContinue() {
-    console.log("oke")
     if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsOwner == true) == null){
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
