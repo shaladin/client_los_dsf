@@ -527,7 +527,7 @@ export class CustMainDataComponent implements OnInit {
           MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode})
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       }
-      this.RelationshipChange(this.CustMainDataForm.controls.MrCustRelationshipCode.value);
+      this.RelationshipChange(CustObj.MrCustRelationshipCode);
 
       if (this.inputMode == 'EDIT') {
         this.CustMainDataForm.patchValue({
