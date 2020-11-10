@@ -15,6 +15,12 @@
         {
             "type": "label",
             "position": "left",
+            "label": "Customer Type",
+            "name": "MrCustTypeDescr"
+        },
+        {
+            "type": "label",
+            "position": "left",
             "label": "Customer Relationship",
             "name": "MrCustRelationshipCode"
         },
@@ -53,6 +59,11 @@
             "type": "text",
             "position": "left",
             "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrCustTypeDescr"
         },
         {
             "type": "text",
