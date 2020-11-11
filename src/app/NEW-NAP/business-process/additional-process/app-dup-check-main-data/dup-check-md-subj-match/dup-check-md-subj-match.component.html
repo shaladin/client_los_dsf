@@ -38,7 +38,7 @@
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>
             <td>{{item.DuplicateItem}}</td>
-            <td><a *ngIf="!IsAppLock || IsMasterLock" class="danger p-0" (click)="selectMasterCust(item)">Select</a></td>
+            <td><a *ngIf="isMasterLock || !isAppLock" class="danger p-0" (click)="selectMasterCust(item)">Select</a></td>
           </tr>
         </tbody>
       </table>
@@ -73,7 +73,7 @@
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>            
             <td>{{item.DuplicateItem}}</td>
-            <td><a *ngIf="!IsMasterLock || IsAppLock" class="danger p-0" (click)="selectAppCust(item)">Select</a></td>
+            <td><a *ngIf="isAppLock || !isMasterLock" class="danger p-0" (click)="selectAppCust(item)">Select</a></td>
           </tr>
         </tbody>
       </table>
