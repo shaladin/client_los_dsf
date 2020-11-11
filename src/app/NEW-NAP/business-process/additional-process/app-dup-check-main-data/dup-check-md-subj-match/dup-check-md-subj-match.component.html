@@ -1,14 +1,12 @@
 <div class="card">
   <lib-ucviewgeneric *ngIf="mrCustTypeCode" [viewGenericObj]="viewMainInfoObj" (callback)="viewMainInfoCallback($event)" #viewMainProd> </lib-ucviewgeneric>
   <div class="ucSearch-Button-Right pr-3" style="right:0px">
-    <div class="text-right" *ngIf="!isLock">
-      <button type="button" class="btn btn-raised btn-primary" (click)="buttonNewCustOnClick()" translate>New Customer</button>
-    </div>
-    <button type="button" class="btn btn-raised btn-warning" (click)="buttonCancelOnClick()">
+    <button *ngIf="!isLock" type="button" class="btn btn-raised btn-primary mr-1" (click)="buttonNewCustOnClick()" translate>New Customer</button>
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelOnClick()">
       <i class="fa fa-ban"></i> Cancel
     </button>
   </div>
-  <div class="card-body px-3 pb-3">
+  <div class="card-body px-3 pb-3" *ngIf="IsReady">
     <lib-ucSubsection [id]="'subSecMatchId'" [title]="'Match / Similiar Data'" [panel]="'subSecMatch'"></lib-ucSubsection>
     <div id="subSecMatch">
       <table class="table table-responsive-md text-center table-hover">
