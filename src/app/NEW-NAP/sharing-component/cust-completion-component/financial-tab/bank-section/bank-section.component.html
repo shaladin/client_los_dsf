@@ -1,4 +1,4 @@
-<form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm()"
+<form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)"
   #enjiForm="ngForm">
   <span class="mr-1 pull-right" *ngIf="!IsDetail">
     <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
@@ -144,11 +144,15 @@
             </tbody>
             <tbody *ngIf="BankAccStmntForm.controls['BankStmntObjs'].controls.length > 0">
               <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
-                <td [formGroupName]="i"><select class="form-control" formControlName="Month">
+                <td [formGroupName]="i"><select class="form-control" formControlName="Month"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
                     <option *ngFor="let item of MonthObj" value="{{item.Key}}">
                       {{item.Value}}
                     </option>
-                  </select></td>
+                  </select>
+                  <lib-uc-show-errors [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </td>
                 <td [formGroupName]="i">
                   <input type="text" class="form-control" formControlName="Year"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year.invalid }">

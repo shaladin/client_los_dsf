@@ -29,8 +29,6 @@ export class NapCustMainDataComponent implements OnInit {
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
-  IsMultiAsset: string;
-  ListAsset: any;
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
@@ -158,7 +156,6 @@ export class NapCustMainDataComponent implements OnInit {
         break;
     }
     this.ucViewMainProd.initiateForm();
-    this.NextStep(AppStep, true);
   }
 
   getEvent(event) {
@@ -166,7 +163,7 @@ export class NapCustMainDataComponent implements OnInit {
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
     
-    //Fix untuk data kosong saat kembai ke step cust jika save new cust
+    //Fix untuk data kosong saat kembali ke step cust jika save new cust
     if(!this.appCustId){
       this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
         (response) => {
@@ -180,11 +177,11 @@ export class NapCustMainDataComponent implements OnInit {
     }
   }
 
-  async NextStep(Step, IsChangeByUser: boolean = false) {
+  async NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       async (response) => {
-        if(!IsChangeByUser) await this.ChangeTab(Step);
+        await this.ChangeTab(Step);
         this.stepper.to(this.AppStepIndex);
       }
     )

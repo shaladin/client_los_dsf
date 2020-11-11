@@ -32,10 +32,11 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   CustStep = {
     "Detail": 1,
     "Address": 2,
-    "Contact": 3,
-    "Financial": 4,
-    "Legal": 5,
-    "Other": 6,
+    "Shrholder": 3,
+    "Contact": 4,
+    "Financial": 5,
+    "Legal": 6,
+    "Other": 7,
   }
   constructor(
     private http: HttpClient,
@@ -93,6 +94,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       case "Address":
         this.stepIndex = this.CustStep["Address"];
         break;
+        case "Shrholder":
+          this.stepIndex = this.CustStep["Shrholder"];
+          break;
       case "Contact":
         this.stepIndex = this.CustStep["Contact"];
         break;
@@ -136,7 +140,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
         console.log(this.completionCheckingObj);
         if (this.completionCheckingObj.IsCompleted != true) {
-          this.toastr.warningMessage('Please complete & save followong data first');
+          this.toastr.warningMessage('To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep);
           this.EnterTab(this.completionCheckingObj.InCompletedStep);
         }
         else {

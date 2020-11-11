@@ -19,6 +19,7 @@ export class FinancialPersonalComponent implements OnInit {
 
   @Input() AppCustId: number;
   @Input() AppCustPersonalId: number;
+  @Input() IsMarried: boolean;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsDetail: boolean = false;
   AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;

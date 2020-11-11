@@ -43,7 +43,7 @@ export class ViewAgrmntReservedFundComponent implements OnInit {
         this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {
           for (let i = 0; i < this.RsvFundObj.length; i++) {
-            this.totalRsvFund = this.RsvFundObj[i].ReservedFundAmt;
+            this.totalRsvFund+= this.RsvFundObj[i].ReservedFundAmt;
           }
         }
       }

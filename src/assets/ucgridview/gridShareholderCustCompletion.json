@@ -1,0 +1,51 @@
+{
+    "isSeq": true,
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Shareholder Name",
+        "name": "CustName"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Shareholder Relationship",
+        "name": "MrCustRelationshipDescr"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Birth Place",
+        "name": "BirthPlace"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Birth Date",
+        "name": "BirthDt"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "MrCustRelationshipDescr"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "BirthPlace"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "BirthDt"
+      }
+    ]
+  }

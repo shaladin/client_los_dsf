@@ -43,6 +43,7 @@ export class CustDetailPersonalComponent implements OnInit {
     FamilyCardNo: ['', Validators.pattern("^[0-9]+$")],
     NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
     NoOfResidence: ['', Validators.pattern("^[0-9]+$")],
+    IsRestInPeace: [false],
     IsVip: [false],
     IsAffiliateWithMf: [false],
     NickName: [''],
@@ -52,8 +53,7 @@ export class CustDetailPersonalComponent implements OnInit {
     VIPNotes: [''],
     CustPrefixName: [''],
     CustSuffixName: [''],
-    MrSalutationCode: [''],
-    IsRestInPeace: [false]
+    MrSalutationCode: ['']
   })
 
   constructor(private fb: FormBuilder,
@@ -167,11 +167,11 @@ export class CustDetailPersonalComponent implements OnInit {
           NoOfResidence: response.AppCustPersonalObj.NoOfResidence,
           IsVip: response.AppCustObj.IsVip,
           IsAffiliateWithMf: response.AppCustObj.IsAffiliateWithMf,
+          IsRestInPeace: response.AppCustPersonalObj.IsRestInPeace,
           NickName: response.AppCustPersonalObj.NickName,
           VIPNotes: response.AppCustObj.VipNotes,
           CustPrefixName: response.AppCustPersonalObj.CustPrefixName,
           CustSuffixName: response.AppCustPersonalObj.CustSuffixName,
-          IsRestInPeace: response.AppCustPersonalObj.IsRestInPeace,
           MrNationalityCode: response.AppCustPersonalObj.MrNationalityCode != "" ? response.AppCustPersonalObj.MrNationalityCode : this.NationalityObj[1]["MasterCode"],
           MrEducationCode: response.AppCustPersonalObj.MrEducationCode != null ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
           MrReligionCode: response.AppCustPersonalObj.MrReligionCode != null ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
