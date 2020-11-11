@@ -20,6 +20,12 @@
       "name": "sortId3"
     },
     {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Model",
+      "name": "sortId4"
+    },
+    {
       "type": "label",
       "position": "center",
       "label": "Action"
@@ -40,6 +46,11 @@
       "type": "text",
       "position": "left",
       "property": "MrCustRelationshipCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustModelDescr"
     },
     {
       "type": "action",
