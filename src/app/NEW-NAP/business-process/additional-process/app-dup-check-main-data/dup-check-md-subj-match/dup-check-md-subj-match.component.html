@@ -1,20 +1,14 @@
 <div class="card">
   <lib-ucviewgeneric *ngIf="mrCustTypeCode" [viewGenericObj]="viewMainInfoObj" (callback)="viewMainInfoCallback($event)" #viewMainProd> </lib-ucviewgeneric>
   <div class="ucSearch-Button-Right pr-3" style="right:0px">
-    <button type="button" class="btn btn-raised btn-warning" (click)="buttonCancelOnClick()">
+    <button *ngIf="!isLock" type="button" class="btn btn-raised btn-primary mr-1" (click)="buttonNewCustOnClick()" translate>New Customer</button>
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelOnClick()">
       <i class="fa fa-ban"></i> Cancel
     </button>
   </div>
-
-  
-  <div class="card-body px-3 pb-3">
-
-    <div class="text-right" *ngIf="!isLock">
-      <button type="button" class="btn btn-raised btn-primary" (click)="buttonNewCustOnClick()" translate>New Customer</button>
-    </div>
-
-    <lib-ucSubsection [id]="'subSecMatchId'" [title]="'Match / Similiar Data'" [panel]="'subSecMatchId'"></lib-ucSubsection>
-    <div id="subSecMatchId">
+  <div class="card-body px-3 pb-3" *ngIf="IsReady">
+    <lib-ucSubsection [id]="'subSecMatchId'" [title]="'Match / Similiar Data'" [panel]="'subSecMatch'"></lib-ucSubsection>
+    <div id="subSecMatch">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -42,14 +36,14 @@
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>
             <td>{{item.DuplicateItem}}</td>
-            <td><a class="danger p-0" (click)="selectMasterCust(item)">Select</a></td>
+            <td><a *ngIf="isMasterLock || !isAppLock" class="danger p-0" (click)="selectMasterCust(item)">Select</a></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <lib-ucSubsection [id]="'subSecAppProcessId'" [title]="'Application in Process'" [panel]="'subSecAppProcessId'"></lib-ucSubsection>
-    <div id="subSecAppProcessId">
+    <lib-ucSubsection [id]="'subSecAppProcessId'" [title]="'Application in Process'" [panel]="'subSecAppProcess'"></lib-ucSubsection>
+    <div id="subSecAppProcess">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -77,14 +71,14 @@
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>
             <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>            
             <td>{{item.DuplicateItem}}</td>
-            <td><a *ngIf="!isMasterLock" class="danger p-0" (click)="selectAppCust(item)">Select</a></td>
+            <td><a *ngIf="isAppLock || !isMasterLock" class="danger p-0" (click)="selectAppCust(item)">Select</a></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <lib-ucSubsection [id]="'subSecNegListId'" [title]="'Negative List'" [panel]="'subSecNegListId'"></lib-ucSubsection>
-    <div id="subSecNegListId">
+    <lib-ucSubsection [id]="'subSecNegListId'" [title]="'Negative List'" [panel]="'subSecNegList'"></lib-ucSubsection>
+    <div id="subSecNegList">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
