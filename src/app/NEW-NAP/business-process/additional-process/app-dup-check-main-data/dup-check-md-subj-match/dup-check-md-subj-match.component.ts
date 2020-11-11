@@ -31,6 +31,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   isLock: boolean = true;
   isMasterLock: boolean = false;
   isNegativeLock: boolean = false;
+  isAppLock: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.queryParams.subscribe(params => {
@@ -55,7 +56,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   getDupCheckData(){
     this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
-      response => {
+      async response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;
         this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
@@ -99,7 +100,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         }
 
         //List Master Cust Duplicate Checking
-        this.http.post(URLConstant.GetCustomerDuplicateCheck, requestDupCheck).subscribe(
+        await this.http.post(URLConstant.GetCustomerDuplicateCheck, requestDupCheck).toPromise().then(
           response => {
             this.listMasterCustDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) 
@@ -112,7 +113,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         );
 
         //List Negative Cust Checking
-        this.http.post(URLConstant.GetNegativeCustomerDuplicateCheck, requestDupCheck).subscribe(
+        await this.http.post(URLConstant.GetNegativeCustomerDuplicateCheck, requestDupCheck).toPromise().then(
           response => {
             this.listNegativeCustDuplicate = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
             this.isNegativeLock = (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) ;
@@ -128,15 +129,18 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         );
 
         //List App Cust Duplicate Checking
-        this.http.post(URLConstant.MD_GetAppCustDuplicateCheck, requestDupCheck).subscribe(
+        await this.http.post(URLConstant.MD_GetAppCustDuplicateCheck, requestDupCheck).toPromise().then(
           response => {
             this.listAppCustDuplicate = response["ListDuplicateAppCust"];
-            if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) this.isLock = true;
+            if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock){
+              this.isLock = true;
+              this.isAppLock = true;
+            }
             else if(!this.isMasterLock) this.isLock = false;
           }
         );
 
-        this.initViewMainInfo();
+        await this.initViewMainInfo();
       });
   }
 
