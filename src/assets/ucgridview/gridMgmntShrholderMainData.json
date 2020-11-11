@@ -20,6 +20,12 @@
         "name": "MrCustRelationshipCode"
       },
       {
+        "type": "sort",
+        "position": "left",
+        "label": "Owner",
+        "name": "IsOwner"
+      },
+      {
         "type": "label",
         "position": "center",
         "label": "Action"
@@ -40,6 +46,11 @@
         "type": "text",
         "position": "left",
         "property": "MrCustRelationshipCode"
+      },
+      {
+        "type": "boolean",
+        "position": "left",
+        "property": "IsOwner"
       },
       {
         "type": "action",
