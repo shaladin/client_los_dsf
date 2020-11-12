@@ -246,7 +246,7 @@ export class CustDetailPersonalComponent implements OnInit {
       });
   }
 
-  VIPCheck(IsVip: boolean){
+  VIPCheck(IsVip: boolean = false){
   let Vip = false;
   if(IsVip != undefined){
     Vip = IsVip;
