@@ -38,6 +38,15 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     "Legal": 6,
     "Other": 7,
   }
+  ValidationMessages = {
+    "Detail": "Please complete required data in tab \"Customer Detail\"",
+    "Address": "Please add Legal Address in tab \"Address Information\"",
+    "Shrholder": "Please complete required data in tab \"Management / Shareholder\"",
+    "Contact": "Please complete required data in tab \"Contact Information\"",
+    "Financial": "Please complete required data in tab \"Financial Data\"",
+    "Legal": "Please add at least one data in tab \"Legal Document\"",
+    "Other": "Please complete required data in tab \"Other Attribute\"",
+  }
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -140,7 +149,8 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
         console.log(this.completionCheckingObj);
         if (this.completionCheckingObj.IsCompleted != true) {
-          this.toastr.warningMessage('To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep);
+          let errorMsg = typeof this.ValidationMessages[this.completionCheckingObj.InCompletedStep] != 'undefined' ? this.ValidationMessages[this.completionCheckingObj.InCompletedStep] : 'To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep;
+          this.toastr.warningMessage(errorMsg);
           this.EnterTab(this.completionCheckingObj.InCompletedStep);
         }
         else {
