@@ -99,6 +99,7 @@ export class JobTabComponent implements OnInit {
     this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).subscribe(
       (response) => {
         this.MrCustModelDescr = response.Descr;
+        this.CheckCustModel();
       }
     );
 
@@ -183,6 +184,19 @@ export class JobTabComponent implements OnInit {
       error => {
         console.log(error);
       });
+  }
+
+  CheckCustModel(){
+    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+      this.JobDataForm.controls.MrJobPositionCode.setValidators([Validators.required]);
+      this.JobDataForm.controls.MrJobStatCode.setValidators([Validators.required]);
+      this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+    }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
+      this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+    }
+    this.JobDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+    this.JobDataForm.controls.MrJobStatCode.updateValueAndValidity();
+    this.JobDataForm.controls.EmploymentEstablishmentDt.updateValueAndValidity();
   }
 
   SaveForm() {

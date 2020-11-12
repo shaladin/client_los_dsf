@@ -33,9 +33,9 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.CoyName" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>Establishment Date</label>
+                <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
                     max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
                     [submit]="enjiForm.submitted">
@@ -51,7 +51,7 @@
                     </option>
                   </select>
                 </div>
-                <label class="col-md-2 adins-required-label" translate>Company Scale</label>
+                <label class="col-md-2" translate>Company Scale</label>
                 <div class="col-md-4">
                   <select class="form-control" formControlName="MrCoyScaleCode">
                     <option *ngFor="let item of CompanyScaleObj" [value]="item.Key">
@@ -70,9 +70,9 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.ProfessionalNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>Establishment Date</label>
+                <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
                     max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
                     [submit]="enjiForm.submitted">
@@ -98,7 +98,7 @@
             </div>
             <div *ngIf="CustModelCode == 'EMP'">
               <div class="form-group row">
-                <label class="col-md-2" translate>Job Status</label>
+                <label class="col-md-2 adins-required-label" translate>Job Status</label>
                 <div class="col-md-4">
                   <select class="form-control" formControlName="MrJobStatCode">
                     <option *ngFor="let item of JobStatObj" [value]="item.Key">
@@ -143,8 +143,7 @@
                 </div>
                 <label class="col-md-2" translate>Previous Employment Date</label>
                 <div class="col-md-4">
-                  <!-- max="{{MaxDate | date:'yyyy-MM-dd'}}" -->
-                  <input type="date" class="form-control" formControlName="PrevEmploymentDt">
+                  <input type="date" class="form-control" formControlName="PrevEmploymentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.PrevEmploymentDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -189,10 +188,9 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2" translate>Establishment Date</label>
+                <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <!-- max="{{MaxDate | date:'yyyy-MM-dd'}}" -->
-                  <input type="date" class="form-control" formControlName="OthBizEstablishmentDt">
+                  <input type="date" class="form-control" formControlName="OthBizEstablishmentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.OthBizEstablishmentDt"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
