@@ -189,6 +189,8 @@ export class CustDetailPersonalComponent implements OnInit {
             });
         }
 
+        this.VIPCheck(response.AppCustObj.IsVip);
+
         if(response.AppCustPersonalObj.NationalityCountryCode != null){
           this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
         }
@@ -242,5 +244,23 @@ export class CustDetailPersonalComponent implements OnInit {
       error => {
         console.log(error);
       });
+  }
+
+  VIPCheck(IsVip: boolean){
+  let Vip = false;
+  if(IsVip != undefined){
+    Vip = IsVip;
+  }else{
+    Vip = this.CustDetailForm.controls.IsVip.value
+  }
+  if (Vip == true) {
+    this.CustDetailForm.controls.VIPNotes.enable();     
+    this.CustDetailForm.controls.VIPNotes.setValidators([Validators.required]);
+  } else {
+    this.CustDetailForm.controls.VIPNotes.disable();
+    this.CustDetailForm.controls.VIPNotes.patchValue(null);
+    this.CustDetailForm.controls.VIPNotes.clearValidators();
+  }
+  this.CustDetailForm.controls.VIPNotes.updateValueAndValidity();
   }
 }

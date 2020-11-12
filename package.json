@@ -18,7 +18,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "^1.0.1",
     "@adins/uc-subsection": "^1.0.5",
-    "@adins/ucaddress": "^1.0.50",
+    "@adins/ucaddress": "^1.0.51",
     "@adins/ucaddtotemp": "^1.0.14",
     "@adins/ucapproval": "^1.0.9",
     "@adins/ucapprovalhist": "^1.0.15",
