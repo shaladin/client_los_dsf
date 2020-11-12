@@ -63,9 +63,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT ap.APP_NO AS AppNo, agr.PROD_OFFERING_NAME AS ProdOfferingName, agr.AGRMNT_NO AS AgrmntNo, agr.PROD_OFFERING_CODE AS ProdOfferingCode, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_VERSION AS ProdOfferingVersion, agr.OFFICE_NAME AS OfficeName, ap.APP_ID AS AppId, agr.AGRMNT_ID AS AgrmntId, vPo.END_DT AS EndDt",
-          "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) LEFT JOIN dbo.APP ap WITH(NOLOCK) ON agr.APP_ID = ap.APP_ID LEFT JOIN dbo.V_PROD_OFFERING vPo WITH(NOLOCK) ON ap.PROD_OFFERING_CODE = vPo.PROD_OFFERING_CODE",
-          "where": "WHERE agr.AGRMNT_NO = '{0}'"
+          "name": "viewOfferingValidityCheckingApproval"
         }
       }
     ]

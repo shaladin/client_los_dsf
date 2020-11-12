@@ -57,10 +57,9 @@
             "label": "Resend Data"
         }
     ],
-    "querystring": {
-        "select": "SELECT LEL.APP_NO AS AppNo, LEL.[ERROR_MESSAGE] AS ErrorMessage, LEL.IS_FIXED AS IsFixed",
-        "from": "FROM LOS_INTEGRATION.dbo.LOS_ERROR_LOG LEL WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "searchLosErrorData"
+  },
     "orderby": {
         "key": "LEL.APP_NO", 
         "value": "false"

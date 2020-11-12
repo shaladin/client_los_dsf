@@ -33,9 +33,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT vrm.DESCR AS Descr, lcpj.COMPANY_NAME AS CompanyName, vrp.PROFESSION_NAME AS ProfessionName ",
-        "from": "FROM dbo.LEAD_CUST lc WITH(NOLOCK) JOIN dbo.LEAD_CUST_PERSONAL lcp  WITH(NOLOCK) on lc.LEAD_CUST_ID = lcp.LEAD_CUST_ID JOIN  dbo.LEAD_CUST_PERSONAL_JOB_DATA lcpj WITH(NOLOCK) ON lcp.LEAD_CUST_PERSONAL_ID = lcpj.LEAD_CUST_PERSONAL_ID LEFT JOIN V_REF_MASTER vrm WITH(NOLOCK) ON  vrm.MASTER_CODE = lc.MR_CUST_MODEL_CODE and vrm.REF_MASTER_TYPE_CODE = 'CUST_MODEL' JOIN V_REF_PROFESSION vrp WITH(NOLOCK) ON lcpj.MR_PROFESSION_CODE = vrp.PROFESSION_CODE",
-        "where": "WHERE lc.LEAD_ID = {0}"
+        "name": "viewLeadCustPersonalJobData"
       }
     }
   ]

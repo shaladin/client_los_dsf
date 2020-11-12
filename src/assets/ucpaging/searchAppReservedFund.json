@@ -53,8 +53,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.APP_CURR_STEP AS AppCurrStep, A.LOB_CODE AS LobCode, A.APP_ID AS AppId",
-    "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID"
+    "name": "searchAppReservedFund"
   },
   "bodyList": [
     {

@@ -43,9 +43,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT la.FULL_ASSET_NAME AS FullAssetName, vrm1.DESCR AS AssetCondition, la.MANUFACTURING_YEAR AS ManufacturingYear, la.ASSET_PRICE_AMT AS AssetPriceAmt, vrm2.DESCR AS DownPaymentType, la.DOWN_PAYMENT_AMT AS DownPaymentAmt, la.SERIAL_NO_1 AS SerialNo1",
-          "from": "From dbo.LEAD_ASSET la WITH(NOLOCK) LEFT JOIN V_REF_MASTER vrm1 WITH(NOLOCK) ON vrm1.MASTER_CODE = la.MR_ASSET_CONDITION_CODE AND vrm1.REF_MASTER_TYPE_CODE = 'ASSET_CONDITION' LEFT JOIN V_REF_MASTER vrm2 WITH(NOLOCK) ON vrm2.MASTER_CODE = la.MR_DOWN_PAYMENT_TYPE_CODE AND vrm2.REF_MASTER_TYPE_CODE = 'DOWN_PAYMENT_TYPE'",
-          "where": "WHERE la.LEAD_ID = {0}"
+          "name": "viewLeadAssetData"
         }
       }
     ]

@@ -113,10 +113,9 @@
             "criteriaPropValue": "MOUC_STAT"
         }
     ],
-    "querystring": {
-        "select": "SELECT MOU_CUST_NO AS MouCustNo, MOU_CUST_ID AS MouCustId, CUST_NAME AS CustName, MOU_CUST_DT AS MouCustDt, START_DT AS StartDt, END_DT AS EndDt, PLAFOND_AMT PlafondAmt, IS_REVOLVING AS IsRevolving, REF_NO AS RefNo, MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU_STAT AS MouStat, CUST_NO AS CustNo",
-        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "searchMouCustomerInquiry"
+  },
     "headerList": [
         {
             "type": "sort",

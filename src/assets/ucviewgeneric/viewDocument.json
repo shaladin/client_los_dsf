@@ -82,10 +82,8 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdNo,B.OFFICE_NAME AS OfficeName, A.APP_ID AS AppId, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION as ProdOfferingVersion, B.AGRMNT_ID AS AgrmntId, E.MOU_CUST_NO AS MouCustNo, E.MOU_CUST_ID AS MouCustId, StatDescr.DESCR AS Stat, CurrStepDescr.DESCR AS CurrStep, LastStepDescr.DESCR AS LastStep",
-           "from":" FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID LEFT JOIN dbo.MOU_CUST E ON E.MOU_CUST_ID = A.MOU_CUST_ID LEFT JOIN MOU_CUST_FCTR D ON D.MOU_CUST_ID = E.MOU_CUST_ID LEFT JOIN dbo.V_REF_STATUS StatDescr WITH(NOLOCK) ON A.APP_STAT = StatDescr.REF_STATUS_CODE AND StatDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' AND StatDescr.STATUS_GRP_CODE = 'APP_STAT' LEFT JOIN dbo.V_REF_STATUS CurrStepDescr WITH(NOLOCK) ON A.APP_CURR_STEP = CurrStepDescr.REF_STATUS_CODE AND CurrStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' AND CurrStepDescr.STATUS_GRP_CODE = 'APP_STEP' LEFT JOIN dbo.V_REF_STATUS LastStepDescr WITH(NOLOCK) ON A.APP_LAST_STEP = LastStepDescr.REF_STATUS_CODE AND LastStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' AND LastStepDescr.STATUS_GRP_CODE = 'APP_STEP'",
-            "where":"WHERE B.AGRMNT_ID = {0}"
-            
+          "name": "viewDocument"
+
         }
       }
     ]

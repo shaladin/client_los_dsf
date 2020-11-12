@@ -115,9 +115,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, rhh.RETURN_HANDLING_H_ID as ReturnHandlingHId, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, WTL.SLA_COLOR AS SlaColor",
-    "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH ( NOLOCK ) ON a.APP_NO = WTL.TRANSACTION_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE  JOIN [dbo].RETURN_HANDLING_H rhh WITH ( NOLOCK ) on a.APP_ID = rhh.APP_ID",
-    "where": "WHERE WTL.END_EXECUTING_DATE IS NULL AND a.IS_APP_INIT_DONE = 1 AND RHH.RETURN_H_STATUS <> N'FIN'"
+    "name": "searchReturnHandlingPhnVerif"
   },
   "bodyList": [
     {

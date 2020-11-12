@@ -52,11 +52,9 @@
             "label": "Action"
         }
     ],
-    "querystring": {
-        "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.BIZ_TEMPLATE_CODE as BizTemplateCode",
-        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID",
-        "where": "WHERE a.APP_STAT = N'CAN'"
-    },
+  "querystring": {
+    "name": "searchCancelledApp"
+  },
     "bodyList": [
         {
             "type": "link",

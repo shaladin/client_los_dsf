@@ -81,9 +81,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT  WF.USERNAME AS Username, A.ORI_OFFICE_NAME AS OfficeName, WF.WF_TASK_LIST_ID as TaskListId, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode, WF.SLA_COLOR AS SlaColor",
-    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID JOIN dbo.V_WF_TASK_LIST WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AGR.AGRMNT_NO ",
-    "where": "WHERE WF.END_EXECUTING_DATE IS NULL"
+    "name": "searchCustConfirmation"
   },
   "orderby": {
     "key": "A.APP_NO",

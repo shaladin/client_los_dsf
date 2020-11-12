@@ -152,10 +152,9 @@
             "name": "l.LEAD_STAT"
         }
     ],
-    "querystring": {
-        "select": "SELECT l.LEAD_NO AS LeadNo, l.ORI_OFFICE_CODE AS OriOfficeCode, l.ORDER_NO AS OrderNo, lc.CUST_NAME AS CustName,  l.MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, la.FULL_ASSET_NAME AS FullAssetName, STEP.DESCR AS LeadStep, STAT.DESCR AS LeadStat, l.lEAD_ID AS LeadId, ro.OFFICE_NAME AS OfficeName",
-        "from": "FROM dbo.LEAD l WITH(NOLOCK) LEFT JOIN dbo.LEAD_CUST lc WITH(NOLOCK) ON l.LEAD_ID = lc.LEAD_ID LEFT JOIN dbo.LEAD_ASSET la on l.LEAD_ID = la.LEAD_ID LEFT JOIN dbo.V_REF_OFFICE ro WITH(NOLOCK) ON l.ORI_OFFICE_CODE = ro.OFFICE_CODE LEFT JOIN dbo.V_REF_STATUS AS STEP WITH(NOLOCK) ON l.LEAD_STEP = STEP.REF_STATUS_CODE AND STEP.STATUS_GRP_CODE = 'LEAD_STEP' LEFT JOIN dbo.V_REF_STATUS AS STAT WITH(NOLOCK) ON l.LEAD_STAT = STAT.REF_STATUS_CODE AND STAT.STATUS_GRP_CODE = 'LEAD_STAT'"
-    },
+  "querystring": {
+    "name": "searchLeadInquiry"
+  },
     "bodyList": [
         {
             "type": "link",

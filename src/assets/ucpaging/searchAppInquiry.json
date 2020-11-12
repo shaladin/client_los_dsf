@@ -129,8 +129,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT A.APP_NO AS appNo, B.AGRMNT_NO AS agrmntNo, C.CUST_NO AS custNo, C.CUST_NAME AS custName, A.PROD_OFFERING_NAME AS prodOfferingName, A.PROD_OFFERING_CODE AS prodOfferingCode, A.PROD_OFFERING_VERSION as prodOfferingVersion, A.APP_CREATED_DT AS appDt, A.ORI_OFFICE_CODE AS OriOfficeCode, E.INST_AMT AS instAmt, A.IS_APP_INIT_DONE AS isNapSub, B.AGRMNT_STAT AS contractStat, ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP) AS appStep, A.APP_STAT AS appStat, A.APP_ID AS AppId,A.BIZ_TEMPLATE_CODE as BizTemplateCode, B.AGRMNT_ID as AgrmntId, C.APP_CUST_ID as appCustId",
-    "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.AGRMNT B WITH(NOLOCK) ON A.APP_ID = B.APP_ID LEFT JOIN dbo.APP_CUST C WITH (NOLOCK) ON A.APP_ID = C.APP_ID AND C.IS_CUSTOMER = 1 LEFT JOIN dbo.APP_FIN_DATA E WITH (NOLOCK) ON A.APP_ID = E.APP_ID"
+    "name": "searchAppInquiry"
   },
   "headerList": [
     {

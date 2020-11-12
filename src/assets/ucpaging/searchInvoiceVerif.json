@@ -27,11 +27,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select":"SELECT C.WF_TASK_LIST_ID AS TaskListId, A.APP_NO AS ApplicationNo,B.CUST_NAME AS CustName,A.PROD_OFFERING_NAME AS ProdName, A.APP_ID AS AppId, A.PROD_OFFERING_CODE AS ProdOfferingCode, C.SLA_COLOR AS SlaColor",
-        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.APP_CUST B WITH (NOLOCK) ON A.APP_ID = B.APP_ID JOIN dbo.V_WF_TASK_LIST C ON A.APP_NO = C.TRANSACTION_CODE",
-        "where" : "WHERE C.ACT_CODE = N'INV_VERIF' AND C.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchInvoiceVerif"
+  },
     "headerList": [
         {
             "type": "sort",

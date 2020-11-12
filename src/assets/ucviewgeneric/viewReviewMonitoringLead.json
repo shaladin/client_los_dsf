@@ -38,9 +38,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT RO.OFFICE_NAME AS OfficeName,UMH.UPLOAD_MONITORING_NO AS UploadNo, UMH.FILE_NAME AS FileName, UMH.UPLOAD_DT AS UploadDt, UMH.TOTAL_RECORD AS TotalRecord, UMH.TOTAL_RECORD_PROCESSED AS TotalRecordProcessed",
-          "from": "FROM dbo.UPLOAD_MONITORING_H UMH WITH(NOLOCK) JOIN dbo.REF_STATUS RS WITH(NOLOCK) ON RS.REF_STATUS_CODE = UL.UPLOAD_STATUS JOIN dbo.REF_OFFICE AS RO WITH(NOLOCK) ON UMH.OFFICE_CODE = RO.OFFICE_CODE",
-          "where": "WHERE UMH.UPLOAD_MONITORING_H_ID = {0} AND RS.STATUS_GRP_CODE = N'UPLOAD_STATUS'"
+          "name": "viewReviewMonitoringLead"
         }
       }
     ]
