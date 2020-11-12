@@ -127,6 +127,15 @@
             <div *ngIf="CustModelCode != 'NONPROF'">
               <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputJobAddrObj" [enjiForm]="enjiForm"
                 [identifier]="'JobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Notes </label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="JobNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.JobNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="JobDataForm.controls.JobNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
             </div>
           </div>
           <div *ngIf="CustModelCode != 'NONPROF'">
@@ -150,6 +159,15 @@
               </div>
               <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputPrevJobAddrObj" [enjiForm]="enjiForm"
                 [identifier]="'PrevJobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Notes </label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="PrevJobNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.PrevJobNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="JobDataForm.controls.PrevJobNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
             </div>
             <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'">
             </lib-ucSubsection>
@@ -199,6 +217,15 @@
             </div>
             <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm"
               [identifier]="'OthBizAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Notes </label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="OthBizNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizNotes.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizNotes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
           </div>
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)

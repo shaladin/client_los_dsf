@@ -83,6 +83,9 @@ export class JobTabComponent implements OnInit {
     OthBizIndustryTypeCode: [''],
     OthBizJobPosition: [''],
     OthBizEstablishmentDt: [''],
+    JobNotes: [''],
+    PrevJobNotes: [''],
+    OthBizNotes: [''],
   })
 
   constructor(private fb: FormBuilder,
