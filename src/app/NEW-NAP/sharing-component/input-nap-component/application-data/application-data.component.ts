@@ -28,7 +28,6 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 export class ApplicationDataComponent implements OnInit {
   @Input() isCollateral: boolean;
   @Input() appId: number;
-  @Input() AppId: any;
   @Input() showCancel: boolean = true;
   @Input() IsLoanObject: boolean = false;
   @Input() BizTemplateCode: string = "";
@@ -116,7 +115,7 @@ export class ApplicationDataComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient,
     private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
       this.route.queryParams.subscribe(params => {
-        this.AppId = params["AppId"];
+        this.appId = params["AppId"];
       });  
       this.route.queryParams.subscribe(params => {
         if (params["IsMainData"] != undefined && params["IsMainData"]) this.isMainData = params["IsMainData"];
@@ -125,13 +124,11 @@ export class ApplicationDataComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
-    this.ListCrossAppObj["appId"] = this.appId;
+    this.ListCrossAppObj["AppId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
 
     this.applicationDDLitems = [];
-    // data dummy test
-    // data real
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
@@ -712,7 +709,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
    
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, {'AppId': this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, {'AppId': this.appId}).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);
