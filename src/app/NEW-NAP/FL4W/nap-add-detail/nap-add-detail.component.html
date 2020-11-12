@@ -253,7 +253,7 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"
                                          [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>

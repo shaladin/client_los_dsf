@@ -21,7 +21,7 @@
       },
       {
         "type": "sort",
-        "position": "left",
+        "position": "center",
         "label": "Owner",
         "name": "IsOwner"
       },
@@ -49,7 +49,7 @@
       },
       {
         "type": "boolean",
-        "position": "left",
+        "position": "center",
         "property": "IsOwner"
       },
       {
