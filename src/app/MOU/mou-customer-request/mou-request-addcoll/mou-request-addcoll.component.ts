@@ -33,7 +33,12 @@ export class MouRequestAddcollComponent implements OnInit {
   @Output() modeDetail: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
-  @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
+  private ucLookupCollateral: UclookupgenericComponent;
+  @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.ucLookupCollateral = content;
+    }
+  }
 
   listSelectedId: Array<number> = new Array<number>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
