@@ -67,10 +67,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT ac.CUST_NAME AS CustName, a.APP_NO AS AppNo, agr.AGRMNT_NO as AgrmntNo, aa.FULL_ASSET_NAME AS FullAssetName, vat.SERIAL_NO_1_LABEL AS ChassisNo, vat.SERIAL_NO_2_LABEL AS EngineNo, vat.SERIAL_NO_5_LABEL AS LicensePlate, aa.ASSET_STAT AS AssetStat",
-        "from": "FROM dbo.APP a WITH(NOLOCK) LEFT JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN dbo.APP_ASSET aa WITH(NOLOCK) ON a.APP_ID = aa.APP_ID JOIN dbo.AGRMNT agr WITH(NOLOCK) ON a.APP_ID = agr.APP_ID and aa.AGRMNT_ID = agr.AGRMNT_ID JOIN dbo.V_ASSET_TYPE vat WITH(NOLOCK) ON aa.ASSET_TYPE_CODE = vat.ASSET_TYPE_CODE"
-    },
+  "querystring": {
+    "name": "searchAssetInquiry"
+  },
     "headerList": [
         {
             "type": "sort",

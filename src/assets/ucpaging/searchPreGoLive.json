@@ -81,9 +81,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT wFht.WF_TASK_LIST_ID AS TaskListId, wFht.USERNAME AS Username, agr.AGRMNT_NO AS AgrmntNo, app.APP_NO AS AppNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, agr.PROD_OFFERING_CODE AS ProdOfferingCode, agr.PROD_OFFERING_VERSION AS ProdOfferingVersion, agr.AGRMNT_ID AS AgrmntId, app.APP_ID AS AppId, app.ORI_OFFICE_CODE as OfficeCode, app.ORI_OFFICE_NAME as OfficeName, app.BIZ_TEMPLATE_CODE as BizTemplateCode, wFht.ACT_CODE as ActCode, wFht.SLA_COLOR AS SlaColor",
-    "from": "FROM dbo.AGRMNT agr WITH(NOLOCK) JOIN dbo.APP app WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.V_WF_TASK_LIST wFht WITH(NOLOCK) ON agr.AGRMNT_NO = wFht.TRANSACTION_CODE",
-    "where": "WHERE wFht.END_EXECUTING_DATE IS NULL"
+    "name": "searchPreGoLive"
   },
   "orderby": {
     "key": "app.APP_NO",

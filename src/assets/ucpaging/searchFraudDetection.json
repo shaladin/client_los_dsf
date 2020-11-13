@@ -115,9 +115,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT ac.MR_CUST_TYPE_CODE as CustTypeCode, a.BIZ_TEMPLATE_CODE AS BizTemplateCode, a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ac.IS_EXISTING_CUST AS IsExistingCust, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, a.APP_ID AS AppId, a.PROD_OFFERING_CODE AS prodOfferingCode, a.PROD_OFFERING_VERSION AS prodOfferingVersion, WTL.ACT_CODE AS ActCode, WTL.SLA_COLOR AS SlaColor" ,
-    "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE",
-    "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
+    "name": "searchFraudDetection"
   },
   "bodyList": [
     {

@@ -97,11 +97,9 @@
         "label": "Take Back"
       }
     ],
-    "querystring": {
-      "select": "SELECT a.ORI_OFFICE_NAME AS OfficeName, a.ORI_OFFICE_CODE AS OfficeCode, a.APP_NO AS AppNo, ac.CUST_NAME AS CustName, ac.MR_CUST_TYPE_CODE AS MrCustTypeCode, a.PROD_OFFERING_NAME AS ProdOfferingName, a.APP_ID AS AppId, ATL.CURRENT_USER_ID AS CurrentUser, ATL.MAIN_USER_ID AS MainUser, ATL.INSTANCE_ID AS InstanceId, ATL.TASK_ID AS TaskId, ATL.IS_HOLD as IsHold, vro.IS_ALLOW_APP_CREATED AS IsAllowAppCreated, a.PROD_OFFERING_CODE AS prodOfferingCode, a.PROD_OFFERING_VERSION AS prodOfferingVersion",
-      "from": "FROM dbo.APP a WITH ( NOLOCK ) LEFT JOIN dbo.APP_CUST ac WITH ( NOLOCK ) ON a.APP_ID = ac.APP_ID AND ac.IS_CUSTOMER=1 JOIN [dbo].[V_APV_TASK_LIST] ATL WITH ( NOLOCK ) ON a.APP_NO = ATL.TRX_NO  AND ATL.CATEGORY_CODE = 'CRD_APV' JOIN [dbo].[V_REF_LOB] RL WITH ( NOLOCK ) ON a.BIZ_TEMPLATE_CODE = RL.BIZ_TMPLT_CODE  AND  a.LOB_CODE = RL.LOB_CODE JOIN [dbo].[V_REF_OFFICE] vro WITH ( NOLOCK ) ON a.ORI_OFFICE_CODE = vro.OFFICE_CODE ",
-      "where": "WHERE a.IS_APP_INIT_DONE = 1"
-    },
+  "querystring": {
+    "name": "searchCreditApprovalCFNA"
+  },
     "orderby": {
         "key": "a.APP_NO", 
         "value": "false"
@@ -173,4 +171,3 @@
       }
     ]
   }
-  

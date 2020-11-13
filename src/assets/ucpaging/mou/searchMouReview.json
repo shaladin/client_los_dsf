@@ -91,11 +91,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo,WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU.CUST_NO AS CustNo, WTL.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_REVIEW'",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL AND MOU.MOU_STAT = N'MRV' AND WTL.OFFICE_CODE = N'HO'"
-    },
+  "querystring": {
+    "name": "searchMouReview"
+  },
     "headerList": [
         {
             "type": "sort",

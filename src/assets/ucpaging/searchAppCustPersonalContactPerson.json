@@ -43,10 +43,9 @@
             "label": "Action"
         }
     ],
-    "querystring": {
-        "select": "SELECT a.CONTACT_PERSON_NAME AS ContactPersonName, a.ID_NO AS IdNo, cr.DESCR AS CustRelationship, a.MOBILE_PHN_NO_1 AS MobilePhnNo1, g.DESCR AS Gender, a.IS_EMERGENCY_CONTACT AS IsEmergencyContact, a.APP_CUST_PERSONAL_CONTACT_PERSON_ID AS AppCustPersonalContactPersonId",
-        "from": "FROM dbo.APP_CUST_PERSONAL_CONTACT_PERSON a WITH(NOLOCK) LEFT JOIN dbo.REF_MASTER cr WITH(NOLOCK) ON a.MR_CUST_RELATIONSHIP_CODE = cr.MASTER_CODE LEFT JOIN dbo.REF_MASTER g WITH(NOLOCK) ON a.MR_GENDER_CODE = g.MASTER_CODE"
-    },
+  "querystring": {
+    "name": "searchAppCustPersonalContactPerson"
+  },
     "bodyList": [
         {
             "type": "text",

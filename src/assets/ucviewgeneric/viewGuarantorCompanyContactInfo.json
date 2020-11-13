@@ -48,9 +48,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.CONTACT_NAME AS ContactName, A.MR_JOB_POSITION_CODE AS MrJobPositionCode, A.MOBILE_PHN_NO_1 AS MobilePhnNo1, A.PHN_AREA_1+A.PHN_1+A.PHN_EXT_1 AS Phn1, A.MOBILE_PHN_NO_2 AS MobilePhnNo2, A.PHN_AREA_2+A.PHN_2+A.PHN_EXT_2 AS Phn2, A.CONTACT_EMAIL AS ContactEmail, A.FAX AS Fax",
-          "from": "FROM APP_GUARANTOR_COMPANY A WITH(NOLOCK) JOIN APP_GUARANTOR ON APP_GUARANTOR.APP_GUARANTOR_ID=A.APP_GUARANTOR_ID",
-          "where": "WHERE APP_GUARANTOR.APP_ID = {0}"
+          "name": "viewGuarantorCompanyContactInfo"
         }
       }
     ]

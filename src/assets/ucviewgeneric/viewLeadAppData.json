@@ -52,11 +52,9 @@
                     "property": "InstAmt"
                 }
             ],
-            "querystring": {
-                "select": "SELECT la.TENOR AS Tenor, vrm.DESCR AS FirstInstallmentType, la.NTF_AMT AS NtfAmt, la.TOTAL_DOWN_PAYMENT_AMT AS TotalDownPaymentAmt, la.INST_AMT AS InstAmt",
-                "from": "From dbo.LEAD_APP la WITH(NOLOCK) LEFT JOIN V_REF_MASTER vrm WITH(NOLOCK) ON vrm.MASTER_CODE = la.MR_FIRST_INST_TYPE_CODE AND vrm.REF_MASTER_TYPE_CODE = 'FIRST_INST_TYPE'",
-                "where": "WHERE la.LEAD_ID = {0}"
-            }
+          "querystring": {
+            "name": "viewLeadAppData"
+          }
         }
     ]
 }

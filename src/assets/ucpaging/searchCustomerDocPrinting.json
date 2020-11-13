@@ -133,8 +133,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT MC.MOU_CUST_NO AS MouCustNo , MC.CUST_NAME AS CustName, MC.MOU_CUST_ID AS MouCustId, MC.MOU_CUST_DT AS MouCustDt, MC.END_DT AS EndDate, MC.PLAFOND_AMT AS PlafondAmt, MC.IS_REVOLVING AS IsRevolving, MC.REF_NO AS RefNo, MC.MR_MOU_TYPE_CODE AS MrMouTypeCode,  RM.DESCR AS MouType, MC.CUST_NO AS CustNo",
-    "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK) JOIN dbo.MOU_CUST_SIGNER MCS WITH(NOLOCK) ON MCS.MOU_CUST_ID = MC.MOU_CUST_ID LEFT JOIN dbo.V_REF_MASTER RM ON RM.REF_MASTER_TYPE_CODE='MOU_TYPE' AND RM.MASTER_CODE = MC.MR_MOU_TYPE_CODE"
+    "name": "searchCustomerDocPrinting"
   },
   "bodyList": [
     {

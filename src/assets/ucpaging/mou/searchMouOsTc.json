@@ -35,11 +35,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.START_DT AS StartDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MrMouTypeCode , MOU.CUST_NO AS CustNo",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN(SELECT MOU_CUST_ID, COUNT(1) AS OS_CHECKED FROM dbo.MOU_CUST_TC WITH(NOLOCK) WHERE IS_MANDATORY = 1 AND IS_CHECKED = 0 GROUP BY MOU_CUST_ID) OS_TC ON OS_TC.MOU_CUST_ID = MOU.MOU_CUST_ID",
-        "where": "WHERE MOU.MOU_STAT NOT IN (N'NEW',N'RJC',N'CAN',N'EXP',N'ACT')"
-    },
+  "querystring": {
+    "name": "searchMouOsTc"
+  },
     "headerList": [
         {
             "type": "sort",

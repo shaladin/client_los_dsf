@@ -60,10 +60,9 @@
             "criteriaPropValue": "UPLOAD"
         }
     ],
-    "querystring": {
-        "select": "SELECT UL.UPLOAD_MONITORING_NO AS UploadMonitoringNo, RO.OFFICE_NAME AS OfficeName, UL.CUST_NO AS CustNo, UL.CUST_NAME AS CustName, UL.TAX_ID_NO AS TaxIdNo, STAT.DESCR AS UploadStatus",
-        "from": "FROM dbo.UPLOAD_LEAD AS UL WITH(NOLOCK) LEFT JOIN dbo.V_REF_OFFICE AS RO WITH(NOLOCK) ON UL.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN dbo.V_REF_STATUS AS STAT WITH(NOLOCK) ON UL.UPLOAD_STATUS = STAT.REF_STATUS_CODE AND STAT.STATUS_GRP_CODE = 'UPLOAD_STATUS'"
-    },
+  "querystring": {
+    "name": "searchLeadMonitoring"
+  },
     "headerList": [
         {
             "type": "sort",

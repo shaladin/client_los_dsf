@@ -97,11 +97,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, WTL.OFFICE_CODE AS OfficeCode, L.LEAD_ID AS LeadId, L.ORI_OFFICE_CODE AS OriOfficeCode, L.ORDER_NO AS OrderNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LA.FULL_ASSET_NAME AS FullAssetName, RO.OFFICE_NAME AS OfficeName, WTL.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) LEFT JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID JOIN LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON L.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'LEAD_UPD' JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE",
-        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchLeadUpdate"
+  },
     "headerList": [
         {
             "type": "sort",

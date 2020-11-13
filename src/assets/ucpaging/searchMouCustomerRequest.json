@@ -83,11 +83,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT MOU_CUST_NO AS mouCustNo, CUST_NAME AS CustName, MOU_CUST_DT AS MouCustDt, REF_NO AS RefNo, MR_MOU_TYPE_CODE AS MrMouTypeCode, MOU_CUST_ID AS MouCustId,CUST_NO AS CustNo",
-        "from": "FROM dbo.MOU_CUST WITH(NOLOCK)",
-        "where": "WHERE MOU_STAT = N'NEW'"
-    },
+  "querystring": {
+    "name": "searchMouCustomerRequest"
+  },
     "headerList": [
         {
             "type": "sort",

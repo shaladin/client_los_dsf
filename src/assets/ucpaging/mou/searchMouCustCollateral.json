@@ -19,10 +19,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT CL.COLLATERAL_NO AS CollateralNo, CL.COLLATERAL_ID AS CollateralId, CL.FULL_ASSET_CODE AS FullAssetCode, CL.FULL_ASSET_NAME AS FullAssetName, ATE.ASSET_TYPE_NAME AS AssetTypeName, CL.COLLATERAL_PRICE_AMT AS CollateralValueAmt, CU.CUST_NAME AS CustName, CU.CUST_NO AS CustNo",
-        "from": "FROM dbo.CUST CU WITH(NOLOCK) JOIN dbo.COLLATERAL CL WITH(NOLOCK) ON CL.CUST_ID = CU.CUST_ID JOIN dbo.ASSET_TYPE ATE ON ATE.ASSET_TYPE_CODE = CL.ASSET_TYPE_CODE"
-    },
+  "querystring": {
+    "name": "searchMouCustCollateral"
+  },
     "headerList": [],
     "bodyList": []
 }
