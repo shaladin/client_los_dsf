@@ -15,6 +15,12 @@
         {
             "type": "label",
             "position": "left",
+            "label": "Customer Type",
+            "name": "MrCustTypeDescr"
+        },
+        {
+            "type": "label",
+            "position": "left",
             "label": "Customer Relationship",
             "name": "MrCustRelationshipCode"
         },
@@ -29,6 +35,12 @@
             "position": "center",
             "label": "Applicant No",
             "name": "ApplicantNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Is Complete",
+            "name": "IsCompletion"
         },
         {
             "type": "label",
@@ -51,17 +63,27 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrRelationshipCustDescr"
+            "property": "MrCustTypeDescr"
         },
         {
             "type": "text",
             "position": "left",
+            "property": "MrCustRelationshipDescr"
+        },
+        {
+            "type": "text",
+            "position": "center",
             "property": "CustNo"
         },
         {
             "type": "text",
-            "position": "left",
+            "position": "center",
             "property": "ApplicantNo"
+        },
+        {
+            "type" : "boolean",
+            "position" : "center",
+            "property" : "IsCompletion"
         },
         {
             "type": "action",

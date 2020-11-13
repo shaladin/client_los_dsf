@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
@@ -55,17 +56,24 @@ export class LegalDocTabComponent implements OnInit {
       this.AppCustCompanyLegalDoc = event.RowObj
       this.IsDetail = true;
     }else if(event.Key == "delete"){
-      this.http.post(URLConstant.DeleteAppCustCompanyLegalDoc,  {AppCustCompanyLegalDocId : event.RowObj["AppCustCompanyLegalDocId"]}).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.LoadListLegalDocData();
-        }
-      );
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+        this.http.post(URLConstant.DeleteAppCustCompanyLegalDoc,  {AppCustCompanyLegalDocId : event.RowObj["AppCustCompanyLegalDocId"]}).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.LoadListLegalDocData();
+          }
+        );
+      }
     }
   }
 
   Continue(){
-    this.OutputTab.emit();
+    if(this.ListLegalDoc.length > 0){
+      this.OutputTab.emit({IsComplete: true});
+    }else{
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA)
+      return;
+    }
   }
 
   GetEvent(){

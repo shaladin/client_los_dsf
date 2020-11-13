@@ -1,7 +1,7 @@
 <div class="col-md-12">
   <div class="card">
     <div class="card-body">
-      <div class="px-3">        
+      <div class="px-3">
         <form class="form form-horizontal" [formGroup]="CcForm" (ngSubmit)="CcForm.valid && SaveForm()"
           #enjiForm="ngForm">
           <lib-ucSubsection [id]="'CcMainId'" [title]="'Contact Main Information'" [panel]="'CcMain'">
@@ -15,8 +15,7 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="ContactPersonName"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.ContactPersonName.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.ContactPersonName"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.ContactPersonName" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -25,15 +24,14 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="JobTitleName"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.JobTitleName.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.JobTitleName"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.JobTitleName" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4 adInsLabel" translate>Id Type</label>
-                  <div class="col-md-8">                    
-                    <select class="form-control adInsInput" formControlName="MrIdTypeCode">
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" formControlName="MrIdTypeCode" (change)="ChangeIdType()">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterIdTypeCode]" value="{{it.Key}}">
                         {{it.Value}} </option>
@@ -41,22 +39,30 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Id No</label>
+                  <label class="col-md-4"
+                    [ngClass]="{ 'adins-required-label': CcForm.controls.MrIdTypeCode.value == IdTypeNpwp, 'adInsLabel': CcForm.controls.MrIdTypeCode.value != IdTypeNpwp }"
+                    translate>Id No</label>
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="IdNo"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdNo.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.IdNo"
-                      [submit]="enjiForm.submitted">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdNo.invalid }">
+                    <lib-uc-show-errors [control]="CcForm.controls.IdNo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Id Expired Date</label>
+                  <label class="col-md-4"
+                    [ngClass]="{'adins-required-label': CcForm.controls.MrIdTypeCode.value == 'KITAS' || CcForm.controls.MrIdTypeCode.value == 'SIM'}"
+                    translate>Id Expired Date</label>
                   <div class="col-md-8">
-                    <input type="date" class="form-control" formControlName="IdExpiredDt"
+                    <input *ngIf="['NPWP','AKTA','EKTP'].includes(CcForm.controls.MrIdTypeCode.value)" readonly
+                      type="date" class="form-control" formControlName="IdExpiredDt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdExpiredDt.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.IdExpiredDt"
-                      [submit]="enjiForm.submitted">
+                    <input [attr.readonly]="isExisting ? 'true' : null"
+                      *ngIf="!['NPWP','AKTA','EKTP'].includes(CcForm.controls.MrIdTypeCode.value)"
+                      min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control"
+                      formControlName="IdExpiredDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdExpiredDt.invalid}">
+                    <lib-uc-show-errors [control]="CcForm.controls.IdExpiredDt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -65,8 +71,7 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="MobilePhnNo1"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.MobilePhnNo1.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.MobilePhnNo1"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -75,8 +80,7 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="Email1"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.Email1.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.Email1"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.Email1" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -85,22 +89,28 @@
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Gender</label>
-                  <div class="col-md-8">                    
-                    <select class="form-control adInsInput" formControlName="MrGenderCode">
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" formControlName="MrGenderCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.MrGenderCode.invalid}">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterGenderCode]" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
+                    <lib-uc-show-errors [control]="CcForm.controls.MrGenderCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Job Position</label>
-                  <div class="col-md-8">                    
-                    <select class="form-control adInsInput" formControlName="MrJobPositionCode">
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" formControlName="MrJobPositionCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.MrJobPositionCode.invalid}">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterJobPosCode]" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
+                    <lib-uc-show-errors [control]="CcForm.controls.MrJobPositionCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -108,8 +118,7 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="BirthPlace"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.BirthPlace.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.BirthPlace"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.BirthPlace" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -117,15 +126,15 @@
                   <label class="col-md-4 adInsLabel" translate>Birth Date</label>
                   <div class="col-md-8">
                     <input type="date" class="form-control" formControlName="BirthDt"
+                      max="{{BusinessDate | date:'yyyy-MM-dd'}}"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.BirthDt.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.BirthDt"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.BirthDt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4 adInsLabel" translate>Contact Relationship</label>
-                  <div class="col-md-8">                    
+                  <div class="col-md-8">
                     <select class="form-control adInsInput" formControlName="MrCustRelationshipCode">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of DictRefMaster[MasterCustRelationCode]" value="{{it.Key}}">
@@ -138,8 +147,7 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="MobilePhnNo2"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.MobilePhnNo2.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.MobilePhnNo2"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.MobilePhnNo2" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -148,21 +156,18 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="Email2"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.Email2.invalid}">
-                    <lib-uc-show-errors [control]="CcForm.controls.Email2"
-                      [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="CcForm.controls.Email2" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-          <lib-ucaddress *ngIf="IsUcAddrReady" #UcAddrCc [addressObj]="inputAddressObjForCc" [enjiForm]="enjiForm" [identifier]="InputAddressObjForCc_Identifier" [UCAddrForm]="CcForm"></lib-ucaddress>
-
+          <lib-ucaddress *ngIf="IsUcAddrReady" #UcAddrCc [addressObj]="inputAddressObjForCc" [enjiForm]="enjiForm"
+            [identifier]="InputAddressObjForCc_Identifier" [UCAddrForm]="CcForm"></lib-ucaddress>
           <div class="form-actions right">
-            <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CcForm)
-              class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+            <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CcForm) class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>
         </form>

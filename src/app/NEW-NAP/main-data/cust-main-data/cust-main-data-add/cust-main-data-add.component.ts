@@ -12,6 +12,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -26,6 +27,7 @@ export class CustMainDataAddComponent implements OnInit {
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
   bizTemplateCode: string;
+  isDisableCopyAppFrom: boolean = true;
   user: any;
 
   NapAppForm = this.fb.group({
@@ -79,7 +81,7 @@ export class CustMainDataAddComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
-    private http: HttpClient, private toastr: NGXToastrService) 
+    private http: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService) 
   { 
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
@@ -219,16 +221,28 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppMaindata, napAppObj).subscribe(
       (response) => {
+        setTimeout(()=>{ this.spinner.show(); }, 10)
         this.toastr.successMessage(response["message"]);
 
         switch(this.bizTemplateCode) {
           case CommonConstant.CF4W :
-            this.router.navigate(["Nap/ConsumerFinance/NAP1"], {
-              queryParams: { "AppId": response["AppId"]} 
-            });
+            this.router.navigate(["Nap/ConsumerFinance/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.CFRFN4W :
+            this.router.navigate(["Nap/CFRefinancing/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.FCTR :
+            this.router.navigate(["Nap/Factoring/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.FL4W :
+            this.router.navigate(["Nap/FinanceLeasing/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+          break;
+          case CommonConstant.CFNA :
+            this.router.navigate(["Nap/CFNA/NAP1"], {queryParams: { "AppId": response["AppId"]} });
           break;
         }
-      });
+      }
+    );
   }
 
   getLookupAppResponseCopy(ev: any) {

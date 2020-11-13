@@ -37,9 +37,19 @@
                     </lib-uclookupgeneric>
                   </div>
                 </div>
-
               </div>
               <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Customer Model</label>
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput full-width" style="width: 100%" formControlName="MrCustModelCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.MrCustModelCode.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="CustDetailForm.controls.MrCustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Industry Type</label>
                   <div class="col-md-8"> 
@@ -58,7 +68,7 @@
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustDetailForm)
               class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+              <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>
         </form>

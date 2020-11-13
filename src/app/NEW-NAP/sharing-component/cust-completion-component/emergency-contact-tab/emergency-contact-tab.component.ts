@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -14,6 +13,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 
@@ -25,7 +25,7 @@ import { environment } from 'environments/environment';
 export class EmergencyContactTabComponent implements OnInit {
 
   @Input() AppCustId: number;
-  @Input() isMarried: boolean;
+  @Input() IsMarried: boolean;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   isUcAddressReady: boolean;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
@@ -38,7 +38,7 @@ export class EmergencyContactTabComponent implements OnInit {
   ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
-  MaxDate: Date;
+  BusinessDt: Date;
 
   EmergencyContactForm = this.fb.group({
     ContactPersonName: [''],
@@ -48,11 +48,11 @@ export class EmergencyContactTabComponent implements OnInit {
     IdNo: [''],
     BirthPlace: [''],
     IdExpiredDt: [''],
-    BirthDt: [''],
+    BirthDt: ['', Validators.required],
     MrCustRelationshipCode: ['', Validators.required],
     MobilePhnNo1: ['', Validators.required],
     MobilePhnNo2: [''],
-    Email1: [''],
+    Email: [''],
     CopyAddrFrom: ['']
   })
 
@@ -60,13 +60,12 @@ export class EmergencyContactTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
     public formValidate: FormValidateService) {
   }
 
   ngOnInit() {
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    this.MaxDate = UserAccess.BusinessDt;
+    this.BusinessDt = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -106,8 +105,8 @@ export class EmergencyContactTabComponent implements OnInit {
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
+          this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
-        this.clearExpDt();
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
@@ -123,7 +122,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
-        if (!this.isMarried) {
+        if (!this.IsMarried) {
           await this.removeSpouse();
         }
         await this.EmergencyContactForm.patchValue({
@@ -132,7 +131,7 @@ export class EmergencyContactTabComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListAppCustAddrData, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
         this.copyAddressFromObj = response;
         this.EmergencyContactForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
@@ -140,20 +139,20 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   getData(){
-    this.http.post(URLConstant.GetAppCustEmrgncCntctByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response["AppCustEmrgncCntctId"] != 0){
+        if(response.AppCustEmrgncCntctId != 0){
           this.EmergencyContactForm.patchValue({
-            MrIdTypeCode: response["MrIdTypeCode"],
-            MrGenderCode: response["MrGenderCode"],
-            IdNo: response["IdNo"],
-            BirthPlace: response["BirthPlace"],
-            IdExpiredDt: formatDate(response["IdExpiredDt"], 'yyyy-MM-dd', 'en-US'),
-            BirthDt: formatDate(response["BirthDt"], 'yyyy-MM-dd', 'en-US'),
-            MrCustRelationshipCode: response["MrCustRelationshipCode"],
-            MobilePhnNo1: response["MobilePhnNo1"],
-            MobilePhnNo2: response["MobilePhnNo2"],
-            Email1: response["Email1"]
+            MrIdTypeCode: response.MrIdTypeCode,
+            MrGenderCode: response.MrGenderCode,
+            IdNo: response.IdNo,
+            BirthPlace: response.BirthPlace,
+            IdExpiredDt: response.IdExpiredDt != null ? formatDate(response.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+            BirthDt: formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US'),
+            MrCustRelationshipCode: response.MrCustRelationshipCode,
+            MobilePhnNo1: response.MobilePhnNo1,
+            MobilePhnNo2: response.MobilePhnNo2,
+            Email: response.Email
           })
         }        
       this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
@@ -184,63 +183,71 @@ export class EmergencyContactTabComponent implements OnInit {
       });
   }
 
-  clearExpDt() {
-    this.EmergencyContactForm.controls.IdExpiredDt.reset();
+  ChangeIdType(IdType: string){
+    this.EmergencyContactForm.controls.IdExpiredDt.patchValue("");
+
+    if(IdType == "KITAS" || IdType == "SIM"){
+      this.EmergencyContactForm.controls.IdExpiredDt.setValidators([Validators.required]);
+    }else{
+      this.EmergencyContactForm.controls.IdExpiredDt.clearValidators();
+    }
+
+    this.EmergencyContactForm.controls.IdExpiredDt.updateValueAndValidity();
   }
 
   removeSpouse() {
     let SpouseRelationship = this.MrCustRelationshipObj[0]
-    if (!this.isMarried && SpouseRelationship.Key == "SPOUSE") {
+    if (!this.IsMarried && SpouseRelationship.Key == "SPOUSE") {
       this.MrCustRelationshipObj = this.MrCustRelationshipObj.slice(1, this.MrCustRelationshipObj.length);
     }
   }
 
   copyCustomerEvent(event) {
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
       (response) => {
-        if (response["CustObj"] != undefined) {
+        if (response.CustObj != undefined) {
           this.EmergencyContactForm.patchValue({
-            ContactPersonName: response["CustObj"].CustName,
-            ContactPersonCustNo: response["CustObj"].CustNo,
-            MrCustTypeCode: response["CustObj"].MrCustTypeCode,
-            MrIdTypeCode: response["CustObj"].MrIdTypeCode,
-            IdNo: response["CustObj"].IdNo,
-            IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
+            ContactPersonName: response.CustObj.CustName,
+            ContactPersonCustNo: response.CustObj.CustNo,
+            MrCustTypeCode: response.CustObj.MrCustTypeCode,
+            MrIdTypeCode: response.CustObj.MrIdTypeCode,
+            IdNo: response.CustObj.IdNo,
+            IdExpiredDt: response.CustObj.IdExpiredDt != null ? formatDate(response.CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
           });
-          this.InputLookupCustObj.nameSelect = response["CustObj"].CustName;
-          this.InputLookupCustObj.jsonSelect = { CustName: response["CustObj"].CustName };
+          this.InputLookupCustObj.nameSelect = response.CustObj.CustName;
+          this.InputLookupCustObj.jsonSelect = { CustName: response.CustObj.CustName };
         }
 
-        if (response["CustPersonalObj"] != undefined) {
+        if (response.CustPersonalObj != undefined) {
           this.EmergencyContactForm.patchValue({
-            MrGenderCode: response["CustPersonalObj"].MrGenderCode,
-            BirthPlace: response["CustPersonalObj"].BirthPlace,
-            BirthDt: formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US'),
-            MobilePhnNo1: response["CustPersonalObj"].MobilePhnNo1,
-            MobilePhnNo2: response["CustPersonalObj"].MobilePhnNo2,
-            Email1: response["CustPersonalObj"].Email1,
+            MrGenderCode: response.CustPersonalObj.MrGenderCode,
+            BirthPlace: response.CustPersonalObj.BirthPlace,
+            BirthDt: response.CustPersonalObj.BirthDt != null ? formatDate(response.CustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US') : "",
+            MobilePhnNo1: response.CustPersonalObj.MobilePhnNo1,
+            MobilePhnNo2: response.CustPersonalObj.MobilePhnNo2,
+            Email: response.CustPersonalObj.Email1,
           });
         }
 
-        if (response["CustAddrLegalObj"] != undefined) {
-          this.UcAddrObj.Addr = response["CustAddrLegalObj"].Addr;
-          this.UcAddrObj.AreaCode1 = response["CustAddrLegalObj"].AreaCode1;
-          this.UcAddrObj.AreaCode2 = response["CustAddrLegalObj"].AreaCode2;
-          this.UcAddrObj.AreaCode3 = response["CustAddrLegalObj"].AreaCode3;
-          this.UcAddrObj.AreaCode4 = response["CustAddrLegalObj"].AreaCode4;
-          this.UcAddrObj.City = response["CustAddrLegalObj"].City;
-          this.UcAddrObj.Phn1 = response["CustAddrLegalObj"].Phn1;
-          this.UcAddrObj.Phn2 = response["CustAddrLegalObj"].Phn2;
-          this.UcAddrObj.Phn3 = response["CustAddrLegalObj"].Phn3;
-          this.UcAddrObj.PhnArea1 = response["CustAddrLegalObj"].PhnArea1;
-          this.UcAddrObj.PhnArea2 = response["CustAddrLegalObj"].PhnArea2;
-          this.UcAddrObj.PhnArea3 = response["CustAddrLegalObj"].PhnArea3;
-          this.UcAddrObj.PhnExt1 = response["CustAddrLegalObj"].PhnExt1;
-          this.UcAddrObj.PhnExt2 = response["CustAddrLegalObj"].PhnExt2;
-          this.UcAddrObj.PhnExt3 = response["CustAddrLegalObj"].PhnExt3;
+        if (response.CustAddrLegalObj != undefined) {
+          this.UcAddrObj.Addr = response.CustAddrLegalObj.Addr;
+          this.UcAddrObj.AreaCode1 = response.CustAddrLegalObj.AreaCode1;
+          this.UcAddrObj.AreaCode2 = response.CustAddrLegalObj.AreaCode2;
+          this.UcAddrObj.AreaCode3 = response.CustAddrLegalObj.AreaCode3;
+          this.UcAddrObj.AreaCode4 = response.CustAddrLegalObj.AreaCode4;
+          this.UcAddrObj.City = response.CustAddrLegalObj.City;
+          this.UcAddrObj.Phn1 = response.CustAddrLegalObj.Phn1;
+          this.UcAddrObj.Phn2 = response.CustAddrLegalObj.Phn2;
+          this.UcAddrObj.Phn3 = response.CustAddrLegalObj.Phn3;
+          this.UcAddrObj.PhnArea1 = response.CustAddrLegalObj.PhnArea1;
+          this.UcAddrObj.PhnArea2 = response.CustAddrLegalObj.PhnArea2;
+          this.UcAddrObj.PhnArea3 = response.CustAddrLegalObj.PhnArea3;
+          this.UcAddrObj.PhnExt1 = response.CustAddrLegalObj.PhnExt1;
+          this.UcAddrObj.PhnExt2 = response.CustAddrLegalObj.PhnExt2;
+          this.UcAddrObj.PhnExt3 = response.CustAddrLegalObj.PhnExt3;
 
-          this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["CustAddrLegalObj"].Zipcode;
-          this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["CustAddrLegalObj"].Zipcode };
+          this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response.CustAddrLegalObj.Zipcode;
+          this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.CustAddrLegalObj.Zipcode };
           this.InputUcAddressObj.default = this.UcAddrObj;
         }
       });
@@ -284,7 +291,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.MrCustRelationshipCode = this.EmergencyContactForm.controls.MrCustRelationshipCode.value;
     this.appCustEmrgncCntctObj.MobilePhnNo1 = this.EmergencyContactForm.controls.MobilePhnNo1.value;
     this.appCustEmrgncCntctObj.MobilePhnNo2 = this.EmergencyContactForm.controls.MobilePhnNo2.value;
-    this.appCustEmrgncCntctObj.Email = this.EmergencyContactForm.controls.Email1.value;
+    this.appCustEmrgncCntctObj.Email = this.EmergencyContactForm.controls.Email.value;
     this.appCustEmrgncCntctObj.Addr = this.UcAddrObj.Addr;
     this.appCustEmrgncCntctObj.AreaCode1 = this.UcAddrObj.AreaCode1;
     this.appCustEmrgncCntctObj.AreaCode2 = this.UcAddrObj.AreaCode2;
@@ -305,7 +312,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.http.post(URLConstant.AddEditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
+        this.OutputTab.emit({IsComplete: true});
       },
       error => {
         console.log(error);

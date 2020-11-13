@@ -1,0 +1,52 @@
+<div *ngIf="!IsDetail">
+  <div class="button-right margin-15">
+    <button type="button" class="btn btn-raised btn-primary" (click)="Add()" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </div>
+  <div *ngIf="ListAddress?.length == 0">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;">
+            <span class="thead-header" name="AddressType" translate>Address Type Name</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Address" translate>Address Name </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="MrBuildingOwnership" translate>Building Ownership</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Phn1" translate>Phone (Fix Line) 1</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Phn2" translate>Phone (Fix Line) 2</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Notes" translate>Notes</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Action" translate>Action</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="IsReady && ListAddress?.length > 0">
+    <lib-ucgridview [gridInput]="inputGridObj" (callback)="GetCallback($event)"></lib-ucgridview>
+  </div>
+  <div class="pull-right margin-15">
+    <button type="button" (click)="Continue()" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i> Save & Continue
+    </button>
+  </div>
+</div>
+<div *ngIf="IsDetail">
+<app-cc-address-detail [InputObj]="InputObj" (OutputTab)="GetEvent($event)"> </app-cc-address-detail>
+</div>

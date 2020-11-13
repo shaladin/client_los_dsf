@@ -26,7 +26,7 @@ export class AppCustPersonalObj {
     Email2: string;
     Email3: string;
     IsRestInPeace: boolean;
-    RowVersion: any;
+    RowVersion: string[];
 
 constructor() { 
         this.AppCustPersonalId = 0;
@@ -54,5 +54,6 @@ constructor() {
         this.Email2 = "";
         this.Email3 = "";
         this.IsRestInPeace = false;
+        this.RowVersion = [];
     }
 }

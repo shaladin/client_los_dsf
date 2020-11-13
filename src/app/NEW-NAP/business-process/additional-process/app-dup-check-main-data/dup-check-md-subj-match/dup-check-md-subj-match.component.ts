@@ -31,6 +31,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   isLock: boolean = true;
   isMasterLock: boolean = false;
   isNegativeLock: boolean = false;
+  isAppLock: boolean = false;
+  IsReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.queryParams.subscribe(params => {
@@ -131,12 +133,16 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         this.http.post(URLConstant.MD_GetAppCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.listAppCustDuplicate = response["ListDuplicateAppCust"];
-            if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) this.isLock = true;
+            if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock){
+              this.isLock = true;
+              this.isAppLock = true;
+            }
             else if(!this.isMasterLock) this.isLock = false;
           }
         );
 
         this.initViewMainInfo();
+        this.IsReady = true;
       });
   }
 
@@ -153,6 +159,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   selectAppCust(item){
     this.reqDupCheckAppCustObj.CustNo = "";
     this.reqDupCheckAppCustObj.ApplicantNo = item.ApplicantNo;
+    this.reqDupCheckAppCustObj.SourceAppCustId = item.AppCustId;
     this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, this.reqDupCheckAppCustObj).subscribe(
       response => {
         this.buttonCancelOnClick();

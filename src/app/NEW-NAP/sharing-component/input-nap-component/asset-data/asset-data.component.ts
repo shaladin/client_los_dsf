@@ -665,6 +665,9 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.IsCollateral = this.AssetDataForm.controls.IsCollateral.value;
     this.allAssetDataObj.AppAssetObj.IsInsurance = this.AssetDataForm.controls.IsInsurance.value;
     this.allAssetDataObj.AppAssetObj.IsEditableDp = this.AssetDataForm.controls.IsEditableDp.value;
+    // if(this.appAssetObj.RowVersion != null){
+    // this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.RowVersion;
+    // }
     if (this.AssetDataForm.controls.AdminHeadNo.value != "") {
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls.AdminHeadName.value;
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls.AdminHeadNo.value;
@@ -1131,6 +1134,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetConditionChanged();
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
+          this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
             this.setAddrOwnerObj();
             this.setAddrLocationObj();

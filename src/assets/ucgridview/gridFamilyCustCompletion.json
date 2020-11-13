@@ -5,24 +5,25 @@
         "type": "sort",
         "position": "left",
         "label": "Family Name",
-        "name": "sortId1"
-      },
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Family Type",
-        "name": "sortId2"
+        "name": "CustName"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Relationship",
-        "name": "sortId3"
+        "name": "MrCustRelationshipDescr"
       },
       {
-        "type": "label",
+        "type": "sort",
+        "position": "left",
+        "label": "Birth Place",
+        "name": "BirthPlace"
+      },
+      {
+        "type": "sort",
         "position": "center",
-        "label": "Action"
+        "label": "Birth Date",
+        "name": "BirthDt"
       }
     ],
     "bodyList": [
@@ -34,84 +35,17 @@
       {
         "type": "text",
         "position": "left",
-        "property": "MrCustTypeCode"
+        "property": "MrCustRelationshipDescr"
       },
       {
         "type": "text",
         "position": "left",
-        "property": "MrCustRelationship"
+        "property": "BirthPlace"
       },
       {
-        "type": "action",
+        "type": "date",
         "position": "center",
-        "action": [
-          {
-            "type": "switch",
-            "case": [
-              {
-                "conditions": [
-                  {
-                    "property": "IsFamily",
-                    "value": "1",
-                    "restriction": "EQ"
-                  },
-                  {
-                    "property": "MrCustRelationship",
-                    "value": "SPOUSE",
-                    "restriction": "NEQ"
-                  }
-                ],
-                "result": {
-                  "type": "callback",
-                  "icon": "ft-edit-2",
-                  "key": "edit",
-                  "property": [
-                    {
-                      "type": "AppCustId",
-                      "property": "AppCustId"
-                    },
-                    {
-                      "type": "MrCustTypeCode",
-                      "property": "MrCustTypeCode"
-                    },
-                    {
-                      "type": "mode",
-                      "property": "edit"
-                    }
-                  ]
-                },
-                "isHide": false
-              },
-              {
-                "conditions": [
-                  {
-                    "property": "IsFamily",
-                    "value": "1",
-                    "restriction": "EQ"
-                  },
-                  {
-                    "property": "MrCustRelationship",
-                    "value": "SPOUSE",
-                    "restriction": "NEQ"
-                  }
-                ],
-                "result": {
-                  "type": "callback",
-                  "icon": "ft-trash-2",
-                  "key": "delete",
-                  "property": [
-                    {
-                      "type": "AppCustId",
-                      "property": "AppCustId"
-                    }
-                  ],
-                  "anchor": "warning"
-                },
-                "isHide": false
-              }
-            ]
-          }
-        ]
+        "property": "BirthDt"
       }
     ]
   }

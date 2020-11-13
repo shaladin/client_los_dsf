@@ -3,11 +3,11 @@
     <div class="card-body">
       <div class="px-3"> 
           <div class="ucSearch-Button-Right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" translate>
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
               <i class="fa fa-arrow-left"></i> Back
             </button>
-            <button type="button" class="btn btn-raised btn-primary mr-1" translate>
-              <i class="fa fa-check-square-o"></i> Save
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Save()"  translate>
+              <i class="fa fa-check-square-o"></i> Submit
             </button>
           </div>
           <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" #viewMainInfo> </lib-ucviewgeneric> 
@@ -28,9 +28,8 @@
               </button>
             </div>
             <div class="line"></div>
-            <div class="step" data-target="#managementShareholder-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="managementShareholder-tab" id="managementShareholder-tab-trigger"
-                (click)="EnterTab('ManagementShareholder')">
+            <div class="step" data-target="#shrholder-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="shrholder-tab" id="shrholder-tab-trigger" (click)="EnterTab('Shrholder')">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Management / Shareholder</span>
               </button>
@@ -71,28 +70,26 @@
           <br><br>
           <div class="bs-stepper-content">
             <div id="customer-detail-tab" class="content" role="tabpanel" aria-labelledby="customer-detail-tab-trigger">
-              <app-cust-detail-company *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="NextStep('Address')"> </app-cust-detail-company>
+              <app-cust-detail-company *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event,'Address')"> </app-cust-detail-company>
             </div>
             <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
-              <!-- <app-address-tab *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="NextStep('Family')"> </app-address-tab> -->b
+              <app-cc-address-paging *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Shrholder')"> </app-cc-address-paging>
             </div>
-            <div id="managementShareholder-tab" class="content" role="tabpanel" aria-labelledby="managementShareholder-tab-trigger">
-              <!-- <app-family-tab *ngIf="stepIndex == 3" [appId]="AppId" [isMarried]="isMarried" (OutputTab)="NextStep('Job')"> </app-family-tab> -->c
+            <div id="shrholder-tab" class="content" role="tabpanel" aria-labelledby="shrholder-tab-trigger">
+              <app-mgmnt-shrholder *ngIf="stepIndex == 3" [AppId]="AppId" (OutputTab)="GetEvent($event, 'Contact')"> </app-mgmnt-shrholder>
             </div>
             <div id="Contact-tab" class="content" role="tabpanel" aria-labelledby="Contact-tab-trigger">
-              <app-cc-contact-information-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" (OutputTab)="NextStep('Financial')"></app-cc-contact-information-tab>
-              <!-- <app-job-tab *ngIf="stepIndex == 4" [appId]="AppId" [AppCustId]="AppCustId"> </app-job-tab> -->
+              <app-cc-contact-information-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event, 'Financial')"></app-cc-contact-information-tab>
             </div>
             <div id="Financial-tab" class="content" role="tabpanel"
               aria-labelledby="Financial-tab-trigger">
-              <!-- <app-customer-personal-job-data (outputTab)="getValue($event)" *ngIf="stepIndex == 5">
-            </app-customer-personal-job-data> -->
+              <app-financial-company *ngIf="stepIndex == 5" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event, 'Legal')"> </app-financial-company>
             </div>
             <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
-              <app-legal-doc-tab *ngIf="stepIndex == 6" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="NextStep('Other')"> </app-legal-doc-tab>
+              <app-legal-doc-tab *ngIf="stepIndex == 6" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="GetEvent($event, 'Other')"> </app-legal-doc-tab>
             </div>
             <div id="other-tab" class="content" role="tabpanel" aria-labelledby="other-tab-trigger">
-              <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 7"> </app-other-info-tab>
+              <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 7" (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
             </div>
           </div>
         </div>

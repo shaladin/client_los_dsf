@@ -1,13 +1,16 @@
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
-import { AnyCnameRecord } from 'dns';
 import { environment } from 'environments/environment';
+import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -22,11 +25,12 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   AppCustPersonalId: number;
   stepIndex: number = 1;
   CustModelCode: string;
-  isChange: boolean = false;
-  isMarried: boolean = false;
+  IsMarried: boolean = false;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-
+  IsCompletion: boolean = false;
+  isCompletionCheck: boolean = true;
+  isCompleteCustStep:object = {};
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -34,11 +38,23 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Job": 4,
     "Emergency": 5,
     "Financial": 6,
-    "CustAttr": 7,
+    "Other": 7,
+  }  
+  ValidationMessages = {
+    "Detail": "Please complete required data in tab \"Customer Detail\"",
+    "Address": "Please add Legal & Residence Address in tab \"Address Information\"",
+    "Family": "Please complete required data in tab \"Family\"",
+    "Job": "Please complete required data in tab \"Job Data\"",
+    "Emergency": "Please complete required data in tab \"Emergency Contact\"",
+    "Financial": "Please complete required data in tab \"Financial Data\"",
+    "Other": "Please complete required data in tab \"Other Attribute\"",
   }
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute) {
+    private location: Location,
+    private route: ActivatedRoute,
+    private toastr: NGXToastrService,
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -64,13 +80,23 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       animation: true
     })
 
-    this.http.post(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response["MrMaritalStatCode"] != null && response["MrMaritalStatCode"] == "MARRIED") this.isMarried = true;
-        this.CustModelCode = response["CustModelCode"];
-        this.AppCustPersonalId = response["AppCustPersonalId"];
+        if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
+        this.CustModelCode = response.AppCustObj.MrCustModelCode;
+        this.AppCustPersonalId = response.AppCustPersonalObj.AppCustPersonalId;
+        this.IsCompletion = response.AppCustObj.IsCompletion;
       }
     );
+
+    // set default isComplete untuk all step ke false jika belum ada defaultnya
+    Object.keys(this.CustStep).forEach(stepName => {
+      if(typeof(this.isCompleteCustStep[stepName]) == 'undefined') this.isCompleteCustStep[stepName] = false;
+    });
+  }
+  
+  Back() {
+    this.location.back();
   }
 
   EnterTab(type: string) {
@@ -93,8 +119,8 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       case "Financial":
         this.stepIndex = this.CustStep["Financial"];
         break;
-      case "CustAttr":
-        this.stepIndex = this.CustStep["CustAttr"];
+      case "Other":
+        this.stepIndex = this.CustStep["Other"];
         break;
     }
     this.stepper.to(this.stepIndex);
@@ -102,11 +128,49 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
   GetEvent(event: any, Step: string){
     if(event!=null){
-      if(event.Key = "Detail"){
+
+      // set isComplete currStep jika ada event nya
+      if(typeof(event.IsComplete) != 'undefined') {
+        Object.keys(this.CustStep).forEach(stepName => {
+          if(this.CustStep[stepName] == this.stepIndex) 
+            this.isCompleteCustStep[stepName] = event.IsComplete;
+        });
+      }
+      if(event.Key == "Detail"){
         this.CustModelCode = event.CustModelCode;
       }
     }
-    this.EnterTab(Step);
-    this.ucViewMainProd.initiateForm();
+    if(Step == 'Save')
+    {
+      this.Save();
+    }
+    else
+    {
+      this.EnterTab(Step);
+      this.ucViewMainProd.initiateForm();
+    }    
+  }
+  completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
+  Save(){
+    this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
+      (response) => {
+        this.completionCheckingObj.IsCompleted = response["IsCompleted"];
+        this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
+        console.log(this.completionCheckingObj);
+        if (this.completionCheckingObj.IsCompleted != true) {
+          let errorMsg = typeof this.ValidationMessages[this.completionCheckingObj.InCompletedStep] != 'undefined' ? this.ValidationMessages[this.completionCheckingObj.InCompletedStep] : 'To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep;
+          this.toastr.warningMessage(errorMsg);
+          this.EnterTab(this.completionCheckingObj.InCompletedStep);
+        }
+        else {
+          this.toastr.successMessage(response["message"]);
+          this.Back();
+        }
+        
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 }

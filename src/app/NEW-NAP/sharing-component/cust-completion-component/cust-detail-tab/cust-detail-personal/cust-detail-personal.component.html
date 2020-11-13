@@ -9,18 +9,6 @@
           <div id="CustDetail">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group row ">
-                  <label class="col-md-4 adins-required-label" translate>Customer Model Code</label>
-                  <div class="col-md-6">
-                    <select class="form-control adInsInput full-width" style="width: 100%"
-                      formControlName="CustModelCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.CustModelCode.invalid }">
-                      <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="CustDetailForm.controls.CustModelCode"
-                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                  </div>
-                </div>
                 <div class="form-group row">
                   <label class="col-md-4" translate>Full Name</label>
                   <div class="col-md-8">
@@ -64,7 +52,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4" translate>Rest in Peace</label>
+                  <label class="col-md-4" translate>Rest In Peace</label>
                   <div class="col-md-8">
                     <input type="checkbox" formControlName="IsRestInPeace"/>
                   </div>
@@ -72,13 +60,13 @@
                 <div class="form-group row">
                   <label class="col-md-4" translate>VIP</label>
                   <div class="col-md-8">
-                    <input type="checkbox" formControlName="IsVip"/>
+                    <input type="checkbox" (change)="VIPCheck()" formControlName="IsVip"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" translate>Affiliation with Multifinance</label>
                   <div class="col-md-8">
-                    <input type="checkbox" formControlName="IsAffiliateWithMF"/>
+                    <input type="checkbox" formControlName="IsAffiliateWithMf"/>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -167,7 +155,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4" translate>VIP Notes</label>
+                  <label class="col-md-4" [ngClass]="{'adins-required-label': CustDetailForm.controls.IsVip.value == true}" translate>VIP Notes</label>
                   <div class="col-md-6">
                     <textarea rows="5" class="form-control" formControlName="VIPNotes"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.VIPNotes.invalid }"></textarea>
@@ -180,7 +168,7 @@
           <div class="form-actions right">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(CustDetailForm)"
               class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+              <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>
         </form>

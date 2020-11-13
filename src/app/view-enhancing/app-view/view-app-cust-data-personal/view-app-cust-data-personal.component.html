@@ -24,8 +24,7 @@
                 <td class="text-left" *ngIf="item.CustAddrTypeName == null"> - </td>
                 <td class="text-left" *ngIf="item.FullAddr != null">{{item.FullAddr}}</td>
                 <td class="text-left" *ngIf="item.FullAddr == null"> - </td>
-                <td class="text-center" *ngIf="item.PhoneNo != null || item.PhoneNo != ''">{{item.PhoneNo}}</td>
-                <td class="text-center" *ngIf="item.PhoneNo == null || item.PhoneNo == ''"> - </td>
+                <td class="text-center">{{item.PhoneNo ? item.PhoneNo : "-"}}</td>
                 <td class="text-center" *ngIf="item.HouseOwnershipName != null">{{item.HouseOwnershipName}}</td>
                 <td class="text-center" *ngIf="item.HouseOwnershipName == null"> - </td>
                 </tr>

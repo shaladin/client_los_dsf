@@ -8,6 +8,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -27,9 +28,7 @@ export class NapCustMainDataComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
-  NapObj: AppObj;
-  IsMultiAsset: string;
-  ListAsset: any;
+  NapObj: AppObj = new AppObj();
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
@@ -37,8 +36,9 @@ export class NapCustMainDataComponent implements OnInit {
   AppStep = {
     "NEW": 1,
     "CUST": 1,
-    "FAMILY": 2,
-    "GUAR": 3,
+    "FAM": 2,
+    "SHR": 3,
+    "GUAR": 4,
   };
 
   ResponseReturnInfoObj;
@@ -67,7 +67,7 @@ export class NapCustMainDataComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainData.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -83,13 +83,12 @@ export class NapCustMainDataComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    this.NapObj = new AppObj();
+    
     this.NapObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
-          //this.AppStepIndex = 1;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
@@ -100,12 +99,13 @@ export class NapCustMainDataComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
       (response) => {
-        if (response['AppCustObj']) 
+        if (response.AppCustObj) 
         {
-          this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
-          this.appCustId = response['AppCustObj'].AppCustId;
+          this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
+          this.appCustId = response.AppCustObj.AppCustId;
+          this.isMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
       }
     );
@@ -140,9 +140,6 @@ export class NapCustMainDataComponent implements OnInit {
 
   ChangeTab(AppStep) {
     switch (AppStep) {
-      case "TEST":
-        this.AppStepIndex = this.AppStep["TEST"];
-        break;
       case CommonConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
         break;
@@ -151,6 +148,9 @@ export class NapCustMainDataComponent implements OnInit {
         break;
       case CommonConstant.AppStepGuar:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
+        break;
+      case CommonConstant.AppStepShr:
+          this.AppStepIndex = this.AppStep[CommonConstant.AppStepShr];
         break;
       default:
         break;
@@ -161,13 +161,17 @@ export class NapCustMainDataComponent implements OnInit {
   getEvent(event) {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
-    this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepGuar);
+    this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
     
-    //Fix untuk data kosong saat kembai ke step cust jika save new cust
+    //Fix untuk data kosong saat kembali ke step cust jika save new cust
     if(!this.appCustId){
       this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
         (response) => {
-          if (response['AppCustObj'])  this.appCustId = response['AppCustObj'].AppCustId;
+          if (response['AppCustObj']){
+            this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
+            this.appCustId = response['AppCustObj'].AppCustId;
+            this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED'? true : false;
+          }
         }
       );
     }

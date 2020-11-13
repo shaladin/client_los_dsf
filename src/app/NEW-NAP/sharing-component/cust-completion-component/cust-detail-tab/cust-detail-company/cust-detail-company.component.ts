@@ -9,6 +9,8 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment'; 
 
@@ -27,9 +29,11 @@ export class CustDetailCompanyComponent implements OnInit {
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj(); 
   businessDt: Date = new Date();
+  CustModelObj: Array<KeyValueObj> = new Array();
   industryTypeObj = {
     IndustryTypeCode: ""
   };
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -38,10 +42,11 @@ export class CustDetailCompanyComponent implements OnInit {
     NoOfEmployee: ['', Validators.required],
     IsAffiliateWithMF: [false],
     EstablishmentDate: ['', Validators.required],
-    IndustryTypeCode: ['', Validators.required]
-
+    IndustryTypeCode: ['', Validators.required],
+    MrCustModelCode: ['', Validators.required],
   })
-  ngOnInit() {
+
+  async ngOnInit() {
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -61,7 +66,17 @@ export class CustDetailCompanyComponent implements OnInit {
     this.lookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
+    await this.GetCustModel();
     this.GetData();
+  }
+
+  async GetCustModel()
+  {
+    await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: CommonConstant.CustTypeCompany }).toPromise().then(
+      (response) => {
+        this.CustModelObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   GetIndustryType(event){
@@ -69,14 +84,17 @@ export class CustDetailCompanyComponent implements OnInit {
       IndustryTypeCode: event.IndustryTypeCode
     });
   }
+
   GetCustGrpData(event){
     this.ListAppCustGrpObj = new Array();
     this.AppCustGrpObj.AppCustId = this.AppCustId;
     this.AppCustGrpObj.CustNo = event.CustNo;
     this.ListAppCustGrpObj.push(this.AppCustGrpObj);
   }
+  
   SetData(){
     this.AppCustObj.AppCustId = this.AppCustId;
+    this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
     this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
@@ -95,7 +113,7 @@ export class CustDetailCompanyComponent implements OnInit {
     this.http.post(URLConstant.UpdateAppCustCompletionCompany, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit();
+        this.OutputTab.emit({IsComplete: true});
       },
       error => {
         console.log(error);
@@ -103,10 +121,10 @@ export class CustDetailCompanyComponent implements OnInit {
   }
 
   GetData(){
-    this.http.post(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
       (response) => {
-        if(response["IndustryTypeCode"] != null){
-          this.industryTypeObj.IndustryTypeCode =  response["IndustryTypeCode"];
+        if(response.AppCustCompanyObj.IndustryTypeCode != null){
+          this.industryTypeObj.IndustryTypeCode =  response.AppCustCompanyObj.IndustryTypeCode;
           this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
             (response) => {
               this.lookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -116,17 +134,18 @@ export class CustDetailCompanyComponent implements OnInit {
         } 
       
         this.CustDetailForm.patchValue({
-          IsAffiliateWithMF : response["IsAffiliateWithMF"],
-          NoOfEmployee : response["NumOfEmp"],
-          EstablishmentDate : formatDate(response["EstablishmentDt"], 'yyyy-MM-dd', 'en-US') ,
-          IndustryTypeCode : response["IndustryTypeCode"],
+          IsAffiliateWithMF : response.AppCustObj.IsAffiliateWithMF,
+          NoOfEmployee : response.AppCustCompanyObj.NumOfEmp,
+          EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
+          IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
+          MrCustModelCode : response.AppCustObj.MrCustModelCode,
         })
  
-        this.AppCustObj.RowVersion = response["AppCustRowVersion"];
-        this.AppCustCompanyObj.RowVersion = response["AppCustCompanyRowVersion"];
+        this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
+        this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
-        if(response["CustNoParent"] != ""){
-          this.http.post(URLConstant.GetCustByCustNo, {CustNo: response["CustNoParent"]}).subscribe(
+        if(response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != ""){
+          this.http.post(URLConstant.GetCustByCustNo, {CustNo: response.AppCustGrpObj.CustNo}).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = {CustName: responseCustGrp["CustName"]};
@@ -137,4 +156,6 @@ export class CustDetailCompanyComponent implements OnInit {
       }
     );
   }
+
+  
 }

@@ -44,6 +44,9 @@ import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/v
 import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
 import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
+import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
+import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
+import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 
  
 export const customCurrencyMaskConfig = {     
@@ -81,6 +84,7 @@ export const customCurrencyMaskConfig = {
     ViewAgrmntComponentModule,
     ViewSharingComponentModule,
     ViewMainInfoComponentModule,
+    MainDataComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -105,7 +109,9 @@ export const customCurrencyMaskConfig = {
     ViewDeliveryOrderDetailComponent,
     ViewDeliveryOrderAssetDetailComponent,
     ViewPurchaseOrderMultiAssetComponent, 
-    ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent, AppAssetDataFl4wComponent, ViewSummaryFl4wComponent, AppAssetDataDetailFl4wComponent 
+    ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent, AppAssetDataFl4wComponent, ViewSummaryFl4wComponent, AppAssetDataDetailFl4wComponent,
+    NapCustMainDataComponent,
+    NapDetailFormComponent
   ],
   providers: [
     NGXToastrService

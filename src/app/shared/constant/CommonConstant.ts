@@ -56,6 +56,7 @@ export class CommonConstant {
   public static CustMainDataModeCust = "CUST";
   public static CustMainDataModeGuarantor = "GUARANTOR";
   public static CustMainDataModeFamily = "FAMILY";
+  public static CustMainDataModeMgmntShrholder = "SHAREHOLDER";
   
 
   //CUST PERSONAL RELATIONSHIP
@@ -89,8 +90,9 @@ export class CommonConstant {
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
-  public static AppStepFamily = "FAMILY";
+  public static AppStepFamily = "FAM";
   public static AppStepGuar = "GUAR";
+  public static AppStepShr = "SHR";
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
   public static AppStepAsset = "ASSET";
@@ -209,6 +211,9 @@ export class CommonConstant {
   //APP CUST 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
   public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
+  public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
+  public static AttrGroupCustPersonalFinData= "CUST_PERSONAL_FINDATA"
+
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -270,7 +275,7 @@ export class CommonConstant {
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
   public static AddrTypeOthBiz = "OTHERBIZ";
-  public static AddrTypeCompanyContactInfo = "COMPANY";
+  public static AddrTypeCompany = "COMPANY";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";

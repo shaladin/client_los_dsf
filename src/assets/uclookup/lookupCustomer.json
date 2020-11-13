@@ -21,7 +21,8 @@
     ],
     "querystring": {
       "select": "SELECT C.CUST_NO AS CustNo, C.CUST_NAME AS CustName, CA.ADDR AS FullAddr, C.MR_CUST_TYPE_CODE AS MrCustTypeCode, C.CUST_ID AS CustId",
-      "from": "FROM dbo.CUST C WITH(NOLOCK) LEFT JOIN dbo.CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
+      "from": "FROM dbo.CUST C WITH(NOLOCK) LEFT JOIN dbo.CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'",
+      "where": "WHERE C.CUST_NO IS NOT NULL AND C.CUST_NO != ''"
     },
     "headerList": [
         {
