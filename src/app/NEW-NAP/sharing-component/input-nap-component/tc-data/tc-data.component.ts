@@ -46,32 +46,32 @@ export class TcDataComponent implements OnInit {
 
   ngOnInit() {
     this.AppIdObj.AppId = this.AppId;
-    this.http.post(URLConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
-      (response) => {
-        this.listAppTcObj = response["AppTcs"];
-        if (this.listAppTcObj.length > 0) {
-          this.mode = "edit";
-          for (let j = 0; j < this.listAppTcObj.length; j++) {
-            var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
-            fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
-          }
-          this.ReconstructForm();
-        }
-        else {
-          this.http.post(URLConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
-            (response) => {
-              this.listAppTcObj = response["AppTcs"];
-              for (let i = 0; i < this.listAppTcObj.length; i++) {
-                var fa_apptc = this.AppTcForm.get("AppTc") as FormArray;
-                fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
-              }
+    // this.http.post(URLConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
+    //   (response) => {
+    //     this.listAppTcObj = response["AppTcs"];
+    //     if (this.listAppTcObj.length > 0) {
+    //       this.mode = "edit";
+    //       for (let j = 0; j < this.listAppTcObj.length; j++) {
+    //         var fa_apptc = this.AppTcForm.get("TCList") as FormArray;
+    //         fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
+    //       }
+    //       this.ReconstructForm();
+    //     }
+    //     else {
+    //       this.http.post(URLConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
+    //         (response) => {
+    //           this.listAppTcObj = response["AppTcs"];
+    //           for (let i = 0; i < this.listAppTcObj.length; i++) {
+    //             var fa_apptc = this.AppTcForm.get("TCList") as FormArray;
+    //             fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
+    //           }
 
-              this.ReconstructForm();
-            }
-          );
-        }
-      }
-    );
+    //           this.ReconstructForm();
+    //         }
+    //       );
+    //     }
+    //   }
+    // );
   }
 
   AddTcControl(obj: AppTCObj) {
@@ -81,6 +81,8 @@ export class TcDataComponent implements OnInit {
       PriorTo: obj.PriorTo,
       IsChecked: obj.IsChecked,
       IsMandatory: obj.IsMandatory,
+      IsWaived: obj.IsWaived,
+      IsExpDtMandatory: obj.IsExpDtMandatory,
       PromisedDt: (obj.PromisedDt == null) ? '' : formatDate(obj.PromisedDt, 'yyyy-MM-dd', 'en-US'),
       ExpiredDt: (obj.ExpiredDt == null) ? '' : formatDate(obj.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
       Notes: obj.Notes,
@@ -88,13 +90,13 @@ export class TcDataComponent implements OnInit {
   }
 
   EnablePromiseDt(i) {
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray
+    var fa_AppTc = this.AppTcForm.get("TCList") as FormArray
     var item = fa_AppTc.at(i);
     item.get("PromisedDt").enable();
   }
 
   ReconstructForm() {
-    var fa_AppTc = this.AppTcForm.get("AppTc") as FormArray;
+    var fa_AppTc = this.AppTcForm.get("TCList") as FormArray;
     for (let a = 0; a < fa_AppTc.length; a++) {
       var item = fa_AppTc.at(a);
       var isMandatory: Boolean = item.get("IsMandatory").value;
@@ -139,7 +141,7 @@ export class TcDataComponent implements OnInit {
 
   getFormValidationErrors() {
     const invalid = [];
-    const controls = this.AppTcForm.controls.AppTc["controls"];
+    const controls = this.AppTcForm.controls.TCList["controls"];
     for (const name in controls) {
         if (controls[name].invalid) {
             invalid.push(name);
