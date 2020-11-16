@@ -499,12 +499,14 @@ this.GetAdminHeadList();
           var assetValidationRule = response;
           this.AssetValidationResult = response;
           this.grossDPPrcnt = assetValidationRule["DPPrcnt"];
-          this.AssetDataForm.patchValue({
-            DownPaymentPrctg: assetValidationRule["DPPrcnt"],
-            DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
-          });
+          if(assetValidationRule["DPPrcnt"] != null){
+            this.AssetDataForm.patchValue({
+              DownPaymentPrctg: assetValidationRule["DPPrcnt"],
+              DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
+            });
+          }
           if(assetValidationRule["DPBhv"] == CommonConstant.RuleBehaviourLock){
-            if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
+            if(this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG'){
               this.AssetDataForm.controls.DownPaymentPrctg.disable();
               this.AssetDataForm.controls["DownPaymentPrctg"].clearValidators();
               this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
@@ -516,13 +518,15 @@ this.GetAdminHeadList();
             }
           }
           else{
-            if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
+            if(this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG'){
               this.AssetDataForm.controls.DownPaymentPrctg.enable();
+              this.AssetDataForm.controls.DownPayment.disable();
               this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
               this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
             }
             else{
               this.AssetDataForm.controls.DownPayment.enable();
+              this.AssetDataForm.controls.DownPaymentPrctg.disable();
               this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
               this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
             }
@@ -569,33 +573,34 @@ this.GetAdminHeadList();
       else{
         if (value == "AMT") {
           this.AssetDataForm.controls["DownPayment"].enable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
           this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
           this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
         }
         else{
           this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+          this.AssetDataForm.controls["DownPayment"].disable();
           this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
           this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
         }
       }
+    }else{
+      if (value == "AMT") {
+        this.AssetDataForm.controls["DownPayment"].enable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+        this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+        this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+      }
+      else{
+        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+        this.AssetDataForm.controls["DownPayment"].disable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+        this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+      }
     }
-    // if (value == "AMT") {
-    //   this.AssetDataForm.controls["DownPayment"].enable()
-    //   var minDP = this.AssetDataForm.controls["AssetPrice"].value * this.grossDPPrcnt / 100;
-    //   this.AssetDataForm.controls["DownPayment"].setValidators(Validators.min(minDP));
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].disable();
-    //   this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
-    // }
-    // else {
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].enable();
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.min(this.grossDPPrcnt), Validators.max(100)]);
-    //   this.AssetDataForm.controls["DownPayment"].disable();
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
-    // }
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("ameng");
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 

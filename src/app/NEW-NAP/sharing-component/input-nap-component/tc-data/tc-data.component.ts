@@ -46,32 +46,32 @@ export class TcDataComponent implements OnInit {
 
   ngOnInit() {
     this.AppIdObj.AppId = this.AppId;
-    this.http.post(URLConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
-      (response) => {
-        this.listAppTcObj = response["AppTcs"];
-        if (this.listAppTcObj.length > 0) {
-          this.mode = "edit";
-          for (let j = 0; j < this.listAppTcObj.length; j++) {
-            var fa_apptc = this.AppTcForm.get("TCList") as FormArray;
-            fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
-          }
-          this.ReconstructForm();
-        }
-        else {
-          this.http.post(URLConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
-            (response) => {
-              this.listAppTcObj = response["AppTcs"];
-              for (let i = 0; i < this.listAppTcObj.length; i++) {
-                var fa_apptc = this.AppTcForm.get("TCList") as FormArray;
-                fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
-              }
+    // this.http.post(URLConstant.GetListTCbyAppId, this.AppIdObj).subscribe(
+    //   (response) => {
+    //     this.listAppTcObj = response["AppTcs"];
+    //     if (this.listAppTcObj.length > 0) {
+    //       this.mode = "edit";
+    //       for (let j = 0; j < this.listAppTcObj.length; j++) {
+    //         var fa_apptc = this.AppTcForm.get("TCList") as FormArray;
+    //         fa_apptc.push(this.AddTcControl(this.listAppTcObj[j]))
+    //       }
+    //       this.ReconstructForm();
+    //     }
+    //     else {
+    //       this.http.post(URLConstant.GetListTCbyAppIdFromRule, this.AppIdObj).subscribe(
+    //         (response) => {
+    //           this.listAppTcObj = response["AppTcs"];
+    //           for (let i = 0; i < this.listAppTcObj.length; i++) {
+    //             var fa_apptc = this.AppTcForm.get("TCList") as FormArray;
+    //             fa_apptc.push(this.AddTcControl(this.listAppTcObj[i]))
+    //           }
 
-              this.ReconstructForm();
-            }
-          );
-        }
-      }
-    );
+    //           this.ReconstructForm();
+    //         }
+    //       );
+    //     }
+    //   }
+    // );
   }
 
   AddTcControl(obj: AppTCObj) {
