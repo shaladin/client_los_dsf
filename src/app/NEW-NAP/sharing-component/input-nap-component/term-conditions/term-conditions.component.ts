@@ -245,7 +245,7 @@ export class TermConditionsComponent implements OnInit {
           }
           else{
             item.get("PromisedDt").enable();
-            item.get("PromisedDt").setValidators([Validators.required]);
+            item.get("PromisedDt").clearValidators();
             item.get("PromisedDt").updateValueAndValidity();
           }
           item.get("ExpiredDt").disable();

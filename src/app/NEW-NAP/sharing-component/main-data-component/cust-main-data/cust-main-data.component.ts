@@ -399,12 +399,12 @@ export class CustMainDataComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });

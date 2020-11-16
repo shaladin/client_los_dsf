@@ -82,14 +82,7 @@ export class AssetDataPagingComponent implements OnInit {
             }
 
             this.gridAssetDataObj.resultData = DetailForGridAsset;
-            this.listAppCollateralObj = response["ReturnCollateral"];
-
-            var DetailForGridCollateral = {
-              Data: response["ReturnCollateral"],
-              Count: "0"
-            }
-
-            this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+            this.getGridCollateral();
           }
         );
       }
