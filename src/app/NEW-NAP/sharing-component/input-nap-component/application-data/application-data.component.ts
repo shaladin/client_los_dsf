@@ -124,7 +124,7 @@ export class ApplicationDataComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
-    this.ListCrossAppObj["AppId"] = this.appId;
+    this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
 
