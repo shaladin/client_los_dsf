@@ -68,7 +68,7 @@ export class CustMainDataPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          this.router.navigate(["Nap/MainData/NAP1/Add"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/MainData/NAP1/Add"],{ "BizTemplateCode": this.bizTemplateCode });
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -82,19 +82,19 @@ export class CustMainDataPagingComponent implements OnInit {
     if (ev.Key == "Edit") {
       switch(this.bizTemplateCode) {
         case CommonConstant.CF4W :
-          this.router.navigate(["Nap/ConsumerFinance/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+          AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.CFRFN4W :
-          this.router.navigate(["Nap/CFRefinancing/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+          AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.FCTR :
-          this.router.navigate(["Nap/Factoring/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.FL4W :
-          this.router.navigate(["Nap/FinanceLeasing/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+          AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.CFNA :
-          this.router.navigate(["Nap/CFNA/NAP1"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
       }
     }

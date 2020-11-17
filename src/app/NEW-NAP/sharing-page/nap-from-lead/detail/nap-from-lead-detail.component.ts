@@ -11,6 +11,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
@@ -189,19 +190,19 @@ export class NapFromLeadDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
-          this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.FL4W) {
-          this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.FCTR) {
-          this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.CFNA) {
-          this.router.navigate(["Nap/CFNA/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": response["AppId"] });
         }
       });
 

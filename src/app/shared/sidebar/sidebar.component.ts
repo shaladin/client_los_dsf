@@ -87,7 +87,7 @@ export class SidebarComponent implements OnInit {
     //NGX Wizard - skip url change
     ngxWizardFunction(path: string) {
         if (path.indexOf('forms/ngx') != -1)
-            this.router.navigate(['forms/ngx/wizard'], { skipLocationChange: false });
+            this.router.navigate(['forms/ngx/wizard'], { skipLocationChange: true });
     }
 
     navigateSkipLocationChange(ev) {

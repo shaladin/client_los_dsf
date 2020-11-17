@@ -120,7 +120,8 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   Back() {
-    this.router.navigate(["/Nap/MainData/NAP1/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+    
   }
 
   MakeViewReturnInfoObj() {
@@ -195,7 +196,7 @@ export class NapCustMainDataComponent implements OnInit {
     this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/MainData/NAP1/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }

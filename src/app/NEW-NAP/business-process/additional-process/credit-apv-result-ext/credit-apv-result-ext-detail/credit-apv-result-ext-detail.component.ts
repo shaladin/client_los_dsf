@@ -48,7 +48,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitNewExpDate, obj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(['/Nap/AddProcess/CreditApprovalResultExt/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/CreditApprovalResultExt/Paging"], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
@@ -75,7 +75,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   Back() {
-    this.router.navigate(['/Nap/AddProcess/CreditApprovalResultExt/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/CreditApprovalResultExt/Paging"], { BizTemplateCode: this.BizTemplateCode });
   }
 
   OpenView(key: string) {

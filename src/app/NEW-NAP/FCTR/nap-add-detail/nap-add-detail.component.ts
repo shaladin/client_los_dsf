@@ -101,7 +101,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/Factoring/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,["/Nap/Factoring/Paging"], { });
   }
 
   MakeViewReturnInfoObj() {
@@ -181,7 +181,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/Factoring/Paging"])
+        AdInsHelper.RedirectUrl(this.router,["/Nap/Factoring/Paging"], {});
       })
   }
 

@@ -9,6 +9,7 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 
@@ -100,7 +101,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { BizTemplateCode: lobCode });
         });
 
     }
@@ -114,7 +115,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { BizTemplateCode: lobCode });
       }
     );
   }
@@ -188,7 +189,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     if (this.isReturnHandling == false) {
     }
     if (this.isReturnHandling == true) {
-      this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail?AppId=" + this.appId + "&AppCollateralId=" + AppCollateralId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail"], {  AppId :this.appId, AppCollateralId : AppCollateralId, ReturnHandlingHId : this.returnHandlingHId, WfTaskListId :this.wfTaskListId});
+      
     }
   }
 

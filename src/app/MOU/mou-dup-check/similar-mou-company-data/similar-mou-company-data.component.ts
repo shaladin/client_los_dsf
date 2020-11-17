@@ -7,6 +7,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustCompanyObj } from 'app/shared/model/MouCustCompanyObj.Model';
 import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-similar-mou-company-data',
@@ -99,7 +100,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoMouCust, {"MouCustId": this.MouCustId, 
     "CustNo":item.CustNo , "ApplicantNo":item.ApplicantNo}).subscribe(
       response => {
-        this.router.navigate(["/Mou/DuplicateCheck/ExistingCompany"], { queryParams: { "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId } });
+        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingCompany"],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -107,11 +108,11 @@ export class SimilarMouCompanyDataComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoMouCust, {"MouCustId": this.MouCustId, 
     "CustNo":this.MouCustObj.ApplicantNo, "ApplicantNo":this.MouCustObj.ApplicantNo, RowVersion: ""}).subscribe(
       (response) => {
-        this.router.navigate(["/Mou/DuplicateCheck/ExistingCompany"], { queryParams: { "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId } });
+        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingCompany"],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
   back() {
-    this.router.navigate(["/Mou/DuplicateCheck/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});
   }
 }

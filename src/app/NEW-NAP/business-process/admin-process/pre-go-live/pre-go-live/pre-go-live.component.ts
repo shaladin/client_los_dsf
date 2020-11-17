@@ -185,7 +185,7 @@ export class PreGoLiveComponent implements OnInit {
     }
     this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/AdminProcess/PreGoLive/RequestApproval"], { queryParams: { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/RequestApproval"],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);
 
       });
@@ -246,7 +246,7 @@ export class PreGoLiveComponent implements OnInit {
 
     this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging');
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Paging"],{});
         this.toastr.successMessage(response['message']);
 
       });

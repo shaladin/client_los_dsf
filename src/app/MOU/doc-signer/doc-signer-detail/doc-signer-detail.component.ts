@@ -265,7 +265,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Mou/DocSigner/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Mou/DocSigner/Paging"],{});
       });
   }
   GetCallBack(event) {

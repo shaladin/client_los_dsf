@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-monitoring-review',
@@ -40,7 +41,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/Lead/ReviewMonitoring/Paging']);
+          AdInsHelper.RedirectUrl(this.router,["/Lead/ReviewMonitoring/Paging"],{});
       }); 
       }
     );

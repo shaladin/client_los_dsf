@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -273,7 +274,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.httpClient.post(URLConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
+          AdInsHelper.RedirectUrl(this.router,["/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging"],{ BizTemplateCode: 'FL4W' });
         });
     }
     else {
@@ -305,7 +306,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         forkJoin([editTc, submitDO]).subscribe(
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
-            this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
+            AdInsHelper.RedirectUrl(this.router,["/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging"],{ "BizTemplateCode": 'FL4W'});
           }
         );
       }

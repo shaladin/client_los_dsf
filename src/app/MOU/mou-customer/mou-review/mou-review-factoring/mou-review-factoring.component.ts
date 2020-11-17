@@ -156,7 +156,7 @@ export class MouReviewFactoringComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouReview, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Mou/Cust/ReviewPaging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
       })
   }
 
@@ -165,7 +165,7 @@ export class MouReviewFactoringComponent implements OnInit {
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Mou/Cust/ReviewPaging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
       })
   }
 

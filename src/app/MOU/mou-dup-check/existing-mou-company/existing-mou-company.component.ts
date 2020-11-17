@@ -212,12 +212,12 @@ export class ExistingMouCompanyComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        this.router.navigate(["/Mou/DuplicateCheck/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});    
       });
   }
 
   Back() {
-    this.router.navigate(["/Mou/DuplicateCheck/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});    
   }
 
   OpenView(key: string, value: number) {

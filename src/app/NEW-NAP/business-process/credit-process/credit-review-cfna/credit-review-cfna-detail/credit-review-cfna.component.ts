@@ -10,6 +10,7 @@ import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-review-cfna',
@@ -263,7 +264,7 @@ export class CreditReviewCfnaComponent implements OnInit {
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode, } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 

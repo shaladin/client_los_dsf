@@ -273,13 +273,14 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } })
+          AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+          
         })
     }
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: this.bizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
   }
 
   Submit() {
@@ -300,7 +301,7 @@ export class NapDetailFormComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.CF4W } })
+            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
           }
         )
       }

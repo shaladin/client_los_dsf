@@ -216,7 +216,7 @@ TCList : any;
       (response) => {
       },
       (error) => {
-        this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -272,14 +272,14 @@ TCList : any;
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage("Success");
-        this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
  
   }
 
   onCancelClick() {
-    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   openView(custNo) {

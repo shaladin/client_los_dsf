@@ -114,10 +114,10 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   backHandler(){
     if(this.pageType == "update"){
-        this.router.navigate(['/Lead/LeadUpdate/Paging']);  
+        AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
       }
       else{
-        this.router.navigate(['/Lead/Lead/Paging']);  
+        AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
       }
   
   }
@@ -425,10 +425,10 @@ GetOfficeDDL(){
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit"){
-              this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "mode": this.pageType });
             }
             else{
-              this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
             }
           }
         );
@@ -440,7 +440,7 @@ GetOfficeDDL(){
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/LeadInput/Page"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+            AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
           }
         );
       }
@@ -458,10 +458,10 @@ GetOfficeDDL(){
           (response) => {
             this.toastr.successMessage(response["message"]);
             if(this.pageType == "edit"){
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             }
             else{
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             }
           }
         );
@@ -473,7 +473,7 @@ GetOfficeDDL(){
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/Lead/Paging"]);
+            AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
           }
         );
       }
