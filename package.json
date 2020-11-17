@@ -18,7 +18,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "^1.0.1",
     "@adins/uc-subsection": "^1.0.5",
-    "@adins/ucaddress": "^1.0.52",
+    "@adins/ucaddress": "^1.0.53",
     "@adins/ucaddtotemp": "^1.0.14",
     "@adins/ucapproval": "^1.0.9",
     "@adins/ucapprovalhist": "^1.0.15",
@@ -121,7 +121,7 @@
     "@angular/cli": "^7.3.10",
     "@angular/compiler-cli": "^7.2.16",
     "@angular/language-service": "7.0.0",
-    "@fortawesome/fontawesome-free": "^5.15.0",
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/core-js": "2.5.0",
     "@types/jasmine": "2.8.9",
     "@types/node": "10.12.0",
