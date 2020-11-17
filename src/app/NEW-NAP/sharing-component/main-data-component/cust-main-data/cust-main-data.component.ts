@@ -183,10 +183,8 @@ export class CustMainDataComponent implements OnInit {
   GetAppCustMainDataByAppId() {
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'AppId': this.appId }).subscribe(
       async (response) => {
-        console.log(response);
         if (response.AppCustObj) {
           this.AppCustData = response.AppCustObj;
-          console.log(this.AppCustData);
         }
       }
     );
@@ -728,8 +726,6 @@ export class CustMainDataComponent implements OnInit {
 
   CekIsCustomer() {
     if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) {
-      console.log(this.CustMainDataForm.controls.CustNo.value);
-      console.log(this.AppCustData.CustNo);
       if (this.CustMainDataForm.controls.CustNo.value == this.AppCustData.CustNo) {
         throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
       }
