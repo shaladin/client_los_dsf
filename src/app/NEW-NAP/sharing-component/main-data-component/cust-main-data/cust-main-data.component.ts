@@ -726,7 +726,12 @@ export class CustMainDataComponent implements OnInit {
 
   CekIsCustomer() {
     if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) {
-      if (this.CustMainDataForm.controls.CustNo.value == this.AppCustData.CustNo) {
+      // if (this.CustMainDataForm.controls.CustNo.value == this.AppCustData.CustNo) {
+      //   throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+      // }
+      
+      // Sementara
+      if (this.CustMainDataForm.value.lookupCustomer.value == this.AppCustData.CustName) {
         throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
       }
     }
