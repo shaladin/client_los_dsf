@@ -530,7 +530,7 @@ export class AssetDataComponent implements OnInit {
       }
     );
   }
-  SetDpValue() {
+  SetDpValue(mode: string = "add") {
     var CheckValidObj = {
       AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
@@ -542,10 +542,12 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).subscribe(
       (response) => {
         this.SetDpObj = response;
-        this.AssetDataForm.patchValue({
-          DownPaymentAmt: (this.SetDpObj.DPPrcnt / 100) * this.AssetDataForm.controls.AssetPriceAmt.value,
-          DownPaymentPrctg: this.SetDpObj.DPPrcnt
-        });
+        if(mode == "add"){
+          this.AssetDataForm.patchValue({
+            DownPaymentAmt: (this.SetDpObj.DPPrcnt / 100) * this.AssetDataForm.controls.AssetPriceAmt.value,
+            DownPaymentPrctg: this.SetDpObj.DPPrcnt
+          });
+        }
         if(this.SetDpObj.DPBhv == CommonConstant.RuleBehaviourLock){
           if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
             this.AssetDataForm.controls.DownPaymentPrctg.disable();
@@ -1054,6 +1056,7 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         this.appAssetObj = response;
         if (this.appAssetObj.ResponseAppAssetObj != null) {
+          let mode = this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0 ? "edit" : "add";
           this.AssetDataForm.patchValue({
             FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
             FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
@@ -1064,6 +1067,7 @@ export class AssetDataComponent implements OnInit {
             ManufacturingYear: this.appAssetObj.ResponseAppAssetObj.ManufacturingYear,
             AssetPriceAmt: this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt,
             DownPaymentAmt: this.appAssetObj.ResponseAppAssetObj.DownPaymentAmt,
+            DownPaymentPrctg: this.appAssetObj.ResponseAppAssetObj.DownPaymentPrctg,
             AssetNotes: this.appAssetObj.ResponseAppAssetObj.AssetNotes,
             Color: this.appAssetObj.ResponseAppAssetObj.Color,
             TaxCityIssuer: this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer,
@@ -1131,7 +1135,7 @@ export class AssetDataComponent implements OnInit {
               SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
             });
           }
-          this.AssetConditionChanged();
+          this.AssetConditionChanged(mode);
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
           this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
@@ -1140,8 +1144,6 @@ export class AssetDataComponent implements OnInit {
             this.setAddrLocationObj();
           }
           this.DpTypeBefore = "AMT";
-          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
-          this.AssetDataForm.controls["DownPaymentAmt"].enable();
           this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
           this.GetAssetMaster(this.assetMasterObj);
           this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
@@ -1507,7 +1509,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  AssetConditionChanged() {
+  AssetConditionChanged(mode: string = "add") {
     if (this.AssetConditionObj != null) {
       var filter: any;
       filter = this.AssetConditionObj.filter(
@@ -1515,7 +1517,7 @@ export class AssetDataComponent implements OnInit {
       this.AssetConditionName = filter[0].Value;
     }
     if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
-      this.SetDpValue();
+      this.SetDpValue(mode);
     }
   }
 
