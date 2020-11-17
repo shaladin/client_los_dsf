@@ -45,7 +45,7 @@
             "type": "sort",
             "position": "left",
             "label": "Address",
-            "name": "CA.ADDR"
+            "name": "B.ADDR"
         },
         {
             "type": "label",
