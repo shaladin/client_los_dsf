@@ -50,9 +50,9 @@ export class EmergencyContactTabComponent implements OnInit {
     IdExpiredDt: [''],
     BirthDt: ['', Validators.required],
     MrCustRelationshipCode: ['', Validators.required],
-    MobilePhnNo1: ['', Validators.required],
-    MobilePhnNo2: [''],
-    Email: [''],
+    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
+    Email: ['', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
     CopyAddrFrom: ['']
   })
 
