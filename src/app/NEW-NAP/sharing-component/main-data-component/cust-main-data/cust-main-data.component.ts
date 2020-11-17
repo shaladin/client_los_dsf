@@ -23,6 +23,7 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -154,6 +155,7 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeFamily:
         this.isIncludeCustRelation = true;
@@ -161,6 +163,7 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
         this.isIncludeCustRelation = true;
@@ -168,11 +171,25 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Shareholder';
         this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+        this.GetAppCustMainDataByAppId();
         break;
       default:
         this.isIncludeCustRelation = false;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
+  }
+
+  AppCustData: AppCustObj = new AppCustObj();
+  GetAppCustMainDataByAppId() {
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'AppId': this.appId }).subscribe(
+      async (response) => {
+        console.log(response);
+        if (response.AppCustObj) {
+          this.AppCustData = response.AppCustObj;
+          console.log(this.AppCustData);
+        }
+      }
+    );
   }
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
@@ -709,7 +726,18 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion = this.rowVersionAppCustAddr;
   }
 
+  CekIsCustomer() {
+    if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) {
+      console.log(this.CustMainDataForm.controls.CustNo.value);
+      console.log(this.AppCustData.CustNo);
+      if (this.CustMainDataForm.controls.CustNo.value == this.AppCustData.CustNo) {
+        throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+      }
+    }
+  }
+
   SaveForm() {
+    this.CekIsCustomer();
     let max17Yodt = new Date(this.MaxDate);
     let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
     let d2 = new Date(this.MaxDate);
