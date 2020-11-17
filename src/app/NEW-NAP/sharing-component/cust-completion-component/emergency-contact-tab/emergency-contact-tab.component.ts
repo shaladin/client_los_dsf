@@ -196,10 +196,8 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   removeSpouse() {
-    let SpouseRelationship = this.MrCustRelationshipObj[0]
-    if (!this.IsMarried && SpouseRelationship.Key == "SPOUSE") {
-      this.MrCustRelationshipObj = this.MrCustRelationshipObj.slice(1, this.MrCustRelationshipObj.length);
-    }
+    let idxSpouse = this.MrCustRelationshipObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+    this.MrCustRelationshipObj.splice(idxSpouse, 1)
   }
 
   copyCustomerEvent(event) {

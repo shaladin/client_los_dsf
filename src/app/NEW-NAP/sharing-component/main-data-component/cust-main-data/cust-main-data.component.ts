@@ -319,9 +319,7 @@ export class CustMainDataComponent implements OnInit {
 
   removeSpouse() {
     let idxSpouse = this.MrCustRelationshipCodeObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
-    if (this.MrCustRelationshipCodeObj[idxSpouse].Key == CommonConstant.MasteCodeRelationshipSpouse) {
-      this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
-    }
+    this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
   }
 
   getCustMainData() {
