@@ -94,8 +94,4 @@ export class CustCompletionDetailComponent implements OnInit {
   GetCallback(event){
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
   }
-
-  GetEvent(event){
-    
-  }
 }
