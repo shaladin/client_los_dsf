@@ -50,6 +50,18 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
     }
+
+    var totalSharePrcnt = 0;
+
+    for(let i = 0; i < this.listMgmntShrholder.length; i++){
+      totalSharePrcnt += this.listMgmntShrholder[i].SharePrcnt;
+    }
+
+    if(totalSharePrcnt != 100){
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_MUST_100);
+      return;
+    }
+    
     this.outputTab.emit();
   }
 

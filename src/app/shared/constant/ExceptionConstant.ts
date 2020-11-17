@@ -95,5 +95,6 @@ export class ExceptionConstant {
     public static MUST_INPUT_SPOUSE_DATA = "Please Input Spouse Data in Family!";
     public static CANT_HAVE_THE_SAME_GUARANTOR_MEMBER = " cannot have the same name as Guarantor No ";
     public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
+    public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
 }
 
