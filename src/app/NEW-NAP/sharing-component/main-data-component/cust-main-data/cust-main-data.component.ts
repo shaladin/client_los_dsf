@@ -365,11 +365,15 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
+      this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
     } else {
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
