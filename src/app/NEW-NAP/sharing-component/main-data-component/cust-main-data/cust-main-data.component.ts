@@ -742,6 +742,7 @@ export class CustMainDataComponent implements OnInit {
       const TempCust2 = this.AppCustData.CustName.toLowerCase();
       if (TempCust1 == TempCust2) {
         this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+        return;
       }
     }
   }
