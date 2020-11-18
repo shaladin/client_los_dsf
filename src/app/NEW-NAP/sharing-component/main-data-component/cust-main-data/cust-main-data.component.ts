@@ -93,7 +93,7 @@ export class CustMainDataComponent implements OnInit {
   CustMainDataForm = this.fb.group({
     MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
-    MrCustRelationshipCode: ['', Validators.maxLength(50)],
+    MrCustRelationshipCode: ['',Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -170,7 +170,8 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsShareholder = true;
         this.subjectTitle = 'Shareholder';
         this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
         this.GetAppCustMainDataByAppId();
         break;
       default:
@@ -366,6 +367,8 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
     } else {
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
@@ -378,6 +381,8 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.IdNo.clearValidators();
       this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
       this.CustMainDataForm.controls.Email1.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
 
     if (this.isIncludeCustRelation) {
