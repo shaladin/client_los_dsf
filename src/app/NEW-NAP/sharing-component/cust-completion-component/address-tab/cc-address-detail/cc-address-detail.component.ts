@@ -52,6 +52,10 @@ export class CcAddressDetailComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, ReserveField1: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
+        if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany){
+          let idxCompany = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeCompany);
+          this.AddressTypeObj.splice(idxCompany, 1)
+        }
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })

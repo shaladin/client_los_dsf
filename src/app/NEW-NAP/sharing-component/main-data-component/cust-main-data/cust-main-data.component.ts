@@ -319,9 +319,7 @@ export class CustMainDataComponent implements OnInit {
 
   removeSpouse() {
     let idxSpouse = this.MrCustRelationshipCodeObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
-    if (this.MrCustRelationshipCodeObj[idxSpouse].Key == CommonConstant.MasteCodeRelationshipSpouse) {
-      this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
-    }
+    this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
   }
 
   getCustMainData() {
@@ -731,7 +729,9 @@ export class CustMainDataComponent implements OnInit {
       // }
       
       // Sementara
-      if (this.CustMainDataForm.value.lookupCustomer.value == this.AppCustData.CustName) {
+      const TempCust1 = this.CustMainDataForm.value.lookupCustomer.value.toLowerCase();
+      const TempCust2 = this.AppCustData.CustName.toLowerCase();
+      if (TempCust1 == TempCust2) {
         throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
       }
     }
