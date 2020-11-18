@@ -729,7 +729,9 @@ export class CustMainDataComponent implements OnInit {
       // }
       
       // Sementara
-      if (this.CustMainDataForm.value.lookupCustomer.value == this.AppCustData.CustName) {
+      const TempCust1 = this.CustMainDataForm.value.lookupCustomer.value.toLowerCase();
+      const TempCust2 = this.AppCustData.CustName.toLowerCase();
+      if (TempCust1 == TempCust2) {
         throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
       }
     }
