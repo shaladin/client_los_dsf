@@ -41,7 +41,7 @@ export class CcAddressPagingComponent implements OnInit {
       (response) => {
         this.ListAddress = response;
         let idxCompany = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeCompany);
-        this.ListAddress.splice(idxCompany, 1)
+        if(idxCompany != -1) this.ListAddress.splice(idxCompany, 1)
 
         this.inputGridObj.resultData = {
           Data: ""
