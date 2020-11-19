@@ -93,7 +93,7 @@ export class CustMainDataComponent implements OnInit {
   CustMainDataForm = this.fb.group({
     MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
-    MrCustRelationshipCode: ['', Validators.maxLength(50)],
+    MrCustRelationshipCode: ['',Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -170,7 +170,8 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsShareholder = true;
         this.subjectTitle = 'Shareholder';
         this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
         this.GetAppCustMainDataByAppId();
         break;
       default:
@@ -266,7 +267,7 @@ export class CustMainDataComponent implements OnInit {
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
     
-    await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: this.MrCustTypeCode }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, ReserveField1: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
       }
@@ -365,11 +366,17 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
+      this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
     } else {
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
@@ -378,6 +385,8 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.IdNo.clearValidators();
       this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
       this.CustMainDataForm.controls.Email1.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
+      this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
 
     if (this.isIncludeCustRelation) {
@@ -732,7 +741,8 @@ export class CustMainDataComponent implements OnInit {
       const TempCust1 = this.CustMainDataForm.value.lookupCustomer.value.toLowerCase();
       const TempCust2 = this.AppCustData.CustName.toLowerCase();
       if (TempCust1 == TempCust2) {
-        throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+        this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+        return;
       }
     }
   }
