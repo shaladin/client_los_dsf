@@ -22,13 +22,13 @@ export class TabDeviationComponent implements OnInit {
 
   @Output("GetData") DataEmit: EventEmitter<any> = new EventEmitter<any>();
   constructor(
-    private router: Router, 
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
-    private toastr: NGXToastrService, 
+    private router: Router,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
     private fb: FormBuilder) { }
 
-  InitData(){
+  InitData() {
     this.AutoDeviationData = new Array();
     this.ManualDeviationData = new Array();
     this.DDLApproveAtData = new Array();
@@ -52,7 +52,7 @@ export class TabDeviationComponent implements OnInit {
     await this.GetDeviationData();
   }
 
-  async GetDeviationData(){
+  async GetDeviationData() {
     var obj = {
       AppId: this.AppId,
       RowVersion: ""
@@ -63,10 +63,12 @@ export class TabDeviationComponent implements OnInit {
         var temp = response["deviationResultObjs"];
         this.DDLDeviationCriteriaData = response["DeviationCategory"];
         this.DDLApproveAtData = response["ApproveAt"];
-        for(var i=0;i<temp.length;i++){
+        for (var i = 0; i < temp.length; i++) {
           var tempObj;
-          if(temp[i].MrDeviationType == CommonConstant.DeviationTypeAutomaticDev){
-            tempObj={
+          if (temp[i].MrDeviationType == CommonConstant.DeviationTypeManualDev) {
+            this.BindManualDeviationData(temp[i]);
+          } else {
+            tempObj = {
               SeqNo: temp[i].SeqNo,
               DeviationType: temp[i].MrDeviationTypeDesc,
               OriValue: temp[i].OriginalValue,
@@ -75,20 +77,18 @@ export class TabDeviationComponent implements OnInit {
               Notes: temp[i].Notes
             };
             this.AutoDeviationData.push(tempObj);
-          }else if(temp[i].MrDeviationType == CommonConstant.DeviationTypeManualDev){
-            this.BindManualDeviationData(temp[i]);
           }
         }
-        
-        if(this.AutoDeviationData.length > 0)
-          this.AutoDeviationData.sort((a,b) => a.SeqNo - b.SeqNo);
-        if(this.ManualDeviationData.length > 0)
-          this.ManualDeviationData.sort((a,b) => a.SeqNo - b.SeqNo);
+
+        if (this.AutoDeviationData.length > 0)
+          this.AutoDeviationData.sort((a, b) => a.SeqNo - b.SeqNo);
+        if (this.ManualDeviationData.length > 0)
+          this.ManualDeviationData.sort((a, b) => a.SeqNo - b.SeqNo);
         this.PassData();
       });
   }
 
-  BindManualDeviationData(objData){
+  BindManualDeviationData(objData) {
     var temp = new DeviationResultObj();
     temp.DeviationResultId = objData.DeviationResultId;
     temp.SeqNo = objData.SeqNo;
@@ -109,7 +109,7 @@ export class TabDeviationComponent implements OnInit {
     this.BindTempDDLData(objData.DeviationCategory);
   }
 
-  sortAutoDeviationData(sort: Sort){
+  sortAutoDeviationData(sort: Sort) {
     const data = this.AutoDeviationData.slice();
     if (!sort.active || sort.direction === '') {
       this.AutoDeviationData = data;
@@ -129,7 +129,7 @@ export class TabDeviationComponent implements OnInit {
     });
   }
 
-  sortManualDeviationData(sort: Sort){
+  sortManualDeviationData(sort: Sort) {
     const data = this.ManualDeviationData.slice();
     if (!sort.active || sort.direction === '') {
       this.ManualDeviationData = data;
@@ -151,20 +151,20 @@ export class TabDeviationComponent implements OnInit {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  BindDDLDataFromTempDDLData(data){
+  BindDDLDataFromTempDDLData(data) {
     var idx = this.tempDDLData.indexOf(this.tempDDLData.find(x => x.DDLDeviationCriteriaData == data));
     this.DDLDeviationCriteriaData.push(this.tempDDLData[idx].DDLDeviationCriteriaData);
     this.DDLApproveAtData.push(this.tempDDLData[idx].DDLApproveAtData);
     this.tempDDLData.splice(idx, 1);
   }
 
-  BindTempDDLData(data){
+  BindTempDDLData(data) {
     var idx = this.DDLDeviationCriteriaData.indexOf(data);
     var temp = {
       DDLDeviationCriteriaData: this.DDLDeviationCriteriaData[idx],
       DDLApproveAtData: this.DDLApproveAtData[idx],
     };
-    
+
     this.tempDDLData.push(temp);
 
     this.ClearFormObj();
@@ -173,15 +173,15 @@ export class TabDeviationComponent implements OnInit {
     this.DDLApproveAtData.splice(idx, 1);
   }
 
-  ClearFormObj(){
+  ClearFormObj() {
     this.FormObjManualDeviationData.patchValue({
       DeviationCrit: "",
       ApvAt: "",
       Notes: "",
     });
   }
-  
-  DeleteFromManualDeviationData(idxData){
+
+  DeleteFromManualDeviationData(idxData) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.BindDDLDataFromTempDDLData(this.ManualDeviationData[idxData].DeviationCategory);
       this.ManualDeviationData.splice(idxData, 1);
@@ -190,15 +190,15 @@ export class TabDeviationComponent implements OnInit {
     }
   }
 
-  onChange(ev){
+  onChange(ev) {
     var idx = ev.target.selectedIndex;
     this.FormObjManualDeviationData.patchValue({
       ApvAt: this.DDLApproveAtData[idx],
     });
   }
 
-  AddNewForm(){
-    if(this.FormObjManualDeviationData.value.DeviationCrit == "") return;
+  AddNewForm() {
+    if (this.FormObjManualDeviationData.value.DeviationCrit == "") return;
     var idx = this.ManualDeviationData.length;
     var temp = new DeviationResultObj();
     temp.DeviationResultId = 0;
@@ -221,18 +221,18 @@ export class TabDeviationComponent implements OnInit {
     this.PassData();
   }
 
-  ReSeqNo(){
-    for(var i = 0; i < this.ManualDeviationData.length; i++){
-      if((i + 1) != this.ManualDeviationData[i].SeqNo){
+  ReSeqNo() {
+    for (var i = 0; i < this.ManualDeviationData.length; i++) {
+      if ((i + 1) != this.ManualDeviationData[i].SeqNo) {
         this.ManualDeviationData[i].DeviationResultId = 0;
         this.ManualDeviationData[i].SeqNo = i + 1;
       }
     }
   }
 
-  PassData(){
+  PassData() {
     this.ReSeqNo();
     this.DataEmit.emit(this.ManualDeviationData);
   }
-  
+
 }

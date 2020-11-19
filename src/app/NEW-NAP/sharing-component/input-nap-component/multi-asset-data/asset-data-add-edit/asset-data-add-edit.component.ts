@@ -155,7 +155,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AdminHeadId : [''],
     AdminHeadName: [''],
     AdminHeadNo: [''],
-    AdminHeadCode: [''],
+    AdminHeadPositionCode: [''],
 
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -204,6 +204,11 @@ export class AssetDataAddEditComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   EmpObj: any;
   vendorEmpSalesObj = {
+    VendorId: 0,
+    VendorEmpId: 0,
+    VendorEmpNo: "",
+  };
+  vendorEmpAdminHeadObj = {
     VendorId: 0,
     VendorEmpId: 0,
     VendorEmpNo: "",
@@ -315,8 +320,9 @@ export class AssetDataAddEditComponent implements OnInit {
     this.salesObj.VendorId = event.VendorId;
     this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.GetSalesList();
-this.GetAdminHeadList();
+    this.GetAdminHeadList();
   }
+
  GetSalesList(){
   var Obj = {
     VendorId : this.salesObj.VendorId,
@@ -330,6 +336,7 @@ this.GetAdminHeadList();
     }
   );
  }
+
  GetAdminHeadList(){
   var Obj = {
     VendorId : this.salesObj.VendorId,
@@ -343,6 +350,7 @@ this.GetAdminHeadList();
     }
   );
  }
+
   GetAppCust() {
     var appObj = {
       AppId: this.AppId,
@@ -409,6 +417,7 @@ this.GetAdminHeadList();
       BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
     });
   }
+
   SalesPersonChanged(event) {
     if (event.target.value != "") {
       //this.vendorEmpObj.VendorEmpId = event.target.value;
@@ -433,6 +442,7 @@ this.GetAdminHeadList();
       });
     }
   }
+  
   AdminChanged(event) {
     if (event.target.value != "") {
       //this.vendorEmpObj.VendorEmpId = event.target.value;
@@ -499,12 +509,14 @@ this.GetAdminHeadList();
           var assetValidationRule = response;
           this.AssetValidationResult = response;
           this.grossDPPrcnt = assetValidationRule["DPPrcnt"];
-          this.AssetDataForm.patchValue({
-            DownPaymentPrctg: assetValidationRule["DPPrcnt"],
-            DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
-          });
+          if(assetValidationRule["DPPrcnt"] != null){
+            this.AssetDataForm.patchValue({
+              DownPaymentPrctg: assetValidationRule["DPPrcnt"],
+              DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
+            });
+          }
           if(assetValidationRule["DPBhv"] == CommonConstant.RuleBehaviourLock){
-            if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
+            if(this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG'){
               this.AssetDataForm.controls.DownPaymentPrctg.disable();
               this.AssetDataForm.controls["DownPaymentPrctg"].clearValidators();
               this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
@@ -516,13 +528,15 @@ this.GetAdminHeadList();
             }
           }
           else{
-            if(this.AssetDataForm.controls.selectedDpType.value == 'PRCTG'){
+            if(this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG'){
               this.AssetDataForm.controls.DownPaymentPrctg.enable();
+              this.AssetDataForm.controls.DownPayment.disable();
               this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
               this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
             }
             else{
               this.AssetDataForm.controls.DownPayment.enable();
+              this.AssetDataForm.controls.DownPaymentPrctg.disable();
               this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
               this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
             }
@@ -569,33 +583,35 @@ this.GetAdminHeadList();
       else{
         if (value == "AMT") {
           this.AssetDataForm.controls["DownPayment"].enable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
           this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
           this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
         }
         else{
           this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+          this.AssetDataForm.controls["DownPayment"].disable();
           this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
           this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
         }
       }
+    }else{
+      if (value == "AMT") {
+        this.AssetDataForm.controls["DownPayment"].enable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+        this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+        this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+      }
+      else{
+        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+        this.AssetDataForm.controls["DownPayment"].disable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+        this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+      }
     }
-    // if (value == "AMT") {
-    //   this.AssetDataForm.controls["DownPayment"].enable()
-    //   var minDP = this.AssetDataForm.controls["AssetPrice"].value * this.grossDPPrcnt / 100;
-    //   this.AssetDataForm.controls["DownPayment"].setValidators(Validators.min(minDP));
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].disable();
-    //   this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
-    // }
-    // else {
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].enable();
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.min(this.grossDPPrcnt), Validators.max(100)]);
-    //   this.AssetDataForm.controls["DownPayment"].disable();
-    //   this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
-    // }
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("ameng");
+    console.log("add edit")
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 
@@ -677,10 +693,17 @@ this.GetAdminHeadList();
               this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
                 (response) => {
                   this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-                  this.AssetDataForm.patchValue({
-                    AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
-                    AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
-                  });
+                  if(this.headAppAssetSupplEmpObj.AppAssetSupplEmpObj != undefined){
+                    this.AssetDataForm.patchValue({
+                      AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
+                      AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName,
+                      AdminHeadPositionCode : this.headAppAssetSupplEmpObj.MrSupplEmpPositionCode
+                    });
+                  }else{
+                    this.AssetDataForm.patchValue({
+                      AdminHeadId: ""
+                    });
+                  }
                 });
           });
 
@@ -910,9 +933,11 @@ this.GetAdminHeadList();
     this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({
-          AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
-        });
+        if(this.mode != 'editAsset'){
+          this.AssetDataForm.patchValue({
+            AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
+          });
+        }
       }
     );
 
@@ -1556,20 +1581,31 @@ this.GetAdminHeadList();
           SupplCode: response["VendorCode"],
         });
         this.vendorEmpSalesObj.VendorId = response["VendorId"];
-          this.vendorEmpSalesObj.VendorEmpNo = this.salesAppAssetSupplEmpObj.SupplEmpNo;
-          this.GetVendorEmpSalesPerson();
+        this.vendorEmpSalesObj.VendorEmpNo = this.salesAppAssetSupplEmpObj.SupplEmpNo;
+        this.GetVendorEmpSalesPerson();
         
-
+        if(this.headAppAssetSupplEmpObj != undefined && this.headAppAssetSupplEmpObj.SupplEmpNo != undefined){
+          this.vendorEmpAdminHeadObj.VendorId = response["VendorId"];
+          this.vendorEmpAdminHeadObj.VendorEmpNo = this.headAppAssetSupplEmpObj.SupplEmpNo;
+          this.GetVendorEmpAdminHead();
+        }
+        
         this.salesObj = new VendorEmpObj();
         this.salesObj.VendorId = response["VendorId"];
         this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
         this.GetSalesList();
+
+        this.adminHeadObj = new VendorEmpObj();
+        this.adminHeadObj.VendorId = response["VendorId"];
+        this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+        this.GetAdminHeadList();
         
         this.InputLookupSupplierObj.jsonSelect = response;
         this.InputLookupSupplierObj.nameSelect = response["VendorName"];
       }
     );
   }
+
   GetVendorEmpSalesPerson() {
     this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpSalesObj).subscribe(
       (response) => {
@@ -1579,6 +1615,17 @@ this.GetAdminHeadList();
       }
     );
   }
+
+  GetVendorEmpAdminHead() {
+    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpAdminHeadObj).subscribe(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          AdminHeadId: response["VendorEmpId"]
+        });
+      }
+    );
+  }
+
   checkForm(){
     console.log(this.AssetDataForm);
   }
