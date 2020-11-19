@@ -457,15 +457,16 @@ this.GetAdminHeadList();
     }
   }
 
-  AssetValidationForSave() {
+  async AssetValidationForSave() {
     var CheckValidObj = {
       AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
       ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
       Tenor: this.appData.Tenor,
       AssetCategoryCode: this.AssetDataForm.controls["AssetCategoryCode"].value,
-      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value
+      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value,
+      AppId : this.AppId
     }
-    this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
+    await this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
       (response) => {
         this.AssetValidationResult = response;
       }
@@ -1137,13 +1138,16 @@ this.GetAdminHeadList();
     }
   }
 
-  SaveForm() {
+  async SaveForm() {
+    console.log("a");
     var assetForm = this.AssetDataForm.getRawValue();
     var confirmMsg = "";
     var isValidOk = true;
-    this.AssetValidationForSave();
+    await this.AssetValidationForSave();
+
+
     if(this.AssetValidationResult){
-      if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG') {
+      if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCNT') {
         if(assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin){
           isValidOk = false;
           confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
@@ -1154,19 +1158,20 @@ this.GetAdminHeadList();
         }
       }
       else{
-        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.DownPaymentAmt;
-        var assetDPMax = this.AssetValidationResult.DPMax * assetForm.DownPaymentAmt;
-        if(assetForm.DownPaymentAmt < assetDPMin){
+        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.AssetPrice / 100;
+        var assetDPMax = this.AssetValidationResult.DPMax * assetForm.AssetPrice / 100;
+        if(assetForm.DownPayment < assetDPMin){
           isValidOk = false;
           confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
         }
-        else if(assetForm.DownPaymentAmt > assetDPMax){
+        else if(assetForm.DownPayment > assetDPMax){
           isValidOk = false;
           confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
         }
       }
-    }
 
+
+    }
     if(!isValidOk){
       confirmMsg += ", Are You Sure to Save This Data ?";
       var confirmation = confirm(confirmMsg);
@@ -1174,6 +1179,7 @@ this.GetAdminHeadList();
         return false;
       }
     }
+
 
     if (this.mode == 'addAsset') {
       this.allAssetDataObj = new AllAssetDataObj();
