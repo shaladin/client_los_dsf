@@ -162,9 +162,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
     this.BindMultiInsGridData();
+    if (this.BLCode == CommonConstant.FCTR) {
       this.GetExistingAppCollateralWithInsurance();
       this.textTitle = "Collateral";
-
+    }
   }
 
   CancelHandler() {
