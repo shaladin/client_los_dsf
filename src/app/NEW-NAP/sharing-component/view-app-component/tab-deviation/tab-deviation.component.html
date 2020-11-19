@@ -6,13 +6,15 @@
 
           <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewAutoDeviation" *ngIf="AutoDeviationData.length > 0">
+          <div class="form-body" id="viewAutoDeviation">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
               <thead>
                 <tr class="table-header">
                   <th><span translate class="thead-header">No. </span>
                   </th>
                   <th><span translate class="thead-header" mat-sort-header="DeviationType">Deviation Type</span>
+                  </th>
+                  <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="DeviationCategory">Deviation Category</span>
                   </th>
                   <th><span translate class="thead-header" mat-sort-header="OriValue">Original Value</span>
                   </th>
@@ -33,6 +35,7 @@
                 <tr *ngFor="let item of AutoDeviationData; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.DeviationType }}</td>
+                  <td style="text-align: left;">{{ item.DeviationCategory }}</td>
                   <td>{{ item.OriValue }}</td>
                   <td>{{ item.CurrValue }}</td>
                   <td>{{ item.AppvAt }}</td>
