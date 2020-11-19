@@ -27,11 +27,9 @@
         "placeholder": ""
       }
     ],
-    "querystring": {
-      "select": "SELECT REF_ECONOMIC_SECTOR_ID AS RefEconomicSectorId, ECONOMIC_SECTOR_CODE AS EconomicSectorCode, ECONOMIC_SECTOR_NAME AS EconomicSectorName, REG_RPT_CODE AS RegRptCode",
-      "from": "FROM REF_ECONOMIC_SECTOR WITH(NOLOCK)",
-      "where": "WHERE IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupEconomicSector"
+  },
     "headerList": [
         {
             "type": "sort",

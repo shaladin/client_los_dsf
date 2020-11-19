@@ -19,10 +19,9 @@
         "placeholder": ""
       }
     ],
-    "querystring": {
-      "select": "SELECT CP.CUST_FULL_NAME AS CustFullName, CP.MOU_CUST_ID AS CustId, C.MOU_CUST_NO AS CustNo",
-      "from": "FROM dbo.MOU_CUST_PERSONAL CP  WITH(NOLOCK) JOIN dbo.MOU_CUST C  WITH(NOLOCK) ON C.MOU_CUST_ID = CP.MOU_CUST_ID"
-    },
+  "querystring": {
+    "name": "lookupCustPersonal"
+  },
     "headerList": [
         {
             "type": "sort",

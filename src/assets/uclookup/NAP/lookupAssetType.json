@@ -32,11 +32,9 @@
         "itemsUrl" : []
       }
     ],
-    "querystring": {
-      "select": "SELECT A.FULL_ASSET_CODE AS FullAssetCode, A.FULL_ASSET_NAME AS FullAssetName, A.ASSET_MASTER_ID AS AssetMasterId, A.ASSET_TYPE_ID AS AssetTypeId",
-      "from": "FROM ASSET_MASTER AS A WITH(NOLOCK) INNER JOIN ASSET_TYPE AS B WITH(NOLOCK) ON A.ASSET_TYPE_ID = B.ASSET_TYPE_ID",
-      "where":"WHERE A.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupAssetType"
+  },
     "headerList": [
         {
           "type": "sort",
@@ -81,4 +79,3 @@
     "propertyId": "FullAssetCode",
     "propertyName": "FullAssetName"
   }
-  

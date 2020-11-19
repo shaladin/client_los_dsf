@@ -18,11 +18,9 @@
         "placeholder": "Supplier Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT V.VENDOR_CODE AS VendorCode, V.VENDOR_NAME AS VendorName, V.VENDOR_ID as VendorId, V.MR_VENDOR_CATEGORY_CODE AS MrVendorCategoryCode",
-      "from": "FROM dbo.VENDOR V WITH(NOLOCK) JOIN dbo.VENDOR_OFFICE_MBR VOM WITH(NOLOCK) ON V.VENDOR_ID = VOM.VENDOR_ID JOIN REF_OFFICE RO WITH(NOLOCK) on VOM.REF_OFFICE_ID = RO.REF_OFFICE_ID",
-      "where": "WHERE V.IS_ACTIVE = 1 and V.MR_VENDOR_CATEGORY_CODE = N'SUPPLIER_BRANCH'"
-    },
+  "querystring": {
+    "name": "lookupSupplierRefinancingLoanObj"
+  },
     "headerList": [
       {
         "type": "sort",
@@ -67,4 +65,3 @@
     "propertyId": "VendorCode",
     "propertyName": "VendorName"
   }
-  

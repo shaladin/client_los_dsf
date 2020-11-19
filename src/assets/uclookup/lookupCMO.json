@@ -27,12 +27,9 @@
         "placeholder": ""
       }
     ],
-    "querystring": {
-      "select": " SELECT RU.USERNAME AS Username, RE.EMP_NO AS EmpNo, RE.EMP_NAME AS EmpName",
-      "from": "FROM dbo.REF_USER RU WITH(NOLOCK)JOIN dbo.REF_USER_ROLE ROR WITH(NOLOCK) ON ROR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_ROLE RR WITH(NOLOCK) ON RR.REF_ROLE_ID = ROR.REF_ROLE_ID JOIN dbo.REF_EMP RE WITH(NOLOCK) ON RE.REF_EMP_ID = RU.REF_EMP_ID",
-      "where" : "WHERE RR.ROLE_CODE IN (SELECT * FROM dbo.fnSplitString((SELECT GS_VALUE FROM GENERAL_SETTING WITH(NOLOCK) WHERE GS_CODE = N'ROLE_FOR_CMO'),',')) AND RU.IS_ACTIVE = 1 AND RR.IS_ACTIVE = 1 AND RE.IS_ACTIVE = 1 ",
-      "groupby" : "GROUP BY RU.USERNAME, RE.EMP_NO, RE.EMP_NAME"
-    },
+  "querystring": {
+    "name": "lookupCMO"
+  },
     "headerList": [
         {
             "type": "sort",

@@ -19,9 +19,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT PROV_DISTRICT_CODE AS DistrictCode, PROV_DISTRICT_NAME AS DistrictName",
-    "from": "FROM dbo.REF_PROV_DISTRICT WITH(NOLOCK)",
-    "where":"WHERE IS_ACTIVE = 1"
+    "name": "lookupDistrict"
   },
   "headerList": [
     {

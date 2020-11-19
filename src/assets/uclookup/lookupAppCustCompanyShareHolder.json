@@ -18,10 +18,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT ACCMS.MGMNT_SHRHOLDER_NAME AS MgmntShrholderName, ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID AS AppCustCompanyMgmntShrholderId, ACCMS.MR_JOB_POSITION_CODE AS MrJobPositionCode, ACCMS.CUST_NO",
-        "from": "FROM dbo.APP_CUST AC JOIN dbo.APP_CUST_COMPANY ACC ON ACC.APP_CUST_ID = AC.APP_CUST_ID JOIN DBO.APP_CUST_COMPANY_MGMNT_SHRHOLDER ACCMS WITH(NOLOCK) ON ACCMS.APP_CUST_COMPANY_ID = ACC.APP_CUST_COMPANY_ID"
-    },
+  "querystring": {
+    "name": "lookupAppCustCompanyShareHolder"
+  },
     "headerList": [
         {
             "type": "sort",

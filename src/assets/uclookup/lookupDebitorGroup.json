@@ -36,10 +36,9 @@
 
 
     ],
-    "querystring": {
-        "select": "SELECT LBPPMS_DEBT_GRP_CODE AS LbppmsDebtGrpCode, DESCR AS Descr, BI_CODE AS BiCode, LBPP_CODE AS LbppCode",
-        "from": "FROM dbo.LBPPMS_DEBT_GRP WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupDebitorGroup"
+  },
     "headerList": [
         {
             "type": "sort",

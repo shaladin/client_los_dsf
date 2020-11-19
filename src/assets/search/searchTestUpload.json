@@ -35,11 +35,9 @@
             "criteriaPropValue": "UPLOAD"
         }
     ],
-    "querystring": {
-        "select": "SELECT UMH.UPLOAD_MONITORING_NO AS UploadMonitoringNo, UMH.OFFICE_CODE AS OfficeCode, UMH.UPLOAD_STATUS AS UploadStatus, UMH.[FILE_NAME] AS [FileName], UMH.TOTAL_RECORD AS TotalRecord, UMH.TOTAL_RECORD_PROCESSED AS TotalRecordProcessed, UMH.TOTAL_RECORD_ERROR AS TotalRecordError, UT.UPLOAD_TYPE_CODE AS UploadTypeCode, UMH.IS_EXECUTED AS IsExecuted, UMH.[ERROR_MESSAGE] AS ErrorMessage",
-        "from": "FROM dbo.UPLOAD_MONITORING_H UMH WITH(NOLOCK) JOIN dbo.UPLOAD_TYPE UT ON UT.UPLOAD_TYPE_ID = UMH.UPLOAD_TYPE_ID",
-        "where": "WHERE UT.UPLOAD_TYPE_CODE = N'UPL_ASM'"
-    },
+  "querystring": {
+    "name": "searchTestUpload"
+  },
     "headerList": [
         {
             "type": "sort",

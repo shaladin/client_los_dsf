@@ -18,11 +18,9 @@
         "placeholder": "Collateral Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT A.FULL_ASSET_CODE AS FullAssetCode, A.FULL_ASSET_NAME AS FullAssetName, A.ASSET_MASTER_ID AS AssetMasterId, A.ASSET_TYPE_ID AS AssetTypeId, C.ASSET_CATEGORY_CODE AS AssetCategoryCode, B.ASSET_TYPE_CODE AS AssetTypeCode",
-      "from": "FROM ASSET_MASTER AS A WITH(NOLOCK) INNER JOIN ASSET_TYPE AS B WITH(NOLOCK) ON A.ASSET_TYPE_ID = B.ASSET_TYPE_ID INNER JOIN dbo.ASSET_CATEGORY AS C ON A.ASSET_CATEGORY_ID = C.ASSET_CATEGORY_ID",
-      "where": "WHERE A.IS_FINAL = 1 AND A.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupCollateralType"
+  },
     "headerList": [
         {
           "type": "sort",
@@ -67,4 +65,3 @@
     "propertyId": "FullAssetCode",
     "propertyName": "FullAssetName"
   }
-  

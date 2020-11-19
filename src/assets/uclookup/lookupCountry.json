@@ -19,10 +19,9 @@
         "placeholder": ""
       }
     ],
-    "querystring": {
-      "select": "SELECT COUNTRY_CODE AS CountryCode, COUNTRY_NAME AS CountryName",
-      "from": "FROM REF_COUNTRY WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupCountry"
+  },
     "headerList": [
         {
             "type": "sort",

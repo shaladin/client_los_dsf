@@ -18,11 +18,9 @@
         "placeholder": "Supplier Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT VND.VENDOR_CODE AS VendorCode, VND.VENDOR_NAME AS VendorName, VND.VENDOR_ID as VendorId",
-      "from": "FROM dbo.VENDOR VND WITH(NOLOCK) JOIN dbo.VENDOR_OFFICE_MBR VOM WITH(NOLOCK) ON VOM.VENDOR_ID = VND.VENDOR_ID",
-      "where": "WHERE VND.IS_ACTIVE = 1 AND VOM.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupSupplierBranch"
+  },
     "headerList": [
       {
         "type": "sort",
@@ -67,4 +65,3 @@
     "propertyId": "VendorCode",
     "propertyName": "VendorName"
   }
-  

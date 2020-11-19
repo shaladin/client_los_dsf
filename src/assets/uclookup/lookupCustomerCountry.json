@@ -37,10 +37,9 @@
         "label": "Action"
       }
     ],
-    "querystring": {
-      "select": "SELECT COUNTRY_CODE AS CountryCode,COUNTRY_NAME AS CountryName , REF_COUNTRY_ID as RefCountryId",
-      "from": "FROM dbo.REF_COUNTRY WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupCustomerCountry"
+  },
     "bodyList": [
       {
         "type": "text",

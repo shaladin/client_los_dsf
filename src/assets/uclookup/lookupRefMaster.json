@@ -17,10 +17,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT MASTER_CODE AS MasterCode, DESCR AS Descr, REF_MASTER_TYPE_CODE AS RefMasterTypeCode",
-        "from": "FROM dbo.REF_MASTER WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupRefMaster"
+  },
     "headerList": [
         {
             "type": "sort",

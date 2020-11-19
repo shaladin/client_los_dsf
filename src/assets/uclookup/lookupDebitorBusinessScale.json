@@ -36,10 +36,9 @@
 
 
     ],
-    "querystring": {
-        "select": "SELECT LBPPMS_BIZ_SCL_CODE AS LbppmsBizSclCode, DESCR AS Descr, BI_CODE AS BiCode, LBPP_CODE AS LbppCode",
-        "from": "FROM dbo.LBPPMS_BIZ_SCL WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupDebitorBusinessScale"
+  },
     "headerList": [
         {
             "type": "sort",
