@@ -166,7 +166,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.GetExistingAppCollateralWithInsurance();
       this.textTitle = "Collateral";
     }
-
   }
 
   CancelHandler() {
@@ -212,12 +211,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
-        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.FCTR){
           this.textTitle = "Collateral";
-        }
-        else if(this.BizTemplateCode == CommonConstant.FL4W){
-          this.textTitle = "Asset";
-        }
       });
 
     this.appAssetObj.AppId = this.appId;
