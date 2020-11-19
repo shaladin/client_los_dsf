@@ -60,7 +60,6 @@ export class TabDeviationComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
       (response) => {
-        console.log(response);
         var temp = response["deviationResultObjs"];
         this.DDLDeviationCriteriaData = response["DeviationCategory"];
         this.DDLApproveAtData = response["ApproveAt"];
