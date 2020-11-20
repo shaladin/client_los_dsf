@@ -407,6 +407,7 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
     this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
