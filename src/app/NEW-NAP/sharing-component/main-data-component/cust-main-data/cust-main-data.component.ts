@@ -379,7 +379,6 @@ export class CustMainDataComponent implements OnInit {
 
       this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
-      this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
@@ -419,6 +418,8 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MrIdTypeCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
     this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
