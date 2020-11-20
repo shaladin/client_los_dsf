@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+CekIsCustomerimport { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroupDirective, ControlContainer, Validators } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -742,13 +742,14 @@ export class CustMainDataComponent implements OnInit {
       const TempCust2 = this.AppCustData.CustName.toLowerCase();
       if (TempCust1 == TempCust2) {
         this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
-        return;
+        return true;
       }
     }
+    return false;
   }
 
   SaveForm() {
-    this.CekIsCustomer();
+    if(this.CekIsCustomer()) return;
     let max17Yodt = new Date(this.MaxDate);
     let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
     let d2 = new Date(this.MaxDate);
