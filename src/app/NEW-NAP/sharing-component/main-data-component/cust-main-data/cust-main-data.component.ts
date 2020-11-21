@@ -409,7 +409,6 @@ export class CustMainDataComponent implements OnInit {
         this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
 
       }
-      this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
 
     this.CustMainDataForm.controls.MrCustModelCode.updateValueAndValidity();
@@ -425,7 +424,6 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
-    this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
     this.setLookup(custType, true);
   }
 
