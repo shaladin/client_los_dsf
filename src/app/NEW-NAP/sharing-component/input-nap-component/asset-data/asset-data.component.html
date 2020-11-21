@@ -294,15 +294,15 @@
                           <div *ngIf="item.controls.AttrInputType.value == 'L'">
                             <select class="form-control" formControlName="AttrValue" style="width:50%"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
-                              <lib-uc-show-errors
-                                [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
-                                [submit]="enjiForm.submitted">
-                              </lib-uc-show-errors>
                               <option value="">-Select One-</option>
                               <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
                                 {{x}}
                               </option>
                             </select>
+                            <lib-uc-show-errors
+                              [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                              [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
                           </div>
                         </div>
                       </div>
