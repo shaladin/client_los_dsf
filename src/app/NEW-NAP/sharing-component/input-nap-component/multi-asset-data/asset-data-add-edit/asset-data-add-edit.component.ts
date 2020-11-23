@@ -611,7 +611,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("add edit")
     this.AssetDataForm.updateValueAndValidity();
     this.items = this.AssetDataForm.get('items') as FormArray;
 
@@ -699,12 +698,9 @@ export class AssetDataAddEditComponent implements OnInit {
                       AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName,
                       AdminHeadPositionCode : this.headAppAssetSupplEmpObj.MrSupplEmpPositionCode
                     });
-                  }else{
-                    this.AssetDataForm.patchValue({
-                      AdminHeadId: ""
-                    });
                   }
                 });
+              this.GetVendorForView();
           });
 
           this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
@@ -725,8 +721,6 @@ export class AssetDataAddEditComponent implements OnInit {
                     SalesPersonPositionCode : this.salesAppAssetSupplEmpObj.MrSupplEmpPositionCode
                   });
                 });
-                this.GetVendorForView();
-
             });
 
         });

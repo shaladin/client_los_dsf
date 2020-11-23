@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -1895,6 +1895,7 @@ export class AssetDataComponent implements OnInit {
     };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
+        console.log(response);
         this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
         if(response['IsDiffWithRefAttr']){
           this.isDiffWithRefAttr = true;
@@ -1944,15 +1945,35 @@ export class AssetDataComponent implements OnInit {
     }
     
   }
-  addGroupAppAssetAttr(appAssetAttrObjs, i) {
-    
-    return this.fb.group({
-      No: [i],
-      AssetAttrCode: [appAssetAttrObjs.AssetAttrCode],
-      AssetAttrName: [appAssetAttrObjs.AssetAttrName],
-      AttrInputType: [appAssetAttrObjs.AttrInputType],
-      AttrValue: [appAssetAttrObjs.AttrValue, [Validators.maxLength(appAssetAttrObjs.AttrLength)]]
-    })
 
+  private setValidators(appAssetAttrObjs: AppAssetAttrCustomObj){
+    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
+
+    if(appAssetAttrObjs.AttrLength != null && appAssetAttrObjs.AttrLength != 0){
+      ListValidator.push(Validators.maxLength(appAssetAttrObjs.AttrLength));
+    } 
+
+    return ListValidator;
+  }
+
+  private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>){
+    let tempFB = this.fb.group({
+      No: [i],
+      AssetAttrCode: [appAssetAttrObj.AssetAttrCode],
+      AssetAttrName: [appAssetAttrObj.AssetAttrName],
+      AttrInputType: [appAssetAttrObj.AttrInputType],
+      AttrValue: [appAssetAttrObj.AttrValue]
+    });
+    if(ListValidator.length > 0){
+      tempFB.get("AttrValue").setValidators(ListValidator);
+    }
+
+    return tempFB;
+  }
+
+  addGroupAppAssetAttr(appAssetAttrObj: AppAssetAttrCustomObj, i: number) {
+    let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
+    
+    return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
   }
 } 

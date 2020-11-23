@@ -71,6 +71,7 @@ export class TabDeviationComponent implements OnInit {
             tempObj = {
               SeqNo: temp[i].SeqNo,
               DeviationType: temp[i].MrDeviationTypeDesc,
+              DeviationCategory: temp[i].DeviationCategory,
               OriValue: temp[i].OriginalValue,
               CurrValue: temp[i].CurrentValue,
               AppvAt: temp[i].ApvAt,
