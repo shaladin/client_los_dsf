@@ -8,6 +8,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-personal',
@@ -17,6 +19,8 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isDetail: false;
+  @Input() appCustId: number;
   viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataEmpObj:  UcViewGenericObj = new UcViewGenericObj();
@@ -25,9 +29,11 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   viewFinDataObj:  UcViewGenericObj = new UcViewGenericObj();
   viewEmergencyContactObj:  UcViewGenericObj = new UcViewGenericObj();
 
+  customerTitle: string;
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
 
+  appCustObj: AppCustObj;
   custModelCode: string;
   appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
   appCustBankAccObjs: Array<AppCustBankAccObj>;
@@ -35,12 +41,12 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj>;
   appCustFamilyObjs: Array<Object>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
   async ngOnInit(): Promise<void> {
     await this.getCustData();
-    this.arrValue.push(this.appId);
+    this.arrValue.push(this.appCustObj.AppCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
@@ -73,9 +79,21 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   }
 
   async getCustData() {
-    var reqObj = {AppId: this.appId, IsForNapCompletionVersion: true}
-    await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
+    let reqObj = {};
+    let url = '';
+
+    if(this.isDetail)
+    {
+      reqObj = {AppCustId: this.appCustId, IsForNapCompletionVersion: true};
+      url = URLConstant.GetCustDataPersonalForViewByAppCustId;
+    } else {
+      reqObj ={AppId: this.appId, IsForNapCompletionVersion: true};
+      url = URLConstant.GetCustDataPersonalForViewByAppId;
+    }
+
+    await this.http.post(url, reqObj).toPromise().then(
       (response) => {
+        this.appCustObj = response["AppCustObj"];
         this.custModelCode = response["CustModelCode"];
         this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
@@ -84,8 +102,23 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
         this.appCustFamilyObjs = response["AppCustFamilyObjs"];
 
         // filter family yg punya relationship
-        if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0)
+        if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {
           this.appCustFamilyObjs = this.appCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
+        }
+
+        if(this.appCustObj.IsFamily) this.customerTitle = 'Family';
+        else if(this.appCustObj.IsShareholder) this.customerTitle = 'Shareholder';
+        else if(this.appCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
+        else this.customerTitle = 'Customer';
       });
+  }
+
+  viewDetailFamilyHandler(AppCustId, MrCustTypeCode){
+    const modalInsDetail = this.modalService.open(ViewAppCustDetailComponent);
+    modalInsDetail.componentInstance.AppCustId = AppCustId;
+    modalInsDetail.componentInstance.MrCustTypeCode = MrCustTypeCode;
+    modalInsDetail.componentInstance.CustomerTitle = 'Family';
+    modalInsDetail.result.then().catch((error) => {
+    });
   }
 }

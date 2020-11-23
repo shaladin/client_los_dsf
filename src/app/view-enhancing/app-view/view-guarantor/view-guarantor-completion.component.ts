@@ -6,6 +6,7 @@ import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
 @Component({
   selector: 'app-guarantor-completion',
   templateUrl: './view-guarantor-completion.component.html',
@@ -38,39 +39,24 @@ export class GuarantorCompletionComponent implements OnInit {
       (response) => {
         this.listAppGuarantorCompany = response[CommonConstant.ReturnObj];
       });
-
-
-
   }
-  ViewGuarantorPersonal(content,id) {
-    this.guarantorPersonalFiltered = this.listAppGuarantorPersonal.filter(
-      per => per.AppGuarantorPersonalId == id);
-    this.guarantorPersonal = this.guarantorPersonalFiltered[0];
-    this.open(content);
+  
+  ViewGuarantorPersonal(id) {
+    this.OpenDetailAppCustModal(id, CommonConstant.CustTypePersonal);
   }
-  ViewGuarantorCompany(content,id) {
-    this.guarantorCompanyFiltered = this.listAppGuarantorCompany.filter(
-      coy => coy.AppGuarantorCompanyId == id);
-    this.guarantorCompany = this.guarantorCompanyFiltered[0];
-    this.open(content);
+
+  ViewGuarantorCompany(id) {
+    this.OpenDetailAppCustModal(id, CommonConstant.CustTypeCompany);
   }
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+
+  OpenDetailAppCustModal(appCustId, mrCustTypeCode) {
+    const modalInsDetail = this.modalService.open(ViewAppCustDetailComponent);
+    modalInsDetail.componentInstance.AppCustId = appCustId;
+    modalInsDetail.componentInstance.MrCustTypeCode = mrCustTypeCode;
+    modalInsDetail.componentInstance.CustomerTitle = 'Guarantor';
+    modalInsDetail.result.then().catch((error) => {
     });
   }
-  cancel() {
-    this.modalService.dismissAll();
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+
+
 }

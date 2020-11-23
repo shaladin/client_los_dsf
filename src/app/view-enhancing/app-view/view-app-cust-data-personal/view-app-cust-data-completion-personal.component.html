@@ -1,7 +1,7 @@
 <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
 <!--Section Addr-->
 <div class="px-3">
-    <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
+    <lib-ucSubsection [id]="'CustAddrId'" [title]="customerTitle+' Address'" [panel]="'CustAddress'">
     </lib-ucSubsection>
     <div id="CustAddress">
         <table class="table table-responsive-md text-center table-hover">
@@ -35,7 +35,7 @@
     </div>
 </div>
 <!--Section Family-->
-<div class="px-3">
+<div class="px-3" *ngIf="!isDetail">
     <lib-ucSubsection [id]="'FamilyId'" [title]="'Family'" [panel]="'Family'">
     </lib-ucSubsection>
     <div id="Family">
@@ -47,6 +47,7 @@
                 <th class="text-left"><span class="thead-header" name='relationship' translate>Relationship</span></th>
                 <th class="text-left"><span class="thead-header" name='birthPlace' translate>Birh Place</span></th>
                 <th class="text-center"><span class="thead-header" name='birthDate' translate>Birh Date</span></th>
+                <th class="text-center"><span translate class="thead-header">View</span></th>
             </tr>
             </thead>
             <tbody *ngIf = "!appCustFamilyObjs || appCustFamilyObjs?.length == 0">
@@ -61,7 +62,10 @@
                         <td class="text-left">{{item.CustName}}</td>
                         <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
                         <td class="text-left">{{item.BirthPlace}}</td>
-                        <td class="text-center">{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>                        
+                        <td class="text-center">{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>             
+                        <td class="text-center">
+                            <a (click)="viewDetailFamilyHandler(item.AppCustId, item.MrCustTypeCode)" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"></i></a>
+                        </td>           
                     </tr>
                 </ng-container>
             </tbody>

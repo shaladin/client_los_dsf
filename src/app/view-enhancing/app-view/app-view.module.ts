@@ -48,6 +48,7 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
 import { ViewAppCustDataCompletionPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-completion-personal.component";
 import { ViewAppCustDataCompletionCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-completion-company.component";
 import { GuarantorCompletionComponent } from "./view-guarantor/view-guarantor-completion.component";
+import { ViewAppCustDetailComponent } from "./view-app-cust-detail/view-app-cust-detail.component";
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { GuarantorCompletionComponent } from "./view-guarantor/view-guarantor-co
         ApprovalHistComponent,
         ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
-        ViewAssetDataComponent
+        ViewAssetDataComponent,
+        ViewAppCustDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -110,7 +112,8 @@ import { GuarantorCompletionComponent } from "./view-guarantor/view-guarantor-co
         UcgridviewComponent,
         UcapprovalhistComponent,
         AppMainInfoComponent,
-        AppAssetDataDetailComponent
+        AppAssetDataDetailComponent,
+        ViewAppCustDetailComponent
     ]
 
 })
