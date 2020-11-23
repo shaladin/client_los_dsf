@@ -4,19 +4,19 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   navbarColor: 'transparent',
-  losUrl : 'http://localhost:5001',
+  losUrl: 'http://r3app-server.ad-ins.com/LOS',
+  //losUrl: 'http://localhost:5001',
+  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   // FoundationR3Url: 'http://localhost:5000',
-  // losUrl: 'http://r3app-server.ad-ins.com/LOS_SIT',
-  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_SIT',
-  ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_SIT',
-  FoundationR3Web: 'http://r3web-server.ad-ins.com/FOUNDATION_SIT',
-  losR3Web: 'http://r3web-server.ad-ins.com/LOS_SIT',
-  WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_SIT',
-  WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_SIT',
+  ApprovalR3Url: 'http://r3app-server.ad-ins.com/approval',
+  FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation',
+  losR3Web: 'http://r3web-server/LOSR3',
+  WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
+  WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
-  Module: "LOS"
+  Module:"LOS"
 };
 
 
