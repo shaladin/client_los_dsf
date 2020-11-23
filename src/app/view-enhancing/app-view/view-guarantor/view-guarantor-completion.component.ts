@@ -6,7 +6,8 @@ import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
+import { ViewAppCustDetailComponent } from 'app/components/general/app-cust-view/view-app-cust-detail/view-app-cust-detail.component';
+
 @Component({
   selector: 'app-guarantor-completion',
   templateUrl: './view-guarantor-completion.component.html',

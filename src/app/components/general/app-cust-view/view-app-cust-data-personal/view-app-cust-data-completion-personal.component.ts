@@ -106,6 +106,11 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
           this.appCustFamilyObjs = this.appCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
         }
 
+        // filter cust group yg punya cust no & applicant no
+        if(this.appCustGrpObjs && this.appCustGrpObjs.length > 0) {
+          this.appCustGrpObjs = this.appCustGrpObjs.filter(item => item['CustNo'] || item['ApplicantNo'])
+        }
+
         if(this.appCustObj.IsFamily) this.customerTitle = 'Family';
         else if(this.appCustObj.IsShareholder) this.customerTitle = 'Shareholder';
         else if(this.appCustObj.IsGuarantor) this.customerTitle = 'Guarantor';

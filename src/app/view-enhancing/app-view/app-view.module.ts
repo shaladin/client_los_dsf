@@ -19,8 +19,6 @@ import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AppMainInfoComponent } from "../app-main-info/app-main-info.component";
 import { AppViewComponent } from "./app-view.component";
 import { AppViewRoutingModule } from "./app-view-routing.module";
-import { ViewAppCustDataCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-company.component";
-import { ViewAppCustDataPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { GuarantorComponent } from "./view-guarantor/view-guarantor.component";
 import { TabReferantorComponent } from "./tab-referantor/tab-referantor.component";
 import { TabApplicationComponent } from "./tab-application/tab-application.component";
@@ -45,11 +43,8 @@ import { ApprovalHistComponent } from "./approval-hist/approval-hist.component";
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
-import { ViewAppCustDataCompletionPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-completion-personal.component";
-import { ViewAppCustDataCompletionCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-completion-company.component";
 import { GuarantorCompletionComponent } from "./view-guarantor/view-guarantor-completion.component";
-import { ViewAppCustDetailComponent } from "./view-app-cust-detail/view-app-cust-detail.component";
-
+import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 
 @NgModule({
     imports: [
@@ -71,14 +66,11 @@ import { ViewAppCustDetailComponent } from "./view-app-cust-detail/view-app-cust
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
+        AppCustViewComponentsModule
     ],
     declarations: [
         AppMainInfoComponent,
         AppViewComponent,
-        ViewAppCustDataCompanyComponent,
-        ViewAppCustDataPersonalComponent,
-        ViewAppCustDataCompletionPersonalComponent,
-        ViewAppCustDataCompletionCompanyComponent,
         GuarantorComponent,
         GuarantorCompletionComponent,
         TabReferantorComponent,
@@ -104,7 +96,6 @@ import { ViewAppCustDetailComponent } from "./view-app-cust-detail/view-app-cust
         ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent,
-        ViewAppCustDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -113,7 +104,6 @@ import { ViewAppCustDetailComponent } from "./view-app-cust-detail/view-app-cust
         UcapprovalhistComponent,
         AppMainInfoComponent,
         AppAssetDataDetailComponent,
-        ViewAppCustDetailComponent
     ]
 
 })
