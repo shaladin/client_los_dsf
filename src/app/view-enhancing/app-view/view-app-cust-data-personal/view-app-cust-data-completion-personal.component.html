@@ -1,0 +1,167 @@
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
+<!--Section Addr-->
+<div class="px-3">
+    <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
+    </lib-ucSubsection>
+    <div id="CustAddress">
+        <table class="table table-responsive-md text-center table-hover">
+            <thead>
+            <tr class="table-header">
+                <th class="text-left"><span class="thead-header" name='addrType' translate>Address Type</span> </th>
+                <th class="text-left"><span class="thead-header" name='fullAddr' translate>Address</span></th>
+                <th class="text-center"><span class="thead-header" name='phoneNo' translate>Phone No</span></th>
+                <th class="text-center"><span class="thead-header" name='houseOwnership' translate>House Ownership</span></th>
+            </tr>
+            </thead>
+            <tbody *ngIf = "appCustAddrForViewObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody>
+            <ng-container *ngFor="let item of appCustAddrForViewObjs">
+                <tr>
+                <td class="text-left" *ngIf="item.CustAddrTypeName != null">{{item.CustAddrTypeName}}</td>
+                <td class="text-left" *ngIf="item.CustAddrTypeName == null"> - </td>
+                <td class="text-left" *ngIf="item.FullAddr != null">{{item.FullAddr}}</td>
+                <td class="text-left" *ngIf="item.FullAddr == null"> - </td>
+                <td class="text-center">{{item.PhoneNo ? item.PhoneNo : "-"}}</td>
+                <td class="text-center" *ngIf="item.HouseOwnershipName != null">{{item.HouseOwnershipName}}</td>
+                <td class="text-center" *ngIf="item.HouseOwnershipName == null"> - </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Section Family-->
+<div class="px-3">
+    <lib-ucSubsection [id]="'FamilyId'" [title]="'Family'" [panel]="'Family'">
+    </lib-ucSubsection>
+    <div id="Family">
+        <table class="table table-responsive-md text-center table-hover">
+            <thead>
+            <tr class="table-header">
+                <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th>
+                <th class="text-left"><span class="thead-header" name='name' translate>Family Name</span></th>
+                <th class="text-left"><span class="thead-header" name='relationship' translate>Relationship</span></th>
+                <th class="text-left"><span class="thead-header" name='birthPlace' translate>Birh Place</span></th>
+                <th class="text-center"><span class="thead-header" name='birthDate' translate>Birh Date</span></th>
+            </tr>
+            </thead>
+            <tbody *ngIf = "!appCustFamilyObjs || appCustFamilyObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <ng-container *ngFor="let item of appCustFamilyObjs; let i=index">
+                    <tr>
+                        <td class="text-center">{{i + 1}}</td>
+                        <td class="text-left">{{item.CustName}}</td>
+                        <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
+                        <td class="text-left">{{item.BirthPlace}}</td>
+                        <td class="text-center">{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>                        
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Section Job Data-->
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'PROF'" [viewGenericObj]="viewJobDataProfObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'EMP'" [viewGenericObj]="viewJobDataEmpObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'SME'" [viewGenericObj]="viewJobDataSmeObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true && custModelCode == 'NONPROF'" [viewGenericObj]="viewJobDataNonProfObj"></lib-ucviewgeneric>
+<!--Section Emergency Contact-->
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewEmergencyContactObj"></lib-ucviewgeneric>
+<!--Section Fin Data-->
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewFinDataObj"></lib-ucviewgeneric>
+<!--Section Bank-->
+<div class="px-3">
+    <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
+    </lib-ucSubsection>
+    <div id="BankAccount">
+        <div *ngFor="let item of appCustBankAccObjs; let i=index">
+            <lib-ucSubsection [id]="'BankAccInfo' + i + 'id'" [title]="item.BankInfo" [panel]="'BankAccInfo' + i">
+            </lib-ucSubsection>
+            <div [id]="'BankAccInfo' + i">
+                <div class="form-body">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="label-control" translate> Bank Branch </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="label-control" translate> {{item.BankBranch}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                    <tr class="table-header">
+                        <th class="text-center"><span class="thead-header" name='month' translate>Month</span> </th>
+                        <th class="text-center"><span class="thead-header" name='year' translate>Year</span></th>
+                        <th class="text-right"><span class="thead-header" name='debit' translate>Debit</span></th>
+                        <th class="text-right"><span class="thead-header" name='credit' translate>Credit</span></th>
+                        <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf = "appCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
+                        <tr>
+                            <td colspan="100%">No Data Available</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                    <ng-container *ngFor="let item of appCustBankAccObjs[i].AppCustBankStmntObjs">
+                        <tr>
+                            <td class="text-center">{{item.MonthName}}</td>
+                            <td class="text-center">{{item.Year}}</td>
+                            <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
+                            <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
+                            <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
+                        </tr>
+                    </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Section Cust Group-->
+<div class="px-3">
+    <lib-ucSubsection [id]="'CustGrpId'" [title]="'Customer Group Member'" [panel]="'CustGrp'">
+    </lib-ucSubsection>
+    <div id="CustGrp">
+        <table class="table table-responsive-md text-center table-hover">
+            <thead>
+            <tr class="table-header">
+                <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th>
+                <th class="text-left"><span class="thead-header" name='custName' translate>Customer Name</span></th>
+                <th class="text-center"><span class="thead-header" name='relationship' translate>Customer Relationship</span></th>
+                <th class="text-left"><span class="thead-header" name='notes' translate>Notes</span></th>
+            </tr>
+            </thead>
+            <tbody *ngIf = "appCustGrpObjs?.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody>
+            <ng-container *ngFor="let item of appCustGrpObjs; let i=index">
+                <tr>
+                    <td class="text-center">{{i + 1}}</td>
+                    <td class="text-left">{{item.CustName}}</td>
+                    <td class="text-center">{{item.RelationshipName}}</td>
+                    <td class="text-left">{{item.CustGrpNotes}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+

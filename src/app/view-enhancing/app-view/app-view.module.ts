@@ -45,6 +45,9 @@ import { ApprovalHistComponent } from "./approval-hist/approval-hist.component";
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
+import { ViewAppCustDataCompletionPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-completion-personal.component";
+import { ViewAppCustDataCompletionCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-completion-company.component";
+import { GuarantorCompletionComponent } from "./view-guarantor/view-guarantor-completion.component";
 
 
 @NgModule({
@@ -73,7 +76,10 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
         AppViewComponent,
         ViewAppCustDataCompanyComponent,
         ViewAppCustDataPersonalComponent,
+        ViewAppCustDataCompletionPersonalComponent,
+        ViewAppCustDataCompletionCompanyComponent,
         GuarantorComponent,
+        GuarantorCompletionComponent,
         TabReferantorComponent,
         TabApplicationComponent,
         TabAppDataComponent,
@@ -97,15 +103,14 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
         ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent
-
-
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
-        AppMainInfoComponent
+        AppMainInfoComponent,
+        AppAssetDataDetailComponent
     ]
 
 })
