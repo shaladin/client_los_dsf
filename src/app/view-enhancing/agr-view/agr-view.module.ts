@@ -18,7 +18,6 @@ import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapproval
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AgrViewRoutingModule } from "./agr-view-routing.module";
 import { AgreementViewContainerComponent } from "./agreement-view-container.component";
-import { ViewCollateralComponent } from "./view-collateral/view-collateral.component";
 import { ViewAppCollateralMultiComponent } from "./view-app-collateral-multi/view-app-collateral-multi.component";
 import { ViewAppCollateralSingleComponent } from "./view-app-collateral-single/view-app-collateral-single.component";
 import { ViewAgrmntInsuranceComponent } from "./view-insurance/view-insurance.component";
@@ -35,7 +34,8 @@ import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.componen
 import { AgrMainInfoComponent } from "../agr-main-info/agr-main-info.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
-import { AppAssetDataDetailFl4wComponent } from "app/NEW-NAP/FL4W/view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component";
+import { ViewAssetCollateralComponent } from "./view-asset-collateral/view-asset-collateral.component";
+import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view-asset-collateral-detail/view-asset-collateral-detail.component";
 
 @NgModule({
     imports: [
@@ -62,7 +62,7 @@ import { AppAssetDataDetailFl4wComponent } from "app/NEW-NAP/FL4W/view-agrmnt-fl
     ],
     declarations: [
         AgreementViewContainerComponent,
-        ViewCollateralComponent,
+        ViewAssetCollateralComponent,
         ViewAppCollateralMultiComponent,
         ViewAppCollateralSingleComponent,
         ViewAgrmntInsuranceComponent,
@@ -77,14 +77,14 @@ import { AppAssetDataDetailFl4wComponent } from "app/NEW-NAP/FL4W/view-agrmnt-fl
         ViewAgrmntSummaryComponent,
         ViewAgrmntDocumentComponent,
         AgrMainInfoComponent,
-        AppAssetDataDetailFl4wComponent
+        ViewAssetCollateralDetailComponent 
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
-        AppAssetDataDetailFl4wComponent
+        ViewAssetCollateralDetailComponent
     ]
 
 })
