@@ -489,6 +489,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   AssetValidation() {
     var CheckValidObj = {
+      AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
       ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
       Tenor: this.appData.Tenor,
@@ -1153,7 +1154,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async SaveForm() {
-    console.log("a");
     var assetForm = this.AssetDataForm.getRawValue();
     var confirmMsg = "";
     var isValidOk = true;
@@ -1626,7 +1626,4 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
 
-  checkForm(){
-    console.log(this.AssetDataForm);
-  }
 }
