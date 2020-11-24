@@ -20,6 +20,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
+  WfTaskListId: number;
   AppCustCompanyId: number;
   stepIndex: number = 1;
   private stepper: Stepper;
@@ -60,6 +61,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       if (params['AppCustId'] != null) {
         this.AppCustId = params['AppCustId'];
       }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
     });
   }
 
@@ -92,7 +96,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
 
   Back() {
-    this.location.back();
+    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
   }
   
   EnterTab(type: string) { 
