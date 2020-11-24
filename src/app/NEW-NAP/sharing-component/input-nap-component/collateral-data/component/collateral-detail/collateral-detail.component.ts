@@ -74,7 +74,7 @@ export class CollateralDetailComponent implements OnInit {
     CollateralNotes: [''],
     CollateralPrcnt: ['', [Validators.required, Validators.max(100)]],
     IsMainCollateral: true,
-    ManufacturingYear: ['', Validators.pattern("^[0-9]*$")],
+    ManufacturingYear: ['', [Validators.pattern("^[0-9]*$"), Validators.required]],
     CollateralNo: [''],
     AssetTaxDt: [''],
     UserName: ['', Validators.required],
