@@ -9,6 +9,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment'; 
@@ -28,6 +29,7 @@ export class CustDetailCompanyComponent implements OnInit {
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj(); 
   businessDt: Date = new Date();
+  CustModelObj: Array<KeyValueObj> = new Array();
   industryTypeObj = {
     IndustryTypeCode: ""
   };
@@ -40,10 +42,11 @@ export class CustDetailCompanyComponent implements OnInit {
     NoOfEmployee: ['', Validators.required],
     IsAffiliateWithMF: [false],
     EstablishmentDate: ['', Validators.required],
-    IndustryTypeCode: ['', Validators.required]
+    IndustryTypeCode: ['', Validators.required],
+    MrCustModelCode: ['', Validators.required],
   })
 
-  ngOnInit() {
+  async ngOnInit() {
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -63,7 +66,17 @@ export class CustDetailCompanyComponent implements OnInit {
     this.lookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
+    await this.GetCustModel();
     this.GetData();
+  }
+
+  async GetCustModel()
+  {
+    await this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, ReserveField1: CommonConstant.CustTypeCompany }).toPromise().then(
+      (response) => {
+        this.CustModelObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   GetIndustryType(event){
@@ -81,6 +94,7 @@ export class CustDetailCompanyComponent implements OnInit {
   
   SetData(){
     this.AppCustObj.AppCustId = this.AppCustId;
+    this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
     this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
@@ -124,6 +138,7 @@ export class CustDetailCompanyComponent implements OnInit {
           NoOfEmployee : response.AppCustCompanyObj.NumOfEmp,
           EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
           IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
+          MrCustModelCode : response.AppCustObj.MrCustModelCode,
         })
  
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
@@ -141,4 +156,6 @@ export class CustDetailCompanyComponent implements OnInit {
       }
     );
   }
+
+  
 }

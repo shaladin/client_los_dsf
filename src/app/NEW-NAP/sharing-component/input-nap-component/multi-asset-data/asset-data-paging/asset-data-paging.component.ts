@@ -22,10 +22,10 @@ export class AssetDataPagingComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IdCust: any;
   appAssetObj: any;
-  listDataAsset : any;
-  listAppAssetObj: any;
+  listDataAsset: Array<any> = new Array();
+  listAppAssetObj: Array<AppAssetObj> = new Array();
   appCollateralObj: any;
-  listAppCollateralObj: any;
+  listAppCollateralObj: Array<AppCollateralObj> = new Array();
   getListAppAssetData: any;
   gridAssetDataObj: any;
   gridAppCollateralObj: any;
@@ -82,14 +82,7 @@ export class AssetDataPagingComponent implements OnInit {
             }
 
             this.gridAssetDataObj.resultData = DetailForGridAsset;
-            this.listAppCollateralObj = response["ReturnCollateral"];
-
-            var DetailForGridCollateral = {
-              Data: response["ReturnCollateral"],
-              Count: "0"
-            }
-
-            this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+            this.getGridCollateral();
           }
         );
       }
@@ -153,7 +146,7 @@ export class AssetDataPagingComponent implements OnInit {
     this.http.post(URLConstant.GetListAppAssetForCopyByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listDataAsset = response[CommonConstant.ReturnObj];
-        this.selectedAsset = this.listDataAsset[0].Code;
+        if(this.listDataAsset.length > 0) this.selectedAsset = this.listDataAsset[0].Code;
       });
   }
   getListDataAsset(){
@@ -171,7 +164,6 @@ export class AssetDataPagingComponent implements OnInit {
       });
   }
   ngOnInit() {
-    console.log("AAAAAAAAAAA");
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
     this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;

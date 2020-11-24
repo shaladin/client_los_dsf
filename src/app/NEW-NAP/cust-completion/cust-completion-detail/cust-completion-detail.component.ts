@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -22,6 +23,7 @@ export class CustCompletionDetailComponent implements OnInit {
   listCustCompletion: Array<any> = new Array(); 
   AppId: number;
   wfTaskListId: number;
+  addObj: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +55,7 @@ export class CustCompletionDetailComponent implements OnInit {
     
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+    this.addObj["WfTaskListId"] = this.wfTaskListId;
     
     this.loadCustCompletionListData();
     this.claimTask();
@@ -90,9 +93,7 @@ export class CustCompletionDetailComponent implements OnInit {
     );
   }
 
-  GetCallback(event){}
-
-  GetEvent(event){
-    
+  GetCallback(event){
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
   }
 }

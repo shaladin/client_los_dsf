@@ -20,8 +20,13 @@
       }
     ],
     "querystring": {
-      "select": "SELECT C.CUST_NO AS CustNo, C.CUST_NAME AS CustName, CA.ADDR AS FullAddr, C.MR_CUST_TYPE_CODE AS MrCustTypeCode, C.CUST_ID AS CustId",
-      "from": "FROM dbo.CUST C WITH(NOLOCK) LEFT JOIN dbo.CUST_ADDR CA WITH(NOLOCK) ON C.CUST_ID = CA.CUST_ID AND CA.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'"
+        "select": "SELECT C.CUST_NO AS CustNo, C.CUST_NAME AS CustName, B.ADDR AS FullAddr, C.MR_CUST_TYPE_CODE AS MrCustTypeCode, C.CUST_ID AS CustId",
+      "from": "FROM dbo.CUST C LEFT JOIN (SELECT CA.MR_CUST_ADDR_TYPE_CODE, CA.CUST_ID, CA.ADDR FROM dbo.CUST_ADDR CA GROUP BY CA.MR_CUST_ADDR_TYPE_CODE, CA.CUST_ID, CA.ADDR) AS B ON B.CUST_ID = C.CUST_ID AND B.MR_CUST_ADDR_TYPE_CODE = 'LEGAL'",
+      "where": "WHERE C.CUST_NO IS NOT NULL AND C.CUST_NO != ''"
+    },
+    "orderby": {
+        "key": "C.CUST_NO",
+        "value": "true"
     },
     "headerList": [
         {
@@ -40,7 +45,7 @@
             "type": "sort",
             "position": "left",
             "label": "Address",
-            "name": "CA.ADDR"
+            "name": "B.ADDR"
         },
         {
             "type": "label",

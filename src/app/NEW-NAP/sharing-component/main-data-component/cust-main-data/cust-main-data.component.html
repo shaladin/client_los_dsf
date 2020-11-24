@@ -49,7 +49,8 @@
                 <label class="col-md-4 adins-required-label" translate>Gender</label>
                 <div class="col-md-6">
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrGenderCode" style="width:100%;"  [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrGenderCode.invalid}">
+                    formControlName="MrGenderCode" style="width:100%;"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrGenderCode.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of DictRefMaster[MasterGender]" [value]="item.Key">
                       {{item.Value}}
@@ -183,13 +184,15 @@
                 <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                 <div class="col-md-6">
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrMaritalStatCode" style="width:100%;" [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrMaritalStatCode.invalid}">
+                    formControlName="MrMaritalStatCode" style="width:100%;"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrMaritalStatCode.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of DictRefMaster[MasterMaritalStat]" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrMaritalStatCode" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrMaritalStatCode"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -209,7 +212,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Customer Model Code</label>
+                <label class="col-md-4 adins-required-label" translate>Customer Model</label>
                 <div class="col-md-6">
                   <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width"
                     style="width: 100%" formControlName="MrCustModelCode"
@@ -253,11 +256,12 @@
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Job Position</label>
                 <div class="col-md-6">
-                  <select class="form-control adInsInput full-width"
-                    style="width: 100%" formControlName="MrJobPositionCode"
+                  <select class="form-control adInsInput full-width" style="width: 100%"
+                    formControlName="MrJobPositionCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrJobPositionCode.invalid }">
                     <option value="">-Select One-</option>
-                    <option *ngFor="let item of DictRefMaster[MasterJobPosition]" value="{{item.Key}}">{{item.Value}}</option>
+                    <option *ngFor="let item of DictRefMaster[MasterJobPosition]" value="{{item.Key}}">{{item.Value}}
+                    </option>
                   </select>
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.MrJobPositionCode"
                     [submit]="enjiForm.submitted">
@@ -347,6 +351,10 @@
           class="btn btn-raised btn-primary">
           <i class="fa fa-check-square"></i> Save
         </button>
+        <!-- <button type="button" (click)=getFormValidationErrors()
+          class="btn btn-raised btn-primary">
+          <i class="fa fa-check-square"></i> cek error
+        </button> -->
       </div>
     </form>
   </div>
