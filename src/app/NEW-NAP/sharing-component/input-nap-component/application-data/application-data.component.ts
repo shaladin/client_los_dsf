@@ -124,7 +124,7 @@ export class ApplicationDataComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
-    this.ListCrossAppObj["AppId"] = this.appId;
+    this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
 
@@ -192,7 +192,7 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         var listDDL = response["DDLRefProdComptCode"];
         this.applicationDDLitems[refProdCompntCode]=listDDL;
-        if(refProdCompntCode == CommonConstant.RefProdCompFirstInstType){
+        if(refProdCompntCode == CommonConstant.RefProdCompFirstInstType && !this.NapAppModelForm.controls.MrFirstInstTypeCode.value){
           this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
           this.NapAppModelForm.patchValue({
             MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key

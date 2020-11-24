@@ -22,6 +22,12 @@
         {
             "type": "label",
             "position": "center",
+            "label": "Waived",
+            "name": "IsWaived"
+        },
+        {
+            "type": "label",
+            "position": "center",
             "label": "Promise Date",
             "name": "PromisedDt"
         },
@@ -53,6 +59,11 @@
             "type": "boolean",
             "position": "center",
             "property": "IsChecked"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsWaived"
         },
         {
             "type": "date",
