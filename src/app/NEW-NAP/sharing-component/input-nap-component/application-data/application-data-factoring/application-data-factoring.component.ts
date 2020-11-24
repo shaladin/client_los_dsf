@@ -280,7 +280,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   }
   SetPayFreq(MouCustId: number) {
-    console.log("abecedeefge");
     var MouObj = {
       MouCustId: MouCustId
     }
@@ -404,7 +403,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async CheckInstType() {
-    console.log("aaaaaa");
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.SalesAppInfoForm.controls.TopDays.disable();
       this.SalesAppInfoForm.controls.TopBased.disable();
