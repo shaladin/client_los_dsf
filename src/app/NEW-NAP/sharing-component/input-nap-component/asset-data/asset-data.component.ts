@@ -268,7 +268,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log("amengsiamengsi");
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
     this.inputAddressObjForOwner.showAllPhn = false;
