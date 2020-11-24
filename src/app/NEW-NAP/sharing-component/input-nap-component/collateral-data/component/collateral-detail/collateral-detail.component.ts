@@ -122,17 +122,18 @@ export class CollateralDetailComponent implements OnInit {
     
     this.items = this.AddCollForm.get('items') as FormArray;
 
-    if (this.isSingleAsset) {
-      await this.getAppCollData(this.AppId, 0);
-    }
 
     this.GetLegalAddr();
     this.initUcLookup();
+    await this.GetAppCustByAppId();
     await this.initDropdownList();
     await this.getAppData();
 
-    if (this.mode == "edit" && !this.isSingleAsset) {
+    if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId);
+    }
+    if (this.isSingleAsset) {
+      await this.getAppCollData(this.AppId, 0);
     }
 
     // this.AddCollForm.controls.AssetTypeCode.disable();
@@ -234,6 +235,13 @@ export class CollateralDetailComponent implements OnInit {
       });
   }
 
+  CustNo: string = "";
+  async GetAppCustByAppId() {
+    await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
+      (response) => {
+        this.CustNo = response.CustNo;
+      });
+  }
   async getAppData() {
     await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       async (response) => {
@@ -270,24 +278,6 @@ export class CollateralDetailComponent implements OnInit {
         // Generate Collateral Doc
         // this.getRefAssetDocList();
 
-        // this.criteriaList = new Array();
-        // this.criteriaObj = new CriteriaObj();
-        // this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-        // this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
-        // this.criteriaObj.value = this.AssetTypeCode;
-        // this.criteriaList.push(this.criteriaObj);
-
-        // tambah filter cust no
-        await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
-          (response) => {
-            this.criteriaObj = new CriteriaObj();
-            this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-            this.criteriaObj.propName = 'ACU.CUST_NO';
-            this.criteriaObj.value = response.CustNo;
-            this.criteriaList.push(this.criteriaObj);
-            this.inputLookupExistColl.addCritInput = this.criteriaList;
-            this.inputLookupExistColl.isReady = true;
-        });
       });
   }
 
@@ -347,7 +337,6 @@ export class CollateralDetailComponent implements OnInit {
   async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false) {
     await this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).toPromise().then(
       async (response) => {
-        console.log(response);
         this.appCollateralObj = response['AppCollateral'];
         this.collateralRegistrationObj = response['AppCollateralRegistration'];
         if (!IsExisting) {
@@ -518,8 +507,8 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   async onItemChange(AssetTypeCode: string) {
-    var arrAddCrit = new Array();
-    var addCrit = new CriteriaObj();
+    let arrAddCrit = new Array();
+    let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = 'B.ASSET_TYPE_CODE';
     addCrit.restriction = AdInsConstant.RestrictionEq;
@@ -568,6 +557,25 @@ export class CollateralDetailComponent implements OnInit {
       });
     
     await this.getRefAssetDocList(AssetTypeCode);
+    
+    //#region Criteria For inputLookupExistColl
+    let criteriaList = new Array();
+    this.criteriaObj = new CriteriaObj();
+    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
+    this.criteriaObj.value = AssetTypeCode;
+    criteriaList.push(this.criteriaObj);
+
+    // tambah filter cust no
+    this.criteriaObj = new CriteriaObj();
+    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    this.criteriaObj.propName = 'ACU.CUST_NO';
+    this.criteriaObj.value = this.CustNo;
+    criteriaList.push(this.criteriaObj);
+
+    this.inputLookupExistColl.addCritInput = criteriaList;
+    this.inputLookupExistColl.isReady = true;
+    //#endregion
   }
 
   changeSerialNoValidators(MrCollateralConditionCode: string) {
