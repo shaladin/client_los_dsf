@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailFl4wComponent } from 'app/NEW-NAP/FL4W/view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 @Component({
   selector: 'agrmnt-view-collateral',
@@ -15,6 +16,7 @@ export class ViewCollateralComponent implements OnInit {
 
   @Input() agrmntId: number = 0;
   appAssetList: Array<AppAssetObj> = new Array<AppAssetObj>();
+  AppCollateralObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
 
   constructor(private http: HttpClient, private modalService: NgbModal) { }
 
@@ -25,6 +27,11 @@ export class ViewCollateralComponent implements OnInit {
     this.http.post<Array<AppAssetObj>>(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, AgrmntObj).subscribe(
       (response) => {
         this.appAssetList = response[CommonConstant.ReturnObj];
+      });
+
+    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, {AgrmntId: this.agrmntId}).subscribe(
+      (response) => {
+        this.AppCollateralObj = response[CommonConstant.ReturnObj];
       });
   }
 
