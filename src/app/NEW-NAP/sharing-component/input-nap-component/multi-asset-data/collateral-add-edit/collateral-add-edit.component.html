@@ -5,7 +5,7 @@
         (ngSubmit)="AddCollForm.valid && SaveForm()">
         <div class="form-body">
           <div class="form-group row">
-            <label class="col-md-2 adins-required" translate>Collateral Status meng ?</label>
+            <label class="col-md-2 adins-required" translate>Collateral Status</label>
             <div class="col-md-3">
               <select class="form-control" formControlName="Collateral" (change)="CollChange()">
                 <option value="New">New Collateral</option>
@@ -186,44 +186,44 @@
                     Refresh Attribute
                   </button>
                 </div>
-                <div formArrayName="AppAssetAttrObjs">
-                  <div *ngFor="let item of AddCollForm.controls['AppAssetAttrObjs'].controls;let i = index">
+                <div formArrayName="AppCollateralAttrObjs">
+                  <div *ngFor="let item of AddCollForm.controls['AppCollateralAttrObjs'].controls;let i = index">
                     <div [formGroupName]="i" class="form-group row">
                       <label class="col-md-2  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
                       <div class="col-md-4">
                         <div *ngIf="item.controls.AttrInputType.value == 'T'">
                           <input type="text" class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <lib-uc-show-errors
-                            [control]="AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                            [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == 'N'">
                           <input type="" currencyMask class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <lib-uc-show-errors
-                            [control]="AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                            [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == 'D'">
                           <input type="date" class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <lib-uc-show-errors
-                            [control]="AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                            [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == 'L'">
                           <select class="form-control" formControlName="AttrValue" style="width:50%"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
-                            <lib-uc-show-errors
-                              [control]="AddCollForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
-                              [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                             <option value="">-Select One-</option>
                             <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
                               {{x}}
                             </option>
                           </select>
+                          <lib-uc-show-errors
+                          [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                         </div>
                       </div>
                     </div>
@@ -306,7 +306,7 @@
                     <i class="fa fa-arrow-circle-left"></i> Cancel
                   </button>
                   <button type="submit" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
-                    <i class="far fa-check-square"></i> Save
+                    <i class="far fa-check-square"></i> Save exis?
                   </button>
                 </div>
               </div>
