@@ -44,7 +44,7 @@
           <app-cust-history [AppId]="appId"></app-cust-history>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Analysis Result">
+      <mat-tab *ngIf="BizTemplateCode != 'CFRFN4W'" label="Analysis Result">
         <ng-template matTabContent>
           <app-tab-analysis-result [appId]="appId"></app-tab-analysis-result>
         </ng-template>
