@@ -12,6 +12,9 @@ export class URLConstant {
     public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
     public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";
 
+
+    // APPROVAL
+    public static GetApprovalScreenViewInfo = environment.ApprovalR3Url + "/api/ApprovalInstanceWeb/GetApprovalScreenViewInfo";
     // APP Application
     public static AddApp = environment.losUrl + "/Application/AddApp";
     public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
