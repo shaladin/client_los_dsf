@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ApvViewInfo } from 'app/shared/model/ApvViewInfo.Model';
 
 @Component({
   selector: 'app-mou-view-analysis-result',
@@ -11,7 +12,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class MouViewAnalysisResultComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @Input() inputObj: any;
+  @Input() inputObj: ApvViewInfo;
+  ;
   RFAInformation: Array<KeyValueObj>;
 
   constructor(private http: HttpClient) { }
