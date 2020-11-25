@@ -27,8 +27,6 @@ import { MouViewLegalComponent } from "./mou-view-legal/mou-view-legal.component
 import { MouViewListedCustFactoringComponent } from "./mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component";
 import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.component";
 import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
-import { MouViewAnalysisResultComponent } from "app/components/general/mou-view/mou-view-analysis-result/mou-view-analysis-result.component";
-
 
 @NgModule({
     imports: [
@@ -62,7 +60,6 @@ import { MouViewAnalysisResultComponent } from "app/components/general/mou-view/
         MouViewListedCustFactoringComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
-        MouViewAnalysisResultComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

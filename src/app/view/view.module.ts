@@ -93,7 +93,6 @@ import { AgreementViewContainerComponent } from "./agr-view/agreement-view-conta
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
-import { MouViewAnalysisResultComponent } from "app/components/general/mou-view/mou-view-analysis-result/mou-view-analysis-result.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -194,7 +193,7 @@ import { MouViewAnalysisResultComponent } from "app/components/general/mou-view/
     MouViewTcComponent,
     MouViewComponent,
     MouViewApprovalHistoryComponent,
-    MouViewAnalysisResultComponent,
+
     //surveyView prototype
     SurveyViewComponent
   ],
