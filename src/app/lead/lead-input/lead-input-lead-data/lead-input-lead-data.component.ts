@@ -832,15 +832,14 @@ export class LeadInputLeadDataComponent implements OnInit {
     if(this.LeadDataForm.status == CommonConstant.INVALID_FORM){
       return;
     }
-
+    this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+    this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+    this.setLeadApp();
     if (this.typePage == "edit" || this.typePage == "update") {
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       if (this.resLeadAssetObj.LeadAssetId != 0) {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
-        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         // this.leadInputLeadDataObj.IsEdit = true;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
@@ -859,10 +858,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       }
       else {
         if (this.lobKta.includes(this.returnLobCode) == true) {
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           //this.setLeadAsset();
-          this.setLeadApp();
-          this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
           this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
@@ -883,10 +879,8 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
           this.setLeadAsset();
-          this.setLeadApp();
-          this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
           this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
@@ -906,10 +900,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
     else {
       if (this.lobKta.includes(this.returnLobCode) == true) {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         //this.setLeadAsset();
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -926,10 +917,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         );
       }
       else {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.setLeadAsset();
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
