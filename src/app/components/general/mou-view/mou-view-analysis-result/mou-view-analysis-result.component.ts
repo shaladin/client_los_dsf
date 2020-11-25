@@ -22,8 +22,8 @@ export class MouViewAnalysisResultComponent implements OnInit {
     var GetApvInfoReq = {
       TaskId: this.inputObj.taskId,
       instanceId: this.inputObj.instanceId,
-      isNeedRFAInfo: true,
-      isNeedPossibleResults: true,
+      isNeedRFAInfo: false,
+      isNeedPossibleResults: false,
       isNeedRecommendations: true,
       isNeedSummaryView: false
     }

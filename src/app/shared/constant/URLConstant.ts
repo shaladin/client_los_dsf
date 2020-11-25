@@ -14,7 +14,7 @@ export class URLConstant {
 
 
     // APPROVAL
-    public static GetApprovalScreenViewInfo = environment.ApprovalR3Url + "/api/ApprovalInstanceWeb/GetApprovalScreenViewInfo";
+    public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/Approval/GetApprovalScreenViewInfo";
     // APP Application
     public static AddApp = environment.losUrl + "/Application/AddApp";
     public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
