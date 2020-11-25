@@ -23,6 +23,7 @@ export class CustCompletionDetailComponent implements OnInit {
   listCustCompletion: Array<any> = new Array(); 
   AppId: number;
   wfTaskListId: number;
+  addObj: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +55,7 @@ export class CustCompletionDetailComponent implements OnInit {
     
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+    this.addObj["WfTaskListId"] = this.wfTaskListId;
     
     this.loadCustCompletionListData();
     this.claimTask();

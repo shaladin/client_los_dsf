@@ -100,7 +100,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("APP DATA FCTRING")
     this.isInputLookupObj = false;
     this.loadData();
@@ -276,7 +276,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
       });
 
-    this.CheckInstType();
+    await this.CheckInstType();
 
   }
   SetPayFreq(MouCustId: number) {
@@ -316,18 +316,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           (response) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
-            if (this.mode == 'edit') {
-              PayFreqCode = this.resultData.PayFreqCode
-              this.SalesAppInfoForm.patchValue({
-                PayFreqCode: PayFreqCode
-              });
-            }
-            if (PayFreqCode == null) {
-              PayFreqCode = "MONTHLY"
-              this.SalesAppInfoForm.patchValue({
-                PayFreqCode: PayFreqCode
-              });
-            }
+
             if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0 && this.isInit == true) {
               this.mode = "add";
             } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 && this.isInit == true) {
@@ -359,6 +348,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
+    this.CheckInstType();
+
+            }
+            if (this.mode == 'edit') {
+              PayFreqCode = this.resultData.PayFreqCode
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: PayFreqCode
+              });
+            }
+            if (PayFreqCode == null) {
+              PayFreqCode = "MONTHLY"
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: PayFreqCode
+              });
             }
             this.isInit = false; 
             this.makeNewLookupCriteria();
@@ -374,7 +377,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
       }
     }
     this.SalesAppInfoForm.controls.MrInstTypeCode.disable();
-    this.CheckInstType();
 
 
   }
@@ -400,7 +402,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
   }
 
-  CheckInstType() {
+  async CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.SalesAppInfoForm.controls.TopDays.disable();
       this.SalesAppInfoForm.controls.TopBased.disable();
@@ -410,7 +412,9 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.RecourseType.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
       this.SalesAppInfoForm.controls.Tenor.enable();
+      if(this.mode != "edit"){
       this.SalesAppInfoForm.controls.Tenor.setValue("");
+      }
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) {
       this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls.TopBased.setValidators([Validators.required]);
@@ -522,7 +526,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
 
 
-    this.http.post(URLConstant.GetApplicationDataByAppId, obj).subscribe(
+    await this.http.post(URLConstant.GetApplicationDataByAppId, obj).toPromise().then(
       (response) => {
         this.resultData = response;
         this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
