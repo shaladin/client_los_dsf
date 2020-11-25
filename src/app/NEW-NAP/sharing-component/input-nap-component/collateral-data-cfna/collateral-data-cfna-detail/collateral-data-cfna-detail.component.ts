@@ -719,7 +719,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               SelfOwner: (this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
             });
             this.GenerateAppCollateralAttr(false);
-            this.onItemChange(this.appCollateralObj.AssetTypeCode,false);
             for (var i = 0; i < this.items.controls.length; i++) {
               var formGroupItem = this.items.controls[i] as FormGroup;
               formGroupItem.patchValue({
