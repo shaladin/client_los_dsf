@@ -863,7 +863,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           //this.setLeadAsset();
           this.setLeadApp();
           this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-          this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId; // INI GA ADA ROWVERS NYA
+          this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
           this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
