@@ -95,7 +95,6 @@ export class JobTabComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("abecede");
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
 
