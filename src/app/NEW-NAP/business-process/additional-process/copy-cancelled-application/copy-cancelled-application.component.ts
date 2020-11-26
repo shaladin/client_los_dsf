@@ -52,7 +52,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
         });
     }else if(ev.Key == "copy"){
       if (confirm("Are you sure to copy this application?")) {
-        this.http.post(URLConstant.CopyCancelledApp, { AppId: ev.RowObj.AppId }).subscribe(
+        this.http.post(URLConstant.CopyCancelledAppForMainData, { AppId: ev.RowObj.AppId }).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
             this.paging.searchPagination(1);
