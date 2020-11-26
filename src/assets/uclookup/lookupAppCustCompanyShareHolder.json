@@ -14,7 +14,7 @@
             "name": "ACCMS.MR_JOB_POSITION_CODE",
             "id": "MrJobPositionCodeId",
             "value": "",
-            "label": "Management/Shareholder Position",
+            "label": "Management/Shareholder Position Code",
             "placeholder": "Placeholder"
         }
     ],
