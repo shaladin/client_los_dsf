@@ -15,7 +15,7 @@
                 <div class="col-md-8">
                   <lib-uclookupgeneric *ngIf="inputLookupExistColl.isReady" [lookupInput]="inputLookupExistColl"
                     [parentForm]='AddCollForm' [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'"
-                    (lookup)="getExistingColl($event)">
+                    (lookup)="getExistingColl($event)" #LookupCollateralExisting>
                   </lib-uclookupgeneric>
                 </div>
               </div>
