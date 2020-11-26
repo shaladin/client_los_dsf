@@ -219,8 +219,8 @@ export class MouRequestAddcollComponent implements OnInit {
 
   UpdateValueCollateralPortionAmt() {
     var CollateralPortionAmt = this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value / 100;
-    if (CollateralPortionAmt > this.AddCollForm.controls.CollateralValueAmt.value) {
-      this.toastr.warningMessage("Collateral Portion Amount exceeded Collateral Value Amount !");
+    if (this.AddCollForm.controls.CollateralPrcnt.value > 100) {
+      this.toastr.warningMessage("Collateral Percentage exceeded 100 !");
       this.AddCollForm.patchValue({
         CollateralPortionAmt: 0,
         CollateralPrcnt: 0
@@ -235,8 +235,8 @@ export class MouRequestAddcollComponent implements OnInit {
 
   UpdateValueCollateralPrcnt() {
     var CollateralPrcnt = this.AddCollForm.controls.CollateralPortionAmt.value / this.AddCollForm.controls.CollateralValueAmt.value * 100;
-    if (CollateralPrcnt > 100) {
-      this.toastr.warningMessage("Collateral Percentage exceeded `00 !");
+    if (this.AddCollForm.controls.CollateralPortionAmt.value > this.AddCollForm.controls.CollateralValueAmt.value) {
+      this.toastr.warningMessage("Collateral Portion Amount exceeded Collateral Value Amount !");
       this.AddCollForm.patchValue({
         CollateralPortionAmt: 0,
         CollateralPrcnt: 0
