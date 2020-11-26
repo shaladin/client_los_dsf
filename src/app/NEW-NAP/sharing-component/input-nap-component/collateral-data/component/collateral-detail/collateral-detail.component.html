@@ -51,7 +51,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-md-4" translate>Manufacturing Year</label>
+                  <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
@@ -104,7 +104,7 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-5 adins-required-label" translate>Portion Amount</label>
-                  <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value}}</label>
+                  <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-5 adins-required-label" translate>Outstanding Portion Percentage (%)</label>
@@ -164,7 +164,7 @@
           </div>
           <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
           </lib-ucSubsection>
-          <div [id]="assetAttr">
+          <div id="assetAttr">
             <div class="form-actions right">
               <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
                 class="btn btn-raised btn-primary">
@@ -172,7 +172,7 @@
               </button>
             </div>
             <div formArrayName="AppCollateralAttrObjs">
-              <div *ngFor="let item of AddCollForm.controls['AppCollateralAttrObjs'].controls;let i = index">
+              <div *ngFor="let item of AddCollForm.controls.AppCollateralAttrObjs['controls'];let i = index">
                 <div [formGroupName]="i" class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
                   <div class="col-md-4">
