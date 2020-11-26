@@ -20,6 +20,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -71,6 +72,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   CollTypeList: any;
   AssetConditionList: any;
+  CollateralPortionTypeObj: Array<KeyValueObj> = new Array();
   IdTypeList: any;
   type: any;
   SerialNoList: any;
@@ -103,7 +105,9 @@ export class MouRequestAddcollComponent implements OnInit {
     RowVersionCollateralRegistration: [''],
     items: this.fb.array([]),
     MrCollateralConditionCode: [''],
-    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]]
+    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
+    CollateralPortionAmt: [0, Validators.required],
+    CollateralPortionType: ['']
   })
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForLocAddr: InputAddressObj;
@@ -162,9 +166,15 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       }
     );
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition };
 
-
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePaymentType }).subscribe(
+      (response) => {
+        this.CollateralPortionTypeObj = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({
+          CollateralPortionType: this.CollateralPortionTypeObj[0].Key
+        });
+        this.CollateralPortionTypeChange();
+      })
 
     var mouCustObj = { MouCustId: this.MouCustId }
     this.http.post(URLConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
@@ -180,7 +190,6 @@ export class MouRequestAddcollComponent implements OnInit {
           AssetTypeCode: this.CollTypeList[0].Key
         });
         this.onItemChange(this.CollTypeList[0].Key);
-        this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
       })
 
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType };
@@ -191,6 +200,53 @@ export class MouRequestAddcollComponent implements OnInit {
           MrIdType: this.IdTypeList[0].Key
         });
       })
+  }
+
+  CollateralPortionTypeChange() {
+    if (this.AddCollForm.controls.CollateralPortionType.value == CommonConstant.PaymentTypeAmt) {
+      this.AddCollForm.controls["CollateralPortionAmt"].enable();
+      this.AddCollForm.controls["CollateralPrcnt"].disable();
+      this.AddCollForm.controls["CollateralPortionAmt"].setValidators([Validators.required, Validators.min(0)]);
+      this.AddCollForm.controls["CollateralPortionAmt"].updateValueAndValidity();
+    }
+    else {
+      this.AddCollForm.controls["CollateralPrcnt"].enable();
+      this.AddCollForm.controls["CollateralPortionAmt"].disable();
+      this.AddCollForm.controls["CollateralPrcnt"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+      this.AddCollForm.controls["CollateralPrcnt"].updateValueAndValidity();
+    }
+  }
+
+  UpdateValueCollateralPortionAmt() {
+    var CollateralPortionAmt = this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value / 100;
+    if (CollateralPortionAmt > this.AddCollForm.controls.CollateralValueAmt.value) {
+      this.toastr.warningMessage("Collateral Portion Amount exceeded Collateral Value Amount !");
+      this.AddCollForm.patchValue({
+        CollateralPortionAmt: 0,
+        CollateralPrcnt: 0
+      });
+    }
+    else {
+      this.AddCollForm.patchValue({
+        CollateralPortionAmt: CollateralPortionAmt
+      });
+    }
+  }
+
+  UpdateValueCollateralPrcnt() {
+    var CollateralPrcnt = this.AddCollForm.controls.CollateralPortionAmt.value / this.AddCollForm.controls.CollateralValueAmt.value * 100;
+    if (CollateralPrcnt > 100) {
+      this.toastr.warningMessage("Collateral Percentage exceeded `00 !");
+      this.AddCollForm.patchValue({
+        CollateralPortionAmt: 0,
+        CollateralPrcnt: 0
+      });
+    }
+    else {
+      this.AddCollForm.patchValue({
+        CollateralPrcnt: CollateralPrcnt
+      });
+    }
   }
 
   bindUcLookup() {
@@ -294,7 +350,6 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.CopyFromLegal.enable();
       this.AddCollForm.controls.AssetTypeCode.enable();
       this.AddCollForm.controls.CollateralValueAmt.enable();
-      this.AddCollForm.controls.CollateralPrcnt.enable();
       this.AddCollForm.controls.FullAssetCode.enable();
       this.AddCollForm.controls.AssetCategoryCode.enable();
       this.AddCollForm.controls.OwnerName.enable();
@@ -354,7 +409,6 @@ export class MouRequestAddcollComponent implements OnInit {
           this.AddCollForm.controls.CollateralPrcnt.setValidators([Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)]);
           this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity();
 
-
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
           var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
@@ -411,7 +465,7 @@ export class MouRequestAddcollComponent implements OnInit {
             CollateralStat: this.collateralObj.CollateralStat,
             CollateralValueAmt: this.collateralObj.CollateralValueAmt,
             CollateralPrcnt: this.maxPrcnt,
-            // CollateralNotes: this.collateralObj.Notes,
+            CollateralPortionAmt: this.collateralObj.CollateralPortionAmt,
             CollateralNotes: this.collateralObj.CollateralNotes,
             ManufacturingYear: this.collateralObj.ManufacturingYear,
             RowVersionCollateral: this.collateralObj.RowVersion,
@@ -439,7 +493,6 @@ export class MouRequestAddcollComponent implements OnInit {
 
           this.AddCollForm.controls.CopyFromLegal.disable();
           this.AddCollForm.controls.CollateralValueAmt.disable();
-          this.AddCollForm.controls.CollateralPrcnt.enable();
           this.AddCollForm.controls.FullAssetCode.disable();
           this.AddCollForm.controls.AssetCategoryCode.disable();
           this.AddCollForm.controls.OwnerName.disable();
@@ -500,7 +553,7 @@ export class MouRequestAddcollComponent implements OnInit {
     }
   }
 
-  onItemChange(value) {
+  onItemChange(value, UserChange: boolean = false) {
     var AssetTypeCode = { 'AssetTypeCode': value };
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
       (response: any) => {
@@ -521,7 +574,7 @@ export class MouRequestAddcollComponent implements OnInit {
           }
         }
       });
-    this.updateUcLookup(value, false, this.type);
+    this.updateUcLookup(value, UserChange ? false : true, this.type);
   }
 
   SaveForm() {
@@ -587,6 +640,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
+    this.mouCustCollateralObj.CollateralPortionAmt = this.AddCollForm.controls.CollateralPortionAmt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
     this.mouCustCollateralObj.ManufacturingYear = this.AddCollForm.controls.ManufacturingYear.value;
 
@@ -648,7 +702,6 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.AssetTypeCode.disable();
       this.AddCollForm.controls.CopyFromLegal.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
-      this.AddCollForm.controls.CollateralPrcnt.enable();
       this.AddCollForm.controls.FullAssetCode.disable();
       this.AddCollForm.controls.AssetCategoryCode.disable();
       this.AddCollForm.controls.OwnerName.disable();
@@ -738,7 +791,7 @@ export class MouRequestAddcollComponent implements OnInit {
           SerialNo5: this.collateralObj.SerialNo5,
           CollateralValueAmt: this.collateralObj.CollateralValueAmt,
           CollateralPrcnt: this.collateralObj.CollateralPrcnt,
-          // CollateralNotes: this.collateralObj.Notes,
+          CollateralPortionAmt: this.collateralObj.CollateralPortionAmt,
           CollateralNotes: this.collateralObj.CollateralNotes,
           ManufacturingYear: this.collateralObj.ManufacturingYear,
           RowVersionCollateral: this.collateralObj.RowVersion,
@@ -821,7 +874,9 @@ export class MouRequestAddcollComponent implements OnInit {
       RowVersionCollateralRegistration: [''],
       items: this.fb.array([]),
       MrCollateralConditionCode: [''],
-      ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]]
+      ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
+      CollateralPortionAmt: [''],
+      CollateralPortionType: ['']
     })
     this.AddCollForm.updateValueAndValidity();
 
@@ -846,6 +901,7 @@ export class MouRequestAddcollComponent implements OnInit {
         MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj
       }
       this.mouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
+      this.mouCustCollateralObj.CollateralPortionAmt = this.AddCollForm.controls.CollateralPortionAmt.value;
       this.http.post(URLConstant.EditMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -860,6 +916,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.mouCustCollateralObj.MouCustCollateralId = this.collateralObj.MouCustCollateralId;
       this.mouCustCollateralObj.CollateralNo = this.collateralObj.CollateralNo;
       this.mouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
+      this.mouCustCollateralObj.CollateralPortionAmt = this.AddCollForm.controls.CollateralPortionAmt.value;
 
       this.http.post(URLConstant.AddExistingCustCollateralData, this.mouCustCollateralObj).subscribe(
         response => {
@@ -898,8 +955,8 @@ export class MouRequestAddcollComponent implements OnInit {
   next() {
     var sumCollateralValue = 0;
     for (let i = 0; i < this.listCollateralData.length; i++) {
-      if (this.listCollateralData[i].CollateralPrcnt != null) {
-        sumCollateralValue += this.listCollateralData[i].CollateralValueAmt * (this.listCollateralData[i].CollateralPrcnt / 100);
+      if (this.listCollateralData[i].CollateralPortionAmt != null) {
+        sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
       }
     }
     if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
@@ -912,5 +969,5 @@ export class MouRequestAddcollComponent implements OnInit {
   back() {
     this.modeDetail.emit({ mode: "edit" });
     this.ResponseMouAddColl.emit({ StatusCode: "-1" });
-  } 
+  }
 }
