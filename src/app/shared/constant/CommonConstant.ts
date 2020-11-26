@@ -255,6 +255,9 @@ export class CommonConstant {
   public static DownPaymentTypeAmt = "AMT";
   public static DownPaymentTypePrcnt = "PRCNT";
 
+  //PAYMENT TYPE
+  public static PaymentTypeAmt = "AMT";
+  public static PaymentTypePrcnt = "PRCNT";
 
   //DEVIATION TYPE
   public static DeviationTypeManualDev = "MANUAL_DEV"
@@ -472,6 +475,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   public static RefMasterTypeCodeSalutation = "SALUTATION";
+  public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
 
   //RATE TYPE
   public static RateTypeFlat = "FLT";

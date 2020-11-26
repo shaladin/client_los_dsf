@@ -35,6 +35,12 @@ import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCu
 export class CollateralDetailComponent implements OnInit {
 
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
+  private ucLookupCollateralExisting: UclookupgenericComponent;
+  @ViewChild('LookupCollateralExisting') set content(content: UclookupgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.ucLookupCollateralExisting = content;
+    }
+  }
   @Input() mode: string = "add";
   @Input() isSingleAsset = true;
   @Input() AppId: number = 0;
@@ -151,18 +157,8 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   initUcLookup() {
-    this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
-    this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupExistColl.urlEnviPaging = environment.losUrl;
-    this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
-    this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
-    this.inputLookupExistColl.isRequired = false;
-
-    this.inputLookupColl.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupColl.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupColl.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.SetInputLookupCollExisting();
+    this.SetInputLookupColl();
 
     // this.criteriaList = new Array();
     // this.criteriaObj = new CriteriaObj();
@@ -170,6 +166,25 @@ export class CollateralDetailComponent implements OnInit {
     // this.criteriaObj.propName = 'apctrl.ASSET_TYPE_CODE';
     // this.criteriaObj.value = this.AssetTypeCode;
     // this.criteriaList.push(this.criteriaObj);
+  }
+
+  SetInputLookupCollExisting(){
+    this.inputLookupExistColl = new InputLookupObj();
+    this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupExistColl.urlEnviPaging = environment.losUrl;
+    this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.isRequired = false;
+  }
+
+  SetInputLookupColl(){
+    this.inputLookupColl = new InputLookupObj();
+    this.inputLookupColl.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupColl.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputLookupColl.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
   }
 
   async GenerateAppCollateralAttr(isRefresh: boolean) {
@@ -255,7 +270,7 @@ export class CollateralDetailComponent implements OnInit {
           this.AddCollForm.patchValue({
             AssetTypeCode: this.CollTypeList[0].Key
           });
-          await this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value)
+          await this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value, false);
         }
       });
 
@@ -320,11 +335,11 @@ export class CollateralDetailComponent implements OnInit {
       });
   }
 
-  CustNo: string = "";
+  AppCustId: number = 0;
   async GetAppCustByAppId() {
     await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
       (response) => {
-        this.CustNo = response.CustNo;
+        this.AppCustId = response.AppCustId;
       });
   }
   async getAppData() {
@@ -592,7 +607,20 @@ export class CollateralDetailComponent implements OnInit {
     this.collateralPortionHandler();
   }
 
-  async onItemChange(AssetTypeCode: string) {
+  resetCollateralName(){    
+    //#region reset Collateral Name
+    this.inputLookupColl.nameSelect = "";
+    this.inputLookupColl.jsonSelect = { FullAssetName: "" };
+    this.AddCollForm.patchValue({
+      FullAssetCode: "",
+      FullAssetName: "",
+      AssetCategoryCode: ""
+    });
+    //#endregion
+  }
+
+  async onItemChange(AssetTypeCode: string, IsChange: boolean = true) {
+    this.resetCollateralName();
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -645,6 +673,9 @@ export class CollateralDetailComponent implements OnInit {
     await this.getRefAssetDocList(AssetTypeCode);
 
     //#region Criteria For inputLookupExistColl
+    this.inputLookupExistColl.nameSelect = "";
+    this.inputLookupExistColl.jsonSelect = { FullAssetName: "" };
+
     let criteriaList = new Array();
     this.criteriaObj = new CriteriaObj();
     this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
@@ -655,14 +686,15 @@ export class CollateralDetailComponent implements OnInit {
     // tambah filter cust no
     this.criteriaObj = new CriteriaObj();
     this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    this.criteriaObj.propName = 'ACU.CUST_NO';
-    this.criteriaObj.value = this.CustNo;
+    this.criteriaObj.propName = 'ACU.APP_CUST_ID';
+    this.criteriaObj.value = this.AppCustId.toString();
     criteriaList.push(this.criteriaObj);
 
     this.inputLookupExistColl.addCritInput = criteriaList;
     this.inputLookupExistColl.isReady = true;
+    if(IsChange) this.ucLookupCollateralExisting.setAddCritInput();
     //#endregion
-      this.GenerateAppCollateralAttr(false);;
+    this.GenerateAppCollateralAttr(false);
   }
 
   changeSerialNoValidators(MrCollateralConditionCode: string) {
