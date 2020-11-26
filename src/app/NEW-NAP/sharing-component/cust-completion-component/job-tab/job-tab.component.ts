@@ -95,6 +95,7 @@ export class JobTabComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("abecede");
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
 
@@ -156,6 +157,7 @@ export class JobTabComponent implements OnInit {
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response.AppCustPersonalJobDataObj.MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
+        }
 
 
           if (response.JobAddr.AppCustAddrId != 0) {
@@ -181,7 +183,6 @@ export class JobTabComponent implements OnInit {
             this.InputOthBizAddrObj.default = this.OthBizAddrObj;
             this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
           }
-        }
         this.isUcAddrReady = true;
       },
       error => {
