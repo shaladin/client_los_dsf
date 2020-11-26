@@ -35,7 +35,6 @@ import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCu
 export class CollateralDetailComponent implements OnInit {
 
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
-  // @ViewChild('LookupCollateralExisting') LookupCollateralExisting: UclookupgenericComponent;
   private ucLookupCollateralExisting: UclookupgenericComponent;
   @ViewChild('LookupCollateralExisting') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
@@ -340,7 +339,6 @@ export class CollateralDetailComponent implements OnInit {
   async GetAppCustByAppId() {
     await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.AppCustId = response.AppCustId;
       });
   }
@@ -622,7 +620,6 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   async onItemChange(AssetTypeCode: string, IsChange: boolean = true) {
-    // this.SetInputLookupColl();
     this.resetCollateralName();
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
