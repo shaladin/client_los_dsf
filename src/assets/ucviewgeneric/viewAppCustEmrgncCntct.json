@@ -1,0 +1,32 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AppCustEmrgncCntctId",
+      "subSectionTitle": "Emergency Contact",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {"type": "text", "label": "Contact Person Name", "property": "ContactPersonName"},
+        {"type": "text", "label": "Gender", "property": "MrGenderDescr"},
+        {"type": "text", "label": "Id Type", "property": "MrIdTypeDescr"},
+        {"type": "text", "label": "Birth Place", "property": "BirthPlace"},
+        {"type": "text", "label": "Id No", "property": "IdNo"},
+        {"type": "date", "label": "Birth Date", "property": "BirthDt"},
+        {"type": "date", "label": "Id Expired Date", "property": "IdExipedDt"},
+        {"type": "text", "label": "Customer Relationship", "property": "MrCustRelationshipDescr"},
+        {"type": "text", "label": "Mobile Phone 1", "property": "MobilePhone1"},
+        {"type": "text", "label": "Mobile Phone 2", "property": "MobilePhone2"},
+        {"type": "text", "label": "Email", "property": "Email"},
+        {"type": "text", "label": "Phone 1", "property": "Phone1"},
+        {"type": "text", "label": "Phone 2", "property": "Phone2"},
+        {"type": "text", "label": "Phone 3", "property": "Phone3"},
+        {"type": "text", "label": "Address", "property": "Addr"}
+      ],
+      "querystring": {
+        "select": "SELECT ACEC.CONTACT_PERSON_NAME AS ContactPersonName, RMG.DESCR AS MrGenderDescr, RMIT.DESCR AS MrIdTypeDescr, ACEC.BIRTH_PLACE as BirthPlace, ACEC.ID_NO AS IdNo, ACEC.BIRTH_DT AS BirthDt, ACEC.ID_EXPIRED_DT as IdExipedDt, RMCR.DESCR as MrCustRelationshipDescr, ACEC.MOBILE_PHN_NO_1 as MobilePhone1, ACEC.MOBILE_PHN_NO_2 as MobilePhone2, ACEC.EMAIL as Email, ACEC.ADDR + ' ' + ACEC.AREA_CODE_3 + ' ' + ACEC.AREA_CODE_4 + ' ' + ACEC.AREA_CODE_1 + ' ' + ACEC.AREA_CODE_2 + ' ' + ACEC.CITY + ' ' + ACEC.ZIPCODE AS Addr, ACEC.PHN_AREA_1+' '+ACEC.PHN_1+'-'+ACEC.PHN_EXT_1 AS Phone1, ACEC.PHN_AREA_2+' '+ACEC.PHN_2+'-'+ACEC.PHN_EXT_2 AS Phone2, ACEC.PHN_AREA_3+' '+ACEC.PHN_3+'-'+ACEC.PHN_EXT_3 AS Phone3",
+        "from": "FROM dbo.APP_CUST AC WITH(NOLOCK) JOIN dbo.APP_CUST_EMRGNC_CNTCT ACEC WITH(NOLOCK) ON AC.APP_CUST_ID=ACEC.APP_CUST_ID LEFT JOIN dbo.V_REF_MASTER RMG WITH (NOLOCK) ON ACEC.MR_GENDER_CODE = RMG.MASTER_CODE AND RMG.REF_MASTER_TYPE_CODE='GENDER' LEFT JOIN dbo.V_REF_MASTER RMIT WITH ( NOLOCK ) ON AC.MR_ID_TYPE_CODE = RMIT.MASTER_CODE AND RMIT.REF_MASTER_TYPE_CODE = 'ID_TYPE' LEFT JOIN dbo.V_REF_MASTER RMCR WITH ( NOLOCK ) ON ACEC.MR_CUST_RELATIONSHIP_CODE = RMCR.MASTER_CODE AND RMCR.REF_MASTER_TYPE_CODE IN ('CUST_PERSONAL_RELATIONSHIP','CUST_COMPANY_RELATIONSHIP')",
+        "where": "WHERE AC.APP_CUST_ID = {0}"
+      }
+    }
+  ]
+}

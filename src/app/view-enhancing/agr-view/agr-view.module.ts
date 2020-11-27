@@ -18,7 +18,6 @@ import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapproval
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AgrViewRoutingModule } from "./agr-view-routing.module";
 import { AgreementViewContainerComponent } from "./agreement-view-container.component";
-import { ViewCollateralComponent } from "./view-collateral/view-collateral.component";
 import { ViewAppCollateralMultiComponent } from "./view-app-collateral-multi/view-app-collateral-multi.component";
 import { ViewAppCollateralSingleComponent } from "./view-app-collateral-single/view-app-collateral-single.component";
 import { ViewAgrmntInsuranceComponent } from "./view-insurance/view-insurance.component";
@@ -35,6 +34,8 @@ import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.componen
 import { AgrMainInfoComponent } from "../agr-main-info/agr-main-info.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
+import { ViewAssetCollateralComponent } from "./view-asset-collateral/view-asset-collateral.component";
+import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view-asset-collateral-detail/view-asset-collateral-detail.component";
 
 @NgModule({
     imports: [
@@ -61,7 +62,7 @@ import { AppViewComponentsModule } from "app/components/general/app-view/app-vie
     ],
     declarations: [
         AgreementViewContainerComponent,
-        ViewCollateralComponent,
+        ViewAssetCollateralComponent,
         ViewAppCollateralMultiComponent,
         ViewAppCollateralSingleComponent,
         ViewAgrmntInsuranceComponent,
@@ -75,13 +76,15 @@ import { AppViewComponentsModule } from "app/components/general/app-view/app-vie
         ViewDeliveryOrderComponent,
         ViewAgrmntSummaryComponent,
         ViewAgrmntDocumentComponent,
-        AgrMainInfoComponent
+        AgrMainInfoComponent,
+        ViewAssetCollateralDetailComponent 
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
+        ViewAssetCollateralDetailComponent
     ]
 
 })

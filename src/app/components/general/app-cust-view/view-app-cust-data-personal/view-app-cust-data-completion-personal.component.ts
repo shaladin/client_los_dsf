@@ -1,46 +1,52 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { AppCustAddrForViewObj } from 'app/shared/model/AppCustAddr/AppCustAddrForViewObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
 
 @Component({
-  selector: 'app-view-app-cust-data-personal',
-  templateUrl: './view-app-cust-data-personal.component.html',
+  selector: 'app-view-app-cust-data-completion-personal',
+  templateUrl: './view-app-cust-data-completion-personal.component.html',
   styleUrls: []
 })
-export class ViewAppCustDataPersonalComponent implements OnInit {
+export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isDetail: false;
+  @Input() appCustId: number;
   viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataEmpObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataSmeObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataNonProfObj:  UcViewGenericObj = new UcViewGenericObj();
   viewFinDataObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewEmergencyContactObj:  UcViewGenericObj = new UcViewGenericObj();
 
+  customerTitle: string;
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
 
+  appCustObj: AppCustObj;
   custModelCode: string;
   appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
   appCustBankAccObjs: Array<AppCustBankAccObj>;
-  appCustSocmedObjs: Array<AppCustSocmedObj>;
   appCustGrpObjs: Array<AppCustGrpObj>;
   appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj>;
+  appCustFamilyObjs: Array<Object>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
   async ngOnInit(): Promise<void> {
     await this.getCustData();
-    this.arrValue.push(this.appId);
+    this.arrValue.push(this.appCustObj.AppCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
@@ -65,19 +71,59 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
     this.viewFinDataObj.viewEnvironment = environment.losUrl;
     this.viewFinDataObj.whereValue = this.arrValue;
 
+    this.viewEmergencyContactObj.viewInput = "./assets/ucviewgeneric/viewAppCustEmrgncCntct.json";
+    this.viewEmergencyContactObj.viewEnvironment = environment.losUrl;
+    this.viewEmergencyContactObj.whereValue = this.arrValue;
+
     this.isDataAlreadyLoaded = true;
   }
 
   async getCustData() {
-    var reqObj = { AppId: this.appId }
-    await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
+    let reqObj = {};
+    let url = '';
+
+    if(this.isDetail)
+    {
+      reqObj = {AppCustId: this.appCustId, IsForNapCompletionVersion: true};
+      url = URLConstant.GetCustDataPersonalForViewByAppCustId;
+    } else {
+      reqObj ={AppId: this.appId, IsForNapCompletionVersion: true};
+      url = URLConstant.GetCustDataPersonalForViewByAppId;
+    }
+
+    await this.http.post(url, reqObj).toPromise().then(
       (response) => {
+        this.appCustObj = response["AppCustObj"];
         this.custModelCode = response["CustModelCode"];
         this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
-        this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
         this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null ? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
+        this.appCustFamilyObjs = response["AppCustFamilyObjs"];
+
+        // filter family yg punya relationship
+        if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {
+          this.appCustFamilyObjs = this.appCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
+        }
+
+        // filter cust group yg punya cust no & applicant no
+        if(this.appCustGrpObjs && this.appCustGrpObjs.length > 0) {
+          this.appCustGrpObjs = this.appCustGrpObjs.filter(item => item['CustNo'] || item['ApplicantNo'])
+        }
+
+        if(this.appCustObj.IsFamily) this.customerTitle = 'Family';
+        else if(this.appCustObj.IsShareholder) this.customerTitle = 'Shareholder';
+        else if(this.appCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
+        else this.customerTitle = 'Customer';
       });
+  }
+
+  viewDetailFamilyHandler(AppCustId, MrCustTypeCode){
+    const modalInsDetail = this.modalService.open(ViewAppCustDetailComponent);
+    modalInsDetail.componentInstance.AppCustId = AppCustId;
+    modalInsDetail.componentInstance.MrCustTypeCode = MrCustTypeCode;
+    modalInsDetail.componentInstance.CustomerTitle = 'Family';
+    modalInsDetail.result.then().catch((error) => {
+    });
   }
 }

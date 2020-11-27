@@ -9,6 +9,7 @@ import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersona
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-view-app-cust-data-personal',
@@ -29,6 +30,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   isDataAlreadyLoaded: boolean = false;
 
   custModelCode: string;
+  appCustObj: AppCustObj;
   appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
   appCustBankAccObjs: Array<AppCustBankAccObj>;
   appCustSocmedObjs: Array<AppCustSocmedObj>;
@@ -40,7 +42,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.getCustData();
-    this.arrValue.push(this.appId);
+    this.arrValue.push(this.appCustObj.AppCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
@@ -72,6 +74,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
     var reqObj = { AppId: this.appId }
     await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
       (response) => {
+        this.appCustObj = response["AppCustObj"];
         this.custModelCode = response["CustModelCode"];
         this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
