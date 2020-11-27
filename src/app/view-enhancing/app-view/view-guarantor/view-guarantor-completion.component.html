@@ -1,90 +1,35 @@
-<div class="px-3">
-  <lib-ucSubsection [id]="'guaPersonalId'" [title]="'Guarantor Personal'" [panel]="'guaPersonal'"> </lib-ucSubsection>
-  <div id="guaPersonal">
+<div class="px-3 pb-3">
+  <lib-ucSubsection [id]="'guaAllId'" [title]="'Guarantor'" [panel]="'guaAll'"> </lib-ucSubsection>
+  <div id="guaAll">
     <table class="table table-responsive-md table-hover" matSort>
         <thead>
           <tr class="table-header">
-            <th class="text-center">
-              <span translate class="thead-header">No. </span>
-            </th>
-            <th class="text-left">
-              <span translate class="thead-header" mat-sort-header="GuarantorNamePersonal">Guarantor Name</span>
-            </th>
-            <th class="text-left">
-              <span translate class="thead-header" mat-sort-header="IdType">Id Type</span>
-            </th>
-            <th class="text-center">
-              <span translate class="thead-header" mat-sort-header="IdNo">Id No</span>
-            </th>
-            <th class="text-left">
-              <span translate class="thead-header" mat-sort-header="CustRelationPersonal">Customer Relationship</span>
-            </th>
-            <th class="text-center">
-              <span translate class="thead-header" mat-sort-header="MobPhn">Mobile Phone</span>
-            </th>
-            <th class="text-center">
-              <span translate class="thead-header" mat-sort-header="ViewPersonalDetail">View</span>
-            </th>
+            <th class="text-left"><span translate name="GuarantorName">Guarantor Name</span></th>
+            <th class="text-left"><span translate name="MrGuarantorTypeCode">Guarantor Type</span></th>
+            <th class="text-left"><span translate name="MrCustRelationshipDescr">Customer Relationship</span></th>
+            <th class="text-center"><span translate name="MobilePhnNo1">Mobile Phone</span></th>
+            <th class="text-center"><span translate name="ViewPersonalDetail">View</span></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngIf="listAppGuarantorPersonal?.length == 0">
-            <td align="center" colspan="7">No Data Available</td>
+          <tr *ngIf="listAppGuarantorPersonal?.length == 0 && listAppGuarantorCompany?.length == 0">
+            <td class="text-center" colspan="100%">No Data Available</td>
+          </tr>
+          <tr *ngFor="let item of listAppGuarantorCompany; let i = index">
+            <td class="text-left">{{ item.GuarantorName }}</td>
+            <td class="text-left">{{ item.MrGuarantorTypeCode }}</td>
+            <td class="text-left">{{ item.MrCustRelationshipDescr }}</td>
+            <td class="text-center">{{ item.MobilePhnNo1 }}</td>
+            <td class="text-center"><a (click)="ViewGuarantorCompany(item.AppGuarantorId)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
           </tr>
           <tr *ngFor="let item of listAppGuarantorPersonal; let i = index">
-            <td class="text-center">{{ i + 1 }}</td>
             <td class="text-left">{{ item.GuarantorName }}</td>
-            <td class="text-left">{{ item.MrIdTypeCode }}</td>
-            <td class="text-center">{{ item.IdNo }}</td>
+            <td class="text-left">{{ item.MrGuarantorTypeCode }}</td>
             <td class="text-left">{{ item.MrCustRelationshipDescr }}</td>
             <td class="text-center">{{ item.MobilePhnNo }}</td>
             <td class="text-center"><a (click)="ViewGuarantorPersonal(item.AppGuarantorId)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
           </tr>
         </tbody>
-    </table>
-  </div>
-  <lib-ucSubsection [id]="'guaCompanyId'" [title]="'Guarantor Company'" [panel]="'guaCompany'"> </lib-ucSubsection>
-  <div id="guaCompany">
-    <table class="table table-responsive-md table-hover" matSort>
-      <thead>
-        <tr class="table-header">
-          <th class="text-center">
-            <span translate class="thead-header">No. </span>
-          </th>
-          <th class="text-left">
-            <span translate class="thead-header" mat-sort-header="GuarantorNameCompany">Guarantor Name</span>
-          </th>
-          <th class="text-left">
-            <span translate class="thead-header" mat-sort-header="CompanyType">Company Type</span>
-          </th>
-          <th class="text-center">
-            <span translate class="thead-header" mat-sort-header="NPWP">NPWP</span>
-          </th>
-          <th class="text-left">
-            <span translate class="thead-header" mat-sort-header="IndusType">Industry Type</span>
-          </th>
-          <th class="text-left">
-            <span translate class="thead-header" mat-sort-header="CustRelationCompany">Customer Relationship</span>
-          </th>
-          <th class="text-center">
-            <span translate class="thead-header" mat-sort-header="ViewCompanyDetail">View</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="listAppGuarantorCompany?.length == 0">
-          <td align="center" colspan="7">No Data Available</td>
-        </tr>
-        <tr *ngFor="let item of listAppGuarantorCompany; let i = index">
-          <td class="text-center">{{ i + 1 }}</td>
-          <td class="text-left">{{ item.GuarantorName }}</td>
-          <td class="text-left">{{ item.MrCompanyTypeCode }}</td>
-          <td class="text-center">{{ item.TaxIdNo }}</td>
-          <td class="text-left">{{ item.IndustryTypeName }}</td>
-          <td class="text-left">{{ item.MrCustRelationshipDescr }}</td>
-          <td class="text-center"><a (click)="ViewGuarantorCompany(item.AppGuarantorId)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
-        </tr>
-      </tbody>
     </table>
   </div>
 
