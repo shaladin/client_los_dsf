@@ -32,6 +32,7 @@ export class URLConstant {
     public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
     public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";
     public static CopyCancelledApp = environment.losUrl + "/Application/CopyCancelledApp";
+    public static CopyCancelledAppForMainData = environment.losUrl + "/Application/CopyCancelledAppForMainData";
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
     public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
 
