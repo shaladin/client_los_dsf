@@ -116,6 +116,11 @@
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId",
                                         "isAddProp": true
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode",
+                                        "isAddProp": true
                                     }
                                 ]
                             }
@@ -143,6 +148,11 @@
                                     {
                                         "type": "WfTaskListId",
                                         "property": "WfTaskListId",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode",
                                         "isAddProp": true
                                     }
                                 ]
