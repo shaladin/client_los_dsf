@@ -12,6 +12,9 @@ export class URLConstant {
     public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
     public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";
 
+
+    // APPROVAL
+    public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/Approval/GetApprovalScreenViewInfo";
     // APP Application
     public static AddApp = environment.losUrl + "/Application/AddApp";
     public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
@@ -496,7 +499,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // Vendor
     public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorCode";
-    public static GetListKeyValueByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
+    public static GetListKeyValueVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
+    public static GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueActiveByCategoryCodeAndOfficeCode";
     public static GetVendorByVendorCode = environment.FoundationR3Url + "/Vendor/GetVendorByVendorCode";
     public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
     public static GetListVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";

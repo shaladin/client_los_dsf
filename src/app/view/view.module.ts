@@ -193,6 +193,7 @@ import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/li
     MouViewTcComponent,
     MouViewComponent,
     MouViewApprovalHistoryComponent,
+
     //surveyView prototype
     SurveyViewComponent
   ],

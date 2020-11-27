@@ -422,8 +422,8 @@ export class AssetDataComponent implements OnInit {
         }
       }
       else{
-        var assetDPMin = this.CheckValidationObj.DPMin * assetForm.DownPaymentAmt;
-        var assetDPMax = this.CheckValidationObj.DPMax * assetForm.DownPaymentAmt;
+        var assetDPMin = (this.CheckValidationObj.DPMin / 100) * assetForm.AssetPriceAmt;
+        var assetDPMax = (this.CheckValidationObj.DPMax / 100) * assetForm.AssetPriceAmt;
         if(assetForm.DownPaymentAmt < assetDPMin){
           this.isValidOk = false;
           confirmMsg = "Down Payment Amount is Lower than Minimum Amount";

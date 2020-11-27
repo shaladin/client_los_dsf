@@ -307,22 +307,28 @@ export class DocSignerCfnaDetailComponent implements OnInit {
 
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder1Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder1Code: tempJobCode,
     })
   }
 
   getLookupAppCustCompanyShareHolder2(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder2Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder2Code: tempJobCode,
     })
   }
 
   getLookupAppCustCompanyShareHolder3(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder3Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder3Code: tempJobCode,
     })
   }
 
