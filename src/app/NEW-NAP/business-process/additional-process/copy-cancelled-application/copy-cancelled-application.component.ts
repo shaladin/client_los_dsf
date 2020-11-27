@@ -18,6 +18,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
+  IsNapVersionMainData: boolean = false;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router,
     private route: ActivatedRoute) { 
@@ -25,6 +26,9 @@ export class CopyCancelledApplicationComponent implements OnInit {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+      if (params["IsNapVersionMainData"] != null) {
+        this.IsNapVersionMainData = params["IsNapVersionMainData"];
       }
     });
   }
@@ -52,7 +56,8 @@ export class CopyCancelledApplicationComponent implements OnInit {
         });
     }else if(ev.Key == "copy"){
       if (confirm("Are you sure to copy this application?")) {
-        this.http.post(URLConstant.CopyCancelledAppForMainData, { AppId: ev.RowObj.AppId }).subscribe(
+        var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
+        this.http.post(url, { AppId: ev.RowObj.AppId }).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
             this.paging.searchPagination(1);
