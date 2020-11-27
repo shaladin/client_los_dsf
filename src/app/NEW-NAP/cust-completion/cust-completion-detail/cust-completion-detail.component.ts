@@ -23,6 +23,7 @@ export class CustCompletionDetailComponent implements OnInit {
   listCustCompletion: Array<any> = new Array(); 
   AppId: number;
   wfTaskListId: number;
+  BizTemplateCode: string;
   addObj: any = {};
 
   constructor(
@@ -36,9 +37,11 @@ export class CustCompletionDetailComponent implements OnInit {
         if (params['AppId'] != null) {
           this.AppId = params['AppId'];
         }
-
         if (params["WfTaskListId"] != null) {
           this.wfTaskListId = params["WfTaskListId"];
+        }
+        if (params["BizTemplateCode"] != null){
+          this.BizTemplateCode = params["BizTemplateCode"];
         }
       });
   }
@@ -56,6 +59,7 @@ export class CustCompletionDetailComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
     this.addObj["WfTaskListId"] = this.wfTaskListId;
+    this.addObj["BizTemplateCode"] = this.BizTemplateCode;
     
     this.loadCustCompletionListData();
     this.claimTask();
@@ -81,7 +85,7 @@ export class CustCompletionDetailComponent implements OnInit {
   }
 
   buttonBackOnClick() {
-    this.location.back();
+    this.router.navigate(['/Nap/CustCompletion/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode} });
   }
 
   buttonSubmitOnClick(){

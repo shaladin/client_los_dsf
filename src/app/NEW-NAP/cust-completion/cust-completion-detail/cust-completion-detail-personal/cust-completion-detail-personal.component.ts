@@ -25,6 +25,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   WfTaskListId: number;
   AppCustPersonalId: number;
   stepIndex: number = 1;
+  BizTemplateCode: string;
   CustModelCode: string;
   IsMarried: boolean = false;
   private stepper: Stepper;
@@ -66,6 +67,9 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       if (params['WfTaskListId'] != null) {
         this.WfTaskListId = params['WfTaskListId'];
       }
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+      }
     });
   }
 
@@ -100,7 +104,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   }
   
   Back() {
-    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
+    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
   }
 
   EnterTab(type: string) {
@@ -160,7 +164,6 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
-        console.log(this.completionCheckingObj);
         if (this.completionCheckingObj.IsCompleted != true) {
           let errorMsg = typeof this.ValidationMessages[this.completionCheckingObj.InCompletedStep] != 'undefined' ? this.ValidationMessages[this.completionCheckingObj.InCompletedStep] : 'To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep;
           this.toastr.warningMessage(errorMsg);

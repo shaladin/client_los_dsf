@@ -10,7 +10,7 @@
   <div class="card-body px-3">
     <lib-ucSubsection [id]="'ListSubjId'" [title]="'List Subject'" [panel]="'ListSubjId'"></lib-ucSubsection>
     <div id="ListSubjId">
-      <lib-ucgridview [gridInput]="gridSubjectObj"></lib-ucgridview>
+      <lib-ucgridview [gridInput]="gridSubjectObj" [additionalObj]="addObj"></lib-ucgridview>
       <div class="text-right py-2">
         <button type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>Submit</button>
       </div>

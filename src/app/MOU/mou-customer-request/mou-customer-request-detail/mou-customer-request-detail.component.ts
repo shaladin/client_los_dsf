@@ -158,7 +158,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   Back(): void {
-    this.location.back();
+    this.router.navigate(['/Mou/Request/Paging']);
   }
 
   Save(){
