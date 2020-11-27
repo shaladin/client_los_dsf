@@ -3,7 +3,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "ACCMS.MGMNT_SHRHOLDER_NAME",
+            "name": "AC.CUST_NAME",
             "id": "MgmntShrholderNameId",
             "value": "",
             "label": "Management/Shareholder Name",
@@ -14,26 +14,33 @@
             "name": "ACCMS.MR_JOB_POSITION_CODE",
             "id": "MrJobPositionCodeId",
             "value": "",
-            "label": "Management/Shareholder Position",
+            "label": "Management/Shareholder Position Code",
             "placeholder": "Placeholder"
         }
     ],
     "querystring": {
-        "select": "SELECT ACCMS.MGMNT_SHRHOLDER_NAME AS MgmntShrholderName, ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID AS AppCustCompanyMgmntShrholderId, ACCMS.MR_JOB_POSITION_CODE AS MrJobPositionCode, ACCMS.CUST_NO",
-        "from": "FROM dbo.APP_CUST AC JOIN dbo.APP_CUST_COMPANY ACC ON ACC.APP_CUST_ID = AC.APP_CUST_ID JOIN DBO.APP_CUST_COMPANY_MGMNT_SHRHOLDER ACCMS WITH(NOLOCK) ON ACCMS.APP_CUST_COMPANY_ID = ACC.APP_CUST_COMPANY_ID"
+        "select": "SELECT AC.CUST_NAME AS MgmntShrholderName, AC.APP_CUST_ID AS AppCustId, ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID AS AppCustCompanyMgmntShrholderId, ACCMS.MR_JOB_POSITION_CODE AS MrJobPositionCode, RM1.DESCR AS MrJobPositionCodeDesc, AC.CUST_NO AS CustNo, AC.MR_CUST_TYPE_CODE AS MrCustTypeCode, RM2.DESCR AS MrCustTypeCodeDesc",
+        "from": "FROM dbo.APP_CUST AC WITH(NOLOCK) LEFT JOIN dbo.APP_CUST_PERSONAL ACPS WITH(NOLOCK) ON AC.APP_CUST_ID = ACPS.APP_CUST_ID LEFT JOIN dbo.APP_CUST_COMPANY ACC WITH(NOLOCK) ON ACC.APP_CUST_ID = AC.APP_CUST_ID JOIN dbo.APP_CUST_COMPANY_MGMNT_SHRHOLDER ACCMS WITH(NOLOCK) ON ACCMS.APP_CUST_ID = AC.APP_CUST_ID LEFT JOIN dbo.V_REF_MASTER RM1 WITH(NOLOCK) ON ACCMS.MR_JOB_POSITION_CODE = RM1.MASTER_CODE LEFT JOIN dbo.V_REF_MASTER RM2 WITH(NOLOCK) ON AC.MR_CUST_TYPE_CODE = RM2.MASTER_CODE",
+        "where": "WHERE AC.IS_SHAREHOLDER = 1 AND (RM1.REF_MASTER_TYPE_CODE = 'JOB_POSITION' OR RM1.REF_MASTER_TYPE_CODE IS NULL) AND RM2.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
             "label": "Name",
-            "name": "ACCMS.MGMNT_SHRHOLDER_NAME"
+            "name": "AC.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Position",
-            "name": "ACCMS.MR_JOB_POSITION_CODE"
+            "name": "RM1.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Cust Type",
+            "name": "RM2.DESCR"
         },
         {
             "type": "label",
@@ -50,7 +57,12 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrJobPositionCode"
+            "property": "MrJobPositionCodeDesc"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrCustTypeCodeDesc"
         },
         {
             "type": "action",

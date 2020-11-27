@@ -1,0 +1,31 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AppCustComapnyContactPersonId",
+      "subSectionTitle": "Contact Person",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {"type": "text", "label": "Contact Person Name", "property": "ContactPersonName"},
+        {"type": "text", "label": "Gender", "property": "MrGenderDescr"},
+        {"type": "text", "label": "Job Title", "property": "JobTitleName"},
+        {"type": "text", "label": "Job Position", "property": "MrJobPositionDescr"},
+        {"type": "text", "label": "Id Type", "property": "MrIdTypeDescr"},
+        {"type": "text", "label": "Birth Place", "property": "BirthPlace"},
+        {"type": "text", "label": "Id No", "property": "IdNo"},
+        {"type": "text", "label": "Birth Date", "property": "BirthDt"},
+        {"type": "text", "label": "Id Expired Date", "property": "IdExipedDt"},
+        {"type": "text", "label": "Contact Relationship", "property": "MrCustRelationshipDescr"},
+        {"type": "text", "label": "Mobile Phone 1", "property": "MobilePhone1"},
+        {"type": "text", "label": "Mobile Phone 2", "property": "MobilePhone2"},
+        {"type": "text", "label": "Email 1", "property": "Email1"},
+        {"type": "text", "label": "Email 2", "property": "Email2"}
+      ],
+      "querystring": {
+        "select": "SELECT ACCP.CONTACT_PERSON_NAME AS ContactPersonName, RMG.DESCR AS MrGenderDescr, ACCP.JOB_TITLE_NAME AS JobTitleName, RMJP.DESCR AS MrJobPositionDescr, RMIT.DESCR AS MrIdTypeDescr, ACCP.BIRTH_PLACE AS BirthPlace, ACCP.ID_NO AS IdNo, ACCP.BIRTH_DT AS BirthDt, ACCP.ID_EXPIRED_DT AS IdExipedDt, RMCR.DESCR AS MrCustRelationshipDescr, ACCP.MOBILE_PHN_NO_1 AS MobilePhone1, ACCP.MOBILE_PHN_NO_2 AS MobilePhone2, ACCP.EMAIL_1 AS Email1, ACCP.EMAIL_2 AS Email2",
+        "from": "FROM dbo.APP_CUST AC WITH ( NOLOCK ) JOIN dbo.APP_CUST_COMPANY ACP WITH (NOLOCK) ON AC.APP_CUST_ID=ACP.APP_CUST_ID JOIN dbo.APP_CUST_COMPANY_CONTACT_PERSON ACCP WITH ( NOLOCK ) ON ACP.APP_CUST_COMPANY_ID= ACCP.APP_CUST_COMPANY_ID LEFT JOIN dbo.V_REF_MASTER RMG WITH ( NOLOCK ) ON ACCP.MR_GENDER_CODE = RMG.MASTER_CODE AND RMG.REF_MASTER_TYPE_CODE= 'GENDER' LEFT JOIN dbo.V_REF_MASTER RMIT WITH ( NOLOCK ) ON AC.MR_ID_TYPE_CODE = RMIT.MASTER_CODE AND RMIT.REF_MASTER_TYPE_CODE = 'ID_TYPE' LEFT JOIN dbo.V_REF_MASTER RMJP WITH ( NOLOCK ) ON ACCP.MR_JOB_POSITION_CODE = RMJP.MASTER_CODE AND RMJP.REF_MASTER_TYPE_CODE = 'JOB_POSITION' LEFT JOIN dbo.V_REF_MASTER RMCR WITH ( NOLOCK ) ON ACCP.MR_CUST_RELATIONSHIP_CODE = RMCR.MASTER_CODE AND RMCR.REF_MASTER_TYPE_CODE IN ( 'CUST_PERSONAL_RELATIONSHIP', 'CUST_COMPANY_RELATIONSHIP' )",
+        "where": "WHERE AC.APP_CUST_ID = {0}"
+      }
+    }
+  ]
+}

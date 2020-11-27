@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ApvViewInfo } from 'app/shared/model/ApvViewInfo.Model';
 
 @Component({
   selector: 'app-mou-approval-factoring',
@@ -19,7 +20,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   MouCustId : number;
   taskId: number;
   instanceId: number;
-  inputObj: any;
+  inputObj: ApvViewInfo;
   MouType : string = "FACTORING";
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   resultData: any;
@@ -31,14 +32,10 @@ export class MouApprovalFactoringComponent implements OnInit {
       if (params["MouCustId"] != null) {
         this.MouCustId = params["MouCustId"];
       }
-
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
-
-      this.inputObj = obj;
+      this.inputObj = new ApvViewInfo();
+      this.inputObj.taskId = params["TaskId"];
+      this.inputObj.instanceId =  params["InstanceId"];
+      this.inputObj.approvalBaseUrl = environment.ApprovalR3Url;
     });
   }
   

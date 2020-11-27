@@ -1664,7 +1664,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   bindInscoBranchObj() {
     var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
-    this.http.post(URLConstant.GetListKeyValueByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
+    this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
       (response) => {
         this.inscoBranchObj = response[CommonConstant.ReturnObj];
       }
