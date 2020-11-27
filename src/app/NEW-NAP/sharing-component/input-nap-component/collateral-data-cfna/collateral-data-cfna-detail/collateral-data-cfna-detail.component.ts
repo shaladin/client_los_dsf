@@ -139,6 +139,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.initDropdownList();
     this.getAppData();
 
+
     if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId, false, false, new Object());
     }
@@ -153,6 +154,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   setCollateralAttribute() {
     if (this.AppCollateralAttrObj != null) {
+      this.appCollateralDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
       for (let i = 0; i < this.AddCollForm.controls["AppCollateralAttrObjs"].value.length; i++) {
         var appCollAttrcObj = new AppCollateralAttrObj();
         appCollAttrcObj.CollateralAttrName = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AssetAttrName;
