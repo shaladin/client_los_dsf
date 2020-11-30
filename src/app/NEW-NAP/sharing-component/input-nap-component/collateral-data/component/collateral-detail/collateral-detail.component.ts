@@ -75,7 +75,6 @@ export class CollateralDetailComponent implements OnInit {
   SerialNoList: any;
   isUsed: boolean = true;
   isCopy: boolean = true;
-  AttrTitle: string = "Asset";
   // isExisting: boolean = false;
   AddCollForm = this.fb.group({
     AppCollateralId: [''],
@@ -130,14 +129,6 @@ export class CollateralDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { "AppId": this.AppId }).subscribe(
-      response => {
-        if(response.BizTemplateCode == CommonConstant.CFRFN4W){
-          this.AttrTitle = "Collateral";
-        }
-      }
-    );
-
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.showSubsection = false;
     this.inputAddressObjForLegal.showAllPhn = false;
