@@ -562,6 +562,9 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   TenorChange() {
     this.Calculate = false;
+    this.LeadDataForm.patchValue({
+      InstallmentAmt: this.NTFAmt / this.Tenor,
+    });
   }
 
   calculateNonKta() {
@@ -570,13 +573,12 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     var minAmt = this.NTFAmt / this.Tenor;
+    if(!this.LeadDataForm.controls["InstallmentAmt"].value) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
-    if(this.NTFAmt > 0){
-      if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
-        this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
-        return;
-      }
+    if(this.NTFAmt && this.InstAmt > this.NTFAmt ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      return;
     }
 
     if (this.AssetPrice <= 0) {
@@ -624,14 +626,14 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
     var minAmt = this.NTFAmt / this.Tenor;
+    if(!this.LeadDataForm.controls["InstallmentAmt"].value) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
-    if(this.NTFAmt > 0){
-    if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
+    if(this.NTFAmt && this.InstAmt > this.NTFAmt ){
       this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
       return;
     }
-  }
+
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
