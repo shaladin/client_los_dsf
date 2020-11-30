@@ -85,7 +85,7 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   Back() {
-    this.location.back();
+    this.router.navigate(['/Mou/Execution/Paging']);
   }
 
   SaveForm() {
@@ -93,7 +93,7 @@ export class MouExecutionDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
       (response: any) => {
         this.toastr.successMessage(response["Message"]);
-        this.router.navigate(['/Mou/Execution/Paging']);
+        this.Back();
       });
 
   }

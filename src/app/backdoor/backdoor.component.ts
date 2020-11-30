@@ -5,6 +5,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-backdoor',
@@ -15,18 +16,20 @@ export class BackdoorComponent implements OnInit {
 
   noParamGiven: boolean = true;
   link: string;
-  mouCustObj: MouCustObj = new MouCustObj();
+  custObj: CustObj = new CustObj();
   k: string;
   iv: string;
+  UploadViewlink: string;
+  Uploadlink: string;
+  Viewlink: string;
 
   constructor(
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(
       (param: ParamMap) => {
-        if (param["MOU_NO"] != undefined && param["CUST_NO"] != undefined && param["KEY"] != undefined && param["IV"] != undefined) {
+        if (param["CUST_NO"] != undefined && param["KEY"] != undefined && param["IV"] != undefined) {
           this.noParamGiven = false;
-          this.mouCustObj.CustNo = param["CUST_NO"];
-          this.mouCustObj.MouCustNo = param["MOU_NO"];
+          this.custObj.CustNo = param["CUST_NO"];
           this.k = param["KEY"];
           this.iv = param["IV"];
         }
@@ -35,18 +38,20 @@ export class BackdoorComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("BDSDFS");
-    this.link = this.DMSIntegrationURL(this.mouCustObj);
+    this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
+    this.Uploadlink = this.DMSURL(this.custObj,"Upload");
+    this.Viewlink  = this.DMSURL(this.custObj,"View");
   }
 
-  DMSIntegrationURL(mouCustObj: MouCustObj) {
-    if (mouCustObj != undefined) {
+  DMSURL(custObj: CustObj, permission : string) {
+    if (custObj != undefined) {
       let Obj: DMSObj = new DMSObj();
       Obj.User = "Admin";
       Obj.Role = "SUPUSR";
-      Obj.ViewCode = "ConfinsMou";
-      Obj.MetadataParent.push(new DMSLabelValueObj("No Customer", mouCustObj.CustNo));
-      Obj.MetadataObject.push(new DMSLabelValueObj("Mou Id", mouCustObj.MouCustNo));
+      Obj.ViewCode = "ConfinsCust";
+      Obj.MetadataParent = null;
+      Obj.MetadataObject.push(new DMSLabelValueObj("No Customer", custObj.CustNo));
+      Obj.Option.push(new DMSLabelValueObj("OverideSecurity", permission));
       let ObjFinalForm = "js=" + JSON.stringify(Obj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
       let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
       prm = encodeURIComponent(prm);

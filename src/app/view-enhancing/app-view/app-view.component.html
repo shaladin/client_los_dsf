@@ -14,20 +14,22 @@
           </div>
         </div>
         <div class="px-3">
-
-
           <ng-template #mainInfoContainerA></ng-template>
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>
-                <app-view-app-cust-data-company [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
+                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="!IsNAPVersionCompletion && CustType=='PERSONAL'"></app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company [appId]="AppId" *ngIf="!IsNAPVersionCompletion && CustType=='COMPANY'"></app-view-app-cust-data-company>
+
+                <app-view-app-cust-data-completion-personal [appId]="AppId" *ngIf="IsNAPVersionCompletion && CustType=='PERSONAL'"></app-view-app-cust-data-completion-personal>
+                <app-view-app-cust-data-completion-company [appId]="AppId" *ngIf="IsNAPVersionCompletion && CustType=='COMPANY'"></app-view-app-cust-data-completion-company>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsGuarantor" label="Guarantor">
               <ng-template matTabContent>
-                <app-guarantor [AppId]="AppId"></app-guarantor>
+                <app-guarantor *ngIf="!IsNAPVersionCompletion" [AppId]="AppId"></app-guarantor>
+                <app-guarantor-completion *ngIf="IsNAPVersionCompletion" [AppId]="AppId"></app-guarantor-completion>
               </ng-template>
             </mat-tab>
 
@@ -55,7 +57,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsMultiAsset" label="Asset">
+            <mat-tab *ngIf="IsMultiAsset" label="Asset & Collateral Data">
               <ng-template matTabContent>
                 <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
               </ng-template>
