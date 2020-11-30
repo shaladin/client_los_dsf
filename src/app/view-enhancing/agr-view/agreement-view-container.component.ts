@@ -43,7 +43,6 @@ export class AgreementViewContainerComponent implements OnInit {
   IsAdditionalService: boolean = true;
   IsMulti: boolean = true;
   IsAppCollateral: boolean = true;
-  IsNAPVersionCompletion: boolean = true;
 
   constructor(
     private route: ActivatedRoute,

@@ -19,6 +19,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 export class ViewAppCustDataPersonalComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() IsNAPVersionCompletion: boolean = true;
   viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataEmpObj:  UcViewGenericObj = new UcViewGenericObj();
@@ -41,6 +42,8 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
+    if(this.IsNAPVersionCompletion) return;
     await this.getCustData();
     this.arrValue.push(this.appCustObj.AppCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";

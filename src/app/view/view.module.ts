@@ -45,7 +45,6 @@ import { ViewCollateralDataComponent } from "./app-view/view-collateral-data/vie
 import { ViewCollateralMultiAssetComponent } from "./app-view/view-collateral-multi-asset/view-collateral-multi-asset.component";
 import { ViewFinancialComponent } from "./app-view/view-financial/view-financial.component";
 import { ViewFraudDetectionResultComponent } from "./app-view/view-fraud-detection-result/view-fraud-detection-result.component";
-import { GuarantorComponent } from "./app-view/view-guarantor/view-guarantor.component";
 import { ViewInsuranceComponent } from "./app-view/view-insurance/view-insurance.component";
 import { ViewPhoneVerifComponent } from "./app-view/view-phone-verif/view-phone-verif.component";
 import { ViewReservedFundComponent } from "./app-view/view-reserved-fund/view-reserved-fund.component";
@@ -147,7 +146,6 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
     ViewCollateralMultiAssetComponent,
     ViewFinancialComponent,
     ViewFraudDetectionResultComponent,
-    GuarantorComponent,
     ViewInsuranceComponent,
     ViewPhoneVerifComponent,
     ViewReservedFundComponent,

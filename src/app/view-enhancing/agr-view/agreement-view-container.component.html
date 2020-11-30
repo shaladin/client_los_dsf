@@ -22,16 +22,10 @@
 
             <mat-tab label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-company *ngIf="!IsNAPVersionCompletion && ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
+                <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
                   [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>
-                <app-view-app-cust-data-personal *ngIf="!IsNAPVersionCompletion && ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
+                <app-view-app-cust-data-personal *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
                   [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal>
-                
-                  <app-view-app-cust-data-completion-company *ngIf="IsNAPVersionCompletion && ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
-                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-completion-company>
-                <app-view-app-cust-data-completion-personal *ngIf="IsNAPVersionCompletion && ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
-                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-completion-personal>
-
               </ng-template>
             </mat-tab>
 

@@ -8,6 +8,8 @@ import { ViewAppCustDataPersonalComponent } from './view-app-cust-data-personal/
 import { ViewAppCustDataCompletionPersonalComponent } from './view-app-cust-data-personal/view-app-cust-data-completion-personal.component';
 import { ViewAppCustDataCompletionCompanyComponent } from './view-app-cust-data-company/view-app-cust-data-completion-company.component';
 import { ViewAppCustDetailComponent } from './view-app-cust-detail/view-app-cust-detail.component';
+import { GuarantorCompletionComponent } from './view-guarantor/view-guarantor-completion.component';
+import { GuarantorComponent } from './view-guarantor/view-guarantor.component';
 
 @NgModule({
     imports: [
@@ -21,14 +23,14 @@ import { ViewAppCustDetailComponent } from './view-app-cust-detail/view-app-cust
         ViewAppCustDataPersonalComponent,
         ViewAppCustDataCompletionPersonalComponent,
         ViewAppCustDataCompletionCompanyComponent,
-        ViewAppCustDetailComponent
+        ViewAppCustDetailComponent,
+        GuarantorComponent,
+        GuarantorCompletionComponent,
     ],
     exports: [
         ViewAppCustDataCompanyComponent,
         ViewAppCustDataPersonalComponent,
-        ViewAppCustDataCompletionPersonalComponent,
-        ViewAppCustDataCompletionCompanyComponent,
-        ViewAppCustDetailComponent
+        GuarantorComponent,
     ],
     entryComponents: [
         ViewAppCustDetailComponent
