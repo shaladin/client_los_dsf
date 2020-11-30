@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ComponentFac
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, NgForm, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, NgForm, FormGroup, FormArray, ValidatorFn } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
@@ -803,27 +803,59 @@ export class CollateralAddEditComponent implements OnInit {
     }
     
   }
-  addGroupAppCollateralAttr(AppCollateralAttrObjs, i) {
-    
-    if(AppCollateralAttrObjs.AttrInputType == 'L'){
-      return this.fb.group({
-        No: [i],
-        AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
-        AssetAttrName: [AppCollateralAttrObjs.CollateralAttrName],
-        AttrInputType: [AppCollateralAttrObjs.AttrInputType],
-        AttrValue: [AppCollateralAttrObjs.AttrValue]
-      })
-    }
-    else{
-    return this.fb.group({
+
+  private setValidators(appCollateralAttrObj: AppCollateralAttrCustomObj){
+    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
+
+    if(appCollateralAttrObj.AttrLength != null && appCollateralAttrObj.AttrLength != 0){
+      ListValidator.push(Validators.maxLength(appCollateralAttrObj.AttrLength));
+    } 
+
+    return ListValidator;
+  }
+  
+  private setFbGroupAssetAttribute(appCollateralAttrObj: AppCollateralAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>){
+    let tempFB = this.fb.group({
       No: [i],
-      AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
-      AssetAttrName: [AppCollateralAttrObjs.CollateralAttrName],
-      AttrInputType: [AppCollateralAttrObjs.AttrInputType],
-      AttrValue: [AppCollateralAttrObjs.AttrValue, [Validators.maxLength(AppCollateralAttrObjs.AttrLength)]]
-    })
+      AssetAttrCode: [appCollateralAttrObj.CollateralAttrCode],
+      AssetAttrName: [appCollateralAttrObj.CollateralAttrName],
+      AttrInputType: [appCollateralAttrObj.AttrInputType],
+      AttrValue: [appCollateralAttrObj.AttrValue]
+    });
+    if(ListValidator.length > 0){
+      tempFB.get("AttrValue").setValidators(ListValidator);
+    }
+
+    return tempFB;
   }
+
+  addGroupAppCollateralAttr(appCollateralAttrObj: AppCollateralAttrCustomObj, i: number) {
+    let ListValidator: Array<ValidatorFn> = this.setValidators(appCollateralAttrObj);
+    
+    return this.setFbGroupAssetAttribute(appCollateralAttrObj, i, ListValidator);
   }
+
+  // addGroupAppCollateralAttr(AppCollateralAttrObjs, i) {
+    
+  //   if(AppCollateralAttrObjs.AttrInputType == 'L'){
+  //     return this.fb.group({
+  //       No: [i],
+  //       AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
+  //       AssetAttrName: [AppCollateralAttrObjs.CollateralAttrName],
+  //       AttrInputType: [AppCollateralAttrObjs.AttrInputType],
+  //       AttrValue: [AppCollateralAttrObjs.AttrValue]
+  //     })
+  //   }
+  //   else{
+  //   return this.fb.group({
+  //     No: [i],
+  //     AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
+  //     AssetAttrName: [AppCollateralAttrObjs.CollateralAttrName],
+  //     AttrInputType: [AppCollateralAttrObjs.AttrInputType],
+  //     AttrValue: [AppCollateralAttrObjs.AttrValue, [Validators.maxLength(AppCollateralAttrObjs.AttrLength)]]
+  //   })
+  // }
+  // }
   refreshAttr(){
     this.isAssetAttrReady = false;
     this.GenerateAppCollateralAttr(true);
