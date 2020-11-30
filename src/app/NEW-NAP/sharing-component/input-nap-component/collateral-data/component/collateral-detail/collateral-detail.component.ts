@@ -132,7 +132,7 @@ export class CollateralDetailComponent implements OnInit {
   async ngOnInit() {
     this.http.post<AppObj>(URLConstant.GetAppById, { "AppId": this.AppId }).subscribe(
       response => {
-        if(response.BizTemplateCode == CommonConstant.CFNA || response.BizTemplateCode == CommonConstant.CFRFN4W){
+        if(response.BizTemplateCode == CommonConstant.CFRFN4W){
           this.AttrTitle = "Collateral";
         }
       }
