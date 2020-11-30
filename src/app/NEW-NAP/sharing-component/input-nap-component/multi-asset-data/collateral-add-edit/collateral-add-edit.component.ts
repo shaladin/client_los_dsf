@@ -760,7 +760,6 @@ export class CollateralAddEditComponent implements OnInit {
     };
     this.http.post(URLConstant.GenerateAppCollateralAttr, GenObj).subscribe(
       (response) => {
-        console.log(response);
          this.AppCollateralAttrObj = response['ResponseAppCollateralAttrObjs'];
         if(response['IsDiffWithRefAttr']){
           this.isDiffWithRefAttr = true;
