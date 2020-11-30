@@ -28,7 +28,7 @@
     {
       "type": "sort",
       "position": "center",
-      "label": "Share Percent",
+      "label": "Share(%)",
       "name": "SharePrcnt"
     },
     {
