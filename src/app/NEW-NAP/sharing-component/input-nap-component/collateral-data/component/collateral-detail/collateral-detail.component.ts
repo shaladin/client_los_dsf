@@ -529,7 +529,7 @@ export class CollateralDetailComponent implements OnInit {
           })
         }
 
-        this.collateralPortionHandler();
+        // this.collateralPortionHandler();
 
         this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
         await this.onItemChange(this.appCollateralObj.AssetTypeCode);
@@ -620,7 +620,6 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   async onItemChange(AssetTypeCode: string, IsChange: boolean = true) {
-    this.resetCollateralName();
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
