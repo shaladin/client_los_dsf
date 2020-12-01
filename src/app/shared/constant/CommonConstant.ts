@@ -186,6 +186,7 @@ export class CommonConstant {
   public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
   public static RefProdCompntCodeCrApvResExpDays = "CR_APV_RES_EXP_DAYS";
   public static CollateralNeeded = "COLLATERALNEEDED";
+  public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";

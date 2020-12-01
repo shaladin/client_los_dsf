@@ -161,7 +161,7 @@ export class LoanObjectComponent implements OnInit {
 
           var objIsDisburse = {
             ProdOfferingCode: this.AppObj.ProdOfferingCode,
-            RefProdCompntCode: CommonConstant.CollateralNeeded,
+            RefProdCompntCode: CommonConstant.RefProdCompntCodeDisburseToCust,
             ProdOfferingVersion: this.AppObj.ProdOfferingVersion
           };
           this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
@@ -170,6 +170,7 @@ export class LoanObjectComponent implements OnInit {
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
+                this.CheckIsDisburseToCust();
               }
               else{
                 throw new Error("Disburse To Cust component not found, please use the latest product offering");
@@ -346,7 +347,6 @@ export class LoanObjectComponent implements OnInit {
   }
 
   CheckIsDisburseToCust() {
-    this.supplierInputLookupObj.isReady = false;
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
       this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
@@ -357,6 +357,5 @@ export class LoanObjectComponent implements OnInit {
       this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
     }
     this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
-    this.supplierInputLookupObj.isReady = true;
   }
 }
