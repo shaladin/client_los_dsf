@@ -7,6 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: "view-phone-verif",
@@ -54,6 +55,6 @@ export class ViewPhoneVerifComponent implements OnInit {
   }
 
   View(VerifResultHid, SubjectName) {
-    window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
+    AdInsHelper.OpenPhoneVerifViewByAppId(this.appId, VerifResultHid, SubjectName);
   }
 }
