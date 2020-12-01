@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "dropdown",
-            "name": "UL.ORI_OFFICE_CODE",
+            "name": "UMH.OFFICE_CODE",
             "id": "OriOfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
@@ -12,7 +12,7 @@
             "isFromURL": true,
             "isSelectOne": false,
             "url": "",
-            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office Name",
             "isQueryIn": true,
             "items": [],
@@ -20,26 +20,18 @@
         },
         {
             "type": "textbox",
-            "name": "UL.UPLOAD_MONITORING_NO",
+            "name": "UMH.FILE_NAME",
+            "id": "FileNameId",
+            "value": "",
+            "label": "File Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "UMH.UPLOAD_MONITORING_NO",
             "id": "UploadMonitoringNoId",
             "value": "",
-            "label": "Upload No.",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "UL.CUST_NO",
-            "id": "CustNoId",
-            "value": "",
-            "label": "Customer No.",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "UL.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "Customer Name",
+            "label": "Upload No",
             "placeholder": "Placeholder"
         },
         {
@@ -52,7 +44,7 @@
             "isFromURL": true,
             "isSelectOne": false,
             "url": "",
-            "path":"/RefStatus/GetRefStatusByTrxTypeCode",
+            "path": "/RefStatus/GetRefStatusByTrxTypeCode",
             "label": "Upload Status",
             "items": [],
             "itemsUrl": [],
@@ -61,15 +53,16 @@
         }
     ],
     "querystring": {
-        "select": "SELECT UL.UPLOAD_MONITORING_NO AS UploadMonitoringNo, RO.OFFICE_NAME AS OfficeName, UL.CUST_NO AS CustNo, UL.CUST_NAME AS CustName, UL.TAX_ID_NO AS TaxIdNo, STAT.DESCR AS UploadStatus",
-        "from": "FROM dbo.UPLOAD_LEAD AS UL WITH(NOLOCK) LEFT JOIN dbo.V_REF_OFFICE AS RO WITH(NOLOCK) ON UL.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN dbo.V_REF_STATUS AS STAT WITH(NOLOCK) ON UL.UPLOAD_STATUS = STAT.REF_STATUS_CODE AND STAT.STATUS_GRP_CODE = 'UPLOAD_STATUS'"
+        "select": "SELECT UMH.UPLOAD_MONITORING_NO AS UploadMonitoringNo, UMH.OFFICE_CODE AS OfficeCode, RO.OFFICE_NAME AS OfficeName, UL.UPLOAD_STATUS AS UploadStatus, STAT.DESCR AS UploadStatusDescr, UMH.FILE_NAME AS FileName, UMH.TOTAL_RECORD AS TotalRecord, UMH.TOTAL_RECORD_PROCESSED AS TotalRecordProcessed, UMH.TOTAL_RECORD_ERROR AS TotalRecordError, UMH.IS_EXECUTED AS IsExecuted, UL.ERROR_MESSAGE AS ErrorMessage ",
+        "from": "FROM dbo.V_UPLOAD_MONITORING_H UMH WITH ( NOLOCK ) JOIN dbo.UPLOAD_LEAD AS UL WITH ( NOLOCK ) ON UMH.UPLOAD_MONITORING_NO = UL.UPLOAD_MONITORING_NO JOIN dbo.V_REF_OFFICE AS RO WITH ( NOLOCK ) ON UL.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN dbo.V_REF_STATUS AS STAT WITH ( NOLOCK ) ON UL.UPLOAD_STATUS = STAT.REF_STATUS_CODE AND STAT.STATUS_GRP_CODE = N'UPLOAD_STATUS'",
+        "groupby": "GROUP BY UMH.UPLOAD_MONITORING_NO, UMH.OFFICE_CODE, RO.OFFICE_NAME, UL.UPLOAD_STATUS, STAT.DESCR, UMH.FILE_NAME, UMH.TOTAL_RECORD, UMH.TOTAL_RECORD_PROCESSED, UMH.TOTAL_RECORD_ERROR, UMH.IS_EXECUTED, UL.ERROR_MESSAGE "
     },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
-            "label": "UPLOAD NO.",
-            "name": "UL.UPLOAD_MONITORING_NO"
+            "label": "UPLOAD NO",
+            "name": "UMH.UPLOAD_MONITORING_NO"
         },
         {
             "type": "sort",
@@ -79,27 +72,39 @@
         },
         {
             "type": "sort",
-            "position": "center",
-            "label": "CUSTOMER NO.",
-            "name": "UL.CUST_NO"
-        },
-        {
-            "type": "sort",
             "position": "left",
-            "label": "CUSTOMER NAME",
-            "name": "UL.CUST_NAME"
+            "label": "FILE NAME",
+            "name": "UMH.FILE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "TOTAL RECORD",
+            "name": "UMH.TOTAL_RECORD"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "TOTAL RECORD PROCESSED",
+            "name": "UMH.TOTAL_RECORD_PROCESSED"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "TOTAL RECORD ERROR",
+            "name": "UMH.TOTAL_RECORD_ERROR"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "TAX ID NO.",
-            "name": "UL.TAX_ID_NO"
-        },
-        {
-            "type": "sort",
-            "position": "left",
             "label": "UPLOAD STATUS",
-            "name": "UL.UPLOAD_STATUS"
+            "name": "STAT.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "ERROR MESSAGE",
+            "name": "UL.ERROR_MESSAGE"
         },
         {
             "type": "label",
@@ -120,23 +125,33 @@
         },
         {
             "type": "text",
+            "position": "left",
+            "property": "FileName"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "TotalRecord"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "TotalRecordProcessed"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "TotalRecordError"
+        },
+        {
+            "type": "text",
             "position": "center",
-            "property": "CustNo"
+            "property": "UploadStatusDescr"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "TaxIdNo"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "UploadStatus"
+            "property": "ErrorMessage"
         },
         {
             "type": "action",
