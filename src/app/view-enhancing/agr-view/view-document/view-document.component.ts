@@ -43,6 +43,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   GetAgrmntSigner() {
     this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
+        console.log(response);
         this.AgrmntSignerObj = response;
       }
     );
