@@ -7,34 +7,16 @@
       "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
-          "type": "link",
           "label": "Application No",
+          "type": "callback",
           "property": "AppNo",
-          "name": "AppNo",
-          "position": "left",
-          "path": "/View/AppView",
-          "target": "_blank",
-          "param": [
-            { 
-              "type": "AppId",
-              "property": "AppId" 
-            }
-          ]
+          "key": "application"
         },
         {
-          "type": "link",
-          "label": "Cust No",
-          "property": "CustNo",
-          "name": "CustNo",
-          "isHide": true,
-          "path": "/View/Mou/CustView",
-          "target": "_blank",
-          "param": [
-            {
-              "type": "AppCustId",
-              "property": "AppCustId"
-            }
-          ]
+          "label": "Customer No",
+          "type": "callback",
+          "key": "customer",
+          "property": "CustNo"
         },
         {
           "type": "text",
