@@ -19,7 +19,7 @@ import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cus
 export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
 
   @Input() appId: number;
-  @Input() isDetail: false;
+  @Input() isDetail: boolean = false;
   @Input() appCustId: number;
   viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj:  UcViewGenericObj = new UcViewGenericObj();
@@ -32,6 +32,12 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   customerTitle: string;
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
+  
+  isPopupDetail: boolean = false;
+  isShowDetail: boolean = false;
+  detailAppCustId: number;
+  detailMrCustTypeCode: string;
+  detailCustomerTitle: string;
 
   appCustObj: AppCustObj;
   custModelCode: string;
@@ -119,11 +125,26 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   }
 
   viewDetailFamilyHandler(AppCustId, MrCustTypeCode){
-    const modalInsDetail = this.modalService.open(ViewAppCustDetailComponent);
-    modalInsDetail.componentInstance.AppCustId = AppCustId;
-    modalInsDetail.componentInstance.MrCustTypeCode = MrCustTypeCode;
-    modalInsDetail.componentInstance.CustomerTitle = 'Family';
-    modalInsDetail.result.then().catch((error) => {
-    });
+    if(this.isPopupDetail)
+    {
+      const modalInsDetail = this.modalService.open(ViewAppCustDetailComponent);
+      modalInsDetail.componentInstance.AppCustId = AppCustId;
+      modalInsDetail.componentInstance.MrCustTypeCode = MrCustTypeCode;
+      modalInsDetail.componentInstance.CustomerTitle = 'Family';
+      modalInsDetail.result.then().catch((error) => {
+      });
+    }
+    else
+    {
+      this.detailAppCustId = AppCustId;
+      this.detailMrCustTypeCode = MrCustTypeCode;
+      this.detailCustomerTitle = 'Family';
+      this.isShowDetail = true;
+    }
+  }
+
+  closeDetailHandler()
+  {
+    this.isShowDetail = false;
   }
 }
