@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,11 +12,17 @@ export class ViewAppCustDetailComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() MrCustTypeCode: string;
   @Input() CustomerTitle: string;
+  @Input() IsPopup: boolean = true;
+  @Output() CloseDetail: EventEmitter<object> = new EventEmitter();
 
-  constructor(private http: HttpClient, public activeModal: NgbActiveModal) {
+  constructor(private http: HttpClient, @Optional() public activeModal: NgbActiveModal) {
   }
 
   async ngOnInit() : Promise<void>{
     
+  }
+
+  onBackClick(){
+    this.CloseDetail.emit({});
   }
 }
