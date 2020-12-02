@@ -85,7 +85,7 @@
       "querystring": {
         "select": "SELECT b.APP_NO AS AppNo, b.APP_ID AS AppId, a.APP_CUST_ID AS AppCustId, a.APPLICANT_NO AS ApplicantNo, a.CUST_NO AS CustNo, a.CUST_NAME AS CustName, d.DESCR as IdTypeDescr, a.ID_NO as IdNo, a.TAX_ID_NO as TaxIdNo, c.BIRTH_DT as BirthDt, c.MOTHER_MAIDEN_NAME as MotherMaidenName, c.MOBILE_PHN_NO_1 as MobilePhoneNo1, CASE WHEN a.IS_CUSTOMER = 1 THEN 'CUSTOMER' WHEN a.IS_GUARANTOR = 1 THEN 'GUARANTOR' WHEN a.IS_FAMILY = 1 THEN 'FAMILY' WHEN a.IS_SHAREHOLDER = 1 THEN 'SHARE HOLDER' ELSE '' END AS SubjectType",
         "from": "FROM dbo.APP_CUST a WITH (NOLOCK) JOIN dbo.APP b WITH (NOLOCK) ON a.APP_ID = b.APP_ID JOIN dbo.APP_CUST_PERSONAL c WITH (NOLOCK) ON c.APP_CUST_ID=a.APP_CUST_ID LEFT JOIN dbo.V_REF_MASTER d WITH (NOLOCK) on d.REF_MASTER_TYPE_CODE='ID_TYPE' AND d.MASTER_CODE=a.MR_ID_TYPE_CODE ",
-        "where": "WHERE a.APP_CUST_ID = {0}"
+        "where": "WHERE a.APP_CUST_ID = {1}"
       }
     }
   ]
