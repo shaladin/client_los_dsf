@@ -597,7 +597,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         CollateralValueAmt: response["CollateralPriceAmt"],
         CollateralNotes: response["Notes"],
         AssetTaxDt: response["AssetTaxDate"] ? formatDate(response["AssetTaxDate"], 'yyyy-MM-dd', 'en-US') : "",
-        CollateralPrcnt: response["CollateralPrcnt"],
+        // CollateralPrcnt: response["CollateralPrcnt"],
         // IsMainCollateral: this.appCollateralObj.IsMainCollateral,
         // ManufacturingYear: this.appCollateralObj.ManufacturingYear,
         // RowVersionCollateral: this.appCollateralObj.RowVersion,

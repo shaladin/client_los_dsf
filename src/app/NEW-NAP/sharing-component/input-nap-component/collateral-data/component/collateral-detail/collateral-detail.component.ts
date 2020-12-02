@@ -506,7 +506,7 @@ export class CollateralDetailComponent implements OnInit {
           CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
           CollateralNotes: this.appCollateralObj.CollateralNotes,
           AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
-          CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
+          // CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
           IsMainCollateral: this.appCollateralObj.IsMainCollateral,
           ManufacturingYear: this.appCollateralObj.ManufacturingYear,
           RowVersionCollateral: this.appCollateralObj.RowVersion,
@@ -522,6 +522,12 @@ export class CollateralDetailComponent implements OnInit {
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
           SelfOwner: (this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
         });
+
+        if(!IsExisting){
+          this.AddCollForm.patchValue({
+            CollateralPrcnt: this.appCollateralObj.CollateralPrcnt
+          });
+        }
 
         if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
           this.AddCollForm.patchValue({
