@@ -150,7 +150,7 @@ export class CollateralAddEditComponent implements OnInit {
     FullAssetCode: ['', [Validators.required]],
     FullAssetName: ['', [Validators.required]],
     AssetCategoryCode: [''],
-    CollateralValueAmt: ['', [Validators.required, Validators.min(1)]],
+    CollateralValueAmt: [0, [Validators.required, Validators.min(1)]],
     Notes: [''],
 
     SelfOwner: [false],
@@ -166,7 +166,7 @@ export class CollateralAddEditComponent implements OnInit {
 
     LocationAddrType: [''],
 
-    CollPercentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+    CollPercentage: [0, [Validators.required, Validators.min(1), Validators.max(100)]],
     CollateralPortionAmt: [0],
     OutstandingCollPrcnt: [0],
     items: this.fb.array([])
@@ -868,13 +868,13 @@ export class CollateralAddEditComponent implements OnInit {
     const currCollPrcnt = this.AddCollForm.controls["CollPercentage"].value;
     const collValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
 
-    if(fullAssetCode && assetType && serialNo1 && collValueAmt && currCollPrcnt){
+    if(fullAssetCode && assetType && serialNo1){
       this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
         (response) => {
           var outCollPrcnt = 100;
           if(response){
             if(response["CollateralPrcnt"]){
-              outCollPrcnt = response["CollateralPrcnt"]; 
+              outCollPrcnt -= response["CollateralPrcnt"]; 
             }
           }
           outCollPrcnt -= currCollPrcnt;

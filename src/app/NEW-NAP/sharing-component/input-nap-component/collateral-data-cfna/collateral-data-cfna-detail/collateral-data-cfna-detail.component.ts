@@ -76,12 +76,12 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     MrCollateralConditionCode: ['', Validators.required],
     MrCollateralUsageCode: ['', Validators.required],
     CollateralStat: ['NEW', Validators.required],
-    CollateralValueAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    CollateralValueAmt: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
     AssetTypeCode: ['', Validators.required],
     AssetCategoryCode: ['', Validators.required],
     AssetTaxCode: [''],
     CollateralNotes: [''],
-    CollateralPrcnt: ['', [Validators.required, Validators.max(100)]],
+    CollateralPrcnt: [0, [Validators.required, Validators.max(100)]],
     IsMainCollateral: true,
     ManufacturingYear: ['', Validators.pattern("^[0-9]*$")],
     CollateralNo: [''],
@@ -561,13 +561,13 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
     const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
 
-    if(fullAssetCode && assetType && serialNo1 && currCollPrcnt && currCollValue){
+    if(fullAssetCode && assetType && serialNo1){
       this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
         (response) => {
           var outCollPrcnt = 100;
           if(response){
             if(response["CollateralPrcnt"]){
-              outCollPrcnt = response["CollateralPrcnt"]; 
+              outCollPrcnt -= response["CollateralPrcnt"]; 
             }
           }
           outCollPrcnt -= currCollPrcnt;
@@ -613,8 +613,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         SelfOwner: response["MrOwnerRelationshipCode"] == "SELF" ? true : false
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
-
-      this.collateralPortionHandler();
 
       for (var i = 0; i < this.items.controls.length; i++) {
         var formGroupItem = this.items.controls[i] as FormGroup;
@@ -681,6 +679,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AddCollForm.patchValue({
         CollateralStat: CommonConstant.AssetStatExisting
         });
+
+      this.collateralPortionHandler();
     }
     else {
       if (this.mode == "edit") {

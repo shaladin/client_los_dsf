@@ -82,12 +82,12 @@ export class CollateralDetailComponent implements OnInit {
     MrCollateralConditionCode: ['', Validators.required],
     MrCollateralUsageCode: ['', Validators.required],
     CollateralStat: ['NEW', Validators.required],
-    CollateralValueAmt: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    CollateralValueAmt: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
     AssetTypeCode: ['', Validators.required],
     AssetCategoryCode: ['', Validators.required],
     AssetTaxCode: [''],
     CollateralNotes: [''],
-    CollateralPrcnt: ['', [Validators.required, Validators.max(100)]],
+    CollateralPrcnt: [0, [Validators.required, Validators.max(100)]],
     IsMainCollateral: true,
     ManufacturingYear: ['', [Validators.pattern("^[0-9]*$"), Validators.required]],
     CollateralNo: [''],
@@ -170,11 +170,11 @@ export class CollateralDetailComponent implements OnInit {
 
   SetInputLookupCollExisting(){
     this.inputLookupExistColl = new InputLookupObj();
-    this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.inputLookupExistColl.urlEnviPaging = environment.losUrl;
-    this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
-    this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
+    this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
+    this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
   }
 
@@ -570,13 +570,13 @@ export class CollateralDetailComponent implements OnInit {
     const currCollPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
     const currCollValue = this.AddCollForm.controls["CollateralValueAmt"].value;
 
-    if (fullAssetCode && assetType && serialNo1 && currCollValue && currCollPrcnt) {
+    if (fullAssetCode && assetType && serialNo1) {
       await this.http.post(URLConstant.GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral, { FullAssetCode: fullAssetCode, AssetTypeCode: assetType, SerialNo1: serialNo1 }).toPromise().then(
         (response) => {
           var outCollPrcnt = 100;
           if (response) {
             if (response["CollateralPrcnt"]) {
-              outCollPrcnt = response["CollateralPrcnt"];
+              outCollPrcnt -= response["CollateralPrcnt"];
             }
           }
           outCollPrcnt -= currCollPrcnt;
