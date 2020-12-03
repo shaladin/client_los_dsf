@@ -1,7 +1,11 @@
 <div class="modal-header">
     <h4 class="modal-title" translate>{{CustomerTitle}} Detail</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
-    <span aria-hidden="true">&times;</span>
+
+    <button *ngIf="IsPopup" type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <button *ngIf="!IsPopup" type="button" class="btn btn-raised btn-warning mr-1 mb-0" (click)="onBackClick()">
+        <i class="fa fa-arrow-left mr-1"></i> <span translate>Back</span>
     </button>
 </div>
 <div class="modal-body">

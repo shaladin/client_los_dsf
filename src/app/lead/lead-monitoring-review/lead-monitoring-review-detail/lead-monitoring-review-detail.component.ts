@@ -47,7 +47,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
