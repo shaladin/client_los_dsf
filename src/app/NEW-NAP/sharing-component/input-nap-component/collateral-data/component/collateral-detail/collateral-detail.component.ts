@@ -124,7 +124,7 @@ export class CollateralDetailComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   appAssetId: any = 0;
   isDiffWithRefAttr: boolean;
-
+  AppCustData: AppCustObj;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -172,7 +172,7 @@ export class CollateralDetailComponent implements OnInit {
     this.inputLookupExistColl = new InputLookupObj();
     this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupExistColl.urlEnviPaging = environment.losUrl;
+    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
@@ -339,6 +339,7 @@ export class CollateralDetailComponent implements OnInit {
   async GetAppCustByAppId() {
     await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
       (response) => {
+        this.AppCustData = response;
         this.AppCustId = response.AppCustId;
       });
   }
@@ -681,21 +682,36 @@ export class CollateralDetailComponent implements OnInit {
     this.inputLookupExistColl.nameSelect = "";
     this.inputLookupExistColl.jsonSelect = { FullAssetName: "" };
 
-    let criteriaList = new Array();
+    // let criteriaList = new Array();
+    // this.criteriaObj = new CriteriaObj();
+    // this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    // this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
+    // this.criteriaObj.value = AssetTypeCode;
+    // criteriaList.push(this.criteriaObj);
+
+    // // tambah filter cust no
+    // this.criteriaObj = new CriteriaObj();
+    // this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    // this.criteriaObj.propName = 'ACU.APP_CUST_ID';
+    // this.criteriaObj.value = this.AppCustId.toString();
+    // criteriaList.push(this.criteriaObj);
+
+    this.criteriaList = new Array();
     this.criteriaObj = new CriteriaObj();
     this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    this.criteriaObj.propName = 'AC.ASSET_TYPE_CODE';
-    this.criteriaObj.value = AssetTypeCode;
-    criteriaList.push(this.criteriaObj);
+    this.criteriaObj.propName = 'CU.CUST_NO';
+    if(this.AppCustData.CustNo){
+      this.criteriaObj.value = this.AppCustData.CustNo;
+      this.criteriaList.push(this.criteriaObj);
+      this.inputLookupExistColl.addCritInput = this.criteriaList;
+    }
+    else{
+      this.criteriaObj.value = "null";
+      this.criteriaList.push(this.criteriaObj);
+      this.inputLookupExistColl.addCritInput = this.criteriaList;
+    }
 
-    // tambah filter cust no
-    this.criteriaObj = new CriteriaObj();
-    this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    this.criteriaObj.propName = 'ACU.APP_CUST_ID';
-    this.criteriaObj.value = this.AppCustId.toString();
-    criteriaList.push(this.criteriaObj);
-
-    this.inputLookupExistColl.addCritInput = criteriaList;
+    this.inputLookupExistColl.addCritInput = this.criteriaList;
     this.inputLookupExistColl.isReady = true;
     if(IsChange) this.ucLookupCollateralExisting.setAddCritInput();
     //#endregion
