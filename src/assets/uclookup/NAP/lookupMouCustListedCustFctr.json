@@ -19,8 +19,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT MC.CUST_NO AS CustNo, MC.CUST_NAME AS CustName, MC.MR_CUST_TYPE_CODE AS MrCustTypeCode, MC.MOU_CUST_ID AS MouCustId",
-    "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.MOU_CUST_LISTED_CUST_FCTR MC WITH(NOLOCK) ON MC.MOU_CUST_ID = A.MOU_CUST_ID"
+    "name": "lookupMouCustListedCustFctr"
   },
   "headerList": [
     {

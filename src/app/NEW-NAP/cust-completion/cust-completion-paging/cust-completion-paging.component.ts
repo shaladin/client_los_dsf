@@ -57,8 +57,7 @@ export class CustCompletionPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      this.router.navigate(["Nap/CustCompletion/Detail"], {queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId} });
+      AdInsHelper.RedirectUrl(this.router,["Nap/CustCompletion/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
     }
   }
-
 }

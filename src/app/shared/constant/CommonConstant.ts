@@ -186,6 +186,7 @@ export class CommonConstant {
   public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
   public static RefProdCompntCodeCrApvResExpDays = "CR_APV_RES_EXP_DAYS";
   public static CollateralNeeded = "COLLATERALNEEDED";
+  public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
@@ -255,6 +256,9 @@ export class CommonConstant {
   public static DownPaymentTypeAmt = "AMT";
   public static DownPaymentTypePrcnt = "PRCNT";
 
+  //PAYMENT TYPE
+  public static PaymentTypeAmt = "AMT";
+  public static PaymentTypePrcnt = "PRCNT";
 
   //DEVIATION TYPE
   public static DeviationTypeManualDev = "MANUAL_DEV"
@@ -276,6 +280,7 @@ export class CommonConstant {
   public static AddrTypePrevJob = "PREV_JOB";
   public static AddrTypeOthBiz = "OTHERBIZ";
   public static AddrTypeCompany = "COMPANY";
+  public static AddrTypeEmergency = "EMERGENCY";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -471,6 +476,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   public static RefMasterTypeCodeSalutation = "SALUTATION";
+  public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
 
   //RATE TYPE
   public static RateTypeFlat = "FLT";

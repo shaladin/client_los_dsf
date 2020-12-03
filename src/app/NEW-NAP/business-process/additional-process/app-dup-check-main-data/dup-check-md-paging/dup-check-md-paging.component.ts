@@ -63,7 +63,6 @@ export class DupCheckMdPagingComponent implements OnInit {
       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
     */
-    
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/SubjList"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheckMainData/SubjList"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
   }
 }

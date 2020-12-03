@@ -61,7 +61,7 @@ export class NapDetailFormComponent implements OnInit {
     
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -100,7 +100,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FCTR } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.FCTR });
   }
 
   MakeViewReturnInfoObj() {

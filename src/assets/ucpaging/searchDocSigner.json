@@ -34,11 +34,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT AP.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.CUST_NAME AS CustName, AG.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode, AP.BIZ_TEMPLATE_CODE as BizTemplateCode",
-        "from": "FROM dbo.APP AP WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID",
-        "where": "WHERE AP.BIZ_TEMPLATE_CODE = N'{0}'"
-    },
+  "querystring": {
+    "name": "searchDocSigner"
+  },
     "headerList": [
         {
             "type": "sort",

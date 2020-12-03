@@ -123,8 +123,8 @@ export class BankSectionComponent implements OnInit {
     }) 
 
     if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
+      var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
       for (let i = 0; i < BankAccAndStmntObj.AppCustBankStmntObjs.length; i++) {
-        var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
         bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.AppCustBankStmntObjs[i]));
       }
     }
@@ -144,6 +144,11 @@ export class BankSectionComponent implements OnInit {
 
     this.InputLookupBankObj.nameSelect = "";
     this.InputLookupBankObj.jsonSelect = {BankName: ""};
+
+    // reset bank statement
+    var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
+    bankStmnObjs.reset();
+    while (bankStmnObjs.length !== 0) bankStmnObjs.removeAt(0)
   }
 
   FormValidity(IsDetail: boolean, IsFirstInit: boolean = false) {

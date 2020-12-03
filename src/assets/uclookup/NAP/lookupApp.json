@@ -35,8 +35,7 @@
       }
     ],
     "querystring": {
-      "select": "SELECT a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.APP_ID AS AppId, a.APP_NO AS AppNo, a.MOU_CUST_ID AS MouCustId, a.LEAD_ID AS LeadId, a.CURR_CODE AS CurrCode, a.LOB_CODE As LobCode, a.REF_PROD_TYPE_CODE AS RefProdTypeCode, a.TENOR AS Tenor, a.NUM_OF_INST AS NumOfInst, a.PAY_FREQ_CODE AS PayFreqCode, a.MR_FIRST_INST_TYPE_CODE AS MrFirstInstTypeCode, a.NUM_OF_ASSET AS NumOfAsset, a.MR_APP_SOURCE_CODE AS MrAppSourceCode, a.MR_WOP_CODE AS MrWopCode, a.SALES_OFFICER_NO AS SalesOfficerNo, a.MR_CUST_NOTIFY_OPT_CODE AS MrCustNotifyOptCode, ac.CUST_NAME AS CustName, vrl.BIZ_TMPLT_CODE AS BizTmpltCode",
-      "from": "FROM dbo.APP a WITH(NOLOCK) JOIN dbo.APP_CUST ac WITH(NOLOCK) ON a.APP_ID = ac.APP_ID JOIN dbo.V_REF_LOB vrl WITH(NOLOCK) ON a.LOB_CODE = vrl.LOB_CODE"
+      "name": "lookupApp"
     },
     "headerList": [
         {
@@ -104,4 +103,3 @@
     "propertyId": "AppNo",
     "propertyName": "AppNo"
   }
-  

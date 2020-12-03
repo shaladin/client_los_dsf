@@ -19,9 +19,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT ASSET_ACCESSORY_CODE AS AssetAccessoryCode, ASSET_ACCESSORY_NAME AS AssetAccessoryName, atp.ASSET_TYPE_CODE AS AssetTypeCode",
-    "from": "FROM dbo.ASSET_ACCESSORY aa WITH(NOLOCK) JOIN dbo.ASSET_TYPE atp ON aa.ASSET_TYPE_ID = atp.ASSET_TYPE_ID",
-    "where":"WHERE aa.IS_ACTIVE = 1"
+    "name": "lookupAcc"
   },
   "headerList": [
     {

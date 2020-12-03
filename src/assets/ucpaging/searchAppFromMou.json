@@ -53,11 +53,9 @@
       "placeholder": "Placeholder"
     }
   ],
-    "querystring": {
-        "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.CUST_NAME AS CustName, MC.MOU_CUST_DT AS MouCustDt, RM.DESCR AS MouTypeDescr, MC.MOU_STAT AS MouStat, MC.MOU_CUST_ID AS MouCustId",
-        "from": "FROM DBO.MOU_CUST MC WITH(NOLOCK) JOIN V_REF_MASTER RM WITH(NOLOCK) ON MC.MR_MOU_TYPE_CODE = RM.MASTER_CODE AND RM.REF_MASTER_TYPE_CODE = 'MOU_TYPE'",
-        "where": "WHERE MC.MOU_STAT = N'ACT'"
-    },
+  "querystring": {
+    "name": "searchAppFromMou"
+  },
     "headerList": [
         {
             "type": "sort",

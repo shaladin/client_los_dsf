@@ -12,6 +12,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { HttpClient } from '@angular/common/http';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-nap-add',
@@ -224,7 +225,8 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/CFNA/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": response["AppId"] });
+        
       });
   }
 

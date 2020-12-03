@@ -1,0 +1,36 @@
+<div class="px-3 pb-3">
+  <lib-ucSubsection [id]="'guaAllId'" [title]="'Guarantor'" [panel]="'guaAll'"> </lib-ucSubsection>
+  <div id="guaAll">
+    <table class="table table-responsive-md table-hover" matSort>
+        <thead>
+          <tr class="table-header">
+            <th class="text-left"><span translate name="GuarantorName">Guarantor Name</span></th>
+            <th class="text-left"><span translate name="MrGuarantorTypeCode">Guarantor Type</span></th>
+            <th class="text-left"><span translate name="MrCustRelationshipDescr">Customer Relationship</span></th>
+            <th class="text-center"><span translate name="MobilePhnNo1">Mobile Phone</span></th>
+            <th class="text-center"><span translate name="ViewPersonalDetail">View</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="listAppGuarantorPersonal?.length == 0 && listAppGuarantorCompany?.length == 0">
+            <td class="text-center" colspan="100%">No Data Available</td>
+          </tr>
+          <tr *ngFor="let item of listAppGuarantorCompany; let i = index">
+            <td class="text-left">{{ item.GuarantorName }}</td>
+            <td class="text-left">{{ item.MrGuarantorTypeCode }}</td>
+            <td class="text-left">{{ item.MrCustRelationshipDescr }}</td>
+            <td class="text-center">{{ item.MobilePhnNo1 }}</td>
+            <td class="text-center"><a (click)="ViewGuarantorCompany(item.AppGuarantorId)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+          </tr>
+          <tr *ngFor="let item of listAppGuarantorPersonal; let i = index">
+            <td class="text-left">{{ item.GuarantorName }}</td>
+            <td class="text-left">{{ item.MrGuarantorTypeCode }}</td>
+            <td class="text-left">{{ item.MrCustRelationshipDescr }}</td>
+            <td class="text-center">{{ item.MobilePhnNo }}</td>
+            <td class="text-center"><a (click)="ViewGuarantorPersonal(item.AppGuarantorId)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+
+</div>

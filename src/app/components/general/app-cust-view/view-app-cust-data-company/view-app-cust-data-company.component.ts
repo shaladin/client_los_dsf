@@ -10,6 +10,7 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalD
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { environment } from 'environments/environment';
 export class ViewAppCustDataCompanyComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() IsNAPVersionCompletion: boolean = true;
   viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
   viewJobDataProfObj: string;
   viewJobDataEmpObj: string;
@@ -30,6 +32,7 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
 
+  appCustObj: AppCustObj;
   appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
   appCustBankAccObjs: Array<AppCustBankAccObj>;
   appCustSocmedObjs: Array<AppCustSocmedObj>;
@@ -41,8 +44,10 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void>{
+    //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
+    if(this.IsNAPVersionCompletion) return;
     await this.getCustData();
-    this.arrValue.push(this.appId);
+    this.arrValue.push(this.appCustObj.AppCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
@@ -58,6 +63,7 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
     var reqObj = {AppId: this.appId}
     await this.http.post(URLConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response) => {
+        this.appCustObj = response["AppCustObj"];
         this.appCustAddrForViewObjs = response["AppCustAddrObjs"];
         this.appCustCompanyMgmntShrholderObjs = response["AppCustCompanyMgmntShrholderObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];

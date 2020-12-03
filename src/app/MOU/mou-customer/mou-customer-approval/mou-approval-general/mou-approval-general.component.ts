@@ -10,6 +10,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ApvViewInfo } from 'app/shared/model/ApvViewInfo.Model';
 
 @Component({
   selector: 'app-mou-approval-general',
@@ -22,7 +23,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   taskId: number;
   instanceId: number;
   MouType : string = CommonConstant.GENERAL;
-  inputObj: any;
+  inputObj: ApvViewInfo;
   link: any;
   resultData: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -35,13 +36,11 @@ export class MouApprovalGeneralComponent implements OnInit {
         this.MouCustId = params["MouCustId"];
       }
 
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
+      this.inputObj = new ApvViewInfo();
+      this.inputObj.taskId = params["TaskId"];
+      this.inputObj.instanceId =  params["InstanceId"];
+      this.inputObj.approvalBaseUrl = environment.ApprovalR3Url;
 
-      this.inputObj = obj;
     });
   }
 
@@ -74,11 +73,11 @@ export class MouApprovalGeneralComponent implements OnInit {
 
   onApprovalSubmited(event) {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Mou/Cust/Approval"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
   }
 
   onCancelClick() {
-    this.router.navigate(["/Mou/Cust/Approval"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
   }
   GetCallBack(event) {
     if (event.Key == "customer") {

@@ -50,9 +50,9 @@ export class EmergencyContactTabComponent implements OnInit {
     IdExpiredDt: [''],
     BirthDt: ['', Validators.required],
     MrCustRelationshipCode: ['', Validators.required],
-    MobilePhnNo1: ['', Validators.required],
-    MobilePhnNo2: [''],
-    Email: [''],
+    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
+    Email: ['', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
     CopyAddrFrom: ['']
   })
 
@@ -196,10 +196,8 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   removeSpouse() {
-    let SpouseRelationship = this.MrCustRelationshipObj[0]
-    if (!this.IsMarried && SpouseRelationship.Key == "SPOUSE") {
-      this.MrCustRelationshipObj = this.MrCustRelationshipObj.slice(1, this.MrCustRelationshipObj.length);
-    }
+    let idxSpouse = this.MrCustRelationshipObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+    this.MrCustRelationshipObj.splice(idxSpouse, 1)
   }
 
   copyCustomerEvent(event) {

@@ -94,5 +94,9 @@ export class ExceptionConstant {
     public static NO_SIGNER_AVAILABLE = "No Signer Available, Please Input Signer at Document Signer";
     public static MUST_INPUT_SPOUSE_DATA = "Please Input Spouse Data in Family!";
     public static CANT_HAVE_THE_SAME_GUARANTOR_MEMBER = " cannot have the same name as Guarantor No ";
+    public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
+    public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
+    public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
+
 }
 

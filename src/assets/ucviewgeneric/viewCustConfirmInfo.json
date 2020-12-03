@@ -62,9 +62,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AGR.CUST_NO AS CustNo, AGR.CUST_NAME AS CustName, AGR.AGRMNT_NO AS AgrmntNo, AGR.AGRMNT_ID AS AgrmntId, A.LEAD_ID AS LeadId, L.LEAD_NO AS LeadNo, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE as BizTemplateCode",
-        "from": "FROM dbo.AGRMNT AGR WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON A.APP_ID = AGR.APP_ID LEFT JOIN dbo.LEAD L ON L.LEAD_ID = AGR.LEAD_ID",
-        "where": "WHERE AGR.AGRMNT_ID = {0}"
+        "name": "viewCustConfirmInfo"
       }
     }
   ]

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, FormGroup, ControlContainer, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroupDirective, ControlContainer, Validators } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
@@ -22,8 +22,8 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -52,20 +52,17 @@ export class CustMainDataComponent implements OnInit {
   isIncludeCustRelation: boolean = false;
   MrCustTypeCode: string = CommonConstant.CustTypePersonal;
   subjectTitle: string = 'Customer';
+  MaritalStatLookup: string = "";
   MaxDate: Date;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputLookupCustGrpObj: InputLookupObj = new InputLookupObj();
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   legalAddrObj: AddrObj = new AddrObj();
-  CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  GenderObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  MaritalStatObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
   MrCustRelationshipCodeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  CompanyTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   CustModelObj: Array<KeyValueObj> = new Array();
-  JobPositionObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
   custDataObj: CustDataObj;
@@ -76,6 +73,11 @@ export class CustMainDataComponent implements OnInit {
   rowVersionAppCustCompany: string[];
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
+  readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
+  readonly MasterCustType = CommonConstant.RefMasterTypeCodeCustType;
+  readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;
+  readonly MasterCompanyType = CommonConstant.RefMasterTypeCodeCompanyType;
+  readonly MasterJobPosition = CommonConstant.RefMasterTypeCodeJobPosition;
 
   constructor(
     private fb: FormBuilder,
@@ -91,7 +93,7 @@ export class CustMainDataComponent implements OnInit {
   CustMainDataForm = this.fb.group({
     MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
-    MrCustRelationshipCode: ['', Validators.maxLength(50)],
+    MrCustRelationshipCode: ['',Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -144,7 +146,7 @@ export class CustMainDataComponent implements OnInit {
       case CommonConstant.CustMainDataModeCust:
         this.isIncludeCustRelation = false;
         this.custDataObj.IsCustomer = true;
-        this.subjectTitle = 'Customer';
+        this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
@@ -152,24 +154,41 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsGuarantor = true;
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeFamily:
         this.isIncludeCustRelation = true;
         this.custDataObj.IsFamily = true;
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
         this.isIncludeCustRelation = true;
         this.custDataObj.IsShareholder = true;
         this.subjectTitle = 'Shareholder';
         this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+        this.GetAppCustMainDataByAppId();
         break;
       default:
         this.isIncludeCustRelation = false;
-        this.subjectTitle = 'Customer';
+        this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
+  }
+
+  AppCustData: AppCustObj = new AppCustObj();
+  GetAppCustMainDataByAppId() {
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'AppId': this.appId }).subscribe(
+      async (response) => {
+        if (response.AppCustObj) {
+          this.AppCustData = response.AppCustObj;
+        }
+      }
+    );
   }
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
@@ -214,6 +233,19 @@ export class CustMainDataComponent implements OnInit {
     }
   }
 
+  RelationshipChange(relationship: string){
+    let idxMarried = this.DictRefMaster[this.MasterMaritalStat].findIndex(x => x.Key == CommonConstant.MasteCodeMartialStatsMarried);
+
+    if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
+      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
+      this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+    }else{
+      this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
+      if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+    }
+    this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+  }
+
   getCustGrpData(event) {
     this.CustMainDataForm.patchValue({
       CustNo: event.CustNo,
@@ -221,24 +253,23 @@ export class CustMainDataComponent implements OnInit {
     });
   }
 
-  async getRefMaster() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
+  async GetListActiveRefMaster(RefMasterTypeCode: string){
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
       (response) => {
-        this.CustTypeObj = response[CommonConstant.ReturnObj];
-        this.MrCustTypeCode = this.CustTypeObj[0].Key;
-        if (this.inputMode == 'ADD') {
-          this.CustMainDataForm.patchValue({
-            MrCustTypeCode: this.CustTypeObj[0].Key
-          })
-        }
+        this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
       });
-
-    await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: this.MrCustTypeCode }).toPromise().then(
+  }
+  
+  async getRefMaster() {
+    await this.GetListActiveRefMaster(this.MasterCustType);
+    await this.GetListActiveRefMaster(this.MasterGender);
+    await this.GetListActiveRefMaster(this.MasterMaritalStat);
+    await this.GetListActiveRefMaster(this.MasterCompanyType);
+    await this.GetListActiveRefMaster(this.MasterJobPosition);
+    
+    await this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, ReserveField1: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        this.CustMainDataForm.patchValue({
-          MrCustModelCode: this.CustModelObj[0].Key
-        });
       }
     );
 
@@ -247,77 +278,49 @@ export class CustMainDataComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
           let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
-          this.CustMainDataForm.patchValue({
-            MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
-          });
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
       });
 
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
-      (response) => {
-        this.GenderObj = response[CommonConstant.ReturnObj];
-        if (this.GenderObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrGenderCode: this.GenderObj[0].Key
-          });
-        }
-      });
-
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
-      (response) => {
-        this.MaritalStatObj = response[CommonConstant.ReturnObj];
-        if (this.MaritalStatObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrMaritalStatCode: this.MaritalStatObj[0].Key
-          });
-        }
-      });
-
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
-      (response) => {
-        this.CompanyTypeObj = response[CommonConstant.ReturnObj];
-        if (this.CompanyTypeObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrCompanyTypeCode: this.CompanyTypeObj[0].Key
-          });
-        }
-      });
-
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).toPromise().then(
-      (response) => {
-        this.JobPositionObj = response[CommonConstant.ReturnObj];
-        if (this.JobPositionObj.length > 0) {
-          this.CustMainDataForm.patchValue({
-            MrJobPositionCode: this.JobPositionObj[0].Key
-          });
-        }
-      });
-
+    if(this.DictRefMaster[this.MasterCustType].length != 0) await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
     if (this.isIncludeCustRelation) {
-      this.getCustRelationship();
+      await this.getCustRelationship();
     }
   }
 
   getCustRelationship() {
-    var refCustRelObj = {
-      RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
-      (response) => {
-        this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-        if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) this.removeSpouse();
-        if (this.inputMode != "EDIT") this.CustMainDataForm.patchValue({ MrCustRelationshipCode: this.MrCustRelationshipCodeObj[0].Key });
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
+      if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
+        var refCustRelObj = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+          ReserveField1: CommonConstant.CustTypePersonal,
+          RowVersion: ""
+        }
+      } else {
+        var refCustRelObj = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+          ReserveField1: CommonConstant.CustTypeCompany,
+          RowVersion: ""
+        }
       }
-    );
+      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        (response) => {
+          this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
+        }
+      );
+    } else {
+      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
+        async (response) => {
+          this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
+          if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
+        }
+      );
+    }
   }
 
   removeSpouse() {
-    let SpouseRelationship = this.MrCustRelationshipCodeObj[0]
-    if (SpouseRelationship.Key == "SPOUSE") {
-      this.MrCustRelationshipCodeObj = this.MrCustRelationshipCodeObj.slice(1, this.MrCustRelationshipCodeObj.length);
-    }
+    let idxSpouse = this.MrCustRelationshipCodeObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+    this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
   }
 
   getCustMainData() {
@@ -348,9 +351,6 @@ export class CustMainDataComponent implements OnInit {
       this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: custType == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
         (response) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
-          this.CustMainDataForm.patchValue({
-            MrCustModelCode: this.CustModelObj[0].Key
-          });
         }
       );
     }
@@ -366,9 +366,17 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
+      this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
+      this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     } else {
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
+
+      this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
+
       this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
@@ -384,16 +392,22 @@ export class CustMainDataComponent implements OnInit {
     if (this.isIncludeCustRelation) {
       this.getCustRelationship();
       this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+
     }
     else {
       this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+      this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
     }
 
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (custType == CommonConstant.CustTypePersonal) {
         this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
       } else {
         this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
+        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+
       }
     }
 
@@ -404,6 +418,8 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MrIdTypeCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
     this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
@@ -413,12 +429,12 @@ export class CustMainDataComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
@@ -456,7 +472,6 @@ export class CustMainDataComponent implements OnInit {
 
   resetInput(custType: string = CommonConstant.CustTypePersonal) {
     this.CustMainDataForm.reset();
-    let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
     this.CustMainDataForm.patchValue({
       MrCustTypeCode: custType,
       SharePrcnt: 0,
@@ -466,13 +481,14 @@ export class CustMainDataComponent implements OnInit {
     });
     if (custType == CommonConstant.CustTypePersonal) {
       this.CustMainDataForm.patchValue({
-        MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"],
-        MrGenderCode: this.GenderObj[0].Key,
-        MrMaritalStatCode: this.MaritalStatObj[0].Key
+        MrIdTypeCode: "",
+        MrGenderCode: "",
+        MrMaritalStatCode: "",
+        MrCustModelCode: ""
       });
     } else {
       this.CustMainDataForm.patchValue({
-        MrCompanyTypeCode: this.CompanyTypeObj[0].Key
+        MrCompanyTypeCode: ""
       });
     }
 
@@ -532,11 +548,16 @@ export class CustMainDataComponent implements OnInit {
         MotherMaidenName: CustPersonalObj.MotherMaidenName,
         BirthPlace: CustPersonalObj.BirthPlace,
         BirthDt: formatDate(CustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
-        MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode,
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
         Email1: CustPersonalObj.Email1,
       });
-      if (!IsCopyCust) this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+      this.MaritalStatLookup = CustPersonalObj.MrMaritalStatCode;
+      if (!IsCopyCust) {
+        this.CustMainDataForm.patchValue({
+          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode})
+        this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+      }
+      this.RelationshipChange(CustObj.MrCustRelationshipCode);
 
       if (this.inputMode == 'EDIT') {
         this.CustMainDataForm.patchValue({
@@ -718,14 +739,33 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion = this.rowVersionAppCustAddr;
   }
 
+  CekIsCustomer() {
+    if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) {
+      // if (this.CustMainDataForm.controls.CustNo.value == this.AppCustData.CustNo) {
+      //   throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+      // }
+      
+      // Sementara
+      const TempCust1 = this.CustMainDataForm.value.lookupCustomer.value.toLowerCase();
+      const TempCust2 = this.AppCustData.CustName.toLowerCase();
+      if (TempCust1 == TempCust2) {
+        this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
+        return true;
+      }
+    }
+    return false;
+  }
+
   SaveForm() {
+    if(this.CekIsCustomer()) return;
     let max17Yodt = new Date(this.MaxDate);
     let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
     let d2 = new Date(this.MaxDate);
     max17Yodt.setFullYear(d2.getFullYear() - 17);
 
     if (d1 > max17Yodt) {
-      throw this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      return;
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -765,4 +805,17 @@ export class CustMainDataComponent implements OnInit {
   cancel() {
     this.outputCancel.emit();
   }
+
+  // Cek Error invalid
+  // getFormValidationErrors() {
+  //   const invalid = [];
+  //   const controls = this.CustMainDataForm.controls;
+  //   for (const name in controls) {
+  //     if (controls[name].invalid) {
+  //       invalid.push(name);
+  //       console.log(name);
+  //     }
+  //   }
+  //   console.log(invalid);
+  // }
 }

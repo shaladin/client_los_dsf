@@ -52,7 +52,8 @@ import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component
     UclookupgenericComponent,
     UcviewgenericComponent,
     UcgridviewComponent,
-    UcapprovalhistComponent
+    UcapprovalhistComponent,
+    AppInsuranceDetailComponent
   ]
 
 })

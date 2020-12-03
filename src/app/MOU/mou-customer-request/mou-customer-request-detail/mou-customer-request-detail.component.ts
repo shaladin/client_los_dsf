@@ -158,7 +158,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   Back(): void {
-    this.location.back();
+    this.router.navigate(['/Mou/Request/Paging']);
   }
 
   Save(){
@@ -173,7 +173,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response["MouCustId"];
-          this.router.navigate(["/Mou/Detail", this.mouType], { queryParams: { mouCustId: mouCustId }});
+          AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustId });    
         });
     }
     else if(this.pageType == "edit" || this.pageType == "return"){
@@ -181,10 +181,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
-            this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId, mode : "return" }});
+            AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustFormData.MouCustId, mode : "return" });    
           }
           else{
-            this.router.navigate(['/Mou/Detail', this.mouType], { queryParams: { mouCustId: mouCustFormData.MouCustId }});
+            AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustFormData.MouCustId });    
           }
         });
     }

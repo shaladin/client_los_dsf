@@ -13,6 +13,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -274,7 +275,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AdminProcess/DeliveryOrder/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/DeliveryOrder/Paging"], {});
       }
     );
   }

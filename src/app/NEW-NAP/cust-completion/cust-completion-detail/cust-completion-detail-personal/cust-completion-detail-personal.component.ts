@@ -22,8 +22,10 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
+  WfTaskListId: number;
   AppCustPersonalId: number;
   stepIndex: number = 1;
+  BizTemplateCode: string;
   CustModelCode: string;
   IsMarried: boolean = false;
   private stepper: Stepper;
@@ -40,6 +42,15 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Financial": 6,
     "Other": 7,
   }  
+  ValidationMessages = {
+    "Detail": "Please complete required data in tab \"Customer Detail\"",
+    "Address": "Please add Legal & Residence Address in tab \"Address Information\"",
+    "Family": "Please complete required data in tab \"Family\"",
+    "Job": "Please complete required data in tab \"Job Data\"",
+    "Emergency": "Please complete required data in tab \"Emergency Contact\"",
+    "Financial": "Please complete required data in tab \"Financial Data\"",
+    "Other": "Please complete required data in tab \"Other Attribute\"",
+  }
   constructor(
     private http: HttpClient,
     private location: Location,
@@ -52,6 +63,12 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       }
       if (params['AppCustId'] != null) {
         this.AppCustId = params['AppCustId'];
+      }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
       }
     });
   }
@@ -87,7 +104,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   }
   
   Back() {
-    this.location.back();
+    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
   }
 
   EnterTab(type: string) {
@@ -147,9 +164,9 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
-        console.log(this.completionCheckingObj);
         if (this.completionCheckingObj.IsCompleted != true) {
-          this.toastr.warningMessage('Please complete & save followong data first');
+          let errorMsg = typeof this.ValidationMessages[this.completionCheckingObj.InCompletedStep] != 'undefined' ? this.ValidationMessages[this.completionCheckingObj.InCompletedStep] : 'To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep;
+          this.toastr.warningMessage(errorMsg);
           this.EnterTab(this.completionCheckingObj.InCompletedStep);
         }
         else {

@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -102,7 +103,7 @@ export class LeadCancelConfirmComponent implements OnInit {
       this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(["/Lead/Cancel"]);
+          AdInsHelper.RedirectUrl(this.router,["/Lead/Cancel"],{});
         }
       );
     }

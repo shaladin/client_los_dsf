@@ -71,11 +71,9 @@
         "placeholder": "Placeholder"
       }
     ],
-    "querystring": {
-      "select": "SELECT A.ORI_OFFICE_NAME AS OfficeName, A.ORI_OFFICE_CODE AS OfficeCode, A.APP_NO AS AppNo, AC.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.APP_ID AS AppId, AC.MR_CUST_TYPE_CODE AS MrCustTypeCode, WTL.USERNAME AS ClaimBy, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.SLA_COLOR AS SlaColor",
-      "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON a.APP_NO = WTL.TRANSACTION_CODE",
-      "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchNewCreditInvestigation"
+  },
     "orderby": {
         "key": "A.APP_NO", 
         "value": "false"
@@ -236,4 +234,3 @@
       }
     ]
   }
-  

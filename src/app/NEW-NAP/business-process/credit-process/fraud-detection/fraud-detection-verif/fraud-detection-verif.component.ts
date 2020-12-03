@@ -20,6 +20,7 @@ import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 @Component({
@@ -119,7 +120,7 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   cancel() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudDetection/Paging"], { BizTemplateCode: lobCode });
   }
 
   submit() {
@@ -135,7 +136,7 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
         var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-        this.router.navigate(["/Nap/CreditProcess/FraudDetection/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudDetection/Paging"], { "BizTemplateCode": BizTemplateCode });
       });
   }
 

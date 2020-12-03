@@ -58,7 +58,7 @@ export class LeadUpdateComponent implements OnInit {
           response => {
             this.toastr.successMessage(response["Message"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/Lead/LeadUpdate/Paging']);
+              this.router.navigate(['/Lead/LeadUpdate/Paging']);
           });
           }
         );

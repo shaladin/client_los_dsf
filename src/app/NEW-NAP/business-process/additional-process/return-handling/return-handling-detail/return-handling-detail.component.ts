@@ -12,6 +12,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -72,7 +73,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AddProcess/ReturnHandling/Paging"], { queryParams: { BizTemplateCode: this.lobCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/Paging"], { BizTemplateCode: this.lobCode });
       });
   }
 

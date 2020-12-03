@@ -38,9 +38,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.GUARANTOR_NAME AS GuarantorName, A.MR_GUARANTOR_TYPE_CODE AS MrGuarantorTypeCode, AC.MR_COMPANY_TYPE_CODE AS MrCompanyTypeCode, A.MR_CUST_RELATIONSHIP_CODE AS MrCustRelationshipCode, AC.INDUSTRY_TYPE_CODE AS IndustryTypeCode, A.TAX_ID_NO AS TaxIdNo",
-          "from": "FROM APP_GUARANTOR A WITH(NOLOCK) JOIN APP_GUARANTOR_COMPANY AC WITH(NOLOCK) ON A.APP_GUARANTOR_ID=AC.APP_GUARANTOR_ID",
-          "where": "WHERE A.APP_ID = {0}"
+          "name": "viewGuarantorCompanyMainInfo"
         }
       }
     ]

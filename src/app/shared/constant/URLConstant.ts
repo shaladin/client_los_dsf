@@ -12,6 +12,9 @@ export class URLConstant {
     public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
     public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";
 
+
+    // APPROVAL
+    public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/Approval/GetApprovalScreenViewInfo";
     // APP Application
     public static AddApp = environment.losUrl + "/Application/AddApp";
     public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
@@ -29,6 +32,7 @@ export class URLConstant {
     public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
     public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";
     public static CopyCancelledApp = environment.losUrl + "/Application/CopyCancelledApp";
+    public static CopyCancelledAppForMainData = environment.losUrl + "/Application/CopyCancelledAppForMainData";
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
     public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
 
@@ -496,7 +500,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // Vendor
     public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorId";
     public static GetListVendorBankAccByVendorCode = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorCode";
-    public static GetListKeyValueByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
+    public static GetListKeyValueVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
+    public static GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/Vendor/GetListKeyValueActiveByCategoryCodeAndOfficeCode";
     public static GetVendorByVendorCode = environment.FoundationR3Url + "/Vendor/GetVendorByVendorCode";
     public static GetListVendorEmpByVendorId = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorId";
     public static GetListVendorEmpByVendorIdAndPositionCodes = environment.FoundationR3Url + "/VendorEmp/GetListVendorEmpByVendorIdAndPositionCodes";
@@ -653,7 +658,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCustAddrByMrCustAddrType = environment.FoundationR3Url + "/CustAddr/GetCustAddrByMrCustAddrType";
     public static GetCustCompanyContactPersonByCustCompanyId = environment.FoundationR3Url + "/CustCompanyContactPerson/GetCustCompanyContactPersonByCustCompanyId";
     public static GetCustPersonalForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyByCustId";
+    public static GetCustPersonalMainDataForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalMainDataForCopyByCustId";
     public static GetCustCompanyForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyByCustId";
+    public static GetCustCompanyMainDataForCopyByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyMainDataForCopyByCustId";
     public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
     public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
     public static GetListKeyValueMobilePhnByAppId = environment.losUrl + "/AppCust/GetListKeyValueMobilePhnByAppId";
@@ -732,7 +739,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     //CUST DATA COMPANY
     public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
     public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
+    public static GetCustDataPersonalForViewByAppCustId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppCustId";
     public static GetCustDataCompanyForViewByAppId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppId";
+    public static GetCustDataCompanyForViewByAppCustId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppCustId";
     public static GetAppCustCompanyByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyByAppCustId";
     public static GetAppCustCompanyContactPersonByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyContactPersonByAppCustId";
     public static AddOrEditAppCustCompanyContactPerson = environment.losUrl + "/AppCust/AddOrEditAppCustCompanyContactPerson";
@@ -821,6 +830,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListNegativeCollateralByAppId = environment.losUrl + "/AppCollateral/GetListNegativeCollateralByAppId";
     public static GetListExistingAppCollateralWithInsurance = environment.losUrl + "/AppCollateral/GetListExistingAppCollateralWithInsurance";
     public static GetAppCollateralByAppAssetId = environment.losUrl + "/AppCollateral/GetAppCollateralByAppAssetId";
+    public static GenerateAppCollateralAttr = environment.losUrl + "/AppCollateral/GenerateAppCollateralAttr";
 
     // App Collateral Suppl Emp
     public static GetListAppAssetSupplEmpByAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByAppAssetId";

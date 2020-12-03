@@ -21,6 +21,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -155,7 +156,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Lead/FraudVerif/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Lead/FraudVerif/Paging"],{});
       });
   }
 
@@ -169,7 +170,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Lead/FraudVerif/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Lead/FraudVerif/Paging"],{});
       });
   }
 
@@ -183,7 +184,6 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
   backHandler() {
-    this.router.navigate(['/Lead/FraudVerif/Paging']);
-
+    AdInsHelper.RedirectUrl(this.router,["/Lead/FraudVerif/Paging"],{});
   }
 }

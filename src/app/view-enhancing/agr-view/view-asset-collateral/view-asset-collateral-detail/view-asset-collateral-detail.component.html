@@ -1,0 +1,149 @@
+<div class="modal-header">
+  <h4 class="modal-title">Asset Detail</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <lib-ucSubsection [id]="'SupplierInfoId'" [title]="'SUPPLIER INFO'" [panel]="'SupplierInfoSection'"></lib-ucSubsection>
+  <div id="SupplierInfoSection">
+    <div class="col-md-12">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Supplier Branch Name</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.SupplName}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Branch Manager</label>
+          <label class="col-md-9 adInsLabel">{{branchManagerName == null ? '-' : branchManagerName}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Sales Person Name</label>
+          <label class="col-md-9 adInsLabel">{{salesName == null ? '-' : salesName}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Admin Head</label>
+          <label class="col-md-9 adInsLabel">{{adminHeadName == null ? '-' : adminHeadName}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'AssetInfoId'" [title]="'ASSET INFO'" [panel]="'AssetInfoSection'"></lib-ucSubsection>
+  <div id="AssetInfoSection">
+    <div class="col-md-12">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Asset Name</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.FullAssetName}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Down Payment</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.DownPaymentAmt | number:'.2':'en-US'}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Asset Price</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.AssetPriceAmt | number:'.2':'en-US'}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Asset Usage</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.MrAssetUsageCode}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.MrAssetConditionCode}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Chassis No</label>
+          <label class="col-md-9 adInsLabel">{{ appAsset ? appAsset[appAsset.ChassisNo] : ''}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>License Plate No</label>
+          <label class="col-md-9 adInsLabel">{{appAsset ? appAsset[appAsset.LicensePlateNo] : ''}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Engine No</label>
+          <label class="col-md-9 adInsLabel">{{appAsset ? appAsset[appAsset.EngineNo] : ''}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.ManufacturingYear}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Notes</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.AssetNotes}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'AssetUserId'" [title]="'ASSET USER'" [panel]="'AssetUserSection'"></lib-ucSubsection>
+  <div id="AssetUserSection">
+    <div class="col-md-12">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>User Name</label>
+        <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.UserName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>User Relationship</label>
+        <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.MrUserRelationshipCode}}</label>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'AssetLocationId'" [title]="'ASSET LOCATION'" [panel]="'AssetLocationSection'"></lib-ucSubsection>
+  <div id="AssetLocationSection">
+    <div class="col-md-12">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Address</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationAddr}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Zip Code</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationZipcode}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>RT / RW</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationAreaCode4}} / {{appCollateralRegistration?.LocationAreaCode3}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Kelurahan</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationAreaCode2}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <!-- <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>RW</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration.LocationAreaCode3}}</label>
+        </div> -->
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Kecamatan</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationAreaCode1}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>City</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationCity}}</label>
+        </div>
+      </div>
+      <!-- <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>City</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration.LocationCity}}</label>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+</div>

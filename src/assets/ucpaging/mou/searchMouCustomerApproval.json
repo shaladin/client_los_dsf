@@ -69,11 +69,9 @@
             "datatype": "date"
         }
     ],
-    "querystring": {
-        "select": "SELECT TL.TASK_ID AS TaskId, TL.INSTANCE_ID AS InstanceId, TL.APV_REQ_ID AS ApvReqId, TL.TRX_NO AS TrxNo, TL.APV_NO AS ApvNo, TL.REQUEST_BY AS RequestBy, TL.REQUEST_DATE AS RequestDate, TL.MAIN_USER_ID AS MainUserId, TL.CURRENT_USER_ID AS CurrentUserId, TL.CATEGORY_CODE AS CategoryCode, A.MOU_CUST_ID AS MouCustId, A.MOU_CUST_NO AS MouCustNo, A.MOU_CUST_ID AS MouCustId, A.CUST_NAME AS CustName, A.MOU_CUST_DT AS MouCustDt, A.END_DT AS EndDt, A.PLAFOND_AMT AS PlafondAmt, A.IS_REVOLVING AS IsRevolving, A.MR_MOU_TYPE_CODE AS MouType, A.MOU_STAT AS MouStat, A.REF_NO AS RefNo, A.CUST_NO AS CustNo, WTL.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.V_APV_TASK_LIST AS TL WITH(NOLOCK) JOIN dbo.MOU_CUST A WITH(NOLOCK) ON TL.TRX_NO = A.MOU_CUST_NO JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON A.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = N'MOU_APV'",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchMouCustomerApproval"
+  },
     "headerList": [
         {
             "type": "sort",

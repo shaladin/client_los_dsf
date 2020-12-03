@@ -138,7 +138,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
     else if (this.CustCnfrmObj.IsSkip == true) {
@@ -149,7 +149,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         () => {
           this.toastr.successMessage("Success !");
-          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
           // this.toastr.successMessage(response["message"]);
           // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         });

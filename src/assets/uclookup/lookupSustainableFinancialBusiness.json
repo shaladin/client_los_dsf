@@ -26,10 +26,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT LBPPMS_BIZ_SUSTAIN_ID AS LbppmsBizSustainId, DESCR AS Descr, BI_CODE AS BiCode, LBPP_CODE AS LbppCode",
-        "from": "FROM dbo.LBPPMS_BIZ_SUSTAIN WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupSustainableFinancialBusiness"
+  },
     "headerList": [
         {
             "type": "sort",

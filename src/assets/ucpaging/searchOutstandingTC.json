@@ -71,10 +71,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, AG.AGRMNT_NO AS AgrmntNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.GO_LIVE_DT AS GoLiveDt, AG.OFFICE_NAME AS OfficeName, A.APP_ID AS AppId, AG.AGRMNT_ID AS AgrmntId, AG.PROD_OFFERING_CODE AS ProdOfferingCode, A.BIZ_TEMPLATE_CODE as BizTemplateCode",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID"
-    },
+  "querystring": {
+    "name": "searchOutstandingTC"
+  },
     "headerList": [
         {
             "type": "sort",

@@ -19,9 +19,7 @@
     }
     ],
     "querystring": {
-      "select": "SELECT V.VENDOR_CODE AS VendorCode, V.VENDOR_ID AS VendorId, V.VENDOR_NAME AS VendorName",
-      "from": "FROM dbo.VENDOR V WITH(NOLOCK)",
-      "where" : "WHERE V.MR_VENDOR_CATEGORY_CODE = N'AGENCY_COMPANY' AND V.IS_ACTIVE = 1"
+      "name": "lookupAgency"
     },
     "headerList": [
       {

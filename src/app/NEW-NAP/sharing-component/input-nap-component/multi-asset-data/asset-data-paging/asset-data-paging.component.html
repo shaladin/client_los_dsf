@@ -8,7 +8,6 @@
 <lib-ucSubsection [id]="'assetListId'" [title]="'Asset List'" [panel]="'assetList'">
 </lib-ucSubsection>
 <div id="assetList">
-
   <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
 </div>
 <div *ngIf="listDataAsset.length > 0" class="form-group row">

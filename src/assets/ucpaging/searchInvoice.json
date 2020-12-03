@@ -1,9 +1,8 @@
 {
     "title": "Invoice",
-    "querystring": {
-        "select":"SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId",
-        "from":"FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B ON A.APP_ID = B.APP_ID"
-    },
+  "querystring": {
+    "name": "searchInvoice"
+  },
     "headerList": [
         {
             "type": "sort",

@@ -81,8 +81,7 @@
 
   ],
   "querystring": {
-    "select": "SELECT vApv.APV_NO AS ApvNo, agr.AGRMNT_NO AS AgrmntNo, agr.CUST_NAME AS CustName, agr.PROD_OFFERING_NAME AS ProdOfferingName, vApv.TRX_NO AS TrxNo, vApv.REQUEST_BY AS RequestBy, vApv.MAIN_USER_ID AS MainUserId, vApv.CURRENT_USER_ID AS CurrentUserId, vApv.REQUEST_DATE AS RequestDate, vApv.TASK_ID AS TaskId, vApv.INSTANCE_ID AS InstanceId, AGRMNT_NO AS AgrmntNo, AGRMNT_ID AS AgrmntId, agr.BIZ_TEMPLATE_CODE as BizTemplateCode, agr.PROD_OFFERING_CODE AS ProdOfferingCode, agr.PROD_OFFERING_VERSION AS ProdOfferingVersion",
-    "from": "FROM dbo.V_APV_TASK_LIST vApv WITH(NOLOCK) LEFT JOIN dbo.AGRMNT agr WITH(NOLOCK) ON vApv.TRX_NO = agr.AGRMNT_NO"
+    "name": "searchOfferingValidityCheckingAndApproval"
   },
   "headerList": [
     {

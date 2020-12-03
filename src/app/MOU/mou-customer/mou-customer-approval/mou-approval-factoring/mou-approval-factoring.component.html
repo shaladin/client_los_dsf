@@ -1,69 +1,73 @@
 <div class="row text-left">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-header header-title" style="margin-bottom: 10px;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - Factoring
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-                <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - Factoring
+              </h4>
+            </div>
+          </div>
+        </div>
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
 
-                <div class="px-3">
-                    <mat-tab-group>
-                      <mat-tab label="MOU Detail">
-                        <ng-template matTabContent>
-                          <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Fee">
-                        <ng-template matTabContent>
-                          <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Collateral">
-                        <ng-template matTabContent>
-                          <app-mou-view-addcoll [MouCustId]="MouCustId"></app-mou-view-addcoll>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Term and Condition">
-                        <ng-template matTabContent>
-                          <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Document">
-                        <ng-template matTabContent>
-                          <app-mou-view-doc></app-mou-view-doc>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Survey">
-                        <ng-template matTabContent>
-                          <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
-                        <ng-template matTabContent>
-                          <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
-                        </ng-template>
-                      </mat-tab>
-                      <!-- <mat-tab label="Review">
+        <div class="px-3">
+          <mat-tab-group>
+            <mat-tab label="MOU Detail">
+              <ng-template matTabContent>
+                <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Fee">
+              <ng-template matTabContent>
+                <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Collateral">
+              <ng-template matTabContent>
+                <app-mou-view-addcoll [MouCustId]="MouCustId"></app-mou-view-addcoll>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Term and Condition">
+              <ng-template matTabContent>
+                <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Document">
+              <ng-template matTabContent>
+                <app-mou-view-doc></app-mou-view-doc>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Survey">
+              <ng-template matTabContent>
+                <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
+              <ng-template matTabContent>
+                <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Analysis Result">
+              <ng-template matTabContent>
+                <app-mou-view-analysis-result [inputObj]="inputObj"></app-mou-view-analysis-result>
+              </ng-template>
+            </mat-tab>
+            <!-- <mat-tab label="Review">
                         <ng-template matTabContent>
                           
                         </ng-template>
                       </mat-tab> -->
-                    </mat-tab-group>
-                </div>
-
-                <br>
-                <div>
-                <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()"
-                    (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
-                </lib-ucapproval>
-                </div>
-            </div>
+          </mat-tab-group>
         </div>
+        <br>
+        <div>
+          <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()"
+            (nextTask)="onAvailableNextTask($event)" (result)="onApprovalSubmited($event)">
+          </lib-ucapproval>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

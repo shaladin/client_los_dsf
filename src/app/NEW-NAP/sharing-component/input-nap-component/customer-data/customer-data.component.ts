@@ -150,7 +150,6 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.title = "Legal Address";
     this.inputAddressObjForLegal.showAllPhn = false;
@@ -416,6 +415,8 @@ export class CustomerDataComponent implements OnInit {
       }
     }
 
+    appCustObj.IsCustomer = true;
+    
     return appCustObj;
   }
 

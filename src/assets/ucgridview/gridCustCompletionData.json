@@ -15,6 +15,12 @@
         {
             "type": "label",
             "position": "left",
+            "label": "Customer Type",
+            "name": "MrCustTypeDescr"
+        },
+        {
+            "type": "label",
+            "position": "left",
             "label": "Customer Relationship",
             "name": "MrCustRelationshipCode"
         },
@@ -53,6 +59,11 @@
             "type": "text",
             "position": "left",
             "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrCustTypeDescr"
         },
         {
             "type": "text",
@@ -100,6 +111,16 @@
                                     {
                                         "type": "AppCustId",
                                         "property": "AppCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode",
+                                        "isAddProp": true
                                     }
                                 ]
                             }
@@ -123,6 +144,16 @@
                                     {
                                         "type": "AppCustId",
                                         "property": "AppCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode",
+                                        "isAddProp": true
                                     }
                                 ]
                             }

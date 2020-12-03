@@ -15,6 +15,7 @@ export class AgreementViewContainerComponent implements OnInit {
 
   @Input() arrValue = [];
   AgrmntId;
+  AppId: number;
   BizTemplateCode: string;
   ResponseAppDetailData;
   IsReady: boolean = false;
@@ -77,6 +78,7 @@ export class AgreementViewContainerComponent implements OnInit {
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         var bizTemplateCode = response["BizTemplateCode"];
+        this.AppId = response['AppId'];
 
         if (bizTemplateCode == CommonConstant.FCTR) {
           this.IsCollateral = false;

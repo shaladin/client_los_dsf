@@ -5,19 +5,25 @@
       "type": "sort",
       "position": "left",
       "label": "Family Name",
-      "name": "sortId1"
+      "name": "CustName"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Family Type",
-      "name": "sortId2"
+      "name": "MrCustTypeCode"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Relationship",
-      "name": "sortId3"
+      "name": "MrCustRelationshipCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Model",
+      "name": "MrCustModelDescr"
     },
     {
       "type": "label",
@@ -40,6 +46,11 @@
       "type": "text",
       "position": "left",
       "property": "MrCustRelationshipCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustModelDescr"
     },
     {
       "type": "action",

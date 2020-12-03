@@ -18,11 +18,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT RE.EMP_NO AS OfficeEmpNo, RE.EMP_NAME AS OfficeEmpName, RJT.JOB_TITLE_CODE AS JobTitleCode, RJT.JOB_TITLE_NAME AS JobTitleName, RO.OFFICE_CODE AS OfficeCode",
-        "from": "FROM dbo.REF_EMP RE WITH(NOLOCK) JOIN dbo.REF_USER RU WITH(NOLOCK) ON RE.REF_EMP_ID = RU.REF_EMP_ID JOIN dbo.REF_USER_ROLE RUR WITH(NOLOCK) ON RUR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_JOB_TITLE RJT WITH(NOLOCK) ON RJT.REF_JOB_TITLE_ID = rur.REF_JOB_TITLE_ID JOIN dbo.REF_OFFICE RO WITH(NOLOCK) ON RO.REF_OFFICE_ID = RUR.REF_OFFICE_ID",
-        "where":"WHERE RE.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupOfficeEmp"
+  },
     "headerList": [
         {
             "type": "sort",

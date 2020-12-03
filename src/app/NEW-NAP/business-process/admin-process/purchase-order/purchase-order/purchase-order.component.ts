@@ -8,6 +8,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-purchase-order',
@@ -90,7 +91,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response[CommonConstant.ReturnObj];
-          this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"]);
+          AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PurchaseOrder/Paging"],{});
           this.toastr.successMessage(response["message"]);
         });
     }
@@ -106,6 +107,6 @@ export class PurchaseOrderComponent implements OnInit {
   }
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    this.router.navigate(["/Nap/AdminProcess/PurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PurchaseOrder/Paging"],{ "BizTemplateCode": BizTemplateCode });
   }
 }

@@ -157,6 +157,16 @@ export class TermConditionsComponent implements OnInit {
     );
   }
 
+  ResetPromisedAndExpiredDtToNull(index){
+    var listTC = this.parentForm.get(this.identifier) as FormArray
+    var item = listTC.at(index);
+    item.patchValue({
+      PromisedDt: null,
+      ExpiredDt: null
+    });
+    this.ReconstructForm();
+  }
+
   ReconstructForm() {
     this.totalCheckAll = 0;
     this.totalMandatory = 0;
@@ -170,10 +180,6 @@ export class TermConditionsComponent implements OnInit {
 
       if (isMandatory) {
         if (isChecked) {
-          item.patchValue({
-            PromisedDt: null,
-            ExpiredDt: null
-          });
           if(isExpDtMandatory){
             item.get("ExpiredDt").enable();
             item.get("ExpiredDt").setValidators([Validators.required]);
@@ -191,10 +197,6 @@ export class TermConditionsComponent implements OnInit {
           this.totalCheckAll++;
         } 
         else {
-          item.patchValue({
-            ExpiredDt: null,
-            PromisedDt: null
-          });
           if(item.get("IsWaived").value){
             item.get("PromisedDt").disable();
             item.get("PromisedDt").clearValidators();
@@ -214,10 +216,6 @@ export class TermConditionsComponent implements OnInit {
       } 
       else {
         if (isChecked) {
-          item.patchValue({
-            PromisedDt: null,
-            ExpiredDt: null
-          });
           if(isExpDtMandatory){
             item.get("ExpiredDt").enable();
             item.get("ExpiredDt").setValidators([Validators.required]);
@@ -234,10 +232,6 @@ export class TermConditionsComponent implements OnInit {
           // item.get("ExpiredDt").setValidators([Validators.required]);
         } 
         else {
-          item.patchValue({
-            ExpiredDt: null,
-            PromisedDt: null
-          });
           if(item.get("IsWaived").value){
             item.get("PromisedDt").disable();
             item.get("PromisedDt").clearValidators();
@@ -245,7 +239,7 @@ export class TermConditionsComponent implements OnInit {
           }
           else{
             item.get("PromisedDt").enable();
-            item.get("PromisedDt").setValidators([Validators.required]);
+            item.get("PromisedDt").clearValidators();
             item.get("PromisedDt").updateValueAndValidity();
           }
           item.get("ExpiredDt").disable();

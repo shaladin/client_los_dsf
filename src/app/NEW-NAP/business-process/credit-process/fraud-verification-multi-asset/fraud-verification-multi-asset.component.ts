@@ -14,6 +14,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-fraud-verification-multi-asset',
@@ -237,7 +238,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerfUrl, verfObj).subscribe(
       response => {
-        this.router.navigate(["Nap/CreditProcess/FraudDetection/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/FraudDetection/Paging"], {});
       }
     )
   }

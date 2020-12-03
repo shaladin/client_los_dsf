@@ -53,9 +53,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT MC.MOU_CUST_NO AS MouCustNo, MC.MOU_CUST_DT AS MouCustDt, MC.CUST_NAME AS CustName, RM.DESCR AS MouType, MC.START_DT as StartDt, MC.PLAFOND_AMT AS PlafondAmt, MC.END_DT as EndDt, MC.REF_NO AS RefNo, RS.DESCR AS MouStat, MC.REALISATION_AMT AS RealisationAmt, MC.IN_PROCESS_AMT AS InProcessAmt, MC.AVAILABLE_AMT as AvailableAmt, MC.MOU_CUST_ID AS MouCustId, MC.IS_EXISTING_CUST as IsExistingCust",
-          "from": "FROM dbo.MOU_CUST MC WITH(NOLOCK)  LEFT JOIN dbo.V_REF_STATUS RS ON RS.STATUS_GRP_CODE='MOUC_STAT' AND RS.REF_STATUS_CODE = MC.MOU_STAT LEFT JOIN dbo.V_REF_MASTER RM ON RM.REF_MASTER_TYPE_CODE='MOU_TYPE' AND RM.MASTER_CODE = MC.MR_MOU_TYPE_CODE",
-          "where": "WHERE MOU_CUST_ID = {0}"
+          "name": "viewMouHeaderFactoring"
         }
       }
     ]

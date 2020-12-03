@@ -42,9 +42,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo,A.APP_ID AS AppId, AG.CUST_NAME AS CustName, StatDescr.DESCR AS Stat, CurrStepDescr.DESCR AS CurrStep, LastStepDescr.DESCR AS LastStep",
-        "from": "FROM dbo.APP A WITH(NOLOCK) JOIN dbo.AGRMNT AG WITH(NOLOCK) ON A.APP_ID = AG.APP_ID LEFT JOIN dbo.V_REF_STATUS StatDescr WITH(NOLOCK) ON A.APP_STAT = StatDescr.REF_STATUS_CODE AND StatDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' AND StatDescr.STATUS_GRP_CODE = 'APP_STAT' LEFT JOIN dbo.V_REF_STATUS CurrStepDescr WITH(NOLOCK) ON A.APP_CURR_STEP = CurrStepDescr.REF_STATUS_CODE AND CurrStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' AND CurrStepDescr.STATUS_GRP_CODE = 'APP_STEP' LEFT JOIN dbo.V_REF_STATUS LastStepDescr WITH(NOLOCK) ON A.APP_LAST_STEP = LastStepDescr.REF_STATUS_CODE AND LastStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' AND LastStepDescr.STATUS_GRP_CODE = 'APP_STEP'",
-        "where": "WHERE A.APP_ID = {0}"
+        "name": "viewOutstandingTC"
       }
     }
   ]

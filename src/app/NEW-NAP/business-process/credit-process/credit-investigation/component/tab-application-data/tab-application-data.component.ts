@@ -19,7 +19,6 @@ export class TabApplicationDataComponent implements OnInit {
     private http: HttpClient,
   ) { }
 
-  GuarantorData;
   CommData;
   ReferantorData;
   AppDetailAssetData;
@@ -32,7 +31,6 @@ export class TabApplicationDataComponent implements OnInit {
 
   InitData() {
     // this.appId = 31;
-    this.GuarantorData = new Array();
     this.CommData = new Array();
     this.ReferantorData = {
       ReferantorName: "",
@@ -89,7 +87,6 @@ export class TabApplicationDataComponent implements OnInit {
 
   async ngOnInit() {
     this.InitData();
-    await this.GetGuarantorData();
     await this.GetReferantorData();
     await this.GetAppDetailData();
     await this.GetDealerData();
@@ -100,40 +97,6 @@ export class TabApplicationDataComponent implements OnInit {
     } else {
       this.InsuranceTitle = "Asset Insurance & Life Insurance"
     }
-  }
-
-  async GetGuarantorData() {
-    var obj = {
-      AppGuarantorObj: {
-        AppID: this.AppId
-      },
-      RowVersion: ""
-    };
-    await this.http.post(URLConstant.GetListAppGuarantorDetail, obj).toPromise().then(
-      (response) => {
-        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-          var tempResponse = response[CommonConstant.ReturnObj][i];
-          var temp = {
-            GuarantorName: tempResponse.appGuarantorObj.GuarantorName,
-            GuarantorType: tempResponse.appGuarantorObj.GuarantorTypeCodeDesc,
-            Relationship: tempResponse.appGuarantorObj.CustRelationshipCodeDesc,
-            IdNo: "",
-            Address: "",
-            MobilePhone: ""
-          };
-          if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodeCompany) {
-            temp.IdNo = tempResponse.appGuarantorObj.TaxIdNo;
-            temp.Address = tempResponse.appGuarantorCompanyObj.Addr;
-            temp.MobilePhone = tempResponse.appGuarantorCompanyObj.MobilePhnNo1 + " / " + tempResponse.appGuarantorCompanyObj.MobilePhnNo2;
-          }
-          if (tempResponse.appGuarantorObj.MrGuarantorTypeCode == CommonConstant.GuarantorTypeCodePersonal) {
-            temp.IdNo = tempResponse.appGuarantorPersonalObj.IdNo;
-            temp.Address = tempResponse.appGuarantorPersonalObj.Addr;
-            temp.MobilePhone = tempResponse.appGuarantorPersonalObj.MobilePhnNo;
-          }
-          this.GuarantorData.push(temp);
-        }
-      });
   }
 
   async GetReferantorData() {
@@ -250,28 +213,6 @@ export class TabApplicationDataComponent implements OnInit {
         this.inputGridObj.resultData.Data = response["AppTcs"]
       });
     this.IsGridTcReady = true;
-  }
-
-
-  sortGuarantorData(sort: Sort) {
-    const data = this.GuarantorData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.GuarantorData = data;
-      return;
-    }
-
-    this.GuarantorData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'GuarantorName': return this.compare(a.GuarantorName, b.GuarantorName, isAsc);
-        case 'GuarantorType': return this.compare(a.GuarantorType, b.GuarantorType, isAsc);
-        case 'Relationship': return this.compare(a.Relationship, b.Relationship, isAsc);
-        case 'IdNo': return this.compare(a.IdNo, b.IdNo, isAsc);
-        case 'Address': return this.compare(a.Address, b.Address, isAsc);
-        case 'MobilePhone': return this.compare(a.MobilePhone, b.MobilePhone, isAsc);
-        default: return 0;
-      }
-    });
   }
 
   sortCommData(sort: Sort) {

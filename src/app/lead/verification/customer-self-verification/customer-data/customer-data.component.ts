@@ -868,10 +868,7 @@ export class CustomerDataComponent implements OnInit {
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            // this.router.navigate(
-            //   ["/Customer/CustomerPersonal/Address"], 
-            //   { queryParams: { "IdCust": this.IdCust }}
-            //   );
+            // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
             this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
@@ -889,10 +886,7 @@ export class CustomerDataComponent implements OnInit {
         this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            // this.router.navigate(
-            //   ["/Customer/CustomerPersonal/Address"], 
-            //   { queryParams: { "IdCust": this.IdCust }}
-            //   );
+            // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
             this.outputTab.emit({ stepMode: "next"});
           },
           (error) => {
@@ -913,10 +907,7 @@ export class CustomerDataComponent implements OnInit {
       this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          // this.router.navigate(
-          //   ["/Customer/CustomerPersonal/Address"], 
-          //   { queryParams: { "IdCust": this.IdCust }}
-          //   );
+          // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
           this.outputTab.emit({ stepMode: "next"});
         },
         (error) => {

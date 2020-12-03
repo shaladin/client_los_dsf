@@ -82,7 +82,7 @@ export class CreditApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        this.router.navigate(["/Nap/CreditProcess/CreditApproval/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Detail"],{ "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode });
       }
     }
     else if (ev.Key == "HoldTask") {

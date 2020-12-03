@@ -68,11 +68,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo, L.LEAD_ID AS LeadId, L.ORI_OFFICE_CODE AS OriOfficeCode, L.ORDER_NO AS OrderNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LA.FULL_ASSET_NAME AS FullAssetName, RO.OFFICE_NAME AS OfficeName",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) LEFT JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON L.LEAD_ID = LA.LEAD_ID LEFT JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE",
-        "where" : "WHERE L.LEAD_STAT = N'NEW'"
-    },
+  "querystring": {
+    "name": "searchLead"
+  },
     "headerList": [
         {
             "type": "sort",

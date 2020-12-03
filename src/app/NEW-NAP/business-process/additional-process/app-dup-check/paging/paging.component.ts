@@ -83,16 +83,19 @@ export class PagingComponent implements OnInit {
     }
 
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Personal"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"],{ "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Company"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
   }
 }

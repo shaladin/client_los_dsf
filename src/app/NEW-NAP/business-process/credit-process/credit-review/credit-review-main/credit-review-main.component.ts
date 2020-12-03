@@ -12,6 +12,7 @@ import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -265,7 +266,7 @@ export class CreditReviewMainComponent implements OnInit {
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/CreditProcess/CreditReview/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode, } });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 

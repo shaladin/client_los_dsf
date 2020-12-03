@@ -9,7 +9,7 @@ export class DMSObj{
     Extdate: string;
     ViewCodeAwal: string;
     ViewThumb: string;
-
+    Option : Array<DMSLabelValueObj> = new Array<DMSLabelValueObj>();
     constructor(){
     };
 }

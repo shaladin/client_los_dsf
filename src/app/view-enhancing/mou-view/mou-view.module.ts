@@ -28,7 +28,6 @@ import { MouViewListedCustFactoringComponent } from "./mou-view-listed-cust-fact
 import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.component";
 import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
 
-
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -60,9 +59,7 @@ import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
         MouViewLegalComponent,
         MouViewListedCustFactoringComponent,
         MouViewSurveyComponent,
-        MouViewTcComponent
-
-
+        MouViewTcComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

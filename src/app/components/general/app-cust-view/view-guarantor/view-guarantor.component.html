@@ -1,4 +1,5 @@
-<div class="px-3">
+<app-guarantor-completion *ngIf="IsNAPVersionCompletion" [AppId]="AppId"></app-guarantor-completion>
+<div class="px-3" *ngIf="!IsNAPVersionCompletion">
   <lib-ucSubsection [id]="'guaPersonalId'" [title]="'Guarantor Personal'"
                     [panel]="'guaPersonal'">
   </lib-ucSubsection>
@@ -97,7 +98,7 @@
                   <label class="adInsLabel"> Birth Place / Date </label>
                 </div>
                 <div class="col-md-6">
-                  <label class="adInsLabel"> {{ix.BirthPlace}},{{ix.BirthDt}} </label>
+                  <label class="adInsLabel"> {{ix.BirthPlace}},{{ix.BirthDt | date: 'dd-MMMM-yyyy'}} </label>
                 </div>
               </div>
             </div>

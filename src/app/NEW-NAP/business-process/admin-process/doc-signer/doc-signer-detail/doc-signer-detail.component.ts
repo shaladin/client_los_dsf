@@ -250,8 +250,10 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder1Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder1Code: tempJobCode,
     })
   }
 
@@ -270,13 +272,13 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/DocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
   }

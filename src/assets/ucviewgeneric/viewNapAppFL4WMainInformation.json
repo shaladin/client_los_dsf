@@ -78,9 +78,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT a.APP_NO AS AppNo, a.ORI_OFFICE_NAME AS OriOfficeName, b.CUST_NAME AS CustName, a.PROD_OFFERING_NAME AS ProdOfferingName, a.PROD_OFFERING_CODE AS ProdOfferingCode, a.PROD_OFFERING_VERSION AS ProdOfferingVersion, a.TENOR AS Tenor, a.CURR_CODE AS CurrCode, a.MR_ORDER_INFO_CODE AS MrOrderInfoCode, c.FULL_ASSET_NAME AS FullAssetName, COUNT(c.APP_ID) OVER ( PARTITION BY c.APP_ID) AS TotalAsset, a.APP_ID AS AppId, MC.MOU_CUST_NO AS MouCustNo, MC.MOU_CUST_ID AS MouCustId, StatDescr.DESCR AS Stat, CurrStepDescr.DESCR AS CurrStep, LastStepDescr.DESCR AS LastStep",
-          "from": "FROM dbo.APP a WITH (NOLOCK) LEFT JOIN dbo.APP_CUST b ON a.APP_ID = b.APP_ID LEFT JOIN dbo.APP_ASSET c ON a.APP_ID = c.APP_ID LEFT JOIN dbo.AGRMNT AG WITH (NOLOCK) ON A.APP_ID = AG.APP_ID LEFT JOIN dbo.MOU_CUST MC WITH (NOLOCK) ON MC.MOU_CUST_ID = a.MOU_CUST_ID LEFT JOIN dbo.V_REF_STATUS StatDescr WITH (NOLOCK) ON a.APP_STAT = StatDescr.REF_STATUS_CODE AND StatDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS CurrStepDescr WITH (NOLOCK) ON ISNULL(AG.AGRMNT_CURR_STEP, A.APP_CURR_STEP) = CurrStepDescr.REF_STATUS_CODE AND CurrStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS LastStepDescr WITH (NOLOCK) ON ISNULL(AG.AGRMNT_LAST_STEP, A.APP_LAST_STEP) = LastStepDescr.REF_STATUS_CODE AND LastStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC'",
-          "where": "WHERE a.APP_ID = {0}"
+          "name": "viewNapAppFL4WMainInformation"
         }
       }
     ]

@@ -37,7 +37,6 @@ import { TabCommissionComponent } from "./app-view/tab-commission/tab-commission
 import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.component";
 import { TabReferantorComponent } from "./app-view/tab-referantor/tab-referantor.component";
 // import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
-import { ViewAppCustDataPersonalComponent } from "./app-view/view-app-cust-data-personal/view-app-cust-data-personal.component";
 import { ViewAppScoreGradeDsrComponent } from "./app-view/view-app-score-grade-dsr/view-app-score-grade-dsr.component";
 import { ViewAppScoreGradeDukcapilComponent } from "./app-view/view-app-score-grade-dukcapil/view-app-score-grade-dukcapil.component";
 import { ViewAppScoreGradeScoringComponent } from "./app-view/view-app-score-grade-scoring/view-app-score-grade-scoring.component";
@@ -46,7 +45,6 @@ import { ViewCollateralDataComponent } from "./app-view/view-collateral-data/vie
 import { ViewCollateralMultiAssetComponent } from "./app-view/view-collateral-multi-asset/view-collateral-multi-asset.component";
 import { ViewFinancialComponent } from "./app-view/view-financial/view-financial.component";
 import { ViewFraudDetectionResultComponent } from "./app-view/view-fraud-detection-result/view-fraud-detection-result.component";
-import { GuarantorComponent } from "./app-view/view-guarantor/view-guarantor.component";
 import { ViewInsuranceComponent } from "./app-view/view-insurance/view-insurance.component";
 import { ViewPhoneVerifComponent } from "./app-view/view-phone-verif/view-phone-verif.component";
 import { ViewReservedFundComponent } from "./app-view/view-reserved-fund/view-reserved-fund.component";
@@ -91,8 +89,8 @@ import { MouViewApprovalHistoryComponent } from "./mou-view/mou-view-approval-hi
 import { SurveyViewComponent } from "./survey-view-prototype/survey-view.component";
 import { AgreementViewContainerComponent } from "./agr-view/agreement-view-container.component";
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
-import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
+import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -114,7 +112,8 @@ import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/li
     UcSubsectionModule,
     SharingComponentModule,
     UcapprovalhistModule,
-    UcShowErrorsModule
+    UcShowErrorsModule,
+    AppCustViewComponentsModule
   ],
   declarations: [
     MainInfoComponent,
@@ -139,8 +138,6 @@ import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/li
     TabCommissionComponent,
     TabDeviationComponent,
     TabReferantorComponent,
-    ViewAppCustDataCompanyComponent,
-    ViewAppCustDataPersonalComponent,
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
     ViewAppScoreGradeScoringComponent,
@@ -149,7 +146,6 @@ import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/li
     ViewCollateralMultiAssetComponent,
     ViewFinancialComponent,
     ViewFraudDetectionResultComponent,
-    GuarantorComponent,
     ViewInsuranceComponent,
     ViewPhoneVerifComponent,
     ViewReservedFundComponent,
@@ -193,6 +189,7 @@ import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/li
     MouViewTcComponent,
     MouViewComponent,
     MouViewApprovalHistoryComponent,
+
     //surveyView prototype
     SurveyViewComponent
   ],

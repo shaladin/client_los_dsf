@@ -83,6 +83,9 @@ export class JobTabComponent implements OnInit {
     OthBizIndustryTypeCode: [''],
     OthBizJobPosition: [''],
     OthBizEstablishmentDt: [''],
+    JobNotes: [''],
+    PrevJobNotes: [''],
+    OthBizNotes: [''],
   })
 
   constructor(private fb: FormBuilder,
@@ -99,6 +102,7 @@ export class JobTabComponent implements OnInit {
     this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).subscribe(
       (response) => {
         this.MrCustModelDescr = response.Descr;
+        this.CheckCustModel();
       }
     );
 
@@ -152,6 +156,7 @@ export class JobTabComponent implements OnInit {
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response.AppCustPersonalJobDataObj.MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
+        }
 
 
           if (response.JobAddr.AppCustAddrId != 0) {
@@ -177,12 +182,24 @@ export class JobTabComponent implements OnInit {
             this.InputOthBizAddrObj.default = this.OthBizAddrObj;
             this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
           }
-        }
         this.isUcAddrReady = true;
       },
       error => {
         console.log(error);
       });
+  }
+
+  CheckCustModel(){
+    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+      this.JobDataForm.controls.MrJobPositionCode.setValidators([Validators.required]);
+      this.JobDataForm.controls.MrJobStatCode.setValidators([Validators.required]);
+      this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+    }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
+      this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+    }
+    this.JobDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+    this.JobDataForm.controls.MrJobStatCode.updateValueAndValidity();
+    this.JobDataForm.controls.EmploymentEstablishmentDt.updateValueAndValidity();
   }
 
   SaveForm() {

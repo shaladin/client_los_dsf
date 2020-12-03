@@ -21,7 +21,8 @@ export class DupCheckMdSubjListComponent implements OnInit {
   wfTaskListId: number;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   gridSubjectObj: InputGridObj = new InputGridObj();
-
+  addObj: any = {};
+  
   constructor(
     private http: HttpClient, 
     private route: ActivatedRoute, 
@@ -51,6 +52,8 @@ export class DupCheckMdSubjListComponent implements OnInit {
   initViewMainInfo()
   {
     this.gridSubjectObj.pagingJson = "./assets/ucpaging/searchAppDupCheckSubject.json";
+    this.addObj["AppId"] = this.appId;
+    this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubject.json";
     this.viewMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewMainInfoObj.ddlEnvironments = [
@@ -93,7 +96,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
 
   buttonBackOnClick() {
     var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { queryParams: { "BizTemplateCode": bizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { "BizTemplateCode": bizTemplateCode });
   }
 
   buttonSubmitOnClick(){

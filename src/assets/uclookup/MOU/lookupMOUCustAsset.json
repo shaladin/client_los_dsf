@@ -18,11 +18,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT AM.FULL_ASSET_CODE AS fullAssetCode, AM.FULL_ASSET_NAME AS fullAssetName, AM.ASSET_MASTER_ID AS assetMasterId",
-        "from": "FROM dbo.ASSET_MASTER AS AM WITH(NOLOCK) INNER JOIN dbo.ASSET_TYPE AS AT WITH(NOLOCK) ON AM.ASSET_TYPE_ID = AT.ASSET_TYPE_ID",
-        "where":"WHERE AM.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupMOUCustAsset"
+  },
     "headerList": [
         {
             "type": "sort",

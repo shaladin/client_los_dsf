@@ -277,14 +277,14 @@ export class ExistingMouPersonalComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        this.router.navigate(["/Mou/DuplicateCheck/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});
       });
   }
 
   Back() {
     // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?MouCustId=" + this.MouCustId + "&WfTaskListId=" + this.WfTaskListId);
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")
-    this.router.navigate(["/Mou/DuplicateCheck/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});
   }
 
   OpenView(key: string, value: number){
