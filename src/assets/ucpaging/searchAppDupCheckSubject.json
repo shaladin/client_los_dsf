@@ -76,7 +76,19 @@
               "result": {
                 "type" : "url",
                 "path" : "/Nap/AdditionalProcess/AppDupCheckMainData/SubjMatch", 
-                "param" : [ {"type": "AppCustId", "property" : "AppCustId"}],
+                "param" : [ 
+                  {"type": "AppId", 
+                   "property" : "AppId",
+                   "isAddProp": true
+                  },
+                  {"type": "AppCustId", 
+                   "property" : "AppCustId"
+                  },
+                  {"type": "WfTaskListId", 
+                   "property" : "WfTaskListId",
+                   "isAddProp": true
+                  }
+                  ],
                 "icon" : "ft-edit-2", 
                 "tooltip": "Select Duplicate Customer"
               },

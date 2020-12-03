@@ -19,9 +19,6 @@ import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AppMainInfoComponent } from "../app-main-info/app-main-info.component";
 import { AppViewComponent } from "./app-view.component";
 import { AppViewRoutingModule } from "./app-view-routing.module";
-import { ViewAppCustDataCompanyComponent } from "./view-app-cust-data-company/view-app-cust-data-company.component";
-import { ViewAppCustDataPersonalComponent } from "./view-app-cust-data-personal/view-app-cust-data-personal.component";
-import { GuarantorComponent } from "./view-guarantor/view-guarantor.component";
 import { TabReferantorComponent } from "./tab-referantor/tab-referantor.component";
 import { TabApplicationComponent } from "./tab-application/tab-application.component";
 import { TabAppDataComponent } from "./tab-application-data/tab-app-data.component";
@@ -45,7 +42,7 @@ import { ApprovalHistComponent } from "./approval-hist/approval-hist.component";
 import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
-
+import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 
 @NgModule({
     imports: [
@@ -67,13 +64,11 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
+        AppCustViewComponentsModule
     ],
     declarations: [
         AppMainInfoComponent,
         AppViewComponent,
-        ViewAppCustDataCompanyComponent,
-        ViewAppCustDataPersonalComponent,
-        GuarantorComponent,
         TabReferantorComponent,
         TabApplicationComponent,
         TabAppDataComponent,
@@ -96,16 +91,15 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
         ApprovalHistComponent,
         ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
-        ViewAssetDataComponent
-
-
+        ViewAssetDataComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
-        AppMainInfoComponent
+        AppMainInfoComponent,
+        AppAssetDataDetailComponent,
     ]
 
 })

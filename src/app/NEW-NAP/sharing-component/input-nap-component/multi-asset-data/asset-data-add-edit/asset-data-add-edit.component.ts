@@ -155,7 +155,7 @@ export class AssetDataAddEditComponent implements OnInit {
     AdminHeadId : [''],
     AdminHeadName: [''],
     AdminHeadNo: [''],
-    AdminHeadCode: [''],
+    AdminHeadPositionCode: [''],
 
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -204,6 +204,11 @@ export class AssetDataAddEditComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   EmpObj: any;
   vendorEmpSalesObj = {
+    VendorId: 0,
+    VendorEmpId: 0,
+    VendorEmpNo: "",
+  };
+  vendorEmpAdminHeadObj = {
     VendorId: 0,
     VendorEmpId: 0,
     VendorEmpNo: "",
@@ -315,8 +320,9 @@ export class AssetDataAddEditComponent implements OnInit {
     this.salesObj.VendorId = event.VendorId;
     this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.GetSalesList();
-this.GetAdminHeadList();
+    this.GetAdminHeadList();
   }
+
  GetSalesList(){
   var Obj = {
     VendorId : this.salesObj.VendorId,
@@ -330,6 +336,7 @@ this.GetAdminHeadList();
     }
   );
  }
+
  GetAdminHeadList(){
   var Obj = {
     VendorId : this.salesObj.VendorId,
@@ -343,6 +350,7 @@ this.GetAdminHeadList();
     }
   );
  }
+
   GetAppCust() {
     var appObj = {
       AppId: this.AppId,
@@ -409,6 +417,7 @@ this.GetAdminHeadList();
       BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
     });
   }
+
   SalesPersonChanged(event) {
     if (event.target.value != "") {
       //this.vendorEmpObj.VendorEmpId = event.target.value;
@@ -433,6 +442,7 @@ this.GetAdminHeadList();
       });
     }
   }
+  
   AdminChanged(event) {
     if (event.target.value != "") {
       //this.vendorEmpObj.VendorEmpId = event.target.value;
@@ -457,15 +467,16 @@ this.GetAdminHeadList();
     }
   }
 
-  AssetValidationForSave() {
+  async AssetValidationForSave() {
     var CheckValidObj = {
       AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
       ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
       Tenor: this.appData.Tenor,
       AssetCategoryCode: this.AssetDataForm.controls["AssetCategoryCode"].value,
-      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value
+      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value,
+      AppId : this.AppId
     }
-    this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
+    await this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
       (response) => {
         this.AssetValidationResult = response;
       }
@@ -478,6 +489,7 @@ this.GetAdminHeadList();
 
   AssetValidation() {
     var CheckValidObj = {
+      AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
       ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
       Tenor: this.appData.Tenor,
@@ -682,11 +694,15 @@ this.GetAdminHeadList();
               this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
                 (response) => {
                   this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-                  this.AssetDataForm.patchValue({
-                    AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
-                    AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
-                  });
+                  if(this.headAppAssetSupplEmpObj.AppAssetSupplEmpObj != undefined){
+                    this.AssetDataForm.patchValue({
+                      AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
+                      AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName,
+                      AdminHeadPositionCode : this.headAppAssetSupplEmpObj.MrSupplEmpPositionCode
+                    });
+                  }
                 });
+              this.GetVendorForView();
           });
 
           this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
@@ -707,8 +723,6 @@ this.GetAdminHeadList();
                     SalesPersonPositionCode : this.salesAppAssetSupplEmpObj.MrSupplEmpPositionCode
                   });
                 });
-                this.GetVendorForView();
-
             });
 
         });
@@ -915,9 +929,11 @@ this.GetAdminHeadList();
     this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({
-          AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
-        });
+        if(this.mode != 'editAsset'){
+          this.AssetDataForm.patchValue({
+            AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
+          });
+        }
       }
     );
 
@@ -1137,13 +1153,15 @@ this.GetAdminHeadList();
     }
   }
 
-  SaveForm() {
+  async SaveForm() {
     var assetForm = this.AssetDataForm.getRawValue();
     var confirmMsg = "";
     var isValidOk = true;
-    this.AssetValidationForSave();
+    await this.AssetValidationForSave();
+
+
     if(this.AssetValidationResult){
-      if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG') {
+      if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCNT') {
         if(assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin){
           isValidOk = false;
           confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
@@ -1154,19 +1172,20 @@ this.GetAdminHeadList();
         }
       }
       else{
-        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.DownPaymentAmt;
-        var assetDPMax = this.AssetValidationResult.DPMax * assetForm.DownPaymentAmt;
-        if(assetForm.DownPaymentAmt < assetDPMin){
+        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.AssetPrice / 100;
+        var assetDPMax = this.AssetValidationResult.DPMax * assetForm.AssetPrice / 100;
+        if(assetForm.DownPayment < assetDPMin){
           isValidOk = false;
           confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
         }
-        else if(assetForm.DownPaymentAmt > assetDPMax){
+        else if(assetForm.DownPayment > assetDPMax){
           isValidOk = false;
           confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
         }
       }
-    }
 
+
+    }
     if(!isValidOk){
       confirmMsg += ", Are You Sure to Save This Data ?";
       var confirmation = confirm(confirmMsg);
@@ -1174,6 +1193,7 @@ this.GetAdminHeadList();
         return false;
       }
     }
+
 
     if (this.mode == 'addAsset') {
       this.allAssetDataObj = new AllAssetDataObj();
@@ -1561,20 +1581,31 @@ this.GetAdminHeadList();
           SupplCode: response["VendorCode"],
         });
         this.vendorEmpSalesObj.VendorId = response["VendorId"];
-          this.vendorEmpSalesObj.VendorEmpNo = this.salesAppAssetSupplEmpObj.SupplEmpNo;
-          this.GetVendorEmpSalesPerson();
+        this.vendorEmpSalesObj.VendorEmpNo = this.salesAppAssetSupplEmpObj.SupplEmpNo;
+        this.GetVendorEmpSalesPerson();
         
-
+        if(this.headAppAssetSupplEmpObj != undefined && this.headAppAssetSupplEmpObj.SupplEmpNo != undefined){
+          this.vendorEmpAdminHeadObj.VendorId = response["VendorId"];
+          this.vendorEmpAdminHeadObj.VendorEmpNo = this.headAppAssetSupplEmpObj.SupplEmpNo;
+          this.GetVendorEmpAdminHead();
+        }
+        
         this.salesObj = new VendorEmpObj();
         this.salesObj.VendorId = response["VendorId"];
         this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
         this.GetSalesList();
+
+        this.adminHeadObj = new VendorEmpObj();
+        this.adminHeadObj.VendorId = response["VendorId"];
+        this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+        this.GetAdminHeadList();
         
         this.InputLookupSupplierObj.jsonSelect = response;
         this.InputLookupSupplierObj.nameSelect = response["VendorName"];
       }
     );
   }
+
   GetVendorEmpSalesPerson() {
     this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpSalesObj).subscribe(
       (response) => {
@@ -1584,7 +1615,15 @@ this.GetAdminHeadList();
       }
     );
   }
-  checkForm(){
-    console.log(this.AssetDataForm);
+
+  GetVendorEmpAdminHead() {
+    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpAdminHeadObj).subscribe(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          AdminHeadId: response["VendorEmpId"]
+        });
+      }
+    );
   }
+
 }

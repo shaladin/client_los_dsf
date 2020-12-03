@@ -20,8 +20,10 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
+  WfTaskListId: number;
   AppCustCompanyId: number;
   stepIndex: number = 1;
+  BizTemplateCode: string;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsCompletion: boolean = false;
@@ -60,6 +62,12 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       if (params['AppCustId'] != null) {
         this.AppCustId = params['AppCustId'];
       }
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+      }
     });
   }
 
@@ -92,7 +100,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
 
   Back() {
-    this.location.back();
+    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
   }
   
   EnterTab(type: string) { 

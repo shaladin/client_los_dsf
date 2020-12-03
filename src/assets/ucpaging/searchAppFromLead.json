@@ -7,7 +7,7 @@
       "name": "L.LEAD_NO",
       "id": "LeadNoId",
       "value": "",
-      "label": "LEAD NO",
+      "label": "Lead No",
       "placeholder": "Placeholder"
     },
     {
@@ -21,7 +21,7 @@
       "isSelectOne": false,
       "url": "",
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-      "label": "OFFICE",
+      "label": "Office",
       "items": [],
       "isQueryIn": true,
       "itemsUrl": []
@@ -31,7 +31,7 @@
       "name": "LC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder"
     },
     {
@@ -39,7 +39,7 @@
       "name": "L.LEAD_DT",
       "id": "LeadDtId",
       "value": "",
-      "label": "LEAD DATE >=",
+      "label": "Lead Date >=",
       "restriction": "gte",
       "placeholder": "Placeholder"
     },
@@ -48,7 +48,7 @@
       "name": "RL.LOB_NAME",
       "id": "LobNameId",
       "value": "",
-      "label": "LINE OF BUSINESS",
+      "label": "Line Of Business",
       "placeholder": "Placeholder"
     },
     {
@@ -56,7 +56,7 @@
       "name": "L.LEAD_DT",
       "id": "LeadDtId",
       "value": "",
-      "label": "LEAD DATE <=",
+      "label": "Lead Date <=",
       "restriction": "lte",
       "placeholder": "Placeholder"
     },
@@ -71,7 +71,7 @@
       "isSelectOne": false,
       "url": "",
       "path": "/RefMaster/GetListKeyValueActiveByCode",
-      "label": "LEAD SOURCE",
+      "label": "Lead Source",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "RefMasterTypeCode",

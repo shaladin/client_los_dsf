@@ -10,6 +10,7 @@ import { MouViewFeeComponent } from './mou-view-fee/mou-view-fee.component';
 import { MouViewLegalComponent } from './mou-view-legal/mou-view-legal.component';
 import { MouViewSurveyComponent } from './mou-view-survey/mou-view-survey.component';
 import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
+import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
         MouViewFeeComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
-        MouViewTcComponent
+        MouViewTcComponent,
+        MouViewAnalysisResultComponent
     ],
     exports: [
         MouViewAddcollComponent,
@@ -34,7 +36,8 @@ import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
         MouViewFeeComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
-        MouViewTcComponent
+        MouViewTcComponent,
+        MouViewAnalysisResultComponent
     ]
 })
 export class MouViewComponentsModule { }

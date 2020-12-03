@@ -284,8 +284,8 @@
 
   </div>
   <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'FL4W'">
-    <agrmnt-view-collateral [agrmntId]="agrmntId"></agrmnt-view-collateral>
-    <lib-ucSubsection [id]="'LoanObjectId'" [title]="'Loan Object'" [panel]="'LoanObjectSection'"></lib-ucSubsection>
+    <view-asset-collateral [agrmntId]="agrmntId"></view-asset-collateral>
+    <lib-ucSubsection [id]="'LoanObjectId'" [title]="'Insurance Loan Object'" [panel]="'LoanObjectSection'"></lib-ucSubsection>
     <div id="LoanObjectSection">
       <div class="col-md-12">
         <lib-ucgridview [gridInput]="inputGridObj" (callback)="getEvent($event)"></lib-ucgridview>

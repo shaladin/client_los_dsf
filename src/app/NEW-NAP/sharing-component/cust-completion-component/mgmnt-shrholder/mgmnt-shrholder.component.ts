@@ -22,7 +22,6 @@ export class MgmntShrholderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("HELLOW")
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridShareholderCustCompletion.json";
 
     this.loadShareholderListData();

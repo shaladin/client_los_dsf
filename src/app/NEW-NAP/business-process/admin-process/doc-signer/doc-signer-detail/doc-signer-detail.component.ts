@@ -250,8 +250,10 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder1Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder1Code: tempJobCode,
     })
   }
 

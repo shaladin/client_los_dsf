@@ -14,8 +14,6 @@
           </div>
         </div>
         <div class="px-3">
-
-
           <ng-template #mainInfoContainerA></ng-template>
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
@@ -55,7 +53,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsMultiAsset" label="Asset">
+            <mat-tab *ngIf="IsMultiAsset" label="Asset & Collateral Data">
               <ng-template matTabContent>
                 <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
               </ng-template>

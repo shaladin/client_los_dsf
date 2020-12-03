@@ -1,11 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalObj.Model';
 import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
 import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.Model';
-import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -17,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class GuarantorComponent implements OnInit {
 
   @Input() AppId;
+  @Input() IsNAPVersionCompletion: boolean = true;
   listAppGuarantorPersonal : Array<AppGuarantorPersonalObj> = new Array<AppGuarantorPersonalObj>();
   listAppGuarantorCompany : Array<AppGuarantorCompanyObj> = new Array<AppGuarantorCompanyObj>();
   listAppGuarantor : Array<AppGuarantorObj> = new Array<AppGuarantorObj>();
@@ -28,6 +26,8 @@ export class GuarantorComponent implements OnInit {
   constructor(private http: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
+    //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
+    if(this.IsNAPVersionCompletion) return;
     this.setValue();
   }
 

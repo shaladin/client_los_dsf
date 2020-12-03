@@ -263,7 +263,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   Back() {
-    this.location.back();
+    this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
   }
 
   SaveForm() {
@@ -273,7 +273,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.httpClient.post(URLConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
+          this.Back();
         });
     }
     else {

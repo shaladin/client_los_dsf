@@ -23,13 +23,13 @@
             <th style="text-align: center;">
               <span class="thead-header" name='insuranceLength' translate>Insurance Length</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: right;">
               <span class="thead-header" name='mainPremi' translate>Main Premi</span>
             </th>
             <th style="text-align: right;">
               <span class="thead-header" name='addPremi' translate>Additional Premi</span>
             </th>
-            <th style="text-align: center;">
+            <th style="text-align: right;">
               <span class="thead-header" name='fee' translate>Fee</span>
             </th>
             <th style="text-align: center;">
@@ -64,7 +64,7 @@
               {{item.TotalCustAddPremiAmt | number:'.2':'en-US'}}
             </td>
             <td style="text-align: right;">
-              {{item.CustAdminFeeAmt | number:'.2':'en-US'}}
+              {{item.CustAdminFeeAmt + item.CustStampDutyFeeAmt| number:'.2':'en-US'}}
             </td>
             <td style="text-align: center;">
               <a (click)="viewDetailLoanHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
@@ -99,13 +99,13 @@
           <th style="text-align: center;">
             <span class="thead-header" name='insuranceLength' translate>Insurance Length</span>
           </th>
-          <th style="text-align: left;">
+          <th style="text-align: right;">
             <span class="thead-header" name='mainPremi' translate>Main Premi</span>
           </th>
           <th style="text-align: right;">
             <span class="thead-header" name='addPremi' translate>Additional Premi</span>
           </th>
-          <th style="text-align: center;">
+          <th style="text-align: right;">
             <span class="thead-header" name='fee' translate>Fee</span>
           </th>
           <th style="text-align: center;">
@@ -140,7 +140,7 @@
             {{item.TotalCustAddPremiAmt | number:'.2':'en-US'}}
           </td>
           <td style="text-align: right;">
-            {{item.CustAdminFeeAmt | number:'.2':'en-US'}}
+            {{item.CustAdminFeeAmt + item.CustStampDutyFeeAmt | number:'.2':'en-US'}}
           </td>
           <td style="text-align: center;">
             <a (click)="viewDetailCollateralHandler(item.AppInsObjId)"><i class="fas fa-pencil-alt"></i></a>

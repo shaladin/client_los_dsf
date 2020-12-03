@@ -26,6 +26,12 @@
         "name": "IsOwner"
       },
       {
+        "type": "sort",
+        "position": "right",
+        "label": "Share(%)",
+        "name": "SharePrcnt"
+      },
+      {
         "type": "label",
         "position": "center",
         "label": "Action"
@@ -51,6 +57,11 @@
         "type": "boolean",
         "position": "center",
         "property": "IsOwner"
+      },
+      {
+        "type": "decimal",
+        "position": "right",
+        "property": "SharePrcnt"
       },
       {
         "type": "action",

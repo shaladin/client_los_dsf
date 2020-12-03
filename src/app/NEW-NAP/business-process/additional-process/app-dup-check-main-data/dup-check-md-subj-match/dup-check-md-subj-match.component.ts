@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -18,7 +19,9 @@ import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCh
 })
 export class DupCheckMdSubjMatchComponent implements OnInit {
 
+  AppId: number;
   appCustId: number;
+  WfTaskListId: number;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   listMasterCustDuplicate: Array<Object>;
   listNegativeCustDuplicate: Array<Object>;
@@ -36,7 +39,9 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null)  this.AppId = params['AppId'];
       if (params['AppCustId'] != null)  this.appCustId = params['AppCustId'];
+      if (params['WfTaskListId'] != null)  this.WfTaskListId = params['WfTaskListId'];
     });
   }
 
@@ -189,7 +194,20 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   buttonCancelOnClick() {
-    this.location.back();
+    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/SubjList"], { queryParams: { "AppId" : this.AppId, "WfTaskListId": this.WfTaskListId } });
   }
-
+  
+  viewMainInfoCallback(event){
+    if(event.Key == "customer"){
+      var custObj = { CustNo: event.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
+  }
+  else if(event.Key == "application"){
+    AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
+  }
+  }
 }
