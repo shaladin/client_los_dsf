@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-approval-cfna',
@@ -63,7 +64,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
@@ -94,17 +95,17 @@ export class CreditApprovalCfnaComponent implements OnInit {
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
           this.toastr.successMessage("Success");
-          this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
 
     } else {
       this.toastr.successMessage("Success");
-      this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+      AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
   onCancelClick() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS)
-    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": BizTemplateCode });
   }
 }

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 @Component({
@@ -65,7 +66,7 @@ export class CreditApprovalDetailComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
@@ -96,9 +97,8 @@ export class CreditApprovalDetailComponent implements OnInit {
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
           this.toastr.successMessage("Success");
-          this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
-
     } 
     else if(event.result.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()){
       console.log("cust neg");
@@ -110,16 +110,16 @@ export class CreditApprovalDetailComponent implements OnInit {
       this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
         (response) => {
           this.toastr.successMessage("Success");
-          this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
       this.toastr.successMessage("Success");
-      this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
   onCancelClick() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS)
-    this.router.navigate(["/Nap/CreditProcess/CreditApproval/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS);
+    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": BizTemplateCode });
   }
 }

@@ -233,7 +233,7 @@ export class NapDetailFormComponent implements OnInit {
       });
   }
   Cancel() {
-    this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CFRFN4W } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFRFN4W });
   }
 
   GetCallback(ev) {

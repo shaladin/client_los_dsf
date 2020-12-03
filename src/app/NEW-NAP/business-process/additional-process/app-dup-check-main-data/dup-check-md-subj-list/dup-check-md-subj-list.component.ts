@@ -96,7 +96,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
 
   buttonBackOnClick() {
     var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { queryParams: { "BizTemplateCode": bizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { "BizTemplateCode": bizTemplateCode });
   }
 
   buttonSubmitOnClick(){

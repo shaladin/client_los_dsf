@@ -73,11 +73,11 @@ export class MouApprovalGeneralComponent implements OnInit {
 
   onApprovalSubmited(event) {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Mou/Cust/Approval"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
   }
 
   onCancelClick() {
-    this.router.navigate(["/Mou/Cust/Approval"]);
+    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
   }
   GetCallBack(event) {
     if (event.Key == "customer") {

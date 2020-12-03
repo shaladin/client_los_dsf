@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-nap-from-lead-paging',
@@ -78,7 +79,7 @@ export class NapFromLeadPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
-          this.router.navigate(["/Nap/Sharing/NapFromLead/Detail"], { queryParams: { "LeadId": ev.RowObj.LeadId}});
+          AdInsHelper.RedirectUrl(this.router,["/Nap/Sharing/NapFromLead/Detail"], { "LeadId": ev.RowObj.LeadId});
         }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }

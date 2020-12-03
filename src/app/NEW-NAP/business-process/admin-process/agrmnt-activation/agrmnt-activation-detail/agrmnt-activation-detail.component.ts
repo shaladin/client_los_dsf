@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -136,7 +137,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
         IsEnd: this.IsEnd
       }
       this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
-        this.router.navigate(["/Nap/AdminProcess/AgrmntActivation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode} });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/AgrmntActivation/Paging"], { BizTemplateCode: this.BizTemplateCode });
       });
     }
   }

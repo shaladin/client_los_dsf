@@ -1,4 +1,5 @@
 import { formatDate } from "@angular/common";
+import { Router } from "@angular/router";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { environment } from "environments/environment";
 import { CommonConstant } from "./constant/CommonConstant";
@@ -202,4 +203,8 @@ export class AdInsHelper {
         });
     return encrypted
   }
+
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {}){
+    router.navigate(url, { queryParams: queryParams, skipLocationChange: true });
+}
 }

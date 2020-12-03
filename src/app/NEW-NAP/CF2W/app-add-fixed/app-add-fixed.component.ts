@@ -15,6 +15,7 @@ import { AppFixedFeeObj } from 'app/shared/model/AppFixedFeeObj.Model';
 import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -421,7 +422,7 @@ export class AppAddFixedComponent implements OnInit {
           (response) => {
             this.returnAllAppDataObj = response;
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "AppId": response["AppId"], "LobCode": this.LobCode } });
+            AdInsHelper.RedirectUrl(this.router,["Nap/CF2W/Add/Detail"], { "AppId": response["AppId"], "LobCode": this.LobCode });
           }
         );
       });

@@ -279,13 +279,13 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Nap/ROS/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } }) //Diganti ROS Bila Sudah Siap
+          AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
         })
     }
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/ROS/Paging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } }); //Diganti ROS Bila Sudah Siap
+    AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
   }
 
   Submit() {
@@ -306,7 +306,8 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.FL4W } }) //Diganti ROS Bila Sudah Siap
+            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+
           }
         )
       }

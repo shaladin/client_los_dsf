@@ -348,7 +348,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);
@@ -358,7 +358,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);

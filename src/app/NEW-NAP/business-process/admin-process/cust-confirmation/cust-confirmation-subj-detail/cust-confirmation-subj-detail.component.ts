@@ -259,7 +259,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (activeButton == "save") {
-          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Detail"], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
           this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);

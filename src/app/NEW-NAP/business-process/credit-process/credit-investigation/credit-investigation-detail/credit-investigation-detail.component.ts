@@ -14,6 +14,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { AppCrdInvstgHObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgHObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 @Component({
@@ -88,7 +89,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
     this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);       
-        this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditInvestigation/Paging"], { BizTemplateCode: lobCode });
       });
 
   }
@@ -160,6 +161,6 @@ export class CreditInvestigationDetailComponent implements OnInit {
   }
   Back() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.router.navigate(["/Nap/CreditProcess/CreditInvestigation/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditInvestigation/Paging"], { BizTemplateCode: lobCode });
   }
 }

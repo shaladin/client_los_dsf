@@ -295,7 +295,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/MainData/NAP2/Paging"], { queryParams: { BizTemplateCode: CommonConstant.CFNA } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFNA });
   }
 
   Submit() {
@@ -316,7 +316,7 @@ export class NapDetailFormComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { queryParams: { BizTemplateCode: CommonConstant.CFNA } })
+            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFNA });
           }
         )
       }

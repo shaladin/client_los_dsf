@@ -15,6 +15,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 import { formatDate } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -218,7 +219,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { BizTemplateCode: lobCode });
         },
         (error) => {
           console.log(error);
@@ -310,7 +311,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { BizTemplateCode: lobCode });
         }
       );
     // }

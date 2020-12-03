@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { HttpClient } from '@angular/common/http';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-dup-check-paging',
@@ -36,16 +37,16 @@ export class MouDupCheckPagingComponent implements OnInit {
       });
 
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Mou/DuplicateCheck/SimilarPersonal"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/SimilarPersonal"],{"MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId});
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      this.router.navigate(["/Mou/DuplicateCheck/ExistingPersonal"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingPersonal"],{ "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Mou/DuplicateCheck/SimilarCompany"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/SimilarCompany"],{"MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId});
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      this.router.navigate(["/Mou/DuplicateCheck/ExistingCompany"], { queryParams: { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingCompany"],{"MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId});
     }
   }
 }

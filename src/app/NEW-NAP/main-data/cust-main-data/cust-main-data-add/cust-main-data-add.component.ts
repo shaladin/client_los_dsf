@@ -13,6 +13,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -226,19 +227,19 @@ export class CustMainDataAddComponent implements OnInit {
 
         switch(this.bizTemplateCode) {
           case CommonConstant.CF4W :
-            this.router.navigate(["Nap/ConsumerFinance/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+            AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/NAP1"], { "AppId": response["AppId"]});
           break;
           case CommonConstant.CFRFN4W :
-            this.router.navigate(["Nap/CFRefinancing/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+            AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/NAP1"], { "AppId": response["AppId"]});
           break;
           case CommonConstant.FCTR :
-            this.router.navigate(["Nap/Factoring/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+            AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/NAP1"], { "AppId": response["AppId"]});
           break;
           case CommonConstant.FL4W :
-            this.router.navigate(["Nap/FinanceLeasing/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+            AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/NAP1"], { "AppId": response["AppId"]});
           break;
           case CommonConstant.CFNA :
-            this.router.navigate(["Nap/CFNA/NAP1"], {queryParams: { "AppId": response["AppId"]} });
+            AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": response["AppId"]});
           break;
         }
       }
@@ -358,7 +359,7 @@ export class CustMainDataAddComponent implements OnInit {
   }
 
   buttonCancelClick(){
-    this.router.navigate(["Nap/MainData/NAP1/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
   }
 
 }
