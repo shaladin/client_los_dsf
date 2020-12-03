@@ -20,10 +20,7 @@
       }
     ],
     "querystring": {
-      "select": "SELECT RE.EMP_NAME AS EmpName, RE.EMP_NO AS EmpNo, RR.ROLE_NAME AS RoleName, RE.REF_EMP_ID AS EmpId",
-      "from": "FROM dbo.REF_EMP RE WITH(NOLOCK) JOIN dbo.REF_USER RU WITH(NOLOCK) ON RU.REF_EMP_ID = RE.REF_EMP_ID JOIN dbo.REF_USER_ROLE RUR WITH(NOLOCK) ON RUR.REF_USER_ID = RU.REF_USER_ID JOIN dbo.REF_ROLE RR WITH(NOLOCK) ON RR.REF_ROLE_ID = RUR.REF_ROLE_ID",
-      "where":"WHERE RE.IS_ACTIVE = 1",
-      "groupby":"GROUP BY RE.EMP_NAME, RE.EMP_NO ,RR.ROLE_NAME, RE.REF_EMP_ID"
+        "name": "lookupEmployee"
     },
     "headerList": [
         {
