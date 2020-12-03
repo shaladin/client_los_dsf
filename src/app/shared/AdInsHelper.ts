@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { environment } from "environments/environment";
 import { CommonConstant } from "./constant/CommonConstant";
-declare const CryptoJS : any;
+declare const CryptoJS: any;
 
 export class AdInsHelper {
   //Function
@@ -91,10 +91,10 @@ export class AdInsHelper {
     }
     return "0";
   }
-  
-  public static OpenCustomerViewByCustId(CustId){
+
+  public static OpenCustomerViewByCustId(CustId) {
     var token = localStorage.getItem("Token");
-      window.open(environment.FoundationR3Web + "/View/Customer/PersonalDetail?CustId=" + CustId + "&Token=" + token, "_blank");
+    window.open(environment.FoundationR3Web + "/View/Customer/PersonalDetail?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
   public static OpenAppViewByAppId(AppId) {
@@ -110,29 +110,28 @@ export class AdInsHelper {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + "/View/Offering?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }
-  
-  public static OpenLeadViewByLeadId(LeadId)
-  {
+
+  public static OpenLeadViewByLeadId(LeadId) {
     var token = localStorage.getItem("Token");
-      window.open(environment.losR3Web + '/View/Lead?LeadId=' + LeadId  + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + '/View/Lead?LeadId=' + LeadId + "&Token=" + token, "_blank");
   }
 
-  public static OpenAgrmntViewByAgrmntId(AgrmntId){
+  public static OpenAgrmntViewByAgrmntId(AgrmntId) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + "/View/AgrmntView?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
   }
 
-  public static OpenMOUCustViewByMouCustId(MouCustId){
+  public static OpenMOUCustViewByMouCustId(MouCustId) {
     var token = localStorage.getItem("Token");
-    window.open( environment.losR3Web + "/View/Mou/CustView?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + "/View/Mou/CustView?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId){
+  public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + "/View/Offering?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
   }
 
-  public static OpenVendorBranchViewByVendorId(VendorId){
+  public static OpenVendorBranchViewByVendorId(VendorId) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + "/View/Vendor/VendorBranch?VendorId=" + VendorId + "&Token=" + token, '_blank');
   }
@@ -195,16 +194,16 @@ export class AdInsHelper {
     var iv = CryptoJS.enc.Utf8.parse(i);
 
     var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plain), key,
-        {
-            keySize: 128 / 8,
-            iv: iv,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
+      {
+        keySize: 128 / 8,
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      });
     return encrypted
   }
 
-  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {}){
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {}) {
     router.navigate(url, { queryParams: queryParams, skipLocationChange: true });
-}
+  }
 }
