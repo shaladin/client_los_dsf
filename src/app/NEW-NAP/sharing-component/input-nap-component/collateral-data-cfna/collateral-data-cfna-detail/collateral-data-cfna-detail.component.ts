@@ -83,7 +83,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     CollateralNotes: [''],
     CollateralPrcnt: [0, [Validators.required, Validators.max(100)]],
     IsMainCollateral: true,
-    ManufacturingYear: ['', Validators.pattern("^[0-9]*$")],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     CollateralNo: [''],
     AssetTaxDt: [''],
     UserName: ['', Validators.required],
