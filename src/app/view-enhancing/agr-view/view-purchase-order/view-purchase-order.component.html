@@ -13,15 +13,18 @@
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Purchase Order Date </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.PurchaseOrderDt | date:'shortDate'}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.PurchaseOrderDt | date:'shortDate'}}
+                </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Purchase Order Expired Date </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.PurchaseOrderExpiredDt | date:'shortDate'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponsePurchaseOrderHData?.PurchaseOrderExpiredDt | date:'shortDate'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Purchase Order Amount </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
             <div class="col-md-6 ">
@@ -55,7 +58,8 @@
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Supplier Bank Account </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.BankName }} - {{ ResponsePurchaseOrderHData?.BankAccName }} - {{ ResponsePurchaseOrderHData?.BankAccNo}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.BankName }} -
+                  {{ ResponsePurchaseOrderHData?.BankAccName }} - {{ ResponsePurchaseOrderHData?.BankAccNo}} </label>
               </div>
             </div>
             <div class="col-md-6 ">
@@ -66,68 +70,110 @@
             </div>
           </div>
         </div>
-        <lib-ucSubsection [id]="'viewAssetInfoId'" [title]="'Asset Information'" [panel]="'viewAssetInfo'">
-        </lib-ucSubsection>
-        <div class="form-body" id="viewAssetInfo">
-          <div class="row">
-            <div class="col-md-6 ">
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Name </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.FullAssetName}} </label>
+        <div *ngIf="ResponseAppAssetData != null">
+          <lib-ucSubsection [id]="'viewAssetInfoId'" [title]="'Asset Information'" [panel]="'viewAssetInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAssetInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Name </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.FullAssetName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Price </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetPriceAmt | number:'.2':'en-US'}}
+                  </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Condition </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.MrAssetConditionCodeDesc}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> License Plate No </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.LicensePlateNo}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Chassis No </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.ChassisNo}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Engine No </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.EngineNo}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Notes </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetNotes}} </label>
+                </div>
               </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Price </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetPriceAmt | number:'.2':'en-US'}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Condition </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.MrAssetConditionCodeDesc}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> License Plate No </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.LicensePlateNo}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Chassis No </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.ChassisNo}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Engine No </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.EngineNo}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Notes </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.AssetNotes}} </label>
-              </div>
-            </div>
-            <div class="col-md-6 ">
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Down Payment </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.DownPaymentAmt | number:'.2':'en-US'}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Asset Usage </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.MrAssetUsageCodeDesc}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Manufacturing Year </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.ManufacturingYear}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Color </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.Color}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> BPKB Issue Date </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.TaxIssueDt | date:'shortDate'}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> BPKB City Issuer </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.TaxCityIssuer}} </label>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Down Payment </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.DownPaymentAmt | number:'.2':'en-US'}}
+                  </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Asset Usage </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.MrAssetUsageCodeDesc}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Manufacturing Year </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.ManufacturingYear}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Color </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.Color}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> BPKB Issue Date </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.TaxIssueDt | date:'shortDate'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> BPKB City Issuer </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppAssetData?.TaxCityIssuer}} </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div *ngIf="ResponseAppAssetData == null">
+          <lib-ucSubsection [id]="'viewLoanPurposeId'" [title]="'Loan Purpose'" [panel]="'viewLoanPurpose'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewLoanPurpose">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Loan Purpose </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppLoanPurposeWithSupplierNameObj?.MrLoanPurposeDescr}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Supplier Name </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppLoanPurposeWithSupplierNameObj?.SupplName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Is Disburse To Customer </label>
+                  <label class="col-md-6 adinslabel" translate *ngIf="ResponseAppLoanPurposeWithSupplierNameObj?.IsDisburseToCust == true">Yes</label>
+                  <label class="col-md-6 adinslabel" translate *ngIf="ResponseAppLoanPurposeWithSupplierNameObj?.IsDisburseToCust == false">No</label>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Budget Plan Amount </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppLoanPurposeWithSupplierNameObj?.BudgetPlanAmt | number:'.2':'en-US'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Self Financing Amount </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppLoanPurposeWithSupplierNameObj?.SelfFinancingAmt | number:'.2':'en-US'}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Financing Amount </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponseAppLoanPurposeWithSupplierNameObj?.FinancingAmt | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <lib-ucSubsection [id]="'viewFinInfoId'" [title]="'Financial Information'" [panel]="'viewFinInfo'">
         </lib-ucSubsection>
         <div class="form-body" id="viewFinInfo">
@@ -135,40 +181,51 @@
             <div class="col-md-6 ">
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Asset Price </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponseAgrmntFinDataData?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> DP Asset Paid by Customer </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Subsidy DP from Dealer </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt - ResponseAgrmntFinDataData?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt - ResponseAgrmntFinDataData?.DownPaymentNettAmt | number:'.2':'en-US'}}
+                </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> First Installment in Advance </label>
-                <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AD'"> {{ResponseAgrmntFinDataData?.InstAmt}} </label>
-                <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AR'"> {{0}} </label>
+                <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AD'">
+                  {{ResponseAgrmntFinDataData?.InstAmt}} </label>
+                <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AR'"> {{0}}
+                </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Insurance Premi </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalInsCustAmt | number:'.2':'en-US'}}
+                </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Life Insurance Premi </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponseAgrmntFinDataData?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Fee </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalFeeAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalFeeAmt | number:'.2':'en-US'}}
+                </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> TDP Paid at MF </label>
-                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TdpPaidCoyAmt | number:'.2':'en-US'}}
+                </label>
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel"> Total Purchase Order Amount </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel">
+                  {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
             <div class="col-md-6 ">

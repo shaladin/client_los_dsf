@@ -464,8 +464,6 @@ export class CollateralDetailComponent implements OnInit {
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
 
-      await this.onItemChange(fouExistObj["AssetTypeCode"]);
-
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
         this.AddCollForm.patchValue({
           SelfUsage: true
@@ -473,6 +471,8 @@ export class CollateralDetailComponent implements OnInit {
       }
 
       this.changeSerialNoValidators(fouExistObj["MrCollateralConditionCode"]);
+      await this.onItemChange(fouExistObj["AssetTypeCode"], true, true);
+
       this.inputLookupExistColl.nameSelect = fouExistObj["FullAssetName"];
       this.inputLookupExistColl.jsonSelect = { FullAssetName: fouExistObj["FullAssetName"] };
       this.inputLookupColl.nameSelect = fouExistObj["FullAssetName"];
@@ -713,7 +713,7 @@ export class CollateralDetailComponent implements OnInit {
     //#endregion
   }
 
-  async onItemChange(AssetTypeCode: string, IsChange: boolean = true) {
+  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false) {
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -752,11 +752,20 @@ export class CollateralDetailComponent implements OnInit {
             this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
           }
         }
-
-        if (this.appCollateralObj != null) {
-          for (var i = 0; i < this.items.length; i++) {
-            if (this.items.controls[i] != null) {
-              this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)];
+        if (isFou) {
+          for (var i = 0; i < this.items.controls.length; i++) {
+            var formGroupItem = this.items.controls[i] as FormGroup;
+            formGroupItem.patchValue({
+              SerialNoValue: response["SerialNo"+(i+1)]
+            });    
+                this.items["controls"][i]["controls"]["SerialNoValue"].disable(); 
+          }
+        } else {
+          if (this.appCollateralObj != null) {
+            for (var i = 0; i < this.items.length; i++) {
+              if (this.items.controls[i] != null) {
+                this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)];
+              }
             }
           }
         }
