@@ -18,11 +18,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT BANK_CODE AS BankCode, BANK_NAME AS BankName, REG_RPT_CODE AS regRptCode",
-        "from": "FROM REF_BANK WITH(NOLOCK)",
-        "where":"WHERE IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupBank"
+  },
     "headerList": [
         {
             "type": "sort",

@@ -26,11 +26,9 @@
         "placeholder": "Sales Head Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT re.EMP_NO AS SalesOfficerNo, re.EMP_NAME AS SalesOfficerName, reHead.EMP_NO AS SalesHeadNo, reHead.EMP_NAME AS SalesHeadName, re.IS_ACTIVE AS OfficerActive, ru.IS_ACTIVE AS HeadActive, rbt.JOB_TITLE_CODE AS JobTitle, ro.OFFICE_CODE As OriOfficeCode",
-      "from": "FROM dbo.REF_EMP re WITH(NOLOCK) JOIN dbo.REF_USER ru WITH(NOLOCK) ON re.REF_EMP_ID = ru.REF_EMP_ID JOIN dbo.REF_USER_ROLE rur WITH(NOLOCK) ON ru.REF_USER_ID = rur.REF_USER_ID LEFT JOIN dbo.REF_USER ruHead WITH(NOLOCK) on ruHead.REF_USER_ID = rur.SPV_ID LEFT JOIN dbo.REF_EMP reHead WITH(NOLOCK) on reHead.REF_EMP_ID = ruHead.REF_EMP_ID JOIN dbo.REF_JOB_TITLE rbt WITH(NOLOCK) on rur.REF_JOB_TITLE_ID = rbt.REF_JOB_TITLE_ID JOIN dbo.REF_OFFICE ro WITH(NOLOCK) on rur.REF_OFFICE_ID = ro.REF_OFFICE_ID",
-      "where":"WHERE re.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupEmp"
+  },
     "headerList": [
         {
           "type": "sort",
@@ -86,4 +84,3 @@
     "propertyId": "SalesOfficerName",
     "propertyName": "SalesOfficerName"
   }
-  

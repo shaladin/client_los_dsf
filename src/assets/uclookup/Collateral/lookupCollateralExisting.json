@@ -50,12 +50,9 @@
         "placeholder": "Serial No 3"
       }
     ],
-    "querystring": {
-      "select": "SELECT MCC.COLLATERAL_NO AS CollateralNo, MIN(MCC.FULL_ASSET_CODE) AS FullAssetCode, MIN(MCC.FULL_ASSET_NAME) AS FullAssetName, MIN(MCC.MANUFACTURING_YEAR) AS ManufacturingYear, MIN(MCC.SERIAL_NO_1) AS SerialNo1, MIN(MCC.SERIAL_NO_2) AS SerialNo2, MIN(MCC.SERIAL_NO_3) AS SerialNo3, MIN(MCC.COLLATERAL_VALUE_AMT) AS CollateralPrice, SUM(MCC.COLLATERAL_PRCNT) AS SumCollateralPrcnt",
-      "from": "FROM dbo.MOU_CUST AS MC WITH(NOLOCK) INNER JOIN dbo.MOU_CUST_COLLATERAL AS MCC WITH(NOLOCK) ON MC.MOU_CUST_ID = MCC.MOU_CUST_ID",
-      "where": "WHERE MC.MOU_STAT IN ( N'REQ', N'LRV', N'SRV', N'SCR', N'FDT', N'MRV', N'MAP', N'DSG', N'ACT', N'RTN')",
-      "groupby": "GROUP BY MCC.COLLATERAL_NO HAVING SUM(MCC.COLLATERAL_PRCNT) < 100 AND SUM(MCC.COLLATERAL_PRCNT) > 0"
-    },
+  "querystring": {
+    "name": "lookupCollateralExisting"
+  },
     "headerList": [
       {
         "type": "sort",
@@ -177,4 +174,3 @@
     "propertyId": "CollateralNo",
     "propertyName": "FullAssetName"
   }
-  

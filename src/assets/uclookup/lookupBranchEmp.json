@@ -18,11 +18,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT VE.VENDOR_EMP_NO AS VendorEmpNo, VE.VENDOR_EMP_NAME AS VendorEmpName, VE.MR_VENDOR_EMP_POSITION_CODE AS MrVendorEmpPositionCode, RM.DESCR AS JobTitleName, RM.REF_MASTER_TYPE_CODE, V.VENDOR_CODE AS VendorCode",
-        "from": "FROM dbo.VENDOR_EMP VE WITH(NOLOCK) JOIN dbo.REF_MASTER RM ON RM.MASTER_CODE = VE.MR_VENDOR_EMP_POSITION_CODE JOIN dbo.VENDOR V ON V.VENDOR_ID = VE.VENDOR_ID",
-        "where":"WHERE VE.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupBranchEmp"
+  },
     "headerList": [
         {
             "type": "sort",
