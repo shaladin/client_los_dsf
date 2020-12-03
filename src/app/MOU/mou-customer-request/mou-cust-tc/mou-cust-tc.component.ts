@@ -9,6 +9,7 @@ import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mou-cust-tc',
@@ -28,7 +29,8 @@ export class MouCustTcComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.formSubmitted = false;
   }
@@ -167,7 +169,8 @@ export class MouCustTcComponent implements OnInit {
       this.httpClient.post(URLConstant.EditListMouCustTc, formFinal).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          this.ResponseMouCustTc.emit(response);
+          // this.ResponseMouCustTc.emit(response);
+          this.router.navigate(["/Mou/Request/Paging"]);
         });
     }
   }
