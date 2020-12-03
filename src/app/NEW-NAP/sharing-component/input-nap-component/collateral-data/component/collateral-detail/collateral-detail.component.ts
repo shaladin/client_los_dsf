@@ -471,7 +471,7 @@ export class CollateralDetailComponent implements OnInit {
       }
 
       this.changeSerialNoValidators(fouExistObj["MrCollateralConditionCode"]);
-      await this.onItemChange(fouExistObj["AssetTypeCode"], true, true);
+      await this.onItemChange(fouExistObj["AssetTypeCode"], true, true, fouExistObj);
 
       this.inputLookupExistColl.nameSelect = fouExistObj["FullAssetName"];
       this.inputLookupExistColl.jsonSelect = { FullAssetName: fouExistObj["FullAssetName"] };
@@ -713,7 +713,7 @@ export class CollateralDetailComponent implements OnInit {
     //#endregion
   }
 
-  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false) {
+  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false, fouExistingObj: any = null) {
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -756,7 +756,7 @@ export class CollateralDetailComponent implements OnInit {
           for (var i = 0; i < this.items.controls.length; i++) {
             var formGroupItem = this.items.controls[i] as FormGroup;
             formGroupItem.patchValue({
-              SerialNoValue: response["SerialNo"+(i+1)]
+              SerialNoValue: fouExistingObj["SerialNo"+(i+1)]
             });    
                 this.items["controls"][i]["controls"]["SerialNoValue"].disable(); 
           }
