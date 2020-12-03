@@ -28,9 +28,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT SOVEN.EMP_NAME AS SalesOfficer, A.SALES_NOTES AS SalesNotes, SSVEN.EMP_NAME AS SalesSpv, SRRM.DESCR AS SalesRecommend",
-        "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.V_EMP_NAME SOVEN WITH(NOLOCK) ON A.SALES_OFFICER_NO = SOVEN.EMP_NO LEFT JOIN dbo.V_EMP_NAME SSVEN WITH(NOLOCK) ON A.SALES_HEAD_NO = SSVEN.EMP_NO LEFT JOIN dbo.V_REF_MASTER SRRM WITH(NOLOCK) ON A.MR_SALES_RECOMMEND_CODE = SRRM.MASTER_CODE AND SRRM.REF_MASTER_TYPE_CODE='SLS_RECOM'",
-        "where": "WHERE a.APP_ID = {0}"
+        "name": "viewTabApplicationFactoringSingleInfo"
       }
     },
     {
