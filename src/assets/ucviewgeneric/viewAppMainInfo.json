@@ -28,7 +28,7 @@
                   {
                     "property" : "BizTemplateCode",
                     "value" : "CFNA",
-                    "restriction" : "NEQ"
+                    "restriction" : "EQ"
                   }
                 ],
                 "result": {
@@ -42,7 +42,7 @@
                   {
                     "property" : "BizTemplateCode",
                     "value" : "CFNA",
-                    "restriction" : "EQ"
+                    "restriction" : "NEQ"
                   }
                 ],
                 "result": {
