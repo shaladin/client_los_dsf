@@ -20,10 +20,38 @@
               }
             ]
           }, 
-          {
-            "type": "text",
-            "label": "Number Of Asset",
-            "property": "NumOfAsset"
+          {            
+            "type" : "switch", 
+            "case" : [ 
+              {
+                "conditions": [                  
+                  {
+                    "property" : "BizTemplateCode",
+                    "value" : "CFNA",
+                    "restriction" : "NEQ"
+                  }
+                ],
+                "result": {
+                  "type": "text",
+                  "label": "Number Of Collateral",
+                  "property" : "NumOfAsset"
+                }
+              },
+              {
+                "conditions": [                  
+                  {
+                    "property" : "BizTemplateCode",
+                    "value" : "CFNA",
+                    "restriction" : "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "text",
+                  "label": "Number Of Asset",
+                  "property" : "NumOfAsset"
+                }
+              }
+            ]
           },
           {
             "type": "text",
