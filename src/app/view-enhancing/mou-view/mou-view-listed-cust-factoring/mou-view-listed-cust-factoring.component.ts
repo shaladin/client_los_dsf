@@ -16,11 +16,11 @@ export class MouViewListedCustFactoringComponent implements OnInit {
   constructor(private http : HttpClient) { } 
 
   ngOnInit() {
-    var mouObj = new MouCustObj();
+    let mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouObj).subscribe(
+    this.http.post<Array<any>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouObj).subscribe(
       response => {
-        this.responseCustListed = response['mouCustListedCustFctrObjs'];
+        this.responseCustListed = response;
       });
   }
   openView(custNo){
