@@ -907,7 +907,7 @@ export class MouCustTabComponent implements OnInit {
     this.inputAddrLegalCompanyObj = new InputAddressObj();
     this.inputAddrLegalCompanyObj.showPhn3 = false;
     this.inputAddrLegalCompanyObj.showSubsection = false;
-    this.inputAddrLegalCompanyObj.showOwnership = true;
+    this.inputAddrLegalCompanyObj.showOwnership = false;
   }
 
   initAddrResidenceObj() {
