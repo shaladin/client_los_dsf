@@ -204,6 +204,6 @@ export class AdInsHelper {
   }
 
   public static RedirectUrl(router: Router, url: Array<string>, queryParams: {}) {
-    router.navigate(url, { queryParams: queryParams, skipLocationChange: true });
+    router.navigate(url, { queryParams: queryParams, skipLocationChange: false });
   }
 }
