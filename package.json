@@ -29,7 +29,7 @@
     "@adins/ucgridview": "^2.0.47",
     "@adins/ucinputnumber": "^1.0.2",
     "@adins/uclookupgeneric": "^2.0.29",
-    "@adins/ucpaging": "^2.0.29",
+    "@adins/ucpaging": "^2.0.30",
     "@adins/ucreport": "^1.0.9",
     "@adins/ucsearch": "^2.0.40",
     "@adins/ucthingstodo": "^1.0.4",
