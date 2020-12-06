@@ -126,15 +126,15 @@
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "LC.CUST_NAME"
-        },
-        {
-            "type": "sort",
             "position": "center",
             "label": "Order No",
             "name": "L.ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "LC.CUST_NAME"
         },
         {
             "type": "sort",
