@@ -61,7 +61,6 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   }
 
   event(ev){
-    console.log(ev);
     switch(ev.Key){
       case "ViewProdOffering":{
         AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
