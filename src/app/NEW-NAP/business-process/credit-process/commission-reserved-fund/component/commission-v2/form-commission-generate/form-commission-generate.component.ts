@@ -316,15 +316,23 @@ export class FormCommissionGenerateComponent implements OnInit {
           this.SetDefaultDDLBankAcc(idx, idxDefault);
         });
     } else if (content == CommonConstant.ContentReferantor) {
-      var eachDDLDetail = this.fb.group({
-        Key: this.FormInputObj["BankData"].BankAccNo,
-        Value: this.FormInputObj["BankData"].BankAccName,
-        BankCode: this.FormInputObj["BankData"].BankCode,
-        BankName: this.FormInputObj["BankData"].BankName,
-        BankBranch: this.FormInputObj["BankData"].BankBranch
-      }) as FormGroup;
-      this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
-      this.SetDefaultDDLBankAcc(idx, idxDefault);
+      this.http.post(URLConstant.GetRefBankByBankCodeAsync, { BankCode: this.FormInputObj["BankData"].BankCode }).toPromise().then(
+        (response) => {
+          var eachDDLDetail = this.fb.group({
+            Key: this.FormInputObj["BankData"].BankAccNo,
+            Value: this.FormInputObj["BankData"].BankAccName,
+            BankCode: this.FormInputObj["BankData"].BankCode,
+            BankName: response["BankName"],
+            BankBranch: this.FormInputObj["BankData"].BankBranch
+          }) as FormGroup;
+          this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
+          this.SetDefaultDDLBankAcc(idx, idxDefault);
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
