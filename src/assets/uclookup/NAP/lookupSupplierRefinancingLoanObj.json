@@ -19,7 +19,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupSupplierRefinancingLoanObj"
+    "name": "lookupSupplierRefinancingLoanObj_Los"
   },
     "headerList": [
       {

@@ -37,7 +37,7 @@
 
     ],
   "querystring": {
-    "name": "lookupDebitorGroup"
+    "name": "lookupDebitorGroup_Los"
   },
     "headerList": [
         {

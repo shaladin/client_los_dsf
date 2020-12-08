@@ -20,7 +20,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupProfession"
+    "name": "lookupProfession_Los"
   },
     "headerList": [
         {

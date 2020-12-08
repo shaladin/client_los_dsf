@@ -36,7 +36,7 @@
     }
   ],
   "querystring": {
-    "name": "lookupIndustryType"
+    "name": "lookupIndustryType_Los"
   },
   "headerList": [
     {

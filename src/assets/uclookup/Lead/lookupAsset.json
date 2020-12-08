@@ -19,7 +19,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupAsset"
+    "name": "lookupAsset_Los"
   },
     "headerList": [
       {

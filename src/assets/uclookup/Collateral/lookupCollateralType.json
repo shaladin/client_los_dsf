@@ -19,7 +19,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupCollateralType"
+    "name": "lookupCollateralType_Los"
   },
     "headerList": [
         {

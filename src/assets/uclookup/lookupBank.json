@@ -19,7 +19,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupBank"
+    "name": "lookupBank_Los"
   },
     "headerList": [
         {

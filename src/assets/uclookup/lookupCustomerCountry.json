@@ -38,7 +38,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupCustomerCountry"
+    "name": "lookupCustomerCountry_Los"
   },
     "bodyList": [
       {
