@@ -6,6 +6,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-backdoor',
@@ -22,6 +23,9 @@ export class BackdoorComponent implements OnInit {
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
+  dmsObj: DMSObj;
+  dmsKeyObj : DMSKeyObj;
+  rootServer: string;
 
   constructor(
     private route: ActivatedRoute) {
@@ -38,26 +42,32 @@ export class BackdoorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
-    this.Uploadlink = this.DMSURL(this.custObj,"Upload");
-    this.Viewlink  = this.DMSURL(this.custObj,"View");
+    // this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
+    // this.Uploadlink = this.DMSURL(this.custObj,"Upload");
+
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = "ConfinsCust";
+    this.dmsObj.MetadataParent = null;
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("No Customer", this.custObj.CustNo));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
+
+    this.dmsKeyObj = new DMSKeyObj();
+    this.dmsKeyObj.k = this.k;
+    this.dmsKeyObj.iv = this.iv;
+    this.rootServer = "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx";
   }
 
-  DMSURL(custObj: CustObj, permission : string) {
-    if (custObj != undefined) {
-      let Obj: DMSObj = new DMSObj();
-      Obj.User = "Admin";
-      Obj.Role = "SUPUSR";
-      Obj.ViewCode = "ConfinsCust";
-      Obj.MetadataParent = null;
-      Obj.MetadataObject.push(new DMSLabelValueObj("No Customer", custObj.CustNo));
-      Obj.Option.push(new DMSLabelValueObj("OverideSecurity", permission));
-      let ObjFinalForm = "js=" + JSON.stringify(Obj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
-      let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
-      prm = encodeURIComponent(prm);
-      console.log("Final Form : " + ObjFinalForm);
-      console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
-      return "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm;
-    }
-  }
+  // DMSURL(custObj: CustObj, permission : string) {
+  //   if (custObj != undefined) {
+
+  //     let ObjFinalForm = "js=" + JSON.stringify(Obj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
+  //     let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
+  //     prm = encodeURIComponent(prm);
+  //     console.log("Final Form : " + ObjFinalForm);
+  //     console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
+  //     return "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm;
+  //   }
+  // }
 }
