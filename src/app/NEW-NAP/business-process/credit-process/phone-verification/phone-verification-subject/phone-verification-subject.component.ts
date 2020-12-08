@@ -120,26 +120,30 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async SaveForm() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    if (this.isReturnHandling == false) {
-      this.setReturnHandlingH();
-      this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
-        (response) => {
+    if (this.blankCount == 0) {
+      var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+      if (this.isReturnHandling == false) {
+        this.setReturnHandlingH();
+        this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
+          (response) => {
 
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/PhoneVerification/Paging"], {  "BizTemplateCode": BizTemplateCode });
-        });
+            this.toastr.successMessage(response["message"]);
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Paging"], { "BizTemplateCode": BizTemplateCode });
+          });
+      }
+      if (this.isReturnHandling == true) {
+        this.setReturnHandlingD();
+        this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { "BizTemplateCode": BizTemplateCode });
+          });
+
+      }
     }
-    if (this.isReturnHandling == true) {
-      this.setReturnHandlingD();
-      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], {  "BizTemplateCode": BizTemplateCode });
-        });
-
+    else{
+      this.toastr.warningMessage("Please verify all the subject.");
     }
-
   }
 
   setReturnHandlingD() {
@@ -172,8 +176,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], {  BizTemplateCode: lobCode });
-        
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { BizTemplateCode: lobCode });
+
       }
     );
   }
@@ -205,6 +209,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
       (response) => {
         this.phoneVerifObj = response;
+        console.log("this.phoneVerifObj");
+        console.log(this.phoneVerifObj);
         this.tempBlank = this.phoneVerifObj.filter(
           blank => blank.Result == '');
         this.tempScs = this.phoneVerifObj.filter(
@@ -214,6 +220,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         this.blankCount = this.tempBlank.length;
         this.scsCount = this.tempScs.length;
         this.failCount = this.tempFail.length;
+
       }
     );
   }
@@ -269,11 +276,11 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource, SubjectRelation) {
     if (this.isReturnHandling == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/PhoneVerification/Subject/Verif"], {  "AppId": this.appId,  "VerfResultHId" : VerifResultHid, "Name" : SubjectName, "Type":SubjectType, "Relation" :SubjectRelation, "Source":IdSource, "WfTaskListId":this.wfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Subject/Verif"], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "WfTaskListId": this.wfTaskListId });
 
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/PhoneVerification/Subject/Verif"], {  "AppId": this.appId,  "VerfResultHId" : VerifResultHid, "Name" : SubjectName, "Type":SubjectType, "Relation" :SubjectRelation, "Source":IdSource, "ReturnHandlingHId":this.returnHandlingHId,"WfTaskListId":this.wfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Subject/Verif"], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
     }
   }
 
@@ -292,10 +299,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   back() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/PhoneVerification/Paging"], { "BizTemplateCode": BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Paging"], { "BizTemplateCode": BizTemplateCode });
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { "BizTemplateCode": BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { "BizTemplateCode": BizTemplateCode });
     }
   }
 }
