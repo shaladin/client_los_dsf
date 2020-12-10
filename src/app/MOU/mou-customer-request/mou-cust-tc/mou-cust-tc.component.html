@@ -59,6 +59,8 @@
             </td>
           </tr>
         </tbody>
+        <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>
+
       </table>
     </div>
   </div>

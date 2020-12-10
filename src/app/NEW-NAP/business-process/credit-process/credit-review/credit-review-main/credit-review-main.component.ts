@@ -13,6 +13,9 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -32,6 +35,12 @@ export class CreditReviewMainComponent implements OnInit {
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
   arrValue = [];
+  dmsObj: DMSObj;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  appNo: string;
+  custNo: string;
+  isDmsReady: boolean = false;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -106,14 +115,42 @@ export class CreditReviewMainComponent implements OnInit {
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
+    this.InitDms();
   }
+
+  async InitDms(){
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = "ConfinsApp";
+    var appObj = { AppId: this.appId };
+    await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
+      (response)=>{
+        this.custNo = response['CustNo'];
+      }
+    );
+    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
+
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("No Application", this.appNo));
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", "2333333"));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "View"));
+
+    this.dmsKeyObj = new DMSKeyObj();
+    this.dmsKeyObj.k = CommonConstant.DmsKey;
+    this.dmsKeyObj.iv = CommonConstant.DmsIV;
+    this.rootServer = environment.DMSUrl;
+    this.isDmsReady = true;
+  }
+
 
   async GetAppNo() {
     var obj = { AppId: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
-        if (response != undefined)
+        if (response != undefined){
           this.GetCreditScoring(response["AppNo"]);
+          this.appNo = response["AppNo"];
+        }
       });
   }
 

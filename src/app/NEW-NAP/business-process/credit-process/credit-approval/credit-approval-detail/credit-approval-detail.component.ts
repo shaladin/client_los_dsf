@@ -10,6 +10,10 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 
 @Component({
@@ -28,6 +32,12 @@ export class CreditApprovalDetailComponent implements OnInit {
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
+  dmsObj: DMSObj;
+  custNo: string;
+  appNo: string;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
 
   constructor(private toastr: NGXToastrService,
@@ -59,7 +69,35 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     this.getApp();
+    await this.InitDms();
   }
+
+  async InitDms(){
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = "ConfinsApp";
+    var appObj = { AppId: this.appId };
+
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        this.appNo = response[0]['AppNo'];
+        this.custNo = response[1]['CustNo'];
+
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", "2333333"));
+        this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "View"));
+    
+        this.dmsKeyObj = new DMSKeyObj();
+        this.dmsKeyObj.k = CommonConstant.DmsKey;
+        this.dmsKeyObj.iv = CommonConstant.DmsIV;
+        this.rootServer = environment.DMSUrl;
+        this.isDmsReady = true;
+      }
+    );
+  }
+
 
   HoldTask(obj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(

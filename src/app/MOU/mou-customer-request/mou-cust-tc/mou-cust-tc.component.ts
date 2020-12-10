@@ -10,6 +10,10 @@ import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { Router } from '@angular/router';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-cust-tc',
@@ -25,6 +29,11 @@ export class MouCustTcComponent implements OnInit {
   MouCustTcForm = this.fb.group({
     MouCustTcList: this.fb.array([])
   });
+  dmsObj: DMSObj;
+  dmsKeyObj: DMSKeyObj;
+  custNo: string;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -105,6 +114,29 @@ export class MouCustTcComponent implements OnInit {
         }
       }
     );
+  }
+
+  async InitDms(){
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = "ConfinsApp";
+    var mouObj = { MouCustId: this.MouCustId };
+    await this.httpClient.post(URLConstant.GetMouCustById, mouObj).toPromise().then(
+      (response)=>{
+        this.custNo = response['CustNo'];
+      }
+    );
+    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
+
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", this.MouCustId.toString()));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload View"));
+
+    this.dmsKeyObj = new DMSKeyObj();
+    this.dmsKeyObj.k = CommonConstant.DmsKey;
+    this.dmsKeyObj.iv = CommonConstant.DmsIV;
+    this.rootServer = environment.DMSUrl;
+    this.isDmsReady = true;
   }
 
   checkedHandler(e, i) {

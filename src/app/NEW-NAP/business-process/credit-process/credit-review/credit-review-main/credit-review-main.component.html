@@ -202,7 +202,7 @@
 
             </div>
           </div>
-
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
               <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 

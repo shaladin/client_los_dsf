@@ -51,6 +51,7 @@ import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit
 import { CommissionCfnaComponent } from './commission-reserved-fund/component/commission-cfna/commission-cfna.component';
 import { CreditReviewComponent } from "./credit-review-prototype/credit-review-paging/credit-review-paging.component";
 import { CreditReviewDetailPersonalComponent } from "./credit-review-prototype/credit-review-detail-personal/credit-review-detail-personal.component";
+import { SharedModule } from "app/shared/shared.module";
 
 
 
@@ -91,6 +92,7 @@ export const customCurrencyMaskConfig = {
     UcviewgenericModule,
     ViewAppComponentModule,
     ViewMainInfoComponentModule,
+    SharedModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -128,7 +130,7 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaPagingComponent,
     CommissionCfnaComponent,
     CreditReviewComponent,
-    CreditReviewDetailPersonalComponent
+    CreditReviewDetailPersonalComponent,
   ],
   providers: [
     NGXToastrService
