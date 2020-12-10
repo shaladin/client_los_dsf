@@ -81,31 +81,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "L.MR_CUST_TYPE_CODE",
-            "id": "CustTypeId",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "",
-            "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Customer Type",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "CUST_TYPE"
-        },
-        {
-            "type": "textbox",
-            "name": "LC.CUST_NO",
-            "id": "CustNoId",
-            "value": "",
-            "label": "Customer No.",
-            "placeholder": "Placeholder"
-        },
-        {
             "type": "textbox",
             "name": "LC.CUST_NAME",
             "id": "CustNameId",
