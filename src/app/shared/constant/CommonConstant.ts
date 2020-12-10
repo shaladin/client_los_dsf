@@ -542,5 +542,8 @@ export class CommonConstant {
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
 
+  //DMS
+  public static DmsKey = "PHL7KV8RR0VG30K4";
+  public static DmsIV = "0G7HFV96AVWXUQ51";
 
 }
