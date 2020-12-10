@@ -28,7 +28,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupTeleSales_Los"
+    "name": "lookupTeleSales"
   },
     "headerList": [
         {

@@ -27,7 +27,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupCounterpartCategory_Los"
+    "name": "lookupCounterpartCategory"
   },
     "headerList": [
         {

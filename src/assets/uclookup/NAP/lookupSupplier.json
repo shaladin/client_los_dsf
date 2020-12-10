@@ -19,7 +19,7 @@
     }
   ],
   "querystring": {
-    "name": "lookupSupplier_Los"
+    "name": "lookupSupplier"
   },
   "headerList": [
     {

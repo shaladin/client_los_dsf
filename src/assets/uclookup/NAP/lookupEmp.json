@@ -27,7 +27,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupEmp_Los"
+    "name": "lookupEmp"
   },
     "headerList": [
         {

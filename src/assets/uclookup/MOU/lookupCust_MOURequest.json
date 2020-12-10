@@ -36,7 +36,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupCust_MOURequest_Los"
+    "name": "lookupCust_MOURequest"
   },
     "headerList": [
         {

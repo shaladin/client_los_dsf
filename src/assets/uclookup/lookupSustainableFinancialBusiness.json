@@ -27,7 +27,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupSustainableFinancialBusiness_Los"
+    "name": "lookupSustainableFinancialBusiness"
   },
     "headerList": [
         {

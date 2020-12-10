@@ -20,7 +20,7 @@
       }
     ],
     "querystring": {
-        "name": "lookupCustomer_Los"
+        "name": "lookupCustomer"
     },
     "orderby": {
         "key": "C.CUST_NO",

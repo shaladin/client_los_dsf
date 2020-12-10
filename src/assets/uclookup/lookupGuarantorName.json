@@ -12,7 +12,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupGuarantorName_Los"
+    "name": "lookupGuarantorName"
   },
     "headerList": [
         {

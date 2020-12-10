@@ -20,7 +20,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupEconomicSectorSlik_Los"
+    "name": "lookupEconomicSectorSlik"
   },
     "headerList": [
         {

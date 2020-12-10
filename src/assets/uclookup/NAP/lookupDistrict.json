@@ -19,7 +19,7 @@
     }
   ],
   "querystring": {
-    "name": "lookupDistrict_Los"
+    "name": "lookupDistrict"
   },
   "headerList": [
     {

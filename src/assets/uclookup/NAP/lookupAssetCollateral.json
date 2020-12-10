@@ -19,7 +19,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupAssetCollateral_Los"
+    "name": "lookupAssetCollateral"
   },
     "headerList": [
       {

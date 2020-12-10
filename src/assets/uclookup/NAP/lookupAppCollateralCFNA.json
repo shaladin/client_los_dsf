@@ -19,7 +19,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupAppCollateralCFNA_Los"
+    "name": "lookupAppCollateralCFNA"
   },
     "headerList": [
         {

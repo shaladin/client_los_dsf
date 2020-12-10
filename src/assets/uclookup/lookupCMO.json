@@ -28,7 +28,7 @@
       }
     ],
     "querystring": {
-        "name": "lookupCMO_Los"
+        "name": "lookupCMO"
     },
     "headerList": [
         {

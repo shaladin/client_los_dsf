@@ -19,7 +19,7 @@
       }
     ],
   "querystring": {
-    "name": "lookupAppName_Los"
+    "name": "lookupAppName"
   },
     "headerList": [
         {

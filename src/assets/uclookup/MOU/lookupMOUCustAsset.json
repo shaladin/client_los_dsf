@@ -19,7 +19,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupMOUCustAsset_Los"
+    "name": "lookupMOUCustAsset"
   },
     "headerList": [
         {

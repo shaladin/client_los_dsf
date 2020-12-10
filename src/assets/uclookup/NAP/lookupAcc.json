@@ -19,7 +19,7 @@
     }
   ],
   "querystring": {
-    "name": "lookupAcc_Los"
+    "name": "lookupAcc"
   },
   "headerList": [
     {

@@ -18,7 +18,7 @@
         }
     ],
   "querystring": {
-    "name": "lookupRefMaster_Los"
+    "name": "lookupRefMaster"
   },
     "headerList": [
         {
