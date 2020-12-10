@@ -26,6 +26,7 @@ export class BackdoorComponent implements OnInit {
   dmsObj: DMSObj;
   dmsKeyObj : DMSKeyObj;
   rootServer: string;
+  isReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute) {
@@ -57,6 +58,7 @@ export class BackdoorComponent implements OnInit {
     this.dmsKeyObj.k = this.k;
     this.dmsKeyObj.iv = this.iv;
     this.rootServer = "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx";
+    this.isReady = true;
   }
 
   // DMSURL(custObj: CustObj, permission : string) {

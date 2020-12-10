@@ -10,4 +10,4 @@
   <iframe [src]="Viewlink | safe" style="width: inherit; height: 800px;" title="View DMS Lite"></iframe>
 </div> -->
 
-<app-dms-iframe [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>
+<app-dms-iframe *ngIf="isReady" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>

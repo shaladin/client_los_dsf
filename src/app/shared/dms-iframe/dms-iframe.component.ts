@@ -10,20 +10,24 @@ import { DMSObj } from '../model/DMS/DMSObj.model';
 })
 export class DmsIframeComponent implements OnInit {
   urlLink: string;
-  appName : string = "CONFINS";
-  @Input() dmsObj : DMSObj;
-  @Input() rootServer : string;
-  @Input() dmsKeyObj : DMSKeyObj;
+  appName: string = "CONFINS";
+  @Input() dmsObj: DMSObj;
+  @Input() rootServer: string;
+  @Input() dmsKeyObj: DMSKeyObj;
+  noParamGiven: boolean = true;
   constructor() { }
-  custNo : string;
+  custNo: string;
   ngOnInit() {
-    this.urlLink = this.dmsUrl();
+    if (this.dmsObj != undefined && this.dmsObj != null && this.dmsKeyObj != undefined && this.dmsKeyObj != null && this.rootServer != "" && this.rootServer != undefined) {
+      this.urlLink = this.dmsUrl();
+      this.noParamGiven = false;
+    }
   }
 
   dmsUrl() {
-      let ObjFinalForm = "js=" + JSON.stringify(this.dmsObj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
-      let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.dmsKeyObj.k, this.dmsKeyObj.iv);
-      prm = encodeURIComponent(prm);
-      return this.rootServer + "?app=" + this.appName + "&prm=" + prm;
+    let ObjFinalForm = "js=" + JSON.stringify(this.dmsObj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
+    let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.dmsKeyObj.k, this.dmsKeyObj.iv);
+    prm = encodeURIComponent(prm);
+    return this.rootServer + "?app=" + this.appName + "&prm=" + prm;
   }
 }
