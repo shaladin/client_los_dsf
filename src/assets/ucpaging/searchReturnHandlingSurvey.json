@@ -148,7 +148,8 @@
       "property": "CustName"
     },
     {
-      "type": "text",
+      "type": "callback",
+      "key": "ViewProdOffering",
       "position": "left",
       "property": "ProdOfferingName"
     },
@@ -165,6 +166,7 @@
               "restriction": "EQ"
             }],
             "result": {
+              "key": "Edit",
               "type": "callback"
             },
             "isHide": false
@@ -177,6 +179,7 @@
               "restriction": "EQ"
             }],
             "result": {
+              "key": "Edit",
               "type": "callback"
             },
             "isHide": false
