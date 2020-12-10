@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-backdoor',
@@ -26,7 +26,6 @@ export class BackdoorComponent implements OnInit {
   dmsObj: DMSObj;
   dmsKeyObj : DMSKeyObj;
   rootServer: string;
-  isReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute) {
@@ -57,8 +56,7 @@ export class BackdoorComponent implements OnInit {
     this.dmsKeyObj = new DMSKeyObj();
     this.dmsKeyObj.k = this.k;
     this.dmsKeyObj.iv = this.iv;
-    this.rootServer = "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx";
-    this.isReady = true;
+    this.rootServer = environment.DMSUrl;
   }
 
   // DMSURL(custObj: CustObj, permission : string) {
