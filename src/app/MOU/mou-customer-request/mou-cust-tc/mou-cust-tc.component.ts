@@ -92,6 +92,10 @@ export class MouCustTcComponent implements OnInit {
             promiseDtValidation = [];
             expiredDtValidation = [];
           }
+          if(item.IsWaived){
+            promiseDtValidation = [];
+            expiredDtValidation = [];
+          }
           var formGroup = this.fb.group({
             MouCustTcId: [item.MouCustTcId, [Validators.required]],
             MouCustId: [this.MouCustId, [Validators.required]],
@@ -105,9 +109,18 @@ export class MouCustTcComponent implements OnInit {
             Notes: [item.IsFromRule ? '' : item.Notes],
             PriorTo: [item.PriorTo],
             IsExpiredDt: [item.IsExpiredDt],
+            IsWaivable: [item.IsWaivable],
+            IsWaived: [item.IsWaived],
             RowVersion: ['']
           });
           if(formGroup.controls.IsChecked.value == true){
+            formGroup.controls.IsChecked.disable();
+          }
+          if(formGroup.controls.IsWaivable.value == false){
+            formGroup.controls.IsWaived.disable();
+          }
+          if(formGroup.controls.IsWaived.value == true){
+            formGroup.controls.IsWaived.disable();
             formGroup.controls.IsChecked.disable();
           }
           formArray.push(formGroup);
@@ -162,6 +175,49 @@ export class MouCustTcComponent implements OnInit {
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
         formArray.at(i).get("ExpiredDt").clearValidators();
         formArray.at(i).get("ExpiredDt").updateValueAndValidity();
+      }
+    }
+  }
+
+  waiveHandler(e, i){
+    var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
+    if(e.target.checked == true){
+      formArray.at(i).get("PromisedDt").clearValidators();
+      formArray.at(i).get("PromisedDt").updateValueAndValidity();
+      formArray.at(i).get("ExpiredDt").clearValidators();
+      formArray.at(i).get("ExpiredDt").updateValueAndValidity();
+      formArray.at(i).get("IsChecked").disable();
+      formArray.at(i).patchValue({
+        PromisedDt: '',
+        ExpiredDt: '',
+        IsChecked: false
+      });
+    }
+    else{
+      formArray.at(i).get("IsChecked").enable();
+      var isChecked = formArray.at(i).get("IsChecked").value;
+      if (isChecked) {
+        var mandatory = formArray.at(i).get("IsMandatory").value;
+        var isExpiredDt = formArray.at(i).get("IsExpiredDt").value;
+        if (mandatory == true && isExpiredDt == true) {
+          formArray.at(i).get("ExpiredDt").setValidators([Validators.required]);
+          formArray.at(i).get("ExpiredDt").updateValueAndValidity();
+          formArray.at(i).get("PromisedDt").clearValidators();
+          formArray.at(i).get("PromisedDt").updateValueAndValidity();
+        }
+        else{
+          formArray.at(i).get("PromisedDt").clearValidators();
+          formArray.at(i).get("PromisedDt").updateValueAndValidity();
+        }
+      }
+      else {
+        var mandatory = formArray.at(i).get("IsMandatory").value;
+        if (mandatory == true) {
+          formArray.at(i).get("PromisedDt").setValidators([Validators.required]);
+          formArray.at(i).get("PromisedDt").updateValueAndValidity();
+          formArray.at(i).get("ExpiredDt").clearValidators();
+          formArray.at(i).get("ExpiredDt").updateValueAndValidity();
+        }
       }
     }
   }
