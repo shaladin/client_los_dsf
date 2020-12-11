@@ -10,6 +10,11 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -23,6 +28,12 @@ export class OutstandingTcDetailComponent implements OnInit {
   appTC: any;
   outstandingTcObj: any;
   BizTemplateCode: any;
+  dmsObj: DMSObj;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  isDmsReady: boolean = false;
+  custNo: any;
+  appNo: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -43,6 +54,36 @@ export class OutstandingTcDetailComponent implements OnInit {
       },
     ];
   }
+  async InitDms(){
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = "ConfinsAgr";
+    var appObj = { AppId: this.AppId };
+
+    let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
+    let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
+    forkJoin([getCustNo, getAppNo]).subscribe(
+      (response) => {
+        this.custNo = response[0]['CustNo'];
+        this.appNo = response[1]['AppNo'];
+      }
+    );
+
+    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
+
+    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Application", this.appNo));
+    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("Mou Id", "2333333"));
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("No Agreement", "2333333"));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload View"));
+
+    this.dmsKeyObj = new DMSKeyObj();
+    this.dmsKeyObj.k = CommonConstant.DmsKey;
+    this.dmsKeyObj.iv = CommonConstant.DmsIV;
+    this.rootServer = environment.DMSUrl;
+    this.isDmsReady = true;
+  }
+
 
   SaveForm() {
     this.outstandingTcObj = new OutstandingTcObj();

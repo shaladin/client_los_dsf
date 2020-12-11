@@ -7,6 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-backdoor',
@@ -48,14 +49,14 @@ export class BackdoorComponent implements OnInit {
     this.dmsObj = new DMSObj();
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
-    this.dmsObj.ViewCode = "ConfinsCust";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeCust;
     this.dmsObj.MetadataParent = null;
-    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("No Customer", this.custObj.CustNo));
-    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custObj.CustNo));
+    this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUpload));
 
     this.dmsKeyObj = new DMSKeyObj();
-    this.dmsKeyObj.k = this.k;
-    this.dmsKeyObj.iv = this.iv;
+    this.dmsKeyObj.k = CommonConstant.DmsKey;
+    this.dmsKeyObj.iv = CommonConstant.DmsIV;
     this.rootServer = environment.DMSUrl;
   }
 
