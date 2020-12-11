@@ -105,15 +105,17 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   CalculateAmortization() {
-    if(this.ParentForm.controls.InstAmt.value == 0){
-      this.toastr.warningMessage(ExceptionConstant.INSERT_INST_AMOUNT);
+    this.calcIrregularObj = this.ParentForm.value;
+    this.calcIrregularObj["IsRecalculate"] = false;
+    
+    var IdxKosong = this.calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
+    if(IdxKosong != -1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (IdxKosong + 1));
       return;
     }
     if(this.ValidateFee() == false){
       return;
     }
-    this.calcIrregularObj = this.ParentForm.value;
-    this.calcIrregularObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
