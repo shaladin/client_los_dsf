@@ -20,7 +20,7 @@
         }
     ],
   "querystring": {
-    "name": "searchMouCustCollateral"
+    "name": "searchMouCustCollateral_Los"
   },
     "headerList": [],
     "bodyList": []

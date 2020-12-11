@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-471",
+  "version": "1.0.0-484",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -29,7 +29,7 @@
     "@adins/ucgridview": "^2.0.47",
     "@adins/ucinputnumber": "^1.0.2",
     "@adins/uclookupgeneric": "^2.0.29",
-    "@adins/ucpaging": "^2.0.29",
+    "@adins/ucpaging": "^2.0.30",
     "@adins/ucreport": "^1.0.9",
     "@adins/ucsearch": "^2.0.40",
     "@adins/ucthingstodo": "^1.0.4",
@@ -64,7 +64,7 @@
     "@types/chartist": "0.9.43",
     "@types/d3-shape": "1.2.4",
     "@types/dragula": "2.1.33",
-    "@types/jquery": "^3.5.4",
+    "@types/jquery": "^3.5.5",
     "angular-archwizard": "^5.0.1",
     "angular-calendar": "0.26.3",
     "angular-file-uploader": "^5.0.2",

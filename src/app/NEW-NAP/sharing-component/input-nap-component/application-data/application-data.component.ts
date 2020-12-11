@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -20,6 +20,7 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { LoanObjectComponent } from './loan-object/loan-object.component';
 
 @Component({
   selector: 'app-application-data',
@@ -34,6 +35,7 @@ export class ApplicationDataComponent implements OnInit {
   @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @ViewChild("LoanObjComp") loanObjComponent: LoanObjectComponent;
 
   ListCrossAppObj: any = {};
   inputLookupObj;
@@ -48,6 +50,8 @@ export class ApplicationDataComponent implements OnInit {
   mouCustObj;
   CustNo: string;
   isMainData: boolean = false;
+  isProdOfrUpToDate: boolean = true;
+  missingProdOfrComp: string;
   
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -216,6 +220,11 @@ export class ApplicationDataComponent implements OnInit {
           InterestTypeDesc: response["CompntValueDesc"],
         });
         this.ChangeInterestType();
+      },
+      (error) => {
+        console.log(error);
+        this.isProdOfrUpToDate = false;
+        this.missingProdOfrComp = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
       });
   }
 
@@ -575,6 +584,14 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ClickSave() { 
+    if(!this.loanObjComponent.isProdOfrUpToDate){
+      this.toastr.warningMessage("Prod Offering Component \""+this.loanObjComponent.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
+      return false;
+    }
+    if(!this.isProdOfrUpToDate){
+      this.toastr.warningMessage("Prod Offering Component \""+this.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
+      return false;
+    }
     if(this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit){
       this.NapAppModelForm.patchValue({
         PrevAgrNo: null,

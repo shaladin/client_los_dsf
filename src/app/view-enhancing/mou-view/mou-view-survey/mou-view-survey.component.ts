@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: 'app-mou-view-survey',
   templateUrl: './mou-view-survey.component.html',
+  providers: [NGXToastrService],
 })
 export class MouViewSurveyComponent implements OnInit {
   @Input() MouCustId: number;
@@ -26,5 +27,4 @@ export class MouViewSurveyComponent implements OnInit {
 
   SrvyOrderForm = this.fb.group({
   })  
-
 }

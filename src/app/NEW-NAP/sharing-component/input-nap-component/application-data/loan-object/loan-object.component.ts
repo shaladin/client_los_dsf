@@ -34,6 +34,8 @@ export class LoanObjectComponent implements OnInit {
   OfficeCode: string;
   RefProdCmptSupplSchm: any;
   isCFNA : boolean = false;
+  isProdOfrUpToDate: boolean = true;
+  missingProdOfrComp: string;
 
   MainInfoForm = this.fb.group({
     IsDisburseToCust: [false],
@@ -179,6 +181,8 @@ export class LoanObjectComponent implements OnInit {
           ).catch(
             (error) => {
               console.log(error);
+              this.isProdOfrUpToDate = false;
+              this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
             }
           );
         }
@@ -200,6 +204,11 @@ export class LoanObjectComponent implements OnInit {
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptSupplSchm = response;
+      },
+      (error) => {
+        console.log(error);
+        this.isProdOfrUpToDate = false;
+        this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
       }
     );
   }
