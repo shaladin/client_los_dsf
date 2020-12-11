@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -49,11 +50,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
 
   getEvent(ev) {
     if(ev.Key == "prodOff"){
-      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
-        response => {
-          this.link = environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'];
-          window.open(this.link, '_blank');
-        });
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }else if(ev.Key == "copy"){
       if (confirm("Are you sure to copy this application?")) {
         var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
