@@ -13,6 +13,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -377,7 +378,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.isInputLookupObj = true;
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array();
 
     var addCrit1 = new CriteriaObj();
@@ -394,12 +395,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
     
-    var addCrit3 = new CriteriaObj();
-    addCrit3.DataType = "text";
-    addCrit3.propName = "rbt.JOB_TITLE_CODE";
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
 
     var addCrit4 = new CriteriaObj();
     addCrit4.DataType = "text";
@@ -409,7 +404,21 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.arrAddCrit.push(addCrit4);
     
     // this.inputLookupObj.addCritInput = this.arrAddCrit;
+    await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
+  }
+
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+      (response) => {
+        console.log(response);
+        var addCrit3 = new CriteriaObj();
+        addCrit3.DataType = "text";
+        addCrit3.propName = "rbt.JOB_TITLE_CODE";
+        addCrit3.restriction = AdInsConstant.RestrictionIn;
+        addCrit3.listValue = [response.GsValue];
+        this.arrAddCrit.push(addCrit3);
+      });
   }
 
   ChangeRecommendation(ev) {
