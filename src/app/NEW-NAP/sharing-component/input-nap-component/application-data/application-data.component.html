@@ -300,7 +300,7 @@
           <!-- Cross Info -->
           <!-- Loan Object -->
           <div *ngIf="BizTemplateCode != 'OPL'">
-            <app-loan-object #LoanObjComp [AppId]="appId" [mode]="mode" [isCollateral]="true" *ngIf="IsLoanObject"></app-loan-object>
+            <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true" (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
           </div>
 
           

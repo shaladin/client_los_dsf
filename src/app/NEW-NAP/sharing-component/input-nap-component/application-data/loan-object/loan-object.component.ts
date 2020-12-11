@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
@@ -21,6 +21,7 @@ export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
   @Input() mode: string;
   @Input() isCollateral: boolean;
+  @Output() ResponseProdOfrUpToDate: EventEmitter<any>;
 
   modal: any;
   loanObjectInputLookupObj: any;
@@ -57,6 +58,7 @@ export class LoanObjectComponent implements OnInit {
         this.AppLoanPurposeId = params["AppLoanPurposeid"];
       });
     }
+    this.ResponseProdOfrUpToDate = new EventEmitter<any>();
   }
 
   private getDismissReason(reason: any): string {
@@ -183,6 +185,7 @@ export class LoanObjectComponent implements OnInit {
               console.log(error);
               this.isProdOfrUpToDate = false;
               this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
+              this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
             }
           );
         }
@@ -209,6 +212,7 @@ export class LoanObjectComponent implements OnInit {
         console.log(error);
         this.isProdOfrUpToDate = false;
         this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
+        this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
       }
     );
   }
