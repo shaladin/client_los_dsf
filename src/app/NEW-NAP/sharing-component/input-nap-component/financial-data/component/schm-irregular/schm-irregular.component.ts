@@ -10,6 +10,7 @@ import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.M
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-irregular',
@@ -32,7 +33,7 @@ export class SchmIrregularComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
+    private toastr: NGXToastrService
   ) { }
 
   ngOnInit() {
@@ -104,6 +105,10 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    if(this.ParentForm.controls.InstAmt.value == 0){
+      this.toastr.warningMessage(ExceptionConstant.INSERT_INST_AMOUNT);
+      return;
+    }
     if(this.ValidateFee() == false){
       return;
     }

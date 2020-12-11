@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
@@ -10,6 +9,7 @@ import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.M
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-irregular-cfna',
@@ -32,7 +32,7 @@ export class SchmIrregularCFNAComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
+    private toastr: NGXToastrService
   ) { }
 
   ngOnInit() {
@@ -104,6 +104,10 @@ export class SchmIrregularCFNAComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    if(this.ParentForm.controls.InstAmt.value == 0){
+      this.toastr.warningMessage(ExceptionConstant.INSERT_INST_AMOUNT);
+      return;
+    }
     if(this.ValidateFee() == false){
       return;
     }
