@@ -15,6 +15,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { DmsIframeComponent } from './dms-iframe/dms-iframe.component';
 import { AppModule } from 'app/app.module';
 import { SafePipe } from './pipe/safepipe';
+import { CookieModule } from 'ngx-cookie';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SafePipe } from './pipe/safepipe';
         CommonModule,
         NgbModule,
         TranslateModule,
-        ContextMenuModule.forRoot()
+        ContextMenuModule.forRoot(),
+        CookieModule.forRoot()
     ],
     declarations: [
         FooterComponent,

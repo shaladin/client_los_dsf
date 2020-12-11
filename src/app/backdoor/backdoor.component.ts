@@ -8,7 +8,7 @@ import { CustObj } from 'app/shared/model/CustObj.Model';
 import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-backdoor',
   templateUrl: './backdoor.component.html',
@@ -29,7 +29,8 @@ export class BackdoorComponent implements OnInit {
   rootServer: string;
 
   constructor(
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(
       (param: ParamMap) => {
         if (param["CUST_NO"] != undefined && param["KEY"] != undefined && param["IV"] != undefined) {
@@ -45,7 +46,8 @@ export class BackdoorComponent implements OnInit {
   ngOnInit() {
     // this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
     // this.Uploadlink = this.DMSURL(this.custObj,"Upload");
-
+    let testtt = this.cookieService.get(CommonConstant.USER_ACCESS);
+    console.log(testtt);
     this.dmsObj = new DMSObj();
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";

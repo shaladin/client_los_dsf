@@ -546,10 +546,12 @@ export class CommonConstant {
   public static DmsKey = "PHL7KV8RR0VG30K4";
   public static DmsIV = "0G7HFV96AVWXUQ51";
   public static DmsNoCust = "No Customer";
+  public static DmsNoApp = "No Application";
+  public static DmsMouId = "Mou Id";
   public static DmsOverideSecurity = "OverideSecurity";
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";
-  public static DmsOverideUploadView = "Upload View";
+  public static DmsOverideUploadView = "Upload,View";
   public static DmsViewCodeCust = "ConfinsCust";
   public static DmsViewCodeApp = "ConfinsApp";
   public static DmsViewCodeAgr = "ConfinsAgr";

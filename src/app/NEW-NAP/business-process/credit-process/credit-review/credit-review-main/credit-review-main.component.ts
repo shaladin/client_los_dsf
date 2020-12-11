@@ -122,18 +122,18 @@ export class CreditReviewMainComponent implements OnInit {
     this.dmsObj = new DMSObj();
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
-    this.dmsObj.ViewCode = "ConfinsApp";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
       (response)=>{
         this.custNo = response['CustNo'];
       }
     );
-    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
+    this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
 
-    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("No Application", this.appNo));
-    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", "2333333"));
-    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "View"));
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+    // this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, "2333333"));
+    this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
 
     this.dmsKeyObj = new DMSKeyObj();
     this.dmsKeyObj.k = CommonConstant.DmsKey;
