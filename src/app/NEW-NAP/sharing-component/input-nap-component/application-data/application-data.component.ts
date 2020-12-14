@@ -19,6 +19,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LoanObjectComponent } from './loan-object/loan-object.component';
 
 @Component({
@@ -407,7 +408,7 @@ export class ApplicationDataComponent implements OnInit {
     this.isInputLookupObj = true;
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array();
 
     var addCrit1 = new CriteriaObj();
@@ -424,13 +425,6 @@ export class ApplicationDataComponent implements OnInit {
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
 
-    var addCrit3 = new CriteriaObj();
-    addCrit3.DataType = "text";
-    addCrit3.propName = "rbt.JOB_TITLE_CODE";
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
-
     var addCrit4 = new CriteriaObj();
     addCrit4.DataType = "text";
     addCrit4.propName = "ro.OFFICE_CODE";
@@ -438,7 +432,22 @@ export class ApplicationDataComponent implements OnInit {
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    await this.GetGSValueSalesOfficer();
+
     this.makeLookUpObj();
+  }
+
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+      (response) => {
+        console.log(response);
+        var addCrit3 = new CriteriaObj();
+        addCrit3.DataType = "text";
+        addCrit3.propName = "rbt.JOB_TITLE_CODE";
+        addCrit3.restriction = AdInsConstant.RestrictionIn;
+        addCrit3.listValue = [response.GsValue];
+        this.arrAddCrit.push(addCrit3);
+      });
   }
 
   ChangeNumOfInstallmentTenor() {

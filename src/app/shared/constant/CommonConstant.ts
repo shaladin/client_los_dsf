@@ -541,6 +541,7 @@ export class CommonConstant {
 
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
+  public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
 
 
 }
