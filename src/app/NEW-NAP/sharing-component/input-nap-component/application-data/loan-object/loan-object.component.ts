@@ -170,7 +170,7 @@ export class LoanObjectComponent implements OnInit {
           };
           this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
             (response) => {
-              if(response && response["ProdOfferingDId"] > 0){
+              if(response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0){
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
@@ -184,27 +184,32 @@ export class LoanObjectComponent implements OnInit {
                   };
                   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
                     (response) => {
-                      this.RefProdCmptSupplSchm = response;
+                      if(response && response["StatusCode"] == "200"){
+                        this.RefProdCmptSupplSchm = response;
+                      }
+                      else{
+                        // throw new Error("Suppl Schm component not found, please use the latest product offering");
+                        this.isProdOfrUpToDate = false;
+                        this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
+                        this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
+                      }
                     },
                     (error) => {
                       console.log(error);
-                      this.isProdOfrUpToDate = false;
-                      this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
-                      this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
                     }
                   );
                 }
               }
               else{
-                throw new Error("Disburse To Cust component not found, please use the latest product offering");
+                // throw new Error("Disburse To Cust component not found, please use the latest product offering");
+                this.isProdOfrUpToDate = false;
+                this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
+                this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
               }
             }
           ).catch(
             (error) => {
               console.log(error);
-              this.isProdOfrUpToDate = false;
-              this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
-              this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
             }
           );
         }
