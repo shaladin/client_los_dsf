@@ -6,6 +6,8 @@ export class MouCustCompanyMgmntShrholderObj {
     JobPositionName: any;
     SharePrcnt: any;
     IsSigner: any;
+    IsOwner: any;
+    IsActive: any;
     MrIdTypeCode: any;
     IdNo: any;
     IdExpiredDt: any;
@@ -32,6 +34,8 @@ constructor() {
         this.MrJobPositionCode = "";
         this.SharePrcnt = 0;
         this.IsSigner = false;
+        this.IsOwner = false;
+        this.IsActive = false;
         this.MrIdTypeCode = "";
         this.IdNo = "";
         this.BirthPlace = "";

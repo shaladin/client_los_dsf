@@ -79,6 +79,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     SharePrcnt: [0, [Validators.min(0),Validators.max(100), Validators.pattern("^[0-9]+$")]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
+    IsOwner: [false],
+    IsActive: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
     EstablishmentDt: ['', Validators.required],
     IsGuarantor: [false]
@@ -210,6 +212,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         MrJobPositionCode: this.listShareholder[i].MrJobPositionCode,
         IsSigner: this.listShareholder[i].IsSigner,
+        IsOwner: this.listShareholder[i].IsOwner,
+        IsActive: this.listShareholder[i].IsActive,
         IsGuarantor: this.listShareholder[i].IsGuarantor
       });
       if(this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != ""){
@@ -237,6 +241,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
         TaxIdNo: this.listShareholder[i].TaxIdNo,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         IsSigner: this.listShareholder[i].IsSigner,
+        IsOwner: this.listShareholder[i].IsOwner,
+        IsActive: this.listShareholder[i].IsActive,
         IsGuarantor: this.listShareholder[i].IsGuarantor
       });
       this.selectedCustTypeName = this.listShareholder[i].CustTypeName;
@@ -282,6 +288,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],
+      IsOwner: [false],
+      IsActive: [false],
       MrCompanyTypeCode: [this.defaultCompanyType, Validators.maxLength(50)],
       EstablishmentDt: ['', Validators.required],
       IsGuarantor: [false]
@@ -414,6 +422,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.MrJobPositionCode = this.CustShareholderForm.controls.MrJobPositionCode.value;
       this.appCustCompanyMgmntShrholderObj.JobPositionName = this.selectedJobPositionName;
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
+      this.appCustCompanyMgmntShrholderObj.IsOwner = this.CustShareholderForm.controls.IsOwner.value;
+      this.appCustCompanyMgmntShrholderObj.IsActive = this.CustShareholderForm.controls.IsActive.value;
     }
 
     if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypeCompany){
@@ -427,6 +437,9 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.TaxIdNo = this.CustShareholderForm.controls.TaxIdNo.value;
       this.appCustCompanyMgmntShrholderObj.SharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
       this.appCustCompanyMgmntShrholderObj.IsGuarantor = this.CustShareholderForm.controls.IsGuarantor.value;
+      this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
+      this.appCustCompanyMgmntShrholderObj.IsOwner = this.CustShareholderForm.controls.IsOwner.value;
+      this.appCustCompanyMgmntShrholderObj.IsActive = this.CustShareholderForm.controls.IsActive.value;
     }
 
     return flag;
