@@ -584,10 +584,10 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ClickSave() { 
-    if(!this.loanObjComponent.isProdOfrUpToDate){
-      this.toastr.warningMessage("Prod Offering Component \""+this.loanObjComponent.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
-      return false;
-    }
+    // if(!this.loanObjComponent.isProdOfrUpToDate){
+    //   this.toastr.warningMessage("Prod Offering Component \""+this.loanObjComponent.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
+    //   return false;
+    // }
     if(!this.isProdOfrUpToDate){
       this.toastr.warningMessage("Prod Offering Component \""+this.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
       return false;

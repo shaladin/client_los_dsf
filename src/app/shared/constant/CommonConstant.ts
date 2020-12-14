@@ -549,6 +549,7 @@ export class CommonConstant {
   public static DmsIV = "0G7HFV96AVWXUQ51";
   public static DmsNoCust = "No Customer";
   public static DmsNoApp = "No Application";
+  public static DmsNoAgr = "No Agreement";
   public static DmsMouId = "Mou Id";
   public static DmsOverideSecurity = "OverideSecurity";
   public static DmsOverideUpload = "Upload";
