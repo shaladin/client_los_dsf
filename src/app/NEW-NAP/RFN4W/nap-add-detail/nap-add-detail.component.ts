@@ -12,6 +12,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -51,7 +54,13 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 7,
     "FIN": 8,
     "TC": 9,
+    "UPD":10
   };
+  dmsObj: DMSObj;
+  appNo: string;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -70,7 +79,7 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -116,6 +125,29 @@ export class NapAddDetailComponent implements OnInit {
     };
 
     this.MakeViewReturnInfoObj();
+    await this.initDms();
+  }
+
+  async initDms(){
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
+    var appObj = {AppId : this.appId};
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+    
+        this.dmsKeyObj = new DMSKeyObj();
+        this.dmsKeyObj.k = CommonConstant.DmsKey;
+        this.dmsKeyObj.iv = CommonConstant.DmsIV;
+        this.rootServer = environment.DMSUrl;
+        this.isDmsReady = true;
+      }
+    );
   }
 
   MakeViewReturnInfoObj() {
@@ -180,7 +212,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+        case CommonConstant.AppStepUplDoc:
+          this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+          break;
       default:
         break;
     }

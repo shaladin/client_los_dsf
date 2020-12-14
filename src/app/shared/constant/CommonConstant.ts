@@ -100,6 +100,7 @@ export class CommonConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
+  public static AppStepUplDoc = "UPD";
   public static AppStepColl = "COLL";
   public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";

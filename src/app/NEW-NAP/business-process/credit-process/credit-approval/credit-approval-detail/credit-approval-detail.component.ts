@@ -76,7 +76,7 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.dmsObj = new DMSObj();
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
-    this.dmsObj.ViewCode = "ConfinsApp";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.appId };
 
     let getApp = await this.http.post(URLConstant.GetAppById, appObj)
@@ -87,7 +87,7 @@ export class CreditApprovalDetailComponent implements OnInit {
         this.custNo = response[1]['CustNo'];
 
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", "2333333"));
-        this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "View"));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
     
         this.dmsKeyObj = new DMSKeyObj();
         this.dmsKeyObj.k = CommonConstant.DmsKey;

@@ -44,6 +44,11 @@
           <app-cust-history [AppId]="appId"></app-cust-history>
         </ng-template>
       </mat-tab>
+      <mat-tab label="Upload Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
       <mat-tab *ngIf="BizTemplateCode != 'CFRFN4W'" label="Analysis Result">
         <ng-template matTabContent>
           <app-tab-analysis-result [appId]="appId"></app-tab-analysis-result>
@@ -63,9 +68,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe> -->
-    
+    </div>    
     <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
     </lib-ucapproval> 
   </div>

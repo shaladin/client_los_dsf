@@ -14,6 +14,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -51,6 +54,7 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 7,
     "FIN": 8,
     "TC": 9,
+    "UPD": 10
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -58,6 +62,11 @@ export class NapAddDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   OnFormReturnInfo = false;
+  dmsObj: DMSObj;
+  appNo: string;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -80,7 +89,7 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -122,6 +131,29 @@ export class NapAddDetailComponent implements OnInit {
         });
     }
     this.MakeViewReturnInfoObj();
+    this.initDms();
+  }
+
+  async initDms() {
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
+    var appObj = { AppId: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+
+        this.dmsKeyObj = new DMSKeyObj();
+        this.dmsKeyObj.k = CommonConstant.DmsKey;
+        this.dmsKeyObj.iv = CommonConstant.DmsIV;
+        this.rootServer = environment.DMSUrl;
+        this.isDmsReady = true;
+      }
+    );
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -145,6 +177,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 7,
         "FIN": 8,
         "TC": 9,
+        "UPD": 10
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -165,6 +198,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 7,
         "FIN": 7,
         "TC": 8,
+        "UPD": 9
       };
     }
   }
@@ -240,7 +274,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -248,8 +284,8 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      
-     this.ucViewMainProd.initiateForm();
+
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -284,13 +320,13 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/ConsumerFinance/Paging"], { BizTemplateCode: CommonConstant.CF4W });
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/ConsumerFinance/Paging"], { BizTemplateCode: CommonConstant.CF4W });
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/ConsumerFinance/Paging"], { BizTemplateCode: CommonConstant.CF4W });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/ConsumerFinance/Paging"], { BizTemplateCode: CommonConstant.CF4W });
   }
 
   Submit() {
@@ -311,7 +347,7 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
           }
         )
       }
@@ -336,7 +372,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

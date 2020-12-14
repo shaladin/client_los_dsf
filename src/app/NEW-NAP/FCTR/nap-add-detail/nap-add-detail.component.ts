@@ -11,6 +11,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -42,8 +45,14 @@ export class NapAddDetailComponent implements OnInit {
     "COLL": 4,
     "INS": 5,
     "FIN": 6,
-    "TC": 7
+    "TC": 7,
+    "UPD": 8
   };
+  dmsObj: DMSObj;
+  appNo: string;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -59,7 +68,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
@@ -98,10 +107,33 @@ export class NapAddDetailComponent implements OnInit {
     })
 
     this.MakeViewReturnInfoObj();
+    this.initDms();
+  }
+
+  async initDms() {
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
+    var appObj = { AppId: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+
+        this.dmsKeyObj = new DMSKeyObj();
+        this.dmsKeyObj.k = CommonConstant.DmsKey;
+        this.dmsKeyObj.iv = CommonConstant.DmsIV;
+        this.rootServer = environment.DMSUrl;
+        this.isDmsReady = true;
+      }
+    );
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/Factoring/Paging"], { });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
   }
 
   MakeViewReturnInfoObj() {
@@ -145,9 +177,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-        case CommonConstant.AppStepInvoice:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
-          break;
+      case CommonConstant.AppStepInvoice:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
+        break;
       case CommonConstant.AppStepColl:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
         break;
@@ -160,7 +192,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -181,7 +215,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/Factoring/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
       })
   }
 
@@ -211,7 +245,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
 
-  GetCallback(ev){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

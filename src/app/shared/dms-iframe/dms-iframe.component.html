@@ -1,6 +1,30 @@
-<div class="col-md-12" *ngIf="noParamGiven">
-  NO PARAM GIVEN !!
-</div>
-<div class="col-md-12" *ngIf="noParamGiven == false">
-  <iframe [src]="urlLink | safe" style="width: inherit; height: 800px;" title="Upload DMS Lite"></iframe>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal">
+            <div class="form-body">
+              <div class="col-md-12" *ngIf="noParamGiven">
+                NO PARAM GIVEN !!
+              </div>
+              <div class="col-md-12" *ngIf="noParamGiven == false">
+                <iframe [src]="urlLink | safe" style="width: inherit; height: 800px;" title="Upload DMS Lite"></iframe>
+              </div>
+
+              <div *ngIf="showButton" class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                  translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" (click)="Save()">
+                  <i class="far fa-check-square"></i> Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

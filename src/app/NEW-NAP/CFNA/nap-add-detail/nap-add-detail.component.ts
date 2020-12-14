@@ -13,6 +13,9 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -51,6 +54,7 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 7,
     "FIN": 8,
     "TC": 9,
+    "UPD": 10
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -58,6 +62,11 @@ export class NapAddDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   OnFormReturnInfo = false;
+  appNo: string;
+  dmsObj: DMSObj;
+  dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,7 +90,7 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
@@ -128,6 +137,29 @@ export class NapAddDetailComponent implements OnInit {
     const component = this.mainInfoContainer.createComponent(componentFactory);
     component.instance.viewGenericObj = this.viewGenericObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
+    await this.initDms();
+  }
+
+  async initDms() {
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
+    var appObj = { AppId: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+
+        this.dmsKeyObj = new DMSKeyObj();
+        this.dmsKeyObj.k = CommonConstant.DmsKey;
+        this.dmsKeyObj.iv = CommonConstant.DmsIV;
+        this.rootServer = environment.DMSUrl;
+        this.isDmsReady = true;
+      }
+    );
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -150,6 +182,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 7,
         "FIN": 8,
         "TC": 9,
+        "UPD": 10
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -169,6 +202,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 7,
         "FIN": 7,
         "TC": 8,
+        "UPD": 9
       };
     }
   }
@@ -244,7 +278,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -253,12 +289,12 @@ export class NapAddDetailComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-        this.mainInfoContainer.clear();
-        const component = this.mainInfoContainer.createComponent(componentFactory);
-        component.instance.viewGenericObj = this.viewGenericObj;
-        component.instance.callback.subscribe((e) => this.GetCallback(e));
-      
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewGenericObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
+
     //  this.ucViewMainProd.initiateForm();
   }
 
@@ -276,10 +312,10 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperCompany.next();
     }
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-        this.mainInfoContainer.clear();
-        const component = this.mainInfoContainer.createComponent(componentFactory);
-        component.instance.viewGenericObj = this.viewGenericObj;
-        component.instance.callback.subscribe((e) => this.GetCallback(e));
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewGenericObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
     // this.ucViewMainProd.initiateForm();
   }
 
@@ -299,13 +335,13 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/CFNA/Paging"], { BizTemplateCode: CommonConstant.CFNA });
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/CFNA/Paging"], { BizTemplateCode: CommonConstant.CFNA });
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CFNA/Paging"], { BizTemplateCode: CommonConstant.CFNA });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/CFNA/Paging"], { BizTemplateCode: CommonConstant.CFNA });
   }
 
   Submit() {
@@ -326,7 +362,7 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFNA });
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFNA });
           }
         )
       }
@@ -351,8 +387,8 @@ export class NapAddDetailComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
 }

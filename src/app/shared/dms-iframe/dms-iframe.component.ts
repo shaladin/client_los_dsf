@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input,EventEmitter, OnInit, Output } from '@angular/core';
 import { AdInsHelper } from '../AdInsHelper';
 import { DMSKeyObj } from '../model/DMS/DMSKeyObj.Model';
 import { DMSObj } from '../model/DMS/DMSObj.model';
@@ -11,9 +11,14 @@ import { DMSObj } from '../model/DMS/DMSObj.model';
 export class DmsIframeComponent implements OnInit {
   urlLink: string;
   appName: string = "CONFINS";
+
+  @Input() showButton: boolean = false;
   @Input() dmsObj: DMSObj;
   @Input() rootServer: string;
   @Input() dmsKeyObj: DMSKeyObj;
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  
   noParamGiven: boolean = true;
   constructor() { }
   custNo: string;
@@ -30,4 +35,12 @@ export class DmsIframeComponent implements OnInit {
     prm = encodeURIComponent(prm);
     return this.rootServer + "?app=" + this.appName + "&prm=" + prm;
   }
+
+  Cancel(){
+    this.outputCancel.emit();
+  }
+  Save(){
+    this.outputTab.emit();
+  }
+  
 }
