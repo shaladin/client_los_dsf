@@ -214,16 +214,21 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
-        this.NapAppModelForm.patchValue({
-          InterestType: response["CompntValue"],
-          InterestTypeDesc: response["CompntValueDesc"],
-        });
-        this.ChangeInterestType();
+        if(response && response["StatusCode"] == "200"){
+          this.NapAppModelForm.patchValue({
+            InterestType: response["CompntValue"],
+            InterestTypeDesc: response["CompntValueDesc"],
+          });
+          this.ChangeInterestType();
+        }
+        else{
+          // throw new Error("Interest Type component not found, please use the latest product offering");
+          this.isProdOfrUpToDate = false;
+          this.missingProdOfrComp += CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+        }
       },
       (error) => {
         console.log(error);
-        this.isProdOfrUpToDate = false;
-        this.missingProdOfrComp = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
       });
   }
 
