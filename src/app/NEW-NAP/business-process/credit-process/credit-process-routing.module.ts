@@ -24,6 +24,8 @@ import { CreditApprovalCfnaComponent } from './credit-approval-cfna/credit-appro
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CreditReviewComponent } from './credit-review-prototype/credit-review-paging/credit-review-paging.component';
 import { CreditReviewDetailPersonalComponent } from './credit-review-prototype/credit-review-detail-personal/credit-review-detail-personal.component';
+import { CreditReviewCrDetailComponent } from './credit-review-cr/credit-review-cr-detail/credit-review-cr-detail.component';
+import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-cr-paging/credit-review-cr-paging.component';
 
 
 const routes: Routes = [
@@ -204,6 +206,20 @@ const routes: Routes = [
         data: {
           title: 'Credit Process Inquiry'
         }
+      },
+      {
+          path: 'CreditReviewCr/Paging',
+          component: CreditReviewCrPagingComponent,
+          data: {
+              title: 'Credit Review Paging'
+          }
+      },
+      {
+          path: 'CreditReviewCr/Detail',
+          component: CreditReviewCrDetailComponent,
+          data: {
+              title: 'Credit Review Paging'
+          }
       }
     ]
   }

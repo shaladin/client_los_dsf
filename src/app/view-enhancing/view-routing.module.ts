@@ -29,6 +29,10 @@ const routes: Routes = [
             {
                 path: 'SurveyView',
                 loadChildren: './survey-view-prototype/survey-view.module#SurveyViewModule'
+            },
+            {
+                path: 'CustExposureView',
+                loadChildren: './cust-exposure-view/cust-exposure-view.module#CustExposureViewModule'
             }
         ]
     }

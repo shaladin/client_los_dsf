@@ -109,12 +109,6 @@
         "name": "a.PROD_OFFERING_NAME"
       },
       {
-        "type": "sort",
-        "position": "center",
-        "label": "Status",
-        "name": "VRS.DESCR"
-      },
-      {
         "type": "label",
         "position": "center",
         "label": "Action"
@@ -162,11 +156,6 @@
         "key": "ViewProdOffering",
         "position": "left",
         "property": "ProdOfferingName"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "ReturnHStatusName"
       },
       {
         "type": "action",
