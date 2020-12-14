@@ -2,10 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { environment } from 'environments/environment';
 import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -33,7 +31,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
+    private toastr: NGXToastrService
   ) { }
 
   ngOnInit() {
@@ -105,11 +103,17 @@ export class SchmIrregularFL4WComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    this.calcIrregularObj = this.ParentForm.value;
+    this.calcIrregularObj["IsRecalculate"] = false;
+    
+    var IdxKosong = this.calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
+    if(IdxKosong != -1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (IdxKosong + 1));
+      return;
+    }
     if(this.ValidateFee() == false){
       return;
     }
-    this.calcIrregularObj = this.ParentForm.value;
-    this.calcIrregularObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;

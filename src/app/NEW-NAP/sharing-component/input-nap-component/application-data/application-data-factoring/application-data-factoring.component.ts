@@ -12,6 +12,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -471,7 +472,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array();
 
     var addCrit1 = new CriteriaObj();
@@ -488,13 +489,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
 
-    var addCrit3 = new CriteriaObj();
-    addCrit3.DataType = "text";
-    addCrit3.propName = "rbt.JOB_TITLE_CODE";
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
-
     var addCrit4 = new CriteriaObj();
     addCrit4.DataType = "text";
     addCrit4.propName = "ro.OFFICE_CODE";
@@ -503,7 +497,22 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.arrAddCrit.push(addCrit4);
 
     //this.inputLookupObj.addCritInput = this.arrAddCrit;
+
+    await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
+  }
+
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+      (response) => {
+        console.log(response);
+        var addCrit3 = new CriteriaObj();
+        addCrit3.DataType = "text";
+        addCrit3.propName = "rbt.JOB_TITLE_CODE";
+        addCrit3.restriction = AdInsConstant.RestrictionIn;
+        addCrit3.listValue = [response.GsValue];
+        this.arrAddCrit.push(addCrit3);
+      });
   }
 
   async loadData() {
