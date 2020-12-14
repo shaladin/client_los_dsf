@@ -16,6 +16,9 @@
               <span class="thead-header" name='checked' translate>CHECKED</span>
             </th>
             <th style="text-align: center;">
+              <span translate class="thead-header text-center">WAIVED</span>
+            </th>
+            <th style="text-align: center;">
               <span class="thead-header" name='mandatory' translate>MANDATORY</span>
             </th>
             <th style="text-align: left;">
@@ -35,6 +38,7 @@
             <td class="text-left">{{MouCustTcForm.get('MouCustTcList').at(i).controls.TcName.value}}</td>
             <td class="text-center"><input type="checkbox" class="border-primary" formControlName="IsChecked" (change)="checkedHandler($event, i)"/>
             </td>
+            <td class="text-center"><input type="checkbox" class="border-primary" formControlName="IsWaived" (change)="waiveHandler($event, i)"></td>
             <td class="text-center">
               <!-- <input type="checkbox" formControlName="IsMandatory" (change)="mandatoryHandler($event, i)"/> -->
               {{MouCustTcForm.get('MouCustTcList').at(i).controls.IsMandatory.value == '1' ? 'Yes' : 'No'}}
@@ -42,13 +46,13 @@
             <td class="text-left">
               <input type="date" class="form-control" formControlName="ExpiredDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt.invalid }"
-                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true && MouCustTcForm.get('MouCustTcList').at(i).controls.IsExpiredDt.value == true ? null : ''" />
+                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsWaived.value == true ? '' : MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true && MouCustTcForm.get('MouCustTcList').at(i).controls.IsExpiredDt.value == true ? null : ''" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.ExpiredDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
             <td class="text-left">
               <input type="date" class="form-control" formControlName="PromisedDt" [min]="businessDate | date: 'yyyy-MM-dd'" onkeypress="return false;"
                 [ngClass]="{ 'is-invalid': formSubmitted && MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt.invalid }"
-                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
+                [attr.disabled]="MouCustTcForm.get('MouCustTcList').at(i).controls.IsWaived.value == true ? '' : MouCustTcForm.get('MouCustTcList').at(i).controls.IsChecked.value == true ? '' : null" />
               <lib-uc-show-errors [control]="MouCustTcForm.get('MouCustTcList').at(i).controls.PromisedDt" [submit]="formSubmitted"></lib-uc-show-errors>
             </td>
             <td class="text-left">
