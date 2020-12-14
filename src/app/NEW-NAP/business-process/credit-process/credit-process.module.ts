@@ -51,6 +51,9 @@ import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit
 import { CommissionCfnaComponent } from './commission-reserved-fund/component/commission-cfna/commission-cfna.component';
 import { CreditReviewComponent } from "./credit-review-prototype/credit-review-paging/credit-review-paging.component";
 import { CreditReviewDetailPersonalComponent } from "./credit-review-prototype/credit-review-detail-personal/credit-review-detail-personal.component";
+import { CreditReviewCrDetailComponent } from './credit-review-cr/credit-review-cr-detail/credit-review-cr-detail.component';
+import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-cr-paging/credit-review-cr-paging.component';
+import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
 
 
 
@@ -91,6 +94,7 @@ export const customCurrencyMaskConfig = {
     UcviewgenericModule,
     ViewAppComponentModule,
     ViewMainInfoComponentModule,
+    CreditReviewComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   declarations: [
@@ -128,7 +132,9 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaPagingComponent,
     CommissionCfnaComponent,
     CreditReviewComponent,
-    CreditReviewDetailPersonalComponent
+    CreditReviewDetailPersonalComponent,
+    CreditReviewCrDetailComponent,
+    CreditReviewCrPagingComponent
   ],
   providers: [
     NGXToastrService

@@ -22,6 +22,7 @@ export class ExceptionConstant {
     public static CUMMULATIVE_TENOR_MUST_HIGHER_THAN = "Cummulative Tenor must be higher than "
     public static BALLOON_AMOUNT_MUST_HIGHER_THAN = "Balloon Amount must be higher than ";
     public static INST_AMOUNT_MUST_HIGHER_THAN = "Installment Amount must be higher than ";
+    public static INPUT_INST_AMOUNT = "Please Input Installment Amount on Installment No ";
     public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
     public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
