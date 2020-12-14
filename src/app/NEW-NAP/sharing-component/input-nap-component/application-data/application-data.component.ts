@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -19,6 +19,8 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { LoanObjectComponent } from './loan-object/loan-object.component';
 
 @Component({
   selector: 'app-application-data',
@@ -33,6 +35,7 @@ export class ApplicationDataComponent implements OnInit {
   @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @ViewChild("LoanObjComp") loanObjComponent: LoanObjectComponent;
 
   ListCrossAppObj: any = {};
   inputLookupObj;
@@ -47,6 +50,8 @@ export class ApplicationDataComponent implements OnInit {
   mouCustObj;
   CustNo: string;
   isMainData: boolean = false;
+  isProdOfrUpToDate: boolean = true;
+  missingProdOfrComp: string;
   
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -215,6 +220,11 @@ export class ApplicationDataComponent implements OnInit {
           InterestTypeDesc: response["CompntValueDesc"],
         });
         this.ChangeInterestType();
+      },
+      (error) => {
+        console.log(error);
+        this.isProdOfrUpToDate = false;
+        this.missingProdOfrComp = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
       });
   }
 
@@ -399,7 +409,7 @@ export class ApplicationDataComponent implements OnInit {
     this.isInputLookupObj = true;
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array();
 
     var addCrit1 = new CriteriaObj();
@@ -416,13 +426,6 @@ export class ApplicationDataComponent implements OnInit {
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
 
-    var addCrit3 = new CriteriaObj();
-    addCrit3.DataType = "text";
-    addCrit3.propName = "rbt.JOB_TITLE_CODE";
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
-
     var addCrit4 = new CriteriaObj();
     addCrit4.DataType = "text";
     addCrit4.propName = "ro.OFFICE_CODE";
@@ -430,7 +433,22 @@ export class ApplicationDataComponent implements OnInit {
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    await this.GetGSValueSalesOfficer();
+
     this.makeLookUpObj();
+  }
+
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+      (response) => {
+        console.log(response);
+        var addCrit3 = new CriteriaObj();
+        addCrit3.DataType = "text";
+        addCrit3.propName = "rbt.JOB_TITLE_CODE";
+        addCrit3.restriction = AdInsConstant.RestrictionIn;
+        addCrit3.listValue = [response.GsValue];
+        this.arrAddCrit.push(addCrit3);
+      });
   }
 
   ChangeNumOfInstallmentTenor() {
@@ -566,6 +584,14 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ClickSave() { 
+    if(!this.loanObjComponent.isProdOfrUpToDate){
+      this.toastr.warningMessage("Prod Offering Component \""+this.loanObjComponent.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
+      return false;
+    }
+    if(!this.isProdOfrUpToDate){
+      this.toastr.warningMessage("Prod Offering Component \""+this.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
+      return false;
+    }
     if(this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit){
       this.NapAppModelForm.patchValue({
         PrevAgrNo: null,

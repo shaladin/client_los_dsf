@@ -32,7 +32,7 @@
               <label class="label-control col-md-6">Customer No</label> 
               <label class="label-control col-md-6"><a (click)="openUrl('customer')"style="color: #299699; cursor: pointer;">{{ AgrmntObj?.CustNo }}</a></label>  
             </div>
-            <div class="row">
+            <div class="row" *ngIf="AgrmntObj?.LeadId != null">
               <label class="label-control col-md-6">Lead No</label>
               <label class="label-control col-md-6"><a href="javascript:void(0);"
                   (click)="openUrl('lead')">{{ LeadObj?.LeadNo }}</a></label>
