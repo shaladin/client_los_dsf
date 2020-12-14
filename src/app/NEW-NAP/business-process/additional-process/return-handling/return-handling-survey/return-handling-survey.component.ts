@@ -68,7 +68,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
       }
       case "Edit":{
         this.TrxNo = ev.RowObj.AppNo;
-        window.location.href = environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token;
+        window.open(environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token);
         break;
       }
     }

@@ -34,7 +34,7 @@
                 "result": {
                   "type": "text",
                   "label": "Number Of Collateral",
-                  "property" : "NumOfAsset"
+                  "property" : "NumOfColl"
                 }
               },
               {
