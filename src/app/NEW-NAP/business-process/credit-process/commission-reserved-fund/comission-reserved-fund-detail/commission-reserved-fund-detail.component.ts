@@ -177,7 +177,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     switch (AppStep) {
       case CommonConstant.AppStepComm:
         this.StepIndex = 1;
-        this.isShow = true;
         break;
       case CommonConstant.AppStepRSVFund:
         this.StepIndex = 2;

@@ -59,28 +59,22 @@
     </div>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
-        </lib-ucSubsection>
-        <div class="form-body" id="viewIncomeInfo" *ngIf="isShow">
-          <div class="row">
-            <div class="col-md-6 ">
-
+        <div class="row">
+          <div class="col-md-6 ">
+            <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewIncomeInfo">
               <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
-                <div class="row" *ngIf="i < TotalHalfListResultRefundIncomeInfo">
+                <div class="row">
                   <div class="col-md-6">
                     <label class="label-control"> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
-                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 1">
+                  <div class="col-md-6 form-inline-right">
                     <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
                     <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                   </div>
-                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 2">
-                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
-                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
-                  </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-md-6">
                   <label class="label-control"> Max Allocated Amount </label>
@@ -89,6 +83,23 @@
                   <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
                     {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
                   <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                </div>
+              </div>    
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <lib-ucSubsection [id]="'viewRemainIncomeInfoId'" [title]="'Remaining Information'" [panel]="'viewRemainIncomeInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewRemainIncomeInfo" *ngIf="isShow">
+              <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="label-control"> {{ item.RefundAllocationFromDesc }} </label>
+                  </div>
+                  <div class="col-md-6 form-inline-right">
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -101,27 +112,9 @@
                   <label class="label-control" *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> (
                     {{-viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} )</label>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 ">
-              <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
-                <div class="row" *ngIf="i >= TotalHalfListResultRefundIncomeInfo">
-                  <div class="col-md-6">
-                    <label class="adInsLabel"> {{ item.RefundAllocationFromDesc }} </label>
-                  </div>
-                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 1">
-                    <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
-                    <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
-                  </div>
-                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 2">
-                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
-                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
-                  </div>
-                </div>
-              </div>
+              </div>    
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -148,10 +141,10 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission-v2 *ngIf="StepIndex == 1 && isView && BizTemplateCode != 'CFNA'" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
-            (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission-v2>
-          <app-commission-cfna *ngIf="StepIndex == 1 && isView && BizTemplateCode == 'CFNA'" [AppId]="ReturnHandlingHObj.AppId" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
-            (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission-cfna>
+          <app-commission-v2 *ngIf="StepIndex == 1 && isView && BizTemplateCode != 'CFNA'" [AppId]="ReturnHandlingHObj.AppId" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
+            (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission-v2>
+          <app-commission-cfna *ngIf="StepIndex == 1 && isView && BizTemplateCode == 'CFNA'" [AppId]="ReturnHandlingHObj.AppId" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
+            (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission-cfna>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
           <reserved-fund *ngIf="StepIndex == 2 && isView" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm"
