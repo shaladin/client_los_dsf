@@ -13,6 +13,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
@@ -25,11 +26,14 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   mode : any;
   ListCrossAppObj: any = {};
+  isProdOfrUpToDate: boolean = true;
+  missingProdOfrComp: string = "";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: NGXToastrService
   ) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -545,7 +549,23 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     return temp;
   }
 
+  MissingProdOfrHandler(e){
+    if(this.isProdOfrUpToDate){
+      this.isProdOfrUpToDate = e.isProdOfrUpToDate;
+    }
+    if(this.missingProdOfrComp){
+      this.missingProdOfrComp += ", " + e.missingProdOfrComp;
+    }
+    else{
+      this.missingProdOfrComp += e.missingProdOfrComp;
+    }
+  }
+
   ClickSave(){
+    if(!this.isProdOfrUpToDate){
+      this.toastr.warningMessage("Prod Offering Component \""+this.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
+      return false;
+    }
     if(this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit){
       this.NapAppModelForm.patchValue({
         PrevAgrNo: null,

@@ -35,7 +35,6 @@ export class ApplicationDataComponent implements OnInit {
   @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  @ViewChild("LoanObjComp") loanObjComponent: LoanObjectComponent;
 
   ListCrossAppObj: any = {};
   inputLookupObj;
@@ -51,7 +50,7 @@ export class ApplicationDataComponent implements OnInit {
   CustNo: string;
   isMainData: boolean = false;
   isProdOfrUpToDate: boolean = true;
-  missingProdOfrComp: string;
+  missingProdOfrComp: string = "";
   
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -215,16 +214,21 @@ export class ApplicationDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
-        this.NapAppModelForm.patchValue({
-          InterestType: response["CompntValue"],
-          InterestTypeDesc: response["CompntValueDesc"],
-        });
-        this.ChangeInterestType();
+        if(response && response["StatusCode"] == "200"){
+          this.NapAppModelForm.patchValue({
+            InterestType: response["CompntValue"],
+            InterestTypeDesc: response["CompntValueDesc"],
+          });
+          this.ChangeInterestType();
+        }
+        else{
+          // throw new Error("Interest Type component not found, please use the latest product offering");
+          this.isProdOfrUpToDate = false;
+          this.missingProdOfrComp += CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+        }
       },
       (error) => {
         console.log(error);
-        this.isProdOfrUpToDate = false;
-        this.missingProdOfrComp = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
       });
   }
 
@@ -583,11 +587,19 @@ export class ApplicationDataComponent implements OnInit {
     return temp;
   }
 
-  ClickSave() { 
-    if(!this.loanObjComponent.isProdOfrUpToDate){
-      this.toastr.warningMessage("Prod Offering Component \""+this.loanObjComponent.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
-      return false;
+  MissingProdOfrHandler(e){
+    if(this.isProdOfrUpToDate){
+      this.isProdOfrUpToDate = e.isProdOfrUpToDate;
     }
+    if(this.missingProdOfrComp){
+      this.missingProdOfrComp += ", " + e.missingProdOfrComp;
+    }
+    else{
+      this.missingProdOfrComp += e.missingProdOfrComp;
+    }
+  }
+
+  ClickSave() { 
     if(!this.isProdOfrUpToDate){
       this.toastr.warningMessage("Prod Offering Component \""+this.missingProdOfrComp+"\" Is Missing, Please Update Product Offering");
       return false;

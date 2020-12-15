@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
@@ -21,6 +21,7 @@ export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
   @Input() mode: string;
   @Input() isCollateral: boolean;
+  @Output() ResponseProdOfrUpToDate: EventEmitter<any>;
 
   modal: any;
   loanObjectInputLookupObj: any;
@@ -57,6 +58,7 @@ export class LoanObjectComponent implements OnInit {
         this.AppLoanPurposeId = params["AppLoanPurposeid"];
       });
     }
+    this.ResponseProdOfrUpToDate = new EventEmitter<any>();
   }
 
   private getDismissReason(reason: any): string {
@@ -168,21 +170,46 @@ export class LoanObjectComponent implements OnInit {
           };
           this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
             (response) => {
-              if(response && response["ProdOfferingDId"] > 0){
+              if(response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0){
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
                 this.CheckIsDisburseToCust();
+
+                if(response["CompntValue"] != 'Y'){
+                  var appObj = {
+                    ProdOfferingCode: this.AppObj.ProdOfferingCode,
+                    RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
+                    ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
+                  };
+                  this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+                    (response) => {
+                      if(response && response["StatusCode"] == "200"){
+                        this.RefProdCmptSupplSchm = response;
+                      }
+                      else{
+                        // throw new Error("Suppl Schm component not found, please use the latest product offering");
+                        this.isProdOfrUpToDate = false;
+                        this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
+                        this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
+                      }
+                    },
+                    (error) => {
+                      console.log(error);
+                    }
+                  );
+                }
               }
               else{
-                throw new Error("Disburse To Cust component not found, please use the latest product offering");
+                // throw new Error("Disburse To Cust component not found, please use the latest product offering");
+                this.isProdOfrUpToDate = false;
+                this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
+                this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
               }
             }
           ).catch(
             (error) => {
               console.log(error);
-              this.isProdOfrUpToDate = false;
-              this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
             }
           );
         }
@@ -193,22 +220,6 @@ export class LoanObjectComponent implements OnInit {
           this.supplierInputLookupObj.isRequired = false;
           this.CheckIsDisburseToCust();
         }
-      }
-    );
-
-    var appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-      (response) => {
-        this.RefProdCmptSupplSchm = response;
-      },
-      (error) => {
-        console.log(error);
-        this.isProdOfrUpToDate = false;
-        this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
       }
     );
   }
@@ -358,13 +369,18 @@ export class LoanObjectComponent implements OnInit {
   CheckIsDisburseToCust() {
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
-      this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
-      this.MainInfoForm.controls.lookupValueSupplier["controls"].value.setValue("");
+      if(this.MainInfoForm.controls.lookupValueSupplier){
+        this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
+        this.MainInfoForm.controls.lookupValueSupplier["controls"].value.setValue("");
+        this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
+      }
       this.AppLoanPurposeObj.SupplCode = "";
     } else {
       this.supplierInputLookupObj.isRequired = true;
-      this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
+      if(this.MainInfoForm.controls.lookupValueSupplier){
+        this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
+        this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
+      }
     }
-    this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
   }
 }
