@@ -14,7 +14,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
-import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 
 @Component({
   selector: "reserved-fund",
