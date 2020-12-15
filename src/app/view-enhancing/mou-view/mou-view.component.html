@@ -28,7 +28,7 @@
             </mat-tab>
             <mat-tab label="Document">
               <ng-template matTabContent>
-                <app-mou-view-doc></app-mou-view-doc>
+                <app-dms-iframe [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
               </ng-template>
             </mat-tab>
             <mat-tab label="Listed Customer Factoring"  *ngIf="this.MrMouTypeCode == 'FACTORING'">

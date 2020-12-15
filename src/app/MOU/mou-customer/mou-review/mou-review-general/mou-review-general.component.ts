@@ -12,6 +12,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 
 @Component({
   selector: 'app-mou-review-general',
@@ -42,7 +44,10 @@ export class MouReviewGeneralComponent implements OnInit {
     Notes: [''],
     ApvRecommendation: this.fb.array([])
   })
-
+  UploadViewlink: string;
+  Uploadlink: string;
+  Viewlink: string;
+  dmsObj: DMSObj;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -66,6 +71,15 @@ export class MouReviewGeneralComponent implements OnInit {
     this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+  
       }
     );
 

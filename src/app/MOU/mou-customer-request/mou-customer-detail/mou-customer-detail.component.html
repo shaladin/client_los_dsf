@@ -57,6 +57,14 @@
                     <span class="bs-stepper-label">Term and Condition</span>
                   </button>
                 </div>
+                <div class="line"></div>
+                <div class="step" data-target="#upload-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="tc-data-tab"
+                    id="upload-data-tab-trigger" (click)="designatedStepHandler('5')" [disabled]="currentStepIndex < 5">
+                    <span class="bs-stepper-circle">5</span>
+                    <span class="bs-stepper-label">Upload Document</span>
+                  </button>
+                </div>
                 <!-- <div class="line"></div>
                 <div class="step" data-target="#document-data-tab">
                   <button type="button" class="step-trigger" role="tab" aria-controls="document-data-tab"
@@ -99,6 +107,10 @@
                   </div>
                 </div>
               </div>
+              <div id="upload-data-tab" class="content" role="tabpanel"
+              aria-labelledby="upload-data-tab-trigger">
+              <app-dms-iframe *ngIf="currentStepIndex == 5" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
+            </div>
               <!-- <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
                 <div *ngIf="currentStepIndex == 5" class="col-md-12" style="padding: 0;">
                   <div class="col-md-12">
@@ -153,6 +165,14 @@
                     <span class="bs-stepper-label">Term and Condition</span>
                   </button>
                 </div>
+                <div class="line"></div>
+                <div class="step" data-target="#upload-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab"
+                    id="upload-data-tab-trigger" (click)="designatedStepHandler('6')" [disabled]="currentStepIndex < 6">
+                    <span class="bs-stepper-circle">6</span>
+                    <span class="bs-stepper-label">Upload Document</span>
+                  </button>
+                </div>
                 <!-- <div class="line"></div>
                 <div class="step" data-target="#document-data-tab">
                   <button type="button" class="step-trigger" role="tab" aria-controls="document-data-tab"
@@ -199,6 +219,11 @@
                   </div>
                 </div>
               </div>
+              
+              <div id="upload-data-tab" class="content" role="tabpanel"
+              aria-labelledby="upload-data-tab-trigger">
+              <app-dms-iframe *ngIf="currentStepIndex == 6" [dmsObj]="dmsObj" [showButton]="true"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
+            </div>
                 <!-- <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
                 <div *ngIf="currentStepIndex == 6" class="col-md-12" style="padding: 0; text-align: right;">
                   <button type="button" class="btn btn-raised btn-warning mr-1" (click)="mouDocumentBack()" translate>
