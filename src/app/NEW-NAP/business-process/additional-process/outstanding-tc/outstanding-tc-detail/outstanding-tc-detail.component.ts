@@ -10,10 +10,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -27,12 +23,6 @@ export class OutstandingTcDetailComponent implements OnInit {
   appTC: any;
   outstandingTcObj: any;
   BizTemplateCode: any;
-  dmsObj: DMSObj;
-  isDmsReady: boolean = false;
-  custNo: string;
-  appNo: string;
-  agrmntNo: string;
-  mouCustNo: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -43,7 +33,7 @@ export class OutstandingTcDetailComponent implements OnInit {
 
   OustandingTCForm = this.fb.group({});
 
-  async ngOnInit() {
+  ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -52,44 +42,7 @@ export class OutstandingTcDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    await this.InitDms();
   }
-  async InitDms(){
-    this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
-    var appObj = { AppId: this.AppId };
-
-    let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
-    let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
-    let getAgrNo = this.http.post(URLConstant.GetAgrmntByAppId, appObj);
-    forkJoin([getCustNo, getAppNo, getAgrNo]).subscribe(
-      (response) => {
-        this.custNo = response[0]['CustNo'];
-        var mouCustId = response[1]['MouCustId'];
-        if(mouCustId != null && mouCustId != ''){
-          var mouObj = {MouCustId : mouCustId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            (response) => {
-              this.mouCustNo = response['MouCustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-
-            });
-        }
-
-        this.appNo = response[1]['AppNo'];
-        this.agrmntNo = response[2]['AgrmntNo']
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrmntNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-      }
-    );
-    this.isDmsReady = true;
-  }
-
 
   SaveForm() {
     this.outstandingTcObj = new OutstandingTcObj();
@@ -118,12 +71,12 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/OutstandingTC/Paging"], {  BizTemplateCode: this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/OutstandingTC/Paging"], {  BizTemplateCode: this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
   }
 }
