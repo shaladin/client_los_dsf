@@ -61,7 +61,7 @@
       <div class="px-3">
         <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
         </lib-ucSubsection>
-        <div class="form-body" id="viewIncomeInfo">
+        <div class="form-body" id="viewIncomeInfo" *ngIf="isShow">
           <div class="row">
             <div class="col-md-6 ">
 
@@ -70,9 +70,13 @@
                   <div class="col-md-6">
                     <label class="label-control"> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
-                  <div class="col-md-6 form-inline-right">
+                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 1">
                     <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
                     <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                  </div>
+                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 2">
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                   </div>
                 </div>
               </div>
@@ -105,9 +109,13 @@
                   <div class="col-md-6">
                     <label class="adInsLabel"> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
-                  <div class="col-md-6 form-inline-right">
+                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 1">
                     <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
                     <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                  </div>
+                  <div class="col-md-6 form-inline-right" *ngIf="StepIndex == 2">
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
                   </div>
                 </div>
               </div>
@@ -146,8 +154,8 @@
             (outputTab)="NextStep('RSV')" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)"></app-commission-cfna>
         </div>
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
-          <reserved-fund *ngIf="StepIndex == 2 && isView" [ReturnHandlingHObj]="ReturnHandlingHObj" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm"
-            (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputUpdateRemainingAlloc)="updateRemainingAllocFromReservedFund($event)"></reserved-fund>
+          <reserved-fund *ngIf="StepIndex == 2 && isView" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm"
+            (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromReservedFund($event)"></reserved-fund>
         </div>
       </div>
     </div>
