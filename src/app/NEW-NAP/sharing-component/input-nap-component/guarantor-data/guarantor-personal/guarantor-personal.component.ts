@@ -162,17 +162,17 @@ export class GuarantorPersonalComponent implements OnInit {
         if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
-            ReserveField1: CommonConstant.CustTypePersonal,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
         }else{
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-            ReserveField1: CommonConstant.CustTypePersonal,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
         } 
-        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
           (response) => {
             this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
             if (this.mode != "edit") {
