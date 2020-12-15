@@ -539,9 +539,9 @@ export class CommissionV2Component implements OnInit {
   CekMaxValueIncomeInfo() {
     var flag = false;
     for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
-      if (this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]) {
+      if (this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]) {
         flag = true;
-        this.toastr.warningMessage(this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAllocationFromDesc + " cannot be more than " + this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAmount);
+        this.toastr.warningMessage(this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAllocationFromDesc + " cannot be more than " + this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount);
       }
     }
     return flag;
