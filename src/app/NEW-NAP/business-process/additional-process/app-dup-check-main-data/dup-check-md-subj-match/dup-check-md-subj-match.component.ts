@@ -74,7 +74,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           var requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
+            "MrCustModelCode": this.appCustObj.MrCustModelCode,
             "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
             "MrIdType": response['AppCustObj'].MrIdType,
             "IdNo": this.appCustObj.IdNo,
@@ -92,7 +92,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           var requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
+            "MrCustModelCode": this.appCustObj.MrCustModelCode,
             "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
             "MrIdType": response['AppCustObj'].MrIdType,
             "IdNo": this.appCustObj.IdNo,
