@@ -277,7 +277,7 @@ export class CustMainDataComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
-          let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
+          let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
       });

@@ -269,7 +269,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if(this.IdTypeObj.length > 0){
-          var idxDefault = this.IdTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
+          var idxDefault = this.IdTypeObj.findIndex(x => x.IsDefaultValue);
           this.parentForm.controls[this.identifier].patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault].MasterCode
           });
@@ -307,7 +307,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if (this.NationalityObj.length > 0) {
-          var idxDefault = this.NationalityObj.findIndex(x => x.ReserveField3 == CommonConstant.DEFAULT);
+          var idxDefault = this.NationalityObj.findIndex(x => x.IsDefaultValue);
           this.parentForm.controls[this.identifier].patchValue({
             MrNationalityCode: this.NationalityObj[idxDefault].MasterCode
           });
