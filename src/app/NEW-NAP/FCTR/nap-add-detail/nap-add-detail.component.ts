@@ -117,6 +117,7 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
     var appObj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppById, appObj).subscribe(
       response1 => {
@@ -125,7 +126,6 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
           response2 => {
             var mouCustNo = response2['MouCustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.appNo));
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
             this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
