@@ -172,7 +172,7 @@
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 10 && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="true" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

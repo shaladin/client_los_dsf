@@ -12,7 +12,6 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
 
@@ -29,8 +28,6 @@ export class OutstandingTcDetailComponent implements OnInit {
   outstandingTcObj: any;
   BizTemplateCode: any;
   dmsObj: DMSObj;
-  dmsKeyObj: DMSKeyObj;
-  rootServer: string;
   isDmsReady: boolean = false;
   custNo: string;
   appNo: string;
@@ -90,11 +87,6 @@ export class OutstandingTcDetailComponent implements OnInit {
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
       }
     );
-
-    this.dmsKeyObj = new DMSKeyObj();
-    this.dmsKeyObj.k = CommonConstant.DmsKey;
-    this.dmsKeyObj.iv = CommonConstant.DmsIV;
-    this.rootServer = environment.DMSUrl;
     this.isDmsReady = true;
   }
 

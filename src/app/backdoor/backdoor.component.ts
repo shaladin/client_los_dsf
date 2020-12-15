@@ -5,7 +5,6 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustObj } from 'app/shared/model/CustObj.Model';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
@@ -25,8 +24,6 @@ export class BackdoorComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
-  dmsKeyObj : DMSKeyObj;
-  rootServer: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,20 +43,14 @@ export class BackdoorComponent implements OnInit {
   ngOnInit() {
     // this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
     // this.Uploadlink = this.DMSURL(this.custObj,"Upload");
-    let testtt = this.cookieService.get(CommonConstant.USER_ACCESS);
-    console.log(testtt);
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeCust;
     this.dmsObj.MetadataParent = null;
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custObj.CustNo));
     this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUpload));
-
-    this.dmsKeyObj = new DMSKeyObj();
-    this.dmsKeyObj.k = CommonConstant.DmsKey;
-    this.dmsKeyObj.iv = CommonConstant.DmsIV;
-    this.rootServer = environment.DMSUrl;
   }
 
   // DMSURL(custObj: CustObj, permission : string) {

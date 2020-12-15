@@ -14,7 +14,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 
 @Component({
@@ -36,8 +35,6 @@ export class CreditReviewMainComponent implements OnInit {
   BizTemplateCode: string = "";
   arrValue = [];
   dmsObj: DMSObj;
-  dmsKeyObj: DMSKeyObj;
-  rootServer: string;
   appNo: string;
   custNo: string;
   isDmsReady: boolean = false;
@@ -135,10 +132,6 @@ export class CreditReviewMainComponent implements OnInit {
     // this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, "2333333"));
     this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
 
-    this.dmsKeyObj = new DMSKeyObj();
-    this.dmsKeyObj.k = CommonConstant.DmsKey;
-    this.dmsKeyObj.iv = CommonConstant.DmsIV;
-    this.rootServer = environment.DMSUrl;
     this.isDmsReady = true;
   }
 

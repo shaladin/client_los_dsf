@@ -24,7 +24,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -113,8 +112,6 @@ export class LeadInputCustDataComponent implements OnInit {
   inputAddressObjForLegalAddr: any;
   inputAddressObjForResidenceAddr: InputAddressObj;
   dmsObj: DMSObj;
-  dmsKeyObj: DMSKeyObj;
-  rootServer: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -604,11 +601,6 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Lead Id", this.LeadId));
     this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
-
-    this.dmsKeyObj = new DMSKeyObj();
-    this.dmsKeyObj.k = CommonConstant.DmsKey;
-    this.dmsKeyObj.iv = CommonConstant.DmsIV;
-    this.rootServer = environment.DMSUrl;
   }
 
   copyAddress() {

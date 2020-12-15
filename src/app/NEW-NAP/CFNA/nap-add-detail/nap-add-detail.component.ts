@@ -15,7 +15,6 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -64,8 +63,6 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo = false;
   appNo: string;
   dmsObj: DMSObj;
-  dmsKeyObj: DMSKeyObj;
-  rootServer: string;
   isDmsReady: boolean = false;
 
   constructor(
@@ -153,10 +150,6 @@ export class NapAddDetailComponent implements OnInit {
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
 
-        this.dmsKeyObj = new DMSKeyObj();
-        this.dmsKeyObj.k = CommonConstant.DmsKey;
-        this.dmsKeyObj.iv = CommonConstant.DmsIV;
-        this.rootServer = environment.DMSUrl;
         this.isDmsReady = true;
       }
     );

@@ -13,8 +13,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
-
 
 @Component({
   selector: 'app-credit-approval-detail',
@@ -35,7 +33,6 @@ export class CreditApprovalDetailComponent implements OnInit {
   dmsObj: DMSObj;
   custNo: string;
   appNo: string;
-  dmsKeyObj: DMSKeyObj;
   rootServer: string;
   isDmsReady: boolean = false;
 
@@ -88,11 +85,6 @@ export class CreditApprovalDetailComponent implements OnInit {
 
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", "2333333"));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-    
-        this.dmsKeyObj = new DMSKeyObj();
-        this.dmsKeyObj.k = CommonConstant.DmsKey;
-        this.dmsKeyObj.iv = CommonConstant.DmsIV;
-        this.rootServer = environment.DMSUrl;
         this.isDmsReady = true;
       }
     );

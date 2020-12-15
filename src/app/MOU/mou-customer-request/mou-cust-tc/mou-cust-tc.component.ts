@@ -12,7 +12,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { Router } from '@angular/router';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { DMSKeyObj } from 'app/shared/model/DMS/DMSKeyObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -30,9 +29,7 @@ export class MouCustTcComponent implements OnInit {
     MouCustTcList: this.fb.array([])
   });
   dmsObj: DMSObj;
-  dmsKeyObj: DMSKeyObj;
   custNo: string;
-  rootServer: string;
   isDmsReady: boolean = false;
 
   constructor(
@@ -144,11 +141,6 @@ export class MouCustTcComponent implements OnInit {
 
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", this.MouCustId.toString()));
     this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload View"));
-
-    this.dmsKeyObj = new DMSKeyObj();
-    this.dmsKeyObj.k = CommonConstant.DmsKey;
-    this.dmsKeyObj.iv = CommonConstant.DmsIV;
-    this.rootServer = environment.DMSUrl;
     this.isDmsReady = true;
   }
 

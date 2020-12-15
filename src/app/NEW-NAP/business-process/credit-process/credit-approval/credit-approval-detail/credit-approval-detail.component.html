@@ -46,7 +46,7 @@
       </mat-tab>
       <mat-tab label="Upload Document">
         <ng-template matTabContent>
-          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [dmsKeyObj]="dmsKeyObj" [rootServer]="rootServer"></app-dms-iframe>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
         </ng-template>
       </mat-tab>
       <mat-tab *ngIf="BizTemplateCode != 'CFRFN4W'" label="Analysis Result">

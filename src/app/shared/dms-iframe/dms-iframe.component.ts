@@ -1,7 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Component, Input,EventEmitter, OnInit, Output } from '@angular/core';
+import { environment } from 'environments/environment';
 import { AdInsHelper } from '../AdInsHelper';
-import { DMSKeyObj } from '../model/DMS/DMSKeyObj.Model';
+import { CommonConstant } from '../constant/CommonConstant';
 import { DMSObj } from '../model/DMS/DMSObj.model';
 
 @Component({
@@ -14,8 +15,9 @@ export class DmsIframeComponent implements OnInit {
 
   @Input() showButton: boolean = false;
   @Input() dmsObj: DMSObj;
-  @Input() rootServer: string;
-  @Input() dmsKeyObj: DMSKeyObj;
+  rootServer: string;
+  dmsKey: string;
+  dmsIv: string;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   
@@ -23,7 +25,10 @@ export class DmsIframeComponent implements OnInit {
   constructor() { }
   custNo: string;
   ngOnInit() {
-    if (this.dmsObj != undefined && this.dmsObj != null && this.dmsKeyObj != undefined && this.dmsKeyObj != null && this.rootServer != "" && this.rootServer != undefined) {
+    this.rootServer = environment.DMSUrl;
+    this.dmsKey = CommonConstant.DmsKey;
+    this.dmsIv = CommonConstant.DmsIV;
+    if (this.dmsObj != undefined && this.dmsObj != null) {
       this.urlLink = this.dmsUrl();
       this.noParamGiven = false;
     }
@@ -31,7 +36,7 @@ export class DmsIframeComponent implements OnInit {
 
   dmsUrl() {
     let ObjFinalForm = "js=" + JSON.stringify(this.dmsObj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
-    let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.dmsKeyObj.k, this.dmsKeyObj.iv);
+    let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.dmsKey, this.dmsIv);
     prm = encodeURIComponent(prm);
     return this.rootServer + "?app=" + this.appName + "&prm=" + prm;
   }
@@ -42,5 +47,4 @@ export class DmsIframeComponent implements OnInit {
   Save(){
     this.outputTab.emit();
   }
-  
 }
