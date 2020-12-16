@@ -595,6 +595,7 @@ export class CommissionV2Component implements OnInit {
     var temp = AppCommH.ListAllocated;
     for (var i = 0; i < temp.length; i++) {
       var tempObj = temp[i];
+      console.log(tempObj);
       var tempAppCommissionDObj = new AppCommissionDObj();
       if (tempObj.AppCommissionDId != 0) {
         tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
@@ -607,6 +608,7 @@ export class CommissionV2Component implements OnInit {
       tempAppCommissionDObj.TaxAmt = tempObj.TaxAmt;
       tempAppCommissionDObj.VatAmt = tempObj.VatAmt;
       tempAppCommissionDObj.PenaltyAmt = tempObj.PenaltyAmt;
+      tempAppCommissionDObj.RefundAmt = this.DictMaxIncomeForm[tempObj.AllocationFrom].RefundAmount;
       tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.AllocationAmount - (tempObj.TaxAmt + tempObj.VatAmt);
       tempAppCommissionDObj.RowVersion = tempObj.RowVersion;
       listAppCommissionDObj.push(tempAppCommissionDObj);

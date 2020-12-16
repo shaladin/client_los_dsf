@@ -140,6 +140,11 @@ export class ReservedFundComponent implements OnInit {
       appReservedFundObj.MrReservedFundCode = this.RsvForm.controls["ReservedFundObjs"].value[i].MrReservedFundCode;
       appReservedFundObj.ReservedFundAmt = this.RsvForm.controls["ReservedFundObjs"].value[i].ReservedFundAmt;
       appReservedFundObj.StdReservedFundAmt = this.RsvForm.controls["ReservedFundObjs"].value[i].StdReservedFundAmt;
+      if(this.DictMaxIncomeForm[appReservedFundObj.MrReservedFundSourceCode] != undefined){
+        appReservedFundObj.RefundAmt = this.DictMaxIncomeForm[appReservedFundObj.MrReservedFundSourceCode].RefundAmount;
+      }else{
+        appReservedFundObj.RefundAmt = 0;
+      }
       appReservedFundObj.Behaviour = this.RsvForm.controls["ReservedFundObjs"].value[i].Behaviour;
       this.allAppReservedFundObj.RequestAppReservedFundObjs.push(appReservedFundObj);
     }

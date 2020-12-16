@@ -1,13 +1,14 @@
 export class AppReservedFundObj {
-  AppReservedFundId: any;
-  AppId: any;
-  MrReservedFundSourceCode: any;
-  MrReservedFundCode: any;
-  ReservedFundAmt: any;
-  StdReservedFundAmt: any;
-  Behaviour: any;
-  RowVersion: any;
-  MrReservedFundSourceName: any;
+  AppReservedFundId: number;
+  AppId: number;
+  MrReservedFundSourceCode: string;
+  MrReservedFundCode: string;
+  ReservedFundAmt: number;
+  StdReservedFundAmt: number;
+  Behaviour: string;
+  RefundAmt: number;
+  RowVersion: string;
+  MrReservedFundSourceName: string;
 
   constructor() {
     this.AppReservedFundId = 0;
