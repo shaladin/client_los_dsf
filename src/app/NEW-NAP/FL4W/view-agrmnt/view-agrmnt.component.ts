@@ -5,12 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-view-agrmnt',
   templateUrl: './view-agrmnt.component.html'
 })
 export class ViewAgrmntComponent implements OnInit {
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  appNo: string;
+  custNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -24,7 +32,7 @@ export class ViewAgrmntComponent implements OnInit {
   AgrmntId: number;
   AppId: number;
   MrCustTypeCode: string;
-  ngOnInit() {
+  async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -54,6 +62,29 @@ export class ViewAgrmntComponent implements OnInit {
           });
       }
     );
+    await this.InitDms();
   }
 
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.AppId };
+
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        this.appNo = response[0]['AppNo'];
+        this.custNo = response[1]['CustNo'];
+        // this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        this.isDmsReady = true;
+      }
+    );
+  }
 }

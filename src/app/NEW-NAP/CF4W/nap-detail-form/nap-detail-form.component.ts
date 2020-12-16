@@ -13,6 +13,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -49,6 +51,7 @@ export class NapDetailFormComponent implements OnInit {
     "LFI": 5,
     "FIN": 6,
     "TC": 7,
+    "UPD": 8
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -56,6 +59,9 @@ export class NapDetailFormComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   OnFormReturnInfo = false;
+  dmsObj: DMSObj;
+  appNo: string;
+  isDmsReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -112,7 +118,9 @@ export class NapDetailFormComponent implements OnInit {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
-
+            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.initDms();
+            }
             this.ChangeStepper();
             this.bizTemplateCode = this.NapObj.BizTemplateCode;
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
@@ -123,6 +131,25 @@ export class NapDetailFormComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
+    var appObj = { AppId: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        this.isDmsReady = true;
+      }
+    );
+  }
+  
   stepperMode: string = CommonConstant.CustTypeCompany;
   ChangeStepper() {
     if (this.custType == CommonConstant.CustTypePersonal) {
@@ -142,6 +169,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 6,
         "TC": 7,
+        "UPD": 8
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -160,6 +188,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 5,
         "TC": 6,
+        "UPD": 7
       };
     }
   }
@@ -229,7 +258,9 @@ export class NapDetailFormComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -237,8 +268,8 @@ export class NapDetailFormComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      
-     this.ucViewMainProd.initiateForm();
+
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -247,7 +278,9 @@ export class NapDetailFormComponent implements OnInit {
     } else {
       this.UpdateAppStep(Step);
     }
-
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
+    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
@@ -273,14 +306,14 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
-          
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
   }
 
   Submit() {
@@ -301,7 +334,7 @@ export class NapDetailFormComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
           }
         )
       }
@@ -326,7 +359,7 @@ export class NapDetailFormComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

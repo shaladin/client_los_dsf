@@ -172,13 +172,20 @@
                 </div>
               </div>
             </div>
-            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
-            </lib-ucSubsection>
-            <div id="TCList">
-              <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
 
-              </app-term-conditions>
-            </div>
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
+                  </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
                 [routerLink]="['/Nap/AdminProcess/DeliveryOrder/Paging']" translate>

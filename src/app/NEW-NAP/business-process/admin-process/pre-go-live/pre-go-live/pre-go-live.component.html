@@ -44,13 +44,20 @@
               <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj">
               </lib-ucapprovalhist>
             </div>
-            <lib-ucSubsection [id]="'TCListId'" [title]="'Term and Condition'" [panel]="'TCList'">
-            </lib-ucSubsection>
-            <div id="TCList">
-              <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
-                (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
-              </app-term-conditions>
-            </div>
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                  (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+                </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
             <div class="form-actions right">
               <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
                 translate>

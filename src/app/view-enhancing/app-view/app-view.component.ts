@@ -5,6 +5,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
 import { AppMainInfoComponent } from '../app-main-info/app-main-info.component';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-app-view',
@@ -40,6 +43,10 @@ export class AppViewComponent implements OnInit {
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
   bizTemplateCode : string = "";
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  appNo: any;
+  custNo: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
@@ -47,12 +54,36 @@ export class AppViewComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.arrValue.push(this.AppId);
     this.GetApp();
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
     const component = this.mainInfoContainer.createComponent(componentFactory);
     component.instance.arrValue = this.arrValue;
+    await this.InitDms();
+  }
+  
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.AppId };
+
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        this.appNo = response[0]['AppNo'];
+        this.custNo = response[1]['CustNo'];
+        // this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        this.isDmsReady = true;
+      }
+    );
   }
 
   GetApp() {

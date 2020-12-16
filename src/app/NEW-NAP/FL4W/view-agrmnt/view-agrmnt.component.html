@@ -42,6 +42,11 @@
                 <app-app-tc [AppId]="AppId"></app-app-tc>
               </ng-template>
             </mat-tab>
+            <mat-tab label="DOCUMENT">
+              <ng-template matTabContent>
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+              </ng-template>
+            </mat-tab>
             <mat-tab label="COMMISSION">
               <ng-template matTabContent>
                 <app-view-commission-agrmnt [agrmntId]="AgrmntId" ></app-view-commission-agrmnt>

@@ -9,6 +9,9 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-purchase-order',
@@ -24,6 +27,11 @@ export class PurchaseOrderComponent implements OnInit {
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
   });
+  isDmsReady: boolean = false;
+  dmsObj: DMSObj;
+  agrNo: string;
+  custNo: any;
+  appNo: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -61,8 +69,49 @@ export class PurchaseOrderComponent implements OnInit {
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
       });
+    this.InitDms();
   }
 
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+    var agrObj = { AgrmntId: this.AgrmntId };
+    var appObj = { AppId: this.AppId };
+
+    let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, agrObj)
+    forkJoin([getAgr, getAppCust, getApp]).subscribe(
+      (response) => {
+        this.agrNo = response[0]['AgrmntNo'];
+        this.custNo = response[1]['CustNo'];
+        this.appNo = response[2]['AppNo'];
+        let mouId = response[2]['MouCustId'];
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
+      }
+    );
+  } 
+  
   testData() {
   }
 

@@ -5,6 +5,8 @@ import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-agreement-view-container',
@@ -42,6 +44,9 @@ export class AgreementViewContainerComponent implements OnInit {
   IsAdditionalService: boolean = true;
   IsMulti: boolean = true;
   IsAppCollateral: boolean = true;
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  agrNo: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,8 +65,33 @@ export class AgreementViewContainerComponent implements OnInit {
     this.arrValue.push(this.AgrmntId);
     await this.GetAgrmnt();
     await this.GetAppAndAppCustDetailByAgrmntId();
+    this.InitDms();
   }
 
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var agrObj = { AgrmntId: this.AgrmntId };
+
+    let getApp = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+    // let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    // forkJoin([getApp, getAppCust]).subscribe(
+      getApp.subscribe(
+      (response) => {
+        this.agrNo = response['AgrmntNo'];
+        // this.custNo = response[1]['CustNo'];
+        // this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        this.isDmsReady = true;
+      }
+    );
+  } 
+  
   async GetAppAndAppCustDetailByAgrmntId() {
     var obj = { agrmntId: this.AgrmntId };
     await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(

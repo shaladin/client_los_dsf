@@ -120,7 +120,9 @@ export class NapAddDetailComponent implements OnInit {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
-
+            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.initDms();
+            }
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
@@ -128,13 +130,14 @@ export class NapAddDetailComponent implements OnInit {
         });
     }
     this.MakeViewReturnInfoObj();
-    this.initDms();
   }
 
   async initDms() {
+    this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     this.dmsObj.MetadataParent = null;
     var appObj = { AppId: this.appId };
@@ -286,7 +289,9 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.UpdateAppStep(Step);
     }
-
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
+    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();

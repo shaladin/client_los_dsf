@@ -110,9 +110,11 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   async initDms() {
+    this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     this.dmsObj.MetadataParent = null;
     var appObj = { AppId: this.appId };

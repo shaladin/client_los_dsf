@@ -35,6 +35,7 @@ import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-c
 import { DupCheckMdPagingComponent } from "./app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component";
 import { DupCheckMdSubjListComponent } from "./app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component";
 import { DupCheckMdSubjMatchComponent } from "./app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component";
+import { SharedModule } from "primeng/primeng";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -58,8 +59,8 @@ export const customCurrencyMaskConfig = {
     ViewMainInfoComponentModule,
     MatCheckboxModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    ViewAppComponentModule
-
+    ViewAppComponentModule,
+    SharedModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,

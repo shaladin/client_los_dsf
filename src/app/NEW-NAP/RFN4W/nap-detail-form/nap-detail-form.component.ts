@@ -12,6 +12,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -49,7 +51,11 @@ export class NapDetailFormComponent implements OnInit {
     "LFI": 5,
     "FIN": 6,
     "TC": 7,
+    "UPD": 8,
   };
+  dmsObj: DMSObj;
+  appNo: string;
+  isDmsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -103,6 +109,9 @@ export class NapDetailFormComponent implements OnInit {
           if (response) {
             if (response["MrCustTypeCode"] != null)
             this.custType = response["MrCustTypeCode"];
+            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.initDms();
+            }
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
             this.stepper.to(this.AppStepIndex);
           } else {
@@ -116,6 +125,25 @@ export class NapDetailFormComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    this.dmsObj.MetadataParent = null;
+    var appObj = { AppId: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        this.isDmsReady = true;
+      }
+    );
+  }
+  
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
@@ -172,7 +200,9 @@ export class NapDetailFormComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -193,6 +223,9 @@ export class NapDetailFormComponent implements OnInit {
         (response) => {
         }
       )
+    }
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
     }
     this.ChangeTab(Step);
     this.ucViewMainProd.initiateForm();

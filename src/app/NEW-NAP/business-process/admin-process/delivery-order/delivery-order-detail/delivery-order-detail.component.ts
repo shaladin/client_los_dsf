@@ -14,6 +14,9 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -48,6 +51,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
   PurchaseOrderDt: Date = new Date();
   listItem: FormArray;
   SerialNoList: any;
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  agrNo: any;
+  custNo: any;
+  appNo: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -75,7 +83,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     listItem: this.fb.array([])
   })
 
-  ngOnInit() {
+  async ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -145,8 +153,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
                 }
                 this.items.push(assetDocumentDetail);
               }
-
-
             }
           }
         );
@@ -178,7 +184,49 @@ export class DeliveryOrderDetailComponent implements OnInit {
           });
       }
     );
+    await this.InitDms();
   }
+
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+    var agrObj = { AgrmntId: this.AgrmntId };
+    var appObj = { AppId: this.AppId };
+
+    let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, agrObj)
+    forkJoin([getAgr, getAppCust, getApp]).subscribe(
+      (response) => {
+        this.agrNo = response[0]['AgrmntNo'];
+        this.custNo = response[1]['CustNo'];
+        this.appNo = response[2]['AppNo'];
+        let mouId = response[2]['MouCustId'];
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+
   SaveForm() {
     var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
     // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {

@@ -116,9 +116,11 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async InitDms(){
+    this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
@@ -127,7 +129,6 @@ export class CreditReviewMainComponent implements OnInit {
       }
     );
     this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
     // this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, "2333333"));
     this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
