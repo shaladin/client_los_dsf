@@ -595,7 +595,6 @@ export class CommissionV2Component implements OnInit {
     var temp = AppCommH.ListAllocated;
     for (var i = 0; i < temp.length; i++) {
       var tempObj = temp[i];
-      console.log(tempObj);
       var tempAppCommissionDObj = new AppCommissionDObj();
       if (tempObj.AppCommissionDId != 0) {
         tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
