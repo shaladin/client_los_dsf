@@ -310,14 +310,14 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   ChangeNationality(ev) {
     if (this.PersonalForm.controls.MrNationalityCode.value == CommonConstant.NationalityLocal) {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
+      this.selectedNationalityCountryCode = this.MrNationalityCode[idx].DefaultCode;
+      this.selectedNationalityCountryName = this.MrNationalityCode[idx].DefaultValue;
       this.isLocal = true;
     } else {
       var foreign = this.MrNationalityCode.find(x => x["MasterCode"] == ev.target.value);
-      this.inputLookupObj1.nameSelect = foreign.ReserveField2;
-      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.countryCode = foreign.ReserveField1;
+      this.inputLookupObj1.nameSelect = foreign.DefaultValue;
+      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.DefaultValue};
+      this.countryCode = foreign.DefaultCode;
       this.isLocal = false;
     }
   }
@@ -388,8 +388,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             if (this.resultData.MrNationalityCode == CommonConstant.NationalityLocal) {
               this.isLocal = true;
               var idx = 1;
-              this.selectedNationalityCountryCode = this.MrNationalityCode[idx].ReserveField1;
-              this.selectedNationalityCountryName = this.MrNationalityCode[idx].ReserveField2;
+              this.selectedNationalityCountryCode = this.MrNationalityCode[idx].DefaultCode;
+              this.selectedNationalityCountryName = this.MrNationalityCode[idx].DefaultValue;
             } else {
               this.isLocal = false;
               this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(

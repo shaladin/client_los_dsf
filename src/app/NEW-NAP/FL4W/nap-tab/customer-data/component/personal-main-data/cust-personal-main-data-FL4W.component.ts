@@ -403,14 +403,14 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   ChangeNationality(ev) {
     if (this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL") {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      this.selectedNationalityCountryCode = this.NationalityObj[idx].DefaultCode;
+      this.selectedNationalityCountryName = this.NationalityObj[idx].DefaultValue;
       this.isLocal = true;
     } else {
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
-      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
-      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+      this.InputLookupCountryObj.nameSelect = foreign.DefaultValue;
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.DefaultValue};
+      this.selectedNationalityCountryCode = foreign.DefaultCode;
       this.isLocal = false;
     }
   }
