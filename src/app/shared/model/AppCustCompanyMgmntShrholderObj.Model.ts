@@ -36,6 +36,8 @@ export class AppCustCompanyMgmntShrholderObj {
     this.MrJobPositionCode = "";
     this.SharePrcnt = 0;
     this.IsSigner = false;
+    this.IsOwner = false;
+    this.IsActive = false;
     this.MrIdTypeCode = "";
     this.IdNo = "";
     this.BirthPlace = "";
