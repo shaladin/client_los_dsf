@@ -116,14 +116,14 @@ export class PurchaseOrderDetailComponent implements OnInit {
   GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj) {
     var TempListPurchaseOrderD = new Array();
     for (var i = 0; i < ListPORefMasterObj.length; i++) {
-      if (ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2NonFee) {
+      if (ListPORefMasterObj[i].MappingCode == CommonConstant.RefMasterReservedField2NonFee) {
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MasterCode;
-        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].ReserveField3] : 0;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].DefaultCode] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].DefaultCode] : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
-      if (ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2Fee) {
-        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].ReserveField3);
+      if (ListPORefMasterObj[i].MappingCode == CommonConstant.RefMasterReservedField2Fee) {
+        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].DefaultCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MasterCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
