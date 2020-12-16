@@ -50,9 +50,9 @@
                   <label class="col-md-2  adins-required-label" translate>{{RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundCode.value}}</label>
                   <div class="col-md-4">
                     <input *ngIf="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MaxAmt.value > 0" type="" currencyMask id="ReservedFundAmt{{i}}" class="form-control" formControlName="ReservedFundAmt" [options]="{ nullable: false }" (change)="InputChanged()"
-                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictMaxIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
+                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictRemainingIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
                     <input *ngIf="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MaxAmt.value <= 0" readonly type="" currencyMask id="ReservedFundAmt{{i}}" class="form-control" formControlName="ReservedFundAmt" [options]="{ nullable: false }" (change)="InputChanged()"
-                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictMaxIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
+                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictRemainingIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
                     <lib-uc-show-errors [control]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>

@@ -301,8 +301,8 @@ export class CustomerDataComponent implements OnInit {
     }
     custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
     custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
-    custDataPersonalObj.AppCustObj.CustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
-    custDataPersonalObj.AppCustPersonalJobDataObj = this.setAppCustPersonalJobData(custDataPersonalObj.AppCustObj.CustModelCode);
+    custDataPersonalObj.AppCustObj.MrCustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
+    custDataPersonalObj.AppCustPersonalJobDataObj = this.setAppCustPersonalJobData(custDataPersonalObj.AppCustObj.MrCustModelCode);
     custDataPersonalObj.AppCustSocmedObjs = this.setAppCustSocmedObj();
     custDataPersonalObj.AppCustGrpObjs = this.setAppCustGrpObj();
 
@@ -399,7 +399,7 @@ export class CustomerDataComponent implements OnInit {
       appCustObj.CustNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustNo.value;
       appCustObj.MrIdTypeCode = "NPWP";
       appCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      appCustObj.CustModelCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustModelCode.value;
+      appCustObj.MrCustModelCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustModelCode.value;
       appCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
       appCustObj.IsVip = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsVip.value;
       appCustObj.AppId = this.appId;
@@ -988,7 +988,7 @@ export class CustomerDataComponent implements OnInit {
             this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
 
             if (this.custDataPersonalObj.AppCustObj.AppCustId != 0) {
-              this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
+              this.defCustModelCode = this.custDataPersonalObj.AppCustObj.MrCustModelCode;
             }
 
           

@@ -100,7 +100,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
     await this.http.post(url, reqObj).toPromise().then(
       (response) => {
         this.appCustObj = response["AppCustObj"];
-        this.custModelCode = response["CustModelCode"];
+        this.custModelCode = response["MrCustModelCode"];
         this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
