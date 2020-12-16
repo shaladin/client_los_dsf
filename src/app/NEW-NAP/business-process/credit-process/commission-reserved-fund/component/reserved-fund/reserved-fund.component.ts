@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 
 @Component({
   selector: "reserved-fund",
@@ -37,7 +38,9 @@ export class ReservedFundComponent implements OnInit {
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: any = {};
+  @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
+  @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
 
@@ -75,12 +78,13 @@ export class ReservedFundComponent implements OnInit {
     // this.getMaxAllocAmtRsvFundUrl = URLConstant.CreateMaxAllocAmtRsvFund;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.allAppReservedFundObj = new AllAppReservedFundObj();
     this.initUrl();
     var appObj = {
       AppId: this.ReturnHandlingHObj.AppId,
     };
+    await this.GetAppCommissionData(appObj);
     this.GetAppRsvFundRule(appObj);
     // this.GetAppFinData(appObj);
     // this.GetMaxAllocAmt(appObj);
@@ -161,6 +165,37 @@ export class ReservedFundComponent implements OnInit {
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
   }
 
+  DictRemainingIncomeForm: any = {};
+  async GetAppCommissionData(appObj) {
+    for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
+      const element = this.ListResultRefundIncomeInfo[index];
+      let TempObj = new ResultRefundObj();
+      TempObj.RefundAllocationFrom = element.RefundAllocationFrom;
+      TempObj.RefundAllocationFromDesc = element.RefundAllocationFromDesc;
+      TempObj.RefundAmount = element.RefundAmount;
+      this.DictRemainingIncomeForm[element.RefundAllocationFrom] = TempObj;
+    }
+    await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, appObj).toPromise().then(
+      (response) => {
+        let tempObj: Array<any> = response[CommonConstant.ReturnObj];
+        // console.log(tempObj);
+        for (let index = 0; index < tempObj.length; index++) {
+          const element = tempObj[index];
+          // console.log(element);
+          for (let index2 = 0; index2 < element.AppCommissionD.length; index2++) {
+            const element2 = element.AppCommissionD[index2];
+            // console.log(element2);
+            if(this.DictRemainingIncomeForm[element2.MrCommissionSourceCode]){
+              this.DictRemainingIncomeForm[element2.MrCommissionSourceCode].RefundAmount-=element2.CommissionAmt;
+            }
+          }
+        }
+        // console.log(this.DictRemainingIncomeForm);
+        this.outputDictRemaining.emit(this.DictRemainingIncomeForm);
+      }
+    );
+  }
+
   GetAppFee(appObj) {
     this.http.post(this.getAppFeeUrl, appObj).subscribe(
       (response) => {
@@ -211,9 +246,9 @@ export class ReservedFundComponent implements OnInit {
           var listAppRsvFunds = this.RsvForm.controls["ReservedFundObjs"] as FormArray;
           let maxAmt = 0;
           let allocAmt = 0;
-          if (this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode] != undefined) {
-            if (this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount > 0){
-              maxAmt = this.DictMaxIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount;
+          if (this.DictRemainingIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode] != undefined) {
+            if (this.DictRemainingIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount > 0){
+              maxAmt = this.DictRemainingIncomeForm[this.appReservedFundObjs[j].MrReservedFundSourceCode].RefundAmount;
               allocAmt = this.appReservedFundObjs[j].ReservedFundAmt;
             }
             else{

@@ -12,7 +12,7 @@
             <app-form-commission-generate #Form2 *ngIf="OnForm2" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp"
               [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate> -->
-            <app-form-commission-generate #Form3 *ngIf="OnForm3" [DictMaxIncomeForm]="DictMaxIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+            <app-form-commission-generate #Form3 *ngIf="OnForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
             </app-form-commission-generate>
           </div>
