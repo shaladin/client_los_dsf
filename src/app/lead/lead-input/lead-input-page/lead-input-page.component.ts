@@ -55,7 +55,6 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("babibubebo");
     await this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise().then(
       (response) => {
         let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
