@@ -48,7 +48,8 @@ export class NapDetailFormComponent implements OnInit {
   };
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
-  appNo: any;
+  appNo: string;
+  mouCustNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -122,7 +123,19 @@ export class NapDetailFormComponent implements OnInit {
         this.appNo = response['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        this.isDmsReady = true;
+        let mouCustId = response['MouCustId'];
+        if(mouCustId != null && mouCustId != ''){
+          var mouObj = {MouCustId : mouCustId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            (response) => {
+              this.mouCustNo = response['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.isDmsReady = true;
+            });
+        }
+        else{
+          this.isDmsReady = true;
+        }
       }
     );
   }

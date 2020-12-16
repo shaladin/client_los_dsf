@@ -146,7 +146,20 @@ export class NapAddDetailComponent implements OnInit {
         this.appNo = response['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        this.isDmsReady = true;
+        let mouId = response['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
       }
     );
   }

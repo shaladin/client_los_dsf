@@ -111,6 +111,9 @@ export class NapAddDetailComponent implements OnInit {
           if (response) {
             if (response["MrCustTypeCode"] != null)
             this.custType = response["MrCustTypeCode"];
+            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.initDms();
+            }
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
             this.stepper.to(this.AppStepIndex);
           } else {
@@ -122,7 +125,6 @@ export class NapAddDetailComponent implements OnInit {
     };
 
     this.MakeViewReturnInfoObj();
-    await this.initDms();
   }
 
   async initDms(){
@@ -139,7 +141,20 @@ export class NapAddDetailComponent implements OnInit {
         this.appNo = response['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        this.isDmsReady = true;
+        let mouId = response['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
       }
     );
   }
@@ -239,6 +254,9 @@ export class NapAddDetailComponent implements OnInit {
         (response) => {
         }
       )
+    }
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
     }
     this.ChangeTab(Step);
     this.ucViewMainProd.initiateForm();

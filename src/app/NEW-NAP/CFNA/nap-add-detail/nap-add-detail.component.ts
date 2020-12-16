@@ -121,7 +121,9 @@ export class NapAddDetailComponent implements OnInit {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
-
+              if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+                this.initDms();
+              }
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
@@ -134,7 +136,6 @@ export class NapAddDetailComponent implements OnInit {
     const component = this.mainInfoContainer.createComponent(componentFactory);
     component.instance.viewGenericObj = this.viewGenericObj;
     component.instance.callback.subscribe((e) => this.GetCallback(e));
-    await this.initDms();
   }
 
   async initDms() {
@@ -151,8 +152,20 @@ export class NapAddDetailComponent implements OnInit {
         this.appNo = response['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-
-        this.isDmsReady = true;
+        let mouId = response['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
       }
     );
   }
@@ -299,7 +312,9 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.UpdateAppStep(Step);
     }
-
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
+    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();

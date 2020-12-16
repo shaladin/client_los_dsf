@@ -91,7 +91,7 @@ export class NapAddDetailComponent implements OnInit {
         if (response) {
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
-          if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+          if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
             this.initDms();
           }
         } else {
@@ -119,138 +119,145 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.MetadataParent = null;
     var appObj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppById, appObj).subscribe(
-      response1 => {
-        this.appNo = response1['AppNo'];
-        var mouCustObj = { MouCustId: response1['MouCustId'] }
-        this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
-          response2 => {
-            var mouCustNo = response2['MouCustNo'];
-            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-            this.isDmsReady = true;
-          }
-        );
+      response => {
+        this.appNo = response['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        let mouId = response['MouCustId'];
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result => {
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else {
+          this.isDmsReady = true;
+        }
       });
-    }
+  }
 
-    Cancel() {
-      AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
-    }
+  Cancel() {
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
+  }
 
-    MakeViewReturnInfoObj() {
-      if (this.mode == CommonConstant.ModeResultHandling) {
-        var obj = {
-          AppId: this.appId,
-          MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
-        }
-        this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
-          (response) => {
-            this.ResponseReturnInfoObj = response;
-            this.FormReturnObj.patchValue({
-              ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
-            });
-            this.OnFormReturnInfo = true;
+  MakeViewReturnInfoObj() {
+    if (this.mode == CommonConstant.ModeResultHandling) {
+      var obj = {
+        AppId: this.appId,
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
+      }
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+        (response) => {
+          this.ResponseReturnInfoObj = response;
+          this.FormReturnObj.patchValue({
+            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });
-      }
-    }
-
-    CheckMultiAsset() {
-      var appObj = { AppId: this.appId }
-      this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
-        (response) => {
-          this.ListAsset = response['ReturnObject'];
-          if (this.ListAsset != undefined && this.ListAsset != null) {
-            if (this.ListAsset.length > 1)
-              this.IsMultiAsset = true;
-            else
-              this.IsMultiAsset = false;
-          }
-          else
-            this.IsMultiAsset = false;
-        })
-    }
-
-    ChangeTab(AppStep) {
-      switch (AppStep) {
-        case CommonConstant.AppStepCust:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
-          break;
-        case CommonConstant.AppStepApp:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
-          break;
-        case CommonConstant.AppStepInvoice:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
-          break;
-        case CommonConstant.AppStepColl:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
-          break;
-        case CommonConstant.AppStepIns:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
-          break;
-        case CommonConstant.AppStepFin:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
-          break;
-        case CommonConstant.AppStepTC:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
-          break;
-        case CommonConstant.AppStepUplDoc:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
-          break;
-        default:
-          break;
-      }
-      this.ucViewMainProd.initiateForm();
-    }
-
-    NextStep(Step) {
-      this.NapObj.AppCurrStep = Step;
-      if(Step == CommonConstant.AppStepUplDoc){
-        this.initDms();
-      }
-      this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-        (response) => {
-          this.ChangeTab(Step);
-          this.stepper.next();
-        }
-      )
-      this.ucViewMainProd.initiateForm();
-    }
-    LastStepHandler() {
-      this.NapObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
-        (response) => {
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
-        })
-    }
-
-    Submit() {
-      if (this.mode == CommonConstant.ModeResultHandling) {
-        var obj = {
-          ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-          ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-          ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-          RowVersion: this.ResponseReturnInfoObj.RowVersion
-        };
-
-        this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
-          (response) => {
-          })
-      }
-    }
-    ClaimTask() {
-      var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-      var wfClaimObj = new AppObj();
-      wfClaimObj.AppId = this.appId;
-      wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-      wfClaimObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-        (response) => {
-
+          this.OnFormReturnInfo = true;
         });
     }
+  }
 
-    GetCallback(ev) {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  CheckMultiAsset() {
+    var appObj = { AppId: this.appId }
+    this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
+      (response) => {
+        this.ListAsset = response['ReturnObject'];
+        if (this.ListAsset != undefined && this.ListAsset != null) {
+          if (this.ListAsset.length > 1)
+            this.IsMultiAsset = true;
+          else
+            this.IsMultiAsset = false;
+        }
+        else
+          this.IsMultiAsset = false;
+      })
+  }
+
+  ChangeTab(AppStep) {
+    switch (AppStep) {
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
+        break;
+      case CommonConstant.AppStepApp:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
+        break;
+      case CommonConstant.AppStepInvoice:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
+        break;
+      case CommonConstant.AppStepColl:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
+        break;
+      case CommonConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
+        break;
+      case CommonConstant.AppStepFin:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
+        break;
+      case CommonConstant.AppStepTC:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
+        break;
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
+      default:
+        break;
+    }
+    this.ucViewMainProd.initiateForm();
+  }
+
+  NextStep(Step) {
+    this.NapObj.AppCurrStep = Step;
+    if (Step == CommonConstant.AppStepUplDoc) {
+      this.initDms();
+    }
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) => {
+        this.ChangeTab(Step);
+        this.stepper.next();
+      }
+    )
+    this.ucViewMainProd.initiateForm();
+  }
+  LastStepHandler() {
+    this.NapObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
+      })
+  }
+
+  Submit() {
+    if (this.mode == CommonConstant.ModeResultHandling) {
+      var obj = {
+        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
+        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
+        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
+        RowVersion: this.ResponseReturnInfoObj.RowVersion
+      };
+
+      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
+        (response) => {
+        })
     }
   }
+  ClaimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+      (response) => {
+
+      });
+  }
+
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  }
+}

@@ -56,8 +56,9 @@ export class OutstandingTcDetailComponent implements OnInit {
   }
   async InitDms(){
     this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
     var appObj = { AppId: this.AppId };
 
@@ -68,26 +69,26 @@ export class OutstandingTcDetailComponent implements OnInit {
       (response) => {
         this.custNo = response[0]['CustNo'];
         var mouCustId = response[1]['MouCustId'];
+        this.appNo = response[1]['AppNo'];
+        this.agrmntNo = response[2]['AgrmntNo']
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrmntNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         if(mouCustId != null && mouCustId != ''){
           var mouObj = {MouCustId : mouCustId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               this.mouCustNo = response['MouCustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.isDmsReady = true;
             });
         }
-
-        this.appNo = response[1]['AppNo'];
-        this.agrmntNo = response[2]['AgrmntNo']
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrmntNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        else{
+          this.isDmsReady = true;
+        }
       }
     );
-    this.isDmsReady = true;
   }
 
 

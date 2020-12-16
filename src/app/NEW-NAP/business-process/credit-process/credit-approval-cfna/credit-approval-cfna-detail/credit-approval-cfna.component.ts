@@ -9,6 +9,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-credit-approval-cfna',
@@ -26,6 +29,10 @@ export class CreditApprovalCfnaComponent implements OnInit {
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
+  dmsObj: DMSObj;
+  isDmsReady: boolean;
+  appNo: any;
+  custNo: any;
 
 
   constructor(private toastr: NGXToastrService,
@@ -57,6 +64,42 @@ export class CreditApprovalCfnaComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     this.getApp();
+    await this.InitDms();
+  }
+
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        this.appNo = response[0]['AppNo'];
+        this.custNo = response[1]['CustNo'];
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        let mouCustId = response[0]['MouCustId'];
+        if (mouCustId != null && mouCustId != '') {
+          var mouObj = { MouCustId: mouCustId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            (response) => {
+              let mouCustNo = response['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            });
+        }
+        else {
+          this.isDmsReady = true;
+        }
+      }
+    );
   }
 
   HoldTask(obj) {

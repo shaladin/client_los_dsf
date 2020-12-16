@@ -7,6 +7,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-agreement-view-container',
@@ -47,7 +48,8 @@ export class AgreementViewContainerComponent implements OnInit {
   IsAppCollateral: boolean = true;
   isDmsReady: boolean;
   dmsObj: DMSObj;
-  agrNo: any;
+  agrNo: string;
+  appId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,7 +71,7 @@ export class AgreementViewContainerComponent implements OnInit {
     await this.InitDms();
   }
 
-  async InitDms(){
+  async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
     let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
@@ -78,21 +80,40 @@ export class AgreementViewContainerComponent implements OnInit {
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
     var agrObj = { AgrmntId: this.AgrmntId };
 
-    let getApp = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
-    // let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    // forkJoin([getApp, getAppCust]).subscribe(
-      getApp.subscribe(
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj).subscribe(
       (response) => {
         this.agrNo = response['AgrmntNo'];
-        // this.custNo = response[1]['CustNo'];
-        this.dmsObj.MetadataParent = null;
-        // this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.appId = response['AppId'];
+        let appObj = { AppId: this.appId };
+        let getApp = this.http.post(URLConstant.GetAppById, appObj);
+        let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-        this.isDmsReady = true;
+        forkJoin([getApp, getAppCust]).subscribe(
+          (response) => {
+            let appNo = response[0]['AppNo'];
+            let custNo = response[1]['CustNo'];
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, appNo));
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+            let mouId = response[0]['MouCustId'];
+            if(mouId != null && mouId != ""){
+              let mouObj = {MouCustId : mouId};
+              this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+                result =>{
+                  let mouCustNo = result['MouCustNo'];
+                  this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                  this.isDmsReady = true;
+                }
+              )
+            }
+            else{
+              this.isDmsReady = true;
+            }
+          }
+        )
       }
     );
-  } 
+  }
 
   async GetAppAndAppCustDetailByAgrmntId() {
     var obj = { agrmntId: this.AgrmntId };

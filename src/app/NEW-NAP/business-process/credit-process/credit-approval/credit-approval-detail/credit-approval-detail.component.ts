@@ -87,6 +87,20 @@ export class CreditApprovalDetailComponent implements OnInit {
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        let mouCustId = response[0]['MouCustId'];
+        if (mouCustId != null && mouCustId != '') {
+          var mouObj = { MouCustId: mouCustId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            (response) => {
+              let mouCustNo = response['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            });
+        }
+        else {
+          this.isDmsReady = true;
+        }
+
         this.isDmsReady = true;
       }
     );

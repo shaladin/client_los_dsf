@@ -18,7 +18,6 @@ export class ViewAgrmntComponent implements OnInit {
   isDmsReady: boolean;
   dmsObj: DMSObj;
   appNo: string;
-  custNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -60,30 +59,6 @@ export class ViewAgrmntComponent implements OnInit {
           (response) => {
             this.MrCustTypeCode = response["MrCustTypeCode"];
           });
-      }
-    );
-    await this.InitDms();
-  }
-
-  async InitDms(){
-    this.isDmsReady = false;
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.AppId };
-
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
-      (response) => {
-        this.appNo = response[0]['AppNo'];
-        this.custNo = response[1]['CustNo'];
-        // this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-        this.isDmsReady = true;
       }
     );
   }

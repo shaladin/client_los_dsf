@@ -51,7 +51,7 @@ export class NapDetailFormComponent implements OnInit {
     "LFI": 5,
     "FIN": 6,
     "TC": 7,
-    "UPD":8,
+    "UPD": 8,
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -119,7 +119,7 @@ export class NapDetailFormComponent implements OnInit {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
-            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
             }
             this.ChangeStepper();
@@ -150,7 +150,20 @@ export class NapDetailFormComponent implements OnInit {
         this.appNo = response['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        this.isDmsReady = true;
+        let mouId = response['MouCustId'];
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result => {
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else {
+          this.isDmsReady = true;
+        }
       }
     );
   }
@@ -174,7 +187,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 6,
         "TC": 7,
-        "UPD":8,
+        "UPD": 8,
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -193,7 +206,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 5,
         "TC": 6,
-        "UPD":7,
+        "UPD": 7,
       };
     }
   }
@@ -274,12 +287,12 @@ export class NapDetailFormComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-        this.mainInfoContainer.clear();
-        const component = this.mainInfoContainer.createComponent(componentFactory);
-        component.instance.viewGenericObj = this.viewGenericObj;
-        component.instance.callback.subscribe((e) => this.GetCallback(e));
-      
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewGenericObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
+
     //  this.ucViewMainProd.initiateForm();
   }
 
@@ -289,7 +302,7 @@ export class NapDetailFormComponent implements OnInit {
     } else {
       this.UpdateAppStep(Step);
     }
-    if(Step == CommonConstant.AppStepUplDoc){
+    if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
     this.ChangeTab(Step);
@@ -299,10 +312,10 @@ export class NapDetailFormComponent implements OnInit {
       this.stepperCompany.next();
     }
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-        this.mainInfoContainer.clear();
-        const component = this.mainInfoContainer.createComponent(componentFactory);
-        component.instance.viewGenericObj = this.viewGenericObj;
-        component.instance.callback.subscribe((e) => this.GetCallback(e));
+    this.mainInfoContainer.clear();
+    const component = this.mainInfoContainer.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewGenericObj;
+    component.instance.callback.subscribe((e) => this.GetCallback(e));
     // this.ucViewMainProd.initiateForm();
   }
 
@@ -328,7 +341,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFNA });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFNA });
   }
 
   Submit() {
@@ -349,7 +362,7 @@ export class NapDetailFormComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFNA });
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFNA });
           }
         )
       }
@@ -374,8 +387,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
 }
