@@ -78,7 +78,12 @@ export class AppViewComponent implements OnInit {
       (response) => {
         this.appNo = response[0]['AppNo'];
         this.custNo = response[1]['CustNo'];
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        if(this.custNo != null && this.custNo != ''){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
         let mouCustId = response[0]['MouCustId'];
@@ -87,7 +92,7 @@ export class AppViewComponent implements OnInit {
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               let mouCustNo = response['MouCustNo'];
-              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
               this.isDmsReady = true;
             });
         }

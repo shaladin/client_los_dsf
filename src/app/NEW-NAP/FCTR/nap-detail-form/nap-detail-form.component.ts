@@ -13,6 +13,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -49,7 +50,6 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
   appNo: string;
-  mouCustNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -116,22 +116,33 @@ export class NapDetailFormComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    this.dmsObj.MetadataParent = null;
     var appObj = { AppId: this.appId };
-    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
       response => {
-        this.appNo = response['AppNo'];
+        this.appNo = response[0]['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let mouCustId = response['MouCustId'];
-        if(mouCustId != null && mouCustId != ''){
-          var mouObj = {MouCustId : mouCustId };
+        let isExisting = response[1]['IsExistingCust'];
+        if(isExisting){
+          let custNo = response[1]['CustNo'];
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+
+        let mouId = response[0]['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            (response) => {
-              this.mouCustNo = response['MouCustNo'];
-              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
               this.isDmsReady = true;
-            });
+            }
+          )
         }
         else{
           this.isDmsReady = true;
