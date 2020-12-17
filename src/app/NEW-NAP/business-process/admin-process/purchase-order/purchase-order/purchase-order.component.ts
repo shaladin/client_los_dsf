@@ -30,8 +30,11 @@ export class PurchaseOrderComponent implements OnInit {
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
   agrNo: string;
-  custNo: any;
-  appNo: any;
+  custNo: string;
+  appNo: string;
+  dmsAppObj: DMSObj;
+  mouCustNo: string;
+  isDmsAppReady: boolean;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -59,7 +62,7 @@ export class PurchaseOrderComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
       AgrmntId: this.AgrmntId
@@ -69,16 +72,22 @@ export class PurchaseOrderComponent implements OnInit {
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
       });
-    this.InitDms();
+    await this.InitDms();
   }
 
-  async InitDms(){
+  async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
+    this.dmsAppObj = new DMSObj();
     let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+
+    this.dmsAppObj.User = currentUserContext.UserName;
+    this.dmsAppObj.Role = currentUserContext.RoleCode;
+    this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
+
     var agrObj = { AgrmntId: this.AgrmntId };
     var appObj = { AppId: this.AppId };
 
@@ -91,27 +100,38 @@ export class PurchaseOrderComponent implements OnInit {
         this.custNo = response[1]['CustNo'];
         this.appNo = response[2]['AppNo'];
         let mouId = response[2]['MouCustId'];
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+
+        if(this.custNo != null && this.custNo != ''){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else{
+          this.dmsAppObj.MetadataParent = null;
+        }
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+
+        this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        if(mouId != null && mouId != ""){
-          let mouObj = {MouCustId : mouId};
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result =>{
-              let mouCustNo = result['MouCustNo'];
-              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+            result => {
+              this.mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
               this.isDmsReady = true;
             }
           )
         }
-        else{
+        else {
           this.isDmsReady = true;
         }
       }
     );
-  } 
-  
+  }
+
   testData() {
   }
 
@@ -140,7 +160,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response[CommonConstant.ReturnObj];
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PurchaseOrder/Paging"],{});
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/PurchaseOrder/Paging"], {});
           this.toastr.successMessage(response["message"]);
         });
     }
@@ -156,6 +176,6 @@ export class PurchaseOrderComponent implements OnInit {
   }
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PurchaseOrder/Paging"],{ "BizTemplateCode": BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/PurchaseOrder/Paging"], { "BizTemplateCode": BizTemplateCode });
   }
 }

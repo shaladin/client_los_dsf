@@ -42,9 +42,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   AppTcForm = this.fb.group({});
   isDmsReady: boolean;
   dmsObj: DMSObj;
-  agrNo: any;
-  custNo: any;
-  appNo: any;
+  agrNo: string;
+  custNo: string;
+  appNo: string;
+  dmsAppObj: DMSObj;
+  mouCustNo: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -119,45 +121,63 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     await this.InitDms();
   }
 
-  async InitDms(){
+  async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
+    this.dmsAppObj = new DMSObj();
     let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+
+    this.dmsAppObj.User = currentUserContext.UserName;
+    this.dmsAppObj.Role = currentUserContext.RoleCode;
+    this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
+
     var agrObj = { AgrmntId: this.agrmntId };
     var appObj = { AppId: this.appId };
 
     let getAgr = await this.httpClient.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.httpClient.post(URLConstant.GetAppCustByAppId, appObj)
-    let getApp = await this.httpClient.post(URLConstant.GetAppById, agrObj)
+    let getApp = await this.httpClient.post(URLConstant.GetAppById, appObj)
     forkJoin([getAgr, getAppCust, getApp]).subscribe(
       (response) => {
         this.agrNo = response[0]['AgrmntNo'];
         this.custNo = response[1]['CustNo'];
         this.appNo = response[2]['AppNo'];
         let mouId = response[2]['MouCustId'];
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+
+        if(this.custNo != null && this.custNo != ''){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else{
+          this.dmsAppObj.MetadataParent = null;
+        }
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+
+        this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        if(mouId != null && mouId != ""){
-          let mouObj = {MouCustId : mouId};
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
           this.httpClient.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result =>{
-              let mouCustNo = result['MouCustNo'];
-              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+            result => {
+              this.mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
               this.isDmsReady = true;
             }
           )
         }
-        else{
+        else {
           this.isDmsReady = true;
         }
       }
     );
   }
+
 
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));

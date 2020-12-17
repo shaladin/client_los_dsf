@@ -90,7 +90,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of DeliveryOrderForm.controls.items['controls']; let i = index" [formGroupName]="i">
+                  <tr *ngFor="let item of DeliveryOrderForm.controls.items['controls']; let i = index"
+                    [formGroupName]="i">
                     <td>{{item.controls.AssetDocName.value}}</td>
                     <td *ngIf="item.controls.IsValueNeeded.value==true">Yes</td>
                     <td *ngIf="item.controls.IsValueNeeded.value==false">No</td>
@@ -180,11 +181,17 @@
                   </app-term-conditions>
                 </ng-template>
               </mat-tab>
-              <mat-tab label="Document">
+              <mat-tab label="App Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Agreement Document">
                 <ng-template matTabContent>
                   <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
                 </ng-template>
               </mat-tab>
+
             </mat-tab-group>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
