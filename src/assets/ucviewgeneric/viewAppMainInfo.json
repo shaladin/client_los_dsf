@@ -28,20 +28,6 @@
                   {
                     "property" : "BizTemplateCode",
                     "value" : "CFNA",
-                    "restriction" : "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "text",
-                  "label": "Number Of Collateral",
-                  "property" : "NumOfColl"
-                }
-              },
-              {
-                "conditions": [                  
-                  {
-                    "property" : "BizTemplateCode",
-                    "value" : "CFNA",
                     "restriction" : "NEQ"
                   }
                 ],
