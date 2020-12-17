@@ -664,6 +664,7 @@ export class CommissionCfnaComponent implements OnInit {
       tempAppCommissionDObj.TaxAmt = tempObj.TaxAmt;
       tempAppCommissionDObj.VatAmt = tempObj.VatAmt;
       tempAppCommissionDObj.PenaltyAmt = tempObj.PenaltyAmt;
+      tempAppCommissionDObj.RefundAmt = this.DictMaxIncomeForm[tempObj.AllocationFrom].RefundAmount;
       tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.AllocationAmount - (tempObj.TaxAmt + tempObj.VatAmt);
       tempAppCommissionDObj.RowVersion = tempObj.RowVersion;
       listAppCommissionDObj.push(tempAppCommissionDObj);
