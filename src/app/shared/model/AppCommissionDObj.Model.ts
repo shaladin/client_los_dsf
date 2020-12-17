@@ -6,6 +6,7 @@ export class AppCommissionDObj{
     TaxAmt: number;
     VatAmt: number;
     PenaltyAmt: number;
+    RefundAmt: number;
     CommissionAmtAfterTax: number;
     RowVersion: string;
     
