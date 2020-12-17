@@ -310,14 +310,16 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   ChangeNationality(ev) {
     if (this.PersonalForm.controls.MrNationalityCode.value == CommonConstant.NationalityLocal) {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.MrNationalityCode[idx].DefaultCode;
-      this.selectedNationalityCountryName = this.MrNationalityCode[idx].DefaultValue;
+      var setCountry = this.MrNationalityCode[idx].DefaultValue.split(';')
+      this.selectedNationalityCountryCode = setCountry[0];
+      this.selectedNationalityCountryName = setCountry[1] || setCountry[0];
       this.isLocal = true;
     } else {
       var foreign = this.MrNationalityCode.find(x => x["MasterCode"] == ev.target.value);
-      this.inputLookupObj1.nameSelect = foreign.DefaultValue;
-      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.DefaultValue};
-      this.countryCode = foreign.DefaultCode;
+      var setCountry = foreign.DefaultValue.split(';')
+      this.inputLookupObj1.nameSelect = setCountry[1] || setCountry[0];
+      this.inputLookupObj1.jsonSelect =  { CountryName: setCountry[1] || setCountry[0]};
+      this.countryCode = setCountry[0];
       this.isLocal = false;
     }
   }
@@ -388,8 +390,9 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             if (this.resultData.MrNationalityCode == CommonConstant.NationalityLocal) {
               this.isLocal = true;
               var idx = 1;
-              this.selectedNationalityCountryCode = this.MrNationalityCode[idx].DefaultCode;
-              this.selectedNationalityCountryName = this.MrNationalityCode[idx].DefaultValue;
+              var setCountry = this.MrNationalityCode[idx].DefaultValue.split(';')
+              this.selectedNationalityCountryCode = setCountry[0];
+              this.selectedNationalityCountryName = setCountry[1] || setCountry[0];
             } else {
               this.isLocal = false;
               this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(

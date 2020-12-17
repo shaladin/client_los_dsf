@@ -139,9 +139,11 @@ export class CustDetailPersonalComponent implements OnInit {
     } else {
       this.isLocal = false;
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == value);
-      this.lookupCountryObj.nameSelect = foreign["DefaultValue"];
-      this.lookupCountryObj.jsonSelect = { CountryName: foreign["DefaultValue"] };
-      this.NationalityCountryCode = foreign["DefaultCode"];
+
+      var setCountry = foreign["DefaultValue"].split(';');
+      this.lookupCountryObj.nameSelect = setCountry[1] || setCountry[0];
+      this.lookupCountryObj.jsonSelect = { CountryName: setCountry[1] || setCountry[0] };
+      this.NationalityCountryCode = setCountry[0];
       this.lookupCountryObj.isRequired = true;
     }
   }

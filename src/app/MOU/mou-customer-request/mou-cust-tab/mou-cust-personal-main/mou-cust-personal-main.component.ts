@@ -372,15 +372,17 @@ export class MouCustPersonalMainComponent implements OnInit {
   ChangeNationality(mrNationalityCode){
     if(this.NationalityObj != undefined){
       if(mrNationalityCode == CommonConstant.NationalityLocal){
-        this.selectedNationalityCountryCode = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).DefaultCode;
-        this.selectedNationalityCountryName = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).DefaultValue;
+        var setCountry = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).DefaultValue.split(';');
+        this.selectedNationalityCountryCode = setCountry[0];
+        this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
         this.isLocal = true;
       }else{
         this.isLocal = false;
         var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
-        this.InputLookupCountryObj.nameSelect = foreign.DefaultValue;
-        this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.DefaultValue};
-        this.selectedNationalityCountryCode = foreign.DefaultCode;
+        var setCountry = foreign.DefaultValue.split(';');
+        this.InputLookupCountryObj.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
+        this.InputLookupCountryObj.jsonSelect =  { CountryName: setCountry[1] ? setCountry[1] : setCountry[0]};
+        this.selectedNationalityCountryCode = setCountry[0];
       }
     }
   }
