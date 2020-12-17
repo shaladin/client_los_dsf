@@ -78,7 +78,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
     await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
       (response) => {
         this.appCustObj = response["AppCustObj"];
-        this.custModelCode = response["CustModelCode"];
+        this.custModelCode = response["MrCustModelCode"];
         this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
         this.appCustBankAccObjs = response["AppCustBankAccObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];

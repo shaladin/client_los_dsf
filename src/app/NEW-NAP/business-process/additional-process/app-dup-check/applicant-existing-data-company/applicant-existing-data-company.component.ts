@@ -89,7 +89,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         var requestDupCheck = {
           "CustName": this.AppCustObj.CustName,
           "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.AppCustObj.CustModelCode,
+          "MrCustModelCode": this.AppCustObj.MrCustModelCode,
           "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
           "IdNo": this.AppCustObj.IdNo,
           "TaxIdNo": this.AppCustObj.TaxIdNo,

@@ -114,7 +114,7 @@ export class FraudDetectionResultComponent implements OnInit {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
+            "MrCustModelCode": this.appCustObj.MrCustModelCode,
             "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
             "IdNo": this.appCustObj.IdNo,
             "TaxIdNo": this.appCustObj.TaxIdNo,
@@ -127,7 +127,7 @@ export class FraudDetectionResultComponent implements OnInit {
           this.requestDupCheck = {
             "CustName": this.appCustObj.CustName,
             "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.CustModelCode,
+            "MrCustModelCode": this.appCustObj.MrCustModelCode,
             "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
             "IdNo": this.appCustObj.IdNo,
             "TaxIdNo": this.appCustObj.TaxIdNo,

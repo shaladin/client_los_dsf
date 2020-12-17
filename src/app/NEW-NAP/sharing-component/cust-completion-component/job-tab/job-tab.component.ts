@@ -294,7 +294,7 @@ export class JobTabComponent implements OnInit {
     let requestObj = {
       AppId: this.appId,
       AppCustId: this.AppCustId,
-      CustModelCode: this.CustModelCode,
+      MrCustModelCode: this.CustModelCode,
       JobDataObj: this.JobDataObj,
       JobDataAddrObj: this.JobDataAddrObj,
       PrevJobAddrObj: this.PrevJobDataAddrObj,

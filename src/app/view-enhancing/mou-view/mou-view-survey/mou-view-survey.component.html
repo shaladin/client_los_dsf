@@ -40,7 +40,7 @@
           <td>{{item.ResultDt | date: 'dd-MMMM-yyyy'}}</td>
           <td>{{item.ReviewBy}}</td>
           <td>
-            <a>View</a>
+            <a [routerLink]="" (click)="openView(item.SurveyTaskNo)">View</a>
           </td>
         </tr>
       </tbody>
