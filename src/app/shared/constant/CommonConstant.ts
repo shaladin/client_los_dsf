@@ -455,7 +455,10 @@ export class CommonConstant {
   public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO";
   public static RefMasterTypeCodeLifeInsPayMethod = "LIFE_INS_PAY_METHOD";
   public static RefMasterTypeCodeLifeInscoBranch = "LIFE_INSCO_BRANCH";
-  public static RefMasterTypeCodeReturnTask = "RETURN_TASK";
+  public static RefMasterTypeCodeReturnTaskCF4W = "RETURN_TASK_CF4W";
+  public static RefMasterTypeCodeReturnTaskCFNA = "RETURN_TASK_CFNA";
+  public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
+  public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";

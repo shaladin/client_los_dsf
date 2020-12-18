@@ -140,7 +140,24 @@ export class ReturnHandlingDetailComponent implements OnInit {
   }
 
   async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReturnTask, MappingCode: this.lobCode, DefaultCode: this.MrCustTypeCode};
+    let refMasterTypeCode = '';
+    switch(this.lobCode){
+      case CommonConstant.CF4W :
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
+        break;
+      case CommonConstant.CFNA :
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFNA;
+        break;
+      case CommonConstant.CFRFN4W :
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFRFN4W;
+        break;
+      case CommonConstant.FL4W :
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;    
+        break;
+    }
+    if(!refMasterTypeCode) return;
+    
+    var refMasterObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode};
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response[CommonConstant.ReturnObj];
