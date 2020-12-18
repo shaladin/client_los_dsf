@@ -32,13 +32,13 @@ export class CreditReviewCrDetailComponent implements OnInit {
   ngOnInit() {
   }
 
-  sortAutoDeviationData() { }
+  sortAutoDeviationData(any) { }
 
   AddNewForm() { }
 
-  onChange() { }
+  onChange(item) { }
 
-  sortManualDeviationData() { }
+  sortManualDeviationData(item) { }
 
-  DeleteFromManualDeviationData() { }
+  DeleteFromManualDeviationData(item) { }
 }
