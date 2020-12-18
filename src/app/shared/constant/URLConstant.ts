@@ -695,6 +695,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderListForNewPOByAppId";
     public static GetPurchaseOrderHByPurchaseOrderHId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHByPurchaseOrderHId";
     public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
+    public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
     public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
 
     // LEAD

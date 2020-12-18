@@ -470,8 +470,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
   public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
   public static RefMasterTypeCodeFinDataCalcBaseOn = "FIN_DATA_CALC_BASE_ON";
-  public static RefMasterReservedField2NonFee = "NON_FEE";
-  public static RefMasterReservedField2Fee = "FEE";
+  public static PurchaseOrderItemTypeNonFee = "NON_FEE";
+  public static PurchaseOrderItemTypeFee = "FEE";
   public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
   public static RefProdCompAssetCond = "ASSETCOND";
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
