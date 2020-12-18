@@ -63,7 +63,7 @@ export class NapDetailFormComponent implements OnInit {
     "UPD":8
   };
   dmsObj: DMSObj;
-  appNo: any;
+  appNo: string;
   isDmsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver) {
