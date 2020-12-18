@@ -4,7 +4,6 @@ export class AppCustObj {
     CustNo: string;
     CustName: string;
     MrCustTypeCode: string;
-    CustModelCode: string;
     MrCustModelCode: string;
     MrIdTypeCode: string;
     IdNo: string;
@@ -13,7 +12,6 @@ export class AppCustObj {
     IsVip: boolean;
     IsAppCustChecked: boolean;
     IsAffiliateWithMf: boolean;
-    CustNotes: string;
     IsExistingCust: boolean;
     IsCustomer: boolean;
     IsFamily: boolean;
@@ -32,7 +30,6 @@ constructor() {
         this.CustNo = "";
         this.CustName = "";
         this.MrCustTypeCode = "";
-        this.CustModelCode = "";
         this.MrCustModelCode = "";
         this.MrIdTypeCode = "";
         this.IdNo = "";
@@ -40,7 +37,6 @@ constructor() {
         this.IsVip = false;
         this.IsAppCustChecked = false;
         this.IsAffiliateWithMf = false;
-        this.CustNotes = "";
         this.IsCustomer = false;
         this.IsFamily = false;
         this.IsGuarantor = false;

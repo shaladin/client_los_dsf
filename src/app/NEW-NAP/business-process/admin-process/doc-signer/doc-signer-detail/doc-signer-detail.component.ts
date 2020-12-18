@@ -186,11 +186,11 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
     this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
 
-    this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
-    this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-    this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+    this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
 
     var crit4Obj = new CriteriaObj();

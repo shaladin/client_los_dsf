@@ -79,6 +79,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
+    this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
     this.arrValue.push(this.ReturnHandlingHObj.AppId);
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -125,7 +126,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
           this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
           this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - response.CommissionAllocatedAmt - response.ReservedFundAllocatedAmt,
           this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
-        this.viewIncomeInfoObj.ExpenseAmount = response.ExpenseAmount;
+        this.viewIncomeInfoObj.ExpenseAmount = response.CommissionAllocatedAmt;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
       });
@@ -146,6 +147,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
               }
             )
           }
+          this.ChangeTab(CommonConstant.AppStepComm);
         }
       });
   }
@@ -171,6 +173,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   tempTotalExpenseAmt: number = 0;
   IsLastStep: boolean = false;
   ChangeTab(AppStep) {
+    this.isShow = false;
     switch (AppStep) {
       case CommonConstant.AppStepComm:
         this.StepIndex = 1;
@@ -262,5 +265,13 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.viewIncomeInfoObj.ExpenseAmount = this.tempTotalExpenseAmt;
     this.viewIncomeInfoObj.ReservedFundAllocatedAmount = this.tempTotalRsvFundAmt;
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+  }
+
+  isShow: boolean = false;
+  DictRemainingIncomeForm: any = {};
+  GetDictRemaining(ev){
+    console.log(ev);
+    this.DictRemainingIncomeForm = ev;
+    this.isShow = true;
   }
 }

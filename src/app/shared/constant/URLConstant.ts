@@ -1093,6 +1093,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetSrvyOrderBySrvyOrderNo = environment.FoundationR3Url + "/SrvyOrder/GetSrvyOrderBySrvyOrderNo";
     public static GetSrvyDataBySrvyOrderId = environment.FoundationR3Url + "/SrvyData/GetSrvyDataBySrvyOrderId";
     public static GetListSrvyTaskBySrvyOrderId = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskBySrvyOrderId";
+    public static GetSrvyTaskBySrvyTaskNo = environment.FoundationR3Url + "/SrvyTask/GetSrvyTaskBySrvyTaskNo";
 
     // Workflow Engine
     public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";

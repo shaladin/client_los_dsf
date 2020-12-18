@@ -317,7 +317,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataCompanyObj.AppCustObj.CustNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustNo.value;
       this.custDataCompanyObj.AppCustObj.MrIdTypeCode = "NPWP";
       this.custDataCompanyObj.AppCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      this.custDataCompanyObj.AppCustObj.CustModelCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustModelCode.value;
+      this.custDataCompanyObj.AppCustObj.MrCustModelCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustModelCode.value;
       this.custDataCompanyObj.AppCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
       this.custDataCompanyObj.AppCustObj.IsVip = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsVip.value;
       this.custDataCompanyObj.AppCustObj.AppId = this.appId;
@@ -525,9 +525,9 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   setAppCustPersonalJobData() {
-    this.custDataPersonalObj.AppCustObj.CustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
+    this.custDataPersonalObj.AppCustObj.MrCustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelProfessional) {
+    if (this.custDataPersonalObj.AppCustObj.MrCustModelCode == CommonConstant.CustModelProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
@@ -536,7 +536,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelEmployee) {
+    if (this.custDataPersonalObj.AppCustObj.MrCustModelCode == CommonConstant.CustModelEmployee) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
@@ -550,7 +550,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
+    if (this.custDataPersonalObj.AppCustObj.MrCustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
@@ -564,7 +564,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
+    if (this.custDataPersonalObj.AppCustObj.MrCustModelCode == CommonConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
   }
@@ -841,7 +841,7 @@ export class CustomerDataFL4WComponent implements OnInit {
             this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
 
             if (this.custDataPersonalObj.AppCustObj != undefined) {
-              this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
+              this.defCustModelCode = this.custDataPersonalObj.AppCustObj.MrCustModelCode;
             }
 
             this.setAddrLegalObj(CommonConstant.CustTypePersonal);
