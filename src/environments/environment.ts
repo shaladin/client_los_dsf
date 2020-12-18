@@ -9,7 +9,7 @@ export const environment = {
    //losUrl: 'http://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3app-server.ad-ins.com/LOS_SWEEP',
-  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
+  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_SWEEP',
   ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_SWEEP',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation',
   losR3Web: 'http://r3web-server/LOSR3',
