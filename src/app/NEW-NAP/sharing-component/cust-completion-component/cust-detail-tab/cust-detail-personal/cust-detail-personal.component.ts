@@ -212,6 +212,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
+    this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMf.value;
     this.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
 
     this.AppCustPersonalObj.CustFullName = this.CustFullName;
@@ -248,11 +249,12 @@ export class CustDetailPersonalComponent implements OnInit {
 
   VIPCheck(IsVip: boolean = false){
   let Vip = false;
-  if(IsVip != undefined){
-    Vip = IsVip;
-  }else{
-    Vip = this.CustDetailForm.controls.IsVip.value
-  }
+  Vip = this.CustDetailForm.controls.IsVip.value;
+  // if(IsVip != undefined){
+  //   Vip = IsVip;
+  // }else{
+  //   Vip = this.CustDetailForm.controls.IsVip.value
+  // }
   if (Vip == true) {
     this.CustDetailForm.controls.VIPNotes.enable();     
     this.CustDetailForm.controls.VIPNotes.setValidators([Validators.required]);

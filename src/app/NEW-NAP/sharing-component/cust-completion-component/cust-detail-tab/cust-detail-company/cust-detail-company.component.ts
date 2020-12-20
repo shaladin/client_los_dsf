@@ -96,6 +96,7 @@ export class CustDetailCompanyComponent implements OnInit {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
     this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
+    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
     this.AppCustCompanyObj.NumOfEmp = this.CustDetailForm.controls.NoOfEmployee.value;
@@ -134,7 +135,7 @@ export class CustDetailCompanyComponent implements OnInit {
         } 
       
         this.CustDetailForm.patchValue({
-          IsAffiliateWithMF : response.AppCustObj.IsAffiliateWithMF,
+          IsAffiliateWithMF : response.AppCustObj.IsAffiliateWithMf,
           NoOfEmployee : response.AppCustCompanyObj.NumOfEmp,
           EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
           IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
