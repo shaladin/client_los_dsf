@@ -1,5 +1,5 @@
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -127,6 +127,7 @@ export class JobTabComponent implements OnInit {
   }
 
   GetData() {
+    var datePipe = new DatePipe("en-US");
     this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustPersonalJobDataObj != null) {
@@ -144,12 +145,12 @@ export class JobTabComponent implements OnInit {
             MrInvestmentTypeCode: response.AppCustPersonalJobDataObj.MrInvestmentTypeCode,
             ProfessionalNo: response.AppCustPersonalJobDataObj.ProfessionalNo != "" ? response.AppCustPersonalJobDataObj.ProfessionalNo : "",
             PrevCoyName: response.AppCustPersonalJobDataObj.PrevCoyName != "" ? response.AppCustPersonalJobDataObj.PrevCoyName : "",
-            PrevEmploymentDt: response.AppCustPersonalJobDataObj.PrevEmploymentDt != null ? response.AppCustPersonalJobDataObj.PrevEmploymentDt : "",
+            PrevEmploymentDt: response.AppCustPersonalJobDataObj.PrevEmploymentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.PrevEmploymentDt, "yyyy-MM-dd") : "",
             OthBizName: response.AppCustPersonalJobDataObj.OthBizName != "" ? response.AppCustPersonalJobDataObj.OthBizName : "",
             OthBizType: response.AppCustPersonalJobDataObj.OthBizType != "" ? response.AppCustPersonalJobDataObj.OthBizType : "",
             OthBizIndustryTypeCode: response.AppCustPersonalJobDataObj.OthBizIndustryTypeCode != "" ? response.AppCustPersonalJobDataObj.OthBizIndustryTypeCode : "",
             OthBizJobPosition: response.AppCustPersonalJobDataObj.OthBizJobPosition != "" ? response.AppCustPersonalJobDataObj.OthBizJobPosition : "",
-            OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? response.AppCustPersonalJobDataObj.OthBizEstablishmentDt : ""
+            OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.OthBizEstablishmentDt, "yyyy-MM-dd") : ""
           })
           this.JobDataObj.RowVersion = response.AppCustPersonalJobDataObj.RowVersion;
           this.InputLookupProfessionObj.nameSelect = response.AppCustPersonalJobDataObj.MrProfessionName;
@@ -157,14 +158,16 @@ export class JobTabComponent implements OnInit {
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
         }
-
-
+        
           if (response.JobAddr.AppCustAddrId != 0) {
             this.JobAddrObj = response.JobAddr;
             this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response.JobAddr.Zipcode;
             this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.JobAddr.Zipcode };
             this.InputJobAddrObj.default = this.JobAddrObj;
             this.JobDataAddrObj.RowVersion = response.JobAddr.RowVersion;
+            this.JobDataForm.patchValue({
+              JobNotes: this.JobAddrObj.Notes
+            });
           }
 
           if (response.PrevJobAddr.AppCustAddrId != 0) {
@@ -173,6 +176,9 @@ export class JobTabComponent implements OnInit {
             this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.PrevJobAddr.Zipcode };
             this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
             this.PrevJobDataAddrObj.RowVersion = response.PrevJobAddr.RowVersion;
+            this.JobDataForm.patchValue({
+              PrevJobNotes: this.PrevJobAddrObj.Notes
+            });
           }
 
           if (response.OthBizAddr.AppCustAddrId != 0) {
@@ -181,6 +187,9 @@ export class JobTabComponent implements OnInit {
             this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.OthBizAddr.Zipcode };
             this.InputOthBizAddrObj.default = this.OthBizAddrObj;
             this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
+            this.JobDataForm.patchValue({
+              OthBizNotes: this.OthBizAddrObj.Notes
+            });
           }
         this.isUcAddrReady = true;
       },
@@ -244,6 +253,7 @@ export class JobTabComponent implements OnInit {
       this.JobDataAddrObj.AreaCode1 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode1"].value;
       this.JobDataAddrObj.City = this.JobDataForm.controls["JobAddr"]["controls"]["City"].value;
       this.JobDataAddrObj.Zipcode = this.JobDataForm.controls["JobAddrZipcode"]["value"].value;
+      this.JobDataAddrObj.Notes = this.JobDataForm.controls["JobNotes"].value;
       this.JobDataAddrObj.RowVersion = this.JobAddrObj.RowVersion;
 
       this.OthBizDataAddrObj.Addr = this.JobDataForm.controls["OthBizAddr"]["controls"]["Addr"].value;
@@ -266,6 +276,8 @@ export class JobTabComponent implements OnInit {
       this.OthBizDataAddrObj.AreaCode1 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode1"].value;
       this.OthBizDataAddrObj.City = this.JobDataForm.controls["OthBizAddr"]["controls"]["City"].value;
       this.OthBizDataAddrObj.Zipcode = this.JobDataForm.controls["OthBizAddrZipcode"]["value"].value;
+      this.OthBizDataAddrObj.FaxArea = this.JobDataForm.controls["OthBizAddr"]["controls"]["FaxArea"].value;
+      this.OthBizDataAddrObj.Notes = this.JobDataForm.controls["OthBizNotes"].value;
       this.OthBizDataAddrObj.RowVersion = this.OthBizAddrObj.RowVersion;
 
       this.PrevJobDataAddrObj.Addr = this.JobDataForm.controls["PrevJobAddr"]["controls"]["Addr"].value;
@@ -288,6 +300,7 @@ export class JobTabComponent implements OnInit {
       this.PrevJobDataAddrObj.AreaCode1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode1"].value;
       this.PrevJobDataAddrObj.City = this.JobDataForm.controls["PrevJobAddr"]["controls"]["City"].value;
       this.PrevJobDataAddrObj.Zipcode = this.JobDataForm.controls["PrevJobAddrZipcode"]["value"].value;
+      this.PrevJobDataAddrObj.Notes = this.JobDataForm.controls["PrevJobNotes"].value;
       this.PrevJobDataAddrObj.RowVersion = this.PrevJobAddrObj.RowVersion;
     }
 
