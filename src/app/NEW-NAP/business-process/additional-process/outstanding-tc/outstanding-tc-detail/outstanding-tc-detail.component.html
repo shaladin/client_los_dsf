@@ -9,7 +9,7 @@
           <form class="form form-horizontal" [formGroup]="OustandingTCForm"
             (ngSubmit)="OustandingTCForm.valid && SaveForm()" #enjiForm="ngForm">
             
-            <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
+            <mat-tab-group>
               <mat-tab label="Term & Conditions">
                 <ng-template matTabContent>
                   <app-term-conditions [AppId]="AppId" [parentForm]="OustandingTCForm" [enjiForm]="enjiForm">
