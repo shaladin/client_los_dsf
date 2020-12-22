@@ -54,7 +54,7 @@ export class DocSignerDetailComponent implements OnInit {
     MrJobPositionSupplBranchEmpName: [''],
     MrJobPositionMfEmpNo1Name: [''],
     MrJobPositionMfEmpNo2Name: [''],
-    MrJobPositionMgmntShrholder1Code: ['']
+    MrJobPositionMgmntShrholder1Name: ['']
   });
 
   async ngOnInit() {
@@ -130,6 +130,12 @@ export class DocSignerDetailComponent implements OnInit {
           this.agrmntSignerObj.MrJobPositionSupplBranchEmpName = this.ResponseAgrmntSignerObj.MrJobPositionSupplBranchEmpName;
           this.agrmntSignerObj.MrJobPositionMfEmpNo1Name = this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo1Name;
           this.agrmntSignerObj.MrJobPositionMfEmpNo2Name = this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo2Name;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Code;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder2Code = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder2Code;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder3Code = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder3Code;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder1Name = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Name;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder2Name = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder2Name;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder3Name = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder3Name;
 
           this.DocSignerForm.patchValue({
             MrJobPositionSupplBranchEmpName: this.ResponseAgrmntSignerObj.MrJobPositionSupplBranchEmpName,
@@ -250,10 +256,12 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
-    let tempJobCode: string = "-";
-    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = event.MrJobPositionCode;
+    let tempJobName: string = "-";
+    if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
+    this.agrmntSignerObj.MrJobPositionMgmntShrholder1Name = tempJobName;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder1Code: tempJobCode,
+      MrJobPositionMgmntShrholder1Name: tempJobName,
     })
   }
 
@@ -261,9 +269,7 @@ export class DocSignerDetailComponent implements OnInit {
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
 
-    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-      this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder1Code.value;
-    } else if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.agrmntSignerObj.AppCustPersonalId = this.ResponseAppCustDataObj.AppCustPersonalId;
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
     }
