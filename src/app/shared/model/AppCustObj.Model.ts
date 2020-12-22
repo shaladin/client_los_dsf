@@ -18,7 +18,6 @@ export class AppCustObj {
     IsGuarantor: boolean;
     IsShareholder: boolean;
     IsCompletion: boolean;
-    IsAffiliateWithMF: boolean;
     MrCustRelationshipCode: string;
     MrCustRelationshipDescr: string;
     VipNotes: string;
@@ -43,7 +42,6 @@ constructor() {
         this.IsGuarantor = false;
         this.IsShareholder = false;
         this.IsCompletion = false;
-        this.IsAffiliateWithMF = false;
         this.MrCustRelationshipCode = "";
         this.VipNotes = "";
     }

@@ -95,7 +95,6 @@ export class CustDetailCompanyComponent implements OnInit {
   SetData(){
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
-    this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
