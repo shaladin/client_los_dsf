@@ -169,10 +169,13 @@ export class EmergencyContactTabComponent implements OnInit {
       this.UcAddrObj.FaxArea = response["FaxArea"];
       this.UcAddrObj.Phn1 = response["Phn1"];
       this.UcAddrObj.Phn2 = response["Phn2"];
+      this.UcAddrObj.Phn3 = response["Phn3"];
       this.UcAddrObj.PhnArea1 = response["PhnArea1"];
       this.UcAddrObj.PhnArea2 = response["PhnArea2"];
+      this.UcAddrObj.PhnArea3 = response["PhnArea3"];
       this.UcAddrObj.PhnExt1 = response["PhnExt1"];
       this.UcAddrObj.PhnExt2 = response["PhnExt2"];
+      this.UcAddrObj.PhnExt3 = response["PhnExt3"];
 
       this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
       this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"]};

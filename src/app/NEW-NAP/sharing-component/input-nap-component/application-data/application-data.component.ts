@@ -765,10 +765,13 @@ export class ApplicationDataComponent implements OnInit {
       this.mailingAddrObj.FaxArea = address.FaxArea;
       this.mailingAddrObj.Phn1 = address.Phn1;
       this.mailingAddrObj.Phn2 = address.Phn2;
+      this.mailingAddrObj.Phn3 = address.Phn3;
       this.mailingAddrObj.PhnArea1 = address.PhnArea1;
       this.mailingAddrObj.PhnArea2 = address.PhnArea2;
+      this.mailingAddrObj.PhnArea3 = address.PhnArea3;
       this.mailingAddrObj.PhnExt1 = address.PhnExt1;
       this.mailingAddrObj.PhnExt2 = address.PhnExt2;
+      this.mailingAddrObj.PhnExt3 = address.PhnExt3;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
