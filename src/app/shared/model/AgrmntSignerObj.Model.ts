@@ -18,10 +18,13 @@ export class AgrmntSignerObj{
     AppCustSpouseId: any;
     AppCustCompanyMgmntShrholder1Id: any;
     MrJobPositionMgmntShrholder1Code: any;
+    MrJobPositionMgmntShrholder1Name: string;
     AppCustCompanyMgmntShrholder2Id: any;
     MrJobPositionMgmntShrholder2Code: any;
+    MrJobPositionMgmntShrholder2Name: string;
     AppCustCompanyMgmntShrholder3Id: any;
     MrJobPositionMgmntShrholder3Code: any;
+    MrJobPositionMgmntShrholder3Name: string;
     RowVersion: any;
     constructor(){}
 }

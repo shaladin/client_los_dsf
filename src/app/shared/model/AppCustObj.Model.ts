@@ -20,6 +20,7 @@ export class AppCustObj {
     IsCompletion: boolean;
     IsAffiliateWithMF: boolean;
     MrCustRelationshipCode: string;
+    MrCustRelationshipDescr: string;
     VipNotes: string;
     Age: number;
     RowVersion: any;

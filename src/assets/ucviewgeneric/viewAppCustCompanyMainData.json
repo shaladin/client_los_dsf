@@ -18,17 +18,12 @@
         },
         {
           "type": "text",
-          "label": "Company Brand Name",
-          "property": "CompanyBrandName"
-        },
-        {
-          "type": "text",
           "label": "Industry Type",
           "property": "IndustryTypeName"
         },
         {
           "type": "text",
-          "label": "CompanyType",
+          "label": "Company Type",
           "property": "CompanyTypeName"
         },
         {
