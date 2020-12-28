@@ -9,6 +9,7 @@ export class CrdRvwNegCheckListComponent implements OnInit {
 
   constructor() { }
 
+  ListNegCust: Array<any> = new Array<any>();
   ngOnInit() {
   }
 

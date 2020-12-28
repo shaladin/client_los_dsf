@@ -26,7 +26,11 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
 
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
+  //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
+  readonly ExposureCustGroupTypeCode: string = CommonConstant.ExposureCustTypeCode;
+  readonly ExposureObligorTypeCode: string = CommonConstant.ExposureCustTypeCode;
+  //#endregion
   crdRvwCustPersInfoObj: CrdRvwCustPersInfoObj = new CrdRvwCustPersInfoObj();
   constructor(
     // private route: ActivatedRoute,
@@ -66,23 +70,27 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
     );
   }
 
-  ListCrdRvwExposureObj: Array<CrdRvwExposureObj> = new Array<CrdRvwExposureObj>();
   CustCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
+  CustGroupCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
+  ObligorCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         // console.log(response);
-        this.ListCrdRvwExposureObj = response.ListCrdRvwExposureObj;
         for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
           const element = response.ListCrdRvwExposureObj[index];
           if (element.ExposureType == this.ExposureCustTypeCode) {
             this.CustCrdRvwExposureObj = element;
-            break;
+          }
+          if (element.ExposureType == this.ExposureCustGroupTypeCode) {
+            this.CustGroupCrdRvwExposureObj = element;
+          }
+          if (element.ExposureType == this.ExposureObligorTypeCode) {
+            this.ObligorCrdRvwExposureObj = element;
           }
         }
       }
-
-    )
+    );
   }
 
   ListAppCustBankAccObjs: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();

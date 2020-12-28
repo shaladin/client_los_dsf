@@ -1,0 +1,53 @@
+<div class="modal-body">
+  <div class="px-3">
+
+    <lib-ucSubsection [id]="'NegativeListId'" [title]="'Negative List'" [panel]="'NegativeList'">
+    </lib-ucSubsection>
+    <div id="NegativeList">
+
+      <div class="col-md-12" style="padding: 0;">
+        <div class="col-md-12">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: left;">
+                  <span class="thead-header" name='LegalDoc' translate>Legal Document</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='DocNo' translate>Document No</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='DocDt' translate>Document Date</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='DocExpDt' translate>Document Expired Date</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='ReleaseBy' translate>Release By</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='ReleaseLocation' translate>Release Location</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="ListLegalDoc.length == 0">
+              <tr>
+                <td colspan="100%">No Data Available</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr *ngFor="let item of ListLegalDoc; let i = index;">
+                <td style="text-align: left;">{{item.LegalDoc}}</td>
+                <td style="text-align: left;">{{item.DocNo}}</td>
+                <td style="text-align: left;">{{item.DocDt | date: 'dd-MMM-yyyy'}}</td>
+                <td style="text-align: left;">{{item.DocExpDt | date: 'dd-MMM-yyyy'}}</td>
+                <td style="text-align: left;">{{item.ReleaseBy}}</td>
+                <td style="text-align: left;">{{item.ReleaseLocation}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

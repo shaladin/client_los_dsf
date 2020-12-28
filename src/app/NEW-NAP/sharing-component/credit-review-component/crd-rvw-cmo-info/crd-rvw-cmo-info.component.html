@@ -35,44 +35,47 @@
             <label class="label-control"> #AGR FPD / Repo / WO (Last {{crdRvwCmoObj.SpanOfMonth}} Month) </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwCmoObj.AgrmntFpd}} / {{crdRvwCmoObj.AgrmntRepo}} / {{crdRvwCmoObj.AgrmntWo}}</label>
+            <label class="label-control"> {{crdRvwCmoObj.AgrmntFpd}} / {{crdRvwCmoObj.AgrmntRepo}} /
+              {{crdRvwCmoObj.AgrmntWo}}</label>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <br>
   <div class="card-body">
     <!-- <div class="px-3">     -->
-      <table class="table table-responsive-md text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th style="text-align: center;">
-              <span class="thead-header" name='No' translate>#AGR</span>
-            </th>
-            <span *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
-              <th style="text-align: left;">
-                <span class="thead-header" name='' translate>{{item.BucketRange}}</span>
-              </th>
-            </span>
+    <h4 class="form-section card-title" style="font-size: 1rem;" translate>Active Agreement Current Condition</h4>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;">
+            <span class="thead-header" name='No' translate>#AGR</span>
+          </th>
+          <span *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
             <th style="text-align: left;">
-              <span class="thead-header" name='AssetPrice' translate>WO</span>
+              <span class="thead-header" name='' translate>{{item.BucketRange}}</span>
             </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='Insurance' translate>REPO</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="text-align: center;">{{crdRvwCmoObj.AllAgrmnt}}</td>
-            <span *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
-              <td style="text-align: left;">{{item.Value}}</td>
-            </span>
-            <td style="text-align: left;">{{crdRvwCmoObj.AllWo}}</td>
-            <td style="text-align: left;">{{crdRvwCmoObj.AllRepo}}</td>
-          </tr>
-        </tbody>
-      </table>
+          </span>
+          <th style="text-align: left;">
+            <span class="thead-header" name='AssetPrice' translate>WO</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='Insurance' translate>REPO</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center;">{{crdRvwCmoObj.AllAgrmnt}}</td>
+          <span *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
+            <td style="text-align: left;">{{item.Value}}</td>
+          </span>
+          <td style="text-align: left;">{{crdRvwCmoObj.AllWo}}</td>
+          <td style="text-align: left;">{{crdRvwCmoObj.AllRepo}}</td>
+        </tr>
+      </tbody>
+    </table>
     <!-- </div> -->
   </div>
 </div>

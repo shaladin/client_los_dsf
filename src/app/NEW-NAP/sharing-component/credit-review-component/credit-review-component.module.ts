@@ -22,6 +22,7 @@ import { CrdRvwBankStatementComponent } from './crd-rvw-cust-info/component/crd-
 import { CrdRvwNegCheckListComponent } from './crd-rvw-cust-info/component/crd-rvw-neg-check-list/crd-rvw-neg-check-list.component';
 import { CrdRvwDiffWithMasterCustComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-master-cust/crd-rvw-diff-with-master-cust.component';
 import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-in-process-app/crd-rvw-diff-with-in-process-app.component';
+import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.component';
 
 @NgModule({
     exports: [
@@ -37,7 +38,8 @@ import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/compone
         CrdRvwIncomeExpenseComponent, 
         CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
-        CrdRvwDukcapilHistComponent
+        CrdRvwDukcapilHistComponent,
+        CrdRvwLegalDocComponent
     ],
     imports: [
         CommonModule,
@@ -63,7 +65,8 @@ import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/compone
         CrdRvwBankStatementComponent,
         CrdRvwNegCheckListComponent,
         CrdRvwDiffWithMasterCustComponent,
-        CrdRvwDiffWithInProcessAppComponent
+        CrdRvwDiffWithInProcessAppComponent,
+        CrdRvwLegalDocComponent
     ],
     providers: [
         NGXToastrService

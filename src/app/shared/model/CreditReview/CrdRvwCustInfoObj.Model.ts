@@ -31,6 +31,6 @@ export class CrdRvwCustInfoObj {
         this.CustIndicatorDescr = CommonConstant.NoData;
         this.DiffToMasterIndicatorDescr = CommonConstant.NoData;
         this.DiffToInPrcssIndicatorDescr = CommonConstant.NoData;
-        this.MrCustTypeCode = CommonConstant.CustTypePersonal;
+        this.MrCustTypeCode = CommonConstant.CustTypeCompany;
     }
 }

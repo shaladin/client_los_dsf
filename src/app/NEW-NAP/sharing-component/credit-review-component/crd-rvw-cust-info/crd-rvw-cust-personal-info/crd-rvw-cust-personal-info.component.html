@@ -259,17 +259,33 @@
           <a class="success" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
         </div>
       </div>
-      <div class="row" *ngFor="let item of ListCrdRvwExposureObj; let i = index;">
+      <div class="row">
         <div class="col-md-6">
-          <label class="label-control"> {{item.ExposureTypeDesc}} </label>
+          <label class="label-control"> Customer </label>
         </div>
         <div class="col-md-6 ">
-          <label class="label-control"> {{item.ActiveAgrmnt}} / {{item.OsArBalance}} / {{item.OsArBalance}} </label>
+          <label class="label-control"> {{CustCrdRvwExposureObj.ActiveAgrmnt}} / {{CustCrdRvwExposureObj.OsArBalance}} / {{CustCrdRvwExposureObj.OsArBalance}} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Customer Group </label>
+        </div>
+        <div class="col-md-6 ">
+          <label class="label-control"> {{CustGroupCrdRvwExposureObj.ActiveAgrmnt}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Obligor </label>
+        </div>
+        <div class="col-md-6 ">
+          <label class="label-control"> {{ObligorCrdRvwExposureObj.ActiveAgrmnt}} / {{ObligorCrdRvwExposureObj.OsArBalance}} / {{ObligorCrdRvwExposureObj.OsArBalance}} </label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <label class="label-control"> Application / Agreement History </label>
+          <br>
         </div>
       </div>
       <div class="row">

@@ -29,6 +29,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
   BizTemplateCode: string = "";
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
+  readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
+  readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
+  
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],

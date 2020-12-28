@@ -7,6 +7,8 @@
         </app-crd-rvw-cust-info>
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
+        <app-crd-rvw-legal-doc *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"></app-crd-rvw-legal-doc>
+        
         <app-crd-rvw-third-party-checking [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-third-party-checking>
         <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">

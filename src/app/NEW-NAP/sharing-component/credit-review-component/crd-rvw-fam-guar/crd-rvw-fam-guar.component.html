@@ -170,6 +170,9 @@
               <th style="text-align: left;">
                 <span class="thead-header" name='IsDiff' translate>#AGR / Days Ovd / Total Ovd Amt As Customer</span>
               </th>
+              <th style="text-align: left;">
+                <span class="thead-header" name='IsDiff' translate>#AGR / Days Ovd / Total Ovd Amt As Guarantor</span>
+              </th>
             </tr>
           </thead>
           <tbody *ngIf="ListAppCustGuarantor.length == 0">
@@ -211,6 +214,34 @@
                   </span>
                 </span>
               </td>
+              
+              <!-- #AGR / Days Ovd / Total Ovd Amt As Customer -->
+              <td style="text-align: left;"
+                *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined">
+                <span id="CustGuarantorOverdueIndicator{{i}}">
+                  <!-- ini belom selesai karena belom ada indicator utk overdue -->
+                  <i *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator"
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator}"
+                    class="font-medium-3 fa fa-circle tooltips">
+                    <span [ngClass]="'tooltipstext'">
+                      {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}}
+                    </span>
+                  </i>
+                  <i *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == whiteIndicator"
+                    class="font-medium-3 far fa-circle tooltips">
+                    <span [ngClass]="'tooltipstext'">
+                      {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}}
+                    </span>
+                  </i>
+                  <span> / DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].TotalAgrmntOverdue /
+                    DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].MaxOverdueDays /
+                    DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].MaxOverdueAmt </span>
+                </span>
+              </td>
+              <td style="text-align: left;"
+                *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined"> - </td>
+              
+              <!-- #AGR / Days Ovd / Total Ovd Amt As Guarantor -->
               <td style="text-align: left;"
                 *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined">
                 <span id="CustGuarantorOverdueIndicator{{i}}">
