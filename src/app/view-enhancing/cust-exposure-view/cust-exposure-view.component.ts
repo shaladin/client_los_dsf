@@ -16,6 +16,7 @@ export class CustExposureViewComponent implements OnInit {
 
   appId: number = 0;
   IsReady: boolean = false;
+  readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
   readonly ExposureCustGroupTypeCode: string = CommonConstant.ExposureCustTypeCode;

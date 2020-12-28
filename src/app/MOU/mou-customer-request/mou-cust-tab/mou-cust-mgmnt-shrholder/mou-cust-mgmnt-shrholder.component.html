@@ -175,6 +175,16 @@
                   <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsSigner" />
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="IsOwner" translate>Owner</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsOwner" />
+                </div>
+                <label class="col-md-2" for="IsActive" translate>Active Signer</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsActive" />
+                </div>
+              </div>
             </div>
             <div *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'COMPANY'">
               <div class="form-group row">
@@ -224,6 +234,22 @@
                   <input type="text" currencyMask class="form-control" id="sharePrcnt" formControlName="SharePrcnt"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.SharePrcnt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.SharePrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="IsOwner" translate>Owner</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsOwner" />
+                </div>
+                <label class="col-md-2" for="IsActive" translate>Active Signer</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsActive" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="sharePrcnt" translate>As Default Signer</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsSigner" />
                 </div>
               </div>
             </div>
