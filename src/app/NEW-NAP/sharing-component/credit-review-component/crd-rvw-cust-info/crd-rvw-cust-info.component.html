@@ -1,5 +1,7 @@
 <lib-ucSubsection [id]="'CustInfoId'" [title]="'Customer Information'" [panel]="'CustInfo'">
 </lib-ucSubsection>
 <div id="CustInfo">
-  <label>Customer Information</label>
+  <!-- <label>Customer Information</label> -->
+  <app-crd-rvw-cust-personal-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypePersonal" (LinkViewCustExposure)="ClickLinkViewCustExposure()" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info>
+  <app-crd-rvw-cust-company-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" (LinkViewCustExposure)="ClickLinkViewCustExposure()" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info>
 </div>

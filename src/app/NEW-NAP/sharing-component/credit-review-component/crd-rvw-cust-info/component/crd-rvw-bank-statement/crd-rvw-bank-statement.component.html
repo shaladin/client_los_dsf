@@ -1,0 +1,62 @@
+<div class="modal-body">
+  <div class="px-3">
+
+    <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
+    </lib-ucSubsection>
+    <div id="BankAccount">
+      <div class="col-md-12" *ngIf="ListAppCustBankAccObjs.length == 0">
+        <span aria-colspan="100%">No Data Available</span>
+      </div>
+
+      <div class="col-md-12" *ngFor="let item of ListAppCustBankAccObjs; let i = index"
+        style="padding: 0; margin-top: 20px;">
+        <div class="col-md-12" style="padding: 0;">
+          <h5 class="col-md-7" style="display: inline-block;">
+            <i class="fas fa-circle" style="color: green" *ngIf="item.IsActive == true"></i>
+            <i class="fas fa-circle" style="color: red" *ngIf="item.IsActive == false"></i>
+            {{i+1}} {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
+          </h5>
+        </div>
+        <div class="col-md-12" style="padding: 0;">
+          <div class="col-md-12">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='month' translate>MONTH</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='year' translate>YEAR</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='debit' translate>DEBIT (-)</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='credit' translate>CREDIT (+)</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='endingBalance' translate>ENDING BALANCE</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="item.AppCustBankStmntObjs?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let stmnt of item.AppCustBankStmntObjs">
+                  <td style="text-align: left;">{{stmnt.MonthName}}</td>
+                  <td style="text-align: left;">{{stmnt.Year}}</td>
+                  <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>
+                  <td style="text-align: left;">{{stmnt.CreditAmt | number:'.2':'en-US'}}</td>
+                  <td style="text-align: left;">{{stmnt.BalanceAmt | number:'.2':'en-US'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

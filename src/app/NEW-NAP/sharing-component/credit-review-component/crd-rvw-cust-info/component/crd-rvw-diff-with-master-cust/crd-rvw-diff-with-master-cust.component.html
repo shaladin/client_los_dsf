@@ -1,0 +1,35 @@
+<div class="modal-body">
+  <div class="px-3">    
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='CustData' translate>Customer Data</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='IsDiff' translate>Is Different</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='AppData' translate>Application Data</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='MasterData' translate>Master Data</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="ListCrdRvwDiffAppToMasterCustObj.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let item of ListCrdRvwDiffAppToMasterCustObj">
+          <td style="text-align: left;">{{item.FieldName}}</td>
+          <td style="text-align: left;">{{item.IsDifference}}</td>
+          <td style="text-align: left;">{{item.AppValue}}</td>
+          <td style="text-align: left;">{{item.MasterValue}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

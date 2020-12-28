@@ -1,135 +1,167 @@
 <div class="col-md-12 text-left">
   <div class="card">
+    <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
-        <app-crd-rvw-cust-info [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-cust-info>
-        <app-crd-rvw-fam-guar [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-fam-guar>
-        <app-crd-rvw-third-party-checking [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-third-party-checking>
-        <app-crd-rvw-app-info [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-app-info>
-        <app-crd-rvw-asset [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-asset>
-        <app-crd-rvw-additional-coll [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-additional-coll>
-        <app-crd-rvw-cmo-info [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info [CrdRvwCustInfoId]="CrdRvwCustInfoId"> </app-crd-rvw-dealer-info>
-        <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
-        </lib-ucSubsection>
-        <div class="form-body" id="viewAutoDeviation" *ngIf="AutoDeviationData.length > 0">
-          <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
-            <thead>
-              <tr class="table-header">
-                <th><span translate class="thead-header">No. </span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="DeviationType">Deviation Type</span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="OriValue">Original Value</span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="CurrValue">Current Value</span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="AppvAt">Approval At</span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="Notes">Notes</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody *ngIf = "AutoDeviationData?.length == 0">
-              <tr>
-                <td colspan="100%">No Data Available</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr *ngFor="let item of AutoDeviationData; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.DeviationType }}</td>
-                <td>{{ item.OriValue }}</td>
-                <td>{{ item.CurrValue }}</td>
-                <td>{{ item.AppvAt }}</td>
-                <td *ngIf="item.Notes != null">{{ item.Notes }}</td>
-                <td *ngIf="item.Notes == null"> - </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <lib-ucSubsection [id]="'viewManualDeviationId'" [title]="'Manual Deviation'" [panel]="'viewManualDeviation'">
-        </lib-ucSubsection>
-        <div class="form-body" id="viewManualDeviation">
-          <div *ngIf="IsEditManualDeviation">
-            <form class="form form-horizontal" [formGroup]="FormObjManualDeviationData">
-              <div class="form-body">
-                <div class="form-actions right">
-                  <button type="button" (click)="AddNewForm()" class="btn btn-raised btn-primary" translate>
-                    <i class="fa fa-check-square-o"></i> Add
-                  </button>
-                </div>
-                <div class="form-group row">
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Deviation Criteria</label>
+        <app-crd-rvw-cust-info [appId]="appId" (ResultCrdRvwCustInfoObj)="GetResultCrdRvwCustInfoObj($event)">
+        </app-crd-rvw-cust-info>
+        <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-fam-guar>
+        <app-crd-rvw-third-party-checking [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-third-party-checking>
+        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
+        </app-crd-rvw-app-info>
+        <app-crd-rvw-asset *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
+        <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-additional-coll>
+        <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-cmo-info>
+        <app-crd-rvw-dealer-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-dealer-info>
+        <app-tab-deviation [AppId]=appId (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
+          
+        <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
+              #enjiForm="ngForm">
+          <div class="form-body">
+  
+            <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
+            </lib-ucSubsection>
+            <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
+              <div *ngFor="let item of FormObj.controls.arr['controls']; let i = index;">
+                <div [formGroupName]="i">
+  
+                  <div class="form-group row">
+                    <div class="form-group col-md-4 adins-required">
+                      <label class="adInsLabel">{{item.controls.Question.value}}</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control adInsInput width-50-per" formControlName="Answer">
+                      <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
                   </div>
-                  <div class="col-md-10">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="DeviationCrit" (change)="onChange($event)">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of DDLDeviationCriteriaData" value="{{it}}">
-                        {{it}} </option>
-                    </select>
-                    <lib-uc-show-errors [control]="DeviationCrit"></lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Approve At</label>
-                  </div>
-                  <div class="form-group col-md-10">
-                    <label class="adInsLabel">{{ FormObjManualDeviationData.value.ApvAt }}</label>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="form-group col-md-2">
-                    <label class="adInsLabel">Notes</label>
-                  </div>
-                  <div class="form-group col-md-10">
-                    <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                      [ngClass]="{ 'is-invalid': FormObjManualDeviationData.controls.Notes.invalid}"></textarea>
-                    <lib-uc-show-errors [control]="Notes"></lib-uc-show-errors>
-                  </div>
+  
                 </div>
               </div>
-            </form>
+            </div>
+  
+            <lib-ucSubsection *ngIf="!isReturnOn" [id]="'formRequestForAppvId'" [title]="'Request For Approval'"
+                              [panel]="'formRequestForAppv'">
+            </lib-ucSubsection>
+            <div *ngIf="!isReturnOn" class="form-body" [id]="'formRequestForAppv'">
+  
+              <div class="form-group row">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Approval Amount</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{FormObj.controls.AppvAmt.value | number:'.2':'en-US'}}</label>
+                </div>
+  
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Credit Scoring</label>
+                </div>
+                <div class="col-md-4">
+                  <label class="adInsLabel">{{FormObj.controls.CreditScoring.value}}</label>
+                </div>
+              </div>
+  
+              <div class="form-group row adins-required">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Recommendation</label>
+                </div>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                          (change)="onChangeReason($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of DDLData[DDLRecomendation]" value="{{it.Key}}">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+  
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Approver</label>
+                </div>
+                <div class="col-md-4">
+                  <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
+                                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'"
+                                    (onChange)="onChangeApprover($event)">
+                  </lib-ucapproveby>
+                  <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+  
+              <div class="form-group row adins-required">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
+                              [panel]="'formReturnCreditReview'">
+            </lib-ucSubsection>
+            <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
+              <div class="form-group row adins-required">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Reason</label>
+                </div>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                          (change)="onChangeReason($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of DDLData[DDLReason]" value="{{it.Key}}">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+  
+              </div>
+  
+              <div class="form-group row adins-required">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+  
+              </div>
+  
+            </div>
           </div>
-          <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortManualDeviationData($event)">
-            <thead>
-              <tr class="table-header">
-                <th><span translate class="thead-header" mat-sort-header="SeqNo"> No. </span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="DeviationCategory">Deviation Criteria</span>
-                </th>
-                <th><span translate class="thead-header" mat-sort-header="ApvAt">Approval At</span>
-                </th>
-                  <th>
-                    <span translate class="thead-header" mat-sort-header="Notes">Notes</span>
-                  </th>               
-                <th *ngIf="IsEditManualDeviation" translate>ACTION</th>
-              </tr>
-            </thead>
-            <tbody *ngIf="ManualDeviationData?.length == 0">
-              <tr>
-                <td colspan="100%">No Data Available</td>
-              </tr>
-            </tbody>
-            <tbody *ngIf="ManualDeviationData?.length > 0">
-              <tr *ngFor="let item of ManualDeviationData; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td style="text-align: left;">{{ item.DeviationCategory }}</td>
-                <td>{{ item.ApvAt }}</td>
-                <td>{{ item.Notes }}</td>
-                <td *ngIf ="IsEditManualDeviation">
-                  <div>
-                    <a class="danger p-0" (click)="DeleteFromManualDeviationData(i)">
-                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                    </a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+              <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
+            </button>
+            <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
+                    [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Check
+          </button> -->
+            <button type="submit" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+  
+        </form>
       </div>
     </div>
   </div>

@@ -1,11 +1,183 @@
 <lib-ucSubsection [id]="'ApplicationInfoId'" [title]="'Application Information'" [panel]="'ApplicationInfo'">
 </lib-ucSubsection>
 <div id="ApplicationInfo">
-  <label>Application Information</label>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Num of Inst / Tenor </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAppObj.NumOfInst}} / {{crdRvwAppObj.Tenor}} / {{crdRvwAppObj.FirstInstType}} / {{crdRvwAppObj.InstType}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Order Information </label>
+          </div>
+          <div class="col-md-6 ">
+            <!-- <label class="label-control"> {{crdRvwAppObj.}} </label> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Life Insured </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAppObj.SubjectLifeIns}} </label>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <a class="success" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>
+            <span id="CreditScoringIndicator" style="float: right;">
+              <i *ngIf="crdRvwAppObj.CreditScoreIndicator != whiteIndicator"
+                [ngStyle]="{'color': crdRvwAppObj.CreditScoreIndicator}" class="font-medium-3 fa fa-circle tooltips">
+                <span [ngClass]="'tooltipstext'">
+                  {{crdRvwAppObj.CreditScoreIndicatorDescr}}
+                </span>
+              </i>
+              <i *ngIf="crdRvwAppObj.CreditScoreIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
+                <span [ngClass]="'tooltipstext'">
+                  {{crdRvwAppObj.CreditScoreIndicatorDescr}}
+                </span>
+              </i>
+            </span>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAppObj.CreditScore}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Tc Received </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAppObj.TcReceived}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<lib-ucSubsection [id]="'FinancialId'" [title]="'Financial'" [panel]="'Financial'">
-</lib-ucSubsection>
-<div id="Financial">
-  <label>Financial</label>
+<div class="row">
+  <div class="col-md-6">
+    <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
+    </lib-ucSubsection>
+    <div id="Financial">      
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> NTF / AR </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control"> {{crdRvwAppObj.Ntf | number:'.2':'en-US'}} / {{crdRvwAppObj.Ar | number:'.2':'en-US'}} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Installment Amount / DSR </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control"> {{crdRvwAppObj.InstAmt | number:'.2':'en-US'}} / {{crdRvwAppObj.Dsr}}% </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Effective Rate / Flat Rate / Gross Yield </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control"> {{crdRvwAppObj.EffRate}}% / {{crdRvwAppObj.FlatRate}}% / {{crdRvwAppObj.GrossYield}}% </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Supplier Rate / Standart Rate </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control"> {{crdRvwAppObj.SupplRate}}% / {{crdRvwAppObj.StdRate}}% </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- <lib-ucSubsection [id]="'IncomeAndExpenseId'" [title]="'Income And Expense'" [panel]="'IncomeAndExpense'">
+    </lib-ucSubsection> -->
+    <div class="card-body">
+      <form class="form form-horizontal">
+        <div class="form-body">
+          <h4 class="form-section font-weight-bold">
+            <div [id]="'IncomeAndExpenseId'" class="btn no-padding cursor-pointer" (click)="isHidden = !isHidden">
+              <i class="fa" style="font-size: 15px; margin: 0px 0px 5px -15px;color: white;"
+                [ngClass]="isHidden ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+            </div> 
+            <a class="success" (click)="ClickLinkIncomeExpenseDetail(IncomeExpenseDetail)"> Income And Expense </a>
+          </h4>
+        </div>
+      </form>
+    </div>
+    <div id="IncomeAndExpense">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Total Income </label>
+        </div>
+        <div class="col-md-6 ">
+          <label class="label-control"> {{crdRvwAppObj.TotalIncome | number:'.2':'en-US'}} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> Total Expense </label>
+        </div>
+        <div class="col-md-6 ">
+          <label class="label-control"> {{crdRvwAppObj.TotalExpense | number:'.2':'en-US'}} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label-control"> TAC Commission + Reserve Fund </label>
+          <span id="TacIndicator" style="float: right;">
+            <i *ngIf="crdRvwAppObj.TacIndicator != whiteIndicator"
+              [ngStyle]="{'color': crdRvwAppObj.TacIndicator}" class="font-medium-3 fa fa-circle tooltips">
+              <span [ngClass]="'tooltipstext'">
+                {{crdRvwAppObj.TacIndicatorDescr}}
+              </span>
+            </i>
+            <i *ngIf="crdRvwAppObj.TacIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
+              <span [ngClass]="'tooltipstext'">
+                {{crdRvwAppObj.TacIndicatorDescr}}
+              </span>
+            </i>
+          </span>
+        </div>
+        <div class="col-md-6 ">
+          <label class="label-control"> {{crdRvwAppObj.Tac}}% </label>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #IncomeExpenseDetail let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Income And Expense Detail</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-income-expense [crdRvwCustInfoIncomeAndExpenseDetailsObj]="crdRvwCustInfoIncomeAndExpenseDetailsObj"></app-crd-rvw-income-expense>
+</ng-template>
+
+<ng-template #CreditScoring let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Credit Scoring</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-credit-scoring [scoringResultHObj]="scoringResultHObj" [ListScoringResultDObj]="ListScoringResultDObj"></app-crd-rvw-credit-scoring>
+</ng-template>

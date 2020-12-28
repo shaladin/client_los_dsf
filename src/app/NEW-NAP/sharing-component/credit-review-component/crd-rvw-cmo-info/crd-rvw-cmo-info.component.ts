@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CrdRvwCmoObj } from 'app/shared/model/CreditReview/CrdRvwCmoObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-cmo-info',
@@ -7,11 +10,26 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CrdRvwCmoInfoComponent implements OnInit {
 
-  @Input() CrdRvwCustInfoId: number;
+  @Input() CrdRvwCustInfoId: number = 0;
 
-  constructor() { }
+  crdRvwCmoObj: CrdRvwCmoObj = new CrdRvwCmoObj();
+  constructor(
+    // private route: ActivatedRoute,
+    private http: HttpClient,
+    // private fb: FormBuilder,
+    // private router: Router
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.GetCrdRvwCollateralByCrdRvwCustInfoId();
   }
 
+  async GetCrdRvwCollateralByCrdRvwCustInfoId() {
+    await this.http.post<CrdRvwCmoObj>(URLConstant.GetCrdRvwCmoBycrdRvwExposureId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
+      (response) => {
+        // console.log(response);
+        this.crdRvwCmoObj = response;
+      }
+    );
+  }
 }

@@ -46,7 +46,7 @@ import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component
     MainInfoComponent,
     ViewInsuranceDetailComponent,
     AppInsuranceDetailComponent,
-    LeadMainInfoComponent
+    LeadMainInfoComponent,
   ],
   entryComponents: [
     UclookupgenericComponent,

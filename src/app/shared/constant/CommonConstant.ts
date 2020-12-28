@@ -477,6 +477,7 @@ export class CommonConstant {
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   public static RefMasterTypeCodeSalutation = "SALUTATION";
   public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
+  public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
 
   //RATE TYPE
   public static RateTypeFlat = "FLT";
@@ -543,5 +544,18 @@ export class CommonConstant {
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
 
+  // Cust Type  
+  public static WhiteIndicator = "WHITE";
+  public static NoData = "No Data";
+  public static MaritalStatusMarried = "MARRIED";
+  public static ExposureCustTypeCode = "CUST_EXPSR";
+  public static ExposureCustGroupTypeCode = "CUST_GRP_EXPSR";
+  public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
+  
+  // Role Type
+  public static RoleCustData = "CUST_DATA";
+  public static RoleFamilyData = "FAM_DATA";
+  public static RoleGuarantorData = "GUARANTOR_DATA";
+  public static RoleShareholder = "SHAREHOLDER_DATA";
 
 }
