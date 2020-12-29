@@ -87,7 +87,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         for (const item of this.doAssetList) {
           var formGroup = this.fb.group({
             AppAssetId: [item.AppAssetId],
-            AssetSeqNo: [item.AssetSeqNo],
+            AssetSeqNo: [item.CollateralSeqNo],
             FullAssetName: [item.FullAssetName],
             AssetPriceAmt: [item.AssetPriceAmt],
             DownPaymentAmt: [item.DownPaymentAmt],
