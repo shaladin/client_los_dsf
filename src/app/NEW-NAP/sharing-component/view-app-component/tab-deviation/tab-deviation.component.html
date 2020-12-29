@@ -36,8 +36,8 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.DeviationType }}</td>
                   <td style="text-align: left;">{{ item.DeviationCategory }}</td>
-                  <td>{{ item.OriValue }}</td>
-                  <td>{{ item.CurrValue }}</td>
+                  <td style="text-align: right;">{{ item.OriValue | number:'.2':'en-US' }}</td>
+                  <td style="text-align: right;">{{ item.CurrValue | number:'.2':'en-US'}}</td>
                   <td>{{ item.AppvAt }}</td>
                   <td *ngIf="item.Notes != null">{{ item.Notes }}</td>
                   <td *ngIf="item.Notes == null"> - </td>

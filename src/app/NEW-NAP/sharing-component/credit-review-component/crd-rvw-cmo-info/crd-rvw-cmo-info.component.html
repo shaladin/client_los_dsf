@@ -49,14 +49,12 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th style="text-align: center;">
+          <th style="text-align: left;">
             <span class="thead-header" name='No' translate>#AGR</span>
           </th>
-          <span *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
-            <th style="text-align: left;">
-              <span class="thead-header" name='' translate>{{item.BucketRange}}</span>
-            </th>
-          </span>
+          <th style="text-align: left;" *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
+            <span class="thead-header" name='' translate>{{item.BucketRange}}</span>
+          </th>
           <th style="text-align: left;">
             <span class="thead-header" name='AssetPrice' translate>WO</span>
           </th>
@@ -67,10 +65,8 @@
       </thead>
       <tbody>
         <tr>
-          <td style="text-align: center;">{{crdRvwCmoObj.AllAgrmnt}}</td>
-          <span *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
-            <td style="text-align: left;">{{item.Value}}</td>
-          </span>
+          <td style="text-align: left;">{{crdRvwCmoObj.AllAgrmnt}}</td>
+          <td style="text-align: left;" *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">{{item.Value}}</td>
           <td style="text-align: left;">{{crdRvwCmoObj.AllWo}}</td>
           <td style="text-align: left;">{{crdRvwCmoObj.AllRepo}}</td>
         </tr>

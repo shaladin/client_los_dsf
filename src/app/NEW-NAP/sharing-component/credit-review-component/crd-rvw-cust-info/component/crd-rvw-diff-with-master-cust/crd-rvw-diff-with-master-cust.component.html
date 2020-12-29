@@ -23,9 +23,21 @@
         </tr>
       </tbody>
       <tbody>
-        <tr *ngFor="let item of ListCrdRvwDiffAppToMasterCustObj">
-          <td style="text-align: left;">{{item.FieldName}}</td>
-          <td style="text-align: left;">{{item.IsDifference}}</td>
+        <tr *ngFor="let item of ListCrdRvwDiffAppToMasterCustObj; let i = index">
+          <td style="text-align: left;">{{item.Field}}</td>
+          <td style="text-align: left;">
+            <span id="IsDiffIndicator{{i}}" style="float: left;">
+              <i [ngStyle]="{'color': item.IsDifference ? 'RED' : 'GREEN'}"
+                class="font-medium-3 fa fa-circle tooltips">
+                <span [ngClass]="'tooltipstext'" *ngIf="item.IsDifference">
+                  Different
+                </span>
+                <span [ngClass]="'tooltipstext'" *ngIf="!item.IsDifference">
+                  Not Different
+                </span>
+              </i>
+            </span>
+          </td>
           <td style="text-align: left;">{{item.AppValue}}</td>
           <td style="text-align: left;">{{item.MasterValue}}</td>
         </tr>

@@ -34,7 +34,7 @@ export class CrdRvwAssetComponent implements OnInit {
     if (this.crdRvwCustInfoObj.BizTemplateCode == this.BizTemplateCF4W) {
       await this.http.post<CrdRvwAssetObj>(URLConstant.GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
         (response) => {
-          // console.log(response);
+          console.log(response);
           this.crdRvwAssetObj = response;
         }
       );

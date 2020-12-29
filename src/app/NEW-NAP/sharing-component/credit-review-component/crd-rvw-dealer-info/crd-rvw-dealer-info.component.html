@@ -56,14 +56,12 @@
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th style="text-align: center;">
+            <th style="text-align: left;">
               <span class="thead-header" name='No' translate>#AGR</span>
             </th>
-            <span *ngFor="let item of crdRvwDealerObj.ListCrdRvwDealerBucketObj; let i = index;">
-              <th style="text-align: left;">
-                <span class="thead-header" name='' translate>{{item.BucketRange}}</span>
-              </th>
-            </span>
+            <th style="text-align: left;" *ngFor="let item of crdRvwDealerObj.ListCrdRvwDealerBucketObj; let i = index;">
+              <span class="thead-header" name='' translate>{{item.BucketRange}}</span>
+            </th>
             <th style="text-align: left;">
               <span class="thead-header" name='AssetPrice' translate>WO</span>
             </th>
@@ -74,10 +72,8 @@
         </thead>
         <tbody>
           <tr>
-            <td style="text-align: center;">{{crdRvwDealerObj.AllAgrmnt}}</td>
-            <span *ngFor="let item of crdRvwDealerObj.ListCrdRvwDealerBucketObj; let i = index;">
-              <td style="text-align: left;">{{item.Value}}</td>
-            </span>
+            <td style="text-align: left;">{{crdRvwDealerObj.AllAgrmnt}}</td>
+            <td style="text-align: left;" *ngFor="let item of crdRvwDealerObj.ListCrdRvwDealerBucketObj; let i = index;">{{item.Value}}</td>
             <td style="text-align: left;">{{crdRvwDealerObj.AllWo}}</td>
             <td style="text-align: left;">{{crdRvwDealerObj.AllRepo}}</td>
           </tr>

@@ -17,24 +17,24 @@
             <label class="label-control"> Asset Price </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAssetObj.AssetPrice}} </label>
+            <label class="label-control"> {{crdRvwAssetObj.AssetPrice | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
             <label class="label-control"> Negative Asset </label>
             <span id="NegAssetIndicator" style="float: right;">
-              <i *ngIf=" crdRvwCustInfoObj.NegativeAssetIndicator != null && crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator"
+              <i *ngIf="crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator"
                 [ngStyle]="{'color': crdRvwAssetObj.NegativeAssetIndicator}"
                 class="font-medium-3 fa fa-circle tooltips">
                 <span [ngClass]="'tooltipstext'">
                   {{crdRvwAssetObj.NegativeAssetIndicatorDescr}}
                 </span>
               </i>
-              <i *ngIf="crdRvwCustInfoObj.NegativeAssetIndicator == null || crdRvwCustInfoObj.NegativeAssetIndicator == whiteIndicator"
+              <i *ngIf="crdRvwCustInfoObj.NegativeAssetIndicator == whiteIndicator"
                 class="font-medium-3 far fa-circle tooltips">
                 <span [ngClass]="'tooltipstext'">
-                  <span *ngIf="!crdRvwAssetObj.NegativeAssetIndicatorDescr"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
+                  <span *ngIf="crdRvwAssetObj?.NegativeAssetIndicatorDescr"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
                   <span> No Data </span>
                 </span>
               </i>
@@ -53,7 +53,7 @@
             <label class="label-control"> DP Amount / Percentage </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAssetObj.DpAmount}} / {{crdRvwAssetObj.DpPrcnt}}% </label>
+            <label class="label-control"> {{crdRvwAssetObj.DpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.DpPrcnt}}% </label>
           </div>
         </div>
         <div class="row">
@@ -110,8 +110,8 @@
           <tr *ngFor="let item of ListCrdRvwAssetObj; let i = index">
             <td style="text-align: center;">{{i+1}}</td>
             <td style="text-align: left;">{{item.AssetName}}</td>
-            <td style="text-align: left;">{{item.AssetPrice}}</td>
-            <td style="text-align: left;">{{item.DpAmount}} / {{item.DpPrcnt}}%</td>
+            <td style="text-align: left;">{{item.AssetPrice | number:'.2':'en-US'}}</td>
+            <td style="text-align: left;">{{item.DpAmount | number:'.2':'en-US'}} / {{item.DpPrcnt}}%</td>
             <td style="text-align: left;">{{item.Insurance}}</td>
             <td style="text-align: center;" *ngIf="item.IsDoubleFinancing">Yes</td>
             <td style="text-align: center;" *ngIf="!item.IsDoubleFinancing">No</td>

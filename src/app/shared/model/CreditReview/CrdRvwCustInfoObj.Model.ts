@@ -4,6 +4,7 @@ export class CrdRvwCustInfoObj {
     
     CrdRvwCustInfoId: number;
     AppId: number;
+    AppCustCompanyId: number;
     AppNo: string;
     AppCustId: number;
     BizTemplateCode: string;

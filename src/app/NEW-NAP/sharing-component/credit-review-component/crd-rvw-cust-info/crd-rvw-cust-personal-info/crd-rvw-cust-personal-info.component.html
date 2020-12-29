@@ -128,7 +128,7 @@
               <span
                 *ngIf="crdRvwCustPersInfoObj.NpwpIndicatorDescr != undefined && crdRvwCustPersInfoObj.NpwpIndicatorDescr != ''"
                 [ngClass]="crdRvwCustPersInfoObj.NpwpIndicatorDescr != undefined && crdRvwCustPersInfoObj.NpwpIndicatorDescr != '' ? 'tooltipstext' : ''">
-                {{crdRvwCustPersInfoObj.OccupationIndicatorDescr}}
+                {{crdRvwCustPersInfoObj.NpwpIndicatorDescr}}
               </span>
             </i>
             <i *ngIf="crdRvwCustPersInfoObj.NpwpIndicator == whiteIndicator"
@@ -136,7 +136,7 @@
               <span
                 *ngIf="crdRvwCustPersInfoObj.NpwpIndicatorDescr != undefined && crdRvwCustPersInfoObj.NpwpIndicatorDescr != ''"
                 [ngClass]="crdRvwCustPersInfoObj.NpwpIndicatorDescr != undefined && crdRvwCustPersInfoObj.NpwpIndicatorDescr != '' ? 'tooltipstext' : ''">
-                {{crdRvwCustPersInfoObj.OccupationIndicatorDescr}}
+                {{crdRvwCustPersInfoObj.NpwpIndicatorDescr}}
               </span>
             </i>
           </span>
@@ -164,6 +164,7 @@
                 </span>
               </i>
             </span>
+            &nbsp;
             <label class="label-control"> {{item.PhnNo}} </label>
           </span>
         </div>

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-legal-doc',
@@ -7,10 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrdRvwLegalDocComponent implements OnInit {
 
-  constructor() { }
+  @Input() AppCustCompanyId: number = 0;
+  constructor(
+    // private route: ActivatedRoute,
+    private http: HttpClient,
+    // private fb: FormBuilder,
+    // private router: Router
+  ) { }
 
-  ListLegalDoc: Array<any> = new Array<any>();
-  ngOnInit() {
+  async ngOnInit() {
+    await this.LoadListLegalDocData();
   }
 
+  ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
+  async LoadListLegalDocData() {
+    await this.http.post<{ ListCompanyLegalDoc: Array<AppCustCompanyLegalDocObj> }>(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.ListLegalDoc = response.ListCompanyLegalDoc;
+      }
+    );
+  }
 }

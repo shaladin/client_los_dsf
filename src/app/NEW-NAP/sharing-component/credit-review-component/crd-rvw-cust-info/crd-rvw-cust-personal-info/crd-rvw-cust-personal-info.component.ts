@@ -28,8 +28,8 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
-  readonly ExposureCustGroupTypeCode: string = CommonConstant.ExposureCustTypeCode;
-  readonly ExposureObligorTypeCode: string = CommonConstant.ExposureCustTypeCode;
+  readonly ExposureCustGroupTypeCode: string = CommonConstant.ExposureCustGroupTypeCode;
+  readonly ExposureObligorTypeCode: string = CommonConstant.ExposureObligorTypeCode;
   //#endregion
   crdRvwCustPersInfoObj: CrdRvwCustPersInfoObj = new CrdRvwCustPersInfoObj();
   constructor(
@@ -76,7 +76,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        // console.log(response);
+        console.log(response);
         for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
           const element = response.ListCrdRvwExposureObj[index];
           if (element.ExposureType == this.ExposureCustTypeCode) {
@@ -116,7 +116,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        // console.log(response);
+        console.log(response);
         this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;
       }
     );
