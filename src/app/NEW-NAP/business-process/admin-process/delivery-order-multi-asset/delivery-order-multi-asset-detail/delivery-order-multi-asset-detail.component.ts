@@ -32,6 +32,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   arrValue: Array<any> = new Array<any>();
   wfTaskListId: number;
   isFinal: boolean;
+  isHideDP: boolean = true;
 
   DOAssetForm = this.fb.group({
     DOAssetList: this.fb.array([])
