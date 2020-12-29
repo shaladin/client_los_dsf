@@ -1,0 +1,44 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+    <div class="card-body">
+      <div class="px-3">
+        <app-crd-rvw-cust-info [appId]="appId" (ResultCrdRvwCustInfoObj)="GetResultCrdRvwCustInfoObj($event)">
+        </app-crd-rvw-cust-info>
+        <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-fam-guar>
+        <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
+        
+        <app-crd-rvw-third-party-checking [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-third-party-checking>
+        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
+        </app-crd-rvw-app-info>
+        <app-crd-rvw-asset *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
+        <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-additional-coll>
+        <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-cmo-info>
+        <app-crd-rvw-dealer-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-dealer-info>
+        <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>   
+        
+      </div>
+    </div>
+    <div class="ng-star-inserted">
+      <div class="row margin-bot-15">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="px-3">
+                <app-approval-hist [AppId]="appId"></app-approval-hist>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+    <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
+    </lib-ucapproval> 
+  </div>
+</div>
