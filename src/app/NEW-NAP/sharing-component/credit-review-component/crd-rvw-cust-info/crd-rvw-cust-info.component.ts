@@ -29,9 +29,9 @@ export class CrdRvwCustInfoComponent implements OnInit {
     private router: Router) { }
 
   async ngOnInit() {
-    console.log(this.appId);
+    // console.log(this.appId);
     this.crdRvwCustInfoObj.AppId = this.appId;
-    // await this.GetCrdRvwCustInfoByAppId();
+    await this.GetCrdRvwCustInfoByAppId();
 
     this.ResultCrdRvwCustInfoObj.emit(this.crdRvwCustInfoObj);
   }
