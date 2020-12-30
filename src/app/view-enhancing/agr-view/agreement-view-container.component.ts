@@ -90,6 +90,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsInvoiceData = false;
+          this.IsLoanData = false;
         }
         else if (bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
