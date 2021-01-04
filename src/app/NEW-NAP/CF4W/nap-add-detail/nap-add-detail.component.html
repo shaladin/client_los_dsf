@@ -120,9 +120,7 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
-              </app-customer-data>
+              <app-new-nap-cust-detail *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [AppId]="appId" [AppCustIdInput]="'0'" [custMainDataMode]="'CUST'" [BizTemplateCode]="'CF4W'" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()"></app-new-nap-cust-detail>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"

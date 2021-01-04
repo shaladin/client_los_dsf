@@ -1,3 +1,40 @@
-<p>
-  new-nap-cust-detail works!
-</p>
+<div class="card-body">
+    <div class="px-3">
+        <div class="form-body">
+            <app-new-nap-cust-main-data [ParentForm]="CustMainDataForm" [custMainDataMode]="custMainDataMode"
+                [appId]="AppId" [appCustId]="AppCustIdInput" [bizTemplateCode]="BizTemplateCode"
+                [inputMode]="inputMode" [isMarried]="IsMarried" [InputAppCustObjMainData]="InputAppCustObjMainData"
+                (ResponseCustType)="MainDataCustTypeHandler($event)" (ResponseIsExisting)="MainDataCustIsExistingHandler($event)"
+                (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)">
+            </app-new-nap-cust-main-data>
+            <app-new-nap-cust-personal-full-data [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" 
+                (ResponseCustGrp)="CustPersonalFullDataCustGrpHandler($event)" (ResponseIsLocal)="CustPersonalFullDataIsLocalHandler($event)"
+                (ResponseLocalCountry)="CustPersonalFullDataLocalCountryHandler($event)" (ResponseNationalityCountry)="CustPersonalFullDataNationalityCountryHandler($event)">
+            </app-new-nap-cust-personal-full-data>
+            <app-new-nap-cust-addr [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
+                (OutputTab)="GetListAddress($event)">
+            </app-new-nap-cust-addr>
+            <app-new-nap-cust-personal-job *ngIf="CustModelCode" [ParentForm]="JobDataForm" [appId]="AppId" [AppCustId]="AppCustIdInput"
+                [CustModelCode]="CustModelCode">
+            </app-new-nap-cust-personal-job>
+            <app-new-nap-cust-personal-emergency [ParentForm]="EmergencyContactForm" 
+                [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried">
+            </app-new-nap-cust-personal-emergency>
+            <app-new-nap-cust-personal-financial [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput"
+                [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried">
+            </app-new-nap-cust-personal-financial>
+            <app-new-nap-other-info [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" 
+                [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">
+            </app-new-nap-other-info>
+        </div>
+        <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1"
+                (click)="cancel()" translate>
+                <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square"></i> Save
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="ParentForm" (ngSubmit)="ParentForm.valid"
+          #enjiForm="ngForm">
+          <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Data'" [panel]="'Financial'">
+          </lib-ucSubsection>
+          <div id="Financial">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Monthly Income</label>
+                  <div class="col-md-8">
+                    <input type="" currencyMask class="form-control" formControlName="MonthlyIncomeAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MonthlyIncomeAmt.invalid}" (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                    <lib-uc-show-errors [control]="ParentForm.controls.MonthlyIncomeAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Source Income</label>
+                  <div class="col-md-6">
+                    <select class="form-control" formControlName="MrSourceOfIncomeTypeCode" style="width:100%;"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrSourceOfIncomeTypeCode.invalid }">
+                      <option *ngFor="let item of MrSourceOfIncomeTypeObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="ParentForm.controls.MrSourceOfIncomeTypeCode"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Other Income</label>
+                  <div class="col-md-8">
+                    <input type="" currencyMask class="form-control" formControlName="OtherIncomeAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OtherIncomeAmt.invalid}" (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                    <lib-uc-show-errors [control]="ParentForm.controls.OtherIncomeAmt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="IsMarried">
+                  <label class="col-md-4" translate>Is Join Income</label>
+                  <div class="col-md-8">
+                    <input type="checkbox" formControlName="IsJoinIncome" (change)="CalculateFinData()"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Total Monthly Income</label>
+                  <div class="col-md-8" style="text-align: right;">
+                    <label>{{ParentForm.controls.TotalIncomeAmt.value | number:'.2':'en-US' }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Monthly Expense</label>
+                  <div class="col-md-8">
+                    <input type="" currencyMask class="form-control" formControlName="MonthlyExpenseAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MonthlyExpenseAmt.invalid}" (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                    <lib-uc-show-errors [control]="ParentForm.controls.MonthlyExpenseAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Monthly Installment</label>
+                  <div class="col-md-8">
+                    <input type="" currencyMask class="form-control" formControlName="MonthlyInstallmentAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MonthlyInstallmentAmt.invalid}" (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                    <lib-uc-show-errors [control]="ParentForm.controls.MonthlyInstallmentAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Other Monthly Installment</label>
+                  <div class="col-md-8">
+                    <input type="" currencyMask class="form-control" formControlName="OtherMonthlyInstAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OtherMonthlyInstAmt.invalid}" (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                    <lib-uc-show-errors [control]="ParentForm.controls.OtherMonthlyInstAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="IsMarried">
+                  <label class="col-md-4" translate>Spouse Monthly Income</label>
+                  <div class="col-md-8">
+                    <input type="" currencyMask class="form-control" formControlName="SpouseMonthlyIncomeAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SpouseMonthlyIncomeAmt.invalid}" (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                    <lib-uc-show-errors [control]="ParentForm.controls.SpouseMonthlyIncomeAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Nett Monthly Income</label>
+                  <div class="col-md-8" style="text-align: right;">
+                    <label>{{ParentForm.controls.NettIncomeAmt.value | number:'.2':'en-US' }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <app-new-nap-attr-content [title]="'Financial Attribute'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+            [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup"></app-new-nap-attr-content>
+          <app-new-nap-cust-bank-acc [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-new-nap-cust-bank-acc>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

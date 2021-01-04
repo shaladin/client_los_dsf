@@ -1,0 +1,56 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="ParentForm" (ngSubmit)="ParentForm.valid"
+          #enjiForm="ngForm">
+          <lib-ucSubsection [id]="'OtherInformationId'" [title]="'Other Information'" [panel]="'OtherInformation'">
+          </lib-ucSubsection>
+          <div id="OtherInformation">
+            <div class="row" *ngIf="IsLookupReady" >
+              <div class="col-md-6"> 
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Debitor Group</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputDebitorGroupLookupObj"     [parentForm]="ParentForm" [identifier]="'DebitorGroup'" (lookup)="getLookupDebitorGroup($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Counterpart Catetgory</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputCounterpartCategoryLookupObj" [parentForm]="ParentForm" [identifier]="'CounterpartCategry'" (lookup)="getLookupCounterpartCategory($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Debitor Business Scale</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputDebitorBusinessScaleLookupObj"
+                       [parentForm]="ParentForm" [identifier]="'DebitorBusinessScale'"
+                      (lookup)="getLookupDebitorBusinessScale($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Sustainable Financial Business</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputSustaianableFinancialBusinessLookupObj"
+                       [parentForm]="ParentForm" [identifier]="'SustainableFinancialBusiness'"(lookup)="getLookupSustainableFinancialBusiness($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <app-new-nap-attr-content [title]="'Attribute List'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+            [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup">
+          </app-new-nap-attr-content>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

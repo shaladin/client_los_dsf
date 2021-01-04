@@ -35,7 +35,7 @@ export class NapAddDetailComponent implements OnInit {
   ListAsset: any;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
-  custType: string = CommonConstant.CustTypeCompany;
+  custType: string = CommonConstant.CustTypePersonal;
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
@@ -124,7 +124,7 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
-  stepperMode: string = CommonConstant.CustTypeCompany;
+  stepperMode: string = CommonConstant.CustTypePersonal;
   ChangeStepper() {
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
