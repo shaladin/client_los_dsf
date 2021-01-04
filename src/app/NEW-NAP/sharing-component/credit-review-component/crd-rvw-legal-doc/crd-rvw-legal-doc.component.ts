@@ -12,10 +12,7 @@ export class CrdRvwLegalDocComponent implements OnInit {
 
   @Input() AppCustCompanyId: number = 0;
   constructor(
-    // private route: ActivatedRoute,
     private http: HttpClient,
-    // private fb: FormBuilder,
-    // private router: Router
   ) { }
 
   async ngOnInit() {
@@ -26,7 +23,6 @@ export class CrdRvwLegalDocComponent implements OnInit {
   async LoadListLegalDocData() {
     await this.http.post<{ ListCompanyLegalDoc: Array<AppCustCompanyLegalDocObj> }>(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.ListLegalDoc = response.ListCompanyLegalDoc;
       }
     );

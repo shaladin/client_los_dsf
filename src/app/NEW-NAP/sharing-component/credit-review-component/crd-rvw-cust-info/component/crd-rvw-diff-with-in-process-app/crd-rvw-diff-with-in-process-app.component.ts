@@ -23,12 +23,7 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
   DictDiffAppNoIndicator: { [AppNo: string]: boolean } = {};
   DictDiffValue: { [AppNo_DiffType: string]: CrdRvwDiffAppToInPrcAppCustObj } = {};
   ngOnInit() {
-    // this.makeTestObj();
-    // this.makeTestObj2();
-    // this.makeTestObj3();
-    // console.log(this.ListCrdRvwDiffAppToInPrcAppCustObj);
     this.SetDictDiffValue();
-    // console.log(this.DictDiffValue);
   }
 
   SetDictDiffValue() {
@@ -48,10 +43,8 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
   }
 
   async ClickLinkApp(AppNo: string){
-    // console.log(AppNo);
     await this.http.post<any>(URLConstant.GetAppByAppNo, {AppNo: AppNo}).toPromise().then(
       (response) => {
-        // console.log(response);
         AdInsHelper.OpenAppViewByAppId(response.AppId);
       }
     )

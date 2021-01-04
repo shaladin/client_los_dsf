@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
@@ -21,17 +20,12 @@ export class CrdRvwAppInfoComponent implements OnInit {
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
 
   constructor(
-    // private route: ActivatedRoute,
     private http: HttpClient,
     private modalService: NgbModal,
-    private _renderer2: Renderer2,
-    // private fb: FormBuilder,
-    // private router: Router
   ) { }
 
   crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   async ngOnInit() {
-    // console.log(this.CrdRvwCustInfoId);
     await this.GetCrdRvwAppByCrdRvwCustInfoId();
     await this.GetCrdRvwCustInfoIncomeAndExpenseDetails();
     await this.GetLatestListScoringResultHAndResultDByTrxSourceNo();
@@ -40,7 +34,6 @@ export class CrdRvwAppInfoComponent implements OnInit {
   async GetCrdRvwAppByCrdRvwCustInfoId() {
     await this.http.post<CrdRvwAppObj>(URLConstant.GetCrdRvwAppByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.crdRvwAppObj = response;
       }
     );
@@ -50,7 +43,6 @@ export class CrdRvwAppInfoComponent implements OnInit {
   async GetCrdRvwCustInfoIncomeAndExpenseDetails(){
     await this.http.post<CrdRvwCustInfoIncomeAndExpenseDetailsObj>(URLConstant.GetCrdRvwCustInfoIncomeAndExpenseDetails, { AppId: this.appId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.crdRvwCustInfoIncomeAndExpenseDetailsObj = response;
       }
     );
@@ -61,7 +53,6 @@ export class CrdRvwAppInfoComponent implements OnInit {
   async GetLatestListScoringResultHAndResultDByTrxSourceNo() {
     await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { ScoringResultH: { TrxSourceNo: this.crdRvwAppObj.AppNo } }).toPromise().then(
       (response) => {
-        console.log(response);
         this.scoringResultHObj = response.ScoringResultHObj;
         this.ListScoringResultDObj = response.ListScoringResultDObj;
       }

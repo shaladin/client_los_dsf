@@ -14,10 +14,7 @@ export class CrdRvwCmoInfoComponent implements OnInit {
 
   crdRvwCmoObj: CrdRvwCmoObj = new CrdRvwCmoObj();
   constructor(
-    // private route: ActivatedRoute,
     private http: HttpClient,
-    // private fb: FormBuilder,
-    // private router: Router
   ) { }
 
   async ngOnInit() {
@@ -27,7 +24,6 @@ export class CrdRvwCmoInfoComponent implements OnInit {
   async GetCrdRvwCollateralByCrdRvwCustInfoId() {
     await this.http.post<CrdRvwCmoObj>(URLConstant.GetCrdRvwCmoBycrdRvwExposureId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        // console.log(response);
         this.crdRvwCmoObj = response;
       }
     );

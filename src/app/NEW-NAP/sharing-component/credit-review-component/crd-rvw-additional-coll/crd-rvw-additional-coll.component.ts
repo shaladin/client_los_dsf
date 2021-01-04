@@ -13,10 +13,7 @@ export class CrdRvwAdditionalCollComponent implements OnInit {
   @Input() CrdRvwCustInfoId: number = 0;
   
   constructor(
-    // private route: ActivatedRoute,
     private http: HttpClient,
-    // private fb: FormBuilder,
-    // private router: Router
   ) { }
 
   async ngOnInit() {
@@ -27,7 +24,6 @@ export class CrdRvwAdditionalCollComponent implements OnInit {
   async GetCrdRvwCollateralByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwCollateralObj: Array<CrdRvwCollateralObj> }>(URLConstant.GetCrdRvwCollateralByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        // console.log(response);
         this.ListCrdRvwCollateralObj = response.ListCrdRvwCollateralObj;
       }
     );

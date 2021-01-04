@@ -16,14 +16,10 @@ export class CrdRvwIncomeExpenseComponent implements OnInit {
   @Input() crdRvwCustInfoIncomeAndExpenseDetailsObj: CrdRvwCustInfoIncomeAndExpenseDetailsObj = new CrdRvwCustInfoIncomeAndExpenseDetailsObj();
 
   constructor(
-    // private route: ActivatedRoute,
     private http: HttpClient,
-    // private fb: FormBuilder,
-    // private router: Router
   ) { }
 
   async ngOnInit() {
-    console.log(this.crdRvwCustInfoIncomeAndExpenseDetailsObj);
     this.SetTotalIncome();
     this.SetTacAmt();
   }

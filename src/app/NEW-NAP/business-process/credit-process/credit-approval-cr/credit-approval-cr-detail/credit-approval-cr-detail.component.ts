@@ -57,6 +57,18 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
+    await this.GetCrdRvwCustInfoByAppId();
+  }
+
+  crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
+  isShow: boolean = false;
+  async GetCrdRvwCustInfoByAppId() {
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+      (response) => {
+        this.crdRvwCustInfoObj = response;
+        this.isShow = true;
+      }
+    );
   }
 
   HoldTask(obj) {
@@ -67,14 +79,6 @@ export class CreditApprovalCrDetailComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
-  }
-  
-  crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
-  isShow: boolean = false;
-  GetResultCrdRvwCustInfoObj(ev: CrdRvwCustInfoObj) {
-    this.crdRvwCustInfoObj = ev;
-    console.log(ev);
-    this.isShow = true;
   }
 
   //#region Uc Approval 

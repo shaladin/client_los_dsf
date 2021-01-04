@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
@@ -11,6 +12,7 @@ import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoO
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -65,7 +67,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
-    this.isReturnOn = false;
   }
 
   async ngOnInit() {
@@ -76,17 +77,10 @@ export class CreditReviewCrDetailComponent implements OnInit {
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
+    await this.GetCrdRvwCustInfoByAppId();
   }
 
   //#region Get Local Data
-  crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
-  isShow: boolean = false;
-  GetResultCrdRvwCustInfoObj(ev: CrdRvwCustInfoObj) {
-    this.crdRvwCustInfoObj = ev;
-    console.log(ev);
-    this.isShow = true;
-  }
-
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev){
     console.log(ev);
@@ -196,6 +190,17 @@ export class CreditReviewCrDetailComponent implements OnInit {
         }
       });
   }
+
+  crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
+  isShow: boolean = false;
+  async GetCrdRvwCustInfoByAppId() {
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+      (response) => {
+        this.crdRvwCustInfoObj = response;
+        this.isShow = true;
+      }
+    );
+  }
   //#endregion
 
   switchForm() {
@@ -243,6 +248,15 @@ export class CreditReviewCrDetailComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  ReCaptureCreditReviewData(){    
+    let workflowApiObj = new WorkflowApiObj();
+    workflowApiObj.TaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });

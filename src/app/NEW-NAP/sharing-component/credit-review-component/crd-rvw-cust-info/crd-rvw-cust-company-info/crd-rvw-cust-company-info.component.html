@@ -1,212 +1,118 @@
-<div class="card-body">
+<div>
   <div class="row">
-    <div class="col-md-6 ">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Customer Name </label>
-          <span id="CustIndicator" style="float: right;">
-            <i *ngIf="crdRvwCustInfoObj.CustIndicator != whiteIndicator"
-              [ngStyle]="{'color': crdRvwCustInfoObj.CustIndicator}" class="font-medium-3 fa fa-circle tooltips">
-              <span
-                *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != ''"
-                [ngClass]="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != '' ? 'tooltipstext' : ''">
-                {{crdRvwCustInfoObj.CustIndicatorDescr}}
-              </span>
-            </i>
-            <i *ngIf="crdRvwCustInfoObj.CustIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
-              <span
-                *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != ''"
-                [ngClass]="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != '' ? 'tooltipstext' : ''">
-                {{crdRvwCustInfoObj.CustIndicatorDescr}}
-              </span>
-            </i>
+    <div class="col-md-6">
+      <label class="label-control"> Customer Name </label>
+      <span id="CustIndicator" style="float: right;">
+        <i *ngIf="crdRvwCustInfoObj.CustIndicator != whiteIndicator"
+          [ngStyle]="{'color': crdRvwCustInfoObj.CustIndicator}" class="font-medium-3 fa fa-circle tooltips">
+          <span
+            *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != ''"
+            [ngClass]="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != '' ? 'tooltipstext' : ''">
+            {{crdRvwCustInfoObj.CustIndicatorDescr}}
           </span>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{crdRvwCustInfoObj.CustName}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> NPWP </label>
-          <span id="NpwpIndicator" style="float: right;">
-            <i *ngIf="crdRvwCustCoyInfoObj.NpwpIndicator != whiteIndicator"
-              [ngStyle]="{'color': crdRvwCustCoyInfoObj.NpwpIndicator}" class="font-medium-3 fa fa-circle tooltips">
-              <span [ngClass]="'tooltipstext'">
-                {{crdRvwCustCoyInfoObj.NpwpIndicatorDescr}}
-              </span>
-            </i>
-            <i *ngIf="crdRvwCustCoyInfoObj.NpwpIndicator == whiteIndicator"
-              class="font-medium-3 far fa-circle tooltips">
-              <span [ngClass]="'tooltipstext'">
-                {{crdRvwCustCoyInfoObj.NpwpIndicatorDescr}}
-              </span>
-            </i>
+        </i>
+        <i *ngIf="crdRvwCustInfoObj.CustIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
+          <span
+            *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != ''"
+            [ngClass]="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != '' ? 'tooltipstext' : ''">
+            {{crdRvwCustInfoObj.CustIndicatorDescr}}
           </span>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{crdRvwCustCoyInfoObj.Npwp}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Address </label>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{crdRvwCustCoyInfoObj.Address}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Industry Type </label>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{crdRvwCustCoyInfoObj.IndustryType}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> ROI </label>
-          <span id="RoiIndicator" style="float: right;">
-            <i *ngIf="crdRvwCustCoyInfoObj.RoiIndicator != whiteIndicator" [ngStyle]="{'color': crdRvwCustCoyInfoObj.RoiIndicator}" class="font-medium-3 fa fa-circle tooltips">
-              <span [ngClass]="'tooltipstext'">
-                {{crdRvwCustCoyInfoObj.RoiIndicatorDescr}}
-              </span>
-            </i>
-            <i *ngIf="crdRvwCustCoyInfoObj.RoiIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
-              <span [ngClass]="'tooltipstext'">
-                {{crdRvwCustCoyInfoObj.RoiIndicatorDescr}}
-              </span>
-            </i>
-          </span>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{crdRvwCustCoyInfoObj.Roi}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Phone </label>
-        </div>
-        <div class="col-md-6 "> 
-          <span *ngFor="let item of ListCrdRvwCustPhnStatusObj; let i = index">
-            <label *ngIf="i!=0" class="label-control"> &nbsp;/&nbsp; </label>
-            <span id="PhnIndicator{{i}}">
-              <i *ngIf="item.PhnIndicator != whiteIndicator" [ngStyle]="{'color': item.PhnIndicator}" class="font-medium-3 fa fa-circle tooltips">
-                <span [ngClass]="'tooltipstext'">
-                  {{item.PhnIndicatorDescr}}
-                </span>
-              </i>
-              <i *ngIf="item.PhnIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
-                <span [ngClass]="'tooltipstext'">
-                  {{item.PhnIndicatorDescr}}
-                </span>
-              </i>
-            </span>
-            <label class="label-control"> {{item.PhnNo}} </label>
-          </span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> View </label>
-        </div>
-        <div class="col-md-6 ">
-          <a class="success" (click)="ClickLinkBankStatement(BankStatementContent)">Bank Statement</a>
-          <label class="label-control"> &nbsp;|&nbsp; </label>
-          <a class="success" (click)="ClickLinkNegativeCheckingList(NegCheckListContent)">Negative Checking List</a>
-        </div>
-      </div>
+        </i>
+      </span>
     </div>
-
     <div class="col-md-6 ">
-      <div class="row">
-        <div class="col-md-12">
-          <a class="success" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Customer </label>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{CustCrdRvwExposureObj.ActiveAgrmnt}} / {{CustCrdRvwExposureObj.OsArBalance}} / {{CustCrdRvwExposureObj.OsArBalance}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Customer Group </label>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{CustGroupCrdRvwExposureObj.ActiveAgrmnt}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Obligor </label>
-        </div>
-        <div class="col-md-6 ">
-          <label class="label-control"> {{ObligorCrdRvwExposureObj.ActiveAgrmnt}} / {{ObligorCrdRvwExposureObj.OsArBalance}} / {{ObligorCrdRvwExposureObj.OsArBalance}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <br>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> #App Submit / Reject / Approved / In Process </label>
-        </div>
-        <div class="col-md-6">
-          <!-- <label class="label-control"> {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} /
-            {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} </label> -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> #Agr Repo / WO / Paid Off </label>
-        </div>
-        <div class="col-md-6">
-          <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntRepossess}} / {{CustCrdRvwExposureObj.AgrmntWrittenOff}} /
-            {{CustCrdRvwExposureObj.AgrmntPaidOff}} </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> #Agr FPD (Last X month / All) </label>
-        </div>
-        <div class="col-md-6">
-          <!-- <label class="label-control"> {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} </label> -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label-control"> Current Overdue </label>
-        </div>
-        <div class="col-md-6">
-          <label class="label-control"> {{CustCrdRvwExposureObj.TotalAgrmntOverdue}} / {{CustCrdRvwExposureObj.MaxOverdueDays}} / {{CustCrdRvwExposureObj.MaxOverdueAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
+      <label class="label-control"> {{crdRvwCustInfoObj.CustName}} </label>
     </div>
   </div>
-
-  <ng-template #BankStatementContent let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title">Bank Account</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="label-control"> NPWP </label>
+      <span id="NpwpIndicator" style="float: right;">
+        <i *ngIf="crdRvwCustCoyInfoObj.NpwpIndicator != whiteIndicator"
+          [ngStyle]="{'color': crdRvwCustCoyInfoObj.NpwpIndicator}" class="font-medium-3 fa fa-circle tooltips">
+          <span [ngClass]="'tooltipstext'">
+            {{crdRvwCustCoyInfoObj.NpwpIndicatorDescr}}
+          </span>
+        </i>
+        <i *ngIf="crdRvwCustCoyInfoObj.NpwpIndicator == whiteIndicator"
+          class="font-medium-3 far fa-circle tooltips">
+          <span [ngClass]="'tooltipstext'">
+            {{crdRvwCustCoyInfoObj.NpwpIndicatorDescr}}
+          </span>
+        </i>
+      </span>
     </div>
-    <app-crd-rvw-bank-statement [ListAppCustBankAccObjs]="ListAppCustBankAccObjs"></app-crd-rvw-bank-statement>
-  </ng-template>
-  <ng-template #NegCheckListContent let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title">Negative List</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="col-md-6 ">
+      <label class="label-control"> {{crdRvwCustCoyInfoObj.Npwp}} </label>
     </div>
-    <app-crd-rvw-neg-check-list></app-crd-rvw-neg-check-list>
-  </ng-template>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="label-control"> Address </label>
+    </div>
+    <div class="col-md-6 ">
+      <label class="label-control"> {{crdRvwCustCoyInfoObj.Address}} </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="label-control"> Industry Type </label>
+    </div>
+    <div class="col-md-6 ">
+      <label class="label-control"> {{crdRvwCustCoyInfoObj.IndustryType}} </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="label-control"> ROI </label>
+      <span id="RoiIndicator" style="float: right;">
+        <i *ngIf="crdRvwCustCoyInfoObj.RoiIndicator != whiteIndicator" [ngStyle]="{'color': crdRvwCustCoyInfoObj.RoiIndicator}" class="font-medium-3 fa fa-circle tooltips">
+          <span [ngClass]="'tooltipstext'">
+            {{crdRvwCustCoyInfoObj.RoiIndicatorDescr}}
+          </span>
+        </i>
+        <i *ngIf="crdRvwCustCoyInfoObj.RoiIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
+          <span [ngClass]="'tooltipstext'">
+            {{crdRvwCustCoyInfoObj.RoiIndicatorDescr}}
+          </span>
+        </i>
+      </span>
+    </div>
+    <div class="col-md-6 ">
+      <label class="label-control"> {{crdRvwCustCoyInfoObj.Roi}} </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="label-control"> Phone </label>
+    </div>
+    <div class="col-md-6 "> 
+      <span *ngFor="let item of ListCrdRvwCustPhnStatusObj; let i = index">
+        <label *ngIf="i!=0" class="label-control"> &nbsp;/&nbsp; </label>
+        <span id="PhnIndicator{{i}}">
+          <i *ngIf="item.PhnIndicator != whiteIndicator" [ngStyle]="{'color': item.PhnIndicator}" class="font-medium-3 fa fa-circle tooltips">
+            <span [ngClass]="'tooltipstext'">
+              {{item.PhnIndicatorDescr}}
+            </span>
+          </i>
+          <i *ngIf="item.PhnIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
+            <span [ngClass]="'tooltipstext'">
+              {{item.PhnIndicatorDescr}}
+            </span>
+          </i>
+        </span>
+        <label class="label-control"> {{item.PhnNo}} </label>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="label-control"> View </label>
+    </div>
+    <div class="col-md-6 ">
+      <a class="success" (click)="ClickLinkBankStatement()">Bank Statement</a>
+      <label class="label-control"> &nbsp;|&nbsp; </label>
+      <a class="success" (click)="ClickLinkNegativeCheckingList()">Negative Checking List</a>
+    </div>
+  </div>
 </div>

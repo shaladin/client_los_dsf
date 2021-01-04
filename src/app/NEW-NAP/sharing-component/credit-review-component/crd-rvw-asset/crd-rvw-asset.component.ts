@@ -20,10 +20,7 @@ export class CrdRvwAssetComponent implements OnInit {
   ListCrdRvwAssetObj: Array<CrdRvwAssetObj> = new Array<CrdRvwAssetObj>();
 
   constructor(
-    // private route: ActivatedRoute,
     private http: HttpClient,
-    // private fb: FormBuilder,
-    // private router: Router
   ) { }
 
   async ngOnInit() {
@@ -34,14 +31,12 @@ export class CrdRvwAssetComponent implements OnInit {
     if (this.crdRvwCustInfoObj.BizTemplateCode == this.BizTemplateCF4W) {
       await this.http.post<CrdRvwAssetObj>(URLConstant.GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
         (response) => {
-          console.log(response);
           this.crdRvwAssetObj = response;
         }
       );
     } else {
       await this.http.post<{ ListCrdRvwAssetObj: Array<CrdRvwAssetObj> }>(URLConstant.GetMultiAssetCrdRvwAssetByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
         (response) => {
-          // console.log(response);
           this.ListCrdRvwAssetObj = response.ListCrdRvwAssetObj;
         }
       );
