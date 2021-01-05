@@ -98,11 +98,11 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
         criteriaObj.propName = 'COUNTRY_CODE';
         criteriaObj.value = this.Country.GsValue;
         this.lookupCountryObj.addCritInput.push(criteriaObj);
-        this.ChangeNationality(this.Country.GsValue)
 
         this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.Country.GsValue }).subscribe(
           (response) => {
             this.LocalCountry = response;
+            this.ChangeNationality(this.Country.GsValue)
             this.lookupCountryObj.isReady = true;
             this.ResponseLocalCountry.emit(this.LocalCountry.CountryCode);
           });
