@@ -444,7 +444,6 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.AppCustId = this.AppCustIdInput;
     this.custDataPersonalObj.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.custDataPersonalObj.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
-    this.custDataPersonalObj.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMf.value;
     this.custDataPersonalObj.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
 
     this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustMainDataForm.value.lookupCustomer.value;
