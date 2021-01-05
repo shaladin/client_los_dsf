@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NegCustObj } from '../../crd-rvw-cust-info.component';
 
 @Component({
   selector: 'app-crd-rvw-neg-check-list',
@@ -9,7 +10,7 @@ export class CrdRvwNegCheckListComponent implements OnInit {
 
   constructor() { }
 
-  ListNegCust: Array<any> = new Array<any>();
+  @Input() ListNegCust: Array<NegCustObj> = new Array<NegCustObj>();
   ngOnInit() {
   }
 

@@ -11,19 +11,19 @@
             <thead>
               <tr class="table-header">
                 <th style="text-align: left;">
-                  <span class="thead-header" name='no' translate>No.</span>
+                  <span  name='no' translate>No.</span>
                 </th>
                 <th style="text-align: left;">
-                  <span class="thead-header" name='CustName' translate>Customer Name</span>
+                  <span  name='CustName' translate>Customer Name</span>
                 </th>
                 <th style="text-align: left;">
-                  <span class="thead-header" name='NegStatus' translate>Negative Status</span>
+                  <span  name='NegStatus' translate>Negative Status</span>
                 </th>
                 <th style="text-align: left;">
-                  <span class="thead-header" name='NegSource' translate>Negative Source</span>
+                  <span  name='NegSource' translate>Negative Source</span>
                 </th>
                 <th style="text-align: left;">
-                  <span class="thead-header" name='NegCause' translate>Negative Cause</span>
+                  <span  name='NegCause' translate>Negative Cause</span>
                 </th>
               </tr>
             </thead>
@@ -36,9 +36,9 @@
               <tr *ngFor="let stmnt of ListNegCust; let i = index;">
                 <td style="text-align: left;">{{i}}</td>
                 <td style="text-align: left;">{{stmnt.CustName}}</td>
-                <td style="text-align: left;">{{stmnt.Negstatus}}</td>
-                <td style="text-align: left;">{{stmnt.NegSource}}</td>
-                <td style="text-align: left;">{{stmnt.NegCause}}</td>
+                <td style="text-align: left;">{{stmnt.MrNegCustTypeCodeDesc}}</td>
+                <td style="text-align: left;">{{stmnt.MrNegCustSourceCodeDesc}}</td>
+                <td style="text-align: left;">{{stmnt.NegCustCause}}</td>
               </tr>
             </tbody>
           </table>

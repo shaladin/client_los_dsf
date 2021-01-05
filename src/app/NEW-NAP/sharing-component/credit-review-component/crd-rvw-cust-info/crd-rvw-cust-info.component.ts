@@ -33,8 +33,10 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   async ngOnInit() {
     this.crdRvwCustInfoObj.AppId = this.appId;
+    console.log(this.crdRvwCustInfoObj);
     await this.GetListCrdRvwExposureByCrdRvwCustInfoId();
     await this.GetAppCustBankAccList();
+    await this.GetListNegativeCustByCustNo();
   }
 
   
@@ -66,6 +68,16 @@ export class CrdRvwCustInfoComponent implements OnInit {
       (response) => {
         this.ListAppCustBankAccObjs = response.AppCustBankAccList;
       });
+  }
+
+  ListNegCust: Array<NegCustObj> = new Array<NegCustObj>();
+  async GetListNegativeCustByCustNo(){
+    await this.http.post<any>(URLConstant.GetListNegativeCustByCustNo, { CustNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        console.log(response);
+        this.ListNegCust = response[CommonConstant.ReturnObj];
+      });
+
   }
   
   ClickLinkViewCustExposure(){
@@ -122,4 +134,14 @@ export class CrdRvwCustInfoComponent implements OnInit {
     }
   }
   //#endregion
+}
+
+export class NegCustObj{
+  CustName: string;
+  MrNegCustTypeCode: string;
+  MrNegCustTypeCodeDesc: string;
+  MrNegCustSourceCode: string;
+  MrNegCustSourceCodeDesc: string;
+  NegCustCause: string;
+  constructor(){}
 }

@@ -4,10 +4,10 @@
       <thead>
         <tr class="table-header">
           <th style="text-align: left;">
-            <span class="thead-header" name='CustData' translate>Customer Data</span>
+            <span  name='CustData' translate>Customer Data</span>
           </th>
           <th style="text-align: left;" *ngFor="let item of ListAppNo; let i = index">
-            <span class="thead-header" name='item' translate>          
+            <span  name='item' translate>          
               <span id="Indicator{{i}}">
                 <i [ngStyle]="{'color': DictDiffAppNoIndicator[item] ? 'RED' : 'GREEN'}" class="font-medium-3 fa fa-circle tooltips">
                   <span [ngClass]="'tooltipstext'" *ngIf="DictDiffAppNoIndicator[item]">

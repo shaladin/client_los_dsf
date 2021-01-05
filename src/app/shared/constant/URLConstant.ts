@@ -1234,6 +1234,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCrdRvwCmoBycrdRvwExposureId = environment.losUrl + "/CrdRvwCmo/GetCrdRvwCmoBycrdRvwExposureId";
     public static GetCrdRvwDealerByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDealer/GetCrdRvwDealerByCrdRvwCustInfoId";
     public static GetLatestListScoringResultHAndResultDByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestListScoringResultHAndResultDByTrxSourceNo";
+    public static GetListNegativeCustByCustNo = environment.FoundationR3Url + "/NegativeCust/GetListNegativeCustByCustNo";
 
 
     // New Approval R3

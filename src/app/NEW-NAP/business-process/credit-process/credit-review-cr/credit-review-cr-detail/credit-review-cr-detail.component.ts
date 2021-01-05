@@ -1,5 +1,6 @@
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -11,9 +12,12 @@ import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -22,6 +26,7 @@ import { environment } from 'environments/environment';
 })
 export class CreditReviewCrDetailComponent implements OnInit {
 
+  @ViewChild(UcapprovalcreateComponent) createComponent;
   appId: number = 0;
   wfTaskListId: number = 0;
   arrValue = [];
@@ -29,6 +34,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
   UserAccess: any;
   Arr: FormArray;
   BizTemplateCode: string = "";
+  InputObj: UcInputRFAObj;
+  IsReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -38,18 +45,19 @@ export class CreditReviewCrDetailComponent implements OnInit {
     arr: this.fb.array([]),
     AppvAmt: [''],
     CreditScoring: [''],
-    Reason: ['', Validators.required],
-    ReasonDesc: [""],
-    Approver: ['', Validators.required],
-    ApproverDesc: [""],
-    Notes: ['', Validators.required]
+    // Reason: ['', Validators.required],
+    // ReasonDesc: [""],
+    // Approver: ['', Validators.required],
+    // ApproverDesc: [""],
+    // Notes: ['', Validators.required]
   });
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    public toastr: ToastrService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -78,6 +86,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
+    this.initInputApprovalObj();
   }
 
   //#region Get Local Data
@@ -101,12 +110,15 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#endregion
   
   //#region Get API Data
+  appNo: string = "";
   async GetAppNo() {
     let obj = { AppId: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       async (response) => {
-        if (response != undefined)
+        if (response != undefined){
+          this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
+        }
       });
   }
   
@@ -172,6 +184,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
         this.FormObj.patchValue({
           AppvAmt: response["ApvAmt"]
         });
+        this.PlafondAmt = response["ApvAmt"];
       });
   }
   
@@ -196,6 +209,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
       (response) => {
+        console.log(response);
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
       }
@@ -210,19 +224,52 @@ export class CreditReviewCrDetailComponent implements OnInit {
       Notes: ""
     });
 
-    if (!this.isReturnOn) {
-      this.isReturnOn = true;
-      this.FormObj.controls.Approver.clearValidators();
-    } else {
-      this.isReturnOn = false;
-      this.FormObj.controls.Approver.setValidators([Validators.required]);
-    }
-    this.FormObj.controls.Approver.updateValueAndValidity();
+    // if (!this.isReturnOn) {
+    //   this.isReturnOn = true;
+    //   this.FormObj.controls.Approver.clearValidators();
+    // } else {
+    //   this.isReturnOn = false;
+    //   this.FormObj.controls.Approver.setValidators([Validators.required]);
+    // }
+    // this.FormObj.controls.Approver.updateValueAndValidity();
 
   }
   
+  PlafondAmt: number = 0;
+  initInputApprovalObj(){  
+    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS);
+    this.InputObj = new UcInputRFAObj();
+    var Attributes = [];
+    var attribute1 = { 
+      "AttributeName" : "Approval Amount",
+      "AttributeValue": this.PlafondAmt
+    };
+    Attributes.push(attribute1);
+    
+    var TypeCode = {
+      "TypeCode" : "CRD_APV_CF_TYPE",
+      "Attributes" : Attributes,
+    };
+    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
+    this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
+    this.InputObj.UrlBactToPaging = '/Nap/CreditProcess/CreditReviewCr/Paging?BizTemplateCode=' + BizTemplateCode;
+    this.InputObj.TrxNo = this.appNo;
+    this.IsReady = true;
+  }
+
   //#region Submit
-  SaveForm() {
+  SaveForm() { 
+    let RFAPreGoLive = null;
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -234,8 +281,21 @@ export class CreditReviewCrDetailComponent implements OnInit {
     }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
 
-    if (this.isReturnOn)
-      temp.Approver = 0;
+    if (!this.isReturnOn){
+      let ApprovalCreateOutput = this.createComponent.output();
+      if(ApprovalCreateOutput != undefined){
+        RFAPreGoLive = new RFAPreGoLiveObj();
+        // this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
+        // this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
+        // this.RFAPreGoLive.ApprovedBy = this.MainInfoForm.controls.ApprovedBy.value;
+        // this.RFAPreGoLive.Reason = this.MainInfoForm.controls.Reason.value;
+        RFAPreGoLive.TaskListId = this.wfTaskListId;
+        RFAPreGoLive.RowVersion = "";
+        RFAPreGoLive.RequestRFAObj = ApprovalCreateOutput;
+      }else{
+        return this.toastr.warning('Input RFA Data First!');
+      }
+    }
 
     let apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
@@ -245,8 +305,10 @@ export class CreditReviewCrDetailComponent implements OnInit {
       WfTaskListId: this.wfTaskListId,
       RowVersion: "",
       AppId: this.appId,
-      ListDeviationResultObjs: this.ManualDeviationData
-    }
+      ListDeviationResultObjs: this.ManualDeviationData,
+      RequestRFAObj: RFAPreGoLive
+    };
+    // console.log(apiObj);
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
