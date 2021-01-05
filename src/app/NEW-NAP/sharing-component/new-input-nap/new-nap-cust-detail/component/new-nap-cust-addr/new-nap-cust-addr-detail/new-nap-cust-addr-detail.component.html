@@ -19,8 +19,8 @@
       <div class="col-md-4">
         <div class="input-group">
           <select class="form-control" formControlName="CopyAddrFrom">
-            <option *ngFor="let item of copyAddressFromObj" [value]="item.AppCustAddrId">
-              {{item.MrCustAddrTypeDescr}}
+            <option *ngFor="let item of copyAddressFromObj" [value]="item.MrCustAddrTypeCode">
+              {{item.CustAddrTypeName}}
             </option>
           </select>
           <div class="input-group-append">

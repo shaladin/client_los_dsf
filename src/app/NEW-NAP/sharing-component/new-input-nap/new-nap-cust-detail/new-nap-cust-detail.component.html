@@ -12,7 +12,7 @@
                 (ResponseCustGrp)="CustPersonalFullDataCustGrpHandler($event)" (ResponseIsLocal)="CustPersonalFullDataIsLocalHandler($event)"
                 (ResponseLocalCountry)="CustPersonalFullDataLocalCountryHandler($event)" (ResponseNationalityCountry)="CustPersonalFullDataNationalityCountryHandler($event)">
             </app-new-nap-cust-personal-full-data>
-            <app-new-nap-cust-addr  [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
+            <app-new-nap-cust-addr *ngIf="isAddrReady" [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
                 (OutputTab)="GetListAddress($event)">
             </app-new-nap-cust-addr>
             <app-new-nap-cust-personal-job *ngIf="CustModelCode" [IsJobSubmitted]="IsSubmitted" [ParentForm]="JobDataForm" [appId]="AppId" [AppCustId]="AppCustIdInput"

@@ -65,20 +65,19 @@ export class NewNapCustAddrDetailComponent implements OnInit {
         })
         await this.LoadAddrForCopy();
         await this.ResetForm();
-      });
 
-    if (this.InputObj.AppCustAddrId != 0) {
-      this.http.post<AppCustAddrObj>(URLConstant.GetAppCustAddrByAppCustAddrId, { AppCustAddrId: this.InputObj.AppCustAddrId }).subscribe(
-        (response) => {
-          this.AddrObj = response;
-          this.AddressForm.patchValue({ MrCustAddrTypeCode: response.MrCustAddrTypeCode })
-          this.appCustAddrObj.MrCustAddrTypeCode = response.MrCustAddrTypeCode;
-          this.appCustAddrObj.RowVersion = response.RowVersion;
-          this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
-          this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
+        if (this.InputObj.Mode == "Edit") {
+          this.AddrObj = this.InputObj.InputedAddr;
+          this.AddressForm.patchValue({ MrCustAddrTypeCode: this.InputObj.InputedAddr.MrCustAddrTypeCode, CustAddrTypeName: this.InputObj.InputedAddr.CustAddrTypeName });
+          this.selectedAddrType = this.InputObj.InputedAddr.CustAddrTypeName;
+          this.appCustAddrObj.MrCustAddrTypeCode = this.InputObj.InputedAddr.MrCustAddrTypeCode;
+          this.appCustAddrObj.RowVersion = this.InputObj.InputedAddr.RowVersion;
+          this.inputAddressObj.inputField.inputLookupObj.nameSelect = this.InputObj.InputedAddr.Zipcode;
+          this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: this.InputObj.InputedAddr.Zipcode };
           this.inputAddressObj.default = this.AddrObj;
-        });
-    }
+          this.SetShowOwnership(this.InputObj.InputedAddr.MrCustAddrTypeCode);
+        }
+      });
   }
 
   ResetForm() {
@@ -92,59 +91,40 @@ export class NewNapCustAddrDetailComponent implements OnInit {
   }
 
   LoadAddrForCopy() {
-    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { AppCustId: this.InputObj.AppCustId }).subscribe(
-      (response) => {
-        this.copyAddressFromObj = response;
-        this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
-      });
+    this.copyAddressFromObj = this.InputObj.ListInputedAddr;
+    if(this.InputObj.ListInputedAddr.length > 0){
+      this.AddressForm.patchValue({ CopyAddrFrom: this.InputObj.ListInputedAddr[0]['MrCustAddrTypeCode'] });
+    }
   }
 
   CopyAddress() {
     if (this.copyAddressFromObj.length < 1) {
       return
     }
-
-    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { AppCustAddrId: this.AddressForm.controls.CopyAddrFrom.value }).subscribe(
-      (response) => {
-        this.AddrObj.Addr = response["Addr"];
-        this.AddrObj.AreaCode1 = response["AreaCode1"];
-        this.AddrObj.AreaCode2 = response["AreaCode2"];
-        this.AddrObj.AreaCode3 = response["AreaCode3"];
-        this.AddrObj.AreaCode4 = response["AreaCode4"];
-        this.AddrObj.City = response["City"];
-        this.AddrObj.Fax = response["Fax"];
-        this.AddrObj.FaxArea = response["FaxArea"];
-        this.AddrObj.Phn1 = response["Phn1"];
-        this.AddrObj.Phn2 = response["Phn2"];
-        this.AddrObj.Phn3 = response["Phn3"];
-        this.AddrObj.PhnArea1 = response["PhnArea1"];
-        this.AddrObj.PhnArea2 = response["PhnArea2"];
-        this.AddrObj.PhnArea3 = response["PhnArea3"];
-        this.AddrObj.PhnExt1 = response["PhnExt1"];
-        this.AddrObj.PhnExt2 = response["PhnExt2"];
-        this.AddrObj.PhnExt3 = response["PhnExt3"];
-
-        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
-        this.inputAddressObj.default = this.AddrObj;
-      });
+    var copiedAddr = this.InputObj.ListInputedAddr.find(x => x.MrCustAddrTypeCode == this.AddressForm.controls.CopyAddrFrom.value);
+    this.AddrObj = copiedAddr;
+    this.inputAddressObj.inputField.inputLookupObj.nameSelect = copiedAddr.Zipcode;
+    this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: copiedAddr.Zipcode };
+    this.inputAddressObj.default = this.AddrObj;
   }
 
   Cancel() {
-    this.OutputTab.emit({ IsDetail: false })
+    this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr })
   }
 
   AddrTypeChanged(event){
     this.selectedAddrType = event.target.options[event.target.options.selectedIndex].text;
+    this.SetShowOwnership(event.target.value);
+  }
 
+  SetShowOwnership(mrCustAddrTypeCode){
     this.isUcAddressReady = false;
 
-    if(event.target.value == CommonConstant.AddrTypeLegal){
+    if(mrCustAddrTypeCode == CommonConstant.AddrTypeLegal){
       this.inputAddressObj.showOwnership = false;
     }else{
       this.inputAddressObj.showOwnership = true;
     }
-
     this.isUcAddressReady = true;
   }
 
@@ -194,6 +174,11 @@ export class NewNapCustAddrDetailComponent implements OnInit {
       this.appCustAddrObj.PhoneNo2 = this.appCustAddrObj.PhnArea2 + " - " + this.appCustAddrObj.Phn2 + " - " + this.appCustAddrObj.PhnExt2;
       this.appCustAddrObj.CustAddrTypeName = this.selectedAddrType;
       this.appCustAddrObj.HouseOwnershipName = this.appCustAddrObj.MrHouseOwnershipCode;
+
+      if(this.InputObj.Mode == "Edit"){
+        this.InputObj.ListInputedAddr.splice(this.InputObj.EditedIndex, 1);
+      }
+
       this.InputObj.ListInputedAddr.push(this.appCustAddrObj);
 
       this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });

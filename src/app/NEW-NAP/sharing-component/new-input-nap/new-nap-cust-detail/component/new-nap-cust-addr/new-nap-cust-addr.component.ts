@@ -31,7 +31,7 @@ export class NewNapCustAddrComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionAddress.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppCustAddrNewNap.json";
     this.LoadListCustAddress(new Array<AppCustAddrObj>());
   }
 
@@ -87,6 +87,8 @@ export class NewNapCustAddrComponent implements OnInit {
     this.InputObj.IsDetail = true;
     this.InputObj.AppCustId = this.AppCustId;
     this.InputObj.AppCustAddrId = event.RowObj.AppCustAddrId;
+    this.InputObj.InputedAddr = this.ListAddress.find(x => x.MrCustAddrTypeCode == event.RowObj.MrCustAddrTypeCode);
+    this.InputObj.EditedIndex = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == event.RowObj.MrCustAddrTypeCode);
     this.InputObj.MrCustTypeCode = this.MrCustTypeCode;
   }
 

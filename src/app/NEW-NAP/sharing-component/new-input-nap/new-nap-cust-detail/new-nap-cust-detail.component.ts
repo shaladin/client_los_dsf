@@ -62,6 +62,7 @@ export class NewNapCustDetailComponent implements OnInit {
   AttrGroup: string;
   IsSubmitted: boolean;
   custAttrRequest = new Array<Object>();
+  isAddrReady: boolean = false;
 
   //#region FormAppCustMainData
   CustMainDataForm = this.fb.group({
@@ -270,6 +271,7 @@ export class NewNapCustDetailComponent implements OnInit {
           else{
             this.inputMode = "ADD";
           }
+          this.isAddrReady = true;
         }
       ).catch(
         (error) => {
@@ -294,7 +296,9 @@ export class NewNapCustDetailComponent implements OnInit {
 
   //#region MainDataCust
   MainDataCustTypeHandler(e){
+    this.isAddrReady = false;
     this.MrCustTypeCode = e;
+    this.isAddrReady = true;
   }
 
   MainDataCustIsExistingHandler(e){

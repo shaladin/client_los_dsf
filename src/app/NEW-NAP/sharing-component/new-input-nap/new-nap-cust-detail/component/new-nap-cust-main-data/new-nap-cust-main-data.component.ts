@@ -118,6 +118,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     if (this.inputMode != 'ADD') {
       this.getCustMainData();
     }
+    this.ResponseCustType.emit(this.ParentForm.controls.MrCustTypeCode.value);
   }
 
   CustModelHandler(){

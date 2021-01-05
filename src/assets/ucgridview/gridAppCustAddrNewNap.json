@@ -1,0 +1,77 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Address Type Name",
+            "name": "CustAddrTypeName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Address",
+            "name": "Addr"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Building Ownership",
+            "name": "HouseOwnershipName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Phone (Fix Line) 1",
+            "name": "PhoneNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Phone (Fix Line) 2",
+            "name": "PhoneNo2"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action",
+            "name": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustAddrTypeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Addr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "HouseOwnershipName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PhoneNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PhoneNo2"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                  "type": "callback",
+                  "key": "edit"
+                }
+            ]
+        }
+    ]
+}
