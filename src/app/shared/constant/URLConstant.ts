@@ -1252,4 +1252,10 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetNextNodeMember = "/Approval/GetNextNodeMember";
     public static GetRefReasonActive = "/Approval/GetRefReasonActive";
     public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
+
+    //Digitalization
+    public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
+
+    //ThirdPartyRsltH
+    public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
 }
