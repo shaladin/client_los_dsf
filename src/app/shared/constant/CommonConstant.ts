@@ -77,6 +77,8 @@ export class CommonConstant {
   public static LeadStepReject = "RJC";
   public static LeadStepSelfVerification = "SVR";
 
+  //TRX TYPE
+  public static LEAD = "LEAD";
 
   //ASSET CONDITION 
   public static AssetConditionUsed = "USED";
@@ -543,5 +545,7 @@ export class CommonConstant {
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
 
+  //Serial Item
+  public static Chassis_No = "Chassis No";
 
 }

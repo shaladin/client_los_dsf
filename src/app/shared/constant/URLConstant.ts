@@ -152,6 +152,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetGeneralSettingById = "/GeneralSetting/GetGeneralSettingById";
     public static GetGeneralSettingValue = "/GeneralSetting/GetGeneralSettingValue";
     public static GetGeneralSettingByCode = environment.FoundationR3Url + "/GeneralSetting/GetGeneralSettingByCode";
+    public static GetListGeneralSettingByListGsCode = environment.FoundationR3Url + "/GeneralSetting/GetListGeneralSettingByListGsCode";
 
     //REF OFFICE
     public static GetRefOfficeObj = "/RefOffice/GetRefOfficeObj";
@@ -1211,4 +1212,11 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
 
     // INTEGRATION
     public static ReSendLosR3DataToR2 = environment.losUrl + "/Integration/ReSendLosR3DataToR2";
+
+    // THIRD PARTY RESULT H
+    public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
+
+    // CHECK RAPINDO
+    public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
+
 }
