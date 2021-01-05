@@ -72,7 +72,6 @@ export class NewNapCustDetailComponent implements OnInit {
     MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
     MrCustRelationshipCode: ['',Validators.maxLength(50)],
-    CustName: ['', Validators.required],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -111,11 +110,9 @@ export class NewNapCustDetailComponent implements OnInit {
     IsAffiliateWithMf: [false],
     NickName: [''],
     MrNationalityCode: ['', Validators.required],
-    Country: ['', Validators.required],
     MrEducationCode: ['', Validators.required],
     MrReligionCode: ['', Validators.required],
     VIPNotes: [''],
-    CustFullName: ['', Validators.required],
     CustPrefixName: [''],
     CustSuffixName: [''],
     MrSalutationCode: [''],
@@ -149,7 +146,6 @@ export class NewNapCustDetailComponent implements OnInit {
   });
 
   EmergencyContactForm = this.fb.group({
-    ContactPersonName: ['', Validators.required],
     ContactPersonCustNo: [''],
     MrIdTypeCode: [''],
     MrGenderCode: ['', Validators.required],
@@ -502,7 +498,7 @@ export class NewNapCustDetailComponent implements OnInit {
   
   //#region CustAddress
   GetListAddress(e){
-    this.ListAddress = e;
+    this.ListAddress = e.ListAddress;
   }
   //#endregion
 
@@ -692,6 +688,7 @@ export class NewNapCustDetailComponent implements OnInit {
       this.SetDataCustPersonalFullData();
       this.SetAppCustPersonalJobData();
       this.SetAttrContentFinData();
+      this.SetAppCustPersonalEmergency();
       this.setAttrContent();
       this.setAppCustOtherInfoData();
       let appCustPersonalJobRequest = {

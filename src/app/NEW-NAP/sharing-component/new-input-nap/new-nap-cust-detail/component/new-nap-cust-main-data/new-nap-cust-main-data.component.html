@@ -39,7 +39,7 @@
                 *ngIf="this.InputLookupCustObj.isReady" [parentForm]="ParentForm"
                 [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
               </lib-uclookupgeneric>
-              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupCustomer && ParentForm.controls.lookupCustomer.controls.value.untouched" [control]="ParentForm.controls.CustName"
+              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupCustomer && ParentForm.controls.lookupCustomer.controls.value.untouched" [control]="ParentForm.controls.lookupCustomer.controls.value"
                 [submit]="IsCustMainDataSubmitted"></lib-uc-show-errors>
             </div>
           </div>

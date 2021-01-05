@@ -125,7 +125,7 @@
               <lib-uclookupgeneric [lookupInput]="lookupCountryObj" [parentForm]="ParentForm" [enjiForm]="enjiForm"
                 [identifier]="'WNACountry'" (lookup)=GetCountryData($event)>
               </lib-uclookupgeneric>
-              <lib-uc-show-errors *ngIf="ParentForm.controls.WNACountry && ParentForm.controls.WNACountry.controls.value.untouched" [control]="ParentForm.controls.Country"
+              <lib-uc-show-errors *ngIf="ParentForm.controls.WNACountry && ParentForm.controls.WNACountry.controls.value.untouched" [control]="ParentForm.controls.WNACountry.controls.value"
                 [submit]="IsPersonalSubmitted"></lib-uc-show-errors>
             </div> 
           </div>
