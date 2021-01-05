@@ -4,13 +4,15 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-6">
-        <app-crd-rvw-cust-personal-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypePersonal" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info>
+        <app-crd-rvw-cust-personal-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info>
         <app-crd-rvw-cust-company-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info>
       </div>
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-12">
-            <a class="success" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
+            <label class="label-control"> 
+              <a class="font-weight-bold" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
+             </label>
           </div>
         </div>
         <div class="row">
