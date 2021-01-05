@@ -129,6 +129,7 @@ export class FinancialCompanyComponent implements OnInit {
   SaveForm() {
     this.SetAttrContent();
     this.AppCustCompanyFinData = this.FinancialForm.value;
+    this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
     this.AppCustCompanyFinData.AppCustId = this.AppCustId;
 
     let request = {

@@ -189,7 +189,7 @@ export class CustDetailPersonalComponent implements OnInit {
             });
         }
 
-        this.VIPCheck(response.AppCustObj.IsVip);
+        this.VIPCheck();
 
         if(response.AppCustPersonalObj.NationalityCountryCode != null){
           this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
@@ -212,7 +212,6 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
-    this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMf.value;
     this.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
 
     this.AppCustPersonalObj.CustFullName = this.CustFullName;
@@ -247,7 +246,7 @@ export class CustDetailPersonalComponent implements OnInit {
       });
   }
 
-  VIPCheck(IsVip: boolean = false){
+  VIPCheck(){
   let Vip = false;
   Vip = this.CustDetailForm.controls.IsVip.value;
   // if(IsVip != undefined){
