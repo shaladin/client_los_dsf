@@ -9,6 +9,9 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -17,7 +20,8 @@ import { environment } from 'environments/environment';
 })
 export class CreditApprovalCrDetailComponent implements OnInit {
 
-  appId: number;
+  appId: number = 0;
+  ApvReqId: number = 0;
   mrCustTypeCode: string;
   viewObj: string;
   arrValue = [];
@@ -37,6 +41,9 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       }
       if (params["MrCustTypeCode"] != null) {
         this.mrCustTypeCode = params["MrCustTypeCode"];
+      }
+      if (params["ApvReqId"] != null) {
+        this.ApvReqId = params["ApvReqId"];
       }
       var obj = {
         taskId: params["TaskId"],
@@ -58,6 +65,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
+    this.initInputApprovalObj();
   }
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
@@ -81,6 +89,36 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     )
   }
 
+  InputApvObj : UcInputApprovalObj;
+  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  IsReady: boolean = false;
+  initInputApprovalObj(){
+
+    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
+    this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.inputObj.taskId;
+    
+    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
+    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
+
+    this.InputApvObj = new UcInputApprovalObj();
+    this.InputApvObj.TaskId = this.inputObj.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.UrlBactToPaging = "/Nap/CreditProcess/CreditApprovalCr/Paging?BizTemplateCode="+ this.BizTemplateCode;
+    this.InputApvObj.TrxNo =  this.AppObj.AppNo;
+    this.IsReady = true;
+  }
+
   //#region Uc Approval 
   async getApp() {
     let appObj = new AppObj();
@@ -92,39 +130,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
-      var returnHandlingHObj = new ReturnHandlingHObj();
-      var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-
-      returnHandlingHObj.AppId = this.appId;
-      returnHandlingHObj.AgrmntId = null;
-      returnHandlingHObj.ReturnBy = user.UserName;
-      returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes = event.notes;
-      returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
-
-      this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
-        (response) => {
-          this.toastr.successMessage("Success");
-          AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
-        });
-    } 
-    else if(event.result.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()){
-      console.log("cust neg");
-      var NegCustObj = {
-        AppId: this.appId,
-        MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
-        NegCustCause: event.reason
-      };
-      this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
-        (response) => {
-          this.toastr.successMessage("Success");
-          AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
-        });
-    } else {
-      this.toastr.successMessage("Success");
-      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
-    }
+    this.onCancelClick();
   }
 
   onAvailableNextTask() {

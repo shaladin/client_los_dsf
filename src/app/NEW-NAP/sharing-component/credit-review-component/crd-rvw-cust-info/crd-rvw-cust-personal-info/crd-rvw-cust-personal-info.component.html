@@ -176,7 +176,7 @@
         {{crdRvwCustPersInfoObj.MonthlyIncome | number:'.2':'en-US'}} </label>
       <label *ngIf="crdRvwCustPersInfoObj.IsJoinIncome" class="label-control"> {{crdRvwCustPersInfoObj.MonthlyIncome
         + crdRvwCustPersInfoObj.SpouseIncome | number:'.2':'en-US'}} </label>
-      <label *ngIf="crdRvwCustPersInfoObj.IsJoinIncome" class="label-control tooltips"> (Join Income)
+      <label *ngIf="crdRvwCustPersInfoObj.IsJoinIncome" class="label-control tooltips"> &nbsp; (Join Income)
         <span [ngClass]="'tooltipstext'">
           <div class="row">
             <label class="col-md-6 form-inline"> Monthly Income </label>
