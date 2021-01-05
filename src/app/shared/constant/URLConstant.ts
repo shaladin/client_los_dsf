@@ -1087,7 +1087,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
     public static AddPreGoLive = environment.losUrl + "/PreGoLive/AddPreGoLive";
     public static CreateRFAPreGoLive = environment.losUrl + "/PreGoLive/CreateRFAPreGoLive";
-
+    public static CreateRFAPreGoLiveNew = environment.losUrl + "/PreGoLive/CreateRFAPreGoLiveNew";
+    
     // Survey or Srvy
     public static GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode";
     public static GetSrvyResultDataByTrxRefNo = environment.losUrl + "/MouCustSrvyOrder/GetSrvyResultDataByTrxRefNo";
@@ -1234,4 +1235,20 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCrdRvwDealerByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDealer/GetCrdRvwDealerByCrdRvwCustInfoId";
     public static GetLatestListScoringResultHAndResultDByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestListScoringResultHAndResultDByTrxSourceNo";
 
+
+    // New Approval R3
+    public static CreateNewRFA = "/Approval/CreateNewRFA";
+    public static CreateJumpRFA = "/Approval/CreateJumpRFA";
+    public static GetRefSingleCategoryByCategoryCode = "/Approval/GetRefSingleCategoryByCategoryCode";
+    public static GetSchemesBySchemeCode = "/Approval/GetSchemesBySchemeCode";
+    public static GetRefAdtQuestion = "/Approval/GetRefAdtQuestion";
+    public static GetPossibleMemberAndAttributeExType = "/Approval/GetPossibleMemberAndAttributeExType";
+    public static GetApprovalReturnHistory = "/Approval/GetApprovalReturnHistory";
+    public static GetSchemesByCategoryId = "/Approval/GetSchemesByCategoryId";
+    public static SubmitApproval = "/Approval/SubmitApproval";
+    public static GetLevelVoting = "/Approval/GetLevelVoting";
+    public static GetPossibleResult = "/Approval/GetPossibleResult";
+    public static GetNextNodeMember = "/Approval/GetNextNodeMember";
+    public static GetRefReasonActive = "/Approval/GetRefReasonActive";
+    public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
 }
