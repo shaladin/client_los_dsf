@@ -1,4 +1,4 @@
-<form class="form form-horizontal" [formGroup]="AddressForm" (ngSubmit)="AddressForm.valid"
+<form class="form form-horizontal" [formGroup]="AddressForm" (ngSubmit)="AddressForm.valid && SaveForm()"
   #enjiForm="ngForm">
   <lib-ucSubsection [id]="'AddressId'" [title]="'Customer Address'" [panel]="'Address'">
   </lib-ucSubsection>
@@ -6,7 +6,7 @@
     <div class="form-group row">
       <label class="col-md-2 adins-required-label" translate>Address Type Name</label>
       <div class="col-md-4">
-        <select class="form-control adInsInput" formControlName="MrCustAddrTypeCode"
+        <select class="form-control adInsInput" formControlName="MrCustAddrTypeCode" (change)="AddrTypeChanged($event)"
           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddressForm.controls.MrCustAddrTypeCode.invalid }">
           <option *ngFor="let it of AddressTypeObj" value="{{it.Key}}">{{it.Value}}</option>
         </select>
@@ -36,12 +36,11 @@
     <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
       [identifier]="'Address'" [UCAddrForm]="AddressForm"></lib-ucaddress>
   </div>
-  <div class="pull-right margin-15">
+  <div class="form-actions right">
     <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
       <i class="ft-x"></i> Cancel
     </button>
-    <button type="submit" class="btn btn-raised btn-primary mr-1"
-      (click)=formValidate.scrollIfFormHasErrors(AddressForm)>
+    <button type="submit" class="btn btn-raised btn-primary mr-1">
       <i class="far fa-check-square"></i> Save
     </button>
   </div>
