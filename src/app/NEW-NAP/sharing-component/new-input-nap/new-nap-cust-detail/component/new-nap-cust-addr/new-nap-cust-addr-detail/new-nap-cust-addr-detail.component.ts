@@ -136,6 +136,16 @@ export class NewNapCustAddrDetailComponent implements OnInit {
 
   AddrTypeChanged(event){
     this.selectedAddrType = event.target.options[event.target.options.selectedIndex].text;
+
+    this.isUcAddressReady = false;
+
+    if(event.target.value == CommonConstant.AddrTypeLegal){
+      this.inputAddressObj.showOwnership = false;
+    }else{
+      this.inputAddressObj.showOwnership = true;
+    }
+
+    this.isUcAddressReady = true;
   }
 
   SaveForm() {
@@ -158,7 +168,9 @@ export class NewNapCustAddrDetailComponent implements OnInit {
       this.appCustAddrObj.AppCustAddrId = this.InputObj.AppCustAddrId;
       this.appCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
       this.appCustAddrObj.AppCustId = this.InputObj.AppCustId;
-      this.appCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
+      if(this.appCustAddrObj.MrCustAddrTypeCode != CommonConstant.AddrTypeLegal){
+        this.appCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
+      }
       this.appCustAddrObj.Addr = this.AddressForm.controls["Address"]["controls"].Addr.value;
       this.appCustAddrObj.AreaCode1 = this.AddressForm.controls["Address"]["controls"].AreaCode1.value;
       this.appCustAddrObj.AreaCode2 = this.AddressForm.controls["Address"]["controls"].AreaCode2.value;
