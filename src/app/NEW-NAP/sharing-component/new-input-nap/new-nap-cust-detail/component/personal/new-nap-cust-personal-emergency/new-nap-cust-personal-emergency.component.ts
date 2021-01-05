@@ -26,6 +26,7 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Input() AppCustId: number;
   @Input() IsMarried: boolean;
+  @Input() IsEmergencySubmitted: boolean;
   isUcAddressReady: boolean;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputUcAddressObj: InputAddressObj = new InputAddressObj();
@@ -44,7 +45,9 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService
-  ) { }
+  ) {
+    this.IsEmergencySubmitted = false;
+   }
 
   ngOnInit() {
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));

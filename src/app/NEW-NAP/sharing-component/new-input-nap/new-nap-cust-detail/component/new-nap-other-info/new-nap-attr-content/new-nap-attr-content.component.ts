@@ -22,6 +22,7 @@ export class NewNapAttrContentComponent implements OnInit {
   @Input() AttrGroup: string;
   @Input() AppCustId: number;
   @Input() title: string;
+  @Input() IsAttrSubmitted: boolean;
   ListAttrContent: Array<AttrContent> = new Array<AttrContent>();
   RefAttrList: Array<RefAttr> = new Array<RefAttr>();
   ListInputLookUpObj = new Array();
@@ -32,7 +33,9 @@ export class NewNapAttrContentComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.IsAttrSubmitted = false;
+   }
 
   async ngOnInit() {
     var custGrp = {

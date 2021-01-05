@@ -22,12 +22,12 @@
             <div class="col-md-3">
               <select class="form-control adInsInput full-width" style="width: 100%"
                 formControlName="MrCustRelationshipCode" (change)="RelationshipChange($event.target.value)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrCustRelationshipCode.invalid }">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrCustRelationshipCode.invalid }">
                 <option value="">-Select One-</option>
                 <option *ngFor="let it of MrCustRelationshipCodeObj" value="{{it.Key}}">{{it.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrCustRelationshipCode"
-                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                [submit]="IsCustMainDataSubmitted"></lib-uc-show-errors>
             </div>
           </div>
         </div>
@@ -39,6 +39,8 @@
                 *ngIf="this.InputLookupCustObj.isReady" [parentForm]="ParentForm"
                 [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
               </lib-uclookupgeneric>
+              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupCustomer && ParentForm.controls.lookupCustomer.controls.value.untouched" [control]="ParentForm.controls.CustName"
+                [submit]="IsCustMainDataSubmitted"></lib-uc-show-errors>
             </div>
           </div>
         </div>
@@ -48,13 +50,13 @@
             <div class="col-md-6">
               <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
                 formControlName="MrGenderCode" style="width:100%;"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrGenderCode.invalid}">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrGenderCode.invalid}">
                 <option value="">-Select One-</option>
                 <option *ngFor="let item of DictRefMaster[MasterGender]" [value]="item.Key">
                   {{item.Value}}
                 </option>
               </select>
-              <lib-uc-show-errors [control]="ParentForm.controls.MrGenderCode" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="ParentForm.controls.MrGenderCode" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -71,7 +73,7 @@
                 </option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrCompanyTypeCode"
-                [submit]="enjiForm.submitted">
+                [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -85,8 +87,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="TaxIdNo"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TaxIdNo.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.TaxIdNo" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.TaxIdNo.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.TaxIdNo" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -99,13 +101,13 @@
             <div class="col-md-6">
               <select [attr.disabled]="isExisting ? 'true' : null" class="form-control" id="idType"
                 formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrIdTypeCode.invalid }">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrIdTypeCode.invalid }">
                 <option value="">-Select One-</option>
                 <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
                   {{item.Descr}}
                 </option>
               </select>
-              <lib-uc-show-errors [control]="ParentForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="ParentForm.controls.MrIdTypeCode" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -116,8 +118,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="BirthPlace"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.BirthPlace.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.BirthPlace" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.BirthPlace.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.BirthPlace" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -128,8 +130,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="IdNo"
-                [ngClass]="{'is-invalid': enjiForm.submitted && ParentForm.controls.IdNo.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.IdNo" [submit]="enjiForm.submitted">
+                [ngClass]="{'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.IdNo.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.IdNo" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -140,8 +142,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}"
                 class="form-control" formControlName="BirthDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.BirthDt.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.BirthDt" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.BirthDt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.BirthDt" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -154,12 +156,12 @@
             <div class="col-md-8">
               <input *ngIf="['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)" readonly
                 type="date" class="form-control" formControlName="IdExpiredDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.IdExpiredDt.invalid}">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.IdExpiredDt.invalid}">
               <input [attr.readonly]="isExisting ? 'true' : null"
                 *ngIf="!['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)"
                 min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.IdExpiredDt.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.IdExpiredDt" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.IdExpiredDt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.IdExpiredDt" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -171,8 +173,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="TaxIdNo"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TaxIdNo.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.TaxIdNo" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.TaxIdNo.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.TaxIdNo" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -183,14 +185,14 @@
             <div class="col-md-6">
               <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
                 formControlName="MrMaritalStatCode" style="width:100%;"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrMaritalStatCode.invalid}">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrMaritalStatCode.invalid}">
                 <option value="">-Select One-</option>
                 <option *ngFor="let item of DictRefMaster[MasterMaritalStat]" [value]="item.Key">
                   {{item.Value}}
                 </option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrMaritalStatCode"
-                [submit]="enjiForm.submitted">
+                [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -201,9 +203,9 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="MotherMaidenName"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MotherMaidenName.invalid}">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MotherMaidenName.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.MotherMaidenName"
-                [submit]="enjiForm.submitted">
+                [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -214,12 +216,12 @@
             <div class="col-md-6">
               <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width"
                 style="width: 100%" formControlName="MrCustModelCode"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrCustModelCode.invalid }" (change)="CustModelHandler()">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrCustModelCode.invalid }" (change)="CustModelHandler()">
                 <option value="">-Select One-</option>
                 <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrCustModelCode"
-                [submit]="enjiForm.submitted">
+                [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -230,8 +232,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="MobilePhnNo1"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MobilePhnNo1.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MobilePhnNo1.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo1" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -242,8 +244,8 @@
             <div class="col-md-8">
               <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                 formControlName="Email1"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.Email1.invalid}">
-              <lib-uc-show-errors [control]="ParentForm.controls.Email1" [submit]="enjiForm.submitted">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.Email1.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.Email1" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -256,13 +258,13 @@
             <div class="col-md-6">
               <select class="form-control adInsInput full-width" style="width: 100%"
                 formControlName="MrJobPositionCode"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.MrJobPositionCode.invalid }">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrJobPositionCode.invalid }">
                 <option value="">-Select One-</option>
                 <option *ngFor="let item of DictRefMaster[MasterJobPosition]" value="{{item.Key}}">{{item.Value}}
                 </option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrJobPositionCode"
-                [submit]="enjiForm.submitted">
+                [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -273,9 +275,9 @@
             <div class="col-md-8">
               <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
                 formControlName="EstablishmentDt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstablishmentDt.invalid}">
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.EstablishmentDt.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.EstablishmentDt"
-                [submit]="enjiForm.submitted">
+                [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -285,9 +287,9 @@
             <label class="col-md-4" translate>Share(%)</label>
             <div class="col-md-8">
               <input type="text" currencyMask class="form-control" formControlName="SharePrcnt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SharePrcnt.invalid}"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.SharePrcnt.invalid}"
                 [options]="{suffix:'%', max:100, allowNegative: false}">
-              <lib-uc-show-errors [control]="ParentForm.controls.SharePrcnt" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="ParentForm.controls.SharePrcnt" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>
           </div>

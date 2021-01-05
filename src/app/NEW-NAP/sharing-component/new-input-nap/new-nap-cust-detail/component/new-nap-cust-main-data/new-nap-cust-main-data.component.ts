@@ -46,6 +46,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   @Input() inputMode: string = "ADD";
   @Input() isMarried: boolean = false;
   @Input() InputAppCustObjMainData: Object;
+  @Input() IsCustMainDataSubmitted: boolean;
   @Output() ResponseCustType: EventEmitter<any>;
   @Output() ResponseIsExisting: EventEmitter<any>;
   @Output() ResponseIsIncludeCustRelation: EventEmitter<any>;
@@ -95,6 +96,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseIsExisting = new EventEmitter<any>();
     this.ResponseIsIncludeCustRelation = new EventEmitter<any>();
     this.ResponseCustModel = new EventEmitter<any>();
+    this.IsCustMainDataSubmitted = false;
   }
 
   async ngOnInit() {
@@ -414,6 +416,9 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   async copyCustomerEvent(event) {
+    this.ParentForm.patchValue({
+      CustName: event.CustName
+    });
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {

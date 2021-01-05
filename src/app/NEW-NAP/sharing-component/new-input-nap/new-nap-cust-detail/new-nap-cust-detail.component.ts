@@ -60,6 +60,7 @@ export class NewNapCustDetailComponent implements OnInit {
   IsCompletion: boolean;
   IsMarried: boolean;
   AttrGroup: string;
+  IsSubmitted: boolean;
   custAttrRequest = new Array<Object>();
 
   //#region FormAppCustMainData
@@ -67,6 +68,7 @@ export class NewNapCustDetailComponent implements OnInit {
     MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
     MrCustRelationshipCode: ['',Validators.maxLength(50)],
+    CustName: ['', Validators.required],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -105,6 +107,7 @@ export class NewNapCustDetailComponent implements OnInit {
     IsAffiliateWithMf: [false],
     NickName: [''],
     MrNationalityCode: ['', Validators.required],
+    Country: ['', Validators.required],
     MrEducationCode: ['', Validators.required],
     MrReligionCode: ['', Validators.required],
     VIPNotes: [''],
@@ -142,7 +145,7 @@ export class NewNapCustDetailComponent implements OnInit {
   });
 
   EmergencyContactForm = this.fb.group({
-    ContactPersonName: [''],
+    ContactPersonName: ['', Validators.required],
     ContactPersonCustNo: [''],
     MrIdTypeCode: [''],
     MrGenderCode: ['', Validators.required],
@@ -221,6 +224,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.AttrGroup = CommonConstant.AttrGroupCustPersonalFinData;
     this.custAttrRequest = new Array<Object>();
     this.custMainDataMode = CommonConstant.CustMainDataModeCust;
+    this.IsSubmitted = false;
   }
 
   ngOnInit() {
@@ -585,6 +589,14 @@ export class NewNapCustDetailComponent implements OnInit {
   //#endregion
 
   SaveForm() {
+    this.IsSubmitted = true;
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      if(!this.CustMainDataForm.valid || !this.CustDetailForm.valid || !this.JobDataForm.valid || 
+        !this.EmergencyContactForm.valid || !this.PersonalFinancialForm.valid || !this.OtherInformationForm.valid){
+        return false;
+      }
+    }
+    
     if(this.CekIsCustomer()) return;
     let max17Yodt = new Date(this.MaxDate);
     let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);

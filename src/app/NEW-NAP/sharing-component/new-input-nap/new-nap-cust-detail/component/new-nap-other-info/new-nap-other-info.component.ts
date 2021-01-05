@@ -18,6 +18,7 @@ export class NewNapOtherInfoComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Input() AppCustId: number;
   @Input() CustTypeCode: string;
+  @Input() IsOtherInfoSubmitted: boolean;
   @Output() ResponseAppCustOtherInfo: EventEmitter<any> = new EventEmitter<any>();
   InputDebitorGroupLookupObj : InputLookupObj;
   InputDebitorBusinessScaleLookupObj: InputLookupObj;
@@ -36,6 +37,7 @@ export class NewNapOtherInfoComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder
   ) { 
+    this.IsOtherInfoSubmitted = false;
   }
 
   async ngOnInit() {

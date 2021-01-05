@@ -19,6 +19,7 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() AppCustPersonalId: number;
   @Input() IsMarried: boolean;
+  @Input() IsFinancialSubmitted: boolean;
   IsDetail: boolean = false;
   AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
@@ -31,7 +32,9 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService
-  ) { }
+  ) { 
+    this.IsFinancialSubmitted = false;
+  }
 
   async ngOnInit() {
     await this.GetRefMaster();

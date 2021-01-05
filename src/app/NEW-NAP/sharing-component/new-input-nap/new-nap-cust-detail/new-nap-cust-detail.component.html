@@ -4,26 +4,27 @@
             <app-new-nap-cust-main-data [ParentForm]="CustMainDataForm" [custMainDataMode]="custMainDataMode"
                 [appId]="AppId" [appCustId]="AppCustIdInput" [bizTemplateCode]="BizTemplateCode"
                 [inputMode]="inputMode" [isMarried]="IsMarried" [InputAppCustObjMainData]="InputAppCustObjMainData"
+                [IsCustMainDataSubmitted]="IsSubmitted"
                 (ResponseCustType)="MainDataCustTypeHandler($event)" (ResponseIsExisting)="MainDataCustIsExistingHandler($event)"
                 (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)">
             </app-new-nap-cust-main-data>
-            <app-new-nap-cust-personal-full-data [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" 
+            <app-new-nap-cust-personal-full-data [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" [IsPersonalSubmitted]="IsSubmitted"
                 (ResponseCustGrp)="CustPersonalFullDataCustGrpHandler($event)" (ResponseIsLocal)="CustPersonalFullDataIsLocalHandler($event)"
                 (ResponseLocalCountry)="CustPersonalFullDataLocalCountryHandler($event)" (ResponseNationalityCountry)="CustPersonalFullDataNationalityCountryHandler($event)">
             </app-new-nap-cust-personal-full-data>
             <app-new-nap-cust-addr [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
                 (OutputTab)="GetListAddress($event)">
             </app-new-nap-cust-addr>
-            <app-new-nap-cust-personal-job *ngIf="CustModelCode" [ParentForm]="JobDataForm" [appId]="AppId" [AppCustId]="AppCustIdInput"
+            <app-new-nap-cust-personal-job *ngIf="CustModelCode" [IsJobSubmitted]="IsSubmitted" [ParentForm]="JobDataForm" [appId]="AppId" [AppCustId]="AppCustIdInput"
                 [CustModelCode]="CustModelCode">
             </app-new-nap-cust-personal-job>
-            <app-new-nap-cust-personal-emergency [ParentForm]="EmergencyContactForm" 
+            <app-new-nap-cust-personal-emergency [ParentForm]="EmergencyContactForm" [IsEmergencySubmitted]="IsSubmitted"
                 [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried">
             </app-new-nap-cust-personal-emergency>
-            <app-new-nap-cust-personal-financial [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput"
+            <app-new-nap-cust-personal-financial [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput" [IsFinancialSubmitted]="IsSubmitted"
                 [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried">
             </app-new-nap-cust-personal-financial>
-            <app-new-nap-other-info [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" 
+            <app-new-nap-other-info [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
                 [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">
             </app-new-nap-other-info>
         </div>

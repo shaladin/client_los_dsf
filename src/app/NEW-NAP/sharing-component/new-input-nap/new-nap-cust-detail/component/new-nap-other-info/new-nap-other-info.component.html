@@ -14,6 +14,8 @@
                   <div class="col-md-8">
                     <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputDebitorGroupLookupObj"     [parentForm]="ParentForm" [identifier]="'DebitorGroup'" (lookup)="getLookupDebitorGroup($event)">
                     </lib-uclookupgeneric>
+                    <lib-uc-show-errors *ngIf="ParentForm.controls.DebitorGroup && ParentForm.controls.DebitorGroup.controls.value.untouched" [control]="ParentForm.controls.LbppmsDebtGrpLbppCode"
+                      [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -21,6 +23,8 @@
                   <div class="col-md-8">
                     <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputCounterpartCategoryLookupObj" [parentForm]="ParentForm" [identifier]="'CounterpartCategry'" (lookup)="getLookupCounterpartCategory($event)">
                     </lib-uclookupgeneric>
+                    <lib-uc-show-errors *ngIf="ParentForm.controls.CounterpartCategry && ParentForm.controls.CounterpartCategry.controls.value.untouched" [control]="ParentForm.controls.LbppmsCntrprtLbppCode"
+                      [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
                   </div>
                 </div>
               </div>
@@ -32,6 +36,8 @@
                        [parentForm]="ParentForm" [identifier]="'DebitorBusinessScale'"
                       (lookup)="getLookupDebitorBusinessScale($event)">
                     </lib-uclookupgeneric>
+                    <lib-uc-show-errors *ngIf="ParentForm.controls.DebitorBusinessScale && ParentForm.controls.DebitorBusinessScale.controls.value.untouched" [control]="ParentForm.controls.LbppmsBizSclLbppCode"
+                      [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -40,6 +46,8 @@
                     <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputSustaianableFinancialBusinessLookupObj"
                        [parentForm]="ParentForm" [identifier]="'SustainableFinancialBusiness'"(lookup)="getLookupSustainableFinancialBusiness($event)">
                     </lib-uclookupgeneric>
+                    <lib-uc-show-errors *ngIf="ParentForm.controls.SustainableFinancialBusiness && ParentForm.controls.SustainableFinancialBusiness.controls.value.untouched" [control]="ParentForm.controls.LbppmsBizSustainLbppCode"
+                      [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
                   </div>
                 </div>
               </div>
@@ -47,7 +55,7 @@
           </div>
 
           <app-new-nap-attr-content [title]="'Attribute List'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
-            [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup">
+            [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup" [IsAttrSubmitted]="IsOtherInfoSubmitted">
           </app-new-nap-attr-content>
         </form>
       </div>

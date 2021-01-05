@@ -14,6 +14,8 @@
                   [lookupInput]="InputLookupProfessionObj" [parentForm]="ParentForm"
                   [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                 </lib-uclookupgeneric>
+                <lib-uc-show-errors *ngIf="ParentForm.controls.lookupProfessionData && ParentForm.controls.lookupProfessionData.controls.value.untouched" [control]="ParentForm.controls.MrProfessionCode"
+                  [submit]="IsJobSubmitted"></lib-uc-show-errors>
               </div>
               <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>Industry
                 Type</label>
@@ -22,6 +24,8 @@
                   [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="ParentForm"
                   [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
                 </lib-uclookupgeneric>
+                <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType.controls.value.untouched" [control]="ParentForm.controls.IndustryTypeCode"
+                  [submit]="IsJobSubmitted"></lib-uc-show-errors>
               </div>
             </div>
             <div *ngIf="CustModelCode == 'EMP' || CustModelCode == 'SME'">
@@ -29,16 +33,16 @@
                 <label class="col-md-2 adins-required-label" translate>Company Name</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="CoyName"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CoyName.invalid }">
-                  <lib-uc-show-errors [control]="ParentForm.controls.CoyName" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.CoyName.invalid }">
+                  <lib-uc-show-errors [control]="ParentForm.controls.CoyName" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EmploymentEstablishmentDt.invalid }"
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.EmploymentEstablishmentDt.invalid }"
                     max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="ParentForm.controls.EmploymentEstablishmentDt"
-                    [submit]="enjiForm.submitted">
+                    [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -66,16 +70,16 @@
                 <label class="col-md-2" translate>Professional No</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="ProfessionalNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ProfessionalNo.invalid }">
-                  <lib-uc-show-errors [control]="ParentForm.controls.ProfessionalNo" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.ProfessionalNo.invalid }">
+                  <lib-uc-show-errors [control]="ParentForm.controls.ProfessionalNo" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EmploymentEstablishmentDt.invalid }"
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.EmploymentEstablishmentDt.invalid }"
                     max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="ParentForm.controls.EmploymentEstablishmentDt"
-                    [submit]="enjiForm.submitted">
+                    [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -84,15 +88,15 @@
               <label class="col-md-2" translate>Job Title Name</label>
               <div class="col-md-4">
                 <input type="text" class="form-control" formControlName="JobTitleName"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.JobTitleName.invalid }">
-                <lib-uc-show-errors [control]="ParentForm.controls.JobTitleName" [submit]="enjiForm.submitted">
+                  [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.JobTitleName.invalid }">
+                <lib-uc-show-errors [control]="ParentForm.controls.JobTitleName" [submit]="IsJobSubmitted">
                 </lib-uc-show-errors>
               </div>
               <label class="col-md-2" *ngIf="CustModelCode != 'PROF'" translate>Number of Employee</label>
               <div class="col-md-2" *ngIf="CustModelCode != 'PROF'">
                 <input type="number" min="0" class="form-control" formControlName="NumOfEmployee"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.NumOfEmployee.invalid }">
-                <lib-uc-show-errors [control]="ParentForm.controls.NumOfEmployee" [submit]="enjiForm.submitted">
+                  [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.NumOfEmployee.invalid }">
+                <lib-uc-show-errors [control]="ParentForm.controls.NumOfEmployee" [submit]="IsJobSubmitted">
                 </lib-uc-show-errors>
               </div>
             </div>
@@ -131,8 +135,8 @@
                   <label class="col-md-2" translate>Notes </label>
                   <div class="col-md-4">
                     <textarea type="text" class="form-control adInsInput" formControlName="JobNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.JobNotes.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="ParentForm.controls.JobNotes" [submit]="enjiForm.submitted">
+                      [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.JobNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="ParentForm.controls.JobNotes" [submit]="IsJobSubmitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -146,14 +150,14 @@
                 <label class="col-md-2" translate>Previous Company Name</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="PrevCoyName"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.PrevCoyName.invalid }">
-                  <lib-uc-show-errors [control]="ParentForm.controls.PrevCoyName" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.PrevCoyName.invalid }">
+                  <lib-uc-show-errors [control]="ParentForm.controls.PrevCoyName" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" translate>Previous Employment Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="PrevEmploymentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
-                  <lib-uc-show-errors [control]="ParentForm.controls.PrevEmploymentDt" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="ParentForm.controls.PrevEmploymentDt" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -163,8 +167,8 @@
                   <label class="col-md-2" translate>Notes </label>
                   <div class="col-md-4">
                     <textarea type="text" class="form-control adInsInput" formControlName="PrevJobNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.PrevJobNotes.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="ParentForm.controls.PrevJobNotes" [submit]="enjiForm.submitted">
+                      [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.PrevJobNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="ParentForm.controls.PrevJobNotes" [submit]="IsJobSubmitted">
                     </lib-uc-show-errors>
                   </div>
                 </div> -->
@@ -176,15 +180,15 @@
                 <label class="col-md-2" translate>Other Business Name</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizName"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OthBizName.invalid }">
-                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizName" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizName.invalid }">
+                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizName" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" translate>Other Business Type</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizType"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OthBizType.invalid }">
-                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizType" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizType.invalid }">
+                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizType" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -192,16 +196,16 @@
                 <label class="col-md-2" translate>Other Business Industry Type</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizIndustryTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OthBizIndustryTypeCode.invalid }">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizIndustryTypeCode.invalid }">
                   <lib-uc-show-errors [control]="ParentForm.controls.OthBizIndustryTypeCode"
-                    [submit]="enjiForm.submitted">
+                    [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" translate>Other Job Type</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizJobPosition"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OthBizJobPosition.invalid }">
-                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizJobPosition" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizJobPosition.invalid }">
+                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizJobPosition" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -210,7 +214,7 @@
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="OthBizEstablishmentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="ParentForm.controls.OthBizEstablishmentDt"
-                    [submit]="enjiForm.submitted">
+                    [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -221,8 +225,8 @@
                 <label class="col-md-2" translate>Notes </label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="OthBizNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.OthBizNotes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizNotes" [submit]="enjiForm.submitted">
+                    [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizNotes.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="ParentForm.controls.OthBizNotes" [submit]="IsJobSubmitted">
                   </lib-uc-show-errors>
                 </div>
               </div> -->

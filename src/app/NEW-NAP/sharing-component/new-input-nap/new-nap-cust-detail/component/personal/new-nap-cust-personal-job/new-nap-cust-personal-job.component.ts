@@ -36,6 +36,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
   @Input() appId: number;
   @Input() AppCustId: number;
   @Input() CustModelCode: string;
+  @Input() IsJobSubmitted: boolean;
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
   InputLookupIndustryTypeObj: InputLookupObj = new InputLookupObj();
   InputJobAddrObj: InputAddressObj = new InputAddressObj();
@@ -67,7 +68,9 @@ export class NewNapCustPersonalJobComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService
-  ) { }
+  ) { 
+    this.IsJobSubmitted = false;
+  }
 
   async ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));

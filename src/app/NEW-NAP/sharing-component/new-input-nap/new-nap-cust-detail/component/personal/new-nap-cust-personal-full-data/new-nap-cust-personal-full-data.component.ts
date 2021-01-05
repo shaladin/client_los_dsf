@@ -24,6 +24,7 @@ import { environment } from 'environments/environment';
 export class NewNapCustPersonalFullDataComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Input() AppCustId: number;
+  @Input() IsPersonalSubmitted: boolean;
   @Output() ResponseCustGrp: EventEmitter<any> = new EventEmitter<any>();
   @Output() ResponseIsLocal: EventEmitter<any> = new EventEmitter<any>();
   @Output() ResponseLocalCountry: EventEmitter<any> = new EventEmitter<any>();
@@ -47,7 +48,9 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService
-  ) { }
+  ) { 
+    this.IsPersonalSubmitted = false;
+  }
 
   async ngOnInit() {
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -123,9 +126,15 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
   }
 
   ChangeNationality(value: string) {
+    this.ParentForm.patchValue({
+      Country: ""
+    });
     if (value == CommonConstant.NationalityLocal || value == "IDN") {
       this.isLocal = true;
       this.lookupCountryObj.isRequired = false;
+      this.ParentForm.patchValue({
+        Country: this.LocalCountry.CountryCode
+      });
     } else {
       this.isLocal = false;
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == value);
@@ -134,6 +143,9 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
       this.NationalityCountryCode = foreign["ReserveField1"];
       this.lookupCountryObj.isRequired = true;
       this.ResponseNationalityCountry.emit(this.NationalityCountryCode);
+      this.ParentForm.patchValue({
+        Country: this.NationalityCountryCode
+      });
     }
     this.ResponseIsLocal.emit(this.isLocal);
   }
@@ -149,6 +161,9 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
   GetCountryData(event) {
     this.NationalityCountryCode = event.CountryCode;
     this.ResponseNationalityCountry.emit(event.CountryCode);
+    this.ParentForm.patchValue({
+      Country: this.NationalityCountryCode
+    });
   }
 
   GetData() {
