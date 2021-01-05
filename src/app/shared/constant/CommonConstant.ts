@@ -543,5 +543,17 @@ export class CommonConstant {
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
 
+  //Approval
+  public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
+  public static SCHM_CODE_APV_PRE_GO_LIVE = "PRE_GLV_APV_CF";
+
+
+  public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV"; 
+  public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV"; 
+
+
+  
 
 }
