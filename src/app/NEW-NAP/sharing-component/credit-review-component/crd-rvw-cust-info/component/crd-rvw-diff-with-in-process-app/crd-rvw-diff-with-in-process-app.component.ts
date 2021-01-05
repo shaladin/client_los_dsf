@@ -42,8 +42,8 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
     }
   }
 
-  async ClickLinkApp(AppNo: string){
-    await this.http.post<any>(URLConstant.GetAppByAppNo, {AppNo: AppNo}).toPromise().then(
+  async ClickLinkApp(AppNo: string) {
+    await this.http.post<any>(URLConstant.GetAppByAppNo, { AppNo: AppNo }).toPromise().then(
       (response) => {
         AdInsHelper.OpenAppViewByAppId(response.AppId);
       }

@@ -28,12 +28,10 @@ export class CrdRvwCustInfoComponent implements OnInit {
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
 
   constructor(
-    private modalService: NgbModal,
-    private http: HttpClient,) { }
+    private modalService: NgbModal, private http: HttpClient) { }
 
   async ngOnInit() {
     this.crdRvwCustInfoObj.AppId = this.appId;
-    console.log(this.crdRvwCustInfoObj);
     await this.GetListCrdRvwExposureByCrdRvwCustInfoId();
     await this.GetAppCustBankAccList();
     await this.GetListNegativeCustByCustNo();
@@ -71,7 +69,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
   }
 
   ListNegCust: Array<NegCustObj> = new Array<NegCustObj>();
-  async GetListNegativeCustByCustNo(){
+  async GetListNegativeCustByCustNo() {
     await this.http.post<any>(URLConstant.GetListNegativeCustByCustNo, { CustNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
       (response) => {
         console.log(response);
@@ -79,7 +77,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
       });
 
   }
-  
+
   ClickLinkViewCustExposure() {
     AdInsHelper.OpenCustExposureViewByCrdRvwCustInfoId(this.appId);
   }
@@ -106,15 +104,11 @@ export class CrdRvwCustInfoComponent implements OnInit {
     this.modalNegCheckListContent = this.modalService.open(NegCheckListContent);
     this.modalNegCheckListContent.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.cancelNegCheckListContent();
+      this.modalNegCheckListContent.close();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      this.cancelNegCheckListContent();
+      this.modalNegCheckListContent.close();
     });
-  }
-
-  cancelNegCheckListContent() {
-    this.modalNegCheckListContent.close();
   }
   //#endregion
 
@@ -130,12 +124,12 @@ export class CrdRvwCustInfoComponent implements OnInit {
   //#endregion
 }
 
-export class NegCustObj{
+export class NegCustObj {
   CustName: string;
   MrNegCustTypeCode: string;
   MrNegCustTypeCodeDesc: string;
   MrNegCustSourceCode: string;
   MrNegCustSourceCodeDesc: string;
   NegCustCause: string;
-  constructor(){}
+  constructor() { }
 }

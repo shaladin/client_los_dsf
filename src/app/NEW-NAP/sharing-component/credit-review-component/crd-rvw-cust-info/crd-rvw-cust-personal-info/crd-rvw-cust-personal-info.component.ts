@@ -17,7 +17,6 @@ import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/CreditReview/CrdR
   styleUrls: ['./crd-rvw-cust-personal-info.component.scss']
 })
 export class CrdRvwCustPersonalInfoComponent implements OnInit {
-
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj;
   @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter<any>();
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter<any>();
@@ -25,10 +24,8 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
   crdRvwCustPersInfoObj: CrdRvwCustPersInfoObj = new CrdRvwCustPersInfoObj();
-  constructor(
-    private modalService: NgbModal,
-    private http: HttpClient,
-  ) { }
+
+  constructor(private modalService: NgbModal, private http: HttpClient,) { }
 
   async ngOnInit() {
     await this.GetCrdRvwCustPersInfoByCrdRvwCustInfoId();
@@ -94,7 +91,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
     this.modalDiffCustContent.close();
   }
   //#endregion
-  
+
   //#region DiffApp
   modalDiffAppContent: any;
   ClickLinkDiffApp(DiffAppContent) {
@@ -148,11 +145,11 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   //#endregion
 
   //#region Click View
-  ClickLinkBankStatement(){
+  ClickLinkBankStatement() {
     this.ngModelForBankAcc.emit();
   }
 
-  ClickLinkNegativeCheckingList(){
+  ClickLinkNegativeCheckingList() {
     this.ngModelForNegCheckList.emit();
   }
   //#endregion
