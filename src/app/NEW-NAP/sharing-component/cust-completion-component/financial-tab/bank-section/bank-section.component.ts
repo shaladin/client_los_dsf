@@ -53,7 +53,7 @@ export class BankSectionComponent implements OnInit {
       (response) => {
         this.MonthObj = response[CommonConstant.ReturnObj];
         if (this.MonthObj.length > 0) {
-          this.DefaultMonth = this.MonthObj[0].Key;
+          this.DefaultMonth = this.MonthObj[0].Value;
         }
       }
     );

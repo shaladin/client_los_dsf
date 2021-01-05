@@ -48,7 +48,6 @@ export class ApplicationDataComponent implements OnInit {
   resMouCustObj;  
   mouCustObj;
   CustNo: string;
-  isMainData: boolean = false;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
   
@@ -120,10 +119,7 @@ export class ApplicationDataComponent implements OnInit {
     private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
       this.route.queryParams.subscribe(params => {
         this.appId = params["AppId"];
-      });  
-      this.route.queryParams.subscribe(params => {
-        if (params["IsMainData"] != undefined && params["IsMainData"]) this.isMainData = params["IsMainData"];
-      });  
+      });
     }
 
   ngOnInit() {
@@ -624,7 +620,7 @@ export class ApplicationDataComponent implements OnInit {
               appFinData: tempAppFindDataObj,
               RowVersion: "",
             };
-            if(this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+            obj['appCustMailingAddr'] = this.getMailingAddrForSave();
             this.http.post(url, obj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
@@ -648,7 +644,7 @@ export class ApplicationDataComponent implements OnInit {
         appFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      if(this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+      obj['appCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(url, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data');
@@ -729,7 +725,6 @@ export class ApplicationDataComponent implements OnInit {
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
 
-  isIncludeMailingAddress: boolean = false;
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
@@ -739,9 +734,6 @@ export class ApplicationDataComponent implements OnInit {
     {Key: "RESIDENCE", Value: "Residence"}
   ];
   async initMailingAddress(){
-    if (!this.isMainData) return;
-
-    this.isIncludeMailingAddress = true;
     this.mailingAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
@@ -756,7 +748,6 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   copyToMailing(addrType:string = ''){
-    if(!this.isIncludeMailingAddress) return;
     if(!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
     if(!addrType) return;
 
@@ -790,7 +781,6 @@ export class ApplicationDataComponent implements OnInit {
 
   getMailingAddrForSave()
   {
-    if(!this.isIncludeMailingAddress) return null;
     let mailingAddr : AppCustAddrObj = new AppCustAddrObj();
     mailingAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     mailingAddr.Addr = this.NapAppModelForm.controls["Address"]["controls"].Addr.value;

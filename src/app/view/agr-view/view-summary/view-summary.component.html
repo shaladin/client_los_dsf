@@ -96,11 +96,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of SummaryObj?.AppGuarantors;let i=index">
+        <tr *ngFor="let item of SummaryObj?.AppCustGuarantorObjs;let i=index">
           <td class="text-center">{{i+1}}</td>
-          <td class="text-left">{{item.MrGuarantorTypeCode}}</td>
-          <td class="text-left">{{item.GuarantorName}}</td>
-          <td class="text-left">{{item.MrCustRelationshipCode}}</td>
+          <td class="text-left">{{item.MrCustTypeDescr}}</td>
+          <td class="text-left">{{item.CustName}}</td>
+          <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
         </tr>
       </tbody>
     </table>
