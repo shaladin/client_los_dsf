@@ -34,6 +34,7 @@ export class NewNapCustBankAccComponent implements OnInit {
   InputLookupBankObj: InputLookupObj = new InputLookupObj();
 
   BankAccStmntForm = this.fb.group({
+    AppCustBankAccId: [0],
     BankCode: [''],
     BankBranch: ['', Validators.required],
     BankAccName: ['', Validators.required],
@@ -117,6 +118,7 @@ export class NewNapCustBankAccComponent implements OnInit {
     this.BankAccObj.RowVersion = BankAccAndStmntObj.RowVersion;
 
     this.BankAccStmntForm.patchValue({
+      AppCustBankAccId: BankAccAndStmntObj.AppCustBankAccId,
       BankBranch : BankAccAndStmntObj.BankBranch,
       BankAccName : BankAccAndStmntObj.BankAccName,
       BankAccNo : BankAccAndStmntObj.BankAccNo,
@@ -136,6 +138,7 @@ export class NewNapCustBankAccComponent implements OnInit {
 
   ClearForm(){
     this.BankAccStmntForm.patchValue({
+      AppCustBankAccId: 0,
       BankCode: "",
       BankBranch: "",
       BankAccName: "",

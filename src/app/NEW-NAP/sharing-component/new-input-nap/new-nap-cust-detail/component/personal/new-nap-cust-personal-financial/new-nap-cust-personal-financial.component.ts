@@ -20,6 +20,7 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
   @Input() AppCustPersonalId: number;
   @Input() IsMarried: boolean;
   @Input() IsFinancialSubmitted: boolean;
+  @Output() ResponseBankAcc: EventEmitter<any>;
   IsDetail: boolean = false;
   AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
@@ -34,6 +35,7 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
     public formValidate: FormValidateService
   ) { 
     this.IsFinancialSubmitted = false;
+    this.ResponseBankAcc = new EventEmitter<any>();
   }
 
   async ngOnInit() {
@@ -78,6 +80,7 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
   GetEvent(event) {
     if (event != undefined && event.Key == "IsDetail") {
       this.IsDetail = event.Value;
+      this.ResponseBankAcc.emit(event.AppCustBankAccList);
     }
   }
 

@@ -532,6 +532,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         IdExpiredDt: CustObj.IdExpiredDt != null ? formatDate(CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
         TaxIdNo: CustObj.TaxIdNo
       });
+      this.ResponseCustModel.emit(CustObj.MrCustModelCode);
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
       if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;

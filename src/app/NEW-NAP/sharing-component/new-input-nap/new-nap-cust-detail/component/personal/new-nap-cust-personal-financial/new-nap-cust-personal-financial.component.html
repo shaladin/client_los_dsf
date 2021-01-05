@@ -102,6 +102,6 @@
     </div>
   </div>
   <app-new-nap-attr-content [title]="'Financial Attribute'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
-    [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup"></app-new-nap-attr-content>
+    [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup" [IsAttrSubmitted]="IsFinancialSubmitted"></app-new-nap-attr-content>
   <app-new-nap-cust-bank-acc [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-new-nap-cust-bank-acc>
 </form>

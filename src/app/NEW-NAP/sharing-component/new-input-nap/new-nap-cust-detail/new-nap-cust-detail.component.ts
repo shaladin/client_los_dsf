@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -7,6 +7,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustEmrgncCntctObj } from 'app/shared/model/AppCustEmrgncCntctObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
@@ -19,6 +20,7 @@ import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalOb
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { NewNapCustPersonalJobComponent } from './component/personal/new-nap-cust-personal-job/new-nap-cust-personal-job.component';
 
 @Component({
   selector: 'app-new-nap-cust-detail',
@@ -26,6 +28,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
   styles: []
 })
 export class NewNapCustDetailComponent implements OnInit {
+  @ViewChild("NewNapPersonalJobContainer", { read: ViewContainerRef }) personalJobContainer: ViewContainerRef;
   @Input() AppId: number;
   @Input() AppCustIdInput: number;
   @Input() custMainDataMode: string;
@@ -47,6 +50,7 @@ export class NewNapCustDetailComponent implements OnInit {
   ResponseCustOtherInfo : any;
   CustAttrRequest: Array<Object>;
   ListAddress: Array<AppCustAddrObj>;
+  AppCustBankAccList: Array<AppCustBankAccObj>;
   MrCustTypeCode: string;
   appCustId: number;
   isExisting: boolean;
@@ -121,7 +125,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
-    IndustryTypeCode: [Validators.required],
+    IndustryTypeCode: ['', Validators.required],
     CoyName: ['', Validators.required],
     MrJobPositionCode: [''],
     MrJobStatCode: [''],
@@ -198,7 +202,8 @@ export class NewNapCustDetailComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService
+    public formValidate: FormValidateService,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) { 
     this.custDataPersonalObj = new CustMainDataPersonalObj();
     this.AppCustObj = new AppCustObj();
@@ -214,6 +219,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.ListAddress = new Array<AppCustAddrObj>();
     this.outputTab = new EventEmitter<any>();
     this.outputCancel = new EventEmitter<any>();
+    this.AppCustBankAccList = new Array<AppCustBankAccObj>();
     this.isExisting = false;
     this.isIncludeCustRelation = false;
     this.AppCustPersonalId = 0;
@@ -307,6 +313,38 @@ export class NewNapCustDetailComponent implements OnInit {
 
   MainDataCustModel(e){
     this.CustModelCode = e;
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NewNapCustPersonalJobComponent);
+    this.personalJobContainer.clear();
+    const component = this.personalJobContainer.createComponent(componentFactory);
+    component.instance.IsJobSubmitted = this.IsSubmitted;
+    component.instance.ParentForm = this.JobDataForm;
+    component.instance.appId = this.AppId;
+    component.instance.AppCustId = this.AppCustIdInput;
+    component.instance.CustModelCode = this.CustModelCode;
+    this.JobDataForm.patchValue({
+      MrProfessionCode: '',
+      IndustryTypeCode: '',
+      CoyName: '',
+      MrJobPositionCode: '',
+      MrJobStatCode: '',
+      MrCoyScaleCode: '',
+      EmploymentEstablishmentDt: '',
+      NumOfEmployee: '',
+      JobTitleName: '',
+      IsMfEmp: false,
+      MrInvestmentTypeCode: '',
+      ProfessionalNo: '',
+      PrevCoyName: '',
+      PrevEmploymentDt: '',
+      OthBizName: '',
+      OthBizType: '',
+      OthBizIndustryTypeCode: '',
+      OthBizJobPosition: '',
+      OthBizEstablishmentDt: '',
+      JobNotes: '',
+      PrevJobNotes: '',
+      OthBizNotes: '',
+    });
   }
 
   setMainDataCustomerPersonalForSave() {
@@ -545,6 +583,10 @@ export class NewNapCustDetailComponent implements OnInit {
       }  
     }
   }
+
+  GetPersonalBankAcc(e){
+    this.AppCustBankAccList = e;
+  }
   //#endregion
 
   //#region OtherInfo
@@ -609,7 +651,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       var addrMessage = "";
-      var addrValidation = {Legal: false, Residence: false};
+      var addrValidation = {Legal: false, Residence: false, Job: false};
       for (const item of this.ListAddress) {
         switch (item.MrCustAddrTypeCode) {
           case CommonConstant.AddrTypeLegal:
@@ -621,12 +663,24 @@ export class NewNapCustDetailComponent implements OnInit {
           default:
             break;
         }
+        if(item.MrCustAddrTypeCode == CommonConstant.AddrTypeJob){
+          if(this.CustModelCode != CommonConstant.CustModelNonProfessional){
+            addrValidation.Job = true;
+          }
+        }
       }
+      if(this.CustModelCode == CommonConstant.CustModelNonProfessional){
+        addrValidation.Job = true;
+      }
+
       if(!addrValidation.Legal){
         addrMessage == "" ? addrMessage += "Legal" : addrMessage += ",Legal";
       }
       if(!addrValidation.Residence){
         addrMessage == "" ? addrMessage += "Residence" : addrMessage += ",Residence";
+      }
+      if(!addrValidation.Job){
+        addrMessage == "" ? addrMessage += "Job" : addrMessage += ",Job";
       }
       
       if(addrMessage){
@@ -665,7 +719,8 @@ export class NewNapCustDetailComponent implements OnInit {
         AppCustPersonalJobDataObj: appCustPersonalJobRequest,
         AppCustEmergency: this.appCustEmrgncCntctObj,
         AppCustPersonalFinData: appCustPersonalFinDataRequest,
-        AppCustOtherInfo: appCustOtherInfoRequest
+        AppCustOtherInfo: appCustOtherInfoRequest,
+        AppCustBankAccList: this.AppCustBankAccList
       }
       this.http.post(URLConstant.AddEditNewNapCustPersonal, requestPersonal).toPromise().then(
         (response) => {
