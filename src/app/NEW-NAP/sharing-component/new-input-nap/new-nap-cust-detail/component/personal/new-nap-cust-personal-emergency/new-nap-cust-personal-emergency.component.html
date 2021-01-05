@@ -1,174 +1,166 @@
-<div class="col-md-12">
-  <div class="card">
-    <div class="card-body">
-      <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="ParentForm"
-          (ngSubmit)="ParentForm.valid" #enjiForm="ngForm">
-          <lib-ucSubsection [id]="'EmergencyContactId'" [title]="'Emergency Contact'" [panel]="'EmergencyContact'">
-          </lib-ucSubsection>
-          <div id="EmergencyContact">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Contact Person Name</label>
-                  <div class="col-md-8">
-                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
-                      *ngIf="this.InputLookupCustObj.isReady" [parentForm]="ParentForm"
-                      [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
-                    </lib-uclookupgeneric>
-                    <lib-uc-show-errors *ngIf="ParentForm.controls.lookupCustomer && ParentForm.controls.lookupCustomer.controls.value.untouched" [control]="ParentForm.controls.ContactPersonName"
-                      [submit]="IsEmergencySubmitted"></lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Id Type</label>
-                  <div class="col-md-6">
-                    <select class="form-control"
-                      formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MrIdTypeCode.invalid }">
-                      <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
-                        {{item.Descr}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="ParentForm.controls.MrIdTypeCode"
-                      [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Id No</label>
-                  <div class="col-md-8">
-                    <input type="text" class="form-control" formControlName="IdNo"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.IdNo.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.IdNo" [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4"
-                    [ngClass]="{'adins-required-label': ParentForm.controls.MrIdTypeCode.value == 'KITAS' || ParentForm.controls.MrIdTypeCode.value == 'SIM'}"
-                    translate>Id Expired Date</label>
-                  <div class="col-md-8">
-                    <input *ngIf="['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)"
-                      readonly type="date" class="form-control" formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.IdExpiredDt.invalid}">
-                    <input
-                      *ngIf="!['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)"
-                      min="{{BusinessDt | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.IdExpiredDt.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.IdExpiredDt" [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Mobile Phone 1</label>
-                  <div class="col-md-8">
-                    <input type="text" class="form-control"
-                      formControlName="MobilePhnNo1"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MobilePhnNo1.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo1"
-                      [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Email</label>
-                  <div class="col-md-8">
-                    <input type="text" class="form-control"
-                      formControlName="Email"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.Email.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.Email" [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Gender</label>
-                  <div class="col-md-6">
-                    <select class="form-control"
-                      formControlName="MrGenderCode" style="width:100%;">
-                      <option *ngFor="let item of GenderObj" [value]="item.Key">
-                        {{item.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="ParentForm.controls.MrGenderCode"
-                      [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Birth Place</label>
-                  <div class="col-md-8">
-                    <input type="text" class="form-control"
-                      formControlName="BirthPlace"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.BirthPlace.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.BirthPlace"
-                      [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Birth Date</label>
-                  <div class="col-md-8">
-                    <input type="date"
-                      max="{{BusinessDt | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.BirthDt.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.BirthDt" [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row ">
-                  <label class="col-md-4 adins-required-label" translate>Customer Relationship </label>
-                  <div class="col-md-6">
-                    <select class="form-control adInsInput full-width" style="width: 100%"
-                      formControlName="MrCustRelationshipCode"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MrCustRelationshipCode.invalid }">
-                      <option *ngFor="let item of MrCustRelationshipObj" value="{{item.Key}}">{{item.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="ParentForm.controls.MrCustRelationshipCode"
-                      [submit]="IsEmergencySubmitted"></lib-uc-show-errors>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Mobile Phone 2</label>
-                  <div class="col-md-8">
-                    <input type="text" class="form-control"
-                      formControlName="MobilePhnNo2"
-                      [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MobilePhnNo2.invalid}">
-                    <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo2"
-                      [submit]="IsEmergencySubmitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-              </div>
-            </div>
+<form class="form form-horizontal" [formGroup]="ParentForm"
+  (ngSubmit)="ParentForm.valid" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'EmergencyContactId'" [title]="'Emergency Contact'" [panel]="'EmergencyContact'">
+  </lib-ucSubsection>
+  <div id="EmergencyContact">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Contact Person Name</label>
+          <div class="col-md-8">
+            <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
+              *ngIf="this.InputLookupCustObj.isReady" [parentForm]="ParentForm"
+              [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
+            </lib-uclookupgeneric>
+            <lib-uc-show-errors *ngIf="ParentForm.controls.lookupCustomer && ParentForm.controls.lookupCustomer.controls.value.untouched" [control]="ParentForm.controls.ContactPersonName"
+              [submit]="IsEmergencySubmitted"></lib-uc-show-errors>
           </div>
-          <lib-ucSubsection [id]="'ContactAddrId'" [title]="'Contact Address'" [panel]="'ContactAddr'">
-          </lib-ucSubsection>
-          <div id="ContactAddr">
-            <div class="form-group row">
-              <label class="col-md-2" translate>Copy Address From</label>
-              <div class="col-md-4">
-                <div class="input-group">
-                  <select class="form-control" formControlName="CopyAddrFrom">
-                    <option *ngFor="let item of copyAddressFromObj" [value]="item.AppCustAddrId">
-                      {{item.MrCustAddrTypeDescr}}
-                    </option>
-                  </select>
-                  <div class="input-group-append">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
-                        <i class="fa fa-files-o"></i> Copy
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="InputUcAddressObj" [enjiForm]="enjiForm"
-              [identifier]="'Address'" [UCAddrForm]="ParentForm"></lib-ucaddress>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Id Type</label>
+          <div class="col-md-6">
+            <select class="form-control"
+              formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MrIdTypeCode.invalid }">
+              <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
+                {{item.Descr}}
+              </option>
+            </select>
+            <lib-uc-show-errors [control]="ParentForm.controls.MrIdTypeCode"
+              [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
           </div>
-        </form>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Id No</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control" formControlName="IdNo"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.IdNo.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.IdNo" [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4"
+            [ngClass]="{'adins-required-label': ParentForm.controls.MrIdTypeCode.value == 'KITAS' || ParentForm.controls.MrIdTypeCode.value == 'SIM'}"
+            translate>Id Expired Date</label>
+          <div class="col-md-8">
+            <input *ngIf="['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)"
+              readonly type="date" class="form-control" formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.IdExpiredDt.invalid}">
+            <input
+              *ngIf="!['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)"
+              min="{{BusinessDt | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.IdExpiredDt.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.IdExpiredDt" [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Mobile Phone 1</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"
+              formControlName="MobilePhnNo1"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MobilePhnNo1.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo1"
+              [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Email</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"
+              formControlName="Email"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.Email.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.Email" [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Gender</label>
+          <div class="col-md-6">
+            <select class="form-control"
+              formControlName="MrGenderCode" style="width:100%;">
+              <option *ngFor="let item of GenderObj" [value]="item.Key">
+                {{item.Value}}
+              </option>
+            </select>
+            <lib-uc-show-errors [control]="ParentForm.controls.MrGenderCode"
+              [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Birth Place</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"
+              formControlName="BirthPlace"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.BirthPlace.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.BirthPlace"
+              [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Birth Date</label>
+          <div class="col-md-8">
+            <input type="date"
+              max="{{BusinessDt | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.BirthDt.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.BirthDt" [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row ">
+          <label class="col-md-4 adins-required-label" translate>Customer Relationship </label>
+          <div class="col-md-6">
+            <select class="form-control adInsInput full-width" style="width: 100%"
+              formControlName="MrCustRelationshipCode"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MrCustRelationshipCode.invalid }">
+              <option *ngFor="let item of MrCustRelationshipObj" value="{{item.Key}}">{{item.Value}}</option>
+            </select>
+            <lib-uc-show-errors [control]="ParentForm.controls.MrCustRelationshipCode"
+              [submit]="IsEmergencySubmitted"></lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Mobile Phone 2</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control"
+              formControlName="MobilePhnNo2"
+              [ngClass]="{ 'is-invalid': IsEmergencySubmitted && ParentForm.controls.MobilePhnNo2.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo2"
+              [submit]="IsEmergencySubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <lib-ucSubsection [id]="'ContactAddrId'" [title]="'Contact Address'" [panel]="'ContactAddr'">
+  </lib-ucSubsection>
+  <div id="ContactAddr">
+    <div class="form-group row">
+      <label class="col-md-2" translate>Copy Address From</label>
+      <div class="col-md-4">
+        <div class="input-group">
+          <select class="form-control" formControlName="CopyAddrFrom">
+            <option *ngFor="let item of copyAddressFromObj" [value]="item.AppCustAddrId">
+              {{item.MrCustAddrTypeDescr}}
+            </option>
+          </select>
+          <div class="input-group-append">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
+                <i class="fa fa-files-o"></i> Copy
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="InputUcAddressObj" [enjiForm]="enjiForm"
+      [identifier]="'Address'" [UCAddrForm]="ParentForm"></lib-ucaddress>
+  </div>
+</form>
