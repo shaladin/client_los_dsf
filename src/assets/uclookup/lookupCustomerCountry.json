@@ -1,0 +1,67 @@
+{
+    "sectionTitle": "Country",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "COUNTRY_CODE",
+        "id": "countryCodeId",
+        "value": "",
+        "label": "Country Code",
+        "placeholder": "country Codes"
+      },
+      {
+        "type": "textbox",
+        "name": "COUNTRY_NAME",
+        "id": "countryNameId",
+        "value": "",
+        "label": "Country Name",
+        "placeholder": "Country Names"
+      }
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Country Code",
+        "name": "COUNTRY_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Country Name",
+        "name": "COUNTRY_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+  "querystring": {
+    "name": "lookupCustomerCountry"
+  },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CountryCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CountryName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "RefCountryId"
+          }
+        ]
+      }
+    ],
+    "propertyId": "CountryCode",
+    "propertyName": "CountryName"
+  }  

@@ -18,9 +18,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT lcpf.MONTHLY_INCOME_AMT AS MonthlyIncomeAmt, lcpf.MONTHLY_EXPENSE_AMT AS MonthlyExpenseAmt",
-        "from": "FROM dbo.LEAD_CUST_PERSONAL_FIN_DATA lcpf WITH(NOLOCK)  JOIN dbo.LEAD_CUST_PERSONAL lcp WITH(NOLOCK) on lcpf.LEAD_CUST_PERSONAL_ID = lcp.LEAD_CUST_PERSONAL_ID JOIN dbo.LEAD_CUST lc WITH(NOLOCK) on lc.LEAD_CUST_ID = lcp.LEAD_CUST_ID",
-        "where": "WHERE lc.LEAD_ID = {0}"
+        "name": "viewLeadCustPersonalFinData"
       }
     }
   ]

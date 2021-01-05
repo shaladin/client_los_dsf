@@ -35,10 +35,9 @@
             "itemsUrl": []
         }
     ],
-    "querystring": {
-        "select": "SELECT A.CUST_NO AS CustNo, A.CUST_NAME AS CustName, A.MR_CUST_TYPE_CODE AS MrCustTypeCode, B.DESCR AS CustTypeView, A.CUST_ID AS CustId",
-        "from": "FROM CUST AS A WITH(NOLOCK) INNER JOIN REF_MASTER AS B WITH(NOLOCK) ON A.MR_CUST_TYPE_CODE = B.MASTER_CODE AND B.REF_MASTER_TYPE_CODE = 'CUST_TYPE'"
-    },
+  "querystring": {
+    "name": "lookupCust_MOUListCustFctr"
+  },
     "headerList": [
         {
             "type": "sort",

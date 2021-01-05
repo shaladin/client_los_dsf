@@ -22,6 +22,7 @@ export class ExceptionConstant {
     public static CUMMULATIVE_TENOR_MUST_HIGHER_THAN = "Cummulative Tenor must be higher than "
     public static BALLOON_AMOUNT_MUST_HIGHER_THAN = "Balloon Amount must be higher than ";
     public static INST_AMOUNT_MUST_HIGHER_THAN = "Installment Amount must be higher than ";
+    public static INPUT_INST_AMOUNT = "Please Input Installment Amount on Installment No ";
     public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
     public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
@@ -38,6 +39,11 @@ export class ExceptionConstant {
     public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
     public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
     public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
+    public static REF_ATTR_CHANGE = "Ref Attribute have changed, Please refresh to get latest ref attribute";
+
+    public static EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be less than Sell Supplier Rate ({0}).";
+    public static EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be greater than Sell Supplier Rate ({0}).";
+    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate cannot be less than Supplier Rate.";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";
@@ -87,5 +93,11 @@ export class ExceptionConstant {
     public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
     public static NO_SIGNER_AVAILABLE = "No Signer Available, Please Input Signer at Document Signer";
+    public static MUST_INPUT_SPOUSE_DATA = "Please Input Spouse Data in Family!";
+    public static CANT_HAVE_THE_SAME_GUARANTOR_MEMBER = " cannot have the same name as Guarantor No ";
+    public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
+    public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
+    public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
+
 }
 

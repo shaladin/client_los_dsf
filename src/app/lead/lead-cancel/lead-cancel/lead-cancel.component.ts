@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -81,6 +82,6 @@ export class LeadCancelComponent implements OnInit {
 
     let params: string = this.tempLeadCancelObj.LeadIds.join(',')
     let taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
-    this.router.navigate(["/Lead/ConfirmCancel"], { queryParams: { "LeadIds": params, "WfTaskListIds": taskListId } });
+    AdInsHelper.RedirectUrl(this.router,["/Lead/ConfirmCancel"],{ "LeadIds": params, "WfTaskListIds": taskListId });
   }
 }

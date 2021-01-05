@@ -3,6 +3,8 @@ export class AppCustPersonalObj {
     AppCustId: number;
     CustFullName: string;
     NickName: string;
+    CustPrefixName: string;
+    CustSuffixName: string;
     BirthPlace: string;
     BirthDt: Date;
     MotherMaidenName: string;
@@ -12,6 +14,7 @@ export class AppCustPersonalObj {
     MrNationalityCode: string;
     NationalityCountryCode: string;
     MrMaritalStatCode: string;
+    MrSalutationCode: string;
     MaritalStatName: string;
     FamilyCardNo: string;
     NoOfResidence: number;
@@ -22,11 +25,15 @@ export class AppCustPersonalObj {
     Email1: string;
     Email2: string;
     Email3: string;
+    IsRestInPeace: boolean;
+    RowVersion: string[];
 
 constructor() { 
         this.AppCustPersonalId = 0;
         this.AppCustId = 0;
         this.CustFullName = "";
+        this.CustPrefixName = "";
+        this.CustSuffixName = "";
         this.NickName = "";
         this.BirthPlace = "";
         this.MotherMaidenName = "";
@@ -36,6 +43,7 @@ constructor() {
         this.MrNationalityCode = "";
         this.NationalityCountryCode = "";
         this.MrMaritalStatCode = "";
+        this.MrSalutationCode = "";
         this.FamilyCardNo = "";
         this.NoOfResidence = 0;
         this.NoOfDependents = 0;
@@ -45,5 +53,7 @@ constructor() {
         this.Email1 = "";
         this.Email2 = "";
         this.Email3 = "";
+        this.IsRestInPeace = false;
+        this.RowVersion = [];
     }
 }

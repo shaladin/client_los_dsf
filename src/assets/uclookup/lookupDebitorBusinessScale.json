@@ -1,0 +1,107 @@
+{
+    "sectionTitle": "Debitor Business Scale",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "LBPPMS_BIZ_SCL_CODE",
+            "id": "LbppmsBizSclCodeId",
+            "value": "",
+            "label": "Debitor Group Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DESCR",
+            "id": "DescrId",
+            "value": "",
+            "label": "Debitor Business Scale Description",
+            "placeholder": "Placeholder"
+        },{
+            "type": "textbox",
+            "name": "BI_CODE",
+            "id": "BiCodeId",
+            "value": "",
+            "label": "BI Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "LBPP_CODE",
+            "id": "LbppCodeId",
+            "value": "",
+            "label": "LBPP Code",
+            "placeholder": "Placeholder"
+        }
+
+
+
+    ],
+  "querystring": {
+    "name": "lookupDebitorBusinessScale"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Debitor Business Scale Code",
+            "name": "LBPPMS_BIZ_SCL_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Debitor Business Scale Description",
+            "name": "DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "BI Code",
+            "name": "BI_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LBPP Code",
+            "name": "LBPP_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LbppmsBizSclCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BiCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LbppCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "LbppmsBizSclCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "LbppmsBizSclCode",
+    "propertyName": "Descr"  
+}

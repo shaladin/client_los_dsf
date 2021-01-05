@@ -1,0 +1,114 @@
+{
+    "title": "Los Error Data Monitoring",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "LEL.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "LEL.IS_FIXED",
+            "id": "IsFixedId",
+            "label": "Is Fixed",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "isSelectOne": false,
+            "items": [
+                {
+                    "key": "1",
+                    "value": "Yes"
+                },
+                {
+                    "key": "0",
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "LEL.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Error Message",
+            "name": "LEL.[ERROR_MESSAGE]"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Is Fixed",
+            "name": "LEL.IS_FIXED"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Resend Data"
+        }
+    ],
+  "querystring": {
+    "name": "searchLosErrorData"
+  },
+    "orderby": {
+        "key": "LEL.APP_NO", 
+        "value": "false"
+    },
+
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ErrorMessage"
+        },
+        {
+            "type": "boolean",
+            "position": "left",
+            "property": "IsFixed"
+        },
+        {
+            
+            "type": "action",
+            "position": "center",
+            "action": [
+                {                    
+                    "type": "switch",
+                    "case":[                        
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "AppNo",
+                                    "value": "",
+                                    "restriction": "NEQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "key": "ReSend",
+                                "icon" : "ft-edit-2",                           
+                                "isText" : false
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

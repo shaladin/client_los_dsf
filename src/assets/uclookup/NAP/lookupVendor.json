@@ -37,11 +37,9 @@
         "placeholder": "Referantor Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT v.VENDOR_CODE AS ReferantorCode, v.VENDOR_NAME AS ReferantorName, v.MR_VENDOR_CATEGORY_CODE AS ReferantorType, rm.DESCR AS ReferantorTypeDesc, v.IS_NPWP_EXIST AS IsNPWPExist, v.TAXPAYER_NO AS TaxPayerNo, v.TAXPAYER_NAME AS TaxPayerName, v.TAX_ID_NO AS TaxIdNo, va.MR_ADDR_TYPE_CODE AS AddrTypeCode, va.ADDR AS Addr, va.CITY AS City, va.ZIPCODE AS ZipCode, va.AREA_CODE_1 AS Kecamatan, va.AREA_CODE_2 AS Kelurahan, va.AREA_CODE_3 AS RW, va.AREA_CODE_4 AS RT, v.MR_TAX_CALC_METHOD_CODE AS MrTaxCalcMethod, v.VENDOR_ID AS VendorId, ro.OFFICE_CODE AS OfficeCode",
-      "from": "FROM dbo.VENDOR v WITH(NOLOCK) LEFT JOIN dbo.VENDOR_ADDR va WITH(NOLOCK) ON v.VENDOR_ID = va.VENDOR_ID and va.MR_ADDR_TYPE_CODE = 'LEGAL' LEFT JOIN dbo.REF_MASTER rm WITH(NOLOCK) ON rm.MASTER_CODE = v.MR_VENDOR_CATEGORY_CODE JOIN dbo.VENDOR_OFFICE_MBR vom WITH(NOLOCK) ON v.VENDOR_ID = vom.VENDOR_ID JOIN dbo.REF_OFFICE ro WITH(NOLOCK) ON vom.REF_OFFICE_ID = ro.REF_OFFICE_ID",
-      "where":"WHERE v.IS_ACTIVE = 1"
-    },
+  "querystring": {
+    "name": "lookupVendor"
+  },
     "headerList": [
         {
           "type": "sort",
@@ -97,4 +95,3 @@
     "propertyId": "ReferantorName",
     "propertyName": "ReferantorName"
   }
-  

@@ -1,0 +1,92 @@
+{
+  "isSeq": true,
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Family Name",
+      "name": "CustName"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Family Type",
+      "name": "MrCustTypeCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Relationship",
+      "name": "MrCustRelationshipCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Model",
+      "name": "MrCustModelDescr"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustTypeCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustRelationshipCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustModelDescr"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "edit",
+          "property": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            },
+            {
+              "type": "MrCustTypeCode",
+              "property": "MrCustTypeCode"
+            },
+            {
+              "type": "mode",
+              "property": "edit"
+            }
+          ]
+        },
+        {
+          "type": "callback",
+          "key": "delete",
+          "property": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            }
+          ],
+          "icon" : "ft-trash-2",
+          "anchor" : "warning"
+        }
+      ]
+    }
+  ]
+}

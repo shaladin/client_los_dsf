@@ -33,9 +33,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.VERIFY_BY_NAME AS VerifyByName, A.VERIFY_DT AS VerifyDt, A.NOTES AS Notes",
-          "from": "FROM APP_FRAUD_VERF A WITH(NOLOCK)",
-          "where": "WHERE A.APP_ID = {0}"
+          "name": "viewFraudVerifResult"
         }
       }
     ]

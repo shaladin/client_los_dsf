@@ -1,0 +1,77 @@
+{
+  "title": "Application Duplicate Checking Subject",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "position": "left",
+          "path": "/View/AppView",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "AppId",
+              "property": "AppId" 
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "name": "MouCustNo",
+          "isHide": true,
+          "path": "/View/Mou/CustView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "link",
+          "label": "Lead No.",
+          "property": "LeadNo",
+          "name": "LeadNo",
+          "isHide": true,
+          "position": "left",
+          "path": "/View/Lead",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "LeadId",
+              "property": "LeadId" 
+            }
+          ]
+        }
+      ],
+      "querystring": {
+        "name": "viewDupCheckSubject"
+      }
+    }
+  ]
+}

@@ -22,6 +22,9 @@ import { SubsidyAddEditCFNAComponent } from "./nap-components/financial-data/com
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { UcviewgenericComponent } from "@adins/ucviewgeneric";
+import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
+import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
+import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -47,7 +50,8 @@ export const customCurrencyMaskConfig = {
     MatRadioModule,
     MatSelectModule,
     MatTabsModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    MainDataComponentModule
   ],
   declarations: [
     NapAddDetailComponent,
@@ -63,7 +67,9 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownLeasingCFNAComponent,
     SchmStepUpStepDownNormalCFNAComponent,
     SubsidyCFNAComponent,
-    SubsidyAddEditCFNAComponent
+    SubsidyAddEditCFNAComponent,
+    NapCustMainDataComponent,
+    NapDetailFormComponent
   ],
   providers: [
     NGXToastrService

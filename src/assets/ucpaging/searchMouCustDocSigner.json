@@ -104,11 +104,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT MOU.MOU_CUST_NO AS MouCustNo, WTL.WF_TASK_LIST_ID AS WfTaskListId, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat, WTL.OFFICE_CODE AS OfficeCode, MOU.MOU_CUST_ID AS MouCustId, MOU.CUST_NAME AS CustName, MOU.MOU_CUST_DT AS MouCustDt, MOU.END_DT AS EndDt, MOU.PLAFOND_AMT AS PlafondAmt, MOU.IS_REVOLVING AS IsRevolving, MOU.REF_NO AS RefNo, MOU.MR_MOU_TYPE_CODE AS MouTypeCode,RM.DESCR AS MouType, MOU.CUST_NO AS CustNo, WTL.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.MOU_CUST MOU WITH(NOLOCK) JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON MOU.MOU_CUST_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'MOU_DOC_SIGNER' LEFT JOIN dbo.V_REF_MASTER RM ON RM.REF_MASTER_TYPE_CODE='MOU_TYPE' AND RM.MASTER_CODE = MOU.MR_MOU_TYPE_CODE",
-        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchMouCustDocSigner"
+  },
     "headerList": [
         {
             "type": "sort",

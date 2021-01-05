@@ -13,6 +13,7 @@ import { FormBuilder } from '@angular/forms';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -114,7 +115,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/NewPurchaseOrder/Paging"],{ "BizTemplateCode":  CommonConstant.CFNA});
   }
 
   async Save(){
@@ -164,7 +165,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
           (response) => {
             this.toastr.successMessage("Success");
-            this.router.navigate(["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { queryParams: { "BizTemplateCode": CommonConstant.CFNA } });
+            AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/NewPurchaseOrder/Paging"],{ "BizTemplateCode": CommonConstant.CFNA});
           }
         ).catch(
           (error) => {

@@ -196,7 +196,7 @@ export class NapFromMouDetailComponent implements OnInit {
         //   this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         // }
         // if (this.bizTemplateCode == CommonConstant.FCTR) {
-          this.router.navigate(["Nap/Factoring/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
         //}
       });
 

@@ -73,9 +73,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.ADDR AS Addr, A.AREA_CODE_4 + '/' + A.AREA_CODE_3 AS AreaCode4AndAreaCode3, A.AREA_CODE_2 AS AreaCode2, A.AREA_CODE_1 AS AreaCode1, A.CITY AS City, A.ZIPCODE AS Zipcode",
-          "from": "FROM APP_GUARANTOR_PERSONAL A WITH(NOLOCK) JOIN APP_GUARANTOR ON APP_GUARANTOR.APP_GUARANTOR_ID=A.APP_GUARANTOR_ID",
-          "where": "WHERE APP_GUARANTOR.APP_ID = {0}"
+          "name": "viewGuarantorPersonalAddr"
         }
       }
     ]

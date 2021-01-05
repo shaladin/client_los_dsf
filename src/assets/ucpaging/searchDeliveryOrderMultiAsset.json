@@ -87,11 +87,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT WF.USERNAME AS UserName, AP.ORI_OFFICE_NAME AS OfficeName, AG.AGRMNT_NO AS AgrmntNo, AP.APP_NO AS AppNo, AG.CUST_NAME AS CustName, AG.PROD_OFFERING_NAME AS ProdOfferingName, AG.APP_ID AS AppId, AG.AGRMNT_CURR_STEP AS AgrmntCurrStep, AG.AGRMNT_ID AS AgrmntId, WF.WF_TASK_LIST_ID AS WfTaskListId, PO.PURCHASE_ORDER_NO AS PONumber, AP.PROD_OFFERING_CODE AS ProdOfferingCode, AP.PROD_OFFERING_VERSION AS ProdOfferingVersion, WF.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.APP AS AP WITH(NOLOCK) INNER JOIN dbo.AGRMNT AS AG WITH(NOLOCK) ON AP.APP_ID = AG.APP_ID INNER JOIN dbo.V_WF_TASK_LIST AS WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = AG.AGRMNT_NO INNER JOIN dbo.PURCHASE_ORDER_H AS PO WITH(NOLOCK) ON AG.AGRMNT_ID = PO.AGRMNT_ID",
-        "where": "WHERE WF.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchDeliveryOrderMultiAsset"
+  },
     "headerList": [
         {
             "type": "sort",

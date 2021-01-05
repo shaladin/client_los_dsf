@@ -10,8 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: "view-reserved-fund",
-  templateUrl: "./view-reserved-fund.component.html",
-  providers: [NGXToastrService]
+  templateUrl: "./view-reserved-fund.component.html"
 })
 export class ViewReservedFundComponent implements OnInit {
 
@@ -28,7 +27,7 @@ export class ViewReservedFundComponent implements OnInit {
   RsvFundObj: any;
   totalRsvFund: number = 0;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
 
     //this.route.queryParams.subscribe(params => {
     //  if (params['AppId'] != null) {
@@ -55,7 +54,7 @@ export class ViewReservedFundComponent implements OnInit {
         this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {
           for (let i = 0; i < this.RsvFundObj.length; i++) {
-            this.totalRsvFund = this.RsvFundObj[i].ReservedFundAmt;
+            this.totalRsvFund+= this.RsvFundObj[i].ReservedFundAmt;
           }
         }
       }

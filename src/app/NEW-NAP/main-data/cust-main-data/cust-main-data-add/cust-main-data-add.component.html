@@ -1,0 +1,66 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <h4 class="card-title ucSearch-title" translate>NAP 1 Add</h4>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <!-- Main Info -->
+            <lib-ucSubsection [id]="'addAppId'" [title]="'Add Application'" [panel]="'addApp'">
+            </lib-ucSubsection>
+            <div class="form-body" id="addApp">
+              <div class="form-group row adins-required">
+                <label class="col-md-4 adInsLabel">Office </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
+                    (change)="ChangeValueOffice($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of officeItems" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="!isDisableCopyAppFrom">
+                <label class="col-md-4 adInsLabel">Copy Application From </label>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'" #LookupCopyProduct
+                    (lookup)="getLookupAppResponseCopy($event)">
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-4 adins-required">
+                  <label class="adInsLabel">Product Offering Name </label>
+                </div>
+                <div class="col-md-4" *ngIf="!isCopyData">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'" #LookupOffering
+                    (lookup)="getLookupAppResponseName($event)">
+                  </lib-uclookupgeneric>
+                </div>
+                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}} </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 adInsLabel">Currency </label>
+                <label class="col-md-4 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelClick()" translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-arrow-circle-right"></i> Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

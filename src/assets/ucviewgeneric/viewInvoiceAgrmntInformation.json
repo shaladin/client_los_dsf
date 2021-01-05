@@ -71,11 +71,9 @@
                     "property": ""
                 }
             ],
-            "querystring": {
-                "select": "SELECT app.APP_NO AS AppNo, agr.OFFICE_NAME AS OfficeName, agr.AGRMNT_NO AS AgrmntNo, app.PROD_OFFERING_NAME AS ProdOfferingName, appCust.CUST_NAME AS CustName, appFctr.RETENTION_PRCNT AS RetentionPrcnt, app.CURR_CODE AS CurrCode, appCust.APP_CUST_ID AS AppCustId, agr.AGRMNT_ID AS AgrmntId, app.APP_ID AS AppId, App.PROD_OFFERING_CODE AS ProdOfferingCode",
-                "from": "FROM dbo.APP_INVOICE_FCTR invoiceFctr WITH(NOLOCK) JOIN dbo.APP_FCTR appFctr WITH(NOLOCK) ON invoiceFctr.APP_FCTR_ID = appFctr.APP_FCTR_ID JOIN dbo.APP app WITH(NOLOCK) ON appFctr.APP_ID = app.APP_ID JOIN dbo.AGRMNT agr WITH(NOLOCK) ON app.APP_ID = agr.APP_ID JOIN dbo.APP_CUST appCust WITH(NOLOCK) ON agr.APP_ID = appCust.APP_ID",
-                "where": "WHERE invoiceFctr.APP_INVOICE_FCTR_ID = {0}"
-            }
+          "querystring": {
+            "name": "viewInvoiceAgrmntInformation"
+          }
         }
     ]
 }

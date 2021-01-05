@@ -1,0 +1,103 @@
+{
+    "isSeq": true,
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Shareholder Name",
+        "name": "CustName"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Shareholder Type",
+        "name": "MrCustTypeCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Relationship",
+        "name": "MrCustRelationshipCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Owner",
+        "name": "IsOwner"
+      },
+      {
+        "type": "sort",
+        "position": "right",
+        "label": "Share(%)",
+        "name": "SharePrcnt"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "MrCustTypeCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "MrCustRelationshipCode"
+      },
+      {
+        "type": "boolean",
+        "position": "center",
+        "property": "IsOwner"
+      },
+      {
+        "type": "decimal",
+        "position": "right",
+        "property": "SharePrcnt"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "edit",
+            "property": [
+              {
+                "type": "AppCustId",
+                "property": "AppCustId"
+              },
+              {
+                "type": "MrCustTypeCode",
+                "property": "MrCustTypeCode"
+              },
+              {
+                "type": "mode",
+                "property": "edit"
+              }
+            ]
+          },
+          {
+            "type": "callback",
+            "key": "delete",
+            "property": [
+              {
+                "type": "AppCustId",
+                "property": "AppCustId"
+              }
+            ],
+            "icon" : "ft-trash-2",
+            "anchor" : "warning"
+          }
+        ]
+      }
+    ]
+  }

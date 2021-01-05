@@ -12,6 +12,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -100,7 +101,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("APP DATA FCTRING")
     this.isInputLookupObj = false;
     this.loadData();
@@ -276,7 +277,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
       });
 
-    this.CheckInstType();
+    await this.CheckInstType();
 
   }
   SetPayFreq(MouCustId: number) {
@@ -316,18 +317,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           (response) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
-            if (this.mode == 'edit') {
-              PayFreqCode = this.resultData.PayFreqCode
-              this.SalesAppInfoForm.patchValue({
-                PayFreqCode: PayFreqCode
-              });
-            }
-            if (PayFreqCode == null) {
-              PayFreqCode = "MONTHLY"
-              this.SalesAppInfoForm.patchValue({
-                PayFreqCode: PayFreqCode
-              });
-            }
+
             if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0 && this.isInit == true) {
               this.mode = "add";
             } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 && this.isInit == true) {
@@ -359,6 +349,20 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
+    this.CheckInstType();
+
+            }
+            if (this.mode == 'edit') {
+              PayFreqCode = this.resultData.PayFreqCode
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: PayFreqCode
+              });
+            }
+            if (PayFreqCode == null) {
+              PayFreqCode = "MONTHLY"
+              this.SalesAppInfoForm.patchValue({
+                PayFreqCode: PayFreqCode
+              });
             }
             this.isInit = false; 
             this.makeNewLookupCriteria();
@@ -374,7 +378,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
       }
     }
     this.SalesAppInfoForm.controls.MrInstTypeCode.disable();
-    this.CheckInstType();
 
 
   }
@@ -400,7 +403,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
   }
 
-  CheckInstType() {
+  async CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.SalesAppInfoForm.controls.TopDays.disable();
       this.SalesAppInfoForm.controls.TopBased.disable();
@@ -410,7 +413,9 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.RecourseType.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
       this.SalesAppInfoForm.controls.Tenor.enable();
+      if(this.mode != "edit"){
       this.SalesAppInfoForm.controls.Tenor.setValue("");
+      }
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) {
       this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls.TopBased.setValidators([Validators.required]);
@@ -467,7 +472,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array();
 
     var addCrit1 = new CriteriaObj();
@@ -484,13 +489,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     addCrit2.value = "1";
     this.arrAddCrit.push(addCrit2);
 
-    var addCrit3 = new CriteriaObj();
-    addCrit3.DataType = "text";
-    addCrit3.propName = "rbt.JOB_TITLE_CODE";
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
-
     var addCrit4 = new CriteriaObj();
     addCrit4.DataType = "text";
     addCrit4.propName = "ro.OFFICE_CODE";
@@ -499,7 +497,22 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.arrAddCrit.push(addCrit4);
 
     //this.inputLookupObj.addCritInput = this.arrAddCrit;
+
+    await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
+  }
+
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+      (response) => {
+        console.log(response);
+        var addCrit3 = new CriteriaObj();
+        addCrit3.DataType = "text";
+        addCrit3.propName = "rbt.JOB_TITLE_CODE";
+        addCrit3.restriction = AdInsConstant.RestrictionIn;
+        addCrit3.listValue = [response.GsValue];
+        this.arrAddCrit.push(addCrit3);
+      });
   }
 
   async loadData() {
@@ -522,7 +535,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
 
 
-    this.http.post(URLConstant.GetApplicationDataByAppId, obj).subscribe(
+    await this.http.post(URLConstant.GetApplicationDataByAppId, obj).toPromise().then(
       (response) => {
         this.resultData = response;
         this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;

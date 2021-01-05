@@ -157,7 +157,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     if(this.custDataCompanyObj.AppCustObj != undefined){
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
-        CustModelCode: this.custDataCompanyObj.AppCustObj.CustModelCode,
+        CustModelCode: this.custDataCompanyObj.AppCustObj.MrCustModelCode,
         TaxIdNo: this.custDataCompanyObj.AppCustObj.TaxIdNo,
         IsVip: this.custDataCompanyObj.AppCustObj.IsVip
       });

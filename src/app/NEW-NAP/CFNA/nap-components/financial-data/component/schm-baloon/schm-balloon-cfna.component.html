@@ -157,7 +157,7 @@
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV'"
+                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)"
                     [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                     currencyMask>
@@ -242,21 +242,25 @@
             <div class="col-md-3 form-inline">
               <label>Grace Period</label>
             </div>
-            <div class="col-md-1 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="GracePeriod"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
-                (keyup)="SetNeedReCalculate(true)">
-              <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-            <div class="col-md-2 form-inline">
-              <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
-                (change)="SetNeedReCalculate(true)">
-                <option value="">--Select--</option>
-                <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
-              </select>
-              <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
+            <div class="col-md-3 form-inline">
+              <div class="row">
+                <div class="col-md-5">
+                  <input type="number" class="form-control full-width" formControlName="GracePeriod"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
+                    (keyup)="SetNeedReCalculate(true)">
+                  <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-7">
+                  <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
+                    (change)="SetNeedReCalculate(true)">
+                    <option value="">--Select--</option>
+                    <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
+                  </select>
+                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Commission Amount from Diff Rate</label>
@@ -283,7 +287,8 @@
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="BalloonValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.BalloonValueAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
+                (keyup)="SetNeedReCalculate(true)" 
+                [readonly]="ParentForm.controls.BalloonBhv.value == 'LOCK'" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.BalloonValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

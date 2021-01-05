@@ -8,6 +8,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-return-handling-survey',
@@ -60,8 +61,17 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   }
 
   event(ev){
-    this.TrxNo = ev.RowObj.AppNo;
-    window.location.href = environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token;
+    switch(ev.Key){
+      case "ViewProdOffering":{
+        AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
+        break;
+      }
+      case "Edit":{
+        this.TrxNo = ev.RowObj.AppNo;
+        window.open(environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token);
+        break;
+      }
+    }
   }
 
 }

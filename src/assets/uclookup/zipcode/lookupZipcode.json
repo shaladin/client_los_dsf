@@ -34,10 +34,9 @@
         "placeholder": "Kota"
       }
     ],
-    "querystring": {
-      "select": "SELECT RZ.AREA_CODE_1 AS AreaCode1, RZ.AREA_CODE_2 AS AreaCode2, RZ.ZIPCODE AS Zipcode, RZ.CITY AS City, RPD.PROV_DISTRICT_NAME AS Province, RZ.REF_ZIPCODE_ID AS RefZipcodeId, RZ.IS_ACTIVE AS IsActive, RPD.PHN_AREA AS PhnArea, RZ.SUB_ZIPCODE AS SubZipcode",
-      "from": "FROM REF_ZIPCODE RZ WITH(NOLOCK) LEFT JOIN dbo.REF_PROV_DISTRICT RPD WITH(NOLOCK) ON RZ.REF_PROV_DISTRICT_ID = RPD.REF_PROV_DISTRICT_ID"
-    },
+  "querystring": {
+    "name": "lookupZipcode"
+  },
     "headerList": [
         {
             "type": "sort",

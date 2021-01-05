@@ -16,6 +16,7 @@ import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-data',
@@ -171,7 +172,7 @@ export class LeadDataComponent implements OnInit {
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.gsCode = "LOB_KTA";
+    this.generalSettingObj.GsCode = "LOB_KTA";
     this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
@@ -518,13 +519,13 @@ export class LeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if(this.originPage == "teleVerif"){
-              this.router.navigate(["/pages/Submit?reason=submit"]);
+              AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
             }
             else if(this.typePage == "edit"){
-              this.router.navigate(["/pages/Submit?reason=submit"]);
+              AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
             }
             else{
-              this.router.navigate(["/pages/Submit?reason=submit"]);
+              AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
             }
           }
         );
@@ -537,7 +538,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/pages/Submit?reason=submit"]);
+          AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
         });
     } 
   }
@@ -556,24 +557,27 @@ export class LeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             // if(this.originPage == "teleVerif"){
-            //   this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            // AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
+
             // }
             // else if(this.typePage == "update"){
-            //   this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            // AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             // }
             // else{
-            //   this.router.navigate(["/Lead/Lead/Paging"]);
+            // AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             // }
             if(this.originPage == "teleVerif"){
-              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
+
               this.outputPage.emit({ pageType: "submit"});
             }
             else if(this.typePage == "edit"){
-              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
+
               this.outputPage.emit({ pageType: "submit"});
             }
             else{
-              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
               this.outputPage.emit({ pageType: "submit"});
             }     
           }
@@ -588,24 +592,26 @@ export class LeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             // if(this.originPage == "teleVerif"){
-            //   this.router.navigate(["/Lead/TeleVerif/Paging"]);
+            // AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
+
             // }
             // else if(this.typePage == "update"){
-            //   this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+            // AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             // }
             // else{
-            //   this.router.navigate(["/Lead/Lead/Paging"]);
+            // AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             // }
             if(this.originPage == "teleVerif"){
-              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
               this.outputPage.emit({ pageType: "submit"});
             }
             else if(this.typePage == "edit"){
-              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
+
               this.outputPage.emit({ pageType: "submit"});
             }
             else{
-              // this.router.navigate(["/pages/Submit?reason=submit"]);
+              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
               this.outputPage.emit({ pageType: "submit"});
             }     
           }
@@ -622,7 +628,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["/Lead/Lead/Paging"]);
+          AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
         });
     }
     this.editLeadObj = new LeadObj();

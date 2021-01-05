@@ -71,12 +71,12 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Nap/AddProcess/OutstandingTC/Paging"], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/OutstandingTC/Paging"], {  BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
 
   Back() {
-    this.router.navigate(['/Nap/AddProcess/OutstandingTC/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/OutstandingTC/Paging"], {  BizTemplateCode: this.BizTemplateCode });
   }
 }

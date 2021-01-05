@@ -43,9 +43,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT POH.PURCHASE_ORDER_NO AS PurchaseOrderNo, POH.MOU_NO AS MouNo, POH.PURCHASE_ORDER_DT AS PurchaseOrderDt, POH.NUM_OF_EXTENSION AS NumOfExtension, POH.PURCHASE_ORDER_EXPIRED_DT AS PurchaseOrderExpDt, POH.NOTES AS Notes, POH.TOTAL_PURCHASE_ORDER_AMT AS TotalPurchaseOrderAmt",
-          "from": "FROM DBO.AGRMNT AG WITH(NOLOCK) JOIN DBO.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID",
-          "where": "WHERE POH.PURCHASE_ORDER_H_ID = {0} AND AG.AGRMNT_ID = {1}"
+          "name": "viewPOInfo"
         }
       }
     ]

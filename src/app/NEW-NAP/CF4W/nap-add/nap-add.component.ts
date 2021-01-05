@@ -12,6 +12,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-nap-add',
@@ -229,7 +230,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
+        AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/Add/Detail"], { "AppId": response["AppId"] });
       });
   }
 

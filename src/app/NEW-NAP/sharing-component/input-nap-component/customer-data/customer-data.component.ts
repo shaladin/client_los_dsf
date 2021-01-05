@@ -32,6 +32,9 @@ import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDa
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -147,7 +150,6 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.title = "Legal Address";
     this.inputAddressObjForLegal.showAllPhn = false;
@@ -187,16 +189,16 @@ export class CustomerDataComponent implements OnInit {
 
   SaveForm() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.custDataPersonalObj = new CustDataPersonalObj();
-      this.setCustPersonalObjForSave();
-      for (let i = 0; i < this.custDataPersonalObj.AppCustGrpObjs.length; i++) {
-        for (let j = i+1; j < this.custDataPersonalObj.AppCustGrpObjs.length; j++) {
-          if (this.custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
+      var custDataPersonalObj = new CustDataPersonalObj();
+      custDataPersonalObj = this.setCustPersonalObjForSave();
+      for (let i = 0; i < custDataPersonalObj.AppCustGrpObjs.length; i++) {
+        for (let j = i+1; j < custDataPersonalObj.AppCustGrpObjs.length; j++) {
+          if (custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
             this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
             return;
           }
 
-          if (this.custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
+          if (custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
             this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
             return;
           }
@@ -204,7 +206,7 @@ export class CustomerDataComponent implements OnInit {
       }
 
       if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-        if(this.custDataPersonalObj.AppCustBankAccObjs.length <= 0){
+        if(custDataPersonalObj.AppCustBankAccObjs.length <= 0){
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
           return false;
         }
@@ -213,7 +215,7 @@ export class CustomerDataComponent implements OnInit {
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
 
       if (this.isSpouseOk) {
-        this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
+        this.http.post(this.addEditCustDataPersonalUrl, custDataPersonalObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.toastr.successMessage(response["message"]);
@@ -246,16 +248,16 @@ export class CustomerDataComponent implements OnInit {
         return;
       }
 
-      this.custDataCompanyObj = new CustDataCompanyObj();
-      this.setCustCompanyObjForSave();
-      for (let i = 0; i < this.custDataCompanyObj.AppCustGrpObjs.length; i++) {
-        for (let j = i+1; j < this.custDataCompanyObj.AppCustGrpObjs.length; j++) {
-          if (this.custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
+      var custDataCompanyObj = new CustDataCompanyObj();
+      custDataCompanyObj = this.setCustCompanyObjForSave();
+      for (let i = 0; i < custDataCompanyObj.AppCustGrpObjs.length; i++) {
+        for (let j = i+1; j < custDataCompanyObj.AppCustGrpObjs.length; j++) {
+          if (custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
             this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
             return;
           }
 
-          if (this.custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
+          if (custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
             this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
             return;
           }
@@ -263,13 +265,13 @@ export class CustomerDataComponent implements OnInit {
       }
 
       if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-        if(this.custDataCompanyObj.AppCustBankAccObjs.length <= 0){
+        if(custDataCompanyObj.AppCustBankAccObjs.length <= 0){
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
           return false;
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      this.http.post(URLConstant.AddEditCustDataCompany, this.custDataCompanyObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataCompany, custDataCompanyObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.EmitToMainComp();
@@ -282,12 +284,13 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setCustPersonalObjForSave() {
-    this.setAppCust();
-    this.setAppCustPersonal();
-    this.setAppCustAddrLegal();
-    this.setAppCustAddrResidence();
-    this.setAppCustAddrMailing();
-    this.setAppCustPersonalFinData();
+    var custDataPersonalObj = new CustDataPersonalObj();
+    custDataPersonalObj.AppCustObj = this.setAppCust();
+    custDataPersonalObj.AppCustPersonalObj = this.setAppCustPersonal();
+    custDataPersonalObj.AppCustAddrLegalObj = this.setAppCustAddrLegal();
+    custDataPersonalObj.AppCustAddrResidenceObj = this.setAppCustAddrResidence();
+    custDataPersonalObj.AppCustAddrMailingObj = this.setAppCustAddrMailing();
+    custDataPersonalObj.AppCustPersonalFinDataObj = this.setAppCustPersonalFinData();
     var CheckSpouseContactInfo = this.listAppCustPersonalContactInformation.find(
       x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
     if (CheckSpouseContactInfo == null && this.isMarried == true) {
@@ -296,24 +299,30 @@ export class CustomerDataComponent implements OnInit {
     else {
       this.isSpouseOk = true;
     }
-    this.custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
-    this.custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
-    this.setAppCustPersonalJobData();
-    this.setAppCustSocmedObj();
-    this.setAppCustGrpObj();
+    custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
+    custDataPersonalObj.AppCustBankAccObjs = this.listAppCustBankAcc;
+    custDataPersonalObj.AppCustObj.MrCustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
+    custDataPersonalObj.AppCustPersonalJobDataObj = this.setAppCustPersonalJobData(custDataPersonalObj.AppCustObj.MrCustModelCode);
+    custDataPersonalObj.AppCustSocmedObjs = this.setAppCustSocmedObj();
+    custDataPersonalObj.AppCustGrpObjs = this.setAppCustGrpObj();
+
+    return custDataPersonalObj;
   }
 
   setCustCompanyObjForSave() {
-    this.setAppCust();
-    this.setAppCustCompany();
-    this.setAppCustAddrLegal();
-    this.setAppCustAddrMailing();
-    this.custDataCompanyObj.AppCustCompanyMgmntShrholderObjs = this.listShareholder;
-    this.custDataCompanyObj.AppCustCompanyContactPersonObjs = this.listContactPersonCompany;
-    this.setAppCustCompanyFinData();
-    this.custDataCompanyObj.AppCustBankAccObjs = this.listAppCustBankAccCompany;
-    this.custDataCompanyObj.AppCustCompanyLegalDocObjs = this.listLegalDoc;
-    this.setAppCustGrpObj();
+    var custDataCompanyObj = new CustDataCompanyObj();
+    custDataCompanyObj.AppCustObj = this.setAppCust();
+    custDataCompanyObj.AppCustCompanyObj = this.setAppCustCompany();
+    custDataCompanyObj.AppCustAddrLegalObj = this.setAppCustAddrLegal();
+    custDataCompanyObj.AppCustAddrMailingObj = this.setAppCustAddrMailing();
+    custDataCompanyObj.AppCustCompanyMgmntShrholderObjs = this.listShareholder;
+    custDataCompanyObj.AppCustCompanyContactPersonObjs = this.listContactPersonCompany;
+    custDataCompanyObj.AppCustCompanyFinDataObj = this.setAppCustCompanyFinData();
+    custDataCompanyObj.AppCustBankAccObjs = this.listAppCustBankAccCompany;
+    custDataCompanyObj.AppCustCompanyLegalDocObjs = this.listLegalDoc;
+    custDataCompanyObj.AppCustGrpObjs = this.setAppCustGrpObj();
+
+    return custDataCompanyObj;
   }
 
   isExpiredBirthDt: boolean = false;
@@ -358,323 +367,410 @@ export class CustomerDataComponent implements OnInit {
   }
 
   setAppCust() {
+    var appCustObj = new AppCustObj();
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
-      this.custDataPersonalObj.AppCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
-      this.custDataPersonalObj.AppCustObj.CustNo = this.mainDataComponent.selectedCustNo;
-      this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
-      this.custDataPersonalObj.AppCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
-      this.custDataPersonalObj.AppCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
-      if (this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "KITAS" || this.custDataPersonalObj.AppCustObj.MrIdTypeCode == "SIM") {
-        this.CekDt(this.custDataPersonalObj.AppCustObj.IdExpiredDt, ExceptionConstant.DateErrorMessageIdExpiredDate);
+      appCustObj.MrCustTypeCode = this.MrCustTypeCode;
+      appCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
+      appCustObj.CustNo = this.mainDataComponent.selectedCustNo;
+      appCustObj.MrIdTypeCode = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
+      appCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
+      appCustObj.IdExpiredDt = this.CustDataForm.controls["personalMainData"]["controls"].IdExpiredDt.value;
+      if (appCustObj.MrIdTypeCode == "KITAS" || appCustObj.MrIdTypeCode == "SIM") {
+        this.CekDt(appCustObj.IdExpiredDt, ExceptionConstant.DateErrorMessageIdExpiredDate);
       }
-      this.custDataPersonalObj.AppCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
-      this.custDataPersonalObj.AppCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
-      this.custDataPersonalObj.AppCustObj.AppId = this.appId;
+      appCustObj.TaxIdNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
+      appCustObj.IsVip = this.CustDataForm.controls["personalMainData"]["controls"].IsVip.value;
+      appCustObj.AppId = this.appId;
 
-      if (this.custDataPersonalObj.AppCustObj.CustNo != "" && this.custDataPersonalObj.AppCustObj.CustNo != undefined) {
-        this.custDataPersonalObj.AppCustObj.IsExistingCust = true;
+      if (appCustObj.CustNo != "" && appCustObj.CustNo != undefined) {
+        appCustObj.IsExistingCust = true;
       } else {
-        this.custDataPersonalObj.AppCustObj.IsExistingCust = false;
+        appCustObj.IsExistingCust = false;
+      }
+
+      if(this.isExisting){
+        appCustObj.RowVersion = this.custDataPersonalObj.AppCustObj.RowVersion;
       }
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
-      this.custDataCompanyObj.AppCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
-      this.custDataCompanyObj.AppCustObj.CustNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustNo.value;
-      this.custDataCompanyObj.AppCustObj.MrIdTypeCode = "NPWP";
-      this.custDataCompanyObj.AppCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      this.custDataCompanyObj.AppCustObj.CustModelCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustModelCode.value;
-      this.custDataCompanyObj.AppCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      this.custDataCompanyObj.AppCustObj.IsVip = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsVip.value;
-      this.custDataCompanyObj.AppCustObj.AppId = this.appId;
+      appCustObj.MrCustTypeCode = this.MrCustTypeCode;
+      appCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
+      appCustObj.CustNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustNo.value;
+      appCustObj.MrIdTypeCode = "NPWP";
+      appCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
+      appCustObj.MrCustModelCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CustModelCode.value;
+      appCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
+      appCustObj.IsVip = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsVip.value;
+      appCustObj.AppId = this.appId;
 
-      if (this.custDataCompanyObj.AppCustObj.CustNo != "" && this.custDataCompanyObj.AppCustObj.CustNo != undefined) {
-        this.custDataCompanyObj.AppCustObj.IsExistingCust = true;
+      if (appCustObj.CustNo != "" && appCustObj.CustNo != undefined) {
+        appCustObj.IsExistingCust = true;
       } else {
-        this.custDataCompanyObj.AppCustObj.IsExistingCust = false;
+        appCustObj.IsExistingCust = false;
+      }
+
+      if(this.isExisting){
+        appCustObj.RowVersion = this.custDataCompanyObj.AppCustObj.RowVersion;
       }
     }
+
+    appCustObj.IsCustomer = true;
+    
+    return appCustObj;
   }
 
   setAppCustCompany() {
-    this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CompanyBrandName.value;
-    this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IndustryTypeCode.value;
-    this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].MrCompanyTypeCode.value;
-    this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp = this.CustDataCompanyForm.controls["companyMainData"]["controls"].NumOfEmp.value;
-    this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsAffiliated.value;
-    this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
-    this.CekDt(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
+    var appCustCompanyObj = new AppCustCompanyObj();
+    appCustCompanyObj.CompanyBrandName = this.CustDataCompanyForm.controls["companyMainData"]["controls"].CompanyBrandName.value;
+    appCustCompanyObj.IndustryTypeCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IndustryTypeCode.value;
+    appCustCompanyObj.MrCompanyTypeCode = this.CustDataCompanyForm.controls["companyMainData"]["controls"].MrCompanyTypeCode.value;
+    appCustCompanyObj.NumOfEmp = this.CustDataCompanyForm.controls["companyMainData"]["controls"].NumOfEmp.value;
+    appCustCompanyObj.IsAffiliated = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsAffiliated.value;
+    appCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
+    this.CekDt(appCustCompanyObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
+
+    if(this.isExisting){
+      appCustCompanyObj.RowVersion = this.custDataCompanyObj.AppCustCompanyObj.RowVersion;
+    }
+
+    return appCustCompanyObj;
   }
 
   setAppCustPersonal() {
-    this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustDataForm.controls["personalMainData"]["controls"].CustFullName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustDataForm.controls["personalMainData"]["controls"].MrGenderCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustDataForm.controls["personalMainData"]["controls"].MotherMaidenName.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["personalMainData"]["controls"].MrMaritalStatCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustDataForm.controls["personalMainData"]["controls"].BirthPlace.value;
-    this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustDataForm.controls["personalMainData"]["controls"].BirthDt.value;
-    this.CekDt(this.custDataPersonalObj.AppCustPersonalObj.BirthDt, ExceptionConstant.DateErrorMessageBirthDate);
-    this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["personalMainData"]["controls"].MrNationalityCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NationalityCountryCode = this.mainDataComponent.selectedNationalityCountryCode;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo1.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo2 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo2.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo3 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo3.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrEducationCode = this.CustDataForm.controls["personalMainData"]["controls"].MrEducationCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.MrReligionCode = this.CustDataForm.controls["personalMainData"]["controls"].MrReligionCode.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustDataForm.controls["personalMainData"]["controls"].Email1.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email2 = this.CustDataForm.controls["personalMainData"]["controls"].Email2.value;
-    this.custDataPersonalObj.AppCustPersonalObj.Email3 = this.CustDataForm.controls["personalMainData"]["controls"].Email3.value;
-    this.custDataPersonalObj.AppCustPersonalObj.FamilyCardNo = this.CustDataForm.controls["personalMainData"]["controls"].FamilyCardNo.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NoOfResidence = this.CustDataForm.controls["personalMainData"]["controls"].NoOfResidence.value;
-    this.custDataPersonalObj.AppCustPersonalObj.NoOfDependents = this.CustDataForm.controls["personalMainData"]["controls"].NoOfDependents.value;
+    var appCustPersonalObj = new AppCustPersonalObj();
+
+    appCustPersonalObj.CustFullName = this.CustDataForm.controls["personalMainData"]["controls"].CustFullName.value;
+    appCustPersonalObj.MrGenderCode = this.CustDataForm.controls["personalMainData"]["controls"].MrGenderCode.value;
+    appCustPersonalObj.MotherMaidenName = this.CustDataForm.controls["personalMainData"]["controls"].MotherMaidenName.value;
+    appCustPersonalObj.MrMaritalStatCode = this.CustDataForm.controls["personalMainData"]["controls"].MrMaritalStatCode.value;
+    appCustPersonalObj.BirthPlace = this.CustDataForm.controls["personalMainData"]["controls"].BirthPlace.value;
+    appCustPersonalObj.BirthDt = this.CustDataForm.controls["personalMainData"]["controls"].BirthDt.value;
+    this.CekDt(appCustPersonalObj.BirthDt, ExceptionConstant.DateErrorMessageBirthDate);
+    appCustPersonalObj.MrNationalityCode = this.CustDataForm.controls["personalMainData"]["controls"].MrNationalityCode.value;
+    appCustPersonalObj.NationalityCountryCode = this.mainDataComponent.selectedNationalityCountryCode;
+    appCustPersonalObj.MobilePhnNo1 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo1.value;
+    appCustPersonalObj.MobilePhnNo2 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo2.value;
+    appCustPersonalObj.MobilePhnNo3 = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo3.value;
+    appCustPersonalObj.MrEducationCode = this.CustDataForm.controls["personalMainData"]["controls"].MrEducationCode.value;
+    appCustPersonalObj.MrReligionCode = this.CustDataForm.controls["personalMainData"]["controls"].MrReligionCode.value;
+    appCustPersonalObj.Email1 = this.CustDataForm.controls["personalMainData"]["controls"].Email1.value;
+    appCustPersonalObj.Email2 = this.CustDataForm.controls["personalMainData"]["controls"].Email2.value;
+    appCustPersonalObj.Email3 = this.CustDataForm.controls["personalMainData"]["controls"].Email3.value;
+    appCustPersonalObj.FamilyCardNo = this.CustDataForm.controls["personalMainData"]["controls"].FamilyCardNo.value;
+    appCustPersonalObj.NoOfResidence = this.CustDataForm.controls["personalMainData"]["controls"].NoOfResidence.value;
+    appCustPersonalObj.NoOfDependents = this.CustDataForm.controls["personalMainData"]["controls"].NoOfDependents.value;
+
+    if(this.isExisting){
+      appCustPersonalObj.RowVersion = this.custDataPersonalObj.AppCustPersonalObj.RowVersion;
+    }
+    return appCustPersonalObj;
   }
 
   setAppCustAddrLegal() {
+    var appCustAddrLegalObj = new AppCustAddrObj();
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-      this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.City = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea1.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.Phn1 = this.CustDataForm.controls["legalAddr"]["controls"].Phn1.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt1.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.PhnArea2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea2.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.Phn2 = this.CustDataForm.controls["legalAddr"]["controls"].Phn2.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.FaxArea = this.CustDataForm.controls["legalAddr"]["controls"].FaxArea.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
-      this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
+      appCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
+      appCustAddrLegalObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
+      appCustAddrLegalObj.AreaCode3 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
+      appCustAddrLegalObj.AreaCode4 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
+      appCustAddrLegalObj.Zipcode = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
+      appCustAddrLegalObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
+      appCustAddrLegalObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
+      appCustAddrLegalObj.City = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
+      appCustAddrLegalObj.PhnArea1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea1.value;
+      appCustAddrLegalObj.Phn1 = this.CustDataForm.controls["legalAddr"]["controls"].Phn1.value;
+      appCustAddrLegalObj.PhnExt1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt1.value;
+      appCustAddrLegalObj.PhnArea2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea2.value;
+      appCustAddrLegalObj.Phn2 = this.CustDataForm.controls["legalAddr"]["controls"].Phn2.value;
+      appCustAddrLegalObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
+      appCustAddrLegalObj.FaxArea = this.CustDataForm.controls["legalAddr"]["controls"].FaxArea.value;
+      appCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
+      appCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
+
+      if(this.isExisting){
+        appCustAddrLegalObj.RowVersion = this.custDataPersonalObj.AppCustAddrLegalObj.RowVersion;
+      }
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-      this.custDataCompanyObj.AppCustAddrLegalObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.Zipcode = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.City = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].City.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.PhnArea1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea1.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.Phn1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn1.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.PhnArea2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea2.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.Phn2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn2.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
-      this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
+      appCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
+      appCustAddrLegalObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
+      appCustAddrLegalObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
+      appCustAddrLegalObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
+      appCustAddrLegalObj.Zipcode = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
+      appCustAddrLegalObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
+      appCustAddrLegalObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
+      appCustAddrLegalObj.City = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].City.value;
+      appCustAddrLegalObj.PhnArea1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea1.value;
+      appCustAddrLegalObj.Phn1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn1.value;
+      appCustAddrLegalObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
+      appCustAddrLegalObj.PhnArea2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea2.value;
+      appCustAddrLegalObj.Phn2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn2.value;
+      appCustAddrLegalObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
+      appCustAddrLegalObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
+      appCustAddrLegalObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
+      appCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
+
+      if(this.isExisting){
+        appCustAddrLegalObj.RowVersion = this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion;
+      }
     }
+
+    return appCustAddrLegalObj;
   }
 
   setAppCustAddrResidence() {
-    this.custDataPersonalObj.AppCustAddrResidenceObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode3 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode3.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode4 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode4.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.Zipcode = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.City = this.CustDataForm.controls["residenceAddr"]["controls"].City.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea1.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.Phn1 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn1.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt1.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnArea2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea2.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.Phn2 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn2.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.PhnExt2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt2.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.FaxArea = this.CustDataForm.controls["residenceAddr"]["controls"].FaxArea.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.Fax = this.CustDataForm.controls["residenceAddr"]["controls"].Fax.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
-    this.custDataPersonalObj.AppCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
+    var appCustAddrResidenceObj = new AppCustAddrObj();
+    appCustAddrResidenceObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
+    appCustAddrResidenceObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
+    appCustAddrResidenceObj.AreaCode3 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode3.value;
+    appCustAddrResidenceObj.AreaCode4 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode4.value;
+    appCustAddrResidenceObj.Zipcode = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
+    appCustAddrResidenceObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
+    appCustAddrResidenceObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
+    appCustAddrResidenceObj.City = this.CustDataForm.controls["residenceAddr"]["controls"].City.value;
+    appCustAddrResidenceObj.PhnArea1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea1.value;
+    appCustAddrResidenceObj.Phn1 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn1.value;
+    appCustAddrResidenceObj.PhnExt1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt1.value;
+    appCustAddrResidenceObj.PhnArea2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea2.value;
+    appCustAddrResidenceObj.Phn2 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn2.value;
+    appCustAddrResidenceObj.PhnExt2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt2.value;
+    appCustAddrResidenceObj.FaxArea = this.CustDataForm.controls["residenceAddr"]["controls"].FaxArea.value;
+    appCustAddrResidenceObj.Fax = this.CustDataForm.controls["residenceAddr"]["controls"].Fax.value;
+    appCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
+    appCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
+    appCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
+
+    if(this.isExisting){
+      appCustAddrResidenceObj.RowVersion = this.custDataPersonalObj.AppCustAddrResidenceObj.RowVersion;
+    }
+
+    return appCustAddrResidenceObj;
   }
 
   setAppCustAddrMailing() {
+    var appCustAddrMailingObj = new AppCustAddrObj();
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
-      this.custDataPersonalObj.AppCustAddrMailingObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode3.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode4.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.Zipcode = this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode1 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode1.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.AreaCode2 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode2.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.City = this.CustDataForm.controls["mailingAddr"]["controls"].City.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.PhnArea1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea1.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.Phn1 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn1.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.PhnExt1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt1.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.PhnArea2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea2.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.Phn2 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn2.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.PhnExt2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt2.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.FaxArea = this.CustDataForm.controls["mailingAddr"]["controls"].FaxArea.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
-      this.custDataPersonalObj.AppCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
+      appCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
+      appCustAddrMailingObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
+      appCustAddrMailingObj.AreaCode3 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode3.value;
+      appCustAddrMailingObj.AreaCode4 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode4.value;
+      appCustAddrMailingObj.Zipcode = this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value;
+      appCustAddrMailingObj.AreaCode1 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode1.value;
+      appCustAddrMailingObj.AreaCode2 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode2.value;
+      appCustAddrMailingObj.City = this.CustDataForm.controls["mailingAddr"]["controls"].City.value;
+      appCustAddrMailingObj.PhnArea1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea1.value;
+      appCustAddrMailingObj.Phn1 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn1.value;
+      appCustAddrMailingObj.PhnExt1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt1.value;
+      appCustAddrMailingObj.PhnArea2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea2.value;
+      appCustAddrMailingObj.Phn2 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn2.value;
+      appCustAddrMailingObj.PhnExt2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt2.value;
+      appCustAddrMailingObj.FaxArea = this.CustDataForm.controls["mailingAddr"]["controls"].FaxArea.value;
+      appCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
+      appCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
+
+      if(this.isExisting){
+        appCustAddrMailingObj.RowVersion = this.custDataPersonalObj.AppCustAddrMailingObj.RowVersion;
+      }
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
-      this.custDataCompanyObj.AppCustAddrMailingObj.Addr = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Addr.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode3 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode3.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode4 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode4.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.Zipcode = this.CustDataCompanyForm.controls["mailingAddrCompanyZipcode"]["controls"].value.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode1.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.AreaCode2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode2.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.City = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].City.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.PhnArea1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea1.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.Phn1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn1.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.PhnExt1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt1.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.PhnArea2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea2.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.Phn2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn2.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.PhnExt2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt2.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.FaxArea = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].FaxArea.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
-      this.custDataCompanyObj.AppCustAddrMailingObj.SubZipcode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].SubZipcode.value;
+      appCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
+      appCustAddrMailingObj.Addr = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Addr.value;
+      appCustAddrMailingObj.AreaCode3 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode3.value;
+      appCustAddrMailingObj.AreaCode4 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode4.value;
+      appCustAddrMailingObj.Zipcode = this.CustDataCompanyForm.controls["mailingAddrCompanyZipcode"]["controls"].value.value;
+      appCustAddrMailingObj.AreaCode1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode1.value;
+      appCustAddrMailingObj.AreaCode2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode2.value;
+      appCustAddrMailingObj.City = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].City.value;
+      appCustAddrMailingObj.PhnArea1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea1.value;
+      appCustAddrMailingObj.Phn1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn1.value;
+      appCustAddrMailingObj.PhnExt1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt1.value;
+      appCustAddrMailingObj.PhnArea2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea2.value;
+      appCustAddrMailingObj.Phn2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn2.value;
+      appCustAddrMailingObj.PhnExt2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt2.value;
+      appCustAddrMailingObj.FaxArea = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].FaxArea.value;
+      appCustAddrMailingObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
+      appCustAddrMailingObj.SubZipcode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].SubZipcode.value;
+
+      if(this.isExisting){
+        appCustAddrMailingObj.RowVersion = this.custDataCompanyObj.AppCustAddrMailingObj.RowVersion;
+      }
     }
+
+    return appCustAddrMailingObj;
   }
 
   setAppCustAddrJob() {
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj = new AppCustAddrObj();
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Addr = this.CustDataForm.controls["jobDataAddr"]["controls"].Addr.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode3 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode3.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode4 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode4.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode1 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode1.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.AreaCode2 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode2.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.City = this.CustDataForm.controls["jobDataAddr"]["controls"].City.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.PhnArea1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea1.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Phn1 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn1.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.PhnExt1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt1.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.PhnArea2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea2.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Phn2 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn2.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.PhnExt2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt2.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.FaxArea = this.CustDataForm.controls["jobDataAddr"]["controls"].FaxArea.value;
-    this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.Fax = this.CustDataForm.controls["jobDataAddr"]["controls"].Fax.value;
+    var appCustAddrJobObj = new AppCustAddrObj();
+    appCustAddrJobObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
+    appCustAddrJobObj.Addr = this.CustDataForm.controls["jobDataAddr"]["controls"].Addr.value;
+    appCustAddrJobObj.AreaCode3 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode3.value;
+    appCustAddrJobObj.AreaCode4 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode4.value;
+    appCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
+    appCustAddrJobObj.AreaCode1 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode1.value;
+    appCustAddrJobObj.AreaCode2 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode2.value;
+    appCustAddrJobObj.City = this.CustDataForm.controls["jobDataAddr"]["controls"].City.value;
+    appCustAddrJobObj.PhnArea1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea1.value;
+    appCustAddrJobObj.Phn1 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn1.value;
+    appCustAddrJobObj.PhnExt1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt1.value;
+    appCustAddrJobObj.PhnArea2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea2.value;
+    appCustAddrJobObj.Phn2 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn2.value;
+    appCustAddrJobObj.PhnExt2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt2.value;
+    appCustAddrJobObj.FaxArea = this.CustDataForm.controls["jobDataAddr"]["controls"].FaxArea.value;
+    appCustAddrJobObj.Fax = this.CustDataForm.controls["jobDataAddr"]["controls"].Fax.value;
+
+    if(this.isExisting){
+      appCustAddrJobObj.RowVersion = this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.RowVersion;
+    }
+
+    return appCustAddrJobObj;
   }
 
   setAppCustPersonalFinData() {
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyIncomeAmt.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyExpenseAmt.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = this.CustDataForm.controls["financialData"]["controls"].MrSourceOfIncomeTypeCode.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyInstallmentAmt.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
-    this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
+    var appCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+    appCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyIncomeAmt.value;
+    appCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyExpenseAmt.value;
+    appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = this.CustDataForm.controls["financialData"]["controls"].MrSourceOfIncomeTypeCode.value;
+    appCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyInstallmentAmt.value;
+    appCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
+    appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
+
+    if(this.isExisting){
+      appCustPersonalFinDataObj.RowVersion = this.custDataPersonalObj.AppCustPersonalFinDataObj.RowVersion;
+    }
+
+    return appCustPersonalFinDataObj;
   }
 
   setAppCustCompanyFinData() {
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyIncomeAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyIncomeAmt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyExpenseAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyExpenseAmt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossProfitAmt = this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyIncomeAmt - this.custDataCompanyObj.AppCustCompanyFinDataObj.GrossMonthlyExpenseAmt;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfInvestmentPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfInvestmentPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitMarginPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitMarginPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfAssetPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfAssetPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ReturnOfEquityPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfEquityPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.DebtEquityRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DebtEquityRatioPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrentRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrentRatioPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.InvTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].InvTurnOverPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.GrowthPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrowthPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ArTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ArTurnOverPrcnt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.WorkingCapitalAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].WorkingCapitalAmt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.OthMonthlyInstAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].OthMonthlyInstAmt.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.DateAsOf = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DateAsOf.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.Revenue = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].Revenue.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.OprCost = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].OprCost.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ProfitBeforeTax = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitBeforeTax.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrAsset.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.NetFixedAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].NetFixedAsset.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.TotalAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].TotalAsset.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrLiablts.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.LongTemrLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].LongTemrLiablts.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.ShareholderEquity = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ShareholderEquity.value;
-    this.custDataCompanyObj.AppCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
+    var appCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
+
+    appCustCompanyFinDataObj.GrossMonthlyIncomeAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyIncomeAmt.value;
+    appCustCompanyFinDataObj.GrossMonthlyExpenseAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrossMonthlyExpenseAmt.value;
+    appCustCompanyFinDataObj.GrossProfitAmt = appCustCompanyFinDataObj.GrossMonthlyIncomeAmt - appCustCompanyFinDataObj.GrossMonthlyExpenseAmt;
+    appCustCompanyFinDataObj.ReturnOfInvestmentPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfInvestmentPrcnt.value;
+    appCustCompanyFinDataObj.ProfitMarginPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitMarginPrcnt.value;
+    appCustCompanyFinDataObj.ReturnOfAssetPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfAssetPrcnt.value;
+    appCustCompanyFinDataObj.ReturnOfEquityPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ReturnOfEquityPrcnt.value;
+    appCustCompanyFinDataObj.DebtEquityRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DebtEquityRatioPrcnt.value;
+    appCustCompanyFinDataObj.CurrentRatioPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrentRatioPrcnt.value;
+    appCustCompanyFinDataObj.InvTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].InvTurnOverPrcnt.value;
+    appCustCompanyFinDataObj.GrowthPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].GrowthPrcnt.value;
+    appCustCompanyFinDataObj.ArTurnOverPrcnt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ArTurnOverPrcnt.value;
+    appCustCompanyFinDataObj.WorkingCapitalAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].WorkingCapitalAmt.value;
+    appCustCompanyFinDataObj.OthMonthlyInstAmt = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].OthMonthlyInstAmt.value;
+    appCustCompanyFinDataObj.DateAsOf = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].DateAsOf.value;
+    appCustCompanyFinDataObj.Revenue = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].Revenue.value;
+    appCustCompanyFinDataObj.OprCost = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].OprCost.value;
+    appCustCompanyFinDataObj.ProfitBeforeTax = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ProfitBeforeTax.value;
+    appCustCompanyFinDataObj.CurrAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrAsset.value;
+    appCustCompanyFinDataObj.NetFixedAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].NetFixedAsset.value;
+    appCustCompanyFinDataObj.TotalAsset = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].TotalAsset.value;
+    appCustCompanyFinDataObj.CurrLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrLiablts.value;
+    appCustCompanyFinDataObj.LongTermLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].LongTemrLiablts.value;
+    appCustCompanyFinDataObj.ShareholderEquity = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ShareholderEquity.value;
+    appCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
+
+    if(this.isExisting){
+      appCustCompanyFinDataObj.RowVersion = this.custDataCompanyObj.AppCustCompanyFinDataObj.RowVersion;
+    }
+
+    return appCustCompanyFinDataObj;
   }
 
-  setAppCustPersonalJobData() {
-    this.custDataPersonalObj.AppCustObj.CustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
-
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelProfessional) {
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-      this.setAppCustAddrJob();
+  setAppCustPersonalJobData(custModelCode) {
+    var appCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
+    if (custModelCode == CommonConstant.CustModelProfessional) {
+     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+     appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
+     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+     appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelEmployee) {
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-      this.setAppCustAddrJob();
+    if (custModelCode == CommonConstant.CustModelEmployee) {
+     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+     appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+     appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
+     appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+     appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+     appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+     appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+     appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
-      this.setAppCustAddrJob();
+    if (custModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
+     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+     appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+     appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+     appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+     appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+     appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+     appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+     appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
+     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
-    if (this.custDataPersonalObj.AppCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+    if (custModelCode == CommonConstant.CustModelNonProfessional) {
+     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
-    this.CekDt(this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
+
+    this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
+
+    if(this.isExisting){
+      appCustPersonalJobDataObj.RowVersion = this.custDataPersonalObj.AppCustPersonalJobDataObj.RowVersion;
+    }
+
+    return appCustPersonalJobDataObj;
   }
 
   setAppCustSocmedObj() {
-    this.custDataPersonalObj.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
+    var appCustSocmedObjs = new Array<AppCustSocmedObj>();
     for (let i = 0; i < this.CustDataForm.controls["socmed"].value.length; i++) {
       var appCustSocmedObj = new AppCustSocmedObj();
       appCustSocmedObj.MrSocmedCode = this.CustDataForm.controls["socmed"].value[i].MrSocmedCode;
       appCustSocmedObj.MrSocmedName = this.CustDataForm.controls["socmed"].value[i].MrSocmedName;
       appCustSocmedObj.SocmedId = this.CustDataForm.controls["socmed"].value[i].SocmedId;
-      this.custDataPersonalObj.AppCustSocmedObjs.push(appCustSocmedObj);
+      appCustSocmedObjs.push(appCustSocmedObj);
     }
+
+    return appCustSocmedObjs;
   }
 
   setAppCustGrpObj() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.custDataPersonalObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
+      var appCustGrpObjs = new Array<AppCustGrpObj>();
       for (let i = 0; i < this.CustDataForm.controls["custGrpMember"].value.length; i++) {
         var appCustGrpObj = new AppCustGrpObj();
         appCustGrpObj.CustNo = this.CustDataForm.controls["custGrpMember"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataForm.controls["custGrpMember"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataForm.controls["custGrpMember"].value[i].CustGrpNotes;
         appCustGrpObj.IsReversible = this.CustDataForm.controls["custGrpMember"].value[i].IsReversible;
-        this.custDataPersonalObj.AppCustGrpObjs.push(appCustGrpObj);
+        appCustGrpObjs.push(appCustGrpObj);
       }
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-      this.custDataCompanyObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
+      var appCustGrpObjs = new Array<AppCustGrpObj>();
       for (let i = 0; i < this.CustDataCompanyForm.controls["custGrpMemberCompany"].value.length; i++) {
         var appCustGrpObj = new AppCustGrpObj();
         appCustGrpObj.CustNo = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustNo;
         appCustGrpObj.MrCustRelationshipCode = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].MrCustRelationshipCode;
         appCustGrpObj.CustGrpNotes = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].CustGrpNotes;
         appCustGrpObj.IsReversible = this.CustDataCompanyForm.controls["custGrpMemberCompany"].value[i].IsReversible;
-        this.custDataCompanyObj.AppCustGrpObjs.push(appCustGrpObj);
+        appCustGrpObjs.push(appCustGrpObj);
       }
     }
+
+    return appCustGrpObjs;
   }
 
   getCustContactInformation(event) {
@@ -892,7 +988,7 @@ export class CustomerDataComponent implements OnInit {
             this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
 
             if (this.custDataPersonalObj.AppCustObj.AppCustId != 0) {
-              this.defCustModelCode = this.custDataPersonalObj.AppCustObj.CustModelCode;
+              this.defCustModelCode = this.custDataPersonalObj.AppCustObj.MrCustModelCode;
             }
 
           

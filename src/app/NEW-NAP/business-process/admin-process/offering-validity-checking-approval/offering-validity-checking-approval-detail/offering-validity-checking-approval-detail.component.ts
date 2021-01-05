@@ -57,7 +57,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
       (response)=>{
       },
       (error)=>{
-        this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/OfferingValidityApproval/Paging"],{ "BizTemplateCode": this.BizTemplateCode});
       }
     )
   }
@@ -67,12 +67,12 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/OfferingValidityApproval/Paging"],{ "BizTemplateCode": this.BizTemplateCode});
   }
 
   onCancelClick()
   {
-    this.router.navigate(["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/OfferingValidityApproval/Paging"],{ "BizTemplateCode": this.BizTemplateCode});
   }
 
   GetCallBack(ev: any) {

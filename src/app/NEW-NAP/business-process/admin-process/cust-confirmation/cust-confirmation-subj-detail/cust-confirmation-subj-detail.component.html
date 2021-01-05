@@ -20,7 +20,7 @@
               <a *ngIf="agrmntObj.AgrmntNo != null" href="javascript:void(0);" (click)="OpenView('agrmnt')" class="col-md-7">{{agrmntObj.AgrmntNo}}</a>
               <label *ngIf="agrmntObj.AgrmntNo == null" class="col-md-7">-</label>
             </div>
-            <div class="form-group row">
+            <div *ngIf="leadObj.LeadNo != null" class="form-group row">
               <label class="col-md-5">Lead No</label>
               <a *ngIf="leadObj.LeadNo != null" href="javascript:void(0);" (click)="OpenView('lead')"
                 class="col-md-7">{{leadObj.LeadNo}}</a>
@@ -28,8 +28,8 @@
             </div>
             <div class="form-group row">
               <label class="col-md-5">Customer No</label>
-              <label *ngIf="agrmntObj.CustNo != null" class="col-md-7">{{agrmntObj.CustNo}}</label>
-              <label *ngIf="agrmntObj.CustNo == null" class="col-md-7">-</label>
+              <a  href="javascript:void(0);" (click)="OpenView('cust')" *ngIf="agrmntObj.CustNo != null && agrmntObj.CustNo != ''" class="col-md-7">{{agrmntObj.CustNo}}</a>
+              <label *ngIf="agrmntObj.CustNo == null || agrmntObj.CustNo == ''" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
               <label class="col-md-5">Customer Name</label>

@@ -89,7 +89,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         var requestDupCheck = {
           "CustName": this.AppCustObj.CustName,
           "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.AppCustObj.CustModelCode,
+          "MrCustModelCode": this.AppCustObj.MrCustModelCode,
           "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
           "IdNo": this.AppCustObj.IdNo,
           "TaxIdNo": this.AppCustObj.TaxIdNo,
@@ -180,7 +180,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.http.post(URLConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"],{});        
       });
   }
 
@@ -199,7 +199,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   Back() {
     // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"],{ "BizTemplateCode": BizTemplateCode });
+    
   }
 
   OpenView(key: string, value: number) {

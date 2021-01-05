@@ -7,6 +7,7 @@ import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-fee-cfna',
@@ -26,6 +27,7 @@ export class FeeCFNAComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
+    private toastr: NGXToastrService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -44,6 +46,30 @@ export class FeeCFNAComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response[CommonConstant.ReturnObj];
+
+        if(this.listAppFeeObj && this.listAppFeeObj.length > 0){
+          if(this.listAppFeeObj[0].FeeNotFoundList){
+            if(this.listAppFeeObj[0].FeeNotFoundList.length > 0){
+              var feeNotFound = "";
+              for (let i = 0; i < this.listAppFeeObj[0].FeeNotFoundList.length; i++) {
+                if(i == 0 && this.listAppFeeObj[0].FeeNotFoundList.length > 1){
+                  feeNotFound += this.listAppFeeObj[0].FeeNotFoundList[i] + ",";
+                }
+                else if(i == 0 && this.listAppFeeObj[0].FeeNotFoundList.length == 1){
+                  feeNotFound += this.listAppFeeObj[0].FeeNotFoundList[i];
+                }
+                else if(i == this.listAppFeeObj[0].FeeNotFoundList.length - 1){
+                  feeNotFound += this.listAppFeeObj[0].FeeNotFoundList[i];
+                }
+                else{
+                  feeNotFound += this.listAppFeeObj[0].FeeNotFoundList[i] + ",";
+                }
+              }
+              this.toastr.warningMessage(feeNotFound + "Fees Not Found, Please Synchronize Fee Type Between Rule & Fee's Master Table");
+            }
+          }
+        }
+
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
 
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
@@ -220,11 +246,16 @@ export class FeeCFNAComponent implements OnInit {
       // CptlzAmt : obj.CptlzAmt,
       FeeCapitalizeType : obj.FeeCapitalizeType,
       FeeCapitalizeAmt : obj.FeeCapitalizeAmt,
-      FeeCapitalizePrcntg : obj.FeeCapitalizePrcntg,
+      FeeCapitalizePrcnt : obj.FeeCapitalizePrcnt,
       CalculateBaseAmt : 0,
       CalculateBase : '',
       FeeType : feeType,
       FeeSource : feeSource,
+      SellFeeBhv: obj.SellFeeBhv,
+      MinSellFeeAmt: obj.MinSellFeeAmt,
+      MaxSellFeeAmt: obj.MaxSellFeeAmt,
+      MinSellFeePrcnt: obj.MinSellFeePrcnt,
+      MaxSellFeePrcnt: obj.MaxSellFeePrcnt
     })
   }
 
@@ -264,9 +295,6 @@ export class FeeCFNAComponent implements OnInit {
           this.CalculateTotalFeeAndCaptlzAmt();
       }
     );
-  }
-
-  xxx(){
   }
 
 }

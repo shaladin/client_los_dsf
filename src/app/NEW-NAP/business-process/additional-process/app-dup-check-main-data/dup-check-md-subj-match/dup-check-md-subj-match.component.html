@@ -1,0 +1,117 @@
+<div class="card">
+  <lib-ucviewgeneric *ngIf="mrCustTypeCode" [viewGenericObj]="viewMainInfoObj" (callback)="viewMainInfoCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+  <div class="ucSearch-Button-Right pr-3" style="right:0px">
+    <button *ngIf="!isLock" type="button" class="btn btn-raised btn-primary mr-1" (click)="buttonNewCustOnClick()" translate>New Customer</button>
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelOnClick()">
+      <i class="fa fa-ban"></i> Cancel
+    </button>
+  </div>
+  <div class="card-body px-3 pb-3" *ngIf="IsReady">
+    <lib-ucSubsection [id]="'subSecMatchId'" [title]="'Match / Similiar Data'" [panel]="'subSecMatch'"></lib-ucSubsection>
+    <div id="subSecMatch">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span name='custNo' translate>Customer No</span></th>
+            <th><span name='custName' translate>Name</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='idType' translate>ID Type</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='idNo' translate>ID No</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='birthDt' translate>Birth Date</span></th>
+            <th><span name='npwp' translate>NPWP</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='motherMaidenName' translate>Mother Maiden Name</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='mobilePhoneNo' translate>Mobile Phone No</span></th>            
+            <th><span name='duplicateItem' translate>Duplicate Item</span></th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="listMasterCustDuplicate?.length == 0"><td align="center" colspan="100%">No data found</td></tr>
+          <tr *ngFor="let item of listMasterCustDuplicate">
+            <td>{{item.CustNo}}</td>
+            <td>{{item.CustName}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MrIdType}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.IdNo}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+            <td>{{item.TaxIdNo}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>
+            <td>{{item.DuplicateItem}}</td>
+            <td><a *ngIf="isMasterLock || !isAppLock" class="danger p-0" (click)="selectMasterCust(item)">Select</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <lib-ucSubsection [id]="'subSecAppProcessId'" [title]="'Application in Process'" [panel]="'subSecAppProcess'"></lib-ucSubsection>
+    <div id="subSecAppProcess">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span name='applicantNo' translate>Applicant No</span></th>
+            <th><span name='custName' translate>Customer Name</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='idType' translate>ID Type</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='idNo' translate>ID No</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='birthDt' translate>Birth Date</span></th>
+            <th><span name='npwp' translate>NPWP</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='motherMaidenName' translate>Mother Maiden Name</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='mobilePhoneNo' translate>Mobile Phone No</span></th>
+            <th><span name='duplicateItem' translate>Duplicate Item</span></th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="listAppCustDuplicate?.length == 0"><td align="center" colspan="100%">No data found</td></tr>
+          <tr *ngFor="let item of listAppCustDuplicate">
+            <td>{{item.ApplicantNo}}</td>
+            <td>{{item.CustName}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MrIdType}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.IdNo}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+            <td>{{item.TaxIdNo}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>            
+            <td>{{item.DuplicateItem}}</td>
+            <td><a *ngIf="isAppLock || !isMasterLock" class="danger p-0" (click)="selectAppCust(item)">Select</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <lib-ucSubsection [id]="'subSecNegListId'" [title]="'Negative List'" [panel]="'subSecNegList'"></lib-ucSubsection>
+    <div id="subSecNegList">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span name='custtNo' translate>Negative Cust No</span></th>
+            <th><span name='custName' translate>Name</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='idType' translate>ID Type</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='idNo' translate>ID No</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='birthDt' translate>Birth Date</span></th>
+            <th><span name='npwp' translate>NPWP</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='motherMaidenName' translate>Mother Maiden Name</span></th>
+            <th *ngIf="mrCustTypeCode == 'PERSONAL'"><span name='mobilePhoneNo' translate>Mobile Phone No</span></th>            
+            <th><span name='negativeStat' translate>Negative Status</span></th>
+            <th><span name='duplicateItem' translate>Duplicate Item</span></th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="listNegativeCustDuplicate?.length == 0"><td align="center" colspan="100%">No data found</td></tr>
+          <tr *ngFor="let item of listNegativeCustDuplicate">
+            <td>{{item.NegativeCustNo}}</td>
+            <td>{{item.CustName}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MrIdTypeCode}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.IdNo}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.BirthDt | date: 'dd-MM-yyyy'}}</td>
+            <td>{{item.TaxIdNo}}</td>
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MotherMaidenName}}</td>  
+            <td *ngIf="mrCustTypeCode == 'PERSONAL'">{{item.MobilePhnNo1}}</td>                      
+            <td>{{item.MrNegCustType}}</td>
+            <td>{{item.DuplicateItem}}</td>
+            <td align="center"><mat-checkbox color="primary" [checked]="isNegativeLock" [disabled]="isNegativeLock" (change)="checkNegCustOnChange($event, item)"></mat-checkbox></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -43,11 +43,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT WF.USERNAME AS Username, AGR.AGRMNT_NO AS AgrmntNo, A.APP_NO AS AppNo, AGR.CUST_NAME AS CustName, A.PROD_OFFERING_NAME AS ProdOfferingName, CASE WHEN WF.USERNAME = NULL OR WF.USERNAME = '' THEN 'UNCLAIMED' ELSE 'CLAIMED' END AS ClaimStatus, A.APP_ID AS AppId, AGR.AGRMNT_ID AS AgrmntId, WF.WF_TASK_LIST_ID AS TaskListId, WF.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.APP AS A WITH(NOLOCK) INNER JOIN dbo.AGRMNT AS AGR WITH(NOLOCK) ON AGR.APP_ID = A.APP_ID INNER JOIN dbo.V_WF_TASK_LIST AS WF WITH(NOLOCK) ON WF.TRANSACTION_CODE = A.APP_NO",
-        "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchPurchaseOrderFL4W"
+  },
     "headerList": [
         {
             "type": "sort",

@@ -7,11 +7,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: "view-phone-verif",
-  templateUrl: "./view-phone-verif.component.html",
-  providers: [NGXToastrService]
+  templateUrl: "./view-phone-verif.component.html"
 })
 export class ViewPhoneVerifComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class ViewPhoneVerifComponent implements OnInit {
   AppObj: any;
   phoneVerifObj: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
 
     //this.route.queryParams.subscribe(params => {
     //  if (params['AppId'] != null) {
@@ -55,6 +55,6 @@ export class ViewPhoneVerifComponent implements OnInit {
   }
 
   View(VerifResultHid, SubjectName) {
-    window.open("/Nap/PhoneVerif/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
+    AdInsHelper.OpenPhoneVerifViewByAppId(this.appId, VerifResultHid, SubjectName);
   }
 }

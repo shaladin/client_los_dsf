@@ -18,11 +18,9 @@
         "placeholder": "Product Offering Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT po.PROD_OFFERING_CODE AS ProdOfferingCode, po.PROD_OFFERING_NAME AS ProdOfferingName, ro.OFFICE_CODE AS OfficeCode, poh.PROD_OFFERING_VERSION AS ProdOfferingVersion, pod.REF_PROD_COMPNT_CODE AS RefProdCompntCode, pod.COMPNT_VALUE AS CompntValue, rlob.BIZ_TMPLT_CODE as BusinessTemplate",
-      "from": "FROM dbo.REF_OFFICE ro WITH(NOLOCK) JOIN dbo.PROD_OFFERING_BRANCH_MBR pobm WITH(NOLOCK) ON ro.REF_OFFICE_ID = pobm.REF_OFFICE_ID INNER JOIN dbo.PROD_OFFERING po WITH(NOLOCK) ON pobm.PROD_OFFERING_H_ID = po.CURRENT_PROD_OFFERING_H_ID INNER JOIN dbo.PROD_OFFERING_H poh WITH(NOLOCK) ON poh.PROD_OFFERING_ID = po.PROD_OFFERING_ID INNER JOIN dbo.PROD_OFFERING_D pod WITH(NOLOCK) ON pod.PROD_OFFERING_H_ID = poh.PROD_OFFERING_H_ID INNER JOIN dbo.REF_LOB rlob WITH(NOLOCK) ON rlob.LOB_CODE = pod.COMPNT_VALUE",
-      "where":"WHERE pod.REF_PROD_COMPNT_CODE = N'LOB' AND ro.IS_ACTIVE = 1 AND poh.PROD_STAT = N'ACT'"
-    },
+  "querystring": {
+    "name": "lookupAppName"
+  },
     "headerList": [
         {
           "type": "sort",
@@ -67,4 +65,3 @@
     "propertyId": "ProdOfferingName",
     "propertyName": "ProdOfferingName"
   }
-  

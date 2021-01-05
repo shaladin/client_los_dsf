@@ -50,7 +50,7 @@
       <div>
         <label class="col-md-4  adInsLabel" translate>Customer Model</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppCust">{{this.SummaryObj.AppCust.CustModelCode}}</label>
+          *ngIf="SummaryObj?.AppCust">{{this.SummaryObj.AppCust.MrCustModelCode}}</label>
         <label class="col-md-4  adInsLabel" translate>Total Monthly Income</label>
         <label class="col-md-2  adinslabel" translate
           *ngIf="SummaryObj?.AppCustPersonalFinData">{{this.SummaryObj.AppCustPersonalFinData.TotalMonthlyIncomeAmt | number:'.2':'en-US'}}</label>
@@ -450,22 +450,22 @@
       <label class="col-md-4  adInsLabel" translate>Grace Period</label>
       <label class="col-md-2  adinslabel" translate
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GracePeriod}}</label>
-      <label class="col-md-4  adInsLabel" translate>Rouding</label>
+      <label class="col-md-4  adInsLabel" translate>Rounding</label>
       <label class="col-md-2  adinslabel" translate
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.RoundingAmt | number:'.2':'en-US'}}</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Balloon Value Amount</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.LifeInsuranceObject}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.BalloonValueAmt | number:'.2':'en-US'}}</label>
       <label class="col-md-4  adInsLabel" translate>Cummulative Tenor</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalPremiFromInsco}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.CummulativeTenor}}</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Total Interest</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.BalloonValueAmt | number:'.2':'en-US'}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalInterestAmt | number:'.2':'en-US'}}</label>
       <label class="col-md-4  adInsLabel" translate>Diff Rate Amount</label>
       <label class="col-md-2  adinslabel" translate
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.DiffRateAmt | number:'.2':'en-US'}}</label>

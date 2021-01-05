@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-execution-detail',
@@ -85,7 +86,7 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   Back() {
-    this.location.back();
+    this.router.navigate(['/Mou/Execution/Paging']);
   }
 
   SaveForm() {
@@ -93,7 +94,7 @@ export class MouExecutionDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
       (response: any) => {
         this.toastr.successMessage(response["Message"]);
-        this.router.navigate(['/Mou/Execution/Paging']);
+        AdInsHelper.RedirectUrl(this.router,["/Mou/Execution/Paging"],{});
       });
 
   }

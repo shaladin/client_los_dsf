@@ -5,10 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-view-survey',
   templateUrl: './mou-view-survey.component.html',
+  providers: [NGXToastrService],
 })
 export class MouViewSurveyComponent implements OnInit {
   @Input() MouCustId: number;
@@ -27,4 +29,11 @@ export class MouViewSurveyComponent implements OnInit {
   SrvyOrderForm = this.fb.group({
   })  
 
+  
+  openView(SurveyTaskNo){
+    this.http.post(URLConstant.GetSrvyTaskBySrvyTaskNo, {SurveyTaskNo: SurveyTaskNo}).subscribe(
+      response => {
+        AdInsHelper.OpenSrvyTaskViewBySrvyTaskId(response["SrvyTaskId"]);
+      });
+  }
 }

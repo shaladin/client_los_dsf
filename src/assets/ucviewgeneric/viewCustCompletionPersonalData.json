@@ -1,0 +1,90 @@
+{
+    "title": "Customer Personal Completion",
+    "subsection": [
+        {
+            "subSectionId": "NewApplication",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "link",
+                    "label": "Application No",
+                    "property": "AppNo",
+                    "name": "AppNo",
+                    "position": "left",
+                    "path": "/View/AppView",
+                    "target": "_blank",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "label": "Original Office",
+                    "property": "OriOfficeName"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "Gender",
+                    "property": "Gender"
+                },
+                {
+                    "type": "text",
+                    "label": "ID Type",
+                    "property": "IdType"
+                },
+                {
+                    "type": "text",
+                    "label": "Birth Place",
+                    "property": "BirthPlace"
+                },
+                {
+                    "type": "text",
+                    "label": "ID No",
+                    "property": "IdNo"
+                },
+                {
+                    "type": "date",
+                    "label": "Birth Date",
+                    "property": "BirthDt"
+                },
+                {
+                    "type": "date",
+                    "label": "ID Expired Date",
+                    "property": "IdExpDt"
+                },
+                {
+                    "type": "text",
+                    "label": "Tax Id No",
+                    "property": "TaxIdNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Marital Status",
+                    "property": "MaritalStat"
+                },
+                {
+                    "type": "text",
+                    "label": "Mother Maiden Name",
+                    "property": "MotherMaidenName"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Model Code",
+                    "property": "MrCustModelCode"
+                }
+            ],
+          "querystring": {
+            "name": "viewCustCompletionPersonalData"
+          }
+        }
+    ]
+}

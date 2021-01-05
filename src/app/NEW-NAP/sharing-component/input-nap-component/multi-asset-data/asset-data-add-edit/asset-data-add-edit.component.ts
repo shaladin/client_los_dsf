@@ -138,6 +138,7 @@ export class AssetDataAddEditComponent implements OnInit {
     VendorCode: "",
   };
   vendorSchmCode: any;
+  AssetValidationResult: any;
   AssetDataForm = this.fb.group({
     SupplName: [''],
     SupplCode: [''],
@@ -146,13 +147,15 @@ export class AssetDataAddEditComponent implements OnInit {
     BranchManagerNo: [''],
     BranchManagerCode: [''],
 
-    SalesPersonName: [''],
-    SalesPersonNo: ['', [Validators.required]],
-    SalesPersonCode: [''],
-
+    SalesPersonId: ['', Validators.required],
+    SalesPersonName: ['', [Validators.required, Validators.maxLength(500)]],
+    SalesPersonNo: ['', [Validators.required, Validators.maxLength(50)]],
+    SalesPersonPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
+    
+    AdminHeadId : [''],
     AdminHeadName: [''],
     AdminHeadNo: [''],
-    AdminHeadCode: [''],
+    AdminHeadPositionCode: [''],
 
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -199,6 +202,17 @@ export class AssetDataAddEditComponent implements OnInit {
     AppId: 0,
   };
   inputAddressObjForLoc: InputAddressObj;
+  EmpObj: any;
+  vendorEmpSalesObj = {
+    VendorId: 0,
+    VendorEmpId: 0,
+    VendorEmpNo: "",
+  };
+  vendorEmpAdminHeadObj = {
+    VendorId: 0,
+    VendorEmpId: 0,
+    VendorEmpNo: "",
+  };
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
@@ -301,54 +315,41 @@ export class AssetDataAddEditComponent implements OnInit {
       SupplCode: event.VendorCode
     });
 
-    this.branchObj = new VendorEmpObj();
-    this.branchObj.VendorId = event.VendorId;
-    this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
-    this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
-      (response) => {
-        this.listBranchObj = response[CommonConstant.ReturnObj];
-        if (this.listBranchObj) {
-          if (this.listBranchObj.length > 0) {
-            this.AssetDataForm.patchValue({
-              BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
-              BranchManagerName: response[CommonConstant.ReturnObj][0]['Value']
-            });
-          }
-        }
-      });
 
     this.salesObj = new VendorEmpObj();
     this.salesObj.VendorId = event.VendorId;
     this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
-    this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
-      (response) => {
-        this.listSalesObj = response[CommonConstant.ReturnObj];
-        if (this.listSalesObj) {
-          if (this.listSalesObj.length > 0) {
-            this.AssetDataForm.patchValue({
-              SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
-              SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
-            });
-          }
-        }
-      });
-
-    this.adminHeadObj = new VendorEmpObj();
-    this.adminHeadObj.VendorId = event.VendorId;
-    this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
-    this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
-      (response) => {
-        this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-        if (this.listAdminHeadObj) {
-          if (this.listAdminHeadObj.length > 0) {
-            this.AssetDataForm.patchValue({
-              AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
-              AdminHeadName: response[CommonConstant.ReturnObj][0]['Value']
-            });
-          }
-        }
-      });
+    this.GetSalesList();
+    this.GetAdminHeadList();
   }
+
+ GetSalesList(){
+  var Obj = {
+    VendorId : this.salesObj.VendorId,
+    MrVendorEmpPositionCodes : [CommonConstant.SALES_JOB_CODE]
+  }
+  this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes,Obj).subscribe(
+    (response) => {
+      this.EmpObj = response[CommonConstant.ReturnObj];
+      this.listSalesObj = this.EmpObj.filter(
+        emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE);
+    }
+  );
+ }
+
+ GetAdminHeadList(){
+  var Obj = {
+    VendorId : this.salesObj.VendorId,
+    MrVendorEmpPositionCodes : [CommonConstant.ADMIN_HEAD_JOB_CODE]
+  }
+  this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes,Obj).subscribe(
+    (response) => {
+      this.EmpObj = response[CommonConstant.ReturnObj];
+      this.listAdminHeadObj = this.EmpObj.filter(
+        emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
+    }
+  );
+ }
 
   GetAppCust() {
     var appObj = {
@@ -417,20 +418,78 @@ export class AssetDataAddEditComponent implements OnInit {
     });
   }
 
-  SalesChanged(event) {
-    this.AssetDataForm.patchValue({
-      SalesPersonName: this.listSalesObj.find(x => x.Key == event.target.value).Value
-    });
+  SalesPersonChanged(event) {
+    if (event.target.value != "") {
+      //this.vendorEmpObj.VendorEmpId = event.target.value;
+      //this.GetVendorEmpSupervisi();
+
+      var temp: any;
+      temp = this.listSalesObj.filter(
+        emp => emp.VendorEmpId == event.target.value);
+      this.AssetDataForm.patchValue({
+        SalesPersonId: temp[0].VendorEmpId,
+        SalesPersonName: temp[0].VendorEmpName,
+        SalesPersonNo: temp[0].VendorEmpNo,
+        SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        SalesPersonId: "",
+        SalesPersonName: "",
+        SalesPersonNo: "",
+        SalesPersonPositionCode: "",
+      });
+    }
+  }
+  
+  AdminChanged(event) {
+    if (event.target.value != "") {
+      //this.vendorEmpObj.VendorEmpId = event.target.value;
+      //this.GetVendorEmpSupervisi();
+
+      var temp: any;
+      temp = this.listAdminHeadObj.filter(
+        emp => emp.VendorEmpId == event.target.value);
+      this.AssetDataForm.patchValue({
+        AdminHeadId : temp[0].VendorEmpId,
+        AdminHeadName: temp[0].VendorEmpName,
+        AdminHeadNo: temp[0].VendorEmpNo,
+        AdminHeadPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+    }
   }
 
-  AdminChanged(event) {
-    this.AssetDataForm.patchValue({
-      AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
-    });
+  async AssetValidationForSave() {
+    var CheckValidObj = {
+      AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
+      ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
+      Tenor: this.appData.Tenor,
+      AssetCategoryCode: this.AssetDataForm.controls["AssetCategoryCode"].value,
+      MrAssetUsageCode: this.AssetDataForm.controls["AssetUsage"].value,
+      AppId : this.AppId
+    }
+    await this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
+      (response) => {
+        this.AssetValidationResult = response;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   AssetValidation() {
     var CheckValidObj = {
+      AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls["MrAssetConditionCode"].value,
       ManufacturingYear: this.AssetDataForm.controls["ManufacturingYear"].value,
       Tenor: this.appData.Tenor,
@@ -441,47 +500,115 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   CheckDP() {
-    let getAssetValidationRule = this.AssetValidation();
-    getAssetValidationRule.subscribe(
-      (response) => {
-        var assetValidationRule = response;
-        this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
-        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypePrcnt) {
-          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+    const assetCondition = this.AssetDataForm.controls["MrAssetConditionCode"].value;
+    const manufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
+    const assetCategory = this.AssetDataForm.controls["AssetCategoryCode"].value;
+    const assetUsage = this.AssetDataForm.controls["AssetUsage"].value;
+    if(assetCondition && manufacturingYear && assetCategory && assetUsage){
+      let getAssetValidationRule = this.AssetValidation();
+      getAssetValidationRule.subscribe(
+        (response) => {
+          var assetValidationRule = response;
+          this.AssetValidationResult = response;
+          this.grossDPPrcnt = assetValidationRule["DPPrcnt"];
+          if(assetValidationRule["DPPrcnt"] != null){
             this.AssetDataForm.patchValue({
-              DownPayment: assetValidationRule["GrossDPPrctg"]
+              DownPaymentPrctg: assetValidationRule["DPPrcnt"],
+              DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
             });
-            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(assetValidationRule["GrossDPPrctg"]), Validators.max(100)]);
-            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
           }
-        }
-        if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
-          if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
-            var minDP = this.AssetDataForm.controls["AssetPrice"].value * assetValidationRule["GrossDPPrctg"] / 100;
-            this.AssetDataForm.patchValue({
-              DownPayment: minDP
-            });
-            this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
-            this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          if(assetValidationRule["DPBhv"] == CommonConstant.RuleBehaviourLock){
+            if(this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG'){
+              this.AssetDataForm.controls.DownPaymentPrctg.disable();
+              this.AssetDataForm.controls["DownPaymentPrctg"].clearValidators();
+              this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+            }
+            else{
+              this.AssetDataForm.controls.DownPayment.disable();
+              this.AssetDataForm.controls["DownPayment"].clearValidators();
+              this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+            }
           }
-        }
-      });
+          else{
+            if(this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCTG'){
+              this.AssetDataForm.controls.DownPaymentPrctg.enable();
+              this.AssetDataForm.controls.DownPayment.disable();
+              this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+              this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+            }
+            else{
+              this.AssetDataForm.controls.DownPayment.enable();
+              this.AssetDataForm.controls.DownPaymentPrctg.disable();
+              this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+              this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+            }
+          }
+          // this.grossDPPrcnt = assetValidationRule["GrossDPPrctg"];
+          // if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypePrcnt) {
+          //   if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+          //     this.AssetDataForm.patchValue({
+          //       DownPayment: assetValidationRule["GrossDPPrctg"]
+          //     });
+          //     this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(assetValidationRule["GrossDPPrctg"]), Validators.max(100)]);
+          //     this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          //   }
+          // }
+          // if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == 'AMT') {
+          //   if (assetValidationRule["DPGrossBehaviour"] == 'MIN') {
+          //     var minDP = this.AssetDataForm.controls["AssetPrice"].value * assetValidationRule["GrossDPPrctg"] / 100;
+          //     this.AssetDataForm.patchValue({
+          //       DownPayment: minDP
+          //     });
+          //     this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(minDP)]);
+          //     this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+          //   }
+          // }
+        });
+    }
   }
 
   downPaymentChange() {
     var value = this.AssetDataForm.controls["MrDownPaymentTypeCode"].value;
-    if (value == "AMT") {
-      this.AssetDataForm.controls["DownPayment"].enable()
-      var minDP = this.AssetDataForm.controls["AssetPrice"].value * this.grossDPPrcnt / 100;
-      this.AssetDataForm.controls["DownPayment"].setValidators(Validators.min(minDP));
-      this.AssetDataForm.controls["DownPaymentPrctg"].disable();
-      this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
-    }
-    else {
-      this.AssetDataForm.controls["DownPaymentPrctg"].enable();
-      this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.min(this.grossDPPrcnt), Validators.max(100)]);
-      this.AssetDataForm.controls["DownPayment"].disable();
-      this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+    if(this.AssetValidationResult && this.AssetValidationResult["DPBhv"]){
+      if(this.AssetValidationResult["DPBhv"] == CommonConstant.RuleBehaviourLock){
+        if(value == "AMT"){
+          this.AssetDataForm.controls["DownPayment"].disable();
+          this.AssetDataForm.controls["DownPayment"].clearValidators();
+          this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+        }
+        else{
+          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].clearValidators();
+          this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+        }
+      }
+      else{
+        if (value == "AMT") {
+          this.AssetDataForm.controls["DownPayment"].enable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+          this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+          this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+        }
+        else{
+          this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+          this.AssetDataForm.controls["DownPayment"].disable();
+          this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+          this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+        }
+      }
+    }else{
+      if (value == "AMT") {
+        this.AssetDataForm.controls["DownPayment"].enable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
+        this.AssetDataForm.controls["DownPayment"].setValidators([Validators.required, Validators.min(0)]);
+        this.AssetDataForm.controls["DownPayment"].updateValueAndValidity();
+      }
+      else{
+        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
+        this.AssetDataForm.controls["DownPayment"].disable();
+        this.AssetDataForm.controls["DownPaymentPrctg"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+        this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
+      }
     }
   }
 
@@ -554,26 +681,6 @@ export class AssetDataAddEditComponent implements OnInit {
             SupplName: this.returnVendorObj.VendorName,
           });
 
-          this.appAssetSupplEmpBranchObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpBranchObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpBranchObj.MrSupplEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
-          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpBranchObj).subscribe(
-            (response) => {
-              this.branchAppAssetSupplEmpObj = response;
-
-              this.branchObj = new VendorEmpObj();
-              this.branchObj.VendorId = this.returnVendorObj.VendorId;
-              this.branchObj.MrVendorEmpPositionCode = CommonConstant.BRANCH_MANAGER_JOB_CODE;
-              this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
-                (response) => {
-                  this.listBranchObj = response[CommonConstant.ReturnObj];
-                  this.AssetDataForm.patchValue({
-                    BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
-                    BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
-                  });
-                });
-            });
-
           this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
           this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
           this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
@@ -587,12 +694,16 @@ export class AssetDataAddEditComponent implements OnInit {
               this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
                 (response) => {
                   this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-                  this.AssetDataForm.patchValue({
-                    AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
-                    AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
-                  });
+                  if(this.headAppAssetSupplEmpObj.AppAssetSupplEmpObj != undefined){
+                    this.AssetDataForm.patchValue({
+                      AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
+                      AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName,
+                      AdminHeadPositionCode : this.headAppAssetSupplEmpObj.MrSupplEmpPositionCode
+                    });
+                  }
                 });
-            });
+              this.GetVendorForView();
+          });
 
           this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
           this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
@@ -600,7 +711,6 @@ export class AssetDataAddEditComponent implements OnInit {
           this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
             (response) => {
               this.salesAppAssetSupplEmpObj = response;
-
               this.salesObj = new VendorEmpObj();
               this.salesObj.VendorId = this.returnVendorObj.VendorId;
               this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
@@ -609,17 +719,20 @@ export class AssetDataAddEditComponent implements OnInit {
                   this.listSalesObj = response[CommonConstant.ReturnObj];
                   this.AssetDataForm.patchValue({
                     SalesPersonNo: this.salesAppAssetSupplEmpObj.SupplEmpNo,
-                    SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName
+                    SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName,
+                    SalesPersonPositionCode : this.salesAppAssetSupplEmpObj.MrSupplEmpPositionCode
                   });
                 });
             });
 
         });
+        
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppAssetId = this.AppAssetId;
       this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
+          this.appCollateralObj.IsMainCollateral = this.returnAppCollateralObj.IsMainCollateral;
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
@@ -816,9 +929,11 @@ export class AssetDataAddEditComponent implements OnInit {
     this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({
-          AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
-        });
+        if(this.mode != 'editAsset'){
+          this.AssetDataForm.patchValue({
+            AssetUsage: response[CommonConstant.ReturnObj][0]['Key']
+          });
+        }
       }
     );
 
@@ -870,6 +985,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+    this.allAssetDataObj["VendorEmpId"] = this.AssetDataForm.controls.SalesPersonId.value;
 
     // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
     if (!this.AssetDataForm.controls["BranchManagerName"].value) {
@@ -886,6 +1002,7 @@ export class AssetDataAddEditComponent implements OnInit {
   // MrDownPaymentTypeCode:[''],
 
   setAssetInfo() {
+    var assetForm = this.AssetDataForm.getRawValue();
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
@@ -893,6 +1010,7 @@ export class AssetDataAddEditComponent implements OnInit {
     for (var i = 0; i < this.items.length; i++) {
       if (this.items.controls[i] != null) {
         this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+        this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
       }
     }
     this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls["SupplName"].value;
@@ -900,11 +1018,17 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
 
     if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
+      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm["DownPayment"] / assetForm["AssetPrice"]) * 100;
     }
     else {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
+      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * (assetForm["DownPaymentPrctg"] / 100);
+      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm["DownPaymentPrctg"];
     }
+    this.allAssetDataObj.AppAssetObj.MinDownPaymentPrcnt = this.AssetValidationResult && this.AssetValidationResult.DPMin ? this.AssetValidationResult.DPMin : 0;
+    this.allAssetDataObj.AppAssetObj.MaxDownPaymentPrcnt = this.AssetValidationResult && this.AssetValidationResult.DPMax ? this.AssetValidationResult.DPMax : 0;
 
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
@@ -915,10 +1039,17 @@ export class AssetDataAddEditComponent implements OnInit {
     if (this.AppAssetId == 0) {
       this.allAssetDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
+      this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
     }
     else {
       this.allAssetDataObj.AppAssetObj.AssetStat = CommonConstant.AssetStatNew;
       this.allAssetDataObj.AppCollateralObj.CollateralStat = CommonConstant.AssetStatNew;
+      if(this.appCollateralObj != null){
+      this.allAssetDataObj.AppCollateralObj.IsMainCollateral = this.appCollateralObj.IsMainCollateral;
+      }
+      else {
+        this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
+      }
     }
 
     this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
@@ -1023,7 +1154,48 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
 
-  SaveForm() {
+  async SaveForm() {
+    var assetForm = this.AssetDataForm.getRawValue();
+    var confirmMsg = "";
+    var isValidOk = true;
+    await this.AssetValidationForSave();
+
+
+    if(this.AssetValidationResult){
+      if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCNT') {
+        if(assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin){
+          isValidOk = false;
+          confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
+        }
+        else if(assetForm.DownPaymentPrctg > this.AssetValidationResult.DPMax){
+          isValidOk = false;
+          confirmMsg = "Down Payment Percentage is Higher than Maximum Percentage";
+        }
+      }
+      else{
+        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.AssetPrice / 100;
+        var assetDPMax = this.AssetValidationResult.DPMax * assetForm.AssetPrice / 100;
+        if(assetForm.DownPayment < assetDPMin){
+          isValidOk = false;
+          confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
+        }
+        else if(assetForm.DownPayment > assetDPMax){
+          isValidOk = false;
+          confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
+        }
+      }
+
+
+    }
+    if(!isValidOk){
+      confirmMsg += ", Are You Sure to Save This Data ?";
+      var confirmation = confirm(confirmMsg);
+      if(!confirmation){
+        return false;
+      }
+    }
+
+
     if (this.mode == 'addAsset') {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setSupplierInfo();
@@ -1099,6 +1271,8 @@ export class AssetDataAddEditComponent implements OnInit {
       this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
       this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
+      this.allAssetDataObj.AppAssetObj.RowVersion = this.returnAppAssetObj.RowVersion;
+      if (this.salesAppAssetSupplEmpObj != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.salesAppAssetSupplEmpObj.RowVersion;
       this.allAssetDataObj.AppCollateralObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
 
@@ -1181,7 +1355,7 @@ export class AssetDataAddEditComponent implements OnInit {
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: ['', Validators.required],
-        AccessoryDownPaymentAmt: ['', Validators.required],
+        AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
       })
     } else {
@@ -1400,4 +1574,57 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     }
   }
+   GetVendorForView() {
+    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).toPromise().then(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          SupplName: response["VendorName"],
+          SupplCode: response["VendorCode"],
+        });
+        this.vendorEmpSalesObj.VendorId = response["VendorId"];
+        this.vendorEmpSalesObj.VendorEmpNo = this.salesAppAssetSupplEmpObj.SupplEmpNo;
+        this.GetVendorEmpSalesPerson();
+        
+        if(this.headAppAssetSupplEmpObj != undefined && this.headAppAssetSupplEmpObj.SupplEmpNo != undefined){
+          this.vendorEmpAdminHeadObj.VendorId = response["VendorId"];
+          this.vendorEmpAdminHeadObj.VendorEmpNo = this.headAppAssetSupplEmpObj.SupplEmpNo;
+          this.GetVendorEmpAdminHead();
+        }
+        
+        this.salesObj = new VendorEmpObj();
+        this.salesObj.VendorId = response["VendorId"];
+        this.salesObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+        this.GetSalesList();
+
+        this.adminHeadObj = new VendorEmpObj();
+        this.adminHeadObj.VendorId = response["VendorId"];
+        this.adminHeadObj.MrVendorEmpPositionCode = CommonConstant.SALES_JOB_CODE;
+        this.GetAdminHeadList();
+        
+        this.InputLookupSupplierObj.jsonSelect = response;
+        this.InputLookupSupplierObj.nameSelect = response["VendorName"];
+      }
+    );
+  }
+
+  GetVendorEmpSalesPerson() {
+    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpSalesObj).subscribe(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          SalesPersonId: response["VendorEmpId"]
+        });
+      }
+    );
+  }
+
+  GetVendorEmpAdminHead() {
+    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpAdminHeadObj).subscribe(
+      (response) => {
+        this.AssetDataForm.patchValue({
+          AdminHeadId: response["VendorEmpId"]
+        });
+      }
+    );
+  }
+
 }

@@ -15,6 +15,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 @Component({
@@ -194,7 +195,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.gsCode = "LOB_KTA";
+    this.generalSettingObj.GsCode = "LOB_KTA";
     this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
@@ -562,6 +563,9 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   TenorChange() {
     this.Calculate = false;
+    this.LeadDataForm.patchValue({
+      InstallmentAmt: this.NTFAmt / this.Tenor,
+    });
   }
 
   calculateNonKta() {
@@ -570,13 +574,12 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     var minAmt = this.NTFAmt / this.Tenor;
+    if(!this.LeadDataForm.controls["InstallmentAmt"].value) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
-    if(this.NTFAmt > 0){
-      if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
-        this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
-        return;
-      }
+    if(this.NTFAmt && this.InstAmt > this.NTFAmt ){
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+      return;
     }
 
     if (this.AssetPrice <= 0) {
@@ -624,14 +627,14 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.LeadDataForm.controls["NTFAmt"].value;
     var minAmt = this.NTFAmt / this.Tenor;
+    if(!this.LeadDataForm.controls["InstallmentAmt"].value) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
-    if(this.NTFAmt > 0){
-    if(this.InstAmt > this.LeadDataForm.controls["NTFAmt"].value ){
+    if(this.NTFAmt && this.InstAmt > this.NTFAmt ){
       this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
       return;
     }
-  }
+
     if (this.DPAmount > this.AssetPrice) {
       this.toastr.warningMessage("Down Payment Amount Must Be Lower Than Asset Price!");
       return;
@@ -720,32 +723,33 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["Lead/TeleVerif/Paging"],{});
             }
             else if (this.typePage == "update") {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["Lead/LeadUpdate/Paging"],{});
             }
             else {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["Lead/Lead/Paging"],{});
             }
           });
       }
       else {
         if (this.lobKta.includes(this.returnLobCode) == true) {
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
           //this.setLeadAsset();
           this.setLeadApp();
           this.http.post(URLConstant.AddEditLeadDataKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                this.router.navigate(["/Lead/TeleVerif/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
               }
               else if (this.typePage == "update") {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
               }
               else {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
               }
             }
           );
@@ -756,19 +760,21 @@ export class LeadInputLeadDataComponent implements OnInit {
             return;
           }
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
           this.setLeadAsset();
+          this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
           this.setLeadApp();
           this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                this.router.navigate(["/Lead/TeleVerif/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});                
               }
               else if (this.typePage == "update") {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
               }
               else {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
               }
             }
           );
@@ -784,13 +790,13 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
             }
             else if (this.typePage == "update") {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             }
             else {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             }
           }
         );
@@ -803,13 +809,13 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
             }
             else if (this.typePage == "update") {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             }
             else {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             }
           }
         );
@@ -829,48 +835,44 @@ export class LeadInputLeadDataComponent implements OnInit {
     if(this.LeadDataForm.status == CommonConstant.INVALID_FORM){
       return;
     }
-
+    this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+    this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
+    this.setLeadApp();
     if (this.typePage == "edit" || this.typePage == "update") {
+      this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       if (this.resLeadAssetObj.LeadAssetId != 0) {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
-        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         // this.leadInputLeadDataObj.IsEdit = true;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
             }
             else if (this.typePage == "update") {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             }
             else {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             }
           }
         );
       }
       else {
         if (this.lobKta.includes(this.returnLobCode) == true) {
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           //this.setLeadAsset();
-          this.setLeadApp();
-          this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
           this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                this.router.navigate(["/Lead/TeleVerif/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
               }
               else if (this.typePage == "update") {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
               }
               else {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
               }
             }
           );
@@ -880,21 +882,19 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
           this.setLeadAsset();
-          this.setLeadApp();
-          this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
           this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                this.router.navigate(["/Lead/TeleVerif/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
               }
               else if (this.typePage == "update") {
-                this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
               }
               else {
-                this.router.navigate(["/Lead/Lead/Paging"]);
+                AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
               }
             }
           );
@@ -903,41 +903,35 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
     else {
       if (this.lobKta.includes(this.returnLobCode) == true) {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         //this.setLeadAsset();
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
             }
             else if (this.typePage == "update") {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             }
             else {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             }
           }
         );
       }
       else {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.setLeadAsset();
-        this.setLeadApp();
-        this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              this.router.navigate(["/Lead/TeleVerif/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
             }
             else if (this.typePage == "update") {
-              this.router.navigate(["/Lead/LeadUpdate/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
             }
             else {
-              this.router.navigate(["/Lead/Lead/Paging"]);
+              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
             }
           }
         );

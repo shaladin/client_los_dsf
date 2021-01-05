@@ -52,6 +52,13 @@ export class CommonConstant {
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
   public static CustGrupIndentifierTypeCompany = "custGrpMemberCompany";
 
+  //CUST MAIN DATA MODE
+  public static CustMainDataModeCust = "CUST";
+  public static CustMainDataModeGuarantor = "GUARANTOR";
+  public static CustMainDataModeFamily = "FAMILY";
+  public static CustMainDataModeMgmntShrholder = "SHAREHOLDER";
+  
+
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
 
@@ -83,7 +90,9 @@ export class CommonConstant {
   //App Step
   public static AppStepNew = "NEW";
   public static AppStepCust = "CUST";
+  public static AppStepFamily = "FAM";
   public static AppStepGuar = "GUAR";
+  public static AppStepShr = "SHR";
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
   public static AppStepAsset = "ASSET";
@@ -177,6 +186,7 @@ export class CommonConstant {
   public static RefProdCompntCodePurposeOfFinancing = "PURPOSE_OF_FINANCING";
   public static RefProdCompntCodeCrApvResExpDays = "CR_APV_RES_EXP_DAYS";
   public static CollateralNeeded = "COLLATERALNEEDED";
+  public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
@@ -198,6 +208,12 @@ export class CommonConstant {
   public static AppCollateralAttrTransmition = "TRANSMITION";
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
+
+  //APP CUST 
+  public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
+  public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
+  public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
+  public static AttrGroupCustPersonalFinData= "CUST_PERSONAL_FINDATA"
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";
@@ -240,6 +256,9 @@ export class CommonConstant {
   public static DownPaymentTypeAmt = "AMT";
   public static DownPaymentTypePrcnt = "PRCNT";
 
+  //PAYMENT TYPE
+  public static PaymentTypeAmt = "AMT";
+  public static PaymentTypePrcnt = "PRCNT";
 
   //DEVIATION TYPE
   public static DeviationTypeManualDev = "MANUAL_DEV"
@@ -258,6 +277,10 @@ export class CommonConstant {
   public static AddrTypeResidence = "RESIDENCE";
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
+  public static AddrTypePrevJob = "PREV_JOB";
+  public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeCompany = "COMPANY";
+  public static AddrTypeEmergency = "EMERGENCY";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -371,11 +394,13 @@ export class CommonConstant {
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
+  public static ReturnStatus = "Status";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
   public static TitleReferantor = "List Referantor Commission Data";
   public static ReturnObj = "ReturnObject";
+  public static RefMasterObjs = "RefMasterObjs";
 
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
@@ -393,6 +418,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeIdType = "ID_TYPE";
   public static RefMasterTypeCodeRateType = "RATE_TYPE";
   public static RefMasterTypeCodeAddrType = "ADDR_TYPE";
+  public static RefMasterTypeCustAddrType = "CUST_ADDR_TYPE"
   public static RefMasterTypeCodeGracePeriodType = "GRACE_PERIOD_TYPE";
   public static RefMasterTypeLegalReview = "LGL_REVIEW";
   public static RefMasterTypeCodeFeeType = "FEE_TYPE";
@@ -448,6 +474,10 @@ export class CommonConstant {
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
   public static RefMasterTypeCodeWayOfRestructure = "WAY_OF_RESTRUCTURE";
+  public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
+  public static RefMasterTypeCodeSalutation = "SALUTATION";
+  public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
+
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -466,7 +496,7 @@ export class CommonConstant {
   //SUBSIDY FROM TYPE
   public static SubsidyFromTypeAtpm = "ATPM";
   public static SubsidyFromTypeSupplier = "SUPPLIER";
-
+  public static SubsidyFromTypeIns = "INS";
 
   //SCORE TYPE
   public static ScoreTypeScoring = "SCORING";
@@ -508,4 +538,10 @@ export class CommonConstant {
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+
+  //GENERAL SETTING
+  public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
+  public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
+
+
 }

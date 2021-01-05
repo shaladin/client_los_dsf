@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-review-detail-personal',
@@ -124,7 +125,7 @@ export class CreditReviewDetailPersonalComponent implements OnInit {
 
   saveForm(){
     this.toastr.successMessage('Submit Success !');
-    this.router.navigate(['/Nap/CreditProcess/CreditReviewPrototype/Paging']);
+    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditReviewPrototype/Paging"], {});
   }
   switchForm1(){
     this.return = "No";

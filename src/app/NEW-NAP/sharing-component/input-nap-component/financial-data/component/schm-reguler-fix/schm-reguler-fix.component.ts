@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-schm-reguler-fix',
@@ -44,8 +45,7 @@ export class SchmRegulerFixComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.result = response;
-        console.log("HELEP")
-        if (this.result.BizTemplateCode == CommonConstant.CF4W) {
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA){
           this.PriceLabel = "Financing Amount";
         }
       });
@@ -94,17 +94,25 @@ export class SchmRegulerFixComponent implements OnInit {
     }
     if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
         && this.ParentForm.controls.IsSubsidyRateExist.value == false 
-        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
     {
-      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_STD_RATE);
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
+      return;  
+    }
+
+    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+        && this.ParentForm.controls.IsSubsidyRateExist.value == false 
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt)
+    {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
       return;  
     }
 
     if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
         && this.ParentForm.controls.IsSubsidyRateExist.value == true 
-        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
+        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
     {
-      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_STD_RATE);
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));    
       return;  
     }
 
@@ -140,10 +148,11 @@ export class SchmRegulerFixComponent implements OnInit {
 
           SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
           CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-          SupplEffectiveRatePrcnt: response.SupplEffectiveRatePrcnt
+          AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
         })
         this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
         this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
+        this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
 
@@ -198,6 +207,22 @@ export class SchmRegulerFixComponent implements OnInit {
     this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
+  SupplEffectiveRatePrcnt_FocusOut(){
+    this.SetCommissionAmtFromDiffRateInput(0);
+    this.SetNeedReCalculate(true);
+  }
+
+  SupplRate_Keyup(event: KeyboardEvent){
+    this.SetNeedReCalculate(true);
+    if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
+      this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
+  }
+
+  SupplRate_Paste(event: ClipboardEvent){
+    this.SetNeedReCalculate(true);
+    this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
+  }
+
   InstallmentAmount_Keyup(event: KeyboardEvent){
     this.SetNeedReCalculate(true);
     if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
@@ -210,7 +235,7 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   SubsidyAmtFromDiffRate_FocusOut(event) {
-    this.SetSubsidyAmtFromDiffRateInput(event.target.value);
+    this.SetSubsidyAmtFromDiffRateInput(this.ParentForm.get("SubsidyAmtFromDiffRate").value);
     this.SetNeedReCalculate(true);
   }
 
@@ -229,7 +254,8 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   CommissionAmtFromDiffRate_FocusOut(event){
-    this.SetCommissionAmtFromDiffRateInput(event.target.value);
+    this.SetCommissionAmtFromDiffRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
+    this.SetSupplEffectiveRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
     this.SetNeedReCalculate(true);
   }
 
@@ -241,6 +267,14 @@ export class SchmRegulerFixComponent implements OnInit {
       if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
         this.ParentForm.get("CommissionAmtFromDiffRate").enable();
       }
+    }
+  }
+
+  SetSupplEffectiveRateInput(commissionAmtFromDiffRate){
+    if(commissionAmtFromDiffRate > 0){
+      this.ParentForm.get("AppSupplEffectiveRatePrcnt").disable(); 
+    }else{
+      this.ParentForm.get("AppSupplEffectiveRatePrcnt").enable(); 
     }
   }
 

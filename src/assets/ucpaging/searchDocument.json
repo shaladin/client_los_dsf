@@ -13,9 +13,9 @@
         {
             "type": "textbox",
             "name": "B.AGRMNT_NO",
-            "id": "AggrementNoId",
+            "id": "AgreementNoId",
             "value": "",
-            "label": "Aggrement No",
+            "label": "Agreement No",
             "placeholder": "Placeholder"
         },
         {
@@ -56,11 +56,9 @@
           "itemsUrl": []
         }
     ],
-    "querystring": {
-        "select": "SELECT A.APP_NO AS ApplicationNo,B.AGRMNT_NO AS AggrementNo,B.CUST_NAME AS CustName,B.PROD_OFFERING_NAME AS ProdName,B.AGRMNT_STAT AS Status, B.AGRMNT_ID AS AgrmntId, A.APP_ID AS AppId, A.BIZ_TEMPLATE_CODE AS BizTemplateCode, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, (CASE WHEN NEED_TO_PRINT_DOC <> DOC.PRINTED_DOC THEN 'Incomplete' ELSE 'Complete' END) AS StatusOfNeedPrinted",
-        "from": "FROM dbo.APP A WITH (NOLOCK) JOIN dbo.AGRMNT B WITH(NOLOCK) ON A.APP_ID = B.APP_ID LEFT JOIN (SELECT AGRMNT_ID, COUNT(IS_NEED_TO_BE_PRINTED) AS NEED_TO_PRINT_DOC, SUM((CASE WHEN LAST_PRINT_DT IS NOT NULL THEN 1 ELSE 0 END)) AS PRINTED_DOC FROM dbo.AGRMNT_DOC WITH(NOLOCK) WHERE IS_NEED_TO_BE_PRINTED = 1 GROUP BY AGRMNT_ID) AS DOC ON DOC.AGRMNT_ID = B.AGRMNT_ID",
-        "where" : "WHERE A.APP_STAT NOT IN ('CAN','RJC') AND B.AGRMNT_STAT NOT IN ('CANCEL', 'CAN')"
-    },
+  "querystring": {
+    "name": "searchDocument"
+  },
     "headerList": [
         {
             "type": "sort",

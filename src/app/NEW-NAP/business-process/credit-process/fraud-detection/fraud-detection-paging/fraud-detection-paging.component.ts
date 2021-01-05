@@ -81,9 +81,9 @@ export class FraudDetectionPagingComponent implements OnInit {
 
             if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
               if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-                this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
+                AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudVerifMultiAsset/Paging"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
               else
-                this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+                AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudDetection/Detail"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
             }
           }
         );
@@ -111,9 +111,9 @@ export class FraudDetectionPagingComponent implements OnInit {
 
             if(dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null){
               if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-                this.router.navigate(['/Nap/CreditProcess/FraudVerifMultiAsset/Paging'], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } })
+                AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudVerifMultiAsset/Paging"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
               else
-                this.router.navigate(["/Nap/CreditProcess/FraudDetection/Detail"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+                AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudDetection/Detail"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
             }
           }
         );

@@ -10,6 +10,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -96,15 +97,15 @@ export class LeadInputPageComponent implements OnInit {
     else{
       modeName = this.pageType;
     }
-    this.router.navigate(["/Lead/LeadInput/MainInfo"], { queryParams: { LeadId: this.LeadId, mode: modeName }});
+    AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/MainInfo"],{ LeadId: this.LeadId, mode: modeName });
   }
 
   cancelHandler(){
     if(this.pageType == "update"){
-      this.router.navigate(['/Lead/LeadUpdate/Paging']);  
+      AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
     }
     else{
-      this.router.navigate(['/Lead/Lead/Paging']);  
+      AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
     }
   }
 

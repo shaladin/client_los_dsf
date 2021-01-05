@@ -61,7 +61,7 @@ export class NapPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          this.router.navigate(["Nap/ROS/Add"]);
+          AdInsHelper.RedirectUrl(this.router,["Nap/ROS/Add"], {});
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -73,7 +73,7 @@ export class NapPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      this.router.navigate(["Nap/ROS/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["Nap/ROS/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
     }
   }
 }

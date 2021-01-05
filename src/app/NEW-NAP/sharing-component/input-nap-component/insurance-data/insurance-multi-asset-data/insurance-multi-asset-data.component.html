@@ -278,6 +278,17 @@
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="adminFee" translate>Customer Stampduty Fee</label>
+                    <div class="col-md-4">
+                      <input type="" currencyMask id="adminFee" class="form-control" formControlName="CustStampDutyFeeAmt"
+                        [options]="{ allowNegative: false }"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustStampDutyFeeAmt.invalid }"
+                        (ngModelChange)="CustAdminFeeAmtChanged($event)">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustStampDutyFeeAmt"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
                 </div>
                 <lib-ucSubsection [id]="'insuranceCoverageId'" [title]="'Insurance Coverage'"
                   [panel]="'insuranceCoverage'">
@@ -300,7 +311,7 @@
                   </div>
                   <div [hidden]="InsuranceDataForm.controls.InsLength.value <= 12" class="form-group row">
                     <label class="col-md-2" for="startDt" translate>Additional Coverage</label>
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                       <label formArrayName="InsAddCvgTypes"
                         *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index"
                         class="custom-control display-inline-block">
@@ -325,14 +336,12 @@
                       <thead>
                         <tr>
                           <th class="text-center width-5-per"><span translate class="thead-header">Year Num</span></th>
-                          <th class="text-center width-5-per"><span translate class="thead-header"># of Month</span>
-                          </th>
-                          <th class="text-center width-5-per"><span translate class="thead-header">Sum Insured
-                              (%)</span></th>
-                          <th class="text-left"><span translate class="thead-header">Main Coverage Type</span></th>
+                          <th class="text-center width-5-per"><span translate class="thead-header"># of Month</span></th>
+                          <th class="text-center width-5-per"><span translate class="thead-header">Sum Insured(%)</span></th>
+                          <th class="text-center"><span translate class="thead-header">Main Coverage Type</span></th>
                           <th class="text-center"><span translate class="thead-header"></span></th>
-                          <th class="text-right"><span translate class="thead-header">Rate</span></th>
-                          <th class="text-right"><span translate class="thead-header">Main Premium Amount</span></th>
+                          <th class="text-center"><span translate class="thead-header">Rate</span></th>
+                          <th class="text-center"><span translate class="thead-header">Main Premium Amount</span></th>
                         </tr>
                       </thead>
                       <tbody *ngFor="let item of InsuranceDataForm.controls.AppInsMainCvgs.controls;let i = index">
@@ -361,11 +370,11 @@
                             </div>
                           </td>
                           <td></td>
-                          <td class="text-right">
+                          <td class="text-center">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiRate.value | number:'.6':'en-US'}}
                             %
                           </td>
-                          <td class="text-right">
+                          <td class="text-center">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value | number:'.2':'en-US'}}
                           </td>
                         </tr>
@@ -373,16 +382,16 @@
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td class="text-left">
+                          <td class="text-center">
                             <label style="font-weight:bold">Additional Coverage Type</label>
                           </td>
-                          <td class="text-left">
+                          <td class="text-center">
                             <label style="font-weight:bold">Sum Insured Amount</label>
                           </td>
-                          <td class="text-right">
+                          <td class="text-center">
                             <label style="font-weight:bold">Rate</label>
                           </td>
-                          <td class="text-right">
+                          <td class="text-center">
                             <label style="font-weight:bold">Additional Premium Amount</label>
                           </td>
                         </tr>
@@ -418,7 +427,7 @@
                               </div>
                             </div>
                           </td>
-                          <td class="text-right">
+                          <td class="text-center">
                             <span
                               *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'AMT'">
                               {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
@@ -429,7 +438,7 @@
                               %
                             </span>
                           </td>
-                          <td class="text-right">
+                          <td class="text-center">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiAmt.value | number:'.2':'en-US'}}
                           </td>
                         </tr>
@@ -439,10 +448,10 @@
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td class="text-right">
+                          <td class="text-center">
                             <label class="col-md-12" style="font-weight:bold">Total Premium per Year</label>
                           </td>
-                          <td class="text-right">
+                          <td class="text-center">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value + InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}
                           </td>
                         </tr>
@@ -466,12 +475,12 @@
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Total Fee</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
+                      translate>{{InsuranceDataForm.controls.TotalCustFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value | number:'.2':'en-US'}}</label>
+                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.TotalCustFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" for="discAmt" translate>Discount</label>
@@ -487,7 +496,7 @@
                     <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer after
                       Discount</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.CustAdminFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
+                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.TotalCustFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
                   </div> 
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Full Capitalized Amount</label>

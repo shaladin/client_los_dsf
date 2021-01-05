@@ -205,7 +205,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
                   IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
                   DocNo: response[CommonConstant.ReturnObj][i].DocNo,
                   ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
-                  DocNotes: response[CommonConstant.ReturnObj][i].DocNotes
+                  DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+                  RowVersion: "",
                 }) as FormGroup;
                 this.items.push(assetDocumentDetail);
               }
@@ -299,7 +300,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
                       DocNo: this.AppCollateralDocs[i].DocNo,
                       DocNotes: this.AppCollateralDocs[i].DocNotes,
                       ACDExpiredDt: formatDate(this.AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-                      IsReceived: this.AppCollateralDocs[i].IsReceived
+                      IsReceived: this.AppCollateralDocs[i].IsReceived,
+                      RowVersion: this.AppCollateralDocs[i].RowVersion,
                     })
                   }
                 }
@@ -488,6 +490,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
       this.appCollateralDoc.DocNo = this.AddCollForm.value.items[i].DocNo;
       this.appCollateralDoc.ExpiredDt = this.AddCollForm.value.items[i].ACDExpiredDt;
       this.appCollateralDoc.DocNotes = this.AddCollForm.value.items[i].DocNotes;
+      if(this.type != 'Add') this.appCollateralDoc.RowVersion = this.AddCollForm.value.items[i].RowVersion;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
@@ -668,7 +671,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
                   DocNo: this.AppCollateralDocs[i].DocNo,
                   DocNotes: this.AppCollateralDocs[i].DocNotes,
                   ACDExpiredDt: formatDate(this.AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-                  IsReceived: this.AppCollateralDocs[i].IsReceived
+                  IsReceived: this.AppCollateralDocs[i].IsReceived,
+                  RowVersion: this.AppCollateralDocs[i].RowVersion,
                 })
               }
             }

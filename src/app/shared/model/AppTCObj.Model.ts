@@ -1,17 +1,21 @@
 export class AppTCObj{
-    AppTcId: any;
-    AppId: any;
-    TcName : any;
-    TcCode: any;
+    AppTcId: number;
+    AppId: number;
+    TcName : string;
+    TcCode: string;
     PriorTo: any;
-    IsChecked: any;
+    IsChecked: boolean;
     IsMandatory: boolean;
     PromisedDt: any;
     CheckedDt: any;
-    Notes: any;
+    Notes: string;
     ExpiredDt: any;
-    IsAdditional: any;
-    IsExpDtMandatory: any;
+    IsAdditional: boolean;
+    IsExpDtMandatory: boolean;
+    IsWaivable: boolean;
+    IsWaived: boolean;
     RowVersion: any;
-    constructor() { }
+    constructor() { 
+        this.RowVersion = "";
+    }
 }

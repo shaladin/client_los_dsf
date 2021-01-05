@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TcSharingComponentModule } from "./tc-sharing-component.module";
-import { GuarantorComponent } from "./guarantor-data/guarantor.component";
 import { LifeInsuranceDataComponent } from "./life-insurance-data/life-insurance-data.component";
 import { ApplicationDataComponent } from "./application-data/application-data.component";
 import { SearchCrossAppComponent } from "./application-data/search-cross-app/search-cross-app.component";
@@ -29,9 +28,6 @@ import { SubsidyAddEditComponent } from "./financial-data/component/subsidy-add-
 import { FeeComponent } from "./financial-data/component/fee/fee.component";
 import { TcDataComponent } from "./tc-data/tc-data.component";
 import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
-import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
-import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
-import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 import { ApplicationDataRefinancingComponent } from "./application-data/application-data-refinancing/application-data-refinancing.component";
 import { LoanObjectComponent } from "./application-data/loan-object/loan-object.component";
 import { SchmStepUpStepDownNormalComponent } from "./financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal.component";
@@ -73,6 +69,10 @@ import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { CollateralDataCfnaComponent } from './collateral-data-cfna/collateral-data-cfna.component';
 import { CollateralDataCfnaPagingComponent } from './collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging.component';
 import { CollateralDataCfnaDetailComponent } from './collateral-data-cfna/collateral-data-cfna-detail/collateral-data-cfna-detail.component';
+import { GuarantorComponent } from "./guarantor-data/guarantor.component";
+import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
+import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
+import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     

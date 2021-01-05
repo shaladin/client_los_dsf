@@ -73,11 +73,9 @@
             "itemsUrl": []
         }
     ],
-    "querystring": {
-        "select": "SELECT A.APP_NO AS AppNo, A.APP_ID AS AppId, AC.CUST_NAME as CustName, A.PROD_OFFERING_NAME as ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, WF.USERNAME as ClaimBy, WF.WF_TASK_LIST_ID as WFTaskListId, WF.TRANSACTION_CODE as TrxNo, WF.SLA_COLOR AS SlaColor",
-        "from": "FROM APP A WITH(NOLOCK) JOIN APP_CUST AC ON A.APP_ID = AC.APP_ID JOIN V_WF_TASK_LIST WF WITH(NOLOCK) ON A.APP_NO = WF.TRANSACTION_CODE",
-        "where" : "WHERE WF.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchAgrmntActivation"
+  },
     "headerList": [
         {
             "type": "sort",

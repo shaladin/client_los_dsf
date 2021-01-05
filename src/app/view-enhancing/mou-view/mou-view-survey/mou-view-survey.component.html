@@ -34,13 +34,13 @@
           <td>{{item.SurveyeeName}}</td>
           <td>{{item.ObjectSurvey}}</td>
           <td>{{item.Addr}}</td>
-          <td>{{item.SurveyType}}</td>
+          <td>{{item.SurveyTypeDesc}}</td>
           <td>{{item.SurveyorCode}}</td>
           <td>{{item.SurveyTaskStatus}}</td>
           <td>{{item.ResultDt | date: 'dd-MMMM-yyyy'}}</td>
           <td>{{item.ReviewBy}}</td>
           <td>
-            <a>View</a>
+            <a [routerLink]="" (click)="openView(item.SurveyTaskNo)">View</a>
           </td>
         </tr>
       </tbody>

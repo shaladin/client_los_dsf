@@ -91,7 +91,8 @@ export class InvoiceVerifDetailComponent implements OnInit {
       InvoiceAmt: obj.InvoiceAmt,
       Verification: this.listVerificationStatus[0].Key,
       InvoiceNotes: obj.InvoiceNotes,
-      InvoiceDt: obj.InvoiceDueDt
+      InvoiceDt: obj.InvoiceDueDt,
+      RowVersion: obj.RowVersion,
     })
   }
 
@@ -102,7 +103,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   Cancel() {
-    this.router.navigate(["/Nap/AdminProcess/InvoiceVerif/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/InvoiceVerif/Paging"], {});
   }
   SaveData() {
     var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
@@ -111,11 +112,12 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
       this.listInvoice[i].InvoiceStat = item.get("Verification").value;
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
+      this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
 
     var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId };
     this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-      this.router.navigate(["/Nap/AdminProcess/InvoiceVerif/Paging"]);
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/InvoiceVerif/Paging"], {});
     });
 
   }

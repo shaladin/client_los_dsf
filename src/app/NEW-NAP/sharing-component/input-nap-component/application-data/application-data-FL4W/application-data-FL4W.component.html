@@ -84,14 +84,16 @@
                 <!-- First Installment Type -->
                 <label class="col-md-2 adInsLabel"> First Installment Type </label>
                 <div class="col-md-4">
-                  <label class="adInsLabel"> {{FirstInstType}} </label>
-                  <!--select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
-                          <option value="">-Select One-</option>
-                          <option *ngFor="let it of applicationDDLitems['FIRST_INST_TYPE']" value="{{it.Key}}">
-                            {{it.Value}} </option>
-                        </select>
-                    <lib-uc-show-errors  [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors -->
+                  <!-- <label class="adInsLabel"> {{FirstInstType}} </label> -->
+                  <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
 
@@ -319,6 +321,30 @@
 
 
             <!-- <app-loan-object [AppId]="AppId" [mode]="mode"> </app-loan-object> -->
+
+            <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'" *ngIf="isIncludeMailingAddress">
+            </lib-ucSubsection>
+            <div id="mailingAddr" *ngIf="isIncludeMailingAddress">
+              <div class="form-group row">
+                <label class="col-md-2" translate>Copy Address From</label>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <select class="form-control" formControlName="CopyFromMailing">
+                      <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
+                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-btn">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                          <i class="fa fa-check-square-o"></i>Copy
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+                [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
+            </div>
 
 
             <div class="form-actions right">

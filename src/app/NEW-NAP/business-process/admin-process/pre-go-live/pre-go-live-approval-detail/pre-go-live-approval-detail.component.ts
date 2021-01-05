@@ -30,7 +30,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result5: any;
   result6: any;
   arrValue = [];
-
+TCList : any;
   AppNo: any;
   NumOfAsset: any;
   Tenor: any;
@@ -46,7 +46,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ProdOfferingVersion: string;
   LeadNo: string;
   MouNo: string;
-  AppTcList: any = [];
   identifier: string = "TCList";
   IsApvReady: boolean = false;
   outstandingTcObj : any;
@@ -107,6 +106,11 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
+
+      this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.TCList = response["AppTcs"];
+        });
 
     var Obj = {
       AgrmntNo: this.TrxNo,
@@ -212,7 +216,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -268,14 +272,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage("Success");
-        this.router.navigate(["/Nap/AdminProcess/PreGoLive/Approval/Paging"], { queryParams: { "BizTemplateCode": this.bizTemplateCode } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
  
   }
 
   onCancelClick() {
-    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Approval/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   openView(custNo) {

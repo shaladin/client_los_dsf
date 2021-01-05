@@ -185,19 +185,19 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   editMainInfoHandler() {
     if (this.pageType == "return") {
-      this.router.navigate(["/Mou/Request/Detail"], { queryParams: { MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType } });
+      AdInsHelper.RedirectUrl(this.router,["/Mou/Request/Detail"],{ MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType });
     }
     else {
-      this.router.navigate(["/Mou/Request/Detail"], { queryParams: { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType } });
+      AdInsHelper.RedirectUrl(this.router,["/Mou/Request/Detail"],{ MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType });
     }
   }
 
   cancelHandler() {
     if (this.pageType == "return") {
-      this.router.navigate(["Mou/EditMouCustomer/Paging"]);
+      AdInsHelper.RedirectUrl(this.router,["Mou/EditMouCustomer/Paging"],{});
     }
     else {
-      this.router.navigate(['/Mou/Request/Paging']);
+      AdInsHelper.RedirectUrl(this.router,["/Mou/Request/Paging"],{});
     }
   }
 
@@ -208,10 +208,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
-            this.router.navigate(['/Mou/EditMouCustomer/Paging']);
+            AdInsHelper.RedirectUrl(this.router,["/Mou/EditMouCustomer/Paging"],{});
           }
           else {
-            this.router.navigate(['/Mou/Request/Paging']);
+            AdInsHelper.RedirectUrl(this.router,["/Mou/Request/Paging"],{});
           }
         });
     }
@@ -234,10 +234,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          this.router.navigate(['/Mou/EditMouCustomer/Paging']);
+          AdInsHelper.RedirectUrl(this.router,["/Mou/EditMouCustomer/Paging"],{});
         }
         else {
-          this.router.navigate(['/Mou/Request/Paging']);
+          AdInsHelper.RedirectUrl(this.router,["/Mou/Request/Paging"],{});
         }
         break;
       default:
@@ -259,10 +259,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          this.router.navigate(['/Mou/EditMouCustomer/Paging']);
+          AdInsHelper.RedirectUrl(this.router,["/Mou/EditMouCustomer/Paging"],{});
         }
         else {
-          this.router.navigate(['/Mou/Request/Paging']);
+          AdInsHelper.RedirectUrl(this.router,["/Mou/Request/Paging"],{});
         }
         break;
       default:

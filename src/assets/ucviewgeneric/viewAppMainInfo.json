@@ -20,10 +20,24 @@
               }
             ]
           }, 
-          {
-            "type": "text",
-            "label": "Number Of Asset",
-            "property": "NumOfAsset"
+          {            
+            "type" : "switch", 
+            "case" : [ 
+              {
+                "conditions": [                  
+                  {
+                    "property" : "BizTemplateCode",
+                    "value" : "CFNA",
+                    "restriction" : "NEQ"
+                  }
+                ],
+                "result": {
+                  "type": "text",
+                  "label": "Number Of Asset",
+                  "property" : "NumOfAsset"
+                }
+              }
+            ]
           },
           {
             "type": "text",
@@ -79,9 +93,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT A.APP_NO AS AppNo,  A.APP_ID AS AppId, AC.CUST_NAME AS CustName, A.TENOR AS Tenor, A.CURR_CODE AS CurrCode, A.NUM_OF_ASSET AS NumOfAsset, A.ORI_OFFICE_NAME AS OfficeName, A.PROD_OFFERING_NAME AS ProdOfferingName, A.PROD_OFFERING_CODE AS ProdOfferingCode, A.PROD_OFFERING_VERSION AS ProdOfferingVersion, A.MR_ORDER_INFO_CODE AS MrOrderInfoCode, A.LEAD_ID AS LeadId, L.LEAD_NO AS LeadNo, StatDescr.DESCR AS Stat, ISNULL(AgrCurStepDescr.DESCR, CurrStepDescr.DESCR) AS CurrStep, ISNULL(AgrLastStepDescr.DESCR, LastStepDescr.DESCR) AS LastStep",
-          "from": "FROM APP A WITH(NOLOCK) LEFT JOIN dbo.AGRMNT B WITH(NOLOCK) ON A.APP_ID = B.APP_ID LEFT JOIN APP_CUST AC WITH(NOLOCK) ON A.APP_ID = AC.APP_ID LEFT JOIN dbo.LEAD L ON L.LEAD_ID = A.LEAD_ID LEFT JOIN dbo.V_REF_STATUS StatDescr WITH(NOLOCK) ON A.APP_STAT = StatDescr.REF_STATUS_CODE AND StatDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS CurrStepDescr WITH(NOLOCK) ON A.APP_CURR_STEP = CurrStepDescr.REF_STATUS_CODE AND CurrStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS LastStepDescr WITH(NOLOCK) ON A.APP_LAST_STEP = LastStepDescr.REF_STATUS_CODE AND LastStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS AgrCurStepDescr WITH(NOLOCK) ON B.AGRMNT_CURR_STEP = AgrCurStepDescr.REF_STATUS_CODE AND AgrCurStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC' LEFT JOIN dbo.V_REF_STATUS AgrLastStepDescr WITH(NOLOCK) ON B.AGRMNT_LAST_STEP = AgrLastStepDescr.REF_STATUS_CODE AND AgrLastStepDescr.TRX_TYPE_CODE = 'LOS_CRD_PRC'",
-          "where": "WHERE A.APP_ID = {0}"
+          "name": "viewAppMainInfo"
         }
       }
     ]

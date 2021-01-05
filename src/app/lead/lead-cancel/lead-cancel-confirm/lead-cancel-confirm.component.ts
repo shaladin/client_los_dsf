@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsService } from 'app/shared/services/adIns.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -10,6 +9,8 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -37,7 +38,7 @@ export class LeadCancelConfirmComponent implements OnInit {
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router,
-    private adInsService: AdInsService,
+    private formValidate: FormValidateService,
     private fb: FormBuilder
   ) { }
 
@@ -102,7 +103,7 @@ export class LeadCancelConfirmComponent implements OnInit {
       this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
-          this.router.navigate(["/Lead/Cancel"]);
+          AdInsHelper.RedirectUrl(this.router,["/Lead/Cancel"],{});
         }
       );
     }

@@ -21,6 +21,7 @@ import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
+import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -39,7 +40,9 @@ export class CommissionV2Component implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: any = {};
   @Input() BizTemplateCode: string;
+  @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
 
@@ -113,6 +116,7 @@ export class CommissionV2Component implements OnInit {
 
   async ngOnInit() {
     this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+    await this.GetListAppReservedFundByAppId();
     await this.GetContentData();
     await this.GetRuleDataForForm();
     await this.GetExistingAppCommData();
@@ -121,6 +125,34 @@ export class CommissionV2Component implements OnInit {
         this.IsCalculated = true;
       }
     }
+  }
+
+  DictRemainingIncomeForm: any = {};
+  async GetListAppReservedFundByAppId(){
+    for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
+      const element = this.ListResultRefundIncomeInfo[index];
+      let TempObj = new ResultRefundObj();
+      TempObj.RefundAllocationFrom = element.RefundAllocationFrom;
+      TempObj.RefundAllocationFromDesc = element.RefundAllocationFromDesc;
+      TempObj.RefundAmount = element.RefundAmount;
+      this.DictRemainingIncomeForm[element.RefundAllocationFrom] = TempObj;
+    }
+    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {AppId: this.AppId}).toPromise().then(
+      (response)=>{
+        // console.log(response);
+        let tempObj: Array<any> = response[CommonConstant.ReturnObj];
+        // console.log(tempObj);
+        for (let index = 0; index < tempObj.length; index++) {
+          const element = tempObj[index];
+          // console.log(element);
+          if(this.DictRemainingIncomeForm[element.MrReservedFundSourceCode]){
+            this.DictRemainingIncomeForm[element.MrReservedFundSourceCode].RefundAmount-=element.ReservedFundAmt;
+          }          
+        }
+        // console.log(this.DictRemainingIncomeForm);
+        this.outputDictRemaining.emit(this.DictRemainingIncomeForm);
+      }
+    )
   }
 
   async GetContentData() {
@@ -507,9 +539,9 @@ export class CommissionV2Component implements OnInit {
   CekMaxValueIncomeInfo() {
     var flag = false;
     for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
-      if (this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]) {
+      if (this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]) {
         flag = true;
-        this.toastr.warningMessage(this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAllocationFromDesc + " cannot be more than " + this.DictMaxIncomeForm[this.ListAllocFromForDict[i]].RefundAmount);
+        this.toastr.warningMessage(this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAllocationFromDesc + " cannot be more than " + this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount);
       }
     }
     return flag;
@@ -575,6 +607,7 @@ export class CommissionV2Component implements OnInit {
       tempAppCommissionDObj.TaxAmt = tempObj.TaxAmt;
       tempAppCommissionDObj.VatAmt = tempObj.VatAmt;
       tempAppCommissionDObj.PenaltyAmt = tempObj.PenaltyAmt;
+      tempAppCommissionDObj.RefundAmt = this.DictMaxIncomeForm[tempObj.AllocationFrom].RefundAmount;
       tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.AllocationAmount - (tempObj.TaxAmt + tempObj.VatAmt);
       tempAppCommissionDObj.RowVersion = tempObj.RowVersion;
       listAppCommissionDObj.push(tempAppCommissionDObj);

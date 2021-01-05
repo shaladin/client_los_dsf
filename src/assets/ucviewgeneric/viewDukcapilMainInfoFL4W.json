@@ -82,11 +82,9 @@
                     "property": "Profession"
                 }
             ],
-            "querystring": {
-                "select": "SELECT FD.FAMILY_CARD_NO AS FamilyCardNo, FD.CUST_NAME AS CustName, FD.BIRTH_PLACE AS BirthPlace, FD.BIRTH_DT AS BirthDt, FD.GENDER AS Gender, FD.RELIGION AS Religion, FD.MARITAL_STATUS AS MaritalStatus, FD.RELATIONSHIP AS Relationship, FD.EDUCATION AS Education, FD.PROFESSION AS Profession, FD.MOTHER_ID_NO AS MotherIdNo, FD.MOTHER_MAIDEN_NAME AS MotherMaidenName, FD.FATHER_ID_NO AS FatherIdNo, FD.FATHER_NAME AS FatherName",
-                "from": "FROM dbo.FRAUD_DUKCAPIL_REQ_LOG LG JOIN dbo.FRAUD_DUKCAPIL FD ON FD.FRAUD_DUKCAPIL_REQ_LOG_ID = LG.FRAUD_DUKCAPIL_REQ_LOG_ID JOIN dbo.APP ON LG.TRX_NO = APP.APP_NO",
-                "where": "WHERE LG.TRX_TYPE_CODE = N'APP' AND APP_ID = {0}"
-            }
+          "querystring": {
+            "name": "viewDukcapilMainInfoFL4W_DukcapilCustDataId"
+          }
         },
         {
             "subSectionId": "DukcapilAddressDataId",
@@ -129,11 +127,9 @@
                     "property": "Zipcode"
                 }
             ],
-            "querystring": {
-                "select": "SELECT FD.ADDR AS Addr, FD.AREA_CODE_1 AS AreaCode1, FD.AREA_CODE_2 AS AreaCode2, FD.AREA_CODE_3 AS AreaCode3, FD.AREA_CODE_4 AS AreaCode4, FD.CITY AS City, FD.ZIPCODE AS Zipcode",
-                "from": "FROM dbo.FRAUD_DUKCAPIL_REQ_LOG LG JOIN dbo.FRAUD_DUKCAPIL FD ON FD.FRAUD_DUKCAPIL_REQ_LOG_ID = LG.FRAUD_DUKCAPIL_REQ_LOG_ID JOIN dbo.APP ON LG.TRX_NO = APP.APP_NO",
-                "where": "WHERE LG.TRX_TYPE_CODE = 'APP' AND APP_ID = {0}"
-            }
+          "querystring": {
+            "name": "viewDukcapilMainInfoFL4W_DukcapilAddressDataId"
+          }
         },
         {
             "subSectionId": "DukcapilMarriageDataId",
@@ -161,11 +157,9 @@
                     "property": "DivorceDt"
                 }
             ],
-            "querystring": {
-                "select": "SELECT FD.MARRIAGE_DEED_NO AS MarriageDeedNo, FD.MARRIAGE_DT AS MarriageDt, FD.DIVORCE_DEED_NO AS DivorceDeedNo, FD.DIVORCE_DT AS DivorceDt",
-                "from": "FROM dbo.FRAUD_DUKCAPIL_REQ_LOG LG JOIN dbo.FRAUD_DUKCAPIL FD ON FD.FRAUD_DUKCAPIL_REQ_LOG_ID = LG.FRAUD_DUKCAPIL_REQ_LOG_ID JOIN dbo.APP ON LG.TRX_NO = APP.APP_NO",
-                "where": "WHERE LG.TRX_TYPE_CODE = 'APP' AND APP_ID = {0}"
-            }
+          "querystring": {
+            "name": "viewDukcapilMainInfoFL4W_DukcapilMarriageDataId"
+          }
         },
         {
             "subSectionId": "DukcapilStatusCekDataId",
@@ -213,11 +207,9 @@
                     "property": "BirthDt"
                 }
             ],
-            "querystring": {
-                "select": "SELECT FD.CUST_NAME AS CustName, FD.DUKCAPIL_DATA_STATUS AS DukcapilDataStatus, FD.ID_NO AS IdNo, FD.CEK_DUKCAPIL_DT AS CekDukcapilDt, FD.FAMILY_CARD_NO AS FamilyCardNo, FD.BIRTH_PLACE AS BirthPlace, FD.BIRTH_DT AS BirthDt",
-                "from": "FROM dbo.FRAUD_DUKCAPIL_REQ_LOG LG JOIN dbo.FRAUD_DUKCAPIL FD ON FD.FRAUD_DUKCAPIL_REQ_LOG_ID = LG.FRAUD_DUKCAPIL_REQ_LOG_ID JOIN dbo.APP ON LG.TRX_NO = APP.APP_NO",
-                "where": "WHERE LG.TRX_TYPE_CODE = 'APP' AND APP_ID = {0}"
-            }
+          "querystring": {
+            "name": "viewDukcapilMainInfoFL4W_DukcapilStatusCekDataId"
+          }
         }
     ]
 }

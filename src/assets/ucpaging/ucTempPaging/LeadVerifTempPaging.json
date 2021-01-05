@@ -102,11 +102,9 @@
             "placeholder": "Placeholder"
           }
     ],
-    "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo, L.ORI_OFFICE_CODE AS OfficeCode, WTL.USERNAME AS ClaimBy, WTL.CLAIM_STAT AS ClaimStat,WTL.WF_TASK_LIST_ID AS WfTaskListId, LC.CUST_NAME AS CustName,  LA.FULL_ASSET_NAME AS FullAssetName, L.ORDER_NO AS OrderNo, L.LEAD_ID AS LeadId, L.MR_LEAD_SOURCE_CODE as MrLeadSourceCode ,RM.DESCR AS LeadSource, DL.LEAD_NO AS DuplicateLeadNo, DL.LEAD_ID AS DuplicateLeadId, RO.OFFICE_NAME AS OfficeName",
-        "from": "FROM  dbo.LEAD L WITH(NOLOCK) LEFT JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON LC.LEAD_ID = L.LEAD_ID LEFT JOIN dbo.LEAD DL WITH(NOLOCK) ON DL.LEAD_ID = L.DUPLICATE_LEAD_ID LEFT JOIN dbo.LEAD_ASSET LA WITH(NOLOCK) ON LA.LEAD_ID = LC.LEAD_ID LEFT JOIN [V_REF_MASTER] RM ON RM.MASTER_CODE = L.MR_LEAD_SOURCE_CODE AND RM.REF_MASTER_TYPE_CODE = 'LEAD_SOURCE' JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON L.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'LEAD_VERIFICATION' JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE",
-        "where" : "WHERE WTL.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "LeadVerifTempPaging"
+  },
     "headerList": [
         {
             "type": "sort",
@@ -128,15 +126,15 @@
         },
         {
             "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "LC.CUST_NAME"
-        },
-        {
-            "type": "sort",
             "position": "center",
             "label": "Order No",
             "name": "L.ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "LC.CUST_NAME"
         },
         {
             "type": "sort",

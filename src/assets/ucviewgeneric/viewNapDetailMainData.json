@@ -1,0 +1,135 @@
+{
+  "title": "New Application Detail",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "position": "left",
+          "path": "/View/AppView",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "AppId",
+              "property": "AppId" 
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "name": "MouCustNo",
+          "isHide": true,
+          "path": "/View/Mou/CustView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Type",
+          "property": "CustType"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions" : [ 
+                {
+                  "property" : "BizTemplateCode", 
+                  "value" : "CFRFN4W",
+                  "restriction": "EQ"
+                }
+              ],
+                "result" : {
+                  "type": "text",
+                  "label": "Collateral Data",
+                  "property": "CollateralData"
+              }
+            },
+            {
+              "conditions" : [ 
+                {
+                  "property" : "BizTemplateCode", 
+                  "value" : "CFRFN4W",
+                  "restriction": "NEQ"
+                }
+              ],
+                "result" : {
+                  "type": "text",
+                  "label": "Asset Data",
+                  "property": "AssetData"
+                }
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Lead No.",
+          "property": "LeadNo",
+          "name": "LeadNo",
+          "isHide": true,
+          "position": "left",
+          "path": "/View/Lead",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "LeadId",
+              "property": "LeadId" 
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Application Status",
+          "property": "Stat"
+        },
+        {
+          "type": "text",
+          "label": "Application Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Application Last Step",
+          "property": "LastStep"
+        }
+      ],
+      "querystring": {
+        "name": "viewNapDetailMainData"
+      }
+    }
+  ]
+}

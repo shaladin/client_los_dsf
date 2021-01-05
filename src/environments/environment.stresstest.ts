@@ -6,13 +6,13 @@
 export const environment = {
     production: true,
     navbarColor: 'lime',
-    losUrl: 'http://R3STWEBBE.ad-ins.com/LOS',
-    FoundationR3Url: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
+    losUrl: 'http://R3STWEBBE.ad-ins.com/LOS_BE',
+    FoundationR3Url: 'http://R3STWEBBE.ad-ins.com/FOUNDATION_BE',
     DashboardURL: 'http://R3STWEBBE.ad-ins.com/Dashboard',
-    WebSocketURL: 'http://R3STWEBBE.ad-ins.com/FOUNDATION',
+    WebSocketURL: 'http://R3STWEBBE.ad-ins.com/FOUNDATION_BE',
     
-    FoundationR3Web: 'http://R3STWEBFE.ad-ins.com/Foundation',
-    losR3Web: 'http://R3STWEBFE.ad-ins.com/LOS',
+    FoundationR3Web: 'http://R3STWEBFE.ad-ins.com/FOUNDATION_FE',
+    losR3Web: 'http://R3STWEBFE.ad-ins.com/LOS_FE',
 
     WorkflowR3Url: 'http://r3stengine.ad-ins.com/WORKFLOW',
     ApprovalR3Url: 'http://r3stengine.ad-ins.com/approval',

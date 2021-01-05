@@ -53,9 +53,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT AFD.TOTAL_ASSET_PRICE_AMT AS TotalAssetPriceAmt, AFD.DOWN_PAYMENT_GROSS_AMT AS DPAssetPaidByCust, (AFD.DOWN_PAYMENT_GROSS_AMT-AFD.DOWN_PAYMENT_NETT_AMT) AS SubsidyDPFromDealer, AG.MR_FIRST_INST_TYPE_CODE AS MrFirstInstTypeCode,AFD.INST_AMT AS InstAmt,AFD.TOTAL_INS_CUST_AMT AS TotalInsCustAmt, AFD.TOTAL_LIFE_INS_CUST_AMT AS TotalLifeInstCustAmt, AFD.TOTAL_FEE_AMT AS TotalFeeAmt, AFD.TDP_PAID_COY_AMT AS TDPPaid, POH.TOTAL_PURCHASE_ORDER_AMT AS TotalPurchaseOrderAmt",
-          "from": "FROM dbo.APP_FIN_DATA AFD WITH(NOLOCK) JOIN dbo.APP A WITH(NOLOCK) ON AFD.APP_ID = A.APP_ID JOIN dbo.AGRMNT AG ON AG.APP_ID = A.APP_ID JOIN DBO.PURCHASE_ORDER_H POH WITH(NOLOCK) ON AG.AGRMNT_ID = POH.AGRMNT_ID",
-          "where": "WHERE POH.PURCHASE_ORDER_H_ID = {0} AND AG.AGRMNT_ID = {1}"
+          "name": "viewADFinancialInfo"
         }
       }
     ]

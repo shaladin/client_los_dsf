@@ -43,7 +43,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W && this.result.BizTemplateCode == CommonConstant.CFNA){
           this.PriceLabel = "Financing Amount";
         }
       });
@@ -102,6 +102,12 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
       this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
         InstAmt: 0
       });
+      if(this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].setValidators([Validators.max(100)]);
+      else
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].clearValidators();
+
+      this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].updateValueAndValidity();
     }
 
     this.SetNeedReCalculate(true);
@@ -148,11 +154,11 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value ; i++){
+    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value-1 ; i++){
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
-        InstAmt: [0]
+        InstAmt: [0, this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt ? [Validators.max(100)] : []]
       });
       (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }

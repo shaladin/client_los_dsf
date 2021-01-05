@@ -18,11 +18,9 @@
         "placeholder": "Asset Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT A.FULL_ASSET_CODE AS FullAssetCode, A.FULL_ASSET_NAME AS FullAssetName, B.ASSET_TYPE_ID AS AssetTypeId, B.ASSET_TYPE_CODE AS AssetTypeCode, C.ASSET_CATEGORY_CODE AS AssetCategoryCode",
-      "from": "FROM dbo.ASSET_MASTER A WITH(NOLOCK) JOIN dbo.ASSET_TYPE B WITH(NOLOCK) ON A.ASSET_TYPE_ID = B.ASSET_TYPE_ID JOIN dbo.ASSET_CATEGORY C WITH (NOLOCK) ON A.ASSET_CATEGORY_ID = C.ASSET_CATEGORY_ID",
-      "where":"WHERE A.IS_ACTIVE = 1 AND A.ASSET_CATEGORY_ID IS NOT NULL AND A.IS_FINAL = 1 AND B.IS_LOAN_OBJ = 1"
-    },
+  "querystring": {
+    "name": "lookupAsset"
+  },
     "headerList": [
       {
         "type": "sort",
@@ -67,4 +65,3 @@
     "propertyId": "FullAssetCode",
     "propertyName": "FullAssetName"
   }
-  

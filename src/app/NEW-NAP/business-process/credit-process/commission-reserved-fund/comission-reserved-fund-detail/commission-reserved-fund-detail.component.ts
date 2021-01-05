@@ -15,6 +15,7 @@ import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model'
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -78,6 +79,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.BizTemplateCode);
+    this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
     this.arrValue.push(this.ReturnHandlingHObj.AppId);
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -124,7 +126,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
           this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
           this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - response.CommissionAllocatedAmt - response.ReservedFundAllocatedAmt,
           this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
-        this.viewIncomeInfoObj.ExpenseAmount = response.ExpenseAmount;
+        this.viewIncomeInfoObj.ExpenseAmount = response.CommissionAllocatedAmt;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
       });
@@ -145,6 +147,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
               }
             )
           }
+          this.ChangeTab(CommonConstant.AppStepComm);
         }
       });
   }
@@ -170,6 +173,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   tempTotalExpenseAmt: number = 0;
   IsLastStep: boolean = false;
   ChangeTab(AppStep) {
+    this.isShow = false;
     switch (AppStep) {
       case CommonConstant.AppStepComm:
         this.StepIndex = 1;
@@ -208,7 +212,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     }
     else {
       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CommissionReservedFund/Paging"],{ BizTemplateCode: lobCode });
+
     }
   }
 
@@ -232,7 +237,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          this.router.navigate(["/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+          AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode });
         })
     }
   }
@@ -240,9 +245,9 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   Back() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode});
     } else {
-      this.router.navigate(["/Nap/CreditProcess/CommissionReservedFund/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode});
     }
   }
 
@@ -260,5 +265,13 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.viewIncomeInfoObj.ExpenseAmount = this.tempTotalExpenseAmt;
     this.viewIncomeInfoObj.ReservedFundAllocatedAmount = this.tempTotalRsvFundAmt;
     this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+  }
+
+  isShow: boolean = false;
+  DictRemainingIncomeForm: any = {};
+  GetDictRemaining(ev){
+    console.log(ev);
+    this.DictRemainingIncomeForm = ev;
+    this.isShow = true;
   }
 }

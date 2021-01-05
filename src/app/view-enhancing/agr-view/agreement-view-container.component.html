@@ -14,6 +14,12 @@
           <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
 
           <mat-tab-group *ngIf="IsReady">
+            <mat-tab *ngIf="IsSummary" label="Summary">
+              <ng-template matTabContent>
+                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab label="Customer">
               <ng-template matTabContent>
                 <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
@@ -29,13 +35,13 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsCollateral" label="Collateral">
+            <mat-tab *ngIf="IsCollateral" label="Asset & Collateral">
               <ng-template matTabContent>
-                <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
+                <view-asset-collateral [agrmntId]="AgrmntId"></view-asset-collateral>
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsAppCollateral" label="Collateral">
+            <mat-tab *ngIf="IsAppCollateral" label="Asset & Collateral">
               <ng-template matTabContent>
                 <app-view-app-collateral-multi *ngIf="IsMulti" [agrmntId]="AgrmntId"></app-view-app-collateral-multi>
                 <app-view-app-collateral-single *ngIf="!IsMulti" [agrmntId]="AgrmntId">
@@ -69,15 +75,15 @@
             </mat-tab>
 
             <mat-tab *ngIf="IsTC" label="Term and Conditions">
-              <ng-template matTabContent>
+              <ng-template matTabContent >
                 <app-app-tc [AppId]="AppId"></app-app-tc>
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsAgreementCard" label="Agreement Card">
+            <!-- <mat-tab *ngIf="IsAgreementCard" label="Agreement Card">
               <ng-template matTabContent>
               </ng-template>
-            </mat-tab>
+            </mat-tab> -->
 
             <mat-tab *ngIf="IsCommission" label="Commission">
               <ng-template matTabContent>
@@ -97,10 +103,10 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsCustomerCard" label="Customer Card">
+            <!-- <mat-tab *ngIf="IsCustomerCard" label="Customer Card">
               <ng-template matTabContent>
               </ng-template>
-            </mat-tab>
+            </mat-tab> -->
 
             <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
@@ -124,19 +130,13 @@
                 <agrmnt-view-document [agrmntId]="AgrmntId"></agrmnt-view-document>
               </ng-template>
             </mat-tab>
-
-            <mat-tab *ngIf="IsSummary" label="Summary">
-              <ng-template matTabContent>
-                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
-              </ng-template>
-            </mat-tab>
-
+            
             <mat-tab *ngIf="IsInvoiceData" label="Invoice Data">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsComplainHandling" label="Complain Handling">
+            <!-- <mat-tab *ngIf="IsComplainHandling" label="Complain Handling">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
@@ -144,7 +144,7 @@
             <mat-tab *ngIf="IsAdditionalService" label="Additional Service">
               <ng-template matTabContent>
               </ng-template>
-            </mat-tab>
+            </mat-tab> -->
 
           </mat-tab-group>
         </div>

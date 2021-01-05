@@ -148,7 +148,8 @@ export class LegalReviewDetailComponent implements OnInit {
       this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
-          this.router.navigate(["/Mou/CustomerLegalReview/Paging"]);
+          AdInsHelper.RedirectUrl(this.router,["/Mou/CustomerLegalReview/Paging"],{});
+
         });
       this.mouTc.Save();
     }

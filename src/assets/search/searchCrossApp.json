@@ -18,10 +18,9 @@
         "placeholder": "Customer Name"
       }
     ],
-    "querystring": {
-      "select": "SELECT ag.AGRMNT_NO AS AgrmntNo, ag.CUST_NAME AS CustName, ap.APP_NO AS AppNo, ap.APP_ID AS AppId, ag.AGRMNT_STAT AS AgrmntStat, ag.AGRMNT_ID AS AgrmntId",
-      "from": "FROM dbo.APP ap WITH(NOLOCK) JOIN dbo.AGRMNT ag WITH(NOLOCK) ON ap.APP_ID = ag.APP_ID"
-    },
+  "querystring": {
+    "name": "searchCrossApp"
+  },
     "orderby": {
       "key": "ap.APP_NO",
       "value": "false"

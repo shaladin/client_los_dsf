@@ -7,7 +7,7 @@
       "name": "L.LEAD_NO",
       "id": "LeadNoId",
       "value": "",
-      "label": "LEAD NO",
+      "label": "Lead No",
       "placeholder": "Placeholder"
     },
     {
@@ -21,7 +21,7 @@
       "isSelectOne": false,
       "url": "",
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-      "label": "OFFICE",
+      "label": "Office",
       "items": [],
       "isQueryIn": true,
       "itemsUrl": []
@@ -31,7 +31,7 @@
       "name": "LC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
-      "label": "CUSTOMER NAME",
+      "label": "Customer Name",
       "placeholder": "Placeholder"
     },
     {
@@ -39,7 +39,7 @@
       "name": "L.LEAD_DT",
       "id": "LeadDtId",
       "value": "",
-      "label": "LEAD DATE >=",
+      "label": "Lead Date >=",
       "restriction": "gte",
       "placeholder": "Placeholder"
     },
@@ -48,7 +48,7 @@
       "name": "RL.LOB_NAME",
       "id": "LobNameId",
       "value": "",
-      "label": "LINE OF BUSINESS",
+      "label": "Line Of Business",
       "placeholder": "Placeholder"
     },
     {
@@ -56,7 +56,7 @@
       "name": "L.LEAD_DT",
       "id": "LeadDtId",
       "value": "",
-      "label": "LEAD DATE <=",
+      "label": "Lead Date <=",
       "restriction": "lte",
       "placeholder": "Placeholder"
     },
@@ -71,17 +71,16 @@
       "isSelectOne": false,
       "url": "",
       "path": "/RefMaster/GetListKeyValueActiveByCode",
-      "label": "LEAD SOURCE",
+      "label": "Lead Source",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "RefMasterTypeCode",
       "criteriaPropValue": "LEAD_SOURCE"
     }
   ],
-    "querystring": {
-        "select": "SELECT RO.OFFICE_NAME AS OriOfficeName, L.LEAD_NO AS LeadNo, LC.CUST_NAME AS CustName, RL.LOB_NAME AS LobName, L.LEAD_DT AS LeadDt, RMSC.DESCR AS LeadSourceName, L.MR_LEAD_SOURCE_CODE AS MrLeadSourceCode, L.LEAD_STAT AS LeadStat, L.LEAD_ID AS LeadId",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID LEFT JOIN V_REF_MASTER RMSC WITH(NOLOCK) ON L.MR_LEAD_SOURCE_CODE = RMSC.MASTER_CODE AND RMSC.REF_MASTER_TYPE_CODE = 'LEAD_SOURCE' LEFT JOIN V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE LEFT JOIN V_REF_LOB RL WITH(NOLOCK) ON L.LOB_CODE = RL.LOB_CODE"
-    },
+  "querystring": {
+    "name": "searchAppFromLead"
+  },
     "headerList": [
         {
             "type": "sort",

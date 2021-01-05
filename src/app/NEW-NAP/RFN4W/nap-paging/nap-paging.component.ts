@@ -88,7 +88,7 @@ export class NapPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          this.router.navigate(["Nap/CFRefinancing/Add"]);
+          AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/Add"], {});
         } else {
           this.toastr.typeErrorCustom(ExceptionConstant.OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP);
         }
@@ -100,7 +100,8 @@ export class NapPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId } });
+      AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+      
     }
   }
 

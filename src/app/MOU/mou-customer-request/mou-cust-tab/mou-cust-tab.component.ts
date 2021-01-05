@@ -179,17 +179,28 @@ export class MouCustTabComponent implements OnInit {
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       var totalSharePrcnt = 0;
+      var isActiveSignerExist = false;
 
       if (this.listShareholder != undefined) {
         for (let i = 0; i < this.listShareholder.length; i++) {
           totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+        }
+        for (const item of this.listShareholder) {
+          if(item.IsActive){
+            isActiveSignerExist = true;
+            break;
+          }
         }
       }
 
       if (totalSharePrcnt != 100) {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
-      }      
+      }
+      if(!isActiveSignerExist){
+        this.toastr.warningMessage("At Least 1 Active Signer is Required");
+        return false;
+      }   
       this.custDataCompanyObj = new MouCustCompanyDataObj();
       this.setCustCompanyObjForSave();
       for (let i = 0; i < this.custDataCompanyObj.MouCustGrpObjs.length; i++) {
@@ -907,7 +918,7 @@ export class MouCustTabComponent implements OnInit {
     this.inputAddrLegalCompanyObj = new InputAddressObj();
     this.inputAddrLegalCompanyObj.showPhn3 = false;
     this.inputAddrLegalCompanyObj.showSubsection = false;
-    this.inputAddrLegalCompanyObj.showOwnership = true;
+    this.inputAddrLegalCompanyObj.showOwnership = false;
   }
 
   initAddrResidenceObj() {

@@ -7,6 +7,7 @@
         <th><span translate class="thead-header text-center">Prior To</span></th>
         <th><span translate class="thead-header text-center">Required</span></th>
         <th><span translate class="thead-header text-center">Check</span></th>
+        <th><span translate class="thead-header text-center">Waived</span></th>
         <th><span translate class="thead-header text-center">Promise Date</span></th>
         <th><span translate class="thead-header text-center">Expired Date</span></th>
         <th><span translate class="thead-header text-center">Notes</span></th>
@@ -19,7 +20,8 @@
         <td style="width: 10%" class="text-center">{{parentForm.controls[identifier].controls[i].controls.PriorTo.value}}</td>
         <td style="width: 5%"class="text-center" *ngIf="parentForm.controls[identifier].controls[i].controls.IsMandatory.value==true">Yes</td>
         <td style="width: 5%" class="text-center" *ngIf="parentForm.controls[identifier].controls[i].controls.IsMandatory.value==false">No</td>
-        <td style="width: 5%" class="text-center"><input type="checkbox" class="border-primary" (change)="ReconstructForm()" formControlName="IsChecked"></td>
+        <td style="width: 5%" class="text-center"><input type="checkbox" class="border-primary" (change)="ResetPromisedAndExpiredDtToNull(i)" formControlName="IsChecked"></td>
+        <td style="width: 5%" class="text-center"><input type="checkbox" class="border-primary" (change)="ResetPromisedAndExpiredDtToNull(i)" formControlName="IsWaived"></td>
         <td style="width: 10%"><input type="date" min="{{businessDt | date: 'yyyy-MM-dd'}}" class="form-control dateCustomWidth" formControlName="PromisedDt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier].controls[i].controls.PromisedDt.invalid}">
           <lib-uc-show-errors [control]="parentForm.controls[identifier].controls[i].controls.PromisedDt" [submit]="enjiForm.submitted">

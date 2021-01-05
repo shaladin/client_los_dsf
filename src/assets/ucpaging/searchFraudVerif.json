@@ -81,31 +81,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "L.MR_CUST_TYPE_CODE",
-            "id": "CustTypeId",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "",
-            "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Customer Type",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "CUST_TYPE"
-        },
-        {
-            "type": "textbox",
-            "name": "LC.CUST_NO",
-            "id": "CustNoId",
-            "value": "",
-            "label": "Customer No.",
-            "placeholder": "Placeholder"
-        },
-        {
             "type": "textbox",
             "name": "LC.CUST_NAME",
             "id": "CustNameId",
@@ -114,11 +89,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT L.LEAD_NO AS LeadNo,WTL.WF_TASK_LIST_ID AS WfTaskListId,WTL.CLAIM_STAT AS ClaimStat, WTL.USERNAME AS ClaimBy, L.ORDER_NO AS OrderNo , L.LEAD_ID AS LeadId, L.ORI_OFFICE_CODE AS OriOfficeCode, LC.CUST_NO AS CustNo, LC.CUST_NAME AS CustName, L.MR_LEAD_SOURCE_CODE AS SourceCode, LC.MR_CUST_TYPE_CODE AS MrCustTypeCode, RO.OFFICE_NAME AS OfficeName, WTL.SLA_COLOR AS SlaColor",
-        "from": "FROM dbo.LEAD L WITH(NOLOCK) JOIN dbo.LEAD_CUST LC WITH(NOLOCK) ON L.LEAD_ID = LC.LEAD_ID JOIN [dbo].[V_WF_TASK_LIST] WTL WITH(NOLOCK) ON l.LEAD_NO = WTL.TRANSACTION_CODE AND WTL.ACT_CODE = 'FRAUD_VERIFICATION' JOIN dbo.V_REF_OFFICE RO WITH(NOLOCK) ON L.ORI_OFFICE_CODE = RO.OFFICE_CODE",
-        "where": "WHERE WTL.END_EXECUTING_DATE IS NULL"
-    },
+  "querystring": {
+    "name": "searchFraudVerif"
+  },
     "headerList": [
         {
             "type": "sort",

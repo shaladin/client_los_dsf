@@ -33,7 +33,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   mode: string = "add";
   ListObj: Array<LifeInsDObj> = new Array<LifeInsDObj>();
   AppLifeInsD: any = new Array();
-  result: any;
+  result: LifeInsObj = new LifeInsObj();
 
   minInsLength: number = 1;
   maxInsLength: number = 99;
@@ -73,7 +73,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
+    this.http.post<LifeInsObj>(URLConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
       (response) => {
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
@@ -319,6 +319,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     if (this.IsChecked) {
       if (this.checkSubject() == false) return;
       this.LifeInsObj.AppId = this.AppId;
+      this.LifeInsObj.RowVersion = this.result.RowVersion;
       this.http.post(URLConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);

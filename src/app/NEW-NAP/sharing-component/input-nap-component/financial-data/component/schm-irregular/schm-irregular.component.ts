@@ -10,6 +10,7 @@ import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.M
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-schm-irregular',
@@ -32,7 +33,7 @@ export class SchmIrregularComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
+    private toastr: NGXToastrService
   ) { }
 
   ngOnInit() {
@@ -42,7 +43,7 @@ export class SchmIrregularComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
       (response) => {
         this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W ){
+        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA ){
           this.PriceLabel = "Financing Amount";
         }
       });
@@ -104,11 +105,17 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    this.calcIrregularObj = this.ParentForm.value;
+    this.calcIrregularObj["IsRecalculate"] = false;
+    
+    var IdxKosong = this.calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
+    if(IdxKosong != -1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (IdxKosong + 1));
+      return;
+    }
     if(this.ValidateFee() == false){
       return;
     }
-    this.calcIrregularObj = this.ParentForm.value;
-    this.calcIrregularObj["IsRecalculate"] = false;
     this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;

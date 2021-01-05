@@ -36,9 +36,7 @@
     }
   ],
   "querystring": {
-    "select": "SELECT ECONOMIC_SECTOR_CODE AS EconomicSectorCode, ECONOMIC_SECTOR_NAME AS EconomicSectorName, INDUSTRY_TYPE_CODE AS IndustryTypeCode, INDUSTRY_TYPE_NAME AS IndustryTypeName",
-    "from": "FROM dbo.REF_INDUSTRY_TYPE RIT WITH(NOLOCK) JOIN dbo.REF_ECONOMIC_SECTOR RES WITH(NOLOCK) ON RIT.REF_ECONOMIC_SECTOR_ID = RES.REF_ECONOMIC_SECTOR_ID",
-    "where": "WHERE RIT.IS_ACTIVE = 1 "
+    "name": "lookupIndustryType"
   },
   "headerList": [
     {

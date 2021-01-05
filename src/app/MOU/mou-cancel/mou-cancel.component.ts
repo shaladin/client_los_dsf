@@ -29,7 +29,7 @@ export class MouCancelComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      this.router.navigate(["/Mou/UnauthorizedPage"]);
+      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"], {});
       return;
     }
     else {
@@ -67,6 +67,7 @@ export class MouCancelComponent implements OnInit {
         mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+        mouCancel.RowVersion = event.RowObj.RowVersions;
         this.http.post(URLConstant.EditMouForCancelByMouId, mouCancel).subscribe(
           response => {
             this.toastr.successMessage(response["Message"]);

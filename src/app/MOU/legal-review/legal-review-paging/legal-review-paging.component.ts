@@ -24,7 +24,7 @@ export class LegalReviewPagingComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      this.router.navigate(["/Mou/UnauthorizedPage"]);
+      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"],{});
       return;
     }
     else {

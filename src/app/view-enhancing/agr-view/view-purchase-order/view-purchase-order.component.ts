@@ -14,6 +14,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewPurchaseOrderComponent implements OnInit {
 
   @Input() agrmntId: number = 0;
+  ResponseAgrmntFinDataData: any;
+  ResponseAppAssetData: any;
+  ResponsePurchaseOrderHData: any;
+  ResponseAppLoanPurposeWithSupplierNameObj: any;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -26,16 +31,14 @@ export class ViewPurchaseOrderComponent implements OnInit {
     await this.BindPOData();
   }
 
-  ResponseAgrmntFinDataData;
-  ResponseAppAssetData;
-  ResponsePurchaseOrderHData;
-  async BindPOData(){
+  async BindPOData() {
     var obj = { AgrmntId: this.agrmntId };
     await this.http.post(URLConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
       (response) => {
-        this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];
-        this.ResponseAppAssetData=response["ResponseAppAssetObj"];
-        this.ResponsePurchaseOrderHData=response["ResponsePurchaseOrderHObj"];
-      });     
+        this.ResponseAgrmntFinDataData = response["ResponseAgrmntFinDataObj"];
+        this.ResponseAppAssetData = response["ResponseAppAssetObj"];
+        this.ResponsePurchaseOrderHData = response["ResponsePurchaseOrderHObj"];
+        this.ResponseAppLoanPurposeWithSupplierNameObj = response["ResponseAppLoanPurposeWithSupplierNameObj"];
+      });
   }
 }

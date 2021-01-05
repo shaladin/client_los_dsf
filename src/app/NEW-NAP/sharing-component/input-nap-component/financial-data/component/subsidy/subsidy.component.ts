@@ -29,7 +29,6 @@ export class SubsidyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("on init");
     this.LoadSubsidyData();
   }
 
@@ -64,7 +63,7 @@ export class SubsidyComponent implements OnInit {
   deleteSubsidy(obj)
   {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(environment.losUrl + "/AppSubsidy/DeleteSubsidy", { AppSubsidyId : obj.AppSubsidyId }).subscribe(
+        this.http.post(URLConstant.DeleteSubsidy, { AppSubsidyId : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);

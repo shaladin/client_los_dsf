@@ -9,6 +9,7 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-list-company',
@@ -68,7 +69,7 @@ export class ListCompanyComponent implements OnInit {
         var requestDupCheck = {
           "CustName": this.AppCustObj.CustName,
           "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.AppCustObj.CustModelCode,
+          "MrCustModelCode": this.AppCustObj.MrCustModelCode,
           "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
           "IdNo": this.AppCustObj.IdNo,
           "TaxIdNo": this.AppCustObj.TaxIdNo,
@@ -127,7 +128,7 @@ export class ListCompanyComponent implements OnInit {
     "CustNo":item.CustNo};
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -136,7 +137,7 @@ export class ListCompanyComponent implements OnInit {
     "CustNo": this.AppCustObj.CustNo, RowVersion: ""};
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId } });
+        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -154,6 +155,6 @@ export class ListCompanyComponent implements OnInit {
 
   back() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/Paging"], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"], { "BizTemplateCode": BizTemplateCode });
   }
 }

@@ -259,7 +259,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (activeButton == "save") {
-          this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Detail"], { queryParams: { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Detail"], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
           this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);
@@ -318,6 +318,13 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
     }else if(key == "lead"){
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
+    }
+    else if(key == "cust"){
+      var custObj = { CustNo: this.agrmntObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        });
     }
   }
 }

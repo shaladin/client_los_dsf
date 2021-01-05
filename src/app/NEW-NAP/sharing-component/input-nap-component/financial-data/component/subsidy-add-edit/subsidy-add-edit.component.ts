@@ -10,6 +10,7 @@ import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/Result
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-subsidy-add-edit',
@@ -59,6 +60,7 @@ export class SubsidyAddEditComponent implements OnInit {
         valueType: [''],
         subsidyPrcnt: [0, [Validators.min(0), Validators.max(100)]],
         subsidyAmt: [0],
+        RowVersion: [''],
       }
     );
     this.isSubmitted = false;
@@ -90,6 +92,7 @@ export class SubsidyAddEditComponent implements OnInit {
           valueType: subdObj.MrSubsidyValueTypeCode,
           subsidyPrcnt: subdObj.SubsidyPrcnt,
           subsidyAmt: subdObj.SubsidyAmt,
+          RowVersion: subdObj.RowVersion,
         });
       }
     );
@@ -136,6 +139,7 @@ export class SubsidyAddEditComponent implements OnInit {
     }
     if (this.mode == "edit") {
       subdObj.AppSubsidyId = this.AppSubsidyId;
+      subdObj.RowVersion = this.FormAppSubsidy.get("RowVersion").value;
 
       this.http.post(URLConstant.EditAppSubsidy, subdObj).subscribe(
         (response) => {
@@ -148,7 +152,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLFromTypeCode() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSubsidyFromType }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId}).subscribe(
       (response) => {
         this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
 
@@ -162,19 +166,38 @@ export class SubsidyAddEditComponent implements OnInit {
 
         this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
           (response) => {
-            if (response.BizTemplateCode == CommonConstant.CFRFN4W) {
+            if (response.BizTemplateCode == CommonConstant.CFRFN4W || response.BizTemplateCode == CommonConstant.CFNA) {
               let supplierIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeSupplier);
               if (supplierIndex != -1) {
                 this.FromTypeCodeOptions.splice(supplierIndex, 1);
               }
             }
           });
+
+        // Check Ins Type if contain Off System or By Cust
+        let insIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeIns);
+        if(insIndex != -1)
+        {
+          let resAssetIns =  this.http.post<AppObj>(URLConstant.GetAppAssetListForInsuranceByAppId, { AppId: this.AppId });
+          let resCollateralIns = this.http.post<AppObj>(URLConstant.GetAppCollateralListForInsuranceByAppId, { AppId: this.AppId });          
+          forkJoin([resAssetIns, resCollateralIns]).subscribe
+          (
+            (response) => {
+              let allIns = [];
+              if (response[0]['ReturnObject']) allIns = allIns.concat(response[0]['ReturnObject']);
+              if (response[1]['ReturnObject']) allIns = allIns.concat(response[1]['ReturnObject']);
+              let allNotIns = allIns.filter(x => x.InsuredByCode == undefined || [CommonConstant.InsuredByOffSystem, CommonConstant.InsuredByCustomer].includes(x.InsuredByCode));
+              if(allIns.length == allNotIns.length) 
+                this.FromTypeCodeOptions.splice(insIndex, 1);
+            }
+          );
+        }
       }
     );
   }
 
   LoadDDLFromValue(fromTypeCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue", { AppId: this.AppId, SubsidyFromType: fromTypeCode }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyFromValue, { AppId: this.AppId, SubsidyFromType: fromTypeCode }).subscribe(
       (response) => {
         this.FromValueOptions = response[CommonConstant.ReturnObj];
       }
@@ -182,7 +205,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLSubsidyAlloc(fromTypeCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation", { SubsidyFromType: fromTypeCode }).subscribe(
+    this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode, AppId : this.AppId }).subscribe(
       (response) => {
         this.AllocCodeOptions = response[CommonConstant.ReturnObj];
       }
@@ -190,7 +213,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidySource", { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode }).subscribe(
+    this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode, AppId : this.AppId }).subscribe(
       (response) => {
         this.SourceCodeOptions = response[CommonConstant.ReturnObj];
       }
@@ -198,11 +221,12 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode: string) {
-    this.http.post(environment.losUrl + "/AppSubsidy/GetListSubsidyValueType",
+    this.http.post(URLConstant.GetListSubsidyValueType,
       {
         SubsidyFromType: fromTypeCode,
         SubsidyAllocCode: allocCode,
-        SubsidySourceCode: sourceCode
+        SubsidySourceCode: sourceCode,
+        AppId : this.AppId
       }).subscribe(
         (response) => {
           this.ValueTypeOptions = response[CommonConstant.ReturnObj];
@@ -221,9 +245,13 @@ export class SubsidyAddEditComponent implements OnInit {
     if (selected_type != 'MF') {
       this.showFromValue = true;
       this.LoadDDLFromValue(selected_type);
+      this.FormAppSubsidy.controls.fromValueCode.setValidators([Validators.required]);
+      this.FormAppSubsidy.controls.fromValueCode.updateValueAndValidity();
     }
     else {
       this.showFromValue = false;
+      this.FormAppSubsidy.controls.fromValueCode.clearValidators();
+      this.FormAppSubsidy.controls.fromValueCode.updateValueAndValidity();
     }
 
     this.FormAppSubsidy.patchValue({

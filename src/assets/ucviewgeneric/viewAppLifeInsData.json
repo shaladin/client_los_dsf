@@ -43,9 +43,7 @@
           }
         ],
         "querystring": {
-            "select": "SELECT ALI.TOTAL_PREMI_TO_CUST AS TotPremiCust, CASE WHEN ALI.APP_LIFE_INS_H_ID IS NULL THEN 'No' ELSE 'Yes'END AS IsLifeInsCover, ALI.CUST_ADMIN_FEE_AMT AS AdminFeeCust, ALI.TOTAL_PREMI_FROM_INSCO AS TotPremiInsco, ALI.INSCO_ADMIN_FEE_AMT AS AdminFeeInsco, ALI.LIFE_INSCO_BRANCH_NAME AS LifeInscoBranchName, ALI.TOTAL_LIFE_INS_CPTLZ_AMT AS TotLifeInsCptlzAmt",
-            "from": "FROM dbo.APP A WITH(NOLOCK) LEFT JOIN dbo.APP_LIFE_INS_H ALI ON ALI.APP_ID = A.APP_ID",
-            "where": "WHERE A.APP_ID = {0}"
+          "name": "viewAppLifeInsData"
         }
       }
     ]

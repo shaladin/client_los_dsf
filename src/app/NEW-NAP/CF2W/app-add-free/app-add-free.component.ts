@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-app-add-free',
@@ -203,7 +204,7 @@ export class AppAddFreeComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["Nap/CF2W/Add/Detail"], { queryParams: { "AppId": response["AppId"], "LobCode": this.LobCode } });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CF2W/Add/Detail"], { "AppId": response["AppId"], "LobCode": this.LobCode });
       });
 
   }

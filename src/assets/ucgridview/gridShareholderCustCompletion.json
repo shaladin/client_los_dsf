@@ -1,0 +1,95 @@
+{
+    "isSeq": true,
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder Name",
+      "name": "CustName"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder Type",
+      "name": "MrCustTypeDescr"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder Relationship",
+      "name": "MrCustRelationshipDescr"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Establishment Date",
+      "name": "EstablishmentDt"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Share(%)",
+      "name": "SharePrcnt"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Is Signer",
+      "name": "IsSigner"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Is Owner",
+      "name": "IsOwner"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Is Active",
+      "name": "IsActive"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustTypeDescr"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustRelationshipDescr"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "EstablishmentDt"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "SharePrcnt"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsSigner"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsOwner"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsActive"
+    }
+  ]
+  }

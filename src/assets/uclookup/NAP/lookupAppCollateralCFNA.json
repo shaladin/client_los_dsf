@@ -18,10 +18,9 @@
         "placeholder": "PlaceHolder"
       }
     ],
-    "querystring": {
-      "select": "SELECT CO.FULL_ASSET_NAME AS FullAssetName, CO.FULL_ASSET_CODE AS FullAssetCode, CO.ASSET_TYPE_CODE AS AssetTypeCode, CO.ASSET_CATEGORY_CODE AS AssetCategoryCode, CO.MR_COLLATERAL_CONDITION_CODE AS MrCollateralConditionCode, CO.MR_COLLATERAL_USAGE_CODE AS MrCollateralUsageCode, CO.COLLATERAL_PRICE_AMT AS CollateralPriceAmt, CO.NOTES AS Notes, CO.ASSET_TAX_DATE AS AssetTaxDate, CR.OWNER_NAME AS OwnerName, CR.OWNER_ID_NO AS OwnerIdNo, CR.MR_ID_TYPE_CODE AS MrIdTypeCode, CR.OWNER_MOBILE_PHN_NO AS OwnerMobilePhnNo, CR.MR_OWNER_RELATIONSHIP_CODE AS MrOwnerRelationshipCode, CR.USER_NAME AS Username, CR.MR_USER_RELATIONSHIP_CODE AS MrUserRelationshipCode, CR.LOCATION_ADDR AS LocationAddr, CR.LOCATION_AREA_CODE_1 AS LocationAreaCode1, CR.LOCATION_AREA_CODE_2 AS LocationAreaCode2, CR.LOCATION_AREA_CODE_3 AS LocationAreaCode3, CR.LOCATION_AREA_CODE_4 AS LocationAreaCode4, CR.LOCATION_CITY AS LocationCity, CR.OWNER_ADDR AS OwnerAddr, CR.OWNER_AREA_CODE_1 AS OwnerAreaCode1, CR.OWNER_AREA_CODE_2 AS OwnerAreaCode2, CR.OWNER_AREA_CODE_3 AS OwnerAreaCode3, CR.OWNER_AREA_CODE_4 AS OwnerAreaCode4, CR.OWNER_CITY AS OwnerCity, CO.SERIAL_NO_1 AS SerialNo1, CO.SERIAL_NO_2 AS SerialNo2, CO.SERIAL_NO_3 AS SerialNo3, CO.COLLATERAL_ID AS CollateralId, CR.LOCATION_ZIPCODE AS LocationZipcode, CR.OWNER_ZIPCODE AS OwnerZipcode",
-      "from": "FROM dbo.COLLATERAL AS CO WITH(NOLOCK) INNER JOIN dbo.COLLATERAL_REGISTRATION AS CR WITH(NOLOCK) ON CO.COLLATERAL_ID = CR.COLLATERAL_ID INNER JOIN dbo.CUST AS CU WITH(NOLOCK) ON CO.CUST_ID = CU.CUST_ID"
-    },
+  "querystring": {
+    "name": "lookupAppCollateralCFNA"
+  },
     "headerList": [
         {
           "type": "sort",
@@ -132,4 +131,3 @@
     "propertyId": "FullAssetCode",
     "propertyName": "FullAssetName"
   }
-  

@@ -214,26 +214,26 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
         this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
     
-        this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+        this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder1Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
-        this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-        this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+        this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+        this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
     
-        this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+        this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
-        this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-        this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+        this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+        this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
         this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
     
-        this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+        this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder3Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
-        this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
-        this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareHolder.json";
+        this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+        this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";
         this.inputLookupAppCustCompanyShareHolder3Obj.isRequired = false;
         this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
@@ -307,22 +307,28 @@ export class DocSignerCfnaDetailComponent implements OnInit {
 
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder1Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder1Code: tempJobCode,
     })
   }
 
   getLookupAppCustCompanyShareHolder2(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder2Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder2Code: tempJobCode,
     })
   }
 
   getLookupAppCustCompanyShareHolder3(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id = event.AppCustCompanyMgmntShrholderId;
+    let tempJobCode: string = "-";
+    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder3Code: event.MrJobPositionCode,
+      MrJobPositionMgmntShrholder3Code: tempJobCode,
     })
   }
 
@@ -342,7 +348,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);
@@ -352,7 +358,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          this.router.navigate(["Nap/AdminProcess/NewDocumentSigner/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);

@@ -83,10 +83,8 @@
           }
         ],
         "querystring": {
-          "select": "SELECT fd.ID_NO AS IdNo, fd.FAMILY_CARD_NO AS FamilyCardNo, fd.CUST_NAME AS CustomerName, fd.BIRTH_PLACE AS BirthPlace, fd.BIRTH_DT AS BirthDt, fd.GENDER AS Gender, fd.RELIGION AS Religion, fd.MARITAL_STATUS AS MaritalStatus, fd.RELATIONSHIP AS Relationship, fd.EDUCATION AS Education, fd.PROFESSION AS Profession, fd.MOTHER_ID_NO AS MotherIdNo, fd.MOTHER_MAIDEN_NAME AS MotherMaidenName, fd.FATHER_ID_NO AS FatherIdNo, fd.FATHER_NAME AS FatherName",
-           "from":" FROM dbo.FRAUD_DUKCAPIL fd WITH(NOLOCK)",
-            "where":"WHERE ID_NO = {0}"
-            
+          "name": "viewDukcapilMainInfo_DukcapilCustDataId"
+
         }
       },
       {
@@ -131,9 +129,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT fd.ADDR AS Addr, fd.AREA_CODE_1 AS AreaCode1, fd.AREA_CODE_2 AS AreaCode2, fd.AREA_CODE_3 AS AreaCode3, fd.AREA_CODE_4 AS AreaCode4, fd.CITY AS City, fd.ZIPCODE AS Zipcode",
-           "from":" FROM dbo.FRAUD_DUKCAPIL fd WITH(NOLOCK)",
-            "where":"WHERE ID_NO = {0}"            
+          "name": "viewDukcapilMainInfo_DukcapilAddressDataId"
         }
       },
       {
@@ -163,9 +159,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT fd.MARRIAGE_DEED_NO AS MarriageDeedNo, fd.MARRIAGE_DT AS MarriageDt, fd.DIVORCE_DEED_NO AS DivorceDeedNo, fd.DIVORCE_DT AS DivorceDt",
-           "from":" FROM dbo.FRAUD_DUKCAPIL fd WITH(NOLOCK)",
-            "where":"WHERE ID_NO = {0}"            
+          "name": "viewDukcapilMainInfo_DukcapilMarriageDataId"
         }
       },
       {
@@ -215,9 +209,7 @@
           }
         ],
         "querystring": {
-          "select": "SELECT fd.CUST_NAME AS CustomerName, fd.DUKCAPIL_DATA_STATUS AS DukcapilDataStatus, fd.ID_NO AS IdNo, fd.CEK_DUKCAPIL_DT AS CekDukcapilDt, fd.FAMILY_CARD_NO AS FamilyCardNo, fd.BIRTH_PLACE AS BirthPlace, fd.BIRTH_DT AS BirthDt",
-           "from":" FROM dbo.FRAUD_DUKCAPIL fd WITH(NOLOCK)",
-            "where":"WHERE ID_NO = {0}"            
+          "name": "viewDukcapilMainInfo_DukcapilStatusCekDataId"
         }
       }
     ]

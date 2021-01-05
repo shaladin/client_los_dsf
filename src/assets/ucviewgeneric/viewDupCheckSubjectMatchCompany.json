@@ -1,0 +1,62 @@
+{
+  "title": "Application Duplicate Checking Subject Match",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "label": "Application No",
+          "type": "callback",
+          "property": "AppNo",
+          "key": "application"
+        },
+        {
+          "label": "Customer No",
+          "type": "callback",
+          "key": "customer",
+          "property": "CustNo"
+        },
+        {
+          "type": "text",
+          "label": "Applicant No",
+          "property": "ApplicantNo"
+        },
+        {
+          "type": "text",
+          "label": "Subject Type",
+          "property": "SubjectType"
+        },
+        {
+          "type": "text",
+          "label": "Subject Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "ID Type",
+          "property": "IdTypeDescr"
+        },
+        {
+          "type": "text",
+          "label": "ID No",
+          "property": "IdNo"
+        },
+        {
+          "type": "text",
+          "label": "Tax No",
+          "property": "TaxIdNo"
+        },
+        {
+          "type": "text",
+          "label": "Establishment Date",
+          "property": "EstablishmentDt"
+        }
+      ],
+      "querystring": {
+        "name": "viewDupCheckSubjectMatchCompany"
+      }
+    }
+  ]
+}

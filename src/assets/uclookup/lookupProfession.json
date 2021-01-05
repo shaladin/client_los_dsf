@@ -19,10 +19,9 @@
         "placeholder": ""
       }
     ],
-    "querystring": {
-      "select": "SELECT PROFESSION_CODE AS ProfessionCode, PROFESSION_NAME AS ProfessionName, REF_PROFESSION_ID as RefProfessionId, MR_CUST_MODEL_CODE as CustModel",
-      "from": "FROM dbo.REF_PROFESSION WITH(NOLOCK)"
-    },
+  "querystring": {
+    "name": "lookupProfession"
+  },
     "headerList": [
         {
             "type": "sort",

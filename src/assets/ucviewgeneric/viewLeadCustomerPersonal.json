@@ -73,9 +73,7 @@
         }
       ],
       "querystring": {
-        "select": "SELECT lc.MR_CUST_TYPE_CODE AS MrCustTypeCode, lcp.CUST_FULL_NAME as CustFullName, lc.MR_ID_TYPE_CODE AS MrIdTypeCode, lcp.BIRTH_PLACE AS BirthPlace, lcp.BIRTH_DT AS BirthDt, lc.ID_NO AS IdNo, lcp.MOTHER_MAIDEN_NAME AS MotherMaidenName, lc.TAX_ID_NO AS TaxIdNo, lcp.MR_MARITAL_STAT_CODE AS MrMaritalStatCode, lcp.MOBILE_PHN_NO_1 AS MobilePhnNo1, lcp.EMAIL_1 AS Email1, lcp.MOBILE_PHN_NO_2 AS MobilePhnNo2, lc.LEAD_CUST_ID AS LeadCustId, lcp.LEAD_CUST_ID",
-        "from": "FROM dbo.LEAD_CUST lc WITH(NOLOCK) JOIN dbo.LEAD_CUST_PERSONAL lcp WITH(NOLOCK) ON lc.LEAD_CUST_ID = lcp.LEAD_CUST_ID",
-        "where": "WHERE LEAD_ID = {0}"
+        "name": "viewLeadCustomerPersonal"
       }
     }
   ]

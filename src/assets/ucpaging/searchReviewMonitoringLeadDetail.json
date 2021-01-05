@@ -13,7 +13,7 @@
             "isSelectOne": false,
             "isQueryIn" : true,
             "url": "",
-            "path":"/Foundation_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office Name",
             "items": [],
             "itemsUrl": []
@@ -38,7 +38,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": " UL.MR_CUST_MODEL_CODE",
+            "name": "UL.MR_CUST_MODEL_CODE",
             "id": "MrCustModelCodeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -61,10 +61,9 @@
             "placeholder": "Placeholder"
         }
     ],
-    "querystring": {
-        "select": "SELECT UL.ORI_OFFICE_CODE AS OriOfficeCode, LOB.LOB_NAME AS LobCode, UL.CUST_NO AS CustNo, UL.CUST_NAME AS CustName, CM.DESCR AS CustModel, ID.DESCR AS IdType, UL.ID_NO AS IdNo, UL.TAX_ID_NO AS TaxIdNo, UL.BIRTH_PLACE AS BirthPlace, UL.BIRTH_DT AS BirthDt, G.DESCR AS Gender, UL.MOBILE_PHN_NO_1 AS MobilePhnNo1, VUH.UPLOAD_MONITORING_H_ID AS UploadMonitoringHId",
-        "from": "FROM dbo.UPLOAD_LEAD AS UL WITH(NOLOCK) LEFT JOIN V_REF_LOB AS LOB ON UL.LOB_CODE = LOB.LOB_CODE LEFT JOIN V_REF_MASTER AS CM ON UL.MR_CUST_MODEL_CODE = CM.MASTER_CODE AND CM.REF_MASTER_TYPE_CODE = 'CUST_MODEL' LEFT JOIN V_REF_MASTER AS ID ON UL.MR_ID_TYPE_CODE = ID.MASTER_CODE AND ID.REF_MASTER_TYPE_CODE = 'ID_TYPE' LEFT JOIN V_REF_MASTER AS G ON UL.MR_GENDER_CODE = G.MASTER_CODE AND G.REF_MASTER_TYPE_CODE = 'GENDER' JOIN dbo.V_UPLOAD_MONITORING_H VUH ON UL.UPLOAD_MONITORING_NO = VUH.UPLOAD_MONITORING_NO"
-    },
+  "querystring": {
+    "name": "searchReviewMonitoringLeadDetail"
+  },
     "headerList": [
         {
             "type": "sort",

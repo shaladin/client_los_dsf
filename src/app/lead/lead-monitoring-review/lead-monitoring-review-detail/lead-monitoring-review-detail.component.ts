@@ -9,6 +9,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -47,7 +48,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
@@ -88,7 +89,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
-        this.router.navigate(["/Lead/ReviewMonitoring/Paging"]);
+        AdInsHelper.RedirectUrl(this.router,["/Lead/ReviewMonitoring/Paging"],{});
       }
     );
   }

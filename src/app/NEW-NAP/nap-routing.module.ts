@@ -71,14 +71,15 @@ const routes: Routes = [
         data: {
           title: 'View Asset Data'
         }
+      },
+      {
+        path: 'MainData',
+        loadChildren: './main-data/main-data.module#MainDataModule'
+      },
+      {
+        path: 'CustCompletion',
+        loadChildren: './cust-completion/cust-completion.module#CustCompletionModule'
       }
-      // {
-      //     path: 'AssetData/Paging',
-      //     component: MultiAssetDataComponent,
-      //     data: {
-      //       title: 'Asset Registration Summary'
-      //     }
-      // },
       // {
       //   path: 'Single',
       //   component: CollateralAddEditSingleComponent,

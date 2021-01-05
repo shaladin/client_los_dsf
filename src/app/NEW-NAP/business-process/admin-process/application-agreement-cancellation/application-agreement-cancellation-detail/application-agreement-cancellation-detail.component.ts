@@ -80,7 +80,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      this.router.navigate(["/Nap/AdminProcess/AgreementCancellation/Paging"],{ queryParams: { "BizTemplateCode": this.BizTemplateCode} });
+      AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/AgreementCancellation/Paging"], { BizTemplateCode: this.BizTemplateCode });
     });
   }
 

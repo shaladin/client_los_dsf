@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
+import { AppMainInfoComponent } from '../app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-app-view',
@@ -40,6 +40,7 @@ export class AppViewComponent implements OnInit {
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
   bizTemplateCode : string = "";
+
   constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];

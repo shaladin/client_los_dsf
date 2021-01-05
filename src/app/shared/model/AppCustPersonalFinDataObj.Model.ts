@@ -7,6 +7,11 @@ export class AppCustPersonalFinDataObj {
     MrSourceOfIncomeTypeCode: string;
     SpouseMonthlyIncomeAmt: number;
     IsJoinIncome: boolean;
+    OtherIncomeAmt: number;
+    OtherMonthlyInstAmt: number;
+    TotalIncomeAmt: number;
+    NettIncomeAmt: number;
+    RowVersion: string;
 
 constructor() { 
         this.AppCustPersonalFinDataId = 0;
@@ -17,5 +22,10 @@ constructor() {
         this.SpouseMonthlyIncomeAmt = 0;
         this.MonthlyIncomeAmt = 0;
         this.IsJoinIncome = false;
+        this.RowVersion = "";
+        this.OtherIncomeAmt = 0;
+        this.OtherMonthlyInstAmt = 0;
+        this.TotalIncomeAmt = 0;
+        this.NettIncomeAmt = 0;
     }
 }

@@ -1,0 +1,55 @@
+{
+    "title": "Customer Company Completion",
+    "subsection": [
+        {
+            "subSectionId": "NewApplication",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "link",
+                    "label": "Application No",
+                    "property": "AppNo",
+                    "name": "AppNo",
+                    "position": "left",
+                    "path": "/View/AppView",
+                    "target": "_blank",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "label": "Original Office",
+                    "property": "OriOfficeName"
+                },
+                {
+                    "type": "text",
+                    "label": "Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "Company Type",
+                    "property": "CompanyType"
+                },
+                {
+                    "type": "text",
+                    "label": "Tax Id No",
+                    "property": "TaxIdNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Model Code",
+                    "property": "CustModelCode"
+                }
+            ],
+          "querystring": {
+            "name": "viewCustCompletionCompanyData"
+          }
+        }
+    ]
+}

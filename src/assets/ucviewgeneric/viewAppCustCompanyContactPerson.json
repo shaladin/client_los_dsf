@@ -1,0 +1,29 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AppCustComapnyContactPersonId",
+      "subSectionTitle": "Contact Person",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {"type": "text", "label": "Contact Person Name", "property": "ContactPersonName"},
+        {"type": "text", "label": "Gender", "property": "MrGenderDescr"},
+        {"type": "text", "label": "Job Title", "property": "JobTitleName"},
+        {"type": "text", "label": "Job Position", "property": "MrJobPositionDescr"},
+        {"type": "text", "label": "Id Type", "property": "MrIdTypeDescr"},
+        {"type": "text", "label": "Birth Place", "property": "BirthPlace"},
+        {"type": "text", "label": "Id No", "property": "IdNo"},
+        {"type": "text", "label": "Birth Date", "property": "BirthDt"},
+        {"type": "text", "label": "Id Expired Date", "property": "IdExipedDt"},
+        {"type": "text", "label": "Contact Relationship", "property": "MrCustRelationshipDescr"},
+        {"type": "text", "label": "Mobile Phone 1", "property": "MobilePhone1"},
+        {"type": "text", "label": "Mobile Phone 2", "property": "MobilePhone2"},
+        {"type": "text", "label": "Email 1", "property": "Email1"},
+        {"type": "text", "label": "Email 2", "property": "Email2"}
+      ],
+      "querystring": {
+        "name": "viewAppCustCompanyContactPerson"
+      }
+    }
+  ]
+}

@@ -221,7 +221,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        this.router.navigate(["/Nap/CFRefinancing/Paging"])
+        AdInsHelper.RedirectUrl(this.router,["/Nap/CFRefinancing/Paging"], {});
       })
   }
 

@@ -14,8 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: "view-insurance",
-  templateUrl: "./view-insurance.component.html",
-  providers: [NGXToastrService]
+  templateUrl: "./view-insurance.component.html"
 })
 export class ViewInsuranceComponent implements OnInit {
   @Input() AppId: number = 0;
@@ -27,7 +26,7 @@ export class ViewInsuranceComponent implements OnInit {
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
   }
 
   ngOnInit() {

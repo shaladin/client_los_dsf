@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-5" translate>Manufacturing Year</label>
+                  <label class="col-md-5 adins-required-label" translate>Manufacturing Year</label>
                   <div class="col-md-7">
                     <input type="text" class="form-control" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
@@ -65,7 +65,9 @@
                         [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}" translate>
                         {{item.controls.SerialNoLabel.value}} </label>
                       <div class="col-md-7">
-                        <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                        <input type="text" class="form-control adInsInput" *ngIf="i == 0" formControlName="SerialNoValue" (blur)="collateralPortionHandler()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                        <input type="text" class="form-control adInsInput" *ngIf="i != 0" formControlName="SerialNoValue"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                         <lib-uc-show-errors
                           [control]="AddCollForm.controls.items['controls'][i]['controls'].SerialNoValue"
@@ -78,17 +80,24 @@
                   <label class="col-md-5 adins-required-label" translate>Portion Percentage (%)</label>
                   <div class="col-md-7"> 
                     <input type="" currencyMask class="form-control" id="CollateralPrcnt" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}"> 
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}" (blur)="collateralPortionHandler()" /> 
                     <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    
                   </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Portion Amount</label>
+                  <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adins-required-label" translate>Remaining Portion Percentage (%)</label>
+                  <label class="col-md-7">{{AddCollForm.controls.OutstandingCollPrcnt.value}}</label>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-5 adins-required-label" translate>Collateral Price</label>
                   <div class="col-md-7">
-                    <input type="text" currencyMask class="form-control" formControlName="CollateralValueAmt"
+                    <input type="text" currencyMask class="form-control" formControlName="CollateralValueAmt" (blur)="collateralPortionHandler()"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt"
                       [submit]="enjiForm.submitted">
@@ -151,6 +160,59 @@
                 </div>
               </div>
           </div>
+          <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Collateral Attribute'" [panel]="'assetAttr'">
+          </lib-ucSubsection>
+          <div id="assetAttr">
+            <div class="form-actions right">
+              <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
+                class="btn btn-raised btn-primary">
+                Refresh Attribute
+              </button>
+            </div>
+            <div formArrayName="AppCollateralAttrObjs">
+              <div *ngFor="let item of AddCollForm.controls.AppCollateralAttrObjs['controls'];let i = index">
+                <div [formGroupName]="i" class="form-group row">
+                  <label class="col-md-2  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
+                  <div class="col-md-4">
+                    <div *ngIf="item.controls.AttrInputType.value == 'T'">
+                      <input type="text" class="form-control" formControlName="AttrValue"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                      <lib-uc-show-errors
+                        [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <div *ngIf="item.controls.AttrInputType.value == 'N'">
+                      <input type="" currencyMask class="form-control" formControlName="AttrValue"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                      <lib-uc-show-errors
+                        [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <div *ngIf="item.controls.AttrInputType.value == 'D'">
+                      <input type="date" class="form-control" formControlName="AttrValue"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                      <lib-uc-show-errors
+                        [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                    <div *ngIf="item.controls.AttrInputType.value == 'L'">
+                      <select class="form-control" formControlName="AttrValue" style="width:50%"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                        <lib-uc-show-errors
+                          [control]="AddCollForm.controls['AppCollateralAttrObjs']['controls'][i]['controls'].AttrValue"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
+                          {{x}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
             <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
             </lib-ucSubsection>
             <div id="AddCollDocument">
@@ -159,7 +221,7 @@
                   <thead>
                     <tr class="table-header">
                       <th><span translate class="thead-header">Document</span></th>
-                      <th><span translate class="thead-header">Recieved</span></th>
+                      <th><span translate class="thead-header">Received</span></th>
                       <th><span translate class="thead-header">Document No</span></th>
                       <th><span translate class="thead-header">Expired Date</span></th>
                       <th><span translate class="thead-header">Document Notes</span></th>
