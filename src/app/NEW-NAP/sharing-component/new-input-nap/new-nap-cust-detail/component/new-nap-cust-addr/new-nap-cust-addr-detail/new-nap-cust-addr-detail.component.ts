@@ -28,6 +28,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
   appCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
   copyAddressFromObj: Array<AppCustAddrObj> = new Array();
   AddressTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  selectedAddrType: string;
 
   AddressForm = this.fb.group({
     MrCustAddrTypeCode: [],
@@ -133,9 +134,12 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     this.OutputTab.emit({ IsDetail: false })
   }
 
+  AddrTypeChanged(event){
+    this.selectedAddrType = event.target.options[event.target.options.selectedIndex].text;
+  }
+
   SaveForm() {
     let Flag = false;
-
     if (this.InputObj.Mode == "Add") {
       if (this.InputObj.ListInputedAddr.find(x => x.MrCustAddrTypeCode == this.AddressForm.controls.MrCustAddrTypeCode.value)) {
         let ErrorOutput = this.AddressTypeObj.find(x => x.Key == this.AddressForm.controls.MrCustAddrTypeCode.value);
@@ -174,30 +178,14 @@ export class NewNapCustAddrDetailComponent implements OnInit {
       this.appCustAddrObj.PhnExt3 = this.AddressForm.controls["Address"]["controls"].PhnExt3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt3.value;
       this.appCustAddrObj.FaxArea = this.AddressForm.controls["Address"]["controls"].FaxArea.value;
       this.appCustAddrObj.Fax = this.AddressForm.controls["Address"]["controls"].Fax.value;
+      this.appCustAddrObj.PhoneNo = this.appCustAddrObj.PhnArea1 + " - " + this.appCustAddrObj.Phn1 + " - " + this.appCustAddrObj.PhnExt1;
+      this.appCustAddrObj.PhoneNo2 = this.appCustAddrObj.PhnArea2 + " - " + this.appCustAddrObj.Phn2 + " - " + this.appCustAddrObj.PhnExt2;
+      this.appCustAddrObj.CustAddrTypeName = this.selectedAddrType;
+      this.appCustAddrObj.HouseOwnershipName = this.appCustAddrObj.MrHouseOwnershipCode;
       this.InputObj.ListInputedAddr.push(this.appCustAddrObj);
 
-      if(this.InputObj.AppCustId && this.InputObj.AppCustId > 0){
-        if (this.InputObj.Mode == "Add") {
-          this.http.post(URLConstant.AddAppCustAddr, this.appCustAddrObj).toPromise().then(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });
-            },
-            (error) => {
-            });
-        } else {
-          this.http.post(URLConstant.EditAppCustAddr, this.appCustAddrObj).toPromise().then(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });
-            },
-            (error) => {
-            });
-        }
-      }
-      else{
-        this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });
-      }
+      this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });
+      
     }
   }
 

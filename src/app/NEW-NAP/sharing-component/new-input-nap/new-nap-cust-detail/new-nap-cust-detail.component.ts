@@ -609,7 +609,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       var addrMessage = "";
-      var addrValidation = {Legal: false, Residence: false, Mailing: false, Job: false};
+      var addrValidation = {Legal: false, Residence: false};
       for (const item of this.ListAddress) {
         switch (item.MrCustAddrTypeCode) {
           case CommonConstant.AddrTypeLegal:
@@ -617,12 +617,6 @@ export class NewNapCustDetailComponent implements OnInit {
             break;
           case CommonConstant.AddrTypeResidence:
             addrValidation.Residence = true;
-            break;
-          case CommonConstant.AddrTypeMailing:
-            addrValidation.Mailing = true;
-            break;
-          case CommonConstant.AddrTypeJob:
-            addrValidation.Job = true;
             break;
           default:
             break;
@@ -634,12 +628,7 @@ export class NewNapCustDetailComponent implements OnInit {
       if(!addrValidation.Residence){
         addrMessage == "" ? addrMessage += "Residence" : addrMessage += ",Residence";
       }
-      if(!addrValidation.Mailing){
-        addrMessage == "" ? addrMessage += "Mailing" : addrMessage += ",Mailing";
-      }
-      if(!addrValidation.Job){
-        addrMessage == "" ? addrMessage += "Job" : addrMessage += ",Job";
-      }
+      
       if(addrMessage){
         this.toastr.warningMessage("Please Add " + addrMessage + " Address");
         return false;

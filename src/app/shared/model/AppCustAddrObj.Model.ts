@@ -25,6 +25,10 @@ export class AppCustAddrObj {
     FullAddr: string;
     StayLength: number;
     Notes: string;
+    PhoneNo: string;
+    PhoneNo2: string;
+    CustAddrTypeName: string;
+    HouseOwnershipName: string;
     RowVersion: any;
 
     constructor() { this.AppCustAddrId = 0; }
