@@ -39,7 +39,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
     await this.GetListNegativeCustByCustNo();
   }
 
-  
+
   CustCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
   CustGroupCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
   ObligorCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
@@ -61,10 +61,10 @@ export class CrdRvwCustInfoComponent implements OnInit {
       }
     );
   }
-  
+
   ListAppCustBankAccObjs: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   async GetAppCustBankAccList() {
-    await this.http.post< {AppCustBankAccList: Array<AppCustBankAccObj>} >(URLConstant.GetAppCustBankAccAndStatementForView, { AppCustId: this.crdRvwCustInfoObj.AppCustId }).toPromise().then(
+    await this.http.post<{ AppCustBankAccList: Array<AppCustBankAccObj> }>(URLConstant.GetAppCustBankAccAndStatementForView, { AppCustId: this.crdRvwCustInfoObj.AppCustId }).toPromise().then(
       (response) => {
         this.ListAppCustBankAccObjs = response.AppCustBankAccList;
       });
@@ -80,7 +80,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   }
   
-  ClickLinkViewCustExposure(){
+  ClickLinkViewCustExposure() {
     AdInsHelper.OpenCustExposureViewByCrdRvwCustInfoId(this.appId);
   }
 
@@ -89,26 +89,20 @@ export class CrdRvwCustInfoComponent implements OnInit {
   //#region BankAcc
   modalBankStatement: any;
   ClickLinkBankStatement(BankStatementContent) {
-    console.log("click BS");
     this.modalBankStatement = this.modalService.open(BankStatementContent);
     this.modalBankStatement.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.cancelBankStatement();
+      this.modalBankStatement.close();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      this.cancelBankStatement();
+      this.modalBankStatement.close();
     });
-  }
-
-  cancelBankStatement() {
-    this.modalBankStatement.close();
   }
   //#endregion
 
   //#region NegCheck
   modalNegCheckListContent: any;
   ClickLinkNegativeCheckingList(NegCheckListContent) {
-    console.log("click Neg");
     this.modalNegCheckListContent = this.modalService.open(NegCheckListContent);
     this.modalNegCheckListContent.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
