@@ -11,7 +11,7 @@
           <div class="col-md-8">
             <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputDebitorGroupLookupObj"     [parentForm]="ParentForm" [identifier]="'DebitorGroup'" (lookup)="getLookupDebitorGroup($event)">
             </lib-uclookupgeneric>
-            <lib-uc-show-errors *ngIf="ParentForm.controls.DebitorGroup && ParentForm.controls.DebitorGroup.controls.value.untouched" [control]="ParentForm.controls.LbppmsDebtGrpLbppCode"
+            <lib-uc-show-errors *ngIf="ParentForm.controls.DebitorGroup && ParentForm.controls.DebitorGroup.controls.value.untouched" [control]="ParentForm.controls.DebitorGroup.controls.value"
               [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
           </div>
         </div>
@@ -20,7 +20,7 @@
           <div class="col-md-8">
             <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputCounterpartCategoryLookupObj" [parentForm]="ParentForm" [identifier]="'CounterpartCategry'" (lookup)="getLookupCounterpartCategory($event)">
             </lib-uclookupgeneric>
-            <lib-uc-show-errors *ngIf="ParentForm.controls.CounterpartCategry && ParentForm.controls.CounterpartCategry.controls.value.untouched" [control]="ParentForm.controls.LbppmsCntrprtLbppCode"
+            <lib-uc-show-errors *ngIf="ParentForm.controls.CounterpartCategry && ParentForm.controls.CounterpartCategry.controls.value.untouched" [control]="ParentForm.controls.CounterpartCategry.controls.value"
               [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
           </div>
         </div>
@@ -33,7 +33,7 @@
                 [parentForm]="ParentForm" [identifier]="'DebitorBusinessScale'"
               (lookup)="getLookupDebitorBusinessScale($event)">
             </lib-uclookupgeneric>
-            <lib-uc-show-errors *ngIf="ParentForm.controls.DebitorBusinessScale && ParentForm.controls.DebitorBusinessScale.controls.value.untouched" [control]="ParentForm.controls.LbppmsBizSclLbppCode"
+            <lib-uc-show-errors *ngIf="ParentForm.controls.DebitorBusinessScale && ParentForm.controls.DebitorBusinessScale.controls.value.untouched" [control]="ParentForm.controls.DebitorBusinessScale.controls.value"
               [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
           </div>
         </div>
@@ -43,7 +43,7 @@
             <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputSustaianableFinancialBusinessLookupObj"
                 [parentForm]="ParentForm" [identifier]="'SustainableFinancialBusiness'"(lookup)="getLookupSustainableFinancialBusiness($event)">
             </lib-uclookupgeneric>
-            <lib-uc-show-errors *ngIf="ParentForm.controls.SustainableFinancialBusiness && ParentForm.controls.SustainableFinancialBusiness.controls.value.untouched" [control]="ParentForm.controls.LbppmsBizSustainLbppCode"
+            <lib-uc-show-errors *ngIf="ParentForm.controls.SustainableFinancialBusiness && ParentForm.controls.SustainableFinancialBusiness.controls.value.untouched" [control]="ParentForm.controls.SustainableFinancialBusiness.controls.value"
               [submit]="IsOtherInfoSubmitted"></lib-uc-show-errors>
           </div>
         </div>
