@@ -266,7 +266,9 @@ export class NewNapCustBankAccComponent implements OnInit {
     
     for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
       this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
-      this.ListBankStmntObj.push(this.BankStmntObj)
+      var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
+      this.BankStmntObj.MonthName = monthObj.Value;
+      this.ListBankStmntObj.push(this.BankStmntObj);
     }
     this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
     this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
