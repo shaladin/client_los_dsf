@@ -710,6 +710,21 @@ export class NewNapCustDetailComponent implements OnInit {
         ListRequestAppCustAttrObject: this.custAttrRequest,
         RequestAppCustOtherInfoObj: this.appCustOtherInfo
       };
+      var appCustBankAccRequest = new Array<Object>();
+      for (const bank of this.AppCustBankAccList) {
+        var obj = new Object();
+        var bankAccObj = new AppCustBankAccObj();
+        bankAccObj.AppCustBankAccId = bank.AppCustBankAccId;
+        bankAccObj.AppCustId = bank.AppCustId;
+        bankAccObj.BankBranch = bank.BankBranch;
+        bankAccObj.BankAccName = bank.BankAccName;
+        bankAccObj.BankAccNo = bank.BankAccNo;
+        bankAccObj.IsDefault = bank.IsDefault;
+        bankAccObj.IsActive = bank.IsActive;
+        obj["BankAccObj"] = bankAccObj;
+        obj["ListBankStmntObj"] = bank.ListBankStmntObj;
+        appCustBankAccRequest.push(obj);
+      }
       var requestPersonal = {
         AppCustObj: this.custDataPersonalObj.AppCustObj,
         AppCustPersonalObj: this.custDataPersonalObj.AppCustPersonalObj,
@@ -720,7 +735,7 @@ export class NewNapCustDetailComponent implements OnInit {
         AppCustEmergency: this.appCustEmrgncCntctObj,
         AppCustPersonalFinData: appCustPersonalFinDataRequest,
         AppCustOtherInfo: appCustOtherInfoRequest,
-        AppCustBankAccList: this.AppCustBankAccList
+        AppCustBankAccList: appCustBankAccRequest
       }
       this.http.post(URLConstant.AddEditNewNapCustPersonal, requestPersonal).toPromise().then(
         (response) => {

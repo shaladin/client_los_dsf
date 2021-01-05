@@ -256,6 +256,7 @@ export class NewNapCustBankAccComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     this.ListBankStmntObj = new Array();
+    this.BankAccObj.AppCustBankAccId = this.BankAccStmntForm.controls.AppCustBankAccId.value
     this.BankAccObj.AppCustId = this.AppCustId;
     this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
     this.BankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
@@ -267,6 +268,8 @@ export class NewNapCustBankAccComponent implements OnInit {
       this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
       this.ListBankStmntObj.push(this.BankStmntObj)
     }
+    this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
+    this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
 
     var reqObj = {
       BankAccObj : this.BankAccObj,
