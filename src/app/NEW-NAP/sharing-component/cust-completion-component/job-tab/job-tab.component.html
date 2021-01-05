@@ -33,9 +33,11 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.CoyName" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }" translate>Establishment Date</label>
+                <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }"
+                  translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
                     max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
                     [submit]="enjiForm.submitted">
@@ -72,7 +74,8 @@
                 </div>
                 <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
                     max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
                     [submit]="enjiForm.submitted">
@@ -127,15 +130,28 @@
             <div *ngIf="CustModelCode != 'NONPROF'">
               <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputJobAddrObj" [enjiForm]="enjiForm"
                 [identifier]="'JobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
-                <div class="form-group row">
-                  <label class="col-md-2" translate>Notes </label>
-                  <div class="col-md-4">
-                    <textarea type="text" class="form-control adInsInput" formControlName="JobNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.JobNotes.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="JobDataForm.controls.JobNotes" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Notes </label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="JobNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.JobNotes.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="JobDataForm.controls.JobNotes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="IsIntegratorCheckBySystem == 0 && IsCustomer">
+            <lib-ucSubsection [id]="'IntegratorId'" [title]="'Fraud Checking Customer'" [panel]="'Integrator'">
+            </lib-ucSubsection>
+            <div id="Integrator" class="form-group row">
+              <label class="col-md-2" translate>Integrator Checking</label>
+              <div class="col-md-10">
+                <button type="button" (click)="FlaggingIsNeedIntegrator()" class="btn btn-raised btn-primary">
+                  <i class="" style="background-color: #23dc29;"></i> HIT Integrator
+                </button>
+                <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate}}</label>
+              </div>
             </div>
           </div>
           <div *ngIf="CustModelCode != 'NONPROF'">
@@ -152,22 +168,23 @@
                 </div>
                 <label class="col-md-2" translate>Previous Employment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="PrevEmploymentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                  <input type="date" class="form-control" formControlName="PrevEmploymentDt"
+                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.PrevEmploymentDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
               <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputPrevJobAddrObj" [enjiForm]="enjiForm"
                 [identifier]="'PrevJobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
-                <div class="form-group row">
-                  <label class="col-md-2" translate>Notes </label>
-                  <div class="col-md-4">
-                    <textarea type="text" class="form-control adInsInput" formControlName="PrevJobNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.PrevJobNotes.invalid }"></textarea>
-                    <lib-uc-show-errors [control]="JobDataForm.controls.PrevJobNotes" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Notes </label>
+                <div class="col-md-4">
+                  <textarea type="text" class="form-control adInsInput" formControlName="PrevJobNotes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.PrevJobNotes.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="JobDataForm.controls.PrevJobNotes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
+              </div>
             </div>
             <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'">
             </lib-ucSubsection>
@@ -208,7 +225,8 @@
               <div class="form-group row">
                 <label class="col-md-2" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" class="form-control" formControlName="OthBizEstablishmentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                  <input type="date" class="form-control" formControlName="OthBizEstablishmentDt"
+                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.OthBizEstablishmentDt"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -217,15 +235,15 @@
             </div>
             <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm"
               [identifier]="'OthBizAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
-              <div class="form-group row">
-                <label class="col-md-2" translate>Notes </label>
-                <div class="col-md-4">
-                  <textarea type="text" class="form-control adInsInput" formControlName="OthBizNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizNotes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizNotes" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
+            <div class="form-group row">
+              <label class="col-md-2" translate>Notes </label>
+              <div class="col-md-4">
+                <textarea type="text" class="form-control adInsInput" formControlName="OthBizNotes"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizNotes.invalid }"></textarea>
+                <lib-uc-show-errors [control]="JobDataForm.controls.OthBizNotes" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
               </div>
+            </div>
           </div>
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)
