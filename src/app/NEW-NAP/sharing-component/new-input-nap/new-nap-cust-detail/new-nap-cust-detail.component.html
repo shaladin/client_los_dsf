@@ -15,14 +15,15 @@
             <app-new-nap-cust-addr *ngIf="isAddrReady" [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
                 (OutputTab)="GetListAddress($event)">
             </app-new-nap-cust-addr>
-            <app-new-nap-cust-personal-job *ngIf="CustModelCode" [IsJobSubmitted]="IsSubmitted" [ParentForm]="JobDataForm" [appId]="AppId" [AppCustId]="AppCustIdInput"
+            <ng-template #NewNapPersonalJobContainer></ng-template>
+            <!-- <app-new-nap-cust-personal-job  [IsJobSubmitted]="IsSubmitted" [ParentForm]="JobDataForm" [appId]="AppId" [AppCustId]="AppCustIdInput"
                 [CustModelCode]="CustModelCode">
-            </app-new-nap-cust-personal-job>
+            </app-new-nap-cust-personal-job> -->
             <app-new-nap-cust-personal-emergency [ParentForm]="EmergencyContactForm" [IsEmergencySubmitted]="IsSubmitted"
                 [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried">
             </app-new-nap-cust-personal-emergency>
             <app-new-nap-cust-personal-financial [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput" [IsFinancialSubmitted]="IsSubmitted"
-                [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried">
+                [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried" (ResponseBankAcc)="GetPersonalBankAcc($event)">
             </app-new-nap-cust-personal-financial>
             <app-new-nap-other-info [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
                 [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">

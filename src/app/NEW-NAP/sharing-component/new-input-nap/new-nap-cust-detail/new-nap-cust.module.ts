@@ -48,6 +48,9 @@ export const customCurrencyMaskConfig = {
   ],
   exports: [
     NewNapCustDetailComponent
+  ],
+  entryComponents: [
+    NewNapCustPersonalJobComponent
   ]
 })
 export class NewNapCustModule { }

@@ -1,4 +1,4 @@
-<form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid"
+<form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)"
   #enjiForm="ngForm">
   <span class="mr-1 pull-right" *ngIf="!IsDetail">
     <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
