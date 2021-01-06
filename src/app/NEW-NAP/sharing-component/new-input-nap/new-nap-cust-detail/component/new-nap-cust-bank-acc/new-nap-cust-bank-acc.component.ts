@@ -84,7 +84,7 @@ export class NewNapCustBankAccComponent implements OnInit {
     this.BankAccObj.BankCode = event.BankCode;
   }
 
-  CustBankHandler(Mode: string, BankAccAndStmntObj: AppCustBankAccObj = undefined) {
+  CustBankHandler(Mode: string, BankAccAndStmntObj: AppCustBankAccObj = undefined, idx: number = 0) {
     this.ClearForm();
 
     switch (Mode) {
@@ -100,7 +100,7 @@ export class NewNapCustBankAccComponent implements OnInit {
         break;
       case "Delete":
         this.IsDetail = false;
-        this.DeleteBankAcc(BankAccAndStmntObj);
+        this.DeleteBankAcc(BankAccAndStmntObj, idx);
         break;
       case "Cancel":
         this.IsDetail = false;
@@ -232,13 +232,19 @@ export class NewNapCustBankAccComponent implements OnInit {
     }
   }
 
-  DeleteBankAcc(BankAccAndStmntObj: AppCustBankAccObj){
+  DeleteBankAcc(BankAccAndStmntObj: AppCustBankAccObj, idx){
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.http.post(URLConstant.DeleteAppCustBankAccAndStmnt, {BankAccObj : BankAccAndStmntObj}).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.GetAppCustBankAccList();
-        });
+      if(this.BankAccStmntForm.controls.AppCustBankAccId.value && this.BankAccStmntForm.controls.AppCustBankAccId.value > 0){
+        this.http.post(URLConstant.DeleteAppCustBankAccAndStmnt, {BankAccObj : BankAccAndStmntObj}).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.GetAppCustBankAccList();
+          });
+      }
+      else{
+        this.AppCustBankAccList.splice(idx, 1);
+        this.toastr.successMessage("Success");
+      }
     }
   }
 
@@ -247,38 +253,63 @@ export class NewNapCustBankAccComponent implements OnInit {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
       bankStmnObjs.removeAt(index);
 
-      this.http.post(URLConstant.DeleteAppCustBankStmnt, this.AppCustBankStmntList[index]).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-        });
+      if(this.AppCustBankStmntList[index].AppCustBankStmntId && this.AppCustBankStmntList[index].AppCustBankStmntId > 0){
+        this.http.post(URLConstant.DeleteAppCustBankStmnt, this.AppCustBankStmntList[index]).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+          });
+      }
+      else{
+        this.toastr.successMessage("Success");
+      }
     }
   }
 
   SaveForm(enjiForm: NgForm) {
     this.ListBankStmntObj = new Array();
-    this.BankAccObj.AppCustBankAccId = this.BankAccStmntForm.controls.AppCustBankAccId.value
-    this.BankAccObj.AppCustId = this.AppCustId;
-    this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
-    this.BankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
-    this.BankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
-    this.BankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
-    this.BankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
+    if(this.BankAccStmntForm.controls.AppCustBankAccId.value && this.BankAccStmntForm.controls.AppCustBankAccId.value > 0){
+      this.BankAccObj.AppCustBankAccId = this.BankAccStmntForm.controls.AppCustBankAccId.value;
+      this.BankAccObj.AppCustId = this.AppCustId;
+      this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
+      this.BankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
+      this.BankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
+      this.BankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
+      this.BankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
+      
+      for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
+        this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
+        var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
+        this.BankStmntObj.MonthName = monthObj.Value;
+        this.ListBankStmntObj.push(this.BankStmntObj);
+      }
+      this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
+      this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
+  
+      var reqObj = {
+        BankAccObj : this.BankAccObj,
+        ListBankStmntObj : this.ListBankStmntObj
+      }
+  
+      this.AppCustBankAccList.push(this.BankAccObj);
+    }
+    else{
+      this.BankAccObj = this.AppCustBankAccList.find(x => x.AppCustBankAccId == this.BankAccStmntForm.controls.AppCustBankAccId.value);
+      this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
+      this.BankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
+      this.BankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
+      this.BankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
+      this.BankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
+
+      for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
+        this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
+        var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
+        this.BankStmntObj.MonthName = monthObj.Value;
+        this.ListBankStmntObj.push(this.BankStmntObj);
+      }
+      this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
+      this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
+    }
     
-    for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
-      this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
-      var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
-      this.BankStmntObj.MonthName = monthObj.Value;
-      this.ListBankStmntObj.push(this.BankStmntObj);
-    }
-    this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
-    this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
-
-    var reqObj = {
-      BankAccObj : this.BankAccObj,
-      ListBankStmntObj : this.ListBankStmntObj
-    }
-
-    this.AppCustBankAccList.push(this.BankAccObj);
     this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
     enjiForm.resetForm();
 
