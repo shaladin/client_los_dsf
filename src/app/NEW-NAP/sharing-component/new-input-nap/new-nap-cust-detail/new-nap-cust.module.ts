@@ -14,6 +14,11 @@ import { NewNapOtherInfoComponent } from './component/new-nap-other-info/new-nap
 import { NgxCurrencyModule } from "ngx-currency";
 import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { MatRadioModule } from '@angular/material';
+import { NewNapCustCompanyFullDataComponent } from './component/company/new-nap-cust-company-full-data/new-nap-cust-company-full-data.component';
+import { NewNapCustCompanyContactInfoComponent } from './component/company/new-nap-cust-company-contact-info/new-nap-cust-company-contact-info.component';
+import { NewNapCustCompanyFinDataComponent } from './component/company/new-nap-cust-company-fin-data/new-nap-cust-company-fin-data.component';
+import { NewNapCustCompanyLegalDocComponent } from './component/company/new-nap-cust-company-legal-doc/new-nap-cust-company-legal-doc.component';
+import { NewNapCustCompanyLegalDocDetailComponent } from './component/company/new-nap-cust-company-legal-doc/new-nap-cust-company-legal-doc-detail/new-nap-cust-company-legal-doc-detail.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -39,7 +44,7 @@ export const customCurrencyMaskConfig = {
     NewNapCustAddrDetailComponent, 
     NewNapCustBankAccComponent, 
     NewNapAttrContentComponent, 
-    NewNapOtherInfoComponent],
+    NewNapOtherInfoComponent, NewNapCustCompanyFullDataComponent, NewNapCustCompanyContactInfoComponent, NewNapCustCompanyFinDataComponent, NewNapCustCompanyLegalDocComponent, NewNapCustCompanyLegalDocDetailComponent],
   imports: [
     CommonModule,
     AdInsModule,

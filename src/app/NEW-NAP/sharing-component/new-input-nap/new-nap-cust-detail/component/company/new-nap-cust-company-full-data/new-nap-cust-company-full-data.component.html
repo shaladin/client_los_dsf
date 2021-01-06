@@ -1,0 +1,66 @@
+<form class="form form-horizontal" [formGroup]="ParentForm" (ngSubmit)="ParentForm.valid"
+  #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'CustDetailId'" [title]="'Main Data'" [panel]="'CustDetail'">
+  </lib-ucSubsection>
+  <div id="CustDetail">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
+          <div class="col-md-8">
+            <input type="date" class="form-control" formControlName="EstablishmentDate" [max]="businessDt | date: 'yyyy-MM-dd'"
+              [ngClass]="{ 'is-invalid': IsCompanyDataSubmitted && ParentForm.controls.EstablishmentDate.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.EstablishmentDate"
+              [submit]="IsCompanyDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>No Of Employee</label>
+          <div class="col-md-8">
+            <input type="number" class="form-control" formControlName="NoOfEmployee"
+              [ngClass]="{ 'is-invalid': IsCompanyDataSubmitted && ParentForm.controls.NoOfEmployee.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.NoOfEmployee" [submit]="IsCompanyDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Customer Group</label>
+          <div class="col-md-8">
+            <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupCustGrpObj"
+              *ngIf="lookupCustGrpObj.isReady" [parentForm]="ParentForm" [identifier]="'CustomerGrp'"
+              (lookup)="GetCustGrpData($event)">
+            </lib-uclookupgeneric>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Customer Model</label>
+          <div class="col-md-8">
+            <select class="form-control adInsInput full-width" style="width: 100%" formControlName="MrCustModelCode"
+            [ngClass]="{ 'is-invalid': IsCompanyDataSubmitted && ParentForm.controls.MrCustModelCode.invalid }">
+              <option value="">-Select One-</option>
+              <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
+            </select>
+            <lib-uc-show-errors [control]="ParentForm.controls.MrCustModelCode" [submit]="IsCompanyDataSubmitted"></lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Industry Type</label>
+          <div class="col-md-8"> 
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupIndustryTypeObj"   *ngIf="lookupIndustryTypeObj.isReady" [parentForm]="ParentForm" [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
+              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType.controls.value.untouched" [control]="ParentForm.controls.lookupIndustryType.controls.value"
+                [submit]="IsCompanyDataSubmitted"></lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Affiliation with Multifinance</label>
+          <div class="col-md-8">
+            <input type="checkbox" formControlName="IsAffiliateWithMF" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

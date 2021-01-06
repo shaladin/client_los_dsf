@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -8,6 +9,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompany/AppCustCompanyContactPersonObj.Model';
+import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustEmrgncCntctObj } from 'app/shared/model/AppCustEmrgncCntctObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
@@ -51,6 +55,9 @@ export class NewNapCustDetailComponent implements OnInit {
   CustAttrRequest: Array<Object>;
   ListAddress: Array<AppCustAddrObj>;
   AppCustBankAccList: Array<AppCustBankAccObj>;
+  AppCustCompanyObj: AppCustCompanyObj;
+  TempAppCustCompanyContactPersonObj: AppCustCompanyContactPersonObj;
+  AppCustCompanyFinData: AppCustCompanyFinDataObj;
   MrCustTypeCode: string;
   appCustId: number;
   isExisting: boolean;
@@ -66,6 +73,7 @@ export class NewNapCustDetailComponent implements OnInit {
   AttrGroup: string;
   IsSubmitted: boolean;
   custAttrRequest = new Array<Object>();
+  readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
 
   //#region FormAppCustMainData
   CustMainDataForm = this.fb.group({
@@ -177,6 +185,66 @@ export class NewNapCustDetailComponent implements OnInit {
   //#endregion
 
   //#region FormAppCustCompany
+  CustDetailFormCompany = this.fb.group({
+    NoOfEmployee: ['', Validators.required],
+    IsAffiliateWithMF: [false],
+    EstablishmentDate: ['', Validators.required],
+    IndustryTypeCode: ['', Validators.required],
+    MrCustModelCode: ['', Validators.required],
+  })
+
+  CcForm = this.fb.group({
+    ContactPersonName: ['', Validators.required],
+    MrGenderCode: ['', Validators.required],
+    JobTitleName: ['', Validators.required],
+    MrJobPositionCode: ['', Validators.required],
+    MrIdTypeCode: [''],
+    IdNo: [''],
+    IdExpiredDt: [''],
+    BirthPlace: [''],
+    BirthDt: [''],
+    MrCustRelationshipCode: [''],
+    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+    MobilePhnNo2: ['', Validators.pattern("^[0-9]*$")],
+    Email1: ['', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+    Email2: ['', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+    PhnArea1: ['', Validators.pattern("^[0-9]*$")],
+    PhnArea2: ['', Validators.pattern("^[0-9]*$")],
+    Phn1: ['', Validators.pattern("^[0-9]*$")],
+    Phn2: ['', Validators.pattern("^[0-9]*$")],
+    PhnExt1: ['', Validators.pattern("^[0-9]*$")],
+    PhnExt2: ['', Validators.pattern("^[0-9]*$")],
+  });
+
+  FinancialFormCompany = this.fb.group({
+    AppCustCompanyFinDataId: [0],
+    AppCustId: [0],
+    GrossMonthlyIncomeAmt: ['', Validators.required],
+    ReturnOfInvestmentPrcnt: [0],
+    ReturnOfAssetPrcnt: [0],
+    CurrentRatioPrcnt: [0],
+    InvTurnOverPrcnt: [0],
+    GrowthPrcnt: [0],
+    OthMonthlyInstAmt: [0],
+    Revenue: [0],
+    ProfitBeforeTax: [0],
+    NetFixedAsset: [0],
+    CurrLiablts: [0],
+    ShareholderEquity: [0],
+    GrossMonthlyExpenseAmt: [0],
+    ReturnOfEquityPrcnt: [0],
+    ProfitMarginPrcnt: [0],
+    DebtEquityRatioPrcnt: [0],
+    ArTurnOverPrcnt: [0],
+    WorkingCapitalAmt: [0],
+    DateAsOf: [''],
+    OprCost: [0],
+    CurrAsset: [0],
+    TotalAsset: [0],
+    LongTermLiablts: [0],
+    CurrRatio: [0],
+    RowVersion: ['']
+  })
   //#endregion
 
   //#region FormOtherInfo
@@ -216,6 +284,9 @@ export class NewNapCustDetailComponent implements OnInit {
     this.outputTab = new EventEmitter<any>();
     this.outputCancel = new EventEmitter<any>();
     this.AppCustBankAccList = new Array<AppCustBankAccObj>();
+    this.AppCustCompanyObj = new AppCustCompanyObj();
+    this.TempAppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
+    this.AppCustCompanyFinData = new AppCustCompanyFinDataObj();
     this.isExisting = false;
     this.isIncludeCustRelation = false;
     this.AppCustPersonalId = 0;
@@ -623,6 +694,181 @@ export class NewNapCustDetailComponent implements OnInit {
     this.appCustOtherInfo.LbppmsBizSclLbppDescr = this.OtherInformationForm.controls.LbppmsBizSclLbppDescr.value;
 
   }
+  //#endregion
+
+  //#region CustCompanyFullData
+  SetData(){
+    this.AppCustObj.AppCustId = this.AppCustIdInput;
+    this.AppCustObj.MrCustModelCode = this.CustDetailFormCompany.controls.MrCustModelCode.value;
+    this.AppCustObj.IsAffiliateWithMf = this.CustDetailFormCompany.controls.IsAffiliateWithMF.value; 
+   
+    this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailFormCompany.controls.IndustryTypeCode.value;
+    this.AppCustCompanyObj.NumOfEmp = this.CustDetailFormCompany.controls.NoOfEmployee.value;
+    this.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
+  }
+
+  // SaveForm(){
+  //   this.SetData();
+  //   let requestObj={
+  //     AppCustObj: this.AppCustObj, 
+  //     AppCustCompanyObj: this.AppCustCompanyObj,
+  //     AppCustGrpObjs: this.ListAppCustGrpObj
+  //   }
+
+  //   this.http.post(URLConstant.UpdateAppCustCompletionCompany, requestObj).subscribe(
+  //     (response) => {
+  //       this.toastr.successMessage(response["message"]);
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     });
+  // }
+  //#endregion
+
+  //#region CustCompanyContactPerson
+  GetTempContactPerson(e){
+    this.TempAppCustCompanyContactPersonObj = e;
+  }
+
+  // async SaveForm() {
+  //   let temp = this.CcForm.getRawValue();
+  //   let ReqAddr = await this.SetReqAddrObj(temp);
+  //   let requestContactInfo = await this.SetReqCcObj(temp, ReqAddr);
+  //   await this.http.post(URLConstant.AddOrEditAppCustCompanyContactPerson, requestContactInfo).toPromise().then(
+  //     (response) => {
+  //       this.toastr.successMessage(response["message"]);
+  //     }
+  //   );
+  // }
+
+  CheckDt(inputDate: Date, type: string) {
+    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    let max17Yodt = new Date(Max17YO);
+    let d1 = new Date(inputDate);
+    let d2 = new Date(MaxDate);
+    max17Yodt.setFullYear(d2.getFullYear() - 17);
+
+    if (type == ExceptionConstant.DateErrorMessageIdExpiredDate) {
+      d2.setDate(d2.getDate() - 1);
+      if (d1 < d2) {
+        throw this.toastr.warningMessage(type + "  can not be less than " + MaxDate);
+      }
+      return;
+    }
+
+    if (d1 > d2) {
+      throw this.toastr.warningMessage(type + "  can not be more than " + MaxDate);
+    } else if (type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt) {
+      throw this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+    }
+  }
+
+  async SetReqAddrObj(obj: any) {
+    let TempAddr = obj[this.InputAddressObjForCc_Identifier];
+    let TempZipVal = obj[this.InputAddressObjForCc_Identifier + "Zipcode"];
+
+    let ReqAddr: AppCustAddrObj = new AppCustAddrObj();
+    ReqAddr.Phn1 = TempAddr.Phn1;
+    ReqAddr.Phn2 = TempAddr.Phn2;
+    ReqAddr.PhnArea1 = TempAddr.PhnArea1;
+    ReqAddr.PhnArea2 = TempAddr.PhnArea2;
+    ReqAddr.PhnExt1 = TempAddr.PhnExt1;
+    ReqAddr.PhnExt2 = TempAddr.PhnExt2;
+    ReqAddr.Addr = TempAddr.Addr;
+    ReqAddr.AppCustId = this.AppCustIdInput;
+    ReqAddr.AreaCode1 = TempAddr.AreaCode1;
+    ReqAddr.AreaCode2 = TempAddr.AreaCode2;
+    ReqAddr.AreaCode3 = TempAddr.AreaCode3;
+    ReqAddr.AreaCode4 = TempAddr.AreaCode4;
+    ReqAddr.City = TempAddr.City;
+    ReqAddr.Fax = TempAddr.Fax;
+    ReqAddr.FaxArea = TempAddr.FaxArea;
+    ReqAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeCompany;
+    ReqAddr.MrHouseOwnershipCode = "";
+    ReqAddr.Zipcode = TempZipVal.value;
+    ReqAddr.SubZipcode = TempAddr.SubZipcode;
+
+    if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0) {
+      ReqAddr.AppCustAddrId = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.AppCustAddrId;
+      ReqAddr.RowVersion = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.RowVersion;
+    }
+
+    return ReqAddr;
+  }
+
+  async SetReqCcObj(obj: any, ReqAddr: AppCustAddrObj) {
+    let ReqCcObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
+    ReqCcObj.AppCustId = this.AppCustIdInput;
+    ReqCcObj.AppCustCompanyId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyId;
+    ReqCcObj.AppCustCompanyContactPersonId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId;
+    ReqCcObj.RowVersion = this.TempAppCustCompanyContactPersonObj.RowVersion;
+    ReqCcObj.BirthDt = obj.BirthDt
+    if(ReqCcObj.BirthDt != "" && ReqCcObj.BirthDt != null) this.CheckDt(new Date(ReqCcObj.BirthDt), ExceptionConstant.DateErrorMessageBirthDate);
+    ReqCcObj.BirthPlace = obj.BirthPlace;
+    ReqCcObj.ContactPersonName = obj.ContactPersonName;
+    ReqCcObj.Email1 = obj.Email1;
+    ReqCcObj.Email2 = obj.Email2;
+    ReqCcObj.IdExpiredDt = obj.IdExpiredDt;
+    if(ReqCcObj.IdExpiredDt != "" && ReqCcObj.IdExpiredDt != null) this.CheckDt(new Date(ReqCcObj.IdExpiredDt), ExceptionConstant.DateErrorMessageIdExpiredDate);
+    ReqCcObj.IdNo = obj.IdNo;
+    ReqCcObj.JobTitleName = obj.JobTitleName;
+    ReqCcObj.MobilePhnNo1 = obj.MobilePhnNo1;
+    ReqCcObj.MobilePhnNo2 = obj.MobilePhnNo2;
+    ReqCcObj.MrCustRelationshipCode = obj.MrCustRelationshipCode;
+    ReqCcObj.MrGenderCode = obj.MrGenderCode;
+    ReqCcObj.MrIdTypeCode = obj.MrIdTypeCode;
+    ReqCcObj.MrJobPositionCode = obj.MrJobPositionCode;
+    ReqCcObj.Phn1 = obj[this.InputAddressObjForCc_Identifier].Phn1;
+    ReqCcObj.Phn2 = obj[this.InputAddressObjForCc_Identifier].Phn2;
+    ReqCcObj.PhnArea1 = obj[this.InputAddressObjForCc_Identifier].PhnArea1;
+    ReqCcObj.PhnArea2 = obj[this.InputAddressObjForCc_Identifier].PhnArea2;
+    ReqCcObj.PhnExt1 = obj[this.InputAddressObjForCc_Identifier].PhnExt1;
+    ReqCcObj.PhnExt2 = obj[this.InputAddressObjForCc_Identifier].PhnExt2;
+    ReqCcObj.AppCustAddrObj = ReqAddr;
+
+    return ReqCcObj;
+  }
+  //#endregion
+
+  //#region CustCompanyFinData
+  SetAttrContentFinDataCompany(){
+    var formValue = this.FinancialFormCompany['controls']['AttrList'].value;
+    this.CustAttrRequest = new Array<Object>();
+     
+    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
+      for (const key in formValue) {
+        if(formValue[key]["AttrValue"]!=null ) { 
+        var custAttr = {
+          CustAttrContentId: formValue[key]["CustAttrContentId"],
+          AppCustId: this.AppCustIdInput,
+          RefAttrCode: formValue[key]["AttrCode"],
+          AttrValue: formValue[key]["AttrValue"],
+          AttrGroup: this.AttrGroup
+        };
+        this.CustAttrRequest.push(custAttr);}
+
+      }  
+    }
+  }
+
+  // SaveForm() {
+  //   this.SetAttrContentFinDataCompany();
+  //   this.AppCustCompanyFinData = this.FinancialFormCompany.value;
+  //   this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
+  //   this.AppCustCompanyFinData.AppCustId = this.AppCustIdInput;
+
+  //   let request = {
+  //     ListAppCustAttrObj: this.CustAttrRequest,
+  //     AppCustCompanyFinDataObj: this.AppCustCompanyFinData
+  //   }
+    
+  //   this.http.post(URLConstant.AddEditAppCustCompanyFinData, request).subscribe(
+  //     (response) => {
+  //       this.toastr.successMessage(response["message"]);
+  //     });
+  // }
   //#endregion
 
   SaveForm() {
