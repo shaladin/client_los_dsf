@@ -6,8 +6,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';

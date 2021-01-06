@@ -176,11 +176,10 @@ export class NewNapCustAddrDetailComponent implements OnInit {
       this.appCustAddrObj.HouseOwnershipName = this.appCustAddrObj.MrHouseOwnershipCode;
 
       if(this.InputObj.Mode == "Edit"){
-        this.InputObj.ListInputedAddr.splice(this.InputObj.EditedIndex, 1);
+        this.InputObj.ListInputedAddr[this.InputObj.EditedIndex] = this.appCustAddrObj;
+      }else{
+        this.InputObj.ListInputedAddr.push(this.appCustAddrObj);
       }
-
-      this.InputObj.ListInputedAddr.push(this.appCustAddrObj);
-
       this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });
       
     }

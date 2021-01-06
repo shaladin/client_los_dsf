@@ -124,19 +124,6 @@
         </div>
       </div>
     </div>
-    <!-- <div *ngIf="CustModelCode != 'NONPROF'">
-      <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputJobAddrObj" [enjiForm]="enjiForm"
-        [identifier]="'JobAddr'" [UCAddrForm]="ParentForm"></lib-ucaddress>
-        <div class="form-group row">
-          <label class="col-md-2" translate>Notes </label>
-          <div class="col-md-4">
-            <textarea type="text" class="form-control adInsInput" formControlName="JobNotes"
-              [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.JobNotes.invalid }"></textarea>
-            <lib-uc-show-errors [control]="ParentForm.controls.JobNotes" [submit]="IsJobSubmitted">
-            </lib-uc-show-errors>
-          </div>
-        </div>
-    </div> -->
   </div>
   <div *ngIf="CustModelCode != 'NONPROF'">
     <lib-ucSubsection [id]="'PrevJobDataId'" [title]="'Previous Job Data'" [panel]="'PrevJobData'">
@@ -157,17 +144,6 @@
           </lib-uc-show-errors>
         </div>
       </div>
-      <!-- <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputPrevJobAddrObj" [enjiForm]="enjiForm"
-        [identifier]="'PrevJobAddr'" [UCAddrForm]="ParentForm"></lib-ucaddress>
-        <div class="form-group row">
-          <label class="col-md-2" translate>Notes </label>
-          <div class="col-md-4">
-            <textarea type="text" class="form-control adInsInput" formControlName="PrevJobNotes"
-              [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.PrevJobNotes.invalid }"></textarea>
-            <lib-uc-show-errors [control]="ParentForm.controls.PrevJobNotes" [submit]="IsJobSubmitted">
-            </lib-uc-show-errors>
-          </div>
-        </div> -->
     </div>
     <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'">
     </lib-ucSubsection>
@@ -215,22 +191,5 @@
         </div>
       </div>
     </div>
-    <!-- <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm"
-      [identifier]="'OthBizAddr'" [UCAddrForm]="ParentForm"></lib-ucaddress>
-      <div class="form-group row">
-        <label class="col-md-2" translate>Notes </label>
-        <div class="col-md-4">
-          <textarea type="text" class="form-control adInsInput" formControlName="OthBizNotes"
-            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizNotes.invalid }"></textarea>
-          <lib-uc-show-errors [control]="ParentForm.controls.OthBizNotes" [submit]="IsJobSubmitted">
-          </lib-uc-show-errors>
-        </div>
-      </div> -->
-  </div>
-  <div class="form-actions right">
-    <button type="submit" (click)=formValidate.scrollIfFormHasErrors(ParentForm)
-      class="btn btn-raised btn-primary">
-      <i class="far fa-check-square"></i> Save & Continue
-    </button>
   </div>
 </form>
