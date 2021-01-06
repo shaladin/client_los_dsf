@@ -25,22 +25,22 @@ export class NewNapCustBankAccComponent implements OnInit {
   Title: string = "Add Bank Account"
   DefaultMonth: string;
   IsDetail: boolean = false;
-  BankAccObj: AppCustBankAccObj = new AppCustBankAccObj();
   BankStmntObj: AppCustBankStmntObj = new AppCustBankStmntObj();
   MonthObj: Array<KeyValueObj> = new Array();
   AppCustBankStmntList: Array<AppCustBankStmntObj> = new Array();
   ListBankStmntObj: Array<AppCustBankStmntObj> = new Array();
-  RowAppCustBankStmnt: number;
   InputLookupBankObj: InputLookupObj = new InputLookupObj();
+  EditedIndex: number;
 
   BankAccStmntForm = this.fb.group({
-    AppCustBankAccId: [0],
     BankCode: [''],
+    BankName: [''],
     BankBranch: ['', Validators.required],
     BankAccName: ['', Validators.required],
     BankAccNo: ['', Validators.required],
     IsDefault: [false],
     IsActive: [false],
+    RowVersion: [''],
     BankStmntObjs: this.fb.array([])
   })
 
@@ -81,12 +81,14 @@ export class NewNapCustBankAccComponent implements OnInit {
   }
 
   GetBank(event){
-    this.BankAccObj.BankCode = event.BankCode;
+    this.BankAccStmntForm.patchValue({
+      BankCode: event.BankCode,
+      BankName: event.BankName
+    });
   }
 
-  CustBankHandler(Mode: string, BankAccAndStmntObj: AppCustBankAccObj = undefined, idx: number = 0) {
+  CustBankHandler(Mode: string, BankAccAndStmntObj: AppCustBankAccObj = undefined, index: number = 0) {
     this.ClearForm();
-
     switch (Mode) {
       case "Add":
         this.IsDetail = true;
@@ -96,11 +98,11 @@ export class NewNapCustBankAccComponent implements OnInit {
         this.IsDetail = true;
         this.Mode = "Edit";
         this.Title = "Edit Bank Account";
-        this.SetForEdit(BankAccAndStmntObj);
+        this.SetForEdit(BankAccAndStmntObj, index);
         break;
       case "Delete":
         this.IsDetail = false;
-        this.DeleteBankAcc(BankAccAndStmntObj, idx);
+        this.DeleteBankAcc(index);
         break;
       case "Cancel":
         this.IsDetail = false;
@@ -110,21 +112,22 @@ export class NewNapCustBankAccComponent implements OnInit {
     this.OutputObj.emit({Key: 'IsDetail', Value: this.IsDetail});
   }
 
-  SetForEdit(BankAccAndStmntObj: AppCustBankAccObj){
+  SetForEdit(BankAccAndStmntObj: AppCustBankAccObj, index: number){
+    this.EditedIndex = index;
     this.InputLookupBankObj.nameSelect = BankAccAndStmntObj.BankName;
     this.InputLookupBankObj.jsonSelect = {BankName: BankAccAndStmntObj.BankName};
-    this.BankAccObj.AppCustBankAccId = BankAccAndStmntObj.AppCustBankAccId;
-    this.BankAccObj.BankCode = BankAccAndStmntObj.BankCode;
-    this.BankAccObj.RowVersion = BankAccAndStmntObj.RowVersion;
+
 
     this.BankAccStmntForm.patchValue({
-      AppCustBankAccId: BankAccAndStmntObj.AppCustBankAccId,
+      BankCode: BankAccAndStmntObj.BankCode,
+      BankName: BankAccAndStmntObj.BankName,
       BankBranch : BankAccAndStmntObj.BankBranch,
       BankAccName : BankAccAndStmntObj.BankAccName,
       BankAccNo : BankAccAndStmntObj.BankAccNo,
       IsDefault : BankAccAndStmntObj.IsDefault,
       IsActive : BankAccAndStmntObj.IsActive,
-    }) 
+      RowVersion: BankAccAndStmntObj.RowVersion
+    });
 
     if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
@@ -138,8 +141,8 @@ export class NewNapCustBankAccComponent implements OnInit {
 
   ClearForm(){
     this.BankAccStmntForm.patchValue({
-      AppCustBankAccId: 0,
       BankCode: "",
+      BankName: "",
       BankBranch: "",
       BankAccName: "",
       BankAccNo: "",
@@ -223,114 +226,50 @@ export class NewNapCustBankAccComponent implements OnInit {
     }
   }
 
-  RemoveCustBankStmnt(i) {
-    var confirmation = confirm(ExceptionConstant.DELETE_CONFIRMATION);
-    if (confirmation == true) {
+  DeleteCustBankStmnt(i) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var formArray = this.BankAccStmntForm.get('BankStmntObjs') as FormArray;
       formArray.removeAt(i);
-      this.RowAppCustBankStmnt--;
     }
   }
 
-  DeleteBankAcc(BankAccAndStmntObj: AppCustBankAccObj, idx){
+  DeleteBankAcc(index: number){
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      if(this.BankAccStmntForm.controls.AppCustBankAccId.value && this.BankAccStmntForm.controls.AppCustBankAccId.value > 0){
-        this.http.post(URLConstant.DeleteAppCustBankAccAndStmnt, {BankAccObj : BankAccAndStmntObj}).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.GetAppCustBankAccList();
-          });
-      }
-      else{
-        this.AppCustBankAccList.splice(idx, 1);
-        this.toastr.successMessage("Success");
-      }
-    }
-  }
-
-  DeleteBankStmnt(index: number){
-    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
-      bankStmnObjs.removeAt(index);
-
-      if(this.AppCustBankStmntList[index].AppCustBankStmntId && this.AppCustBankStmntList[index].AppCustBankStmntId > 0){
-        this.http.post(URLConstant.DeleteAppCustBankStmnt, this.AppCustBankStmntList[index]).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-          });
-      }
-      else{
-        this.toastr.successMessage("Success");
-      }
+      this.AppCustBankAccList.splice(index, 1)
     }
   }
 
   SaveForm(enjiForm: NgForm) {
     this.ListBankStmntObj = new Array();
-    if(this.BankAccStmntForm.controls.AppCustBankAccId.value && this.BankAccStmntForm.controls.AppCustBankAccId.value > 0){
-      this.BankAccObj.AppCustBankAccId = this.BankAccStmntForm.controls.AppCustBankAccId.value;
-      this.BankAccObj.AppCustId = this.AppCustId;
-      this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
-      this.BankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
-      this.BankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
-      this.BankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
-      this.BankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
-      
-      for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
-        this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
-        var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
-        this.BankStmntObj.MonthName = monthObj.Value;
-        this.ListBankStmntObj.push(this.BankStmntObj);
-      }
-      this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
-      this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
-  
-      var reqObj = {
-        BankAccObj : this.BankAccObj,
-        ListBankStmntObj : this.ListBankStmntObj
-      }
-  
-      this.AppCustBankAccList.push(this.BankAccObj);
-    }
-    else{
-      this.BankAccObj = this.AppCustBankAccList.find(x => x.AppCustBankAccId == this.BankAccStmntForm.controls.AppCustBankAccId.value);
-      this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
-      this.BankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
-      this.BankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
-      this.BankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
-      this.BankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
 
-      for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
-        this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
-        var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
-        this.BankStmntObj.MonthName = monthObj.Value;
-        this.ListBankStmntObj.push(this.BankStmntObj);
-      }
-      this.BankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
-      this.BankAccObj.ListBankStmntObj = this.ListBankStmntObj;
-    }
+    var bankAccObj = new AppCustBankAccObj();
+    bankAccObj.AppCustId = this.AppCustId;
+    bankAccObj.BankCode = this.BankAccStmntForm.controls.BankCode.value;
+    bankAccObj.BankName = this.BankAccStmntForm.controls.BankName.value;
+    bankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
+    bankAccObj.BankAccName = this.BankAccStmntForm.controls.BankAccName.value;
+    bankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
+    bankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
+    bankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
     
+    for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
+      this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
+      var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
+      this.BankStmntObj.MonthName = monthObj.Value;
+      this.ListBankStmntObj.push(this.BankStmntObj);
+    }
+    bankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
+    bankAccObj.ListBankStmntObj = this.ListBankStmntObj;
+
+    if(this.Mode == "Edit"){
+      this.AppCustBankAccList[this.EditedIndex] = bankAccObj;
+    }else{
+      this.AppCustBankAccList.push(bankAccObj);
+    }
     this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
     enjiForm.resetForm();
 
-    // if(this.Mode != "Edit"){
-      // this.http.post(URLConstant.AddAppCustBankAccAndStmnt, reqObj).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     this.OutputObj.emit({Key: 'IsDetail', Value: false});
-      //     this.GetAppCustBankAccList();
-      //     enjiForm.resetForm();
-      //   });
-    // }else{
-      // this.http.post(URLConstant.EditAppCustBankAccAndStmnt, reqObj).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     this.OutputObj.emit({Key: 'IsDetail', Value: false});
-      //     this.GetAppCustBankAccList();
-      //     enjiForm.resetForm();
-      //   });
-    // }
-    this.IsDetail = false
+    this.IsDetail = false;
   }
 
 }
