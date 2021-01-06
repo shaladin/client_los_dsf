@@ -111,6 +111,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   SerialNoList: any;
   items: FormArray;
   isAbleToSubmit: boolean = false;
+  thirdPartyRsltHId: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -229,8 +230,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.http.post(this.getThirdPartyResultHByTrxTypeCodeAndTrxNo, this.thirdPartyObj).subscribe(
               (response) => {
                 this.latestReqDtCheckRapindo = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
                 this.reqLatestJson = JSON.parse(response['ReqJson']);
-                this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+                  this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                }
               }
             );
             if (this.lobKta.includes(this.returnLobCode) == true) {
@@ -374,10 +378,6 @@ export class LeadInputLeadDataComponent implements OnInit {
                           });
                         }
                       }
-                      console.log('form asset');
-                      console.log(this.LeadDataForm.value)
-                      console.log(this.LeadDataForm.value.items)
-                      console.log('form asset = ', this.LeadDataForm.value.items[0]['SerialNoValue']);
                       this.isAssetReady = true;
                     });
                 });
@@ -494,11 +494,6 @@ export class LeadInputLeadDataComponent implements OnInit {
                             });
                           }
                         }
-                        console.log('form asset');
-                        console.log(this.LeadDataForm.value)
-                        console.log(this.LeadDataForm.value.items)
-                        console.log('form asset = ', this.LeadDataForm.value.items[0]['SerialNoValue']);
-                        this.isAssetReady = true;
                       });
                   });
               });
@@ -870,7 +865,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck(){
-    if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo){
+    if(this.isNeedCheckBySystem == "0" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo){
       if(confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")){
         return true;
       }
@@ -1018,7 +1013,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
 
   checkRapindo() {
-    console.log('lead form = ', this.LeadDataForm.controls.items.value)
     if (this.isNeedCheckBySystem == "0"){
         if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
@@ -1026,13 +1020,14 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
             (response1) => {
-              console.log(response1);
-              
               this.http.post(this.getThirdPartyResultHByTrxTypeCodeAndTrxNo, this.thirdPartyObj).subscribe(
                 (response) => {
                   this.latestReqDtCheckRapindo = response['ReqDt'];
+                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
                   this.reqLatestJson = JSON.parse(response['ReqJson']);
-                  this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                  if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+                    this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                  }
                 }
               );
             }
