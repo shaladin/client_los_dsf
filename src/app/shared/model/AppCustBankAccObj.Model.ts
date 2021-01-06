@@ -1,4 +1,3 @@
-import { AppCustBankStmntObj } from "./AppCustBankStmntObj.Model";
 
 export class AppCustBankAccObj {
     AppCustBankAccId: number;
@@ -15,7 +14,6 @@ export class AppCustBankAccObj {
     IsActive: boolean;
     BankInfo: string;
     AppCustBankStmntObjs: Array<any>;
-    ListBankStmntObj: Array<AppCustBankStmntObj>;
     RowVersion: string[];
     
 constructor() { 

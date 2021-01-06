@@ -703,22 +703,6 @@ export class NewNapCustDetailComponent implements OnInit {
     this.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
   }
 
-  // SaveForm(){
-  //   this.SetData();
-  //   let requestObj={
-  //     AppCustObj: this.AppCustObj, 
-  //     AppCustCompanyObj: this.AppCustCompanyObj,
-  //     AppCustGrpObjs: this.ListAppCustGrpObj
-  //   }
-
-  //   this.http.post(URLConstant.UpdateAppCustCompletionCompany, requestObj).subscribe(
-  //     (response) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     },
-  //     error => {
-  //       console.log(error);
-  //     });
-  // }
   //#endregion
 
   //#region CustCompanyContactPerson
@@ -726,16 +710,6 @@ export class NewNapCustDetailComponent implements OnInit {
     this.TempAppCustCompanyContactPersonObj = e;
   }
 
-  // async SaveForm() {
-  //   let temp = this.CcForm.getRawValue();
-  //   let ReqAddr = await this.SetReqAddrObj(temp);
-  //   let requestContactInfo = await this.SetReqCcObj(temp, ReqAddr);
-  //   await this.http.post(URLConstant.AddOrEditAppCustCompanyContactPerson, requestContactInfo).toPromise().then(
-  //     (response) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     }
-  //   );
-  // }
 
   CheckDt(inputDate: Date, type: string) {
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -849,24 +823,6 @@ export class NewNapCustDetailComponent implements OnInit {
     }
   }
 
-  // SaveForm() {
-  //   this.SetAttrContentFinDataCompany();
-  //   this.AppCustCompanyFinData = this.FinancialFormCompany.value;
-  //   this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
-  //   this.AppCustCompanyFinData.AppCustId = this.AppCustIdInput;
-
-  //   let request = {
-  //     ListAppCustAttrObj: this.CustAttrRequest,
-  //     AppCustCompanyFinDataObj: this.AppCustCompanyFinData
-  //   }
-    
-  //   this.http.post(URLConstant.AddEditAppCustCompanyFinData, request).subscribe(
-  //     (response) => {
-  //       this.toastr.successMessage(response["message"]);
-  //     });
-  // }
-  //#endregion
-
   SaveForm() {
     this.IsSubmitted = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -954,6 +910,7 @@ export class NewNapCustDetailComponent implements OnInit {
         var obj = new Object();
         var bankAccObj = new AppCustBankAccObj();
         bankAccObj.AppCustBankAccId = bank.AppCustBankAccId;
+        bankAccObj.BankCode = bank.BankCode;
         bankAccObj.AppCustId = bank.AppCustId;
         bankAccObj.BankBranch = bank.BankBranch;
         bankAccObj.BankAccName = bank.BankAccName;
@@ -961,7 +918,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.ListBankStmntObj;
+        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
         appCustBankAccRequest.push(obj);
       }
       var requestPersonal = {

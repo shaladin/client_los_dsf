@@ -76,7 +76,8 @@ export class NewNapCustBankAccComponent implements OnInit {
   GetAppCustBankAccList() {
     this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
-        this.AppCustBankAccList = response["AppCustBankAccList"]
+        this.AppCustBankAccList = response["AppCustBankAccList"];
+        this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
       });
   }
 
@@ -109,7 +110,7 @@ export class NewNapCustBankAccComponent implements OnInit {
         break;
     }
     this.FormValidity(this.IsDetail);
-    this.OutputObj.emit({Key: 'IsDetail', Value: this.IsDetail});
+    this.OutputObj.emit({Key: 'IsDetail', Value: this.IsDetail, AppCustBankAccList: this.AppCustBankAccList});
   }
 
   SetForEdit(BankAccAndStmntObj: AppCustBankAccObj, index: number){
@@ -235,7 +236,8 @@ export class NewNapCustBankAccComponent implements OnInit {
 
   DeleteBankAcc(index: number){
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.AppCustBankAccList.splice(index, 1)
+      this.AppCustBankAccList.splice(index, 1);
+      this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
     }
   }
 
@@ -259,7 +261,6 @@ export class NewNapCustBankAccComponent implements OnInit {
       this.ListBankStmntObj.push(this.BankStmntObj);
     }
     bankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
-    bankAccObj.ListBankStmntObj = this.ListBankStmntObj;
 
     if(this.Mode == "Edit"){
       this.AppCustBankAccList[this.EditedIndex] = bankAccObj;
