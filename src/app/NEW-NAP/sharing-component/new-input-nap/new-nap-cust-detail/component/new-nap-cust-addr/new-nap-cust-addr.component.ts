@@ -32,11 +32,11 @@ export class NewNapCustAddrComponent implements OnInit {
 
   ngOnInit() {
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppCustAddrNewNap.json";
-    this.LoadListCustAddress(new Array<AppCustAddrObj>());
+    this.LoadListCustAddress(new Array<AppCustAddrObj>(), true);
   }
 
-  LoadListCustAddress(appCustAddrList: Array<AppCustAddrObj>){
-    if(this.AppCustId && this.AppCustId > 0){
+  LoadListCustAddress(appCustAddrList: Array<AppCustAddrObj>, isOnInit: boolean){
+    if(this.AppCustId && this.AppCustId > 0 && isOnInit){
       this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrByAppCustId, { AppCustId: this.AppCustId }).subscribe(
         (response) => {
           this.ListAddress = response;
@@ -96,19 +96,7 @@ export class NewNapCustAddrComponent implements OnInit {
     this.OutputTab.emit({ ListAddress: event.ListAddress });
     this.IsDetail = event.IsDetail;
     this.IsReady = false;
-    this.LoadListCustAddress(event.ListAddress);
-  }
-
-  Continue(){
-    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
-      if(this.ListAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence) != null) {
-        this.OutputTab.emit({ ListAddress: this.ListAddress });
-      }else{
-        this.toastr.warningMessage("Please input Legal Address And Residence Address Data!")
-      }
-    }else if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
-      this.OutputTab.emit({ ListAddress: this.ListAddress });
-    }
+    this.LoadListCustAddress(event.ListAddress, false);
   }
 
 }

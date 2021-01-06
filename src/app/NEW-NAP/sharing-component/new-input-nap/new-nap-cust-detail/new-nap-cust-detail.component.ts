@@ -65,6 +65,7 @@ export class NewNapCustDetailComponent implements OnInit {
   IsMarried: boolean;
   AttrGroup: string;
   IsSubmitted: boolean;
+  IsDataLoaded: boolean = false;
   custAttrRequest = new Array<Object>();
 
   //#region FormAppCustMainData
@@ -272,6 +273,7 @@ export class NewNapCustDetailComponent implements OnInit {
           else{
             this.inputMode = "ADD";
           }
+          this.IsDataLoaded = true;
         }
       ).catch(
         (error) => {
@@ -734,7 +736,7 @@ export class NewNapCustDetailComponent implements OnInit {
         AppCustOtherInfo: appCustOtherInfoRequest,
         AppCustBankAccList: appCustBankAccRequest
       }
-      this.http.post(URLConstant.AddEditNewNapCustPersonal, requestPersonal).toPromise().then(
+      this.http.post(URLConstant.AddEditCustDataPersonal, requestPersonal).toPromise().then(
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
