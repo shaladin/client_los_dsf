@@ -22,6 +22,10 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { LeadObj } from 'app/shared/model/Lead.Model';
+import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -109,6 +113,18 @@ export class LeadInputCustDataComponent implements OnInit {
   });
   inputAddressObjForLegalAddr: any;
   inputAddressObjForResidenceAddr: InputAddressObj;
+  generalSettingObj: GeneralSettingObj;
+  getGeneralSettingByCode: string;
+  returnGeneralSettingObj: any;
+  isNeedCheckBySystem: string;
+  leadObj: LeadObj;
+  returnLeadObj: Object;
+  thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  leadNo: any;
+  latestReqDtCheckIntegrator: any;
+  thirdPartyRsltHId: any;
+  getThirdPartyResultHForFraudChecking: string;
+  reqLatestJson: any;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -122,6 +138,8 @@ export class LeadInputCustDataComponent implements OnInit {
     this.getLeadCustPersonalJobData = URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
     this.getRefProfessionByCode = URLConstant.GetRefProfessionByCode;
     this.getListLeadCustSocmed = URLConstant.GetListLeadCustSocmedByLeadCustId;
+    this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
+    this.getThirdPartyResultHForFraudChecking = URLConstant.GetThirdPartyResultHForFraudChecking;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -199,6 +217,38 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.isRequired = true;
 
+
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
+      (response) => {
+        this.returnGeneralSettingObj = response;
+        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+        this.leadObj = new LeadObj();
+        this.leadObj.LeadId = this.LeadId;
+        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
+          (response) => {
+            this.returnLeadObj = response;
+            this.leadNo = response['LeadNo'];
+
+            this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+            this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
+            this.thirdPartyObj.TrxNo = this.leadNo;
+            this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
+            this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              (response) => {
+                this.latestReqDtCheckIntegrator = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                // this.reqLatestJson = JSON.parse(response['ReqJson']);
+                // if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+                //   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                // }
+              }
+            );
+          }
+        );
+      }
+    );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
@@ -920,4 +970,44 @@ export class LeadInputCustDataComponent implements OnInit {
         }
       });
   }
+
+  checkIntegrator() {
+    //if (this.isNeedCheckBySystem == "0"){
+        // if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
+
+        //   this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        //   this.setLeadAsset();
+        //   this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
+        //     (response1) => {
+        //       this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+        //         (response) => {
+        //           this.latestReqDtCheckIntegrator = response['ReqDt'];
+        //           this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+        //           this.reqLatestJson = JSON.parse(response['ReqJson']);
+        //           // if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+        //           //   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+        //           // }
+        //         }
+        //       );
+        //     }
+        //   );
+        // }
+      
+    //}
+  }
+
+
+  // confirmFraudCheck(){
+  //   if(this.isNeedCheckBySystem == "0" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo){
+  //     if(confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")){
+  //       return true;
+  //     }
+  //     else{
+  //       return false;
+  //     }
+  //   }
+  //   else{
+  //     return true;
+  //   }
+  // }
 }
