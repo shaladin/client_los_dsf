@@ -144,6 +144,7 @@ export class NewNapCustDetailComponent implements OnInit {
     JobNotes: [''],
     PrevJobNotes: [''],
     OthBizNotes: [''],
+    RowVersion: ['']
   });
 
   EmergencyContactForm = this.fb.group({
@@ -158,7 +159,8 @@ export class NewNapCustDetailComponent implements OnInit {
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
     Email: ['', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
-    CopyAddrFrom: ['']
+    CopyAddrFrom: [''],
+    RowVersion: ['']
   });
 
   PersonalFinancialForm = this.fb.group({
@@ -375,15 +377,6 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustMainDataForm.controls.MobilePhnNo1.value;
     this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustMainDataForm.controls.Email1.value;
 
-    // this.custDataPersonalObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode3 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode3.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode4 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode4.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.Zipcode = this.CustMainDataForm.controls["AddressZipcode"]["controls"].value.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode1 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode1.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
-    // this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
 
     if (this.custDataPersonalObj.AppCustObj.IsShareholder) {
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MrJobPositionCode = this.CustMainDataForm.controls.MrJobPositionCode.value;
@@ -395,9 +388,8 @@ export class NewNapCustDetailComponent implements OnInit {
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.CustMainDataForm.controls.RowVersionShareholder.value;
     }
 
-    this.custDataPersonalObj.AppCustObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCust.value;
-    this.custDataPersonalObj.AppCustPersonalObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCustPersonal.value;
-    this.custDataPersonalObj.AppCustAddrLegalObj.RowVersion = this.CustMainDataForm.controls.RowVersionLegalAddr.value;
+    this.custDataPersonalObj.AppCustObj.RowVersion = this.CustDetailForm.controls.RowVersionAppCust.value;
+    this.custDataPersonalObj.AppCustPersonalObj.RowVersion = this.CustDetailForm.controls.RowVersionAppCustPersonal.value;
   }
 
   setMainDataCustomerCompanyForSave() {
@@ -524,7 +516,8 @@ export class NewNapCustDetailComponent implements OnInit {
     this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
     this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
     this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
-    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value
+    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value;
+    this.JobDataObj.RowVersion = this.JobDataForm.controls.RowVersion.value;
   }
   //#endregion
   
@@ -558,6 +551,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt2 = this.EmergencyContactForm.controls["Address"]["controls"].PhnExt2.value;
     this.appCustEmrgncCntctObj.PhnExt3 = this.EmergencyContactForm.controls["Address"]["controls"].PhnExt3.value;
     this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
+    this.appCustEmrgncCntctObj.RowVersion = this.EmergencyContactForm.controls.RowVersion.value;
   }
   //#endregion
 

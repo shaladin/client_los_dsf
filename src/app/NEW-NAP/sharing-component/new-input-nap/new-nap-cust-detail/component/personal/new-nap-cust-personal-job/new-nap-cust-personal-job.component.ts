@@ -128,9 +128,9 @@ export class NewNapCustPersonalJobComponent implements OnInit {
             OthBizType: response.AppCustPersonalJobDataObj.OthBizType != "" ? response.AppCustPersonalJobDataObj.OthBizType : "",
             OthBizIndustryTypeCode: response.AppCustPersonalJobDataObj.OthBizIndustryTypeCode != "" ? response.AppCustPersonalJobDataObj.OthBizIndustryTypeCode : "",
             OthBizJobPosition: response.AppCustPersonalJobDataObj.OthBizJobPosition != "" ? response.AppCustPersonalJobDataObj.OthBizJobPosition : "",
-            OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.OthBizEstablishmentDt, "yyyy-MM-dd") : ""
+            OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.OthBizEstablishmentDt, "yyyy-MM-dd") : "",
+            RowVersion: response.AppCustPersonalJobDataObj.RowVersion
           })
-          this.JobDataObj.RowVersion = response.AppCustPersonalJobDataObj.RowVersion;
           this.InputLookupProfessionObj.nameSelect = response.AppCustPersonalJobDataObj.MrProfessionName;
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response.AppCustPersonalJobDataObj.MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;

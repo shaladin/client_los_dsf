@@ -50,6 +50,7 @@ export class NewNapCustAddrComponent implements OnInit {
           }
           this.inputGridObj.resultData["Data"] = new Array();
           this.inputGridObj.resultData.Data = this.ListAddress;
+          this.OutputTab.emit({ ListAddress: this.ListAddress });
           this.IsReady = true;
         }
       );

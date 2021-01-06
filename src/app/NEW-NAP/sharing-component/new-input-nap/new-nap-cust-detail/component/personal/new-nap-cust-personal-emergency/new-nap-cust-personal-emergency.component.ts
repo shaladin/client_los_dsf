@@ -142,10 +142,10 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
             MrCustRelationshipCode: response.MrCustRelationshipCode,
             MobilePhnNo1: response.MobilePhnNo1,
             MobilePhnNo2: response.MobilePhnNo2,
-            Email: response.Email
+            Email: response.Email,
+            RowVersion: response.RowVersion
           })
         }        
-      this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
       this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
       this.InputLookupCustObj.jsonSelect = { CustName: response["ContactPersonName"] };
 
