@@ -6,9 +6,9 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-   losUrl: 'http://localhost:5001',
+  //losUrl: 'http://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',
-  //losUrl: 'http://r3app-server.ad-ins.com/LOS_SWEEP',
+  losUrl: 'http://r3app-server.ad-ins.com/LOS_SWEEP',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_SWEEP',
   ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_SWEEP',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation',
