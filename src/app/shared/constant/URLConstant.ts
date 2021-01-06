@@ -477,6 +477,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetLeadPersonalForLookupCopy = environment.losUrl + "/Lead/GetLeadPersonalForLookupCopy";
     public static SubmitWorkflowLeadInputKta = environment.losUrl + "/Lead/SubmitWorkflowLeadInputKta";
     public static RejectLead = environment.losUrl + "/Lead/RejectLead";
+    public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
 
     // LEAD ASSET
     public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";
@@ -1213,10 +1214,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // INTEGRATION
     public static ReSendLosR3DataToR2 = environment.losUrl + "/Integration/ReSendLosR3DataToR2";
 
-    // THIRD PARTY RESULT H
+    //Digitalization
+    public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
+
+    //ThirdPartyRsltH
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
-
-    // CHECK RAPINDO
-    public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
-
 }

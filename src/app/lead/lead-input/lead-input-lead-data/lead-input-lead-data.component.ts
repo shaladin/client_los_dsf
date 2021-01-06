@@ -224,7 +224,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.returnLobCode = response['LobCode'];
 
             this.thirdPartyObj = new ThirdPartyRsltHObj();
-            this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD;
+            this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.http.post(this.getThirdPartyResultHByTrxTypeCodeAndTrxNo, this.thirdPartyObj).subscribe(
               (response) => {
