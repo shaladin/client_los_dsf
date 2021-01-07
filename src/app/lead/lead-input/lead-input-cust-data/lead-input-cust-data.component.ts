@@ -27,6 +27,8 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { LeadCustCompareObj } from 'app/shared/model/LeadCustCompareObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -127,6 +129,7 @@ export class LeadInputCustDataComponent implements OnInit {
   getThirdPartyResultHForFraudChecking: string;
   reqLatestJson: any;
   latestCustDataObj: LeadCustCompareObj;
+  dmsObj: DMSObj;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -197,7 +200,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.title = "Residence Address";
     this.inputAddressObjForResidenceAddr.showPhn3 = false;
     this.inputAddressObjForResidenceAddr.showOwnership = false;
-
+    this.InitDms();
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -652,6 +655,23 @@ export class LeadInputCustDataComponent implements OnInit {
 
         });
     }
+  }
+
+  InitDms(){
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = "Admin";
+    this.dmsObj.Role = "SUPUSR";
+    this.dmsObj.ViewCode = "ConfinsLead";
+    // var appObj = { AppId: this.appId };
+    // await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
+    //   (response)=>{
+    //     this.custNo = response['CustNo'];
+    //   }
+    // );
+    // this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
+
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Lead Id", this.LeadId));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
   }
 
   copyAddress() {

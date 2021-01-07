@@ -1,4 +1,4 @@
-<div class="col-md-12" *ngIf="noParamGiven">
+<!-- <div class="col-md-12" *ngIf="noParamGiven">
   NO PARAM GIVEN !!
 </div>
 <div class="col-md-12">
@@ -8,4 +8,6 @@
   <iframe [src]="UploadViewlink | safe" style="width: inherit; height: 800px;" title="Upload View DMS Lite"></iframe>
   View
   <iframe [src]="Viewlink | safe" style="width: inherit; height: 800px;" title="View DMS Lite"></iframe>
-</div>
+</div> -->
+
+<app-dms-iframe [dmsObj]="dmsObj" [showButton]="true"></app-dms-iframe>

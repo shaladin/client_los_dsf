@@ -10,6 +10,7 @@ export const environment = {
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3app-server.ad-ins.com/LOS_SIT',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_SIT',
+  DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
   ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_SIT',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/FOUNDATION_SIT',
   losR3Web: 'http://r3web-server.ad-ins.com/LOS_SIT',

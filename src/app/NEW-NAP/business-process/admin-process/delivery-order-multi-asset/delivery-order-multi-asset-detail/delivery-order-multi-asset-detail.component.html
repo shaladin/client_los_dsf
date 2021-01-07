@@ -31,7 +31,7 @@
                     <th style="text-align: right;">
                       <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
                     </th>
-                    <th style="text-align: right;">
+                    <th style="text-align: right;" *ngIf="!isHideDP">
                       <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
                     </th>
                     <th style="text-align: left;">
@@ -66,7 +66,7 @@
                     <td style="text-align: right;">
                       {{DOAssetForm.get('DOAssetList').at(i).controls.AssetPriceAmt.value | currency : "USD" : ""}}
                     </td>
-                    <td style="text-align: right;">
+                    <td style="text-align: right;" *ngIf="!isHideDP">
                       {{DOAssetForm.get('DOAssetList').at(i).controls.DownPaymentAmt.value | currency : "USD" : ""}}
                     </td>
                     <td style="text-align: left;">
@@ -155,11 +155,25 @@
         <div class="px-3" style="margin-top: 20px;">
           <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && SaveForm()"
             #enjiForm="ngForm">
-            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
-            </lib-ucSubsection>
-            <div id="TCList">
-              <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm"></app-term-conditions>
-            </div>
+
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm">
+                  </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="App Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
             <div class="form-actions right">
               <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
                 <i class="ft-x"></i> Cancel

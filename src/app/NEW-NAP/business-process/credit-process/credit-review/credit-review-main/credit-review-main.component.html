@@ -56,6 +56,13 @@
         </ng-template>
       </mat-tab>
 
+
+      <mat-tab label="Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
+      
     </mat-tab-group>
 
     <mat-tab-group mat-align-tabs="center" *ngIf="BizTemplateCode == 'ROS'">
@@ -72,6 +79,7 @@
           <app-tab-deviation [AppId]=appId (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
         </ng-template>
       </mat-tab>
+
 
     </mat-tab-group>
 
@@ -202,7 +210,6 @@
 
             </div>
           </div>
-
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
               <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 

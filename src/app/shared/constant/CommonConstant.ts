@@ -99,6 +99,7 @@ export class CommonConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
+  public static AppStepUplDoc = "UPD";
   public static AppStepColl = "COLL";
   public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
@@ -556,4 +557,21 @@ export class CommonConstant {
   //FRAUD CHECK TYPE
   public static FRAUD_CHCK_ASSET = "ASSET";
   public static FRAUD_CHCK_CUST = "CUST";
+  //DMS
+  public static DmsKey = "PHL7KV8RR0VG30K4";
+  public static DmsIV = "0G7HFV96AVWXUQ51";
+  public static DmsNoCust = "No Customer";
+  public static DmsNoApp = "No Application";
+  public static DmsNoAgr = "No Agreement";
+  public static DmsMouId = "Mou Id";
+  public static DmsOverideSecurity = "OverideSecurity";
+  public static DmsOverideUpload = "Upload";
+  public static DmsOverideView = "View";
+  public static DmsOverideUploadView = "Upload,View";
+  public static DmsViewCodeCust = "ConfinsCust";
+  public static DmsViewCodeApp = "ConfinsApp";
+  public static DmsViewCodeAgr = "ConfinsAgr";
+  public static DmsViewCodeMou = "ConfinsMou";
+  public static DmsViewCodeLead = "ConfinsLead";
+  
 }
