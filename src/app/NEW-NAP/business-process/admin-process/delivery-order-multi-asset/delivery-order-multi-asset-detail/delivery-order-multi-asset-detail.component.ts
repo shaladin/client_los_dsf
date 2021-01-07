@@ -32,6 +32,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   arrValue: Array<any> = new Array<any>();
   wfTaskListId: number;
   isFinal: boolean;
+  isHideDP: boolean = true;
 
   DOAssetForm = this.fb.group({
     DOAssetList: this.fb.array([])
@@ -86,7 +87,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         for (const item of this.doAssetList) {
           var formGroup = this.fb.group({
             AppAssetId: [item.AppAssetId],
-            AssetSeqNo: [item.AssetSeqNo],
+            AssetSeqNo: [item.CollateralSeqNo],
             FullAssetName: [item.FullAssetName],
             AssetPriceAmt: [item.AssetPriceAmt],
             DownPaymentAmt: [item.DownPaymentAmt],

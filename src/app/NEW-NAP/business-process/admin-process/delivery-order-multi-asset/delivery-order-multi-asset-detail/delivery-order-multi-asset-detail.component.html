@@ -31,7 +31,7 @@
                     <th style="text-align: right;">
                       <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
                     </th>
-                    <th style="text-align: right;">
+                    <th style="text-align: right;" *ngIf="!isHideDP">
                       <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
                     </th>
                     <th style="text-align: left;">
@@ -66,7 +66,7 @@
                     <td style="text-align: right;">
                       {{DOAssetForm.get('DOAssetList').at(i).controls.AssetPriceAmt.value | currency : "USD" : ""}}
                     </td>
-                    <td style="text-align: right;">
+                    <td style="text-align: right;" *ngIf="!isHideDP">
                       {{DOAssetForm.get('DOAssetList').at(i).controls.DownPaymentAmt.value | currency : "USD" : ""}}
                     </td>
                     <td style="text-align: left;">
