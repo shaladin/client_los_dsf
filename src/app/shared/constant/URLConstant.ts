@@ -478,6 +478,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static SubmitWorkflowLeadInputKta = environment.losUrl + "/Lead/SubmitWorkflowLeadInputKta";
     public static RejectLead = environment.losUrl + "/Lead/RejectLead";
     public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
+    public static CheckIntegrator = environment.losUrl + "/Lead/CheckIntegrator";
 
     // LEAD ASSET
     public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";

@@ -17,6 +17,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 
 
 @Component({
@@ -41,7 +42,6 @@ export class LeadInputLeadDataComponent implements OnInit {
   latestReqDtCheckRapindo: string;
   getThirdPartyResultHByTrxTypeCodeAndTrxNo: string;
   leadNo: string;
-  thirdPartyObj: ThirdPartyRsltHObj;
   reqLatestJson: any;
   latestCheckChassisNo: any;
   isAssetReady: boolean =false;
@@ -112,6 +112,8 @@ export class LeadInputLeadDataComponent implements OnInit {
   items: FormArray;
   isAbleToSubmit: boolean = false;
   thirdPartyRsltHId: string;
+  getThirdPartyResultHForFraudChecking: string;
+  thirdPartyObj: ThirdPartyResultHForFraudChckObj;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -125,6 +127,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.editLead = URLConstant.EditLead;
     this.submitWorkflowLeadInput = URLConstant.SubmitWorkflowLeadInput;
+    this.getThirdPartyResultHForFraudChecking = URLConstant.GetThirdPartyResultHForFraudChecking;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -223,11 +226,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.returnLeadObj = response;
             this.leadNo = response['LeadNo'];
             this.returnLobCode = response['LobCode'];
-
-            this.thirdPartyObj = new ThirdPartyRsltHObj();
+            this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
             this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
             this.thirdPartyObj.TrxNo = this.leadNo;
-            this.http.post(this.getThirdPartyResultHByTrxTypeCodeAndTrxNo, this.thirdPartyObj).subscribe(
+            this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
+            this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
               (response) => {
                 this.latestReqDtCheckRapindo = response['ReqDt'];
                 this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
@@ -1020,7 +1023,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
             (response1) => {
-              this.http.post(this.getThirdPartyResultHByTrxTypeCodeAndTrxNo, this.thirdPartyObj).subscribe(
+              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response) => {
                   this.latestReqDtCheckRapindo = response['ReqDt'];
                   this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
