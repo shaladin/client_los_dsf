@@ -49,7 +49,7 @@ export class LeadInputCustDataComponent implements OnInit {
   maritalStatCode: RefMasterObj;
   tempMrMaritalStatCode: any;
   getListActiveRefMasterUrl: string;
-  getRefMasterWithReserveField: string;
+  getListActiveRefMasterWithMappingCodeAll: string;
   custModel: RefMasterObj;
   listCustModel: any;
   leadInputObj: LeadInputObj = new LeadInputObj();
@@ -112,7 +112,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefMasterWithReserveField = URLConstant.GetListActiveRefMasterWithReserveFieldAll;
+    this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
     this.addEditLeadCustPersonal = URLConstant.AddEditLeadCustPersonal;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
@@ -236,8 +236,8 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.custModel = new RefMasterObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
-    this.custModel.ReserveField1 = CommonConstant.CustTypePersonal;
-    this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
+    this.custModel.MappingCode = CommonConstant.CustTypePersonal;
+    this.http.post(this.getListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });

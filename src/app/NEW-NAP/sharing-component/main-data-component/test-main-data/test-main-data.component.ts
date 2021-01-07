@@ -167,7 +167,7 @@ export class TestMainDataComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
-          let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
+          let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
           this.CustMainDataForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
@@ -235,7 +235,7 @@ export class TestMainDataComponent implements OnInit {
 
   resetInput() {
     this.CustMainDataForm.reset();
-    let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
+    let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
     this.CustMainDataForm.patchValue({
       MrCustTypeCode: this.MrCustTypeCode
     });
