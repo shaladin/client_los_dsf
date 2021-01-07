@@ -734,12 +734,14 @@ export class NewNapCustDetailComponent implements OnInit {
     this.AppCustCompanyObj.NumOfEmp = this.CustDetailFormCompany.controls.NoOfEmployee.value;
     this.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
   }
+
   //#endregion
 
   //#region CustCompanyContactPerson
   GetTempContactPerson(e){
     this.TempAppCustCompanyContactPersonObj = e;
   }
+
 
   CheckDt(inputDate: Date, type: string) {
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -970,6 +972,7 @@ export class NewNapCustDetailComponent implements OnInit {
         var obj = new Object();
         var bankAccObj = new AppCustBankAccObj();
         bankAccObj.AppCustBankAccId = bank.AppCustBankAccId;
+        bankAccObj.BankCode = bank.BankCode;
         bankAccObj.AppCustId = bank.AppCustId;
         bankAccObj.BankBranch = bank.BankBranch;
         bankAccObj.BankAccName = bank.BankAccName;
@@ -977,7 +980,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.ListBankStmntObj;
+        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
         appCustBankAccRequest.push(obj);
       }
       var requestPersonal = {
@@ -1061,7 +1064,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.ListBankStmntObj;
+        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
         appCustBankAccRequest.push(obj);
       }
       let appCustOtherInfoRequest = {

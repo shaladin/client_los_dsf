@@ -1,16 +1,16 @@
 <form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)"
   #enjiForm="ngForm">
-  <span class="mr-1 pull-right" *ngIf="!IsDetail">
-    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
-      translate>
-      <i class="ft-plus-circle"></i> Add
-    </button>
-  </span>
   <lib-ucSubsection [id]="'CustBankAccId'" [title]="'Customer Bank Account'" [panel]="'CustBankAccSection'">
   </lib-ucSubsection>
   <div id="CustBankAccSection">
     <div *ngIf="!IsDetail">
       <div class="col-md-12" style="padding: 0;">
+        <div class="button-right margin-15">
+            <button type="button" class="btn btn-raised btn-primary" (click)="CustBankHandler('Add')"
+            translate>
+            <i class="ft-plus-circle"></i> Add
+          </button>
+        </div>
         <div class="col-md-12" *ngFor="let item of AppCustBankAccList; let i = index" style="padding: 0; margin-top: 20px;">
           <div class="col-md-12" style="padding: 0;">
             <h5 class="col-md-7" style="display: inline-block;">
@@ -19,7 +19,7 @@
               - {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
             </h5>
             <div class="col-md-5" style="display: inline-block; text-align: right;">
-              <button type="button" class="btn btn-raised btn-primary mr-1" (click)="CustBankHandler('Edit', AppCustBankAccList[i])" translate>
+              <button type="button" class="btn btn-raised btn-primary mr-1" (click)="CustBankHandler('Edit', AppCustBankAccList[i], i)" translate>
                 Edit Bank Account
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="CustBankHandler('Delete', AppCustBankAccList[i], i)" translate>
@@ -182,7 +182,7 @@
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </td>
                 <td [formGroupName]="i">
-                  <a class="danger p-0" (click)="DeleteBankStmnt(i)">
+                  <a class="danger p-0" (click)="DeleteCustBankStmnt(i)">
                     <i class="ft-trash-2 font-medium-3 mr-2"></i>
                   </a>
                 </td>
