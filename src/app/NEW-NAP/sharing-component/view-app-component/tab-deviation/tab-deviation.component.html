@@ -2,11 +2,11 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <div class="px-3">
+        <!-- <div class="px-3"> -->
 
           <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewAutoDeviation" *ngIf="AutoDeviationData.length > 0">
+          <div class="form-body" id="viewAutoDeviation">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
               <thead>
                 <tr class="table-header">
@@ -36,8 +36,10 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.DeviationType }}</td>
                   <td style="text-align: left;">{{ item.DeviationCategory }}</td>
-                  <td>{{ item.OriValue }}</td>
-                  <td>{{ item.CurrValue }}</td>
+                  <td style="text-align: center;" *ngIf="isNumberOriValue">{{ item.OriValue | number:'.2':'en-US' }}</td>
+                  <td style="text-align: center;" *ngIf="!isNumberOriValue">{{ item.OriValue }}</td>
+                  <td style="text-align: center;" *ngIf="isNumberCurrValue">{{ item.CurrValue | number:'.2':'en-US'}}</td>
+                  <td style="text-align: center;" *ngIf="!isNumberCurrValue">{{ item.CurrValue }}</td>
                   <td>{{ item.AppvAt }}</td>
                   <td *ngIf="item.Notes != null">{{ item.Notes }}</td>
                   <td *ngIf="item.Notes == null"> - </td>
@@ -133,7 +135,7 @@
               </tbody>
             </table>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
     </div>
   </div>
