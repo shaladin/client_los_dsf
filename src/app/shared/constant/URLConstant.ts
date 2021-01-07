@@ -152,6 +152,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetGeneralSettingById = "/GeneralSetting/GetGeneralSettingById";
     public static GetGeneralSettingValue = "/GeneralSetting/GetGeneralSettingValue";
     public static GetGeneralSettingByCode = environment.FoundationR3Url + "/GeneralSetting/GetGeneralSettingByCode";
+    public static GetListGeneralSettingByListGsCode = environment.FoundationR3Url + "/GeneralSetting/GetListGeneralSettingByListGsCode";
 
     //REF OFFICE
     public static GetRefOfficeObj = "/RefOffice/GetRefOfficeObj";
@@ -476,6 +477,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetLeadPersonalForLookupCopy = environment.losUrl + "/Lead/GetLeadPersonalForLookupCopy";
     public static SubmitWorkflowLeadInputKta = environment.losUrl + "/Lead/SubmitWorkflowLeadInputKta";
     public static RejectLead = environment.losUrl + "/Lead/RejectLead";
+    public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
+    public static CheckIntegrator = environment.losUrl + "/Lead/CheckIntegrator";
 
     // LEAD ASSET
     public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";
@@ -1218,4 +1221,5 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
 
     //ThirdPartyRsltH
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
+    public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHForFraudChecking";
 }

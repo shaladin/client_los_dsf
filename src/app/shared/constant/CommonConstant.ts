@@ -77,7 +77,6 @@ export class CommonConstant {
   public static LeadStepReject = "RJC";
   public static LeadStepSelfVerification = "SVR";
 
-
   //ASSET CONDITION 
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
@@ -547,7 +546,14 @@ export class CommonConstant {
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
   public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
 
+  //Serial Item
+  public static Chassis_No = "Chassis No";
+  
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
+  public static LEAD_TRX_TYPE_CODE = "LEAD";
 
+  //FRAUD CHECK TYPE
+  public static FRAUD_CHCK_ASSET = "ASSET";
+  public static FRAUD_CHCK_CUST = "CUST";
 }
