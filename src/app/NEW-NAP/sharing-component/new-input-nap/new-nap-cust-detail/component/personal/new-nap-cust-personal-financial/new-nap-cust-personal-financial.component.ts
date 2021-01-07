@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { CustPersonalFinDataObj } from 'app/shared/model/CustPersonalFinDataObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { NewNapCustBankAccComponent } from '../../new-nap-cust-bank-acc/new-nap-cust-bank-acc.component';
+import { NewNapAttrContentComponent } from '../../new-nap-other-info/new-nap-attr-content/new-nap-attr-content.component';
 
 @Component({
   selector: 'app-new-nap-cust-personal-financial',
@@ -15,6 +19,9 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
   styles: []
 })
 export class NewNapCustPersonalFinancialComponent implements OnInit {
+  @ViewChild(NewNapCustBankAccComponent) custBankAccComponent;
+  @ViewChild(NewNapAttrContentComponent) attrContentComponent;
+
   @Input() ParentForm: FormGroup;
   @Input() AppCustId: number;
   @Input() AppCustPersonalId: number;
@@ -107,5 +114,26 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
       TotalIncomeAmt: TotalIncomeAmt,
       NettIncomeAmt: NettIncomeAmt
     });
+  }
+
+  CopyCustomerFinData(custPersonalFinDataObj: CustPersonalFinDataObj, custBankAccObjs: Array<AppCustBankAccObj>, custAttrContentObjs: Array<NewCustAttrContentObj>){
+    if(custPersonalFinDataObj.CustPersonalFinDataId != 0){
+       this.ParentForm.patchValue({
+        MonthlyIncomeAmt: custPersonalFinDataObj.MonthlyIncomeAmt,
+        MrSourceOfIncomeTypeCode: custPersonalFinDataObj.MrSourceOfIncomeCode,
+        OtherIncomeAmt: custPersonalFinDataObj.OtherIncomeAmt,
+        IsJoinIncome: custPersonalFinDataObj.IsJoinIncome,
+        MonthlyExpenseAmt: custPersonalFinDataObj.MonthlyExpenseAmt,
+        MonthlyInstallmentAmt: custPersonalFinDataObj.MonthlyInstallmentAmt,
+        OtherMonthlyInstAmt: custPersonalFinDataObj.OtherMonthlyInstAmt,
+        SpouseMonthlyIncomeAmt: custPersonalFinDataObj.SpouseMonthlyIncomeAmt
+      });
+      this.CalculateFinData();
+
+      this.custBankAccComponent.AppCustBankAccList = custBankAccObjs;
+
+      var finDataAttrContentObjs = custAttrContentObjs.filter(x => x.AttrGroup == this.AttrGroup);
+      this.attrContentComponent.CopyCustAttrContent(finDataAttrContentObjs);
+    }
   }
 }

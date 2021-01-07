@@ -23,7 +23,13 @@ import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { NewNapCustAddrComponent } from './component/new-nap-cust-addr/new-nap-cust-addr.component';
+import { NewNapOtherInfoComponent } from './component/new-nap-other-info/new-nap-other-info.component';
+import { NewNapCustPersonalEmergencyComponent } from './component/personal/new-nap-cust-personal-emergency/new-nap-cust-personal-emergency.component';
+import { NewNapCustPersonalFinancialComponent } from './component/personal/new-nap-cust-personal-financial/new-nap-cust-personal-financial.component';
+import { NewNapCustPersonalFullDataComponent } from './component/personal/new-nap-cust-personal-full-data/new-nap-cust-personal-full-data.component';
 import { NewNapCustPersonalJobComponent } from './component/personal/new-nap-cust-personal-job/new-nap-cust-personal-job.component';
 
 @Component({
@@ -33,6 +39,12 @@ import { NewNapCustPersonalJobComponent } from './component/personal/new-nap-cus
 })
 export class NewNapCustDetailComponent implements OnInit {
   @ViewChild("NewNapPersonalJobContainer", { read: ViewContainerRef }) personalJobContainer: ViewContainerRef;
+  @ViewChild(NewNapCustPersonalFullDataComponent) custPersonalFullDataComponent;
+  @ViewChild(NewNapCustAddrComponent) custAddrComponent;
+  @ViewChild(NewNapCustPersonalEmergencyComponent) custPersonalEmergencyComponent;
+  @ViewChild(NewNapCustPersonalFinancialComponent) custPersonalFinancialComponent;
+  @ViewChild(NewNapOtherInfoComponent) otherInfoComponent;
+
   @Input() AppId: number;
   @Input() AppCustIdInput: number;
   @Input() custMainDataMode: string;
@@ -335,7 +347,10 @@ export class NewNapCustDetailComponent implements OnInit {
             if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
               await this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustIdInput}).toPromise().then(
                 (response) => {
-                  if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
+                  if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried)
+                  {
+                    this.IsMarried = true;
+                  }
                   this.CustModelCode = response.AppCustObj.MrCustModelCode;
                   this.AppCustPersonalId = response.AppCustPersonalObj.AppCustPersonalId;
                   this.IsCompletion = response.AppCustObj.IsCompletion;
@@ -378,6 +393,32 @@ export class NewNapCustDetailComponent implements OnInit {
     this.isExisting = e;
   }
 
+  IsMarriedHandler(e: boolean){
+    this.IsMarried = e;
+    this.custPersonalEmergencyComponent.CheckIsMarried(this.IsMarried);
+  }
+
+  GetExistingCustHandler(e: ResponseCustPersonalForCopyObj){
+    this.custPersonalFullDataComponent.CopyExistingCust(e.CustObj, e.CustPersonalObj, e.CustGrpObjs);
+    this.custAddrComponent.LoadListCustAddress(e.CustAddrObjs);
+    this.ListAddress = e.CustAddrObjs;
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NewNapCustPersonalJobComponent);
+    this.personalJobContainer.clear();
+    const component = this.personalJobContainer.createComponent(componentFactory);
+    component.instance.IsJobSubmitted = this.IsSubmitted;
+    component.instance.ParentForm = this.JobDataForm;
+    component.instance.appId = this.AppId;
+    component.instance.AppCustId = this.AppCustIdInput;
+    component.instance.CustModelCode = this.CustModelCode;
+    component.instance.IsCopy = true;
+    component.instance.CustPersonalJobData = e.CustPersonalJobDataObj;
+
+    this.custPersonalEmergencyComponent.CopyCustomerEmergency(e.CustPersonalEmergencyContactObj);
+    this.custPersonalFinancialComponent.CopyCustomerFinData(e.CustPersonalFinDataObj, e.CustBankAccObjs, e.CustAttrContentObjs.NewCustAttrContentObjs);
+    this.otherInfoComponent.CopyCustOtherInfo(e.CustOtherInfoObj, e.CustAttrContentObjs.NewCustAttrContentObjs);
+  }
+
   MainDataCustIsIncludeCustRelation(e){
     this.isIncludeCustRelation = e;
   }
@@ -392,6 +433,8 @@ export class NewNapCustDetailComponent implements OnInit {
     component.instance.appId = this.AppId;
     component.instance.AppCustId = this.AppCustIdInput;
     component.instance.CustModelCode = this.CustModelCode;
+    component.instance.IsCopy = false;
+    component.instance.CustPersonalJobData = new AppCustPersonalJobDataObj();
     this.JobDataForm.patchValue({
       MrProfessionCode: '',
       IndustryTypeCode: '',

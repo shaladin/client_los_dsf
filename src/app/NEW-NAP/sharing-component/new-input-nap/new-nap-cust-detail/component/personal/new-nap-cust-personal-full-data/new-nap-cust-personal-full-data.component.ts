@@ -7,6 +7,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
+import { CustPersonalObj } from 'app/shared/model/CustPersonalObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
@@ -201,8 +203,61 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
               this.lookupCountryObj.isReady = true;
             });
         }
+
+        this.ChangeNationality(response.AppCustPersonalObj.MrNationalityCode);
+
       }
     );
+  }
+
+  CopyExistingCust(custObj: CustObj, custPersonalObj: CustPersonalObj, custGrpObj: Array<AppCustGrpObj>){
+    this.ParentForm.patchValue({
+      FamilyCardNo: custPersonalObj.FamilyCardNo,
+          NoOfDependents: custPersonalObj.NoOfDependents,
+          NoOfResidence: custPersonalObj.NoOfResidence,
+          IsVip: custObj.IsVip,
+          IsAffiliateWithMf: custObj.IsAffiliateWithMf,
+          IsRestInPeace: custPersonalObj.IsRestInPeace,
+          NickName: custPersonalObj.NickName,
+          VIPNotes: custObj.VipNotes,
+          CustPrefixName: custPersonalObj.CustPrefixName,
+          CustSuffixName: custPersonalObj.CustSuffixName,
+          MrNationalityCode: custPersonalObj.MrNationalityCode != "" ? custPersonalObj.MrNationalityCode : this.NationalityObj[1]["MasterCode"],
+          MrEducationCode: custPersonalObj.MrEducationCode != null ? custPersonalObj.MrEducationCode : this.EducationObj[0].Key,
+          MrReligionCode: custPersonalObj.MrReligionCode != null ? custPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
+          MrSalutationCode: custPersonalObj.MrSalutationCode != null ? custPersonalObj.MrSalutationCode : this.SalutationObj[0].Key,
+    });
+
+    if (custGrpObj != null && custGrpObj.length > 0 && custGrpObj[0].CustNo != "") {
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: custGrpObj[0].CustNo }).subscribe(
+        (responseCustGrp) => {
+          this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
+          this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};
+          this.lookupCustGrpObj.isReady = true;
+          this.GetCustGrpData({ CustNo: responseCustGrp["CustNo"]});
+        });
+    }
+
+    this.VIPCheck();
+
+    if(custPersonalObj.WnaCountryCode != null){
+      this.NationalityCountryCode = custPersonalObj.WnaCountryCode;
+      this.ResponseNationalityCountry.emit(this.NationalityCountryCode);
+    }
+      
+    if (custPersonalObj.MrNationalityCode != "" && custPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
+      this.isLocal = false;
+      this.ResponseIsLocal.emit(this.isLocal);
+      this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: custPersonalObj.WnaCountryCode }).subscribe(
+        (responseCountry) => {
+          this.lookupCountryObj.nameSelect = responseCountry["CountryName"];
+          this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"]};
+          this.lookupCountryObj.isReady = true;
+        });
+    }
+
+    this.ChangeNationality(custPersonalObj.MrNationalityCode);
+
   }
 
   VIPCheck(){

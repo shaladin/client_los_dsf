@@ -51,6 +51,9 @@ export class NewNapCustMainDataComponent implements OnInit {
   @Output() ResponseIsExisting: EventEmitter<any>;
   @Output() ResponseIsIncludeCustRelation: EventEmitter<any>;
   @Output() ResponseCustModel: EventEmitter<any>;
+  @Output() ResponseGetExistingCust: EventEmitter<ResponseCustPersonalForCopyObj>;
+  @Output() ResponseIsMarried: EventEmitter<boolean>;
+
 
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
@@ -96,6 +99,8 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseIsExisting = new EventEmitter<any>();
     this.ResponseIsIncludeCustRelation = new EventEmitter<any>();
     this.ResponseCustModel = new EventEmitter<any>();
+    this.ResponseGetExistingCust = new EventEmitter<ResponseCustPersonalForCopyObj>();
+    this.ResponseIsMarried = new EventEmitter<boolean>();
     this.IsCustMainDataSubmitted = false;
   }
 
@@ -232,9 +237,11 @@ export class NewNapCustMainDataComponent implements OnInit {
     if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
       this.ParentForm.controls.MrMaritalStatCode.patchValue(this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       this.ParentForm.controls.MrMaritalStatCode.disable();
+      this.ResponseIsMarried.emit(true);
     }else{
       this.ParentForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       if(!this.isExisting) this.ParentForm.controls.MrMaritalStatCode.enable();
+      this.ResponseIsMarried.emit(false);
     }
     this.ParentForm.controls.MrMaritalStatCode.updateValueAndValidity();
   }
@@ -421,14 +428,15 @@ export class NewNapCustMainDataComponent implements OnInit {
       CustName: event.CustName
     });
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
+          this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustCompanyMgmntShrholderObj, true);
+          this.ResponseGetExistingCust.emit(response);
         });
     } else {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
-          this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
+          this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustCompanyMgmntShrholderObj, true);
         });
     }
     await this.disableInput();
@@ -522,7 +530,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     });
   }
 
-  setDataCustomerPersonal(CustObj, CustPersonalObj, CustAddrLegalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
+  setDataCustomerPersonal(CustObj, CustPersonalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.ParentForm.patchValue({
         MrCustModelCode: CustObj.MrCustModelCode,
@@ -567,10 +575,9 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj)
     }
 
-    this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
-  setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
+  setDataCustomerCompany(CustObj, CustCompanyObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
     if (CustObj != undefined) {
       this.ParentForm.patchValue({
         MrCustTypeCode: CustObj.MrCustTypeCode,
@@ -599,7 +606,6 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj)
     }
 
-    this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
   }
 
   setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
@@ -615,26 +621,5 @@ export class NewNapCustMainDataComponent implements OnInit {
       if (!IsCopyCust) this.rowVersionMgmntShrholder = CustCompanyMgmntShrholderObj.RowVersion;
     }
   }
-
-  setDataLegalAddr(response, IsCopyCust: boolean) {
-    if (response != undefined) {
-      this.legalAddrObj.Addr = response.Addr;
-      this.legalAddrObj.AreaCode1 = response.AreaCode1;
-      this.legalAddrObj.AreaCode2 = response.AreaCode2;
-      this.legalAddrObj.AreaCode3 = response.AreaCode3;
-      this.legalAddrObj.AreaCode4 = response.AreaCode4;
-      this.legalAddrObj.City = response.City;
-
-      this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
-      this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
-      this.inputAddressObj.default = this.legalAddrObj;
-
-      if (!IsCopyCust) this.rowVersionAppCustAddr = response.RowVersion;
-    }
-  }
-
-  
-
-  
 
 }

@@ -145,9 +145,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     }
 
     if(!Flag){
-      this.appCustAddrObj.AppCustAddrId = this.InputObj.AppCustAddrId;
       this.appCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
-      this.appCustAddrObj.AppCustId = this.InputObj.AppCustId;
       if(this.appCustAddrObj.MrCustAddrTypeCode != CommonConstant.AddrTypeLegal){
         this.appCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
       }

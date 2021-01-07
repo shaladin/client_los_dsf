@@ -6,7 +6,8 @@
                 [inputMode]="inputMode" [isMarried]="IsMarried" [InputAppCustObjMainData]="InputAppCustObjMainData"
                 [IsCustMainDataSubmitted]="IsSubmitted"
                 (ResponseCustType)="MainDataCustTypeHandler($event)" (ResponseIsExisting)="MainDataCustIsExistingHandler($event)"
-                (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)">
+                (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)"
+                (ResponseGetExistingCust)="GetExistingCustHandler($event)" (ResponseIsMarried)="IsMarriedHandler($event)">
             </app-new-nap-cust-main-data>
             <app-new-nap-cust-personal-full-data *ngIf="IsDataLoaded" [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" [IsPersonalSubmitted]="IsSubmitted"
                 (ResponseCustGrp)="CustPersonalFullDataCustGrpHandler($event)" (ResponseIsLocal)="CustPersonalFullDataIsLocalHandler($event)"
