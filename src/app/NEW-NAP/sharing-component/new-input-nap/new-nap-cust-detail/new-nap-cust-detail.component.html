@@ -8,23 +8,45 @@
                 (ResponseCustType)="MainDataCustTypeHandler($event)" (ResponseIsExisting)="MainDataCustIsExistingHandler($event)"
                 (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)">
             </app-new-nap-cust-main-data>
-            <app-new-nap-cust-personal-full-data *ngIf="IsDataLoaded" [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" [IsPersonalSubmitted]="IsSubmitted"
-                (ResponseCustGrp)="CustPersonalFullDataCustGrpHandler($event)" (ResponseIsLocal)="CustPersonalFullDataIsLocalHandler($event)"
-                (ResponseLocalCountry)="CustPersonalFullDataLocalCountryHandler($event)" (ResponseNationalityCountry)="CustPersonalFullDataNationalityCountryHandler($event)">
-            </app-new-nap-cust-personal-full-data>
-            <app-new-nap-cust-addr *ngIf="IsDataLoaded" [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
-                (OutputTab)="GetListAddress($event)">
-            </app-new-nap-cust-addr>
-            <ng-template *ngIf="IsDataLoaded" #NewNapPersonalJobContainer></ng-template>
-            <app-new-nap-cust-personal-emergency *ngIf="IsDataLoaded" [ParentForm]="EmergencyContactForm" [IsEmergencySubmitted]="IsSubmitted"
-                [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried">
-            </app-new-nap-cust-personal-emergency>
-            <app-new-nap-cust-personal-financial *ngIf="IsDataLoaded" [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput" [IsFinancialSubmitted]="IsSubmitted"
-                [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried" (ResponseBankAcc)="GetPersonalBankAcc($event)">
-            </app-new-nap-cust-personal-financial>
-            <app-new-nap-other-info *ngIf="IsDataLoaded" [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
-                [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">
-            </app-new-nap-other-info>
+            <div *ngIf="MrCustTypeCode == 'PERSONAL'">
+                <app-new-nap-cust-personal-full-data *ngIf="IsDataLoaded" [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" [IsPersonalSubmitted]="IsSubmitted"
+                    (ResponseCustGrp)="CustPersonalFullDataCustGrpHandler($event)" (ResponseIsLocal)="CustPersonalFullDataIsLocalHandler($event)"
+                    (ResponseLocalCountry)="CustPersonalFullDataLocalCountryHandler($event)" (ResponseNationalityCountry)="CustPersonalFullDataNationalityCountryHandler($event)">
+                </app-new-nap-cust-personal-full-data>
+                <app-new-nap-cust-addr *ngIf="IsDataLoaded" [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
+                    (OutputTab)="GetListAddress($event)">
+                </app-new-nap-cust-addr>
+                <ng-template *ngIf="IsDataLoaded" #NewNapPersonalJobContainer></ng-template>
+                <app-new-nap-cust-personal-emergency *ngIf="IsDataLoaded" [ParentForm]="EmergencyContactForm" [IsEmergencySubmitted]="IsSubmitted"
+                    [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried">
+                </app-new-nap-cust-personal-emergency>
+                <app-new-nap-cust-personal-financial *ngIf="IsDataLoaded" [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput" [IsFinancialSubmitted]="IsSubmitted"
+                    [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried" (ResponseBankAcc)="GetPersonalBankAcc($event)">
+                </app-new-nap-cust-personal-financial>
+                <app-new-nap-other-info *ngIf="IsDataLoaded" [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
+                    [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">
+                </app-new-nap-other-info>
+            </div>
+            <div *ngIf="MrCustTypeCode == 'COMPANY'">
+                <app-new-nap-cust-company-full-data *ngIf="IsDataLoaded" [AppCustId]="AppCustIdInput" [ParentForm]="CustDetailFormCompany" 
+                    [IsCompanyDataSubmitted]="IsSubmitted" (ResponseCustGrp)="CustCompanyFullDataCustGrpHandler($event)">
+                </app-new-nap-cust-company-full-data>
+                <app-new-nap-cust-addr *ngIf="IsDataLoaded" [MrCustTypeCode]="MrCustTypeCode" [AppCustId]="AppCustIdInput" 
+                    (OutputTab)="GetListAddress($event)">
+                </app-new-nap-cust-addr>
+                <app-new-nap-cust-company-contact-info *ngIf="IsDataLoaded" [ParentForm]="CcForm" [AppCustId]="AppCustIdInput" 
+                    [IsContactInfoSubmitted]="IsSubmitted" (ResponseTempContactPerson)="GetTempContactPerson($event)">
+                </app-new-nap-cust-company-contact-info>
+                <app-new-nap-cust-company-fin-data [ParentForm]="FinancialFormCompany" [AppCustId]="AppCustIdInput" 
+                    [IsCompanyFinDataSubmitted]="IsSubmitted" (ResponseBankAcc)="GetCompanyBankAcc($event)">
+                </app-new-nap-cust-company-fin-data>
+                <app-new-nap-cust-company-legal-doc [AppCustId]="AppCustIdInput" [AppCustCompanyId]="AppCustCompanyId"
+                    (ResponseLegalDoc)="GetLegalDoc($event)">
+                </app-new-nap-cust-company-legal-doc>
+                <app-new-nap-other-info *ngIf="IsDataLoaded" [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
+                    [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">
+                </app-new-nap-other-info>
+            </div>
         </div>
         <div class="form-actions right" style="text-align: right;">
             <button type="button" class="btn btn-raised btn-warning mr-1"
