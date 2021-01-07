@@ -64,19 +64,14 @@ export class CrdRvwAppInfoComponent implements OnInit {
   //#region IncomeExpenseDetail
   modalIncomeExpenseDetail: any;
   ClickLinkIncomeExpenseDetail(IncomeExpenseDetail) {
-    console.log("click IncomeExpense");
     this.modalIncomeExpenseDetail = this.modalService.open(IncomeExpenseDetail);
     this.modalIncomeExpenseDetail.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.cancelIncomeExpenseDetail();
+      this.modalIncomeExpenseDetail.close();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      this.cancelIncomeExpenseDetail();
+      this.modalIncomeExpenseDetail.close();
     });
-  }
-
-  cancelIncomeExpenseDetail() {
-    this.modalIncomeExpenseDetail.close();
   }
   //#endregion
 
@@ -87,15 +82,11 @@ export class CrdRvwAppInfoComponent implements OnInit {
     this.modalCreditScoring = this.modalService.open(CreditScoring);
     this.modalCreditScoring.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.cancelCreditScoring();
+      this.modalCreditScoring.close();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      this.cancelCreditScoring();
+      this.modalCreditScoring.close();
     });
-  }
-
-  cancelCreditScoring() {
-    this.modalCreditScoring.close();
   }
   //#endregion
 
@@ -108,6 +99,5 @@ export class CrdRvwAppInfoComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
   //#endregion
 }
