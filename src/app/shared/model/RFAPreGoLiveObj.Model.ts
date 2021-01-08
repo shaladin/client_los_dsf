@@ -8,9 +8,10 @@ export class RFAPreGoLiveObj {
     ListValue: any;
     ApprovedBy: any;
     Notes: any;
-    RowVersion : any;
+    RowVersion: any;
+    RequestRFAObj: any;
     constructor() {
         this.TaskId = "",
-        this.RowVersion = ""
+            this.RowVersion = ""
     }
 }  

@@ -480,6 +480,7 @@ export class CommonConstant {
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   public static RefMasterTypeCodeSalutation = "SALUTATION";
   public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
+  public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
 
   //RATE TYPE
   public static RateTypeFlat = "FLT";
@@ -549,6 +550,32 @@ export class CommonConstant {
 
   //Serial Item
   public static Chassis_No = "Chassis No";
+  // Cust Type  
+  public static WhiteIndicator = "WHITE";
+  public static NoData = "No Data";
+  public static MaritalStatusMarried = "MARRIED";
+  public static ExposureCustTypeCode = "CUST_EXPSR";
+  public static ExposureCustGroupTypeCode = "CUST_GRP_EXPSR";
+  public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
+  
+  // Role Type
+  public static RoleCustData = "CUST_DATA";
+  public static RoleFamilyData = "FAM_DATA";
+  public static RoleGuarantorData = "GUARANTOR_DATA";
+  public static RoleShareholder = "SHAREHOLDER_DATA";
+  //Approval
+  public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
+  public static SCHM_CODE_APV_PRE_GO_LIVE = "PRE_GLV_APV_CF";
+  public static SCHM_CODE_CRD_APV_CF = "CRD_APV_CF";
+
+
+  public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV"; 
+  public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV"; 
+  public static CAT_CODE_CRD_APV = "CRD_APV"; 
+
+
   
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";

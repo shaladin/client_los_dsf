@@ -1,5 +1,52 @@
 <lib-ucSubsection [id]="'CreditScoringId'" [title]="'Credit Scoring'" [panel]="'CreditScoring'">
 </lib-ucSubsection>
 <div id="CreditScoring">
-  <label>Credit Scoring</label>
+  <div class="card-body">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span  name='No' translate>No</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='AssetName' translate>Attribute</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='AssetPrice' translate>Value</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='DPAmt_Prcnt' translate>Final Score</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="ListScoringResultDObj.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let item of ListScoringResultDObj; let i = index">
+          <td style="text-align: center;">{{i+1}}</td>
+          <td style="text-align: left;">{{item.ScoringQuestion}}</td>
+          <td style="text-align: left;">{{item.ScoringAnswer}}</td>
+          <td style="text-align: left;">{{item.ScoringValue}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Total Score </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control" *ngIf="scoringResultHObj != null"> {{scoringResultHObj.ScoringValue}} / {{scoringResultHObj.ScoringAlias}} </label>
+            <label class="label-control" *ngIf="scoringResultHObj == null"> 0 / No Data </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -55,6 +55,12 @@ import { SharedModule } from "app/shared/shared.module";
 import { CreditReviewCrDetailComponent } from './credit-review-cr/credit-review-cr-detail/credit-review-cr-detail.component';
 import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-cr-paging/credit-review-cr-paging.component';
 import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
+import { CreditApprovalCrDetailComponent } from './credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail.component';
+import { CreditApprovalCrPagingComponent } from './credit-approval-cr/credit-approval-cr-paging/credit-approval-cr-paging.component';
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
+import { UcapprovalR3Module } from "@adins/ucapproval-r3";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 
 
 
@@ -97,7 +103,11 @@ export const customCurrencyMaskConfig = {
     ViewMainInfoComponentModule,
     SharedModule,
     CreditReviewComponentModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    UcapprovalHistoryModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalgeneralinfoModule
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -136,7 +146,9 @@ export const customCurrencyMaskConfig = {
     CreditReviewComponent,
     CreditReviewDetailPersonalComponent,
     CreditReviewCrDetailComponent,
-    CreditReviewCrPagingComponent
+    CreditReviewCrPagingComponent,
+    CreditApprovalCrDetailComponent,
+    CreditApprovalCrPagingComponent
   ],
   providers: [
     NGXToastrService
