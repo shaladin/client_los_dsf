@@ -221,6 +221,8 @@ export class NewNapCustDetailComponent implements OnInit {
     EstablishmentDate: ['', Validators.required],
     IndustryTypeCode: ['', Validators.required],
     MrCustModelCode: ['', Validators.required],
+    RowVersionAppCust: [''],
+    RowVersionAppCustCompany: ['']
   })
 
   CcForm = this.fb.group({
@@ -287,7 +289,18 @@ export class NewNapCustDetailComponent implements OnInit {
     LbppmsDebtGrpLbppDescr: ['', [Validators.required]],
     LbppmsBizSustainLbppDescr: ['', [Validators.required]],
     LbppmsBizSclLbppDescr: ['', [Validators.required]]
-  }); 
+  });
+  
+  OtherInformationCompanyForm = this.fb.group({
+    LbppmsBizSclLbppCode: ['', [Validators.required]],
+    LbppmsBizSustainLbppCode: ['', [Validators.required]],
+    LbppmsCntrprtLbppCode: ['', [Validators.required]],
+    LbppmsDebtGrpLbppCode: ['', [Validators.required]],
+    LbppmsCntrprtLbppDescr: ['', [Validators.required]],
+    LbppmsDebtGrpLbppDescr: ['', [Validators.required]],
+    LbppmsBizSustainLbppDescr: ['', [Validators.required]],
+    LbppmsBizSclLbppDescr: ['', [Validators.required]]
+  });
   //#endregion
 
   constructor(
@@ -572,9 +585,8 @@ export class NewNapCustDetailComponent implements OnInit {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.CustMainDataForm.controls.RowVersionShareholder.value;
     }
 
-    this.custDataCompanyObj.AppCustObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCust.value;
-    this.custDataCompanyObj.AppCustCompanyObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCustCompany.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion = this.CustMainDataForm.controls.RowVersionLegalAddr.value;
+    this.custDataCompanyObj.AppCustObj.RowVersion = this.CustDetailFormCompany.controls.RowVersionAppCust.value;
+    this.custDataCompanyObj.AppCustCompanyObj.RowVersion = this.CustDetailFormCompany.controls.RowVersionAppCustCompany.value;
   }
 
   CekIsCustomer() {
@@ -730,7 +742,13 @@ export class NewNapCustDetailComponent implements OnInit {
   }
 
   setAttrContent(){
-    var formValue = this.OtherInformationForm['controls']['AttrList'].value;
+    var formValue;
+
+    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
+      formValue = this.OtherInformationForm['controls']['AttrList'].value;
+    }else{
+      formValue = this.OtherInformationCompanyForm['controls']['AttrList'].value;
+    }
     this.custAttrRequest = new Array<Object>();
      
     if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
@@ -752,14 +770,26 @@ export class NewNapCustDetailComponent implements OnInit {
     if(this.ResponseCustOtherInfo != undefined){
      this.appCustOtherInfo.RowVersion = this.ResponseCustOtherInfo.RowVersion 
     }
-    this.appCustOtherInfo.LbppmsBizSclLbppCode = this.OtherInformationForm.controls.LbppmsBizSclLbppCode.value;
-    this.appCustOtherInfo.LbppmsBizSustainLbppCode = this.OtherInformationForm.controls.LbppmsBizSustainLbppCode.value;
-    this.appCustOtherInfo.LbppmsCntrprtLbppCode = this.OtherInformationForm.controls.LbppmsCntrprtLbppCode.value;
-    this.appCustOtherInfo.LbppmsDebtGrpLbppCode = this.OtherInformationForm.controls.LbppmsDebtGrpLbppCode.value;
-    this.appCustOtherInfo.LbppmsCntrprtLbppDescr = this.OtherInformationForm.controls.LbppmsCntrprtLbppDescr.value;
-    this.appCustOtherInfo.LbppmsDebtGrpLbppDescr = this.OtherInformationForm.controls.LbppmsDebtGrpLbppDescr.value;
-    this.appCustOtherInfo.LbppmsBizSustainLbppDescr = this.OtherInformationForm.controls.LbppmsBizSustainLbppDescr.value;
-    this.appCustOtherInfo.LbppmsBizSclLbppDescr = this.OtherInformationForm.controls.LbppmsBizSclLbppDescr.value;
+    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
+      this.appCustOtherInfo.LbppmsBizSclLbppCode = this.OtherInformationForm.controls.LbppmsBizSclLbppCode.value;
+      this.appCustOtherInfo.LbppmsBizSustainLbppCode = this.OtherInformationForm.controls.LbppmsBizSustainLbppCode.value;
+      this.appCustOtherInfo.LbppmsCntrprtLbppCode = this.OtherInformationForm.controls.LbppmsCntrprtLbppCode.value;
+      this.appCustOtherInfo.LbppmsDebtGrpLbppCode = this.OtherInformationForm.controls.LbppmsDebtGrpLbppCode.value;
+      this.appCustOtherInfo.LbppmsCntrprtLbppDescr = this.OtherInformationForm.controls.LbppmsCntrprtLbppDescr.value;
+      this.appCustOtherInfo.LbppmsDebtGrpLbppDescr = this.OtherInformationForm.controls.LbppmsDebtGrpLbppDescr.value;
+      this.appCustOtherInfo.LbppmsBizSustainLbppDescr = this.OtherInformationForm.controls.LbppmsBizSustainLbppDescr.value;
+      this.appCustOtherInfo.LbppmsBizSclLbppDescr = this.OtherInformationForm.controls.LbppmsBizSclLbppDescr.value;
+    }else{
+      this.appCustOtherInfo.LbppmsBizSclLbppCode = this.OtherInformationCompanyForm.controls.LbppmsBizSclLbppCode.value;
+      this.appCustOtherInfo.LbppmsBizSustainLbppCode = this.OtherInformationCompanyForm.controls.LbppmsBizSustainLbppCode.value;
+      this.appCustOtherInfo.LbppmsCntrprtLbppCode = this.OtherInformationCompanyForm.controls.LbppmsCntrprtLbppCode.value;
+      this.appCustOtherInfo.LbppmsDebtGrpLbppCode = this.OtherInformationCompanyForm.controls.LbppmsDebtGrpLbppCode.value;
+      this.appCustOtherInfo.LbppmsCntrprtLbppDescr = this.OtherInformationCompanyForm.controls.LbppmsCntrprtLbppDescr.value;
+      this.appCustOtherInfo.LbppmsDebtGrpLbppDescr = this.OtherInformationCompanyForm.controls.LbppmsDebtGrpLbppDescr.value;
+      this.appCustOtherInfo.LbppmsBizSustainLbppDescr = this.OtherInformationCompanyForm.controls.LbppmsBizSustainLbppDescr.value;
+      this.appCustOtherInfo.LbppmsBizSclLbppDescr = this.OtherInformationCompanyForm.controls.LbppmsBizSclLbppDescr.value;
+    }
+    
   }
   //#endregion
 
@@ -843,7 +873,7 @@ export class NewNapCustDetailComponent implements OnInit {
     return ReqAddr;
   }
 
-  SetReqCcObj(obj: any, ReqAddr: AppCustAddrObj) {
+  SetReqCcObj(obj: any) {
     let ReqCcObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
     ReqCcObj.AppCustId = this.AppCustIdInput;
     ReqCcObj.AppCustCompanyId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyId;
@@ -865,14 +895,6 @@ export class NewNapCustDetailComponent implements OnInit {
     ReqCcObj.MrGenderCode = obj.MrGenderCode;
     ReqCcObj.MrIdTypeCode = obj.MrIdTypeCode;
     ReqCcObj.MrJobPositionCode = obj.MrJobPositionCode;
-    ReqCcObj.Phn1 = obj[this.InputAddressObjForCc_Identifier].Phn1;
-    ReqCcObj.Phn2 = obj[this.InputAddressObjForCc_Identifier].Phn2;
-    ReqCcObj.PhnArea1 = obj[this.InputAddressObjForCc_Identifier].PhnArea1;
-    ReqCcObj.PhnArea2 = obj[this.InputAddressObjForCc_Identifier].PhnArea2;
-    ReqCcObj.PhnExt1 = obj[this.InputAddressObjForCc_Identifier].PhnExt1;
-    ReqCcObj.PhnExt2 = obj[this.InputAddressObjForCc_Identifier].PhnExt2;
-    ReqCcObj.AppCustAddrObj = ReqAddr;
-
     return ReqCcObj;
   }
   //#endregion
@@ -919,7 +941,7 @@ export class NewNapCustDetailComponent implements OnInit {
     }
     else{
       if(!this.CustMainDataForm.valid || !this.CustDetailFormCompany.valid || !this.CcForm.valid || 
-          !this.FinancialFormCompany.valid || !this.OtherInformationForm.valid){
+          !this.FinancialFormCompany.valid || !this.OtherInformationCompanyForm.valid){
         return false;
       }
     }
@@ -1090,8 +1112,7 @@ export class NewNapCustDetailComponent implements OnInit {
       this.setMainDataCustomerCompanyForSave();
       this.SetDataCompanyFullData();  
       let temp = this.CcForm.getRawValue();
-      let ReqAddr = this.SetReqAddrObj(temp);
-      let requestContactInfo = this.SetReqCcObj(temp, ReqAddr);
+      let requestContactInfo = this.SetReqCcObj(temp);
       this.SetAttrContentFinDataCompany();
       this.AppCustCompanyFinData = this.FinancialFormCompany.value;
       this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;

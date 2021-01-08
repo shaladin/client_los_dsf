@@ -24,10 +24,7 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() IsContactInfoSubmitted: boolean;
   @Output() ResponseTempContactPerson: EventEmitter<any> = new EventEmitter<any>();
-  inputAddressObjForCc: InputAddressObj;
-  inputFieldCcObj: InputFieldObj = new InputFieldObj();
   CcAddrObj: AddrObj = new AddrObj();
-  CcCustAddrObj: AppCustAddrObj;
   IsUcAddrReady: boolean = false;
   TempAppCustCompanyContactPersonObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
   DictRefMaster: any = {};
@@ -39,7 +36,6 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
   readonly IdTypeNpwp: string = CommonConstant.MrIdTypeCodeNPWP;
   readonly IdTypeKitas: string = CommonConstant.MrIdTypeCodeKITAS;
   readonly IdTypeSim: string = CommonConstant.MrIdTypeCodeSIM;
-  readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +50,6 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
     let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
 
-    this.SetAddrForm();
     await this.GetListActiveRefMaster(this.MasterGenderCode);
     await this.GetListActiveRefMaster(this.MasterIdTypeCode);
     await this.GetListActiveRefMaster(this.MasterJobPosCode);
@@ -123,43 +118,11 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
             PhnExt1: response.PhnExt1,
             PhnExt2: response.PhnExt2,
           });
-
-          if (response.AppCustAddrObj != null) {
-            this.inputFieldCcObj = new InputFieldObj();
-            this.inputFieldCcObj.inputLookupObj = new InputLookupObj();
-
-            this.CcAddrObj.Addr = response.AppCustAddrObj.Addr;
-            this.CcAddrObj.PhnExt1 = response.AppCustAddrObj.PhnExt1;
-            this.CcAddrObj.PhnExt2 = response.AppCustAddrObj.PhnExt2;
-            this.CcAddrObj.Phn1 = response.AppCustAddrObj.Phn1;
-            this.CcAddrObj.Phn2 = response.AppCustAddrObj.Phn2;
-            this.CcAddrObj.PhnArea1 = response.AppCustAddrObj.PhnArea1;
-            this.CcAddrObj.PhnArea2 = response.AppCustAddrObj.PhnArea2;
-            this.CcAddrObj.Fax = response.AppCustAddrObj.Fax;
-            this.CcAddrObj.FaxArea = response.AppCustAddrObj.FaxArea;
-            this.CcAddrObj.AreaCode1 = response.AppCustAddrObj.AreaCode1;
-            this.CcAddrObj.AreaCode2 = response.AppCustAddrObj.AreaCode2;
-            this.CcAddrObj.AreaCode3 = response.AppCustAddrObj.AreaCode3;
-            this.CcAddrObj.AreaCode4 = response.AppCustAddrObj.AreaCode4;
-            this.CcAddrObj.City = response.AppCustAddrObj.City;
-            this.CcAddrObj.SubZipcode = response.AppCustAddrObj.SubZipcode;
-
-            this.inputFieldCcObj.inputLookupObj.nameSelect = response.AppCustAddrObj.Zipcode;
-            this.inputFieldCcObj.inputLookupObj.jsonSelect = { Zipcode: response.AppCustAddrObj.Zipcode };
-            this.inputAddressObjForCc.default = this.CcAddrObj;
-            this.inputAddressObjForCc.inputField = this.inputFieldCcObj;
-          }
           this.ChangeIdType(true);
         }
         this.IsUcAddrReady = true;
       }
     );
-  }
-
-  SetAddrForm() {
-    this.inputAddressObjForCc = new InputAddressObj();
-    this.inputAddressObjForCc.showSubsection = true;
-    this.inputAddressObjForCc.showPhn3 = false;
   }
 
   ChangeIdType(FirstInit: boolean = false) {

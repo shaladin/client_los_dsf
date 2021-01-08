@@ -102,6 +102,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseCustModel = new EventEmitter<any>();
     this.ResponseGetExistingCust = new EventEmitter<ResponseCustPersonalForCopyObj>();
     this.ResponseIsMarried = new EventEmitter<boolean>();
+    this.ResponseGetExistingCustCompany = new EventEmitter<ResponseCustCompanyForCopyObj>();
     this.IsCustMainDataSubmitted = false;
   }
 
