@@ -9,7 +9,7 @@
             <div class="col-md-3">
               <select class="form-control" formControlName="Collateral" (change)="CollChange()">
                 <option value="New">New Collateral</option>
-                <option value="Exist">Existing Collateral</option>
+                <option value="Exist" *ngIf="custNo">Existing Collateral</option>
               </select>
             </div>
           </div>
