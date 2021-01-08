@@ -14,6 +14,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -32,12 +34,20 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   arrValue: Array<any> = new Array<any>();
   wfTaskListId: number;
   isFinal: boolean;
+  isHideDP: boolean = true;
 
   DOAssetForm = this.fb.group({
     DOAssetList: this.fb.array([])
   });
 
   AppTcForm = this.fb.group({});
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  agrNo: string;
+  custNo: string;
+  appNo: string;
+  dmsAppObj: DMSObj;
+  mouCustNo: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -65,7 +75,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() { 
+  async ngOnInit() { 
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
@@ -86,7 +96,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         for (const item of this.doAssetList) {
           var formGroup = this.fb.group({
             AppAssetId: [item.AppAssetId],
-            AssetSeqNo: [item.AssetSeqNo],
+            AssetSeqNo: [item.CollateralSeqNo],
             FullAssetName: [item.FullAssetName],
             AssetPriceAmt: [item.AssetPriceAmt],
             DownPaymentAmt: [item.DownPaymentAmt],
@@ -109,7 +119,66 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.isFinal = response[2]["IsFinal"];
       }
     );
+    await this.InitDms();
   }
+
+  async InitDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    this.dmsAppObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+
+    this.dmsAppObj.User = currentUserContext.UserName;
+    this.dmsAppObj.Role = currentUserContext.RoleCode;
+    this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
+
+    var agrObj = { AgrmntId: this.agrmntId };
+    var appObj = { AppId: this.appId };
+
+    let getAgr = await this.httpClient.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+    let getAppCust = await this.httpClient.post(URLConstant.GetAppCustByAppId, appObj)
+    let getApp = await this.httpClient.post(URLConstant.GetAppById, appObj)
+    forkJoin([getAgr, getAppCust, getApp]).subscribe(
+      (response) => {
+        this.agrNo = response[0]['AgrmntNo'];
+        this.custNo = response[1]['CustNo'];
+        this.appNo = response[2]['AppNo'];
+        let mouId = response[2]['MouCustId'];
+
+        if(this.custNo != null && this.custNo != ''){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else{
+          this.dmsAppObj.MetadataParent = null;
+        }
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+
+        this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
+          this.httpClient.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result => {
+              this.mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else {
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+
 
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));

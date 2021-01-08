@@ -56,7 +56,12 @@
           <app-cust-history [AppId]=appId></app-cust-history>
         </ng-template>
       </mat-tab>
-
+      
+      <mat-tab label="Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
     </mat-tab-group>
 
     <div class="card-body">

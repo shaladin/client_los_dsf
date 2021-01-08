@@ -112,7 +112,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   async setDropdown() {
     this.refMasterInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeFactoring;
     this.refMasterInsScheme.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
-    this.refMasterInsScheme.ReserveField1 = CommonConstant.FCTR;
+    this.refMasterInsScheme.MappingCode = CommonConstant.FCTR;
     this.refMasterInsType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstType;
     this.refMasterRecommendation.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSlsRecom;
     this.refMasterWOP.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
@@ -177,7 +177,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.refMasterInsScheme).subscribe(
       (response) => {
         this.allInScheme = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {

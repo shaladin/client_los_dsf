@@ -13,6 +13,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -58,8 +61,12 @@ export class NapAddDetailComponent implements OnInit {
     "INS": 6,
     "LFI": 7,
     "FIN": 8,
-    "TC": 9
+    "TC": 9,
+    "UPD": 10
   };
+  dmsObj: DMSObj;
+  isDmsReady: boolean = false;
+  appNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
@@ -81,7 +88,7 @@ export class NapAddDetailComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
@@ -107,7 +114,9 @@ export class NapAddDetailComponent implements OnInit {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
-
+              if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+                this.initDms();
+              }
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
@@ -122,8 +131,50 @@ export class NapAddDetailComponent implements OnInit {
     component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      response => {
+        this.appNo = response[0]['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        let isExisting = response[1]['IsExistingCust'];
+        if(isExisting){
+          let custNo = response[1]['CustNo'];
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+
+        let mouId = response[0]['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/FinanceLeasing/Paging"], { BizTemplateCode: CommonConstant.FL4W });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/FinanceLeasing/Paging"], { BizTemplateCode: CommonConstant.FL4W });
   }
 
   ChangeStepper() {
@@ -146,6 +197,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 7,
         "FIN": 8,
         "TC": 9,
+        "UPD": 10
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -166,6 +218,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 7,
         "FIN": 7,
         "TC": 8,
+        "UPD": 9
       };
     }
   }
@@ -204,7 +257,9 @@ export class NapAddDetailComponent implements OnInit {
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
+    }
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
     this.mainInfoContainer.clear();
     const component = this.mainInfoContainer.createComponent(componentFactory);
@@ -230,7 +285,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/FinanceLeasing/Paging"], { BizTemplateCode: CommonConstant.FL4W });
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/FinanceLeasing/Paging"], { BizTemplateCode: CommonConstant.FL4W });
         })
     }
   }
@@ -265,6 +320,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -294,7 +352,7 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W });
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W });
           }
         )
       }

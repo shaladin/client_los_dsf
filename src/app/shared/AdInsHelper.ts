@@ -141,6 +141,16 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + "/View/Survey/SurveyTask?SrvyTaskId=" + SrvyTaskId + "&Token=" + token, '_blank');
   }
 
+  public static OpenSrvyOrderViewBySrvyOrderId(SrvyOrderId) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + "/View/Survey/SurveyOrder?SrvyOrderId=" + SrvyOrderId + "&Token=" + token, '_blank');
+  }
+
+  public static OpenCustExposureViewByCrdRvwCustInfoId(AppId) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.losR3Web + "/View/CustExposureView?AppId=" + AppId + "&Token=" + token, '_blank');
+  }
+
   public static CreateUserAccess(response) {
     // var currentUserContext = new CurrentUserContext;
     // currentUserContext.UserName = response["Identity"].UserName;

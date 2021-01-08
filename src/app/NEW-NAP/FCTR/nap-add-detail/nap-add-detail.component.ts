@@ -11,6 +11,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -42,8 +45,12 @@ export class NapAddDetailComponent implements OnInit {
     "COLL": 4,
     "INS": 5,
     "FIN": 6,
-    "TC": 7
+    "TC": 7,
+    "UPD": 8
   };
+  dmsObj: DMSObj;
+  appNo: string;
+  isDmsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -59,7 +66,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
@@ -85,6 +92,9 @@ export class NapAddDetailComponent implements OnInit {
         if (response) {
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
+          if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
+            this.initDms();
+          }
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
@@ -100,8 +110,50 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      response => {
+        this.appNo = response[0]['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        let isExisting = response[1]['IsExistingCust'];
+        if(isExisting){
+          let custNo = response[1]['CustNo'];
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+
+        let mouId = response[0]['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/Factoring/Paging"], { });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
   }
 
   MakeViewReturnInfoObj() {
@@ -145,9 +197,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-        case CommonConstant.AppStepInvoice:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
-          break;
+      case CommonConstant.AppStepInvoice:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
+        break;
       case CommonConstant.AppStepColl:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
         break;
@@ -160,7 +212,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -169,6 +223,9 @@ export class NapAddDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
+    if (Step == CommonConstant.AppStepUplDoc) {
+      this.initDms();
+    }
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
         this.ChangeTab(Step);
@@ -181,7 +238,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/Factoring/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
       })
   }
 
@@ -211,7 +268,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
 
-  GetCallback(ev){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

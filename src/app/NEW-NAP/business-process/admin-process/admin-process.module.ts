@@ -52,6 +52,8 @@ import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { MatTabsModule } from "@angular/material";
+import { SharedModule } from "app/shared/shared.module";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -78,7 +80,9 @@ export const customCurrencyMaskConfig = {
     UcapprovalcreateModule,
     UcapprovalR3Module,
     UcapprovalHistoryModule,
-    UcapprovalgeneralinfoModule
+    UcapprovalgeneralinfoModule,
+    MatTabsModule,
+    SharedModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

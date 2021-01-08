@@ -3,6 +3,7 @@ import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -11,11 +12,13 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -26,7 +29,7 @@ import { environment } from 'environments/environment';
   styleUrls: ['./job-tab.component.scss']
 })
 export class JobTabComponent implements OnInit {
-
+  requestedDate: any = "";
   private ucLookupProfession: UclookupgenericComponent;
   @ViewChild('LookupProfession') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
@@ -60,6 +63,8 @@ export class JobTabComponent implements OnInit {
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   isUcAddrReady: boolean = false
   MrCustModelDescr: string = "Employee";
+  IsIntegratorCheckBySystem: string = "0";
+  IsCustomer: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
 
@@ -87,19 +92,35 @@ export class JobTabComponent implements OnInit {
     PrevJobNotes: [''],
     OthBizNotes: [''],
   })
-
+  IsNeedIntegrator: boolean = false;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
+    private route: ActivatedRoute,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService) {
+    this.route.queryParams.subscribe(params => {
+
+      if (params['AppCustId'] != null) {
+        this.AppCustId = params['AppCustId'];
+      }
+      if (params['AppId'] != null) {
+        this.appId = params['AppId'];
+      }
+    });
   }
 
   async ngOnInit() {
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
-
+    this.GetGeneralSetting();
     await this.InitLookup();
-    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).subscribe(
+    await this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+      (response) => {
+        this.IsCustomer = response.AppCustObj.IsCustomer;
+      }
+    );
+    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
       (response) => {
         this.MrCustModelDescr = response.Descr;
         this.CheckCustModel();
@@ -124,6 +145,17 @@ export class JobTabComponent implements OnInit {
     this.InputOthBizAddrObj.inputField = this.InputFieldOthBizObj;
 
     this.GetData();
+  }
+
+  async GetGeneralSetting() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeIntegratorCheckBySystem }).toPromise().then(
+      (response) => {
+        this.IsIntegratorCheckBySystem = response.GsValue;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   GetData() {
@@ -159,29 +191,29 @@ export class JobTabComponent implements OnInit {
         }
 
 
-          if (response.JobAddr.AppCustAddrId != 0) {
-            this.JobAddrObj = response.JobAddr;
-            this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response.JobAddr.Zipcode;
-            this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.JobAddr.Zipcode };
-            this.InputJobAddrObj.default = this.JobAddrObj;
-            this.JobDataAddrObj.RowVersion = response.JobAddr.RowVersion;
-          }
+        if (response.JobAddr.AppCustAddrId != 0) {
+          this.JobAddrObj = response.JobAddr;
+          this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response.JobAddr.Zipcode;
+          this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.JobAddr.Zipcode };
+          this.InputJobAddrObj.default = this.JobAddrObj;
+          this.JobDataAddrObj.RowVersion = response.JobAddr.RowVersion;
+        }
 
-          if (response.PrevJobAddr.AppCustAddrId != 0) {
-            this.PrevJobAddrObj = response.PrevJobAddr;
-            this.InputPrevJobAddrObj.inputField.inputLookupObj.nameSelect = response.PrevJobAddr.Zipcode;
-            this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.PrevJobAddr.Zipcode };
-            this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
-            this.PrevJobDataAddrObj.RowVersion = response.PrevJobAddr.RowVersion;
-          }
+        if (response.PrevJobAddr.AppCustAddrId != 0) {
+          this.PrevJobAddrObj = response.PrevJobAddr;
+          this.InputPrevJobAddrObj.inputField.inputLookupObj.nameSelect = response.PrevJobAddr.Zipcode;
+          this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.PrevJobAddr.Zipcode };
+          this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
+          this.PrevJobDataAddrObj.RowVersion = response.PrevJobAddr.RowVersion;
+        }
 
-          if (response.OthBizAddr.AppCustAddrId != 0) {
-            this.OthBizAddrObj = response.OthBizAddr;
-            this.InputOthBizAddrObj.inputField.inputLookupObj.nameSelect = response.OthBizAddr.Zipcode;
-            this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.OthBizAddr.Zipcode };
-            this.InputOthBizAddrObj.default = this.OthBizAddrObj;
-            this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
-          }
+        if (response.OthBizAddr.AppCustAddrId != 0) {
+          this.OthBizAddrObj = response.OthBizAddr;
+          this.InputOthBizAddrObj.inputField.inputLookupObj.nameSelect = response.OthBizAddr.Zipcode;
+          this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.OthBizAddr.Zipcode };
+          this.InputOthBizAddrObj.default = this.OthBizAddrObj;
+          this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
+        }
         this.isUcAddrReady = true;
       },
       error => {
@@ -189,12 +221,12 @@ export class JobTabComponent implements OnInit {
       });
   }
 
-  CheckCustModel(){
-    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+  CheckCustModel() {
+    if (this.CustModelCode == CommonConstant.CustModelEmployee) {
       this.JobDataForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.JobDataForm.controls.MrJobStatCode.setValidators([Validators.required]);
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
-    }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
+    } else if (this.CustModelCode == CommonConstant.CustModelProfessional) {
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
     }
     this.JobDataForm.controls.MrJobPositionCode.updateValueAndValidity();
@@ -203,6 +235,22 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
+    if (this.IsCustomer) {
+      if (!this.IsNeedIntegrator) {
+        if (confirm("Do you want to submit this data without Integrator ?")) {
+          this.SubmitData();
+        }
+      }
+      else {
+        this.SubmitData();
+      }
+    }
+    else {
+      this.SubmitData();
+    }
+  }
+
+  SubmitData() {
     this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
     this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
     this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
@@ -303,14 +351,15 @@ export class JobTabComponent implements OnInit {
 
     this.http.post(URLConstant.AddEditAppCustPersonalJobData, requestObj).subscribe(
       (response) => {
+        if (this.IsNeedIntegrator) {
+          this.hitAPIIntegrator(requestObj);
+        }
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({IsComplete: true});
+        this.OutputTab.emit({ IsComplete: true });
       },
       error => {
         console.log(error);
       });
-
-
   }
 
   SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false) {
@@ -397,6 +446,7 @@ export class JobTabComponent implements OnInit {
   }
 
   GetProfession(event) {
+    console.log(event);
     this.JobDataForm.patchValue({
       MrProfessionCode: event.ProfessionCode
     });
@@ -406,5 +456,41 @@ export class JobTabComponent implements OnInit {
     this.JobDataForm.patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
+  }
+  GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
+    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
+      (response) => {
+        this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
+          (response) => {
+            if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
+              this.requestedDate = response["ReqDt"];
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  FlaggingIsNeedIntegrator() {
+    this.IsNeedIntegrator = true;
+    this.toastr.successMessage("With Integrator Checking.");
+  }
+
+  hitAPIIntegrator(requestObj: any) {
+    this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudChecking, requestObj).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );  
   }
 }

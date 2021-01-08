@@ -16,6 +16,7 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
 import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order-view.component";
 import { UcgridviewModule } from "@adins/ucgridview";
 import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
   exports: [
@@ -34,6 +35,7 @@ import { AppMainInfoComponent } from "../sharing-component/view-main-info-compon
     ViewSharingComponentModule,
     ViewAgrmntComponentModule,
     UcgridviewModule,
+    SharedModule
   ],
   declarations: [
     AgreementViewContainerComponent,

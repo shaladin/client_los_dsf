@@ -26,6 +26,8 @@ import { CreditReviewComponent } from './credit-review-prototype/credit-review-p
 import { CreditReviewDetailPersonalComponent } from './credit-review-prototype/credit-review-detail-personal/credit-review-detail-personal.component';
 import { CreditReviewCrDetailComponent } from './credit-review-cr/credit-review-cr-detail/credit-review-cr-detail.component';
 import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-cr-paging/credit-review-cr-paging.component';
+import { CreditApprovalCrPagingComponent } from './credit-approval-cr/credit-approval-cr-paging/credit-approval-cr-paging.component';
+import { CreditApprovalCrDetailComponent } from './credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail.component';
 
 
 const routes: Routes = [
@@ -218,7 +220,21 @@ const routes: Routes = [
           path: 'CreditReviewCr/Detail',
           component: CreditReviewCrDetailComponent,
           data: {
-              title: 'Credit Review Paging'
+              title: 'Credit Review Detail'
+          }
+      },
+      {
+          path: 'CreditApprovalCr/Paging',
+          component: CreditApprovalCrPagingComponent,
+          data: {
+              title: 'Credit Approval Paging'
+          }
+      },
+      {
+          path: 'CreditApprovalCr/Detail',
+          component: CreditApprovalCrDetailComponent,
+          data: {
+              title: 'Credit Approval Detail'
           }
       }
     ]

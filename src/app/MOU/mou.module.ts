@@ -69,6 +69,8 @@ import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
  
+import { SharedModule } from "app/shared/shared.module";
+
 export const customCurrencyMaskConfig = {
   align: "left",
   allowNegative: true,
@@ -101,7 +103,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalcreateModule,
     UcapprovalR3Module,
     UcapprovalHistoryModule,
-    UcapprovalgeneralinfoModule
+    UcapprovalgeneralinfoModule,
+    SharedModule
   ],
   declarations: [
     DocSignerComponent,

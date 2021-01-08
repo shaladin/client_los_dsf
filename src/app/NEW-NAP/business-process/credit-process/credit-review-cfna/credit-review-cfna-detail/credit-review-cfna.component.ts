@@ -13,6 +13,10 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+
 @Component({
   selector: 'app-credit-review-cfna',
   templateUrl: './credit-review-cfna.component.html',
@@ -31,6 +35,10 @@ export class CreditReviewCfnaComponent implements OnInit {
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
   arrValue = [];
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  appNo: any;
+  custNo: string;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -111,6 +119,47 @@ export class CreditReviewCfnaComponent implements OnInit {
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
     this.initInputApprovalObj();
+    await this.InitDms();
+  }
+
+  async InitDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        this.appNo = response[0]['AppNo'];
+        this.custNo = response[1]['CustNo'];
+        if(this.custNo != null && this.custNo != ''){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        let mouCustId = response[0]['MouCustId'];
+        if (mouCustId != null && mouCustId != '') {
+          var mouObj = { MouCustId: mouCustId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            (response) => {
+              let mouCustNo = response['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            });
+        }
+        else {
+          this.isDmsReady = true;
+        }
+      }
+    );
   }
 
   async GetAppNo() {
@@ -355,8 +404,8 @@ export class CreditReviewCfnaComponent implements OnInit {
     this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
     this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
     this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_CRD_APV;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLRecommendation;
     this.InputObj.TrxNo = this.AppNo
     this.IsReady = true;
