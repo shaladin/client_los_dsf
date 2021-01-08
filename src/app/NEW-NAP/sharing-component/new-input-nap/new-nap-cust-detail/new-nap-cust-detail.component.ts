@@ -1078,14 +1078,14 @@ export class NewNapCustDetailComponent implements OnInit {
     }
     else {
       var addrMessage = "";
-      var addrValidationCompany = {Legal: false, Mailing: false};
+      var addrValidationCompany = {Legal: false, ContactInfo: false};
       for (const item of this.ListAddress) {
         switch (item.MrCustAddrTypeCode) {
           case CommonConstant.AddrTypeLegal:
             addrValidationCompany.Legal = true;
             break;
-          case CommonConstant.AddrTypeMailing:
-            addrValidationCompany.Mailing = true;
+          case CommonConstant.AddrTypeContactInfo:
+            addrValidationCompany.ContactInfo = true;
             break;
           default:
             break;
@@ -1095,8 +1095,8 @@ export class NewNapCustDetailComponent implements OnInit {
       if(!addrValidationCompany.Legal){
         addrMessage == "" ? addrMessage += "Legal" : addrMessage += ",Legal";
       }
-      if(!addrValidationCompany.Mailing){
-        addrMessage == "" ? addrMessage += "Mailing" : addrMessage += ",Mailing";
+      if(!addrValidationCompany.ContactInfo){
+        addrMessage == "" ? addrMessage += "Contact Info" : addrMessage += ",Contact Info";
       }
       
       if(addrMessage){
