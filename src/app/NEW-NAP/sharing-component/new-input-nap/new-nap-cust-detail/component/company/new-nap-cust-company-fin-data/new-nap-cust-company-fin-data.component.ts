@@ -19,7 +19,7 @@ export class NewNapCustCompanyFinDataComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Input() AppCustId: number;
   @Input() IsCompanyFinDataSubmitted: boolean;
-  @Output() OutputTab: EventEmitter<object> = new EventEmitter();
+  @Output() ResponseBankAcc: EventEmitter<any> = new EventEmitter();
   IsDetail: boolean = false;
   AttrGroup: string = CommonConstant.AttrGroupCustCompanyFinData;
   AppCustCompanyFinData: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
@@ -81,6 +81,7 @@ export class NewNapCustCompanyFinDataComponent implements OnInit {
   GetEvent(event) {
     if (event != undefined && event.Key == "IsDetail") {
       this.IsDetail = event.Value;
+      this.ResponseBankAcc.emit(event.AppCustBankAccList);
     }
   }
 }

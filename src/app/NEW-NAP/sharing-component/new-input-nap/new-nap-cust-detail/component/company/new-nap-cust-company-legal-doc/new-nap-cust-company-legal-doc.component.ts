@@ -16,7 +16,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 export class NewNapCustCompanyLegalDocComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() AppCustCompanyId: number;
-  @Output() OutputTab: EventEmitter<object> = new EventEmitter();
+  @Output() ResponseLegalDoc: EventEmitter<object> = new EventEmitter();
   AppCustCompanyLegalDoc : AppCustCompanyLegalDocObj = new AppCustCompanyLegalDocObj();
   IsDetail: boolean = false;
   ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array();
@@ -44,6 +44,7 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
           this.InputGridObj.resultData["Data"] = new Array();
           this.InputGridObj.resultData.Data = response["ListCompanyLegalDoc"];
           this.ListLegalDoc = this.InputGridObj.resultData.Data;
+          this.ResponseLegalDoc.emit(this.ListLegalDoc);
         }
       );
     }
@@ -96,6 +97,6 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
     this.IsDetail = false;
     this.ListLegalDoc = e.ListAppCustCompanyLegalDoc;
     this.LoadListLegalDocData();
-    this.OutputTab.emit({ ListLegalDoc: this.ListLegalDoc });
+    this.ResponseLegalDoc.emit(this.ListLegalDoc);
   }
 }

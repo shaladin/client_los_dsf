@@ -23,7 +23,6 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() ParentForm: FormGroup;
   @Input() IsCompanyDataSubmitted: boolean;
-  @Output() OutputTab: EventEmitter<any> = new EventEmitter();
   @Output() ResponseCustGrp: EventEmitter<any> = new EventEmitter<any>();
   lookupCustGrpObj: InputLookupObj = new InputLookupObj();
   lookupIndustryTypeObj: InputLookupObj = new InputLookupObj();
@@ -67,7 +66,9 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
     await this.GetCustModel();
-    this.GetData();
+    if(this.AppCustId && this.AppCustId > 0){
+      this.GetData();
+    }
   }
 
   async GetCustModel()

@@ -11,6 +11,7 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompany/AppCustCompanyContactPersonObj.Model';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustEmrgncCntctObj } from 'app/shared/model/AppCustEmrgncCntctObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
@@ -21,6 +22,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDa
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
@@ -64,7 +66,7 @@ export class NewNapCustDetailComponent implements OnInit {
   AppCustPersonalFinData: AppCustPersonalFinDataObj;
   appCustOtherInfo : AppCustOtherInfoObj;
   ResponseCustOtherInfo : any;
-  CustAttrRequest: Array<Object>;
+  CustAttrRequestFinData: Array<Object>;
   ListAddress: Array<AppCustAddrObj>;
   AppCustBankAccList: Array<AppCustBankAccObj>;
   AppCustCompanyObj: AppCustCompanyObj;
@@ -80,6 +82,7 @@ export class NewNapCustDetailComponent implements OnInit {
   NationalityCountryCode: string;
   CustModelCode: string;
   AppCustPersonalId: number;
+  AppCustCompanyId: number;
   IsCompletion: boolean;
   IsMarried: boolean;
   AttrGroup: string;
@@ -87,6 +90,7 @@ export class NewNapCustDetailComponent implements OnInit {
   IsDataLoaded: boolean = false;
   IsLoadEmergency: boolean = true;
   custAttrRequest = new Array<Object>();
+  ListLegalDoc: Array<AppCustCompanyLegalDocObj>;
   readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
 
   //#region FormAppCustMainData
@@ -293,7 +297,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.InputAppCustObjMainData = new Object();
     this.JobDataObj = new AppCustPersonalJobDataObj();
     this.appCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
-    this.CustAttrRequest = new Array<Object>();
+    this.CustAttrRequestFinData = new Array<Object>();
     this.AppCustPersonalFinData = new AppCustPersonalFinDataObj();
     this.appCustOtherInfo = new AppCustOtherInfoObj();
     this.ListAddress = new Array<AppCustAddrObj>();
@@ -306,6 +310,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.isExisting = false;
     this.isIncludeCustRelation = false;
     this.AppCustPersonalId = 0;
+    this.AppCustCompanyId = 0;
     this.IsCompletion = false;
     this.AppCustIdInput = 0;
     this.appCustId = 0;
@@ -314,6 +319,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custAttrRequest = new Array<Object>();
     this.custMainDataMode = CommonConstant.CustMainDataModeCust;
     this.IsSubmitted = false;
+    this.ListLegalDoc = new Array<AppCustCompanyLegalDocObj>();
   }
 
   ngOnInit() {
@@ -358,6 +364,13 @@ export class NewNapCustDetailComponent implements OnInit {
                 }
               );
             }
+            else{
+              await this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustIdInput}).toPromise().then(
+                (response) => {
+                  this.AppCustCompanyId = response.AppCustCompanyObj.AppCustCompanyId;
+                }
+              );
+            }
           }
           else{
             this.inputMode = "ADD";
@@ -388,6 +401,7 @@ export class NewNapCustDetailComponent implements OnInit {
   //#region MainDataCust
   MainDataCustTypeHandler(e){
     this.MrCustTypeCode = e;
+    this.IsSubmitted = false;
   }
 
   MainDataCustIsExistingHandler(e){
@@ -529,16 +543,6 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode = this.CustMainDataForm.controls.MrCompanyTypeCode.value;
 
-    this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode3 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode3.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode4 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode4.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Zipcode = this.CustMainDataForm.controls["AddressZipcode"]["controls"].value.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode1 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode1.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
-
     if (this.custDataCompanyObj.AppCustObj.IsShareholder) {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsSigner = this.CustMainDataForm.controls.IsSigner.value;
@@ -677,7 +681,7 @@ export class NewNapCustDetailComponent implements OnInit {
   //#region CustPersonalFinData
   SetAttrContentFinData(){
     var formValue = this.PersonalFinancialForm['controls']['AttrList'].value;
-    this.CustAttrRequest = new Array<Object>();
+    this.CustAttrRequestFinData = new Array<Object>();
      
     if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
       for (const key in formValue) {
@@ -689,7 +693,7 @@ export class NewNapCustDetailComponent implements OnInit {
             AttrValue: formValue[key]["AttrValue"],
             AttrGroup: this.AttrGroup
           };
-          this.CustAttrRequest.push(custAttr);
+          this.CustAttrRequestFinData.push(custAttr);
         }
       }  
     }
@@ -736,19 +740,22 @@ export class NewNapCustDetailComponent implements OnInit {
     this.appCustOtherInfo.LbppmsDebtGrpLbppDescr = this.OtherInformationForm.controls.LbppmsDebtGrpLbppDescr.value;
     this.appCustOtherInfo.LbppmsBizSustainLbppDescr = this.OtherInformationForm.controls.LbppmsBizSustainLbppDescr.value;
     this.appCustOtherInfo.LbppmsBizSclLbppDescr = this.OtherInformationForm.controls.LbppmsBizSclLbppDescr.value;
-
   }
   //#endregion
 
   //#region CustCompanyFullData
-  SetData(){
-    this.AppCustObj.AppCustId = this.AppCustIdInput;
-    this.AppCustObj.MrCustModelCode = this.CustDetailFormCompany.controls.MrCustModelCode.value;
-    this.AppCustObj.IsAffiliateWithMf = this.CustDetailFormCompany.controls.IsAffiliateWithMF.value; 
+  CustCompanyFullDataCustGrpHandler(e){
+    this.ListAppCustGrpObj = e;
+  }
+
+  SetDataCompanyFullData(){
+    this.custDataCompanyObj.AppCustObj.AppCustId = this.AppCustIdInput;
+    this.custDataCompanyObj.AppCustObj.MrCustModelCode = this.CustDetailFormCompany.controls.MrCustModelCode.value;
+    this.custDataCompanyObj.AppCustObj.IsAffiliateWithMf = this.CustDetailFormCompany.controls.IsAffiliateWithMF.value; 
    
-    this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailFormCompany.controls.IndustryTypeCode.value;
-    this.AppCustCompanyObj.NumOfEmp = this.CustDetailFormCompany.controls.NoOfEmployee.value;
-    this.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
+    this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailFormCompany.controls.IndustryTypeCode.value;
+    this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp = this.CustDetailFormCompany.controls.NoOfEmployee.value;
+    this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
   }
 
   //#endregion
@@ -783,7 +790,7 @@ export class NewNapCustDetailComponent implements OnInit {
     }
   }
 
-  async SetReqAddrObj(obj: any) {
+  SetReqAddrObj(obj: any) {
     let TempAddr = obj[this.InputAddressObjForCc_Identifier];
     let TempZipVal = obj[this.InputAddressObjForCc_Identifier + "Zipcode"];
 
@@ -816,7 +823,7 @@ export class NewNapCustDetailComponent implements OnInit {
     return ReqAddr;
   }
 
-  async SetReqCcObj(obj: any, ReqAddr: AppCustAddrObj) {
+  SetReqCcObj(obj: any, ReqAddr: AppCustAddrObj) {
     let ReqCcObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
     ReqCcObj.AppCustId = this.AppCustIdInput;
     ReqCcObj.AppCustCompanyId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyId;
@@ -851,9 +858,13 @@ export class NewNapCustDetailComponent implements OnInit {
   //#endregion
 
   //#region CustCompanyFinData
+  GetCompanyBankAcc(e){
+    this.AppCustBankAccList = e;
+  }
+
   SetAttrContentFinDataCompany(){
     var formValue = this.FinancialFormCompany['controls']['AttrList'].value;
-    this.CustAttrRequest = new Array<Object>();
+    this.CustAttrRequestFinData = new Array<Object>();
      
     if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
       for (const key in formValue) {
@@ -865,11 +876,18 @@ export class NewNapCustDetailComponent implements OnInit {
           AttrValue: formValue[key]["AttrValue"],
           AttrGroup: this.AttrGroup
         };
-        this.CustAttrRequest.push(custAttr);}
+        this.CustAttrRequestFinData.push(custAttr);}
 
       }  
     }
   }
+  //#endregion
+
+  //#region CustCompanyLegalDoc
+  GetLegalDoc(e){
+    this.ListLegalDoc = e;
+  }
+  //#endregion
 
   SaveForm() {
     this.IsSubmitted = true;
@@ -879,16 +897,35 @@ export class NewNapCustDetailComponent implements OnInit {
         return false;
       }
     }
+    else{
+      if(!this.CustMainDataForm.valid || !this.CustDetailFormCompany.valid || !this.CcForm.valid || 
+          !this.FinancialFormCompany.valid || !this.OtherInformationForm.valid){
+        return false;
+      }
+    }
     
     if(this.CekIsCustomer()) return;
-    let max17Yodt = new Date(this.MaxDate);
-    let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
-    let d2 = new Date(this.MaxDate);
-    max17Yodt.setFullYear(d2.getFullYear() - 17);
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      let max17Yodt = new Date(this.MaxDate);
+      let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
+      let d2 = new Date(this.MaxDate);
+      max17Yodt.setFullYear(d2.getFullYear() - 17);
+  
+      if (d1 > max17Yodt) {
+        this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+        return;
+      }
+    }
+    else{
+      let max17Yodt = new Date(this.MaxDate);
+      let d1 = new Date(this.CcForm.controls.BirthDt.value);
+      let d2 = new Date(this.MaxDate);
+      max17Yodt.setFullYear(d2.getFullYear() - 17);
 
-    if (d1 > max17Yodt) {
-      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
-      return;
+      if (d1 > max17Yodt) {
+        this.toastr.warningMessage("Contact Person age must be at least 17 year old");
+        return;
+      }
     }
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -946,7 +983,7 @@ export class NewNapCustDetailComponent implements OnInit {
       this.AppCustPersonalFinData = this.PersonalFinancialForm.value;
       this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
       let appCustPersonalFinDataRequest = {
-        ListAppCustAttrObj: this.CustAttrRequest,
+        ListAppCustAttrObj: this.CustAttrRequestFinData,
         AppCustPersonalFinDataObj: this.AppCustPersonalFinData
       };
       let appCustOtherInfoRequest = {
@@ -998,19 +1035,102 @@ export class NewNapCustDetailComponent implements OnInit {
       });
     }
     else {
+      var addrMessage = "";
+      var addrValidationCompany = {Legal: false, Mailing: false};
+      for (const item of this.ListAddress) {
+        switch (item.MrCustAddrTypeCode) {
+          case CommonConstant.AddrTypeLegal:
+            addrValidationCompany.Legal = true;
+            break;
+          case CommonConstant.AddrTypeMailing:
+            addrValidationCompany.Mailing = true;
+            break;
+          default:
+            break;
+        }
+      }
+
+      if(!addrValidationCompany.Legal){
+        addrMessage == "" ? addrMessage += "Legal" : addrMessage += ",Legal";
+      }
+      if(!addrValidationCompany.Mailing){
+        addrMessage == "" ? addrMessage += "Mailing" : addrMessage += ",Mailing";
+      }
+      
+      if(addrMessage){
+        this.toastr.warningMessage("Please Add " + addrMessage + " Address");
+        return false;
+      }
+
+      if(this.ListLegalDoc.length < 1){
+        this.toastr.warningMessage("Please add at least 1 legal doc");
+        return false;
+      }
+
       this.setMainDataCustomerCompanyForSave();
-      // this.http.post(URLConstant.AddEditCustMainDataCompany, this.custDataCompanyObj).subscribe(
-      //   (response) => {
-      //     if (response["StatusCode"] == 200) {
-      //       this.toastr.successMessage(response["message"]);
-      //     }
-      //     else {
-      //       response["ErrorMessages"].forEach((message: string) => {
-      //         this.toastr.errorMessage(message["Message"]);
-      //       });
-      //     }
-      //   }
-      // );
+      this.SetDataCompanyFullData();  
+      let temp = this.CcForm.getRawValue();
+      let ReqAddr = this.SetReqAddrObj(temp);
+      let requestContactInfo = this.SetReqCcObj(temp, ReqAddr);
+      this.SetAttrContentFinDataCompany();
+      this.AppCustCompanyFinData = this.FinancialFormCompany.value;
+      this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
+      this.AppCustCompanyFinData.AppCustId = this.AppCustIdInput;
+      let requestAppCustCompanyFinData = {
+        ListAppCustAttrObj: this.CustAttrRequestFinData,
+        AppCustCompanyFinDataObj: this.AppCustCompanyFinData
+      }
+      var appCustBankAccRequest = new Array<Object>();
+      for (const bank of this.AppCustBankAccList) {
+        var obj = new Object();
+        var bankAccObj = new AppCustBankAccObj();
+        bankAccObj.AppCustBankAccId = bank.AppCustBankAccId;
+        bankAccObj.AppCustId = bank.AppCustId;
+        bankAccObj.BankCode = bank.BankCode;
+        bankAccObj.BankBranch = bank.BankBranch;
+        bankAccObj.BankAccName = bank.BankAccName;
+        bankAccObj.BankAccNo = bank.BankAccNo;
+        bankAccObj.IsDefault = bank.IsDefault;
+        bankAccObj.IsActive = bank.IsActive;
+        obj["BankAccObj"] = bankAccObj;
+        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
+        appCustBankAccRequest.push(obj);
+      }
+      this.setAttrContent();
+      this.setAppCustOtherInfoData();
+      let appCustOtherInfoRequest = {
+        ListRequestAppCustAttrObject: this.custAttrRequest,
+        RequestAppCustOtherInfoObj: this.appCustOtherInfo
+      };
+      let requestCompany={
+        AppCustObj: this.custDataCompanyObj.AppCustObj, 
+        AppCustCompanyObj: this.custDataCompanyObj.AppCustCompanyObj,
+        AppCustCompanyMgmntShrholderObj: this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj,
+        AppCustGrpObjs: this.ListAppCustGrpObj,
+        AppCustAddrObjList: this.ListAddress,
+        AppCustCompanyContactPersonObj: requestContactInfo,
+        AppCustCompanyFinDataObj: requestAppCustCompanyFinData,
+        AppCustBankAccList: appCustBankAccRequest,
+        AppCustCompanyLegalDocList: this.ListLegalDoc,
+        AppCustOtherInfo: appCustOtherInfoRequest
+      };
+
+      this.http.post(URLConstant.AddEditCustDataCompany, requestCompany).toPromise().then(
+        (response) => {
+          if (response["StatusCode"] == 200) {
+            this.toastr.successMessage(response["message"]);
+            this.outputTab.emit(this.MrCustTypeCode);
+          }
+          else {
+            response["ErrorMessages"].forEach((message: string) => {
+              this.toastr.errorMessage(message["Message"]);
+            });
+          }
+        },
+        error => {
+          console.log(error);
+        });
+      
     }
   }
 }

@@ -1,4 +1,6 @@
-<div *ngIf="!IsDetail">
+<lib-ucSubsection [id]="'LegalDocSectionId'" [title]="'Legal Doc List'" [panel]="'LegalDocSection'">
+</lib-ucSubsection>
+<div *ngIf="!IsDetail" id="LegalDocSection">
   <div class="button-right margin-15">
     <button type="button" class="btn btn-raised btn-primary" (click)="Add()" translate>
       <i class="ft-plus-circle"></i> Add
