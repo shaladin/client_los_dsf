@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustEmrgncCntctObj } from 'app/shared/model/AppCustEmrgncCntctObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CustPersonalContactPersonObj } from 'app/shared/model/CustPersonalContactPersonObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -35,6 +36,7 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array();
   GenderObj: Array<KeyValueObj> = new Array();
   MrCustRelationshipObj: Array<KeyValueObj> = new Array();
+  MrCustRelationshipSpouseObj: KeyValueObj = new KeyValueObj();
   ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
@@ -110,10 +112,10 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
-        if (!this.IsMarried) {
-          await this.removeSpouse();
-        }
-        await this.ParentForm.patchValue({
+        this.MrCustRelationshipSpouseObj = this.MrCustRelationshipObj.find(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+        this.CheckIsMarried(this.IsMarried);
+        
+        this.ParentForm.patchValue({
           MrCustRelationshipCode: this.MrCustRelationshipObj[0].Key
         });
       }
@@ -176,6 +178,49 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
       });
   }
 
+  CopyCustomerEmergency(custPersonalContactPersonObj: CustPersonalContactPersonObj){
+    if(custPersonalContactPersonObj.CustPersonalContactPersonId != 0){
+      this.ParentForm.patchValue({
+        MrIdTypeCode: custPersonalContactPersonObj.MrIdTypeCode,
+        MrGenderCode: custPersonalContactPersonObj.MrGenderCode,
+        IdNo: custPersonalContactPersonObj.IdNo,
+        BirthPlace: custPersonalContactPersonObj.BirthPlace,
+        IdExpiredDt: custPersonalContactPersonObj.IdExpiredDt != null ? formatDate(custPersonalContactPersonObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+        BirthDt: formatDate(custPersonalContactPersonObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+        MrCustRelationshipCode: custPersonalContactPersonObj.MrCustRelationshipCode,
+        MobilePhnNo1: custPersonalContactPersonObj.MobilePhnNo1,
+        MobilePhnNo2: custPersonalContactPersonObj.MobilePhnNo2,
+        Email: custPersonalContactPersonObj.Email
+      })
+    }
+  this.ChangeIdType(custPersonalContactPersonObj.MrIdTypeCode);
+  this.CheckIsMarried(this.IsMarried);        
+  this.InputLookupCustObj.nameSelect = custPersonalContactPersonObj["ContactPersonName"];
+  this.InputLookupCustObj.jsonSelect = { CustName: custPersonalContactPersonObj["ContactPersonName"] };
+
+  this.UcAddrObj.Addr = custPersonalContactPersonObj["Addr"];
+  this.UcAddrObj.AreaCode1 = custPersonalContactPersonObj["AreaCode1"];
+  this.UcAddrObj.AreaCode2 = custPersonalContactPersonObj["AreaCode2"];
+  this.UcAddrObj.AreaCode3 = custPersonalContactPersonObj["AreaCode3"];
+  this.UcAddrObj.AreaCode4 = custPersonalContactPersonObj["AreaCode4"];
+  this.UcAddrObj.City = custPersonalContactPersonObj["City"];
+  this.UcAddrObj.Fax = custPersonalContactPersonObj["Fax"];
+  this.UcAddrObj.FaxArea = custPersonalContactPersonObj["FaxArea"];
+  this.UcAddrObj.Phn1 = custPersonalContactPersonObj["Phn1"];
+  this.UcAddrObj.Phn2 = custPersonalContactPersonObj["Phn2"];
+  this.UcAddrObj.Phn3 = custPersonalContactPersonObj["Phn3"];
+  this.UcAddrObj.PhnArea1 = custPersonalContactPersonObj["PhnArea1"];
+  this.UcAddrObj.PhnArea2 = custPersonalContactPersonObj["PhnArea2"];
+  this.UcAddrObj.PhnArea3 = custPersonalContactPersonObj["PhnArea3"];
+  this.UcAddrObj.PhnExt1 = custPersonalContactPersonObj["PhnExt1"];
+  this.UcAddrObj.PhnExt2 = custPersonalContactPersonObj["PhnExt2"];
+  this.UcAddrObj.PhnExt3 = custPersonalContactPersonObj["PhnExt3"];
+
+  this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = custPersonalContactPersonObj["Zipcode"];
+  this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: custPersonalContactPersonObj["Zipcode"]};
+  this.InputUcAddressObj.default = this.UcAddrObj;
+  }
+
   ChangeIdType(IdType: string){
     this.ParentForm.controls.IdExpiredDt.patchValue("");
 
@@ -188,9 +233,13 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
     this.ParentForm.controls.IdExpiredDt.updateValueAndValidity();
   }
 
-  removeSpouse() {
-    let idxSpouse = this.MrCustRelationshipObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
-    this.MrCustRelationshipObj.splice(idxSpouse, 1)
+  CheckIsMarried(isMarried: boolean) {
+    if(!isMarried){
+      let idxSpouse = this.MrCustRelationshipObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+      this.MrCustRelationshipObj.splice(idxSpouse, 1)
+    }else{
+      this.MrCustRelationshipObj.push(this.MrCustRelationshipSpouseObj);
+    }
   }
 
   copyCustomerEvent(event) {
@@ -208,7 +257,8 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
           this.InputLookupCustObj.nameSelect = response.CustObj.CustName;
           this.InputLookupCustObj.jsonSelect = { CustName: response.CustObj.CustName };
         }
-
+        this.ChangeIdType(response.CustObj.MrIdTypeCode);
+        
         if (response.CustPersonalObj != undefined) {
           this.ParentForm.patchValue({
             MrGenderCode: response.CustPersonalObj.MrGenderCode,

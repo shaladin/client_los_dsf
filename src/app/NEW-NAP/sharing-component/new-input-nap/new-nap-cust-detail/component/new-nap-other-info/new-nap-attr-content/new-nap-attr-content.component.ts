@@ -8,6 +8,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -51,6 +52,7 @@ export class NewNapAttrContentComponent implements OnInit {
             var parentFormGroup = new Object();
              
             if(this.RefAttrList.length > 0){
+              this.IsFormReady = false;
               for (const refAttr of this.RefAttrList) { 
                 this.AttrContent = new AttrContent();
                 let isUpdateValue = false;
@@ -71,7 +73,6 @@ export class NewNapAttrContentComponent implements OnInit {
               }
               this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
               this.IsFormReady = true;
-              console.log(this.parentForm);
             }
           }
         );
@@ -164,5 +165,54 @@ export class NewNapAttrContentComponent implements OnInit {
       this.tempLookup[refAttr.AttrCode].addCritInput = arrAddCrit;
     }
   }
+
+  CopyCustAttrContent(custAttrContentObjs: Array<NewCustAttrContentObj>){
+    if(custAttrContentObjs.length > 0){
+      this.ListAttrContent = Array<AttrContent>();
+      for(let i = 0; i < custAttrContentObjs.length; i++){
+        var attrContent = new AttrContent();
+        attrContent.AttrCode = custAttrContentObjs[i].AttrCode;
+        attrContent.AttrInputType = custAttrContentObjs[i].AttrInputType;
+        attrContent.AttrName = custAttrContentObjs[i].AttrName;
+        attrContent.AttrValue = custAttrContentObjs[i].AttrValue;
+        attrContent.DefaultValue = custAttrContentObjs[i].DefaultValue;
+        attrContent.Descr = custAttrContentObjs[i].Descr;
+        attrContent.IsMandatory = custAttrContentObjs[i].IsMandatory;
+        attrContent.MasterCode = custAttrContentObjs[i].MasterCode;
+        this.ListAttrContent.push(attrContent);       
+      }
+      var custGrp = {
+        AttrGroup: this.AttrGroup
+      };
+      this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
+        async (response) => {
+          this.RefAttrList = response[CommonConstant.ReturnObj];
+
+          var parentFormGroup = new Object();
+           
+          if(this.RefAttrList.length > 0){
+            for (const refAttr of this.RefAttrList) { 
+              this.AttrContent = new AttrContent();
+              let isUpdateValue = false;
+              if(this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode) ){
+                this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                isUpdateValue = true;
+              }
+
+              var formGroupObject = new Object();
+              formGroupObject["AttrCode"] = [refAttr.AttrCode];
+              formGroupObject["IsMandatory"] = [refAttr.IsMandatory]; 
+              
+              await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
+            }
+            this.ListInputLookUpObj.push(this.tempLookup);
+            this.parentForm.removeControl(this.identifier);
+            this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
+            this.IsFormReady = true;
+          }
+        });
+    } 
+  }
+    
 
 }

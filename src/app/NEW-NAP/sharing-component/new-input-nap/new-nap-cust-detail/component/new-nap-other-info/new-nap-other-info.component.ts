@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -7,7 +7,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
 import { environment } from 'environments/environment';
+import { NewNapAttrContentComponent } from './new-nap-attr-content/new-nap-attr-content.component';
 
 @Component({
   selector: 'app-new-nap-other-info',
@@ -15,6 +17,8 @@ import { environment } from 'environments/environment';
   styles: []
 })
 export class NewNapOtherInfoComponent implements OnInit {
+  @ViewChild(NewNapAttrContentComponent) attrContentComponent;
+
   @Input() ParentForm: FormGroup;
   @Input() AppCustId: number;
   @Input() CustTypeCode: string;
@@ -129,6 +133,35 @@ export class NewNapOtherInfoComponent implements OnInit {
       LbppmsBizSustainLbppCode: e.LbppCode,
       LbppmsBizSustainLbppDescr: e.Descr
     }); 
+  }
+
+  CopyCustOtherInfo(custOtherInfoObj: AppCustOtherInfoObj, custAttrContentObjs: Array<NewCustAttrContentObj>){
+    if (custOtherInfoObj != null && custOtherInfoObj != undefined) {
+      this.IsLookupReady = false;
+      this.InputDebitorGroupLookupObj.nameSelect = custOtherInfoObj.LbppmsDebtGrpLbppDescr;
+      this.InputDebitorGroupLookupObj.jsonSelect = { Descr: custOtherInfoObj.LbppmsDebtGrpLbppDescr };
+      this.InputDebitorBusinessScaleLookupObj.nameSelect = custOtherInfoObj.LbppmsBizSclLbppDescr;
+      this.InputDebitorBusinessScaleLookupObj.jsonSelect = { Descr: custOtherInfoObj.LbppmsBizSclLbppDescr };
+      this.InputCounterpartCategoryLookupObj.nameSelect = custOtherInfoObj.LbppmsCntrprtLbppDescr;
+      this.InputCounterpartCategoryLookupObj.jsonSelect = { Descr: custOtherInfoObj.LbppmsCntrprtLbppDescr };
+      this.InputSustaianableFinancialBusinessLookupObj.nameSelect = custOtherInfoObj.LbppmsBizSustainLbppDescr;
+      this.InputSustaianableFinancialBusinessLookupObj.jsonSelect = { Descr: custOtherInfoObj.LbppmsBizSustainLbppDescr };
+
+      this.ParentForm.patchValue({
+        LbppmsDebtGrpLbppCode: custOtherInfoObj.LbppmsDebtGrpLbppCode,
+        LbppmsCntrprtLbppCode: custOtherInfoObj.LbppmsCntrprtLbppCode,
+        LbppmsBizSustainLbppCode: custOtherInfoObj.LbppmsBizSustainLbppCode,
+        LbppmsBizSclLbppCode: custOtherInfoObj.LbppmsBizSclLbppCode,
+        LbppmsCntrprtLbppDescr: custOtherInfoObj.LbppmsCntrprtLbppDescr,
+        LbppmsDebtGrpLbppDescr: custOtherInfoObj.LbppmsDebtGrpLbppDescr,
+        LbppmsBizSustainLbppDescr: custOtherInfoObj.LbppmsBizSustainLbppDescr,
+        LbppmsBizSclLbppDescr: custOtherInfoObj.LbppmsBizSclLbppDescr
+      });
+      this.IsLookupReady = true;
+
+      var othInfoAttrContentObjs = custAttrContentObjs.filter(x => x.AttrGroup == this.AttrGroup);
+      this.attrContentComponent.CopyCustAttrContent(othInfoAttrContentObjs);
+    }
   }
 
 

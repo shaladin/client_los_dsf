@@ -76,8 +76,6 @@ export class NewNapCustAddrComponent implements OnInit {
     this.InputObj.ListInputedAddr = this.ListAddress;
     this.InputObj.Mode = "Add";
     this.InputObj.IsDetail = true;
-    this.InputObj.AppCustId = this.AppCustId;
-    this.InputObj.AppCustAddrId = 0;
     this.InputObj.MrCustTypeCode = this.MrCustTypeCode;
   }
 
@@ -86,8 +84,6 @@ export class NewNapCustAddrComponent implements OnInit {
     this.InputObj.ListInputedAddr = this.ListAddress;
     this.InputObj.Mode = "Edit";
     this.InputObj.IsDetail = true;
-    this.InputObj.AppCustId = this.AppCustId;
-    this.InputObj.AppCustAddrId = event.RowObj.AppCustAddrId;
     this.InputObj.InputedAddr = this.ListAddress.find(x => x.MrCustAddrTypeCode == event.RowObj.MrCustAddrTypeCode);
     this.InputObj.EditedIndex = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == event.RowObj.MrCustAddrTypeCode);
     this.InputObj.MrCustTypeCode = this.MrCustTypeCode;

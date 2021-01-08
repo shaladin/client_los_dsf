@@ -56,7 +56,7 @@ export class NewNapCustBankAccComponent implements OnInit {
       (response) => {
         this.MonthObj = response[CommonConstant.ReturnObj];
         if (this.MonthObj.length > 0) {
-          this.DefaultMonth = this.MonthObj[0].Key;
+          this.DefaultMonth = this.MonthObj[0].Value;
         }
       }
     );
@@ -256,8 +256,6 @@ export class NewNapCustBankAccComponent implements OnInit {
     
     for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
       this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
-      var monthObj = this.MonthObj.find(x => x.Key == this.BankStmntObj.Month);
-      this.BankStmntObj.MonthName = monthObj.Value;
       this.ListBankStmntObj.push(this.BankStmntObj);
     }
     bankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
