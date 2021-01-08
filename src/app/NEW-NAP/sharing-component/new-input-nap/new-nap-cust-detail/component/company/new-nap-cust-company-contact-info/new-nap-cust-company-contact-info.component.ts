@@ -67,7 +67,7 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
       IdNo: contactInfoObj.IdNo,
       IdExpiredDt: contactInfoObj.IdExpiredDt,
       BirthPlace: contactInfoObj.BirthPlace,
-      BirthDt: formatDate(contactInfoObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+      BirthDt: contactInfoObj.BirthDt ? formatDate(contactInfoObj.BirthDt, 'yyyy-MM-dd', 'en-US') : "",
       MrCustRelationshipCode: contactInfoObj.MrCustRelationshipCode,
       MobilePhnNo1: contactInfoObj.MobilePhnNo1,
       MobilePhnNo2: contactInfoObj.MobilePhnNo2,

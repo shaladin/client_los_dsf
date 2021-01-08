@@ -110,7 +110,7 @@ export class NewNapCustCompanyFinDataComponent implements OnInit {
       DebtEquityRatioPrcnt: custCompanyFinDataObj.DebtEquityRatioPrcnt,
       ArTurnOverPrcnt: custCompanyFinDataObj.ArTurnOverPrcnt,
       WorkingCapitalAmt: custCompanyFinDataObj.WorkingCapitalAmt,
-      DateAsOf: formatDate(custCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US'),
+      DateAsOf: custCompanyFinDataObj.DateAsOf ? formatDate(custCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US') : "",
       OprCost: custCompanyFinDataObj.OprCost,
       CurrAsset: custCompanyFinDataObj.CurrAsset,
       TotalAsset: custCompanyFinDataObj.TotalAsset,
