@@ -1,0 +1,49 @@
+<div class="modal-body">
+  <div class="px-3">
+
+    <lib-ucSubsection [id]="'NegativeListId'" [title]="'Negative List'" [panel]="'NegativeList'">
+    </lib-ucSubsection>
+    <div id="NegativeList">
+
+      <div class="col-md-12" style="padding: 0;">
+        <div class="col-md-12">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: left;">
+                  <span  name='no' translate>No.</span>
+                </th>
+                <th style="text-align: left;">
+                  <span  name='CustName' translate>Customer Name</span>
+                </th>
+                <th style="text-align: left;">
+                  <span  name='NegStatus' translate>Negative Status</span>
+                </th>
+                <th style="text-align: left;">
+                  <span  name='NegSource' translate>Negative Source</span>
+                </th>
+                <th style="text-align: left;">
+                  <span  name='NegCause' translate>Negative Cause</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="ListNegCust.length == 0">
+              <tr>
+                <td colspan="100%">No Data Available</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr *ngFor="let stmnt of ListNegCust; let i = index;">
+                <td style="text-align: left;">{{i}}</td>
+                <td style="text-align: left;">{{stmnt.CustName}}</td>
+                <td style="text-align: left;">{{stmnt.MrNegCustTypeCodeDesc}}</td>
+                <td style="text-align: left;">{{stmnt.MrNegCustSourceCodeDesc}}</td>
+                <td style="text-align: left;">{{stmnt.NegCustCause}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -48,6 +48,8 @@ import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purcha
 import { PoEntryComponent } from './new-purchase-order/new-purchase-order-detail/po-entry/po-entry.component';
 import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
 import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
+import { MatTabsModule } from "@angular/material";
+import { SharedModule } from "app/shared/shared.module";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -70,7 +72,9 @@ export const customCurrencyMaskConfig = {
     ProcessComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     AdInsModule,
-    UcaddtotempModule
+    UcaddtotempModule,
+    MatTabsModule,
+    SharedModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

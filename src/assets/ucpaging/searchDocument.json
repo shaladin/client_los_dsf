@@ -190,7 +190,7 @@
                             "conditions": [
                                 {
                                     "property": "BizTemplateCode",
-                                    "value": "FACTORING",
+                                    "value": "FCTR",
                                     "restriction": "EQ"
                                 }
                             ],

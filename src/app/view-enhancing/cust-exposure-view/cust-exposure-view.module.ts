@@ -15,6 +15,8 @@ import { UcviewgenericComponent, UcviewgenericModule } from "@adins/ucviewgeneri
 import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { CustExposureViewRoutingModule } from "./cust-exposure-view-routing.module";
 import { CustExposureViewComponent } from "./cust-exposure-view.component";
+import { ObligorExposureComponent } from './obligor-exposure/obligor-exposure.component';
+import { CustExposureComponent } from './cust-exposure/cust-exposure.component';
 
 @NgModule({
     imports: [
@@ -36,7 +38,9 @@ import { CustExposureViewComponent } from "./cust-exposure-view.component";
         SharingComponentModule
     ],
     declarations: [
-        CustExposureViewComponent
+        CustExposureViewComponent,
+        ObligorExposureComponent,
+        CustExposureComponent
     ],
     entryComponents: [
     ]

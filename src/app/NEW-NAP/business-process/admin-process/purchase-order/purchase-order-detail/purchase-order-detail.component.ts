@@ -103,11 +103,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
       });
   }
 
-  async GetFromRefMaster() {
-    var tempRefMasterObj: Array<RefMasterObj> = new Array();
-    await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, { refMasterTypeCodes: [CommonConstant.RefMasterTypeCodePoItemCode] }).toPromise().then(
+  async GetFromRule() {
+    var tempRefMasterObj = new Array();
+    await this.http.post(URLConstant.GetPurchaseOrderDPoItemCodeFromRuleByType, {}).toPromise().then(
       (response) => {
-        tempRefMasterObj = response["ReturnObject"];
+        tempRefMasterObj = response["ListPoItems"];
 
       });
     return tempRefMasterObj;
@@ -116,16 +116,16 @@ export class PurchaseOrderDetailComponent implements OnInit {
   GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj) {
     var TempListPurchaseOrderD = new Array();
     for (var i = 0; i < ListPORefMasterObj.length; i++) {
-      if (ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2NonFee) {
+      if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeNonFee) {
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
-        tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MasterCode;
-        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].ReserveField3] : 0;
+        tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
-      if (ListPORefMasterObj[i].ReserveField2 == CommonConstant.RefMasterReservedField2Fee) {
-        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].ReserveField3);
+      if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {
+        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
-        tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MasterCode;
+        tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
@@ -140,7 +140,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     // this.listPurchaseOrderD = new Array();
     // this.purchaseOrderDObj = new PurchaseOrderDObj();
 
-    var ListPORefMasterObj = await this.GetFromRefMaster();
+    var ListPORefMasterObj = await this.GetFromRule();
     var listPurchaseOrderD = this.GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj);
     var POObj = {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
