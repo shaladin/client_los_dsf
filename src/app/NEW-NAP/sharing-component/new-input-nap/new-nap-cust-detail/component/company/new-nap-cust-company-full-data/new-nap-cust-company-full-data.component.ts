@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { CustCompanyObj } from 'app/shared/model/CustCompanyObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
@@ -69,6 +70,28 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
     if(this.AppCustId && this.AppCustId > 0){
       this.GetData();
     }
+  }
+
+  CopyCustCompanyFullData(custObj, custCompanyObj, custGrpObj){
+    this.ParentForm.patchValue({
+      NoOfEmployee: custCompanyObj.NumOfEmp,
+      IsAffiliateWithMF: custObj.IsAffiliateWithMf,
+      EstablishmentDate: formatDate(custCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US'),
+      IndustryTypeCode: custCompanyObj.IndustryTypeCode,
+      MrCustModelCode: custObj.MrCustModelCode
+    });
+    this.http.post(URLConstant.GetCustByCustNo, {CustNo: custGrpObj.CustNo}).toPromise().then(
+      (responseCustGrp) => {
+        this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
+        this.lookupCustGrpObj.jsonSelect = {CustName: responseCustGrp["CustName"]};
+        this.GetCustGrpData({CustNo:responseCustGrp["CustNo"]});
+    });
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, { IndustryTypeCode: custCompanyObj.IndustryTypeCode }).toPromise().then(
+      (response) => {
+        this.lookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
+        this.lookupIndustryTypeObj.jsonSelect = response;     
+      } 
+    );
   }
 
   async GetCustModel()
