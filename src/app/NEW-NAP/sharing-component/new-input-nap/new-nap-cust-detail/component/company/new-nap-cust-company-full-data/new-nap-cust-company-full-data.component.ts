@@ -113,6 +113,8 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
           EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
           IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
           MrCustModelCode : response.AppCustObj.MrCustModelCode,
+          RowVersionAppCust: response.AppCustObj.RowVersion,
+          RowVersionAppCustCompany: response.AppCustCompanyObj.RowVersion
         })
  
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;

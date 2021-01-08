@@ -44,7 +44,7 @@
                 <app-new-nap-cust-company-legal-doc *ngIf="IsDataLoaded" [AppCustId]="AppCustIdInput" [AppCustCompanyId]="AppCustCompanyId"
                     (ResponseLegalDoc)="GetLegalDoc($event)">
                 </app-new-nap-cust-company-legal-doc>
-                <app-new-nap-other-info *ngIf="IsDataLoaded" [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
+                <app-new-nap-other-info *ngIf="IsDataLoaded" [ParentForm]="OtherInformationCompanyForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"
                     [CustTypeCode]="MrCustTypeCode" (ResponseAppCustOtherInfo)="GetAppCustOtherInfo($event)">
                 </app-new-nap-other-info>
             </div>
