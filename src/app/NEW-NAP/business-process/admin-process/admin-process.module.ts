@@ -48,6 +48,10 @@ import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purcha
 import { PoEntryComponent } from './new-purchase-order/new-purchase-order-detail/po-entry/po-entry.component';
 import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
 import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
+import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
+import { UcapprovalR3Module } from '@adins/ucapproval-r3';
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -70,7 +74,11 @@ export const customCurrencyMaskConfig = {
     ProcessComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     AdInsModule,
-    UcaddtotempModule
+    UcaddtotempModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalHistoryModule,
+    UcapprovalgeneralinfoModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

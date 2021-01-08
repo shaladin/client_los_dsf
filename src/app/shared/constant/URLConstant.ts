@@ -553,6 +553,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static AddMouCustListedCustFctr = environment.losUrl + "/MouCustListedCustFctr/AddMouCustListedCustFctr";
     public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
     public static SubmitMouReview = environment.losUrl + "/MouCust/SubmitMouReview";
+    public static SubmitMouReviewNew = environment.losUrl + "/MouCust/SubmitMouReviewNew";
     public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
     public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
     public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
@@ -1140,6 +1141,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // App Credit Review
     public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
     public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
+    public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
     public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
     //RETURN HANDLING

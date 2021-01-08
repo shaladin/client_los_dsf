@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +12,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
 @Component({
   selector: 'app-mou-review-general',
   templateUrl: './mou-review-general.component.html',
@@ -35,7 +36,10 @@ export class MouReviewGeneralComponent implements OnInit {
   mouCustObject: MouCustObj = new MouCustObj();
   listReason: any;
   ScoreResult: number;
-
+  InputObj: UcInputRFAObj;
+  IsReady: boolean;
+  @ViewChild(UcapprovalcreateComponent) createComponent;
+  ApprovalCreateOutput: any;
   MouReviewDataForm = this.fb.group({
     ListApprover: [''],
     Reason: [''],
@@ -50,7 +54,7 @@ export class MouReviewGeneralComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -63,7 +67,7 @@ export class MouReviewGeneralComponent implements OnInit {
       },
     ];
     this.mouCustObject.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
+    await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
       }
@@ -79,24 +83,24 @@ export class MouReviewGeneralComponent implements OnInit {
         })
       })
 
-    var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
-    var apvRecommendObj = { SchemeCode: 'MOUC_GEN_APV' }
-    this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
-      (response) => {
-        this.listRecommendationObj = response;
-        for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
-          var ApvRecommendation = this.fb.group({
-            RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
-            RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
-            RecommendationName: this.listRecommendationObj[i].RecommendationName,
-            RecommendationValue: ['', Validators.required]
-          }) as FormGroup;
-          listRec.push(ApvRecommendation);
-        }
-      })
+    // var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
+    // var apvRecommendObj = { SchemeCode: 'MOUC_GEN_APV' }
+    // this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
+    //   (response) => {
+    //     this.listRecommendationObj = response;
+    //     for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
+    //       var ApvRecommendation = this.fb.group({
+    //         RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
+    //         RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
+    //         RecommendationName: this.listRecommendationObj[i].RecommendationName,
+    //         RecommendationValue: ['', Validators.required]
+    //       }) as FormGroup;
+    //       listRec.push(ApvRecommendation);
+    //     }
+    //   })
 
     var mouCustObj = { MouCustId: this.MouCustId };
-    this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
+    await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
       })
@@ -106,7 +110,7 @@ export class MouReviewGeneralComponent implements OnInit {
         this.MrCustTypeCode = response['MrCustTypeCode'];
       });
 
-    this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL }).pipe(first()).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL }).toPromise().then(
       (response) => {
         this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({
@@ -115,11 +119,12 @@ export class MouReviewGeneralComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
     );
+    this.initInputApprovalObj();
   }
 
   async claimTask() {
@@ -131,34 +136,25 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   Submit() {
+    this.ApprovalCreateOutput = this.createComponent.output();  
+    if(this.ApprovalCreateOutput!=undefined){
     this.mouCustObj.MouCustId = this.MouCustId;
     this.PlafondAmt = this.PlafondAmt;
 
-    var ReviewValue = this.MouReviewDataForm.value;
-    var ApvRecValue = ReviewValue.ApvRecommendation;
-
-    this.rfaInfoObj.ApprovedById = ReviewValue.ListApprover;
-    this.rfaInfoObj.Reason = ReviewValue.Reason;
-    this.rfaInfoObj.Notes = ReviewValue.Notes;
-
-    for (let index = 0; index < ApvRecValue.length; index++) {
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = ApvRecValue[index].RefRecommendationId;
-      this.keyValueObj.Value = ApvRecValue[index].RecommendationValue;
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
+ 
     var submitMouReviewObj = {
       WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj,
-      PlafondAmt: this.PlafondAmt
+      MouCust: this.mouCustObj,
+      PlafondAmt: this.PlafondAmt,
+      RequestRFAObj:this.ApprovalCreateOutput
     }
-    this.http.post(URLConstant.SubmitMouReview, submitMouReviewObj).subscribe(
+    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
       })
-  }
+    }
+}
 
   Return() {
     var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
@@ -177,5 +173,38 @@ export class MouReviewGeneralComponent implements OnInit {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });
     }
+  }
+  initInputApprovalObj(){  
+    this.InputObj = new UcInputRFAObj();
+    var Attributes = []
+    var attribute1= { 
+      "AttributeName" : "Approval Amount",
+      "AttributeValue": this.PlafondAmt
+    }; 
+  
+     var attribute2= {
+      "AttributeName" : "Scoring",
+      "AttributeValue": this.ScoreResult
+    };
+    Attributes.push(attribute1);
+    Attributes.push(attribute2); 
+    var TypeCode = {
+      "TypeCode": "MOUC_GEN_APV_TYPE",
+      "Attributes": Attributes,
+    };
+    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_GENERAL;
+    this.InputObj.Reason = this.listReason;
+    this.InputObj.TrxNo = this.resultData["MouCustNo"]
+    this.IsReady = true;
   }
 }

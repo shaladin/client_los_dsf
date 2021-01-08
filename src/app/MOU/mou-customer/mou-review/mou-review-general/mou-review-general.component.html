@@ -53,7 +53,7 @@
           <p> &nbsp; <span style="display: block;"> <br> </span> &nbsp; </p>
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()"
             #enjiForm="ngForm">
-            <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
+            <!-- <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
               [panel]="'ApvRecommendation'">
             </lib-ucSubsection>
             <div class="form-body" id="ApvRecommendation" formArrayName="ApvRecommendation">
@@ -88,7 +88,7 @@
 
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel">Scoring</label>
-                <label class="col-md-2 adInsLabel">{{ScoreResult}}</label><!-- - {{MrScoreTypeCode}} -->
+                <label class="col-md-2 adInsLabel">{{ScoreResult}}</label>{{MrScoreTypeCode}} 
                 <label class="col-md-2"></label>
                 <label class="col-md-2 adInsLabel adins-required-label">Reason Description</label>
                 <div class="col-md-2">
@@ -122,6 +122,26 @@
                 <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="fa fa-check"></i> Submit
                 </button>
+              </div>
+            </div> -->
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)"></lib-ucapprovalcreate>
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3"> 
+                    <div class="form-actions right">
+
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']"
+                      translate>
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1" translate>
+                      <i class="fa fa-reply"></i> Return
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                      <i class="fa fa-check"></i> Submit
+                    </button> 
+                    </div> 
+                </div>
               </div>
             </div>
           </form>
