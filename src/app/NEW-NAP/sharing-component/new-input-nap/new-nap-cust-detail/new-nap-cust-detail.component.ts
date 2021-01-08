@@ -386,20 +386,6 @@ export class NewNapCustDetailComponent implements OnInit {
   MainDataCustTypeHandler(e){
     this.MrCustTypeCode = e;
     this.IsSubmitted = false;
-    this.AppCustBankAccList = new Array<AppCustBankAccObj>();
-    this.ListAppCustGrpObj = new Array<AppCustGrpObj>();
-    this.ListAddress = new Array<AppCustAddrObj>();
-    this.CustAttrRequestFinData = new Array<Object>();
-    this.OtherInformationForm = this.fb.group({
-      LbppmsBizSclLbppCode: ['', [Validators.required]],
-      LbppmsBizSustainLbppCode: ['', [Validators.required]],
-      LbppmsCntrprtLbppCode: ['', [Validators.required]],
-      LbppmsDebtGrpLbppCode: ['', [Validators.required]],
-      LbppmsCntrprtLbppDescr: ['', [Validators.required]],
-      LbppmsDebtGrpLbppDescr: ['', [Validators.required]],
-      LbppmsBizSustainLbppDescr: ['', [Validators.required]],
-      LbppmsBizSclLbppDescr: ['', [Validators.required]]
-    }); 
   }
 
   MainDataCustIsExistingHandler(e){
@@ -512,16 +498,6 @@ export class NewNapCustDetailComponent implements OnInit {
 
     this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode = this.CustMainDataForm.controls.MrCompanyTypeCode.value;
-
-    this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Addr = this.CustMainDataForm.controls["Address"]["controls"].Addr.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode3 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode3.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode4 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode4.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.Zipcode = this.CustMainDataForm.controls["AddressZipcode"]["controls"].value.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode1 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode1.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
-    this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
 
     if (this.custDataCompanyObj.AppCustObj.IsShareholder) {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
@@ -716,7 +692,6 @@ export class NewNapCustDetailComponent implements OnInit {
     this.appCustOtherInfo.LbppmsDebtGrpLbppDescr = this.OtherInformationForm.controls.LbppmsDebtGrpLbppDescr.value;
     this.appCustOtherInfo.LbppmsBizSustainLbppDescr = this.OtherInformationForm.controls.LbppmsBizSustainLbppDescr.value;
     this.appCustOtherInfo.LbppmsBizSclLbppDescr = this.OtherInformationForm.controls.LbppmsBizSclLbppDescr.value;
-
   }
   //#endregion
 
@@ -726,13 +701,13 @@ export class NewNapCustDetailComponent implements OnInit {
   }
 
   SetDataCompanyFullData(){
-    this.AppCustObj.AppCustId = this.AppCustIdInput;
-    this.AppCustObj.MrCustModelCode = this.CustDetailFormCompany.controls.MrCustModelCode.value;
-    this.AppCustObj.IsAffiliateWithMf = this.CustDetailFormCompany.controls.IsAffiliateWithMF.value; 
+    this.custDataCompanyObj.AppCustObj.AppCustId = this.AppCustIdInput;
+    this.custDataCompanyObj.AppCustObj.MrCustModelCode = this.CustDetailFormCompany.controls.MrCustModelCode.value;
+    this.custDataCompanyObj.AppCustObj.IsAffiliateWithMf = this.CustDetailFormCompany.controls.IsAffiliateWithMF.value; 
    
-    this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailFormCompany.controls.IndustryTypeCode.value;
-    this.AppCustCompanyObj.NumOfEmp = this.CustDetailFormCompany.controls.NoOfEmployee.value;
-    this.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
+    this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailFormCompany.controls.IndustryTypeCode.value;
+    this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp = this.CustDetailFormCompany.controls.NoOfEmployee.value;
+    this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt = this.CustDetailFormCompany.controls.EstablishmentDate.value; 
   }
 
   //#endregion
@@ -1019,7 +994,7 @@ export class NewNapCustDetailComponent implements OnInit {
           case CommonConstant.AddrTypeLegal:
             addrValidationCompany.Legal = true;
             break;
-          case CommonConstant.AddrTypeResidence:
+          case CommonConstant.AddrTypeMailing:
             addrValidationCompany.Mailing = true;
             break;
           default:
@@ -1036,6 +1011,11 @@ export class NewNapCustDetailComponent implements OnInit {
       
       if(addrMessage){
         this.toastr.warningMessage("Please Add " + addrMessage + " Address");
+        return false;
+      }
+
+      if(this.ListLegalDoc.length < 1){
+        this.toastr.warningMessage("Please add at least 1 legal doc");
         return false;
       }
 
@@ -1058,6 +1038,7 @@ export class NewNapCustDetailComponent implements OnInit {
         var bankAccObj = new AppCustBankAccObj();
         bankAccObj.AppCustBankAccId = bank.AppCustBankAccId;
         bankAccObj.AppCustId = bank.AppCustId;
+        bankAccObj.BankCode = bank.BankCode;
         bankAccObj.BankBranch = bank.BankBranch;
         bankAccObj.BankAccName = bank.BankAccName;
         bankAccObj.BankAccNo = bank.BankAccNo;
@@ -1067,13 +1048,16 @@ export class NewNapCustDetailComponent implements OnInit {
         obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
         appCustBankAccRequest.push(obj);
       }
+      this.setAttrContent();
+      this.setAppCustOtherInfoData();
       let appCustOtherInfoRequest = {
         ListRequestAppCustAttrObject: this.custAttrRequest,
         RequestAppCustOtherInfoObj: this.appCustOtherInfo
       };
       let requestCompany={
-        AppCustObj: this.AppCustObj, 
-        AppCustCompanyObj: this.AppCustCompanyObj,
+        AppCustObj: this.custDataCompanyObj.AppCustObj, 
+        AppCustCompanyObj: this.custDataCompanyObj.AppCustCompanyObj,
+        AppCustCompanyMgmntShrholderObj: this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj,
         AppCustGrpObjs: this.ListAppCustGrpObj,
         AppCustAddrObjList: this.ListAddress,
         AppCustCompanyContactPersonObj: requestContactInfo,

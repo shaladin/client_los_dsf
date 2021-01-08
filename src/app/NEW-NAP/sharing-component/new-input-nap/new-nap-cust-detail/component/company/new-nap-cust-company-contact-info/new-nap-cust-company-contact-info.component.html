@@ -161,9 +161,4 @@
   </div>
   <lib-ucaddress *ngIf="IsUcAddrReady" #UcAddrCc [addressObj]="inputAddressObjForCc" [enjiForm]="enjiForm"
     [identifier]="InputAddressObjForCc_Identifier" [UCAddrForm]="ParentForm"></lib-ucaddress>
-  <div class="form-actions right">
-    <button type="submit" (click)=formValidate.scrollIfFormHasErrors(ParentForm) class="btn btn-raised btn-primary">
-      <i class="fa fa-check-square"></i> Save & Continue
-    </button>
-  </div>
 </form>

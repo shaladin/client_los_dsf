@@ -37,10 +37,10 @@
                 <app-new-nap-cust-company-contact-info *ngIf="IsDataLoaded" [ParentForm]="CcForm" [AppCustId]="AppCustIdInput" 
                     [IsContactInfoSubmitted]="IsSubmitted" (ResponseTempContactPerson)="GetTempContactPerson($event)">
                 </app-new-nap-cust-company-contact-info>
-                <app-new-nap-cust-company-fin-data [ParentForm]="FinancialFormCompany" [AppCustId]="AppCustIdInput" 
+                <app-new-nap-cust-company-fin-data *ngIf="IsDataLoaded" [ParentForm]="FinancialFormCompany" [AppCustId]="AppCustIdInput" 
                     [IsCompanyFinDataSubmitted]="IsSubmitted" (ResponseBankAcc)="GetCompanyBankAcc($event)">
                 </app-new-nap-cust-company-fin-data>
-                <app-new-nap-cust-company-legal-doc [AppCustId]="AppCustIdInput" [AppCustCompanyId]="AppCustCompanyId"
+                <app-new-nap-cust-company-legal-doc *ngIf="IsDataLoaded" [AppCustId]="AppCustIdInput" [AppCustCompanyId]="AppCustCompanyId"
                     (ResponseLegalDoc)="GetLegalDoc($event)">
                 </app-new-nap-cust-company-legal-doc>
                 <app-new-nap-other-info *ngIf="IsDataLoaded" [ParentForm]="OtherInformationForm" [AppCustId]="AppCustIdInput" [IsOtherInfoSubmitted]="IsSubmitted"

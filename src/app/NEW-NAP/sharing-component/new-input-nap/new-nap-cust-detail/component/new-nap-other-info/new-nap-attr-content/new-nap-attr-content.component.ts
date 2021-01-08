@@ -66,6 +66,9 @@ export class NewNapAttrContentComponent implements OnInit {
                 await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
               }
               this.ListInputLookUpObj.push(this.tempLookup);
+              if(this.parentForm.controls[this.identifier]){
+                this.parentForm.removeControl(this.identifier);
+              }
               this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
               this.IsFormReady = true;
               console.log(this.parentForm);

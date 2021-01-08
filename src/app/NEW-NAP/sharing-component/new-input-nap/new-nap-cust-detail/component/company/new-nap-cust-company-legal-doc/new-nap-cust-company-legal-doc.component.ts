@@ -44,6 +44,7 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
           this.InputGridObj.resultData["Data"] = new Array();
           this.InputGridObj.resultData.Data = response["ListCompanyLegalDoc"];
           this.ListLegalDoc = this.InputGridObj.resultData.Data;
+          this.ResponseLegalDoc.emit(this.ListLegalDoc);
         }
       );
     }
