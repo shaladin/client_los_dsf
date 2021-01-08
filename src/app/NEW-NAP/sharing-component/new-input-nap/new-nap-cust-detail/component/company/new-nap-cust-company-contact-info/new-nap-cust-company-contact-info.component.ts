@@ -62,6 +62,31 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
     await this.GetAppCustCompanyContactPersonByAppCustId();
   }
 
+  CopyCustCompanyContactPerson(contactInfoObj){
+    this.ParentForm.patchValue({
+      ContactPersonName: contactInfoObj.ContactPersonName,
+      MrGenderCode: contactInfoObj.MrGenderCode,
+      JobTitleName: contactInfoObj.JobTitleName,
+      MrJobPositionCode: contactInfoObj.MrJobPositionCode,
+      MrIdTypeCode: contactInfoObj.MrIdTypeCode,
+      IdNo: contactInfoObj.IdNo,
+      IdExpiredDt: contactInfoObj.IdExpiredDt,
+      BirthPlace: contactInfoObj.BirthPlace,
+      BirthDt: formatDate(contactInfoObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
+      MrCustRelationshipCode: contactInfoObj.MrCustRelationshipCode,
+      MobilePhnNo1: contactInfoObj.MobilePhnNo1,
+      MobilePhnNo2: contactInfoObj.MobilePhnNo2,
+      Email1: contactInfoObj.Email1,
+      Email2: contactInfoObj.Email2,
+      PhnArea1: contactInfoObj.PhnArea1,
+      PhnArea2: contactInfoObj.PhnArea2,
+      Phn1: contactInfoObj.Phn1,
+      Phn2: contactInfoObj.Phn2,
+      PhnExt1: contactInfoObj.PhnExt1,
+      PhnExt2: contactInfoObj.PhnExt2,
+    });
+  }
+
   async GetListActiveRefMaster(RefMasterTypeCode: string) {
     await this.http.post<any>(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": RefMasterTypeCode }).toPromise().then(
       (response) => {

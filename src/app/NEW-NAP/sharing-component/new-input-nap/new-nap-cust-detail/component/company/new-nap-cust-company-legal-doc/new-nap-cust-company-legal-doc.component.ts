@@ -34,6 +34,23 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
     this.LoadListLegalDocData();
   }
 
+  CopyCustLegalDoc(legalDocObjs){
+    this.InputGridObj.resultData["Data"] = new Array();
+    for (const item of legalDocObjs) {
+      var obj = new AppCustCompanyLegalDocObj();
+      obj.MrLegalDocTypeCode = item.MrLegalDocTypeCode,
+      obj.DocNo = item.DocNo,
+      obj.DocDt = item.DocDt,
+      obj.DocExpiredDt = item.DocExpiredDt,
+      obj.DocNotes = item.DocNotes,
+      obj.NotaryName = item.NotaryName,
+      obj.NotaryLocation = item.ReleaseLocation
+      this.InputGridObj.resultData.Data.push(obj);
+    }
+    this.ListLegalDoc = this.InputGridObj.resultData.Data;
+    this.ResponseLegalDoc.emit(this.ListLegalDoc);
+  }
+
   LoadListLegalDocData(){
     if(this.AppCustCompanyId && this.AppCustCompanyId > 0){
       this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).subscribe(

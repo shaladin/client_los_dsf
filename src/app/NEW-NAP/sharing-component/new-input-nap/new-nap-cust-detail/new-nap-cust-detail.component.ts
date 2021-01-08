@@ -25,6 +25,7 @@ import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalOb
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { NewNapCustCompanyContactInfoComponent } from './component/company/new-nap-cust-company-contact-info/new-nap-cust-company-contact-info.component';
@@ -444,7 +445,13 @@ export class NewNapCustDetailComponent implements OnInit {
   }
 
   GetExistingCustHandlerCompany(e){
-    
+    this.custCompanyFullDataComponent.CopyCustCompanyFullData(e.CustObj, e.CustCompanyObj, e.CustGrpObjs);
+    this.custAddrComponent.LoadListCustAddress(e.CustAddrObjs);
+    this.ListAddress = e.CustAddrObjs;
+    this.custCompanyContactInfoComponent.CopyCustCompanyContactPerson(e.CustCompanyContactPersonObjs[0]);
+    this.custCompanyFinDataComponent.CopyCustomerFinDataCompany(e.CustCompanyFinDataObj, e.CustBankAccObjs, e.CustAttrContentObjs.NewCustAttrContentObjs);
+    this.custCompanyLegalDocComponent.CopyCustLegalDoc(e.CustCompanyLegalDocObjs)
+    this.otherInfoComponent.CopyCustOtherInfo(e.CustOtherInfoObj, e.CustAttrContentObjs.NewCustAttrContentObjs);
   }
 
   MainDataCustIsIncludeCustRelation(e){
