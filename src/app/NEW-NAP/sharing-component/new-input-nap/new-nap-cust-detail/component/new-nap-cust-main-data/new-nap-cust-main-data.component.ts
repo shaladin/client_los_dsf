@@ -52,6 +52,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   @Output() ResponseIsIncludeCustRelation: EventEmitter<any>;
   @Output() ResponseCustModel: EventEmitter<any>;
   @Output() ResponseGetExistingCust: EventEmitter<ResponseCustPersonalForCopyObj>;
+  @Output() ResponseGetExistingCustCompany: EventEmitter<ResponseCustCompanyForCopyObj>;
   @Output() ResponseIsMarried: EventEmitter<boolean>;
 
 
@@ -434,9 +435,10 @@ export class NewNapCustMainDataComponent implements OnInit {
           this.ResponseGetExistingCust.emit(response);
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyForCopyByCustId, { CustId: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustCompanyMgmntShrholderObj, true);
+          this.ResponseGetExistingCustCompany.emit(response);
         });
     }
     await this.disableInput();

@@ -7,7 +7,7 @@
                 [IsCustMainDataSubmitted]="IsSubmitted"
                 (ResponseCustType)="MainDataCustTypeHandler($event)" (ResponseIsExisting)="MainDataCustIsExistingHandler($event)"
                 (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)"
-                (ResponseGetExistingCust)="GetExistingCustHandler($event)" (ResponseIsMarried)="IsMarriedHandler($event)">
+                (ResponseGetExistingCust)="GetExistingCustHandler($event)" (ResponseIsMarried)="IsMarriedHandler($event)" (ResponseGetExistingCustCompany)="GetExistingCustHandlerCompany($event)">
             </app-new-nap-cust-main-data>
             <div *ngIf="MrCustTypeCode == 'PERSONAL'">
                 <app-new-nap-cust-personal-full-data *ngIf="IsDataLoaded" [ParentForm]="CustDetailForm" [AppCustId]="AppCustIdInput" [IsPersonalSubmitted]="IsSubmitted"

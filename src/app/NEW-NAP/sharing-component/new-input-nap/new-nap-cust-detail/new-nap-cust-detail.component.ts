@@ -27,6 +27,10 @@ import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/Respo
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { NewNapCustCompanyContactInfoComponent } from './component/company/new-nap-cust-company-contact-info/new-nap-cust-company-contact-info.component';
+import { NewNapCustCompanyFinDataComponent } from './component/company/new-nap-cust-company-fin-data/new-nap-cust-company-fin-data.component';
+import { NewNapCustCompanyFullDataComponent } from './component/company/new-nap-cust-company-full-data/new-nap-cust-company-full-data.component';
+import { NewNapCustCompanyLegalDocComponent } from './component/company/new-nap-cust-company-legal-doc/new-nap-cust-company-legal-doc.component';
 import { NewNapCustAddrComponent } from './component/new-nap-cust-addr/new-nap-cust-addr.component';
 import { NewNapOtherInfoComponent } from './component/new-nap-other-info/new-nap-other-info.component';
 import { NewNapCustPersonalEmergencyComponent } from './component/personal/new-nap-cust-personal-emergency/new-nap-cust-personal-emergency.component';
@@ -46,6 +50,11 @@ export class NewNapCustDetailComponent implements OnInit {
   @ViewChild(NewNapCustPersonalEmergencyComponent) custPersonalEmergencyComponent;
   @ViewChild(NewNapCustPersonalFinancialComponent) custPersonalFinancialComponent;
   @ViewChild(NewNapOtherInfoComponent) otherInfoComponent;
+
+  @ViewChild(NewNapCustCompanyFullDataComponent) custCompanyFullDataComponent: NewNapCustCompanyFullDataComponent;
+  @ViewChild(NewNapCustCompanyContactInfoComponent) custCompanyContactInfoComponent: NewNapCustCompanyContactInfoComponent;
+  @ViewChild(NewNapCustCompanyFinDataComponent) custCompanyFinDataComponent: NewNapCustCompanyFinDataComponent;
+  @ViewChild(NewNapCustCompanyLegalDocComponent) custCompanyLegalDocComponent: NewNapCustCompanyLegalDocComponent;
 
   @Input() AppId: number;
   @Input() AppCustIdInput: number;
@@ -431,6 +440,10 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custPersonalEmergencyComponent.CopyCustomerEmergency(e.CustPersonalEmergencyContactObj);
     this.custPersonalFinancialComponent.CopyCustomerFinData(e.CustPersonalFinDataObj, e.CustBankAccObjs, e.CustAttrContentObjs.NewCustAttrContentObjs);
     this.otherInfoComponent.CopyCustOtherInfo(e.CustOtherInfoObj, e.CustAttrContentObjs.NewCustAttrContentObjs);
+  }
+
+  GetExistingCustHandlerCompany(e){
+    
   }
 
   MainDataCustIsIncludeCustRelation(e){
