@@ -21,6 +21,7 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
   IsDetail: boolean = false;
   ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array();
   InputGridObj: InputGridObj = new InputGridObj();
+  EditedIndex: number;
 
   constructor(
     private fb: FormBuilder,
@@ -31,11 +32,11 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
 
   ngOnInit() {
     this.InputGridObj.pagingJson =  "./assets/ucgridview/gridCustCompletionLegalDoc.json";
-    this.LoadListLegalDocData();
+    this.LoadListLegalDocData(true);
   }
 
-  LoadListLegalDocData(){
-    if(this.AppCustCompanyId && this.AppCustCompanyId > 0){
+  LoadListLegalDocData(isFirstInit: boolean){
+    if(this.AppCustCompanyId && this.AppCustCompanyId > 0 && isFirstInit){
       this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).subscribe(
         (response) => {
           this.InputGridObj.resultData = {
@@ -59,44 +60,27 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
 
   Add(){
     this.IsDetail = true;
-    this.AppCustCompanyLegalDoc = new AppCustCompanyLegalDocObj();
+    this.EditedIndex = -1;
+    this.AppCustCompanyLegalDoc = null;
   }
 
   GetCallback(event){
     if(event.Key == "edit"){
-      this.AppCustCompanyLegalDoc = event.RowObj
+      this.AppCustCompanyLegalDoc = event.RowObj;
+      this.EditedIndex = this.ListLegalDoc.findIndex(x => x.MrLegalDocTypeCode == event.RowObj["MrLegalDocTypeCode"])
       this.IsDetail = true;
     }else if(event.Key == "delete"){
-      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        if(event.RowObj["AppCustCompanyLegalDocId"] && event.RowObj["AppCustCompanyLegalDocId"] > 0){
-          this.http.post(URLConstant.DeleteAppCustCompanyLegalDoc,  {AppCustCompanyLegalDocId : event.RowObj["AppCustCompanyLegalDocId"]}).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.LoadListLegalDocData();
-            }
-          );
-        }
-        else{
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {    
           var idxToDelete = this.ListLegalDoc.findIndex(x => x.MrLegalDocTypeCode == event.RowObj["MrLegalDocTypeCode"]);
-          this.ListLegalDoc.splice(idxToDelete, 1);
-        }
+          this.ListLegalDoc.splice(idxToDelete, 1);    
       }
     }
   }
 
-  // Continue(){
-  //   if(this.ListLegalDoc.length > 0){
-  //     this.OutputTab.emit({IsComplete: true});
-  //   }else{
-  //     this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA)
-  //     return;
-  //   }
-  // }
-
   GetEvent(e){
     this.IsDetail = false;
     this.ListLegalDoc = e.ListAppCustCompanyLegalDoc;
-    this.LoadListLegalDocData();
+    this.LoadListLegalDocData(false);
     this.ResponseLegalDoc.emit(this.ListLegalDoc);
   }
 }

@@ -18,6 +18,7 @@ export class NewNapCustCompanyLegalDocDetailComponent implements OnInit {
   @Input() AppCustCompanyId: number;
   @Input() ListAppCustCompanyLegalDoc: Array<AppCustCompanyLegalDocObj>;
   @Input() AppCustCompanyLegalDoc: AppCustCompanyLegalDocObj;
+  @Input() EditedIndex: number;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsExpDateMandatory: boolean;
   BusinessDt: Date;
@@ -26,8 +27,6 @@ export class NewNapCustCompanyLegalDocDetailComponent implements OnInit {
   AppCustCompanyLegalDocObj: AppCustCompanyLegalDocObj = new AppCustCompanyLegalDocObj();
 
   LegalDocForm = this.fb.group({
-    AppCustCompanyLegalDocId: [0],
-    AppCustCompanyId: [0],
     MrLegalDocTypeCode: ['', Validators.required],
     DocNo: [''],
     DocDt: ['', Validators.required],
@@ -58,8 +57,6 @@ export class NewNapCustCompanyLegalDocDetailComponent implements OnInit {
 
         if(this.AppCustCompanyLegalDoc){
           this.LegalDocForm.patchValue({
-            AppCustCompanyLegalDocId: this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId,
-            AppCustCompanyId: this.AppCustCompanyLegalDoc.AppCustCompanyId,
             MrLegalDocTypeCode: this.AppCustCompanyLegalDoc.MrLegalDocTypeCode,
             DocNo: this.AppCustCompanyLegalDoc.DocNo,
             DocDt:  formatDate(this.AppCustCompanyLegalDoc.DocDt, 'yyyy-MM-dd', 'en-US'),
@@ -74,8 +71,6 @@ export class NewNapCustCompanyLegalDocDetailComponent implements OnInit {
           this.LegalDocForm.updateValueAndValidity();
         }else{
           this.LegalDocForm = this.fb.group({
-            AppCustCompanyLegalDocId: [0],
-            AppCustCompanyId: [0],
             MrLegalDocTypeCode: [this.LegalDocTypeObj[0].Key, Validators.required],
             DocNo: [''],
             DocDt: ['', Validators.required],
@@ -120,22 +115,19 @@ export class NewNapCustCompanyLegalDocDetailComponent implements OnInit {
   }
 
   SaveForm(){
-    if(this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId == 0 && this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value)){
+    if(this.EditedIndex == -1 && this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value)){
       let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
       this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Document")
     }else{
       this.AppCustCompanyLegalDocObj = this.LegalDocForm.value;
       this.AppCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
       this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;
-      this.ListAppCustCompanyLegalDoc.push(this.AppCustCompanyLegalDocObj);
-      this.OutputTab.emit({ ListAppCustCompanyLegalDoc: this.ListAppCustCompanyLegalDoc });
-      
-      // this.http.post(URLConstant.AddEditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     this.OutputTab.emit();
-      //   }
-      // );
+      if(this.EditedIndex == -1){
+        this.ListAppCustCompanyLegalDoc.push(this.AppCustCompanyLegalDocObj);
+      }else{
+        this.ListAppCustCompanyLegalDoc[this.EditedIndex] = this.AppCustCompanyLegalDocObj;
+      }
+      this.OutputTab.emit({ ListAppCustCompanyLegalDoc: this.ListAppCustCompanyLegalDoc });    
     }    
   }
 
