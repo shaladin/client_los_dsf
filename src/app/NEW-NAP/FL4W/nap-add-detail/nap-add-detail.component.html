@@ -114,6 +114,14 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
+            <div class="line"></div>
+            <div class="step" data-target="#upload-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPD')">
+                <span class="bs-stepper-circle">10</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -163,7 +171,10 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                           [showCancel]="showCancel" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+                           [showCancel]="showCancel" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+            </div>
+            <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="true" (outputCancel)="Cancel()" [dmsObj]="dmsObj" ></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -233,6 +244,14 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
+            <div class="line"></div>
+            <div class="step" data-target="#upload-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('UPD')">
+                <span class="bs-stepper-circle">9</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -277,7 +296,10 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY'" [AppId]="appId"
-                           [showCancel]="showCancel" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"></app-tc-data>
+                           [showCancel]="showCancel" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()"></app-tc-data>
+            </div>
+            <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
+              <app-dms-iframe *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="true" (outputCancel)="Cancel()" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

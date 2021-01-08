@@ -43,7 +43,7 @@ export class TabDeviationComponent implements OnInit {
   });
 
   AutoDeviationData;
-  ManualDeviationData;
+  ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   DDLDeviationCriteriaData;
   DDLApproveAtData;
   tempDDLData;

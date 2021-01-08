@@ -11,6 +11,7 @@ export class NegativeCustObj{
     MrNegCustType: string;
     TaxIdNo: string;
     IsSelected: boolean;
+    NegCustCause: string;
 
     constructor () {
         this.IsSelected = false;

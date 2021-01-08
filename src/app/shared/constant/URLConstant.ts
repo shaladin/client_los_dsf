@@ -20,6 +20,7 @@ export class URLConstant {
     public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
     public static EditApp = "/Application/EditApp";
     public static GetAppById = environment.losUrl + "/Application/GetAppById";
+    public static GetAppByAppNo = environment.losUrl + "/Application/GetAppByAppNo";
     public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
     public static GetAppDetailForAppTabById = environment.losUrl + "/Application/GetAppDetailForAppTabById";
     public static AddAppFromLead = environment.losUrl + "/Application/AddAppFromLead";
@@ -152,6 +153,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetGeneralSettingById = "/GeneralSetting/GetGeneralSettingById";
     public static GetGeneralSettingValue = "/GeneralSetting/GetGeneralSettingValue";
     public static GetGeneralSettingByCode = environment.FoundationR3Url + "/GeneralSetting/GetGeneralSettingByCode";
+    public static GetListGeneralSettingByListGsCode = environment.FoundationR3Url + "/GeneralSetting/GetListGeneralSettingByListGsCode";
 
     //REF OFFICE
     public static GetRefOfficeObj = "/RefOffice/GetRefOfficeObj";
@@ -353,7 +355,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
     public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
     public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
-    public static GetListActiveRefMasterWithReserveFieldAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithReserveFieldAll";
+    public static GetListActiveRefMasterWithMappingCodeAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithMappingCodeAll";
     public static GetListRefMasterByRefMasterTypeCodes = environment.FoundationR3Url + "/RefMaster/GetListRefMasterByRefMasterTypeCodes";
     public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode"
     public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode"
@@ -476,6 +478,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetLeadPersonalForLookupCopy = environment.losUrl + "/Lead/GetLeadPersonalForLookupCopy";
     public static SubmitWorkflowLeadInputKta = environment.losUrl + "/Lead/SubmitWorkflowLeadInputKta";
     public static RejectLead = environment.losUrl + "/Lead/RejectLead";
+    public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
+    public static CheckIntegrator = environment.losUrl + "/Lead/CheckIntegrator";
 
     // LEAD ASSET
     public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";
@@ -695,6 +699,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderListForNewPOByAppId";
     public static GetPurchaseOrderHByPurchaseOrderHId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHByPurchaseOrderHId";
     public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
+    public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
     public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
 
     // LEAD
@@ -1086,11 +1091,13 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListApprovedByForPreGoLive = environment.losUrl + "/PreGoLive/GetListApprovedByForPreGoLive";
     public static AddPreGoLive = environment.losUrl + "/PreGoLive/AddPreGoLive";
     public static CreateRFAPreGoLive = environment.losUrl + "/PreGoLive/CreateRFAPreGoLive";
-
+    public static CreateRFAPreGoLiveNew = environment.losUrl + "/PreGoLive/CreateRFAPreGoLiveNew";
+    
     // Survey or Srvy
     public static GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode";
     public static GetSrvyResultDataByTrxRefNo = environment.losUrl + "/MouCustSrvyOrder/GetSrvyResultDataByTrxRefNo";
     public static GetSrvyOrderBySrvyOrderNo = environment.FoundationR3Url + "/SrvyOrder/GetSrvyOrderBySrvyOrderNo";
+    public static GetSrvyOrderByTrxRefNoAndSrvySourceCode = environment.FoundationR3Url + "/SrvyOrder/GetSrvyOrderByTrxRefNoAndSrvySourceCode";
     public static GetSrvyDataBySrvyOrderId = environment.FoundationR3Url + "/SrvyData/GetSrvyDataBySrvyOrderId";
     public static GetListSrvyTaskBySrvyOrderId = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskBySrvyOrderId";
     public static GetSrvyTaskBySrvyTaskNo = environment.FoundationR3Url + "/SrvyTask/GetSrvyTaskBySrvyTaskNo";
@@ -1211,4 +1218,49 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
 
     // INTEGRATION
     public static ReSendLosR3DataToR2 = environment.losUrl + "/Integration/ReSendLosR3DataToR2";
+    
+    // Credit Review
+    public static GetCrdRvwAppByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwApp/GetCrdRvwAppByCrdRvwCustInfoId";
+    public static GetCrdRvwCustInfoByAppId = environment.losUrl + "/CrdRvwCustInfo/GetCrdRvwCustInfoByAppId";
+    public static GetCrdRvwCustInfoIncomeAndExpenseDetails = environment.losUrl + "/CrdRvwCustInfo/GetCrdRvwCustInfoIncomeAndExpenseDetails";
+    public static CrdRvwDataReCapture = environment.losUrl + "/CrdRvwCustInfo/CrdRvwDataReCapture";
+    public static GetCrdRvwCustPersInfoByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustPersInfo/GetCrdRvwCustPersInfoByCrdRvwCustInfoId";
+    public static GetCrdRvwCustCoyInfoByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustCoyInfo/GetCrdRvwCustCoyInfoByCrdRvwCustInfoId";
+    public static GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustPhnStatus/GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId";
+    public static GetListCrdRvwExposureByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwExposureByCrdRvwCustInfoId";
+    public static GetListCrdRvwCustBucketByCrdRvwExposureId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwCustBucketByCrdRvwExposureId";
+    public static GetListCrdRvwAppAgrHistByCrdRvwExposureId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwAppAgrHistByCrdRvwExposureId";
+    public static GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDiffAppToInPrcAppCust/GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId";
+    public static GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDiffAppToMasterCust/GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId";
+    public static GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwAsset/GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId";
+    public static GetMultiAssetCrdRvwAssetByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwAsset/GetMultiAssetCrdRvwAssetByCrdRvwCustInfoId";
+    public static GetCrdRvwCollateralByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCollateral/GetCrdRvwCollateralByCrdRvwCustInfoId";
+    public static GetCrdRvwCmoBycrdRvwExposureId = environment.losUrl + "/CrdRvwCmo/GetCrdRvwCmoBycrdRvwExposureId";
+    public static GetCrdRvwDealerByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDealer/GetCrdRvwDealerByCrdRvwCustInfoId";
+    public static GetLatestListScoringResultHAndResultDByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestListScoringResultHAndResultDByTrxSourceNo";
+    public static GetListNegativeCustByCustNo = environment.FoundationR3Url + "/NegativeCust/GetListNegativeCustByCustNo";
+
+
+    // New Approval R3
+    public static CreateNewRFA = "/Approval/CreateNewRFA";
+    public static CreateJumpRFA = "/Approval/CreateJumpRFA";
+    public static GetRefSingleCategoryByCategoryCode = "/Approval/GetRefSingleCategoryByCategoryCode";
+    public static GetSchemesBySchemeCode = "/Approval/GetSchemesBySchemeCode";
+    public static GetRefAdtQuestion = "/Approval/GetRefAdtQuestion";
+    public static GetPossibleMemberAndAttributeExType = "/Approval/GetPossibleMemberAndAttributeExType";
+    public static GetApprovalReturnHistory = "/Approval/GetApprovalReturnHistory";
+    public static GetSchemesByCategoryId = "/Approval/GetSchemesByCategoryId";
+    public static SubmitApproval = "/Approval/SubmitApproval";
+    public static GetLevelVoting = "/Approval/GetLevelVoting";
+    public static GetPossibleResult = "/Approval/GetPossibleResult";
+    public static GetNextNodeMember = "/Approval/GetNextNodeMember";
+    public static GetRefReasonActive = "/Approval/GetRefReasonActive";
+    public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
+
+    //Digitalization
+    public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
+
+    //ThirdPartyRsltH
+    public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
+    public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHForFraudChecking";
 }

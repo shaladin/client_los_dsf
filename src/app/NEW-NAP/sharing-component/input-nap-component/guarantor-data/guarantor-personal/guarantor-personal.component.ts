@@ -162,17 +162,17 @@ export class GuarantorPersonalComponent implements OnInit {
         if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
-            ReserveField1: CommonConstant.CustTypePersonal,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
         }else{
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-            ReserveField1: CommonConstant.CustTypePersonal,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
         } 
-        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
           (response) => {
             this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
             if (this.mode != "edit") {
@@ -288,14 +288,17 @@ export class GuarantorPersonalComponent implements OnInit {
     console.log("HELEP")
     if (ev.target.value == "LOCAL") {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      var setCountry = this.NationalityObj[idx].DefaultValue.split(';');
+      this.selectedNationalityCountryCode = setCountry[0];
+      this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
+
       this.isLocal = true;
     } else {
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
-      this.inputLookupObj1.nameSelect = foreign.ReserveField2;
-      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+      var setCountry = foreign.DefaultValue.split(';');
+      this.inputLookupObj1.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
+      this.inputLookupObj1.jsonSelect =  { CountryName: setCountry[1] ? setCountry[1] : setCountry[0]};
+      this.selectedNationalityCountryCode = setCountry[0];
       this.isLocal = false;
     }
   }
@@ -392,9 +395,10 @@ export class GuarantorPersonalComponent implements OnInit {
         if (this.resultData.MrNationalityCode == "LOCAL") {
           this.isLocal = true;
           var idx = 1;
-          this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-          this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
-          this.inputLookupObj1.nameSelect = this.NationalityObj[idx].ReserveField2;
+          var setCountry = this.NationalityObj[idx].DefaultValue.split(';');
+          this.selectedNationalityCountryCode = setCountry[0];
+          this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
+          this.inputLookupObj1.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
         }
         this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
           (response) => {

@@ -43,6 +43,7 @@ import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
     imports: [
@@ -64,7 +65,8 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
-        AppCustViewComponentsModule
+        AppCustViewComponentsModule,
+        SharedModule
     ],
     declarations: [
         AppMainInfoComponent,
