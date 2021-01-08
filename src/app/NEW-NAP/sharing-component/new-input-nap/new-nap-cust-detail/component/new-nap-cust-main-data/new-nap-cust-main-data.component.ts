@@ -238,13 +238,19 @@ export class NewNapCustMainDataComponent implements OnInit {
     if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
       this.ParentForm.controls.MrMaritalStatCode.patchValue(this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       this.ParentForm.controls.MrMaritalStatCode.disable();
-      this.ResponseIsMarried.emit(true);
     }else{
       this.ParentForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       if(!this.isExisting) this.ParentForm.controls.MrMaritalStatCode.enable();
-      this.ResponseIsMarried.emit(false);
     }
     this.ParentForm.controls.MrMaritalStatCode.updateValueAndValidity();
+  }
+
+  MaritalStatChange(maritalStat: string){
+    if(maritalStat == CommonConstant.MasteCodeMartialStatsMarried){
+      this.ResponseIsMarried.emit(true);
+    }else{
+      this.ResponseIsMarried.emit(false);
+    }
   }
 
   getCustGrpData(event) {
@@ -565,6 +571,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       }
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
+      this.MaritalStatChange(CustPersonalObj.MrMaritalStatCode);
 
       if (this.inputMode == 'EDIT') {
         this.ParentForm.patchValue({

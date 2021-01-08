@@ -7,6 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustEmrgncCntctObj } from 'app/shared/model/AppCustEmrgncCntctObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustPersonalContactPersonObj } from 'app/shared/model/CustPersonalContactPersonObj.Model';
@@ -28,6 +29,7 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() IsMarried: boolean;
   @Input() IsEmergencySubmitted: boolean;
+  @Input() CopyAddressFromObj: Array<AppCustAddrObj>;
   isUcAddressReady: boolean;
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputUcAddressObj: InputAddressObj = new InputAddressObj();
@@ -38,7 +40,6 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
   MrCustRelationshipObj: Array<KeyValueObj> = new Array();
   MrCustRelationshipSpouseObj: KeyValueObj = new KeyValueObj();
   ArrAddCrit: Array<CriteriaObj> = new Array();
-  copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
   BusinessDt: Date;
 
@@ -121,12 +122,8 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
       }
     );
 
-    if(this.AppCustId && this.AppCustId > 0){
-      this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { AppCustId: this.AppCustId }).subscribe(
-        (response) => {
-          this.copyAddressFromObj = response;
-          this.ParentForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
-        });
+    if(this.CopyAddressFromObj != null && this.CopyAddressFromObj.length > 0){
+      this.ParentForm.patchValue({ CopyAddrFrom: this.CopyAddressFromObj[0].MrCustAddrTypeCode });
     }
   }
 
@@ -194,7 +191,6 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
       })
     }
   this.ChangeIdType(custPersonalContactPersonObj.MrIdTypeCode);
-  this.CheckIsMarried(this.IsMarried);        
   this.InputLookupCustObj.nameSelect = custPersonalContactPersonObj["ContactPersonName"];
   this.InputLookupCustObj.jsonSelect = { CustName: custPersonalContactPersonObj["ContactPersonName"] };
 
@@ -238,7 +234,10 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
       let idxSpouse = this.MrCustRelationshipObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
       this.MrCustRelationshipObj.splice(idxSpouse, 1)
     }else{
-      this.MrCustRelationshipObj.push(this.MrCustRelationshipSpouseObj);
+      let idxSpouse = this.MrCustRelationshipObj.findIndex(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);
+      if(idxSpouse == -1){
+        this.MrCustRelationshipObj.push(this.MrCustRelationshipSpouseObj);
+      }
     }
   }
 
@@ -270,53 +269,53 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
           });
         }
 
-        if (response.CustAddrLegalObj != undefined) {
-          this.UcAddrObj.Addr = response.CustAddrLegalObj.Addr;
-          this.UcAddrObj.AreaCode1 = response.CustAddrLegalObj.AreaCode1;
-          this.UcAddrObj.AreaCode2 = response.CustAddrLegalObj.AreaCode2;
-          this.UcAddrObj.AreaCode3 = response.CustAddrLegalObj.AreaCode3;
-          this.UcAddrObj.AreaCode4 = response.CustAddrLegalObj.AreaCode4;
-          this.UcAddrObj.City = response.CustAddrLegalObj.City;
-          this.UcAddrObj.Phn1 = response.CustAddrLegalObj.Phn1;
-          this.UcAddrObj.Phn2 = response.CustAddrLegalObj.Phn2;
-          this.UcAddrObj.Phn3 = response.CustAddrLegalObj.Phn3;
-          this.UcAddrObj.PhnArea1 = response.CustAddrLegalObj.PhnArea1;
-          this.UcAddrObj.PhnArea2 = response.CustAddrLegalObj.PhnArea2;
-          this.UcAddrObj.PhnArea3 = response.CustAddrLegalObj.PhnArea3;
-          this.UcAddrObj.PhnExt1 = response.CustAddrLegalObj.PhnExt1;
-          this.UcAddrObj.PhnExt2 = response.CustAddrLegalObj.PhnExt2;
-          this.UcAddrObj.PhnExt3 = response.CustAddrLegalObj.PhnExt3;
+        if (response.CustAddrObjs.length > 0) {
+          var custAddrLegalObj = response.CustAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
+          this.UcAddrObj.Addr = custAddrLegalObj.Addr;
+          this.UcAddrObj.AreaCode1 = custAddrLegalObj.AreaCode1;
+          this.UcAddrObj.AreaCode2 = custAddrLegalObj.AreaCode2;
+          this.UcAddrObj.AreaCode3 = custAddrLegalObj.AreaCode3;
+          this.UcAddrObj.AreaCode4 = custAddrLegalObj.AreaCode4;
+          this.UcAddrObj.City = custAddrLegalObj.City;
+          this.UcAddrObj.Phn1 = custAddrLegalObj.Phn1;
+          this.UcAddrObj.Phn2 = custAddrLegalObj.Phn2;
+          this.UcAddrObj.Phn3 = custAddrLegalObj.Phn3;
+          this.UcAddrObj.PhnArea1 = custAddrLegalObj.PhnArea1;
+          this.UcAddrObj.PhnArea2 = custAddrLegalObj.PhnArea2;
+          this.UcAddrObj.PhnArea3 = custAddrLegalObj.PhnArea3;
+          this.UcAddrObj.PhnExt1 = custAddrLegalObj.PhnExt1;
+          this.UcAddrObj.PhnExt2 = custAddrLegalObj.PhnExt2;
+          this.UcAddrObj.PhnExt3 = custAddrLegalObj.PhnExt3;
 
-          this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response.CustAddrLegalObj.Zipcode;
-          this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.CustAddrLegalObj.Zipcode };
+          this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
+          this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
           this.InputUcAddressObj.default = this.UcAddrObj;
         }
       });
   }
 
   CopyAddress() {
-    if (this.copyAddressFromObj.length < 1) {
+    if (this.CopyAddressFromObj.length < 1) {
       return
     }
 
-    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { AppCustAddrId: this.ParentForm.controls.CopyAddrFrom.value }).subscribe(
-      (response) => {
-        this.UcAddrObj.Addr = response["Addr"];
-        this.UcAddrObj.AreaCode1 = response["AreaCode1"];
-        this.UcAddrObj.AreaCode2 = response["AreaCode2"];
-        this.UcAddrObj.AreaCode3 = response["AreaCode3"];
-        this.UcAddrObj.AreaCode4 = response["AreaCode4"];
-        this.UcAddrObj.City = response["City"];
-        this.UcAddrObj.Phn1 = response["Phn1"];
-        this.UcAddrObj.Phn2 = response["Phn2"];
-        this.UcAddrObj.PhnArea1 = response["PhnArea1"];
-        this.UcAddrObj.PhnArea2 = response["PhnArea2"];
-        this.UcAddrObj.PhnExt1 = response["PhnExt1"];
-        this.UcAddrObj.PhnExt2 = response["PhnExt2"];
+    var copiedAddr = this.CopyAddressFromObj.find(x => x.MrCustAddrTypeCode == this.ParentForm.controls.CopyAddrFrom.value);
 
-        this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-        this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
-        this.InputUcAddressObj.default = this.UcAddrObj;
-      });
+    this.UcAddrObj.Addr = copiedAddr["Addr"];
+    this.UcAddrObj.AreaCode1 = copiedAddr["AreaCode1"];
+    this.UcAddrObj.AreaCode2 = copiedAddr["AreaCode2"];
+    this.UcAddrObj.AreaCode3 = copiedAddr["AreaCode3"];
+    this.UcAddrObj.AreaCode4 = copiedAddr["AreaCode4"];
+    this.UcAddrObj.City = copiedAddr["City"];
+    this.UcAddrObj.Phn1 = copiedAddr["Phn1"];
+    this.UcAddrObj.Phn2 = copiedAddr["Phn2"];
+    this.UcAddrObj.PhnArea1 = copiedAddr["PhnArea1"];
+    this.UcAddrObj.PhnArea2 = copiedAddr["PhnArea2"];
+    this.UcAddrObj.PhnExt1 = copiedAddr["PhnExt1"];
+    this.UcAddrObj.PhnExt2 = copiedAddr["PhnExt2"];
+
+    this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = copiedAddr["Zipcode"];
+    this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: copiedAddr["Zipcode"] };
+    this.InputUcAddressObj.default = this.UcAddrObj;
   }
 }

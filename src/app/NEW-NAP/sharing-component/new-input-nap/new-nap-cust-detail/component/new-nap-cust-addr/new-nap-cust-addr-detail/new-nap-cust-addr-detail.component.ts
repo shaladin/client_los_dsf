@@ -61,8 +61,9 @@ export class NewNapCustAddrDetailComponent implements OnInit {
           if(idxEmergency != -1) this.AddressTypeObj.splice(idxEmergency, 1)
         }
         this.AddressForm.patchValue({
-          MrCustAddrTypeCode: this.AddressTypeObj[0].Key
-        })
+          MrCustAddrTypeCode: this.AddressTypeObj[0].Key,
+        });
+        this.selectedAddrType = this.AddressTypeObj[0].Value;
         await this.LoadAddrForCopy();
         await this.ResetForm();
 

@@ -184,7 +184,7 @@
             <label class="col-md-4 adins-required-label" translate>Marital Status</label>
             <div class="col-md-6">
               <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                formControlName="MrMaritalStatCode" style="width:100%;"
+                formControlName="MrMaritalStatCode" style="width:100%;" (change)="MaritalStatChange($event.target.value)"
                 [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrMaritalStatCode.invalid}">
                 <option value="">-Select One-</option>
                 <option *ngFor="let item of DictRefMaster[MasterMaritalStat]" [value]="item.Key">
