@@ -230,25 +230,27 @@ export class EmergencyContactTabComponent implements OnInit {
           });
         }
 
-        if (response.CustAddrLegalObj != undefined) {
-          this.UcAddrObj.Addr = response.CustAddrLegalObj.Addr;
-          this.UcAddrObj.AreaCode1 = response.CustAddrLegalObj.AreaCode1;
-          this.UcAddrObj.AreaCode2 = response.CustAddrLegalObj.AreaCode2;
-          this.UcAddrObj.AreaCode3 = response.CustAddrLegalObj.AreaCode3;
-          this.UcAddrObj.AreaCode4 = response.CustAddrLegalObj.AreaCode4;
-          this.UcAddrObj.City = response.CustAddrLegalObj.City;
-          this.UcAddrObj.Phn1 = response.CustAddrLegalObj.Phn1;
-          this.UcAddrObj.Phn2 = response.CustAddrLegalObj.Phn2;
-          this.UcAddrObj.Phn3 = response.CustAddrLegalObj.Phn3;
-          this.UcAddrObj.PhnArea1 = response.CustAddrLegalObj.PhnArea1;
-          this.UcAddrObj.PhnArea2 = response.CustAddrLegalObj.PhnArea2;
-          this.UcAddrObj.PhnArea3 = response.CustAddrLegalObj.PhnArea3;
-          this.UcAddrObj.PhnExt1 = response.CustAddrLegalObj.PhnExt1;
-          this.UcAddrObj.PhnExt2 = response.CustAddrLegalObj.PhnExt2;
-          this.UcAddrObj.PhnExt3 = response.CustAddrLegalObj.PhnExt3;
+        if (response.CustAddrObjs.length > 0 ) {
+          var custAddrLegalObj = response.CustAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
 
-          this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response.CustAddrLegalObj.Zipcode;
-          this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.CustAddrLegalObj.Zipcode };
+          this.UcAddrObj.Addr = custAddrLegalObj.Addr;
+          this.UcAddrObj.AreaCode1 = custAddrLegalObj.AreaCode1;
+          this.UcAddrObj.AreaCode2 = custAddrLegalObj.AreaCode2;
+          this.UcAddrObj.AreaCode3 = custAddrLegalObj.AreaCode3;
+          this.UcAddrObj.AreaCode4 = custAddrLegalObj.AreaCode4;
+          this.UcAddrObj.City = custAddrLegalObj.City;
+          this.UcAddrObj.Phn1 = custAddrLegalObj.Phn1;
+          this.UcAddrObj.Phn2 = custAddrLegalObj.Phn2;
+          this.UcAddrObj.Phn3 = custAddrLegalObj.Phn3;
+          this.UcAddrObj.PhnArea1 = custAddrLegalObj.PhnArea1;
+          this.UcAddrObj.PhnArea2 = custAddrLegalObj.PhnArea2;
+          this.UcAddrObj.PhnArea3 = custAddrLegalObj.PhnArea3;
+          this.UcAddrObj.PhnExt1 = custAddrLegalObj.PhnExt1;
+          this.UcAddrObj.PhnExt2 = custAddrLegalObj.PhnExt2;
+          this.UcAddrObj.PhnExt3 = custAddrLegalObj.PhnExt3;
+
+          this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
+          this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
           this.InputUcAddressObj.default = this.UcAddrObj;
         }
       });

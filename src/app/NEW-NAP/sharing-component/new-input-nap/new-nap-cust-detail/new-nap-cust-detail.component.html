@@ -18,7 +18,7 @@
             </app-new-nap-cust-addr>
             <ng-template *ngIf="IsDataLoaded" #NewNapPersonalJobContainer></ng-template>
             <app-new-nap-cust-personal-emergency *ngIf="IsDataLoaded" [ParentForm]="EmergencyContactForm" [IsEmergencySubmitted]="IsSubmitted"
-                [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried">
+                [AppCustId]="AppCustIdInput" [IsMarried]="IsMarried" [CopyAddressFromObj]="ListAddress">
             </app-new-nap-cust-personal-emergency>
             <app-new-nap-cust-personal-financial *ngIf="IsDataLoaded" [ParentForm]="PersonalFinancialForm" [AppCustId]="AppCustIdInput" [IsFinancialSubmitted]="IsSubmitted"
                 [AppCustPersonalId]="AppCustPersonalId" [IsMarried]="IsMarried" (ResponseBankAcc)="GetPersonalBankAcc($event)">

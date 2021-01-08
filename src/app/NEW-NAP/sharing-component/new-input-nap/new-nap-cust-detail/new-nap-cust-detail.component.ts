@@ -85,6 +85,7 @@ export class NewNapCustDetailComponent implements OnInit {
   AttrGroup: string;
   IsSubmitted: boolean;
   IsDataLoaded: boolean = false;
+  IsLoadEmergency: boolean = true;
   custAttrRequest = new Array<Object>();
   readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
 
@@ -142,8 +143,8 @@ export class NewNapCustDetailComponent implements OnInit {
   });
 
   JobDataForm = this.fb.group({
-    MrProfessionCode: ['', Validators.required],
-    IndustryTypeCode: ['', Validators.required],
+    MrProfessionCode: [''],
+    IndustryTypeCode: [''],
     CoyName: ['', Validators.required],
     MrJobPositionCode: [''],
     MrJobStatCode: [''],
@@ -607,6 +608,10 @@ export class NewNapCustDetailComponent implements OnInit {
   //#region CustAddress
   GetListAddress(e){
     this.ListAddress = e.ListAddress;
+
+    if(this.ListAddress != null && this.ListAddress.length > 0){
+      this.EmergencyContactForm.patchValue({ CopyAddrFrom: this.ListAddress[0].MrCustAddrTypeCode });
+    }
   }
   //#endregion
 

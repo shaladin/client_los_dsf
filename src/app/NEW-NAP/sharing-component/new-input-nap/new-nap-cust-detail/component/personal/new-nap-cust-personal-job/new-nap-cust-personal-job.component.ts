@@ -156,6 +156,16 @@ export class NewNapCustPersonalJobComponent implements OnInit {
       this.ParentForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
     }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
       this.ParentForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+      this.ParentForm.controls.MrJobPositionCode.clearValidators();
+      this.ParentForm.controls.MrJobStatCode.clearValidators();
+    }else if(this.CustModelCode == CommonConstant.CustModelNonProfessional){
+      this.ParentForm.controls.MrJobPositionCode.clearValidators();
+      this.ParentForm.controls.MrJobStatCode.clearValidators();
+      this.ParentForm.controls.EmploymentEstablishmentDt.clearValidators();
+    }else if(this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise){
+      this.ParentForm.controls.EmploymentEstablishmentDt.clearValidators();
+      this.ParentForm.controls.MrJobPositionCode.setValidators([Validators.required]);
+      this.ParentForm.controls.MrJobStatCode.clearValidators();
     }
     this.ParentForm.controls.MrJobPositionCode.updateValueAndValidity();
     this.ParentForm.controls.MrJobStatCode.updateValueAndValidity();
