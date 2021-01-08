@@ -459,8 +459,8 @@ export class NewNapCustDetailComponent implements OnInit {
 
   GetExistingCustHandlerCompany(e){
     this.custCompanyFullDataComponent.CopyCustCompanyFullData(e.CustObj, e.CustCompanyObj, e.CustGrpObjs);
-    this.custAddrComponent.LoadListCustAddress(e.CustAddrObjs);
-    this.ListAddress = e.CustAddrObjs;
+    this.custAddrComponent.LoadListCustAddress(e.CustAddrObj, false);
+    this.ListAddress = e.CustAddrObj;
     this.custCompanyContactInfoComponent.CopyCustCompanyContactPerson(e.CustCompanyContactPersonObjs[0]);
     this.custCompanyFinDataComponent.CopyCustomerFinDataCompany(e.CustCompanyFinDataObj, e.CustBankAccObjs, e.CustAttrContentObjs.NewCustAttrContentObjs);
     this.custCompanyLegalDocComponent.CopyCustLegalDoc(e.CustCompanyLegalDocObjs)

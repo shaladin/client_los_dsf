@@ -80,12 +80,14 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
       IndustryTypeCode: custCompanyObj.IndustryTypeCode,
       MrCustModelCode: custObj.MrCustModelCode
     });
-    this.http.post(URLConstant.GetCustByCustNo, {CustNo: custGrpObj.CustNo}).toPromise().then(
-      (responseCustGrp) => {
-        this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
-        this.lookupCustGrpObj.jsonSelect = {CustName: responseCustGrp["CustName"]};
-        this.GetCustGrpData({CustNo:responseCustGrp["CustNo"]});
-    });
+    if(custGrpObj && custGrpObj[0].CustNo){
+      this.http.post(URLConstant.GetCustByCustNo, {CustNo: custGrpObj[0].CustNo}).toPromise().then(
+        (responseCustGrp) => {
+          this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
+          this.lookupCustGrpObj.jsonSelect = {CustName: responseCustGrp["CustName"]};
+          this.GetCustGrpData({CustNo:responseCustGrp["CustNo"]});
+      });
+    }
     this.http.post(URLConstant.GetRefIndustryTypeByCode, { IndustryTypeCode: custCompanyObj.IndustryTypeCode }).toPromise().then(
       (response) => {
         this.lookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
