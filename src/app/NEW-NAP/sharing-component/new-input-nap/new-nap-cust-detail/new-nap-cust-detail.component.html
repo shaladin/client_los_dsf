@@ -3,7 +3,7 @@
         <div class="form-body">
             <app-new-nap-cust-main-data *ngIf="IsDataLoaded"  [ParentForm]="CustMainDataForm" [custMainDataMode]="custMainDataMode"
                 [appId]="AppId" [appCustId]="AppCustIdInput" [bizTemplateCode]="BizTemplateCode"
-                [inputMode]="inputMode" [isMarried]="IsMarried" [InputAppCustObjMainData]="InputAppCustObjMainData"
+                [inputMode]="inputMode" [isMainCustMarried]="IsMainCustMarried" [InputAppCustObjMainData]="InputAppCustObjMainData"
                 [IsCustMainDataSubmitted]="IsSubmitted"
                 (ResponseCustType)="MainDataCustTypeHandler($event)" (ResponseIsExisting)="MainDataCustIsExistingHandler($event)"
                 (ResponseIsIncludeCustRelation)="MainDataCustIsIncludeCustRelation($event)" (ResponseCustModel)="MainDataCustModel($event)"

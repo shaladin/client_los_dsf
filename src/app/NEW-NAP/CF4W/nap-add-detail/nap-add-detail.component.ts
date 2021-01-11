@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -39,18 +40,21 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
+  isMainCustMarried: boolean = false;
 
   AppStep = {
     "NEW": 1,
     "CUST": 1,
-    "GUAR": 2,
-    "REF": 3,
-    "APP": 4,
-    "ASSET": 5,
-    "INS": 6,
-    "LFI": 7,
-    "FIN": 8,
-    "TC": 9,
+    "FAM": 2,
+    "SHR": 3,
+    "GUAR": 4,
+    "REF": 5,
+    "APP": 6,
+    "ASSET": 7,
+    "INS": 8,
+    "LFI": 9,
+    "FIN": 10,
+    "TC": 11,
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -121,6 +125,15 @@ export class NapAddDetailComponent implements OnInit {
           }
         });
     }
+
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+      (response) => {
+        if (response.AppCustObj) 
+        {
+          this.isMainCustMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
+        }
+      }
+    );
     this.MakeViewReturnInfoObj();
   }
 
@@ -137,14 +150,16 @@ export class NapAddDetailComponent implements OnInit {
       this.AppStep = {
         "NEW": 1,
         "CUST": 1,
-        "GUAR": 2,
-        "REF": 3,
-        "APP": 4,
-        "ASSET": 5,
-        "INS": 6,
-        "LFI": 7,
-        "FIN": 8,
-        "TC": 9,
+        "FAM": 2,
+        "SHR": 2,
+        "GUAR": 3,
+        "REF": 4,
+        "APP": 5,
+        "ASSET": 6,
+        "INS": 7,
+        "LFI": 8,
+        "FIN": 9,
+        "TC": 10,
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -157,14 +172,16 @@ export class NapAddDetailComponent implements OnInit {
       this.AppStep = {
         "NEW": 1,
         "CUST": 1,
-        "GUAR": 2,
-        "REF": 3,
-        "APP": 4,
-        "ASSET": 5,
-        "INS": 6,
-        "LFI": 7,
-        "FIN": 7,
-        "TC": 8,
+        "FAM": 2,
+        "SHR": 2,
+        "GUAR": 3,
+        "REF": 4,
+        "APP": 5,
+        "ASSET": 6,
+        "INS": 7,
+        "LFI": 8,
+        "FIN": 8,
+        "TC": 9,
       };
     }
   }
@@ -215,6 +232,12 @@ export class NapAddDetailComponent implements OnInit {
     switch (AppStep) {
       case CommonConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
+        break;
+      case CommonConstant.AppStepFamily:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFamily];
+        break;
+      case CommonConstant.AppStepShr:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepShr];
         break;
       case CommonConstant.AppStepGuar:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
@@ -330,10 +353,15 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
 
-  CheckCustType(ev: string) {
-    this.custType = ev;
+  CheckCustType(ev) {
+    this.isMainCustMarried = ev.MrMaritalStatCode != undefined && ev.MrMaritalStatCode == 'MARRIED'? true : false;
+    this.custType = ev.MrCustTypeCode != undefined? ev.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.ChangeStepper();
-    this.NextStep(CommonConstant.AppStepGuar);
+    if(this.custType == CommonConstant.CustTypePersonal){
+      this.NextStep(CommonConstant.AppStepFamily);
+    }else{
+      this.NextStep(CommonConstant.AppStepShr);
+    }
   }
 
   GetCallback(ev) { 

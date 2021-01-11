@@ -60,6 +60,8 @@ export class NewNapCustDetailComponent implements OnInit {
   @Input() AppId: number;
   @Input() AppCustIdInput: number;
   @Input() custMainDataMode: string;
+  @Input() IsMainCustMarried: boolean;
+
   inputMode: string;
   @Input() BizTemplateCode: string;
   @Output() outputTab: EventEmitter<any>;
@@ -405,6 +407,8 @@ export class NewNapCustDetailComponent implements OnInit {
           console.log(error);
         }
       );
+    }else{
+      this.IsDataLoaded = true;
     }
     if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) {
       this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { AppId: this.AppId }).subscribe(
@@ -1064,7 +1068,7 @@ export class NewNapCustDetailComponent implements OnInit {
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputTab.emit(this.MrCustTypeCode);
+            this.outputTab.emit(this.custDataPersonalObj.AppCustPersonalObj);
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
@@ -1160,7 +1164,7 @@ export class NewNapCustDetailComponent implements OnInit {
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
-            this.outputTab.emit(this.MrCustTypeCode);
+            this.outputTab.emit(this.custDataCompanyObj.AppCustObj);
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {

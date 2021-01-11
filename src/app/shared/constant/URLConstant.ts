@@ -758,6 +758,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static AddEditCustMainDataPersonal = environment.losUrl + "/AppCust/AddEditCustMainDataPersonal";
     public static AddEditCustMainDataCompany = environment.losUrl + "/AppCust/AddEditCustMainDataCompany";
     public static DeleteAppCustMainData = environment.losUrl + "/AppCust/DeleteAppCustMainData";
+    public static DeleteAllAppCust = environment.losUrl + "/AppCust/DeleteAllAppCust";
     public static CopyAllExistingCustByAppId = environment.losUrl + "/AppCust/CopyAllExistingCustByAppId";
     public static GetListAppCustCompletion = environment.losUrl + "/AppCust/GetListAppCustCompletion";
     public static GetAppCustAndListFamilyByAppId = environment.losUrl + "/AppCust/GetAppCustAndListFamilyByAppId"; 

@@ -1,0 +1,65 @@
+<div *ngIf="!isDetail">
+  <div class="button-right margin-15">
+    <button type="button" class="btn btn-raised btn-primary" (click)="add()" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </div>
+  <div *ngIf="listFamily?.length == 0">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;">
+            <span class="thead-header" name="NoName" translate>
+              No
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="FamilyName" translate>Family Name </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="MrFamilyTypeCode" translate>
+              Family Type
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Relationship" translate>
+              Relationship
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="MrCustModelCode" translate>
+              Customer Model
+            </span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name="Action" translate>
+              Action
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="listFamily?.length > 0">
+    <lib-ucgridview [gridInput]="inputGridObj" (callback)="event($event)"></lib-ucgridview>
+  </div>
+  <div class="pull-right margin-15">
+    <button type="button" (click)="saveAndContinue()" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+</div>
+<div *ngIf="isDetail">
+  <lib-ucSubsection [id]="'AddEditFamilyId'" [title]="'Add / Edit Family'" [panel]="'AddEditFamily'">
+  </lib-ucSubsection>
+  <div id="AddEditFamily">
+    <app-new-nap-cust-detail [custMainDataMode]="custMainDataMode" [AppId]="appId" [AppCustIdInput]="appCustId"
+      [IsMainCustMarried]="isMainCustMarried" (outputCancel)="close()" (outputTab)="close()">
+    </app-new-nap-cust-detail>
+  </div>
+</div>

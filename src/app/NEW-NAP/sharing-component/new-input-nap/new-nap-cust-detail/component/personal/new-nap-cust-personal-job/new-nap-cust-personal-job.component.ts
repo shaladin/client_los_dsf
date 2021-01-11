@@ -251,6 +251,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+    this.InputLookupIndustryTypeObj.isReady = false;
     this.SetCriteriaAndRequired(this.CustModelCode);
     this.InputLookupIndustryTypeObj.isReady = true;
   }

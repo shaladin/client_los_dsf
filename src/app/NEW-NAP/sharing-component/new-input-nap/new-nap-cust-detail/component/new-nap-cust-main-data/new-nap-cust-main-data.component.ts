@@ -44,7 +44,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   @Input() appCustId: number = 0;
   @Input() bizTemplateCode: string = "";
   @Input() inputMode: string = "ADD";
-  @Input() isMarried: boolean = false;
+  @Input() isMainCustMarried: boolean = false;
   @Input() InputAppCustObjMainData: Object;
   @Input() IsCustMainDataSubmitted: boolean;
   @Output() ResponseCustType: EventEmitter<any>;
@@ -320,7 +320,7 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
         async (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
-          if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
+          if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMainCustMarried) await this.removeSpouse();
         }
       );
     }
