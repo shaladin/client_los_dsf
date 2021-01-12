@@ -266,7 +266,7 @@
     <div class="px-3">
         <form class="form form-horizontal" [formGroup]="FraudVerfForm" (ngSubmit)="FraudVerfForm.valid"
             #enjiForm="ngForm">
-            <div class="form-group row">
+            <div class="form-group row" *ngIf="ResultThirdPartyObj">
                 <div class="row">
 
                     <div class="col-md-2">
