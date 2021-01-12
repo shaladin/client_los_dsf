@@ -268,26 +268,24 @@
             #enjiForm="ngForm">
             <div class="form-group row" *ngIf="ResultThirdPartyObj">
                 <div class="row">
-
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label class="label-control" translate>Dukcapil</label>
+                    </div>
+                    <div class="col-md-1">
                         <span style="float: right;">
                             <i *ngIf="ResultThirdPartyObj.DukcapilIndicator"
                                 [ngStyle]="{'color': ResultThirdPartyObj.DukcapilIndicator}"
                                 class="font-medium-3 fa fa-circle tooltips">
-                                <!-- <span
-                  *ngIf="crdRvwCustPersInfoObj.OccupationIndicatorDescr != undefined && crdRvwCustPersInfoObj.OccupationIndicatorDescr != ''"
-                  [ngClass]="crdRvwCustPersInfoObj.OccupationIndicatorDescr != undefined && crdRvwCustPersInfoObj.OccupationIndicatorDescr != '' ? 'tooltipstext' : ''">
-                  {{crdRvwCustPersInfoObj.OccupationIndicatorDescr}}
-                </span> -->
                             </i>
                         </span>
                     </div>
                     <div class="col-md-4">
                         <label>{{ResultThirdPartyObj.DukcapilResult}}</label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label class="label-control" translate>Pefindo</label>
+                    </div>
+                    <div class="col-md-1">
                         <span style="float: right;">
                             <i *ngIf="ResultThirdPartyObj.PefindoIndicator"
                                 [ngStyle]="{'color': ResultThirdPartyObj.PefindoIndicator}"
@@ -300,9 +298,10 @@
                     </div>
                 </div>
                 <div class="row">
-
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label class="label-control" translate>Rapindo</label>
+                    </div>
+                    <div class="col-md-1">
                         <span style="float: right;">
                             <i *ngIf="ResultThirdPartyObj.RapindoIndicator"
                                 [ngStyle]="{'color': ResultThirdPartyObj.RapindoIndicator}"
@@ -313,9 +312,10 @@
                     <div class="col-md-4">
                         <label>{{ResultThirdPartyObj.RapindoResult}}</label>
                     </div>
-
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label class="label-control" translate>SLIK</label>
+                    </div>
+                    <div class="col-md-1">
                         <span style="float: right;">
                             <i *ngIf="ResultThirdPartyObj.SlikIndicator"
                                 [ngStyle]="{'color': ResultThirdPartyObj.SlikIndicator}"
@@ -328,9 +328,24 @@
                     </div>
                 </div>
                 <div class="row">
-
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label class="label-control" translate>Profind</label>
+                    </div>
+                    <div class="col-md-1">
+                        <span style="float: right;">
+                            <i *ngIf="ResultThirdPartyObj.ProfindIndicator"
+                                [ngStyle]="{'color': ResultThirdPartyObj.ProfindIndicator}"
+                                class="font-medium-3 fa fa-circle tooltips">
+                            </i>
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <label>{{ResultThirdPartyObj.ProfindResult}}</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="label-control" translate>Profind</label>
+                    </div>
+                    <div class="col-md-1">
                         <span style="float: right;">
                             <i *ngIf="ResultThirdPartyObj.ProfindIndicator"
                                 [ngStyle]="{'color': ResultThirdPartyObj.ProfindIndicator}"
