@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
   templateUrl: './credit-review-cfna.component.html',
   styleUrls: []
 })
-export class CreditReviewCfnaComponent implements OnInit {
+export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
 
   appId: number = 0;
   wfTaskListId: number;
@@ -46,7 +46,14 @@ export class CreditReviewCfnaComponent implements OnInit {
   //   ReturnExecNotes: [''],
   // });
   InputObj: UcInputRFAObj;
-  @ViewChild(UcapprovalcreateComponent) createComponent;
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
+
   ApprovalCreateOutput: any;
   IsReady: boolean;
   apvAmt:number;
@@ -107,6 +114,7 @@ export class CreditReviewCfnaComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
+    console.log(this.createComponent)
     this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
@@ -122,6 +130,9 @@ export class CreditReviewCfnaComponent implements OnInit {
     await this.InitDms();
   }
 
+  ngAfterViewInit(){
+    console.log(this.createComponent)
+  }
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();

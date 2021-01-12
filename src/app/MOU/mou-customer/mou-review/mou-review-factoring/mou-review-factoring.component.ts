@@ -38,7 +38,13 @@ export class MouReviewFactoringComponent implements OnInit {
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
-  @ViewChild(UcapprovalcreateComponent) createComponent;
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
   ApprovalCreateOutput: any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {

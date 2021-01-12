@@ -79,7 +79,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
-    this.initInputApprovalObj();
+    await this.initInputApprovalObj();
     await this.InitDms();
   }
 
@@ -171,7 +171,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": BizTemplateCode });
   }
   
-  initInputApprovalObj(){
+  async initInputApprovalObj(){
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";

@@ -93,7 +93,7 @@
             </div>
 
             <br>
-            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" ></lib-ucapprovalcreate>
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
             <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
               [panel]="'formReturnCreditReview'">
             </lib-ucSubsection> 

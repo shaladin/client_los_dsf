@@ -38,7 +38,13 @@ export class CreditReviewMainComponent implements OnInit {
   BizTemplateCode: string = "";
   arrValue = []; 
   InputObj: UcInputRFAObj;
-  @ViewChild(UcapprovalcreateComponent) createComponent;
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
   ApprovalCreateOutput: any;
   IsReady: boolean;
   apvAmt:number;

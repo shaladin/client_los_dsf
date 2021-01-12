@@ -14,6 +14,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
+
+
 @Component({
   selector: 'app-mou-review-general',
   templateUrl: './mou-review-general.component.html',
@@ -38,7 +40,13 @@ export class MouReviewGeneralComponent implements OnInit {
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
-  @ViewChild(UcapprovalcreateComponent) createComponent;
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
   ApprovalCreateOutput: any;
   MouReviewDataForm = this.fb.group({
     ListApprover: [''],

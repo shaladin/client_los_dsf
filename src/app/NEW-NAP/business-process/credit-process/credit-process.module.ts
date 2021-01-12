@@ -105,10 +105,7 @@ export const customCurrencyMaskConfig = {
     CreditReviewComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     UcapprovalcreateModule,
-    UcapprovalR3Module,
     UcapprovalHistoryModule,
-    UcapprovalHistoryModule,
-    UcapprovalcreateModule,
     UcapprovalR3Module,
     UcapprovalgeneralinfoModule
   ],
