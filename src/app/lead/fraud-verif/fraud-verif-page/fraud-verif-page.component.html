@@ -44,7 +44,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody *ngIf="ResultDuplicate?.length > 0">
+            <tbody *ngIf="ResultDuplicate">
                 <ng-container *ngFor="let item of ResultDuplicate; let i = index">
                     <tr>
                         <td>{{i+1}}</td>
@@ -112,7 +112,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody *ngIf="ResultDuplicateNegative?.length > 0">
+                <tbody *ngIf="ResultDuplicateNegative">
                     <tr *ngFor="let item of ResultDuplicateNegative; let i = index">
                         <td>{{i+1}}</td>
                         <td>{{item.CustNo}}</td>
@@ -175,7 +175,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody *ngIf="ResultDuplicateAssetNegative?.length > 0">
+                <tbody *ngIf="ResultDuplicateAssetNegative">
                     <tr *ngFor="let item of ResultDuplicateAssetNegative; let i = index">
                         <td class="text-left">{{item.AssetTypeName}}</td>
                         <td class="text-left">{{item.AssetCategoryCode}}</td>
@@ -238,7 +238,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody *ngIf="ResultDuplicateDoubleFinancing?.length > 0">
+                <tbody *ngIf="ResultDuplicateDoubleFinancing">
                     <tr *ngFor="let item of ResultDuplicateDoubleFinancing; let i = index">
                         <td>{{i+1}}</td>
                         <td class="text-left">{{item.AppNo}}</td>
