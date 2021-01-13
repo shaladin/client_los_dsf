@@ -262,7 +262,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
-    this.InputObj.UrlBactToPaging = '/Nap/CreditProcess/CreditReviewCr/Paging?BizTemplateCode=' + BizTemplateCode;
     this.InputObj.TrxNo = this.appNo;
     this.IsReady = true;
   }

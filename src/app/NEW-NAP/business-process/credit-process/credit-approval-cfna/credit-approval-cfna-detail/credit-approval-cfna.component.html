@@ -56,7 +56,9 @@
         </ng-template>
       </mat-tab>
     </mat-tab-group>
-    <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
-    </lib-ucapproval> 
+  <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+  <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+  <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
+  </lib-ucapprovalHistory>
   </div>
 </div>
