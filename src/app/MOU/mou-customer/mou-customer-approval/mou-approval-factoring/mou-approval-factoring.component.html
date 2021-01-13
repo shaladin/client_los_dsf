@@ -65,10 +65,10 @@
         <div> 
           <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
 
-          <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
-          
           <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
           </lib-ucapprovalHistory>
+
+          <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>          
         </div>
       </div>
     </div>
