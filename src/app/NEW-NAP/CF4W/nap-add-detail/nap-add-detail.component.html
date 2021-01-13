@@ -134,9 +134,7 @@
               <app-new-nap-cust-family *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-family>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
-              </app-guarantor-paging>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="SubmitGuarantor()" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [appId]="appId"
@@ -182,11 +180,19 @@
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Customer Data</span>
               </button>
+            </div>     
+            <div class="line"></div>
+            <div class="step" data-target="#shareholder-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="shareholder-tab"
+                id="shareholder-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('SHR')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Management Shareholder Data</span>
+              </button>
             </div>
             <div class="line"></div>
             <div class="step" data-target="#guarantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('GUAR')">
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('GUAR')">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Guarantor Data</span>
               </button>
@@ -246,10 +252,11 @@
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-new-nap-cust-detail *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [AppId]="appId" [AppCustIdInput]="'0'" [custMainDataMode]="'CUST'" [BizTemplateCode]="'CF4W'" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()"></app-new-nap-cust-detail>
             </div>
+            <div id="shareholder-tab" class="content" role="tabpanel" aria-labelledby="shareholder-tab-trigger">
+              <app-new-nap-cust-shareholder *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-shareholder>
+            </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()">
-              </app-guarantor-paging>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="SubmitGuarantor()" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"

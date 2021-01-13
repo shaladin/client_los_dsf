@@ -20,6 +20,8 @@ import { NewNapCustCompanyFinDataComponent } from './new-nap-cust-detail/compone
 import { NewNapCustCompanyLegalDocComponent } from './new-nap-cust-detail/component/company/new-nap-cust-company-legal-doc/new-nap-cust-company-legal-doc.component';
 import { NewNapCustCompanyLegalDocDetailComponent } from './new-nap-cust-detail/component/company/new-nap-cust-company-legal-doc/new-nap-cust-company-legal-doc-detail/new-nap-cust-company-legal-doc-detail.component';
 import { NewNapCustFamilyComponent } from './new-nap-cust-family/new-nap-cust-family.component';
+import { NewNapCustGuarantorComponent } from './new-nap-cust-guarantor/new-nap-cust-guarantor.component';
+import { NewNapCustShareholderComponent } from './new-nap-cust-shareholder/new-nap-cust-shareholder.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -37,6 +39,8 @@ export const customCurrencyMaskConfig = {
   declarations: [
     NewNapCustDetailComponent,
     NewNapCustFamilyComponent, 
+    NewNapCustGuarantorComponent,
+    NewNapCustShareholderComponent,
     NewNapCustMainDataComponent, 
     NewNapCustPersonalFullDataComponent, 
     NewNapCustAddrComponent, 
@@ -55,7 +59,9 @@ export const customCurrencyMaskConfig = {
   ],
   exports: [
     NewNapCustDetailComponent,
-    NewNapCustFamilyComponent
+    NewNapCustFamilyComponent,
+    NewNapCustGuarantorComponent,
+    NewNapCustShareholderComponent
   ],
   entryComponents: [
     NewNapCustPersonalJobComponent

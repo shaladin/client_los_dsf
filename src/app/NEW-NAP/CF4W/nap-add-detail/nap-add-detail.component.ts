@@ -46,15 +46,15 @@ export class NapAddDetailComponent implements OnInit {
     "NEW": 1,
     "CUST": 1,
     "FAM": 2,
-    "SHR": 3,
-    "GUAR": 4,
-    "REF": 5,
-    "APP": 6,
-    "ASSET": 7,
-    "INS": 8,
-    "LFI": 9,
-    "FIN": 10,
-    "TC": 11,
+    "SHR": 2,
+    "GUAR": 3,
+    "REF": 4,
+    "APP": 5,
+    "ASSET": 6,
+    "INS": 7,
+    "LFI": 8,
+    "FIN": 9,
+    "TC": 10,
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -366,5 +366,14 @@ export class NapAddDetailComponent implements OnInit {
 
   GetCallback(ev) { 
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  }
+
+  SubmitGuarantor(){
+    this.http.post(URLConstant.SubmitNapCust, this.NapObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.NextStep(CommonConstant.AppStepRef);
+      }
+    );
   }
 }

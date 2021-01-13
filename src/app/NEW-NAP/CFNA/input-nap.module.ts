@@ -25,6 +25,7 @@ import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
+import { NewNapCustModule } from "../sharing-component/new-input-nap/new-nap-cust.module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -51,7 +52,8 @@ export const customCurrencyMaskConfig = {
     MatSelectModule,
     MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    MainDataComponentModule
+    MainDataComponentModule,
+    NewNapCustModule
   ],
   declarations: [
     NapAddDetailComponent,

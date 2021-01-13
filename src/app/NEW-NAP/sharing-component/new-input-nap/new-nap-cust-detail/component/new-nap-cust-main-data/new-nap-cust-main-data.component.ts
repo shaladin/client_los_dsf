@@ -332,15 +332,16 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   getCustMainData() {
+    console.log("get main data");
     if (this.InputAppCustObjMainData) {
       if (!this.appCustId) this.appCustId = this.InputAppCustObjMainData["AppCustObj"].AppCustId;
       this.MrCustTypeCode = this.InputAppCustObjMainData["AppCustObj"].MrCustTypeCode;
       this.custTypeChange(this.MrCustTypeCode, true);
 
       if (this.MrCustTypeCode == CommonConstant.CustTypePersonal)
-        this.setDataCustomerPersonal(this.InputAppCustObjMainData["AppCustObj"], this.InputAppCustObjMainData["AppCustPersonalObj"], this.InputAppCustObjMainData["AppCustAddrLegalObj"], this.InputAppCustObjMainData["AppCustCompanyMgmntShrholderObj"]);
+        this.setDataCustomerPersonal(this.InputAppCustObjMainData["AppCustObj"], this.InputAppCustObjMainData["AppCustPersonalObj"], this.InputAppCustObjMainData["AppCustCompanyMgmntShrholderObj"]);
       else
-        this.setDataCustomerCompany(this.InputAppCustObjMainData["AppCustObj"], this.InputAppCustObjMainData["AppCustCompanyObj"], this.InputAppCustObjMainData["AppCustAddrLegalObj"], this.InputAppCustObjMainData["AppCustCompanyMgmntShrholderObj"]);
+        this.setDataCustomerCompany(this.InputAppCustObjMainData["AppCustObj"], this.InputAppCustObjMainData["AppCustCompanyObj"], this.InputAppCustObjMainData["AppCustCompanyMgmntShrholderObj"]);
 
       if (this.InputAppCustObjMainData["AppCustObj"].IsExistingCust) this.disableInput();
     } else
@@ -628,7 +629,11 @@ export class NewNapCustMainDataComponent implements OnInit {
         IsOwner: CustCompanyMgmntShrholderObj.IsOwner,
         EstablishmentDt: CustCompanyMgmntShrholderObj.EstablishmentDt != null ? formatDate(CustCompanyMgmntShrholderObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
       });
-      if (!IsCopyCust) this.rowVersionMgmntShrholder = CustCompanyMgmntShrholderObj.RowVersion;
+      if (!IsCopyCust){
+        this.ParentForm.patchValue({
+          RowVersionShareholder: CustCompanyMgmntShrholderObj.RowVersion
+        });
+      }
     }
   }
 

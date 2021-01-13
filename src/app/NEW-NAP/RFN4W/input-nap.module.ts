@@ -11,6 +11,7 @@ import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
+import { NewNapCustModule } from "../sharing-component/new-input-nap/new-nap-cust.module";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
     AdInsModule,
     InputNapComponentModule,
     ArchwizardModule,
-    MainDataComponentModule
+    MainDataComponentModule,
+    NewNapCustModule
   ],
   declarations: [
     NapPagingComponent,

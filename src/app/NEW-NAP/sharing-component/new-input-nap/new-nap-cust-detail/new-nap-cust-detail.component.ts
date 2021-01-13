@@ -527,6 +527,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.IsFamily = (this.custMainDataMode == CommonConstant.CustMainDataModeFamily);
     this.custDataPersonalObj.AppCustObj.IsShareholder = (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder);
     this.custDataPersonalObj.AppCustObj.IsExistingCust = this.isExisting;
+    this.custDataPersonalObj.AppCustObj.IsCompletion = true;
     this.custDataPersonalObj.AppCustObj.AppId = this.AppId;
     this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId ? this.appCustId : 0;
@@ -569,6 +570,7 @@ export class NewNapCustDetailComponent implements OnInit {
     this.custDataCompanyObj.AppCustObj.IsCustomer = (this.custMainDataMode == CommonConstant.CustMainDataModeCust);
     this.custDataCompanyObj.AppCustObj.IsGuarantor = (this.custMainDataMode == CommonConstant.CustMainDataModeGuarantor);
     this.custDataCompanyObj.AppCustObj.IsShareholder = (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder);
+    this.custDataCompanyObj.AppCustObj.IsCompletion = true;
     this.custDataCompanyObj.AppCustObj.AppId = this.AppId;
     this.custDataCompanyObj.AppCustObj.IsExistingCust = this.isExisting;
     this.custDataCompanyObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
