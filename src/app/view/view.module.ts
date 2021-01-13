@@ -92,6 +92,7 @@ import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
+import { MouViewThirdPartyComponent } from "./mou-view/mou-view-third-party/mou-view-third-party.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -193,7 +194,9 @@ import { SharedModule } from "app/shared/shared.module";
     MouViewApprovalHistoryComponent,
 
     //surveyView prototype
-    SurveyViewComponent
+    SurveyViewComponent,
+
+    MouViewThirdPartyComponent
   ],
   entryComponents: [
     UclookupgenericComponent,
