@@ -91,6 +91,7 @@ import { AgreementViewContainerComponent } from "./agr-view/agreement-view-conta
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
+import { SharedModule } from "app/shared/shared.module";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -113,7 +114,8 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
     SharingComponentModule,
     UcapprovalhistModule,
     UcShowErrorsModule,
-    AppCustViewComponentsModule
+    AppCustViewComponentsModule,
+    SharedModule
   ],
   declarations: [
     MainInfoComponent,

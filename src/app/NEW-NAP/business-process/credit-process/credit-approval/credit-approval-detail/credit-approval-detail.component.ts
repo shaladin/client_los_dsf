@@ -10,7 +10,12 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-
+import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-credit-approval-detail',
@@ -28,6 +33,17 @@ export class CreditApprovalDetailComponent implements OnInit {
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
+  ApvReqId: number; 
+  InputApvObj : UcInputApprovalObj;
+  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  IsReady: boolean = false;
+  taskId:number;
+  dmsObj: DMSObj;
+  custNo: string;
+  appNo: string;
+  rootServer: string;
+  isDmsReady: boolean = false;
 
 
   constructor(private toastr: NGXToastrService,
@@ -40,6 +56,12 @@ export class CreditApprovalDetailComponent implements OnInit {
       }
       if (params["MrCustTypeCode"] != null) {
         this.mrCustTypeCode = params["MrCustTypeCode"];
+      }
+      if( params["ApvReqId"] !=null){ 
+      this.ApvReqId = params["ApvReqId"];
+      }
+      if( params["TaskId"] !=null){ 
+      this.taskId = params["TaskId"];
       }
       var obj = {
         taskId: params["TaskId"],
@@ -58,8 +80,51 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
-    this.getApp();
+    await this.getApp();
+    this.initInputApprovalObj();
+    await this.InitDms();
   }
+
+  async InitDms(){
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      (response) => {
+        this.appNo = response[0]['AppNo'];
+        this.custNo = response[1]['CustNo'];
+        if(this.custNo != null && this.custNo != ''){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        let mouCustId = response[0]['MouCustId'];
+        if (mouCustId != null && mouCustId != '') {
+          var mouObj = { MouCustId: mouCustId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            (response) => {
+              let mouCustNo = response['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            });
+        }
+        else {
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+
 
   HoldTask(obj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
@@ -71,10 +136,10 @@ export class CreditApprovalDetailComponent implements OnInit {
     )
   }
 
-  getApp() {
+  async getApp() {
     var appObj = new AppObj();
     appObj.AppId = this.appId
-    this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
+    await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       });
@@ -83,7 +148,7 @@ export class CreditApprovalDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
-    if (event.result.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+    if (event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
       var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
@@ -91,16 +156,15 @@ export class CreditApprovalDetailComponent implements OnInit {
       returnHandlingHObj.AgrmntId = null;
       returnHandlingHObj.ReturnBy = user.UserName;
       returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes = event.notes;
+      returnHandlingHObj.ReturnNotes = event[0].notes;
       returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
 
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
-          this.toastr.successMessage("Success");
           AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     } 
-    else if(event.result.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()){
+    else if(event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()){
       console.log("cust neg");
       var NegCustObj = {
         AppId: this.appId,
@@ -109,17 +173,39 @@ export class CreditApprovalDetailComponent implements OnInit {
       };
       this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
         (response) => {
-          this.toastr.successMessage("Success");
           AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
-      this.toastr.successMessage("Success");
       AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
   onCancelClick() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS);
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": BizTemplateCode });
+  }
+  
+  initInputApprovalObj(){
+    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
+    this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    
+    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
+    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
+
+    this.InputApvObj = new UcInputApprovalObj();
+    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.TrxNo =  this.AppObj.AppNo;
+    this.IsReady = true;
   }
 }

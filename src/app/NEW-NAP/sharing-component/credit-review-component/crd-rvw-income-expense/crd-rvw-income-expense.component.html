@@ -1,11 +1,162 @@
-<lib-ucSubsection [id]="'IncomeExpenseId'" [title]="'Income And Expense Details'" [panel]="'IncomeExpense'">
-</lib-ucSubsection>
+<!-- <lib-ucSubsection [id]="'IncomeExpenseId'" [title]="'Income And Expense Details'" [panel]="'IncomeExpense'">
+</lib-ucSubsection> -->
 <div id="IncomeExpense">
-  <label>Income And Expense Details</label>
-</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <lib-ucSubsection [id]="'IncomeId'" [title]="'Income Information'" [panel]="'Income'">
+        </lib-ucSubsection>
+        <div id="Income">
+          <div class="px-3">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="label-control"> Total Interest </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{crdRvwCustInfoIncomeAndExpenseDetailsObj.TotalInterestAmt |
+                  number:'.2':'en-US' }} </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="label-control"> Insurance </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{crdRvwCustInfoIncomeAndExpenseDetailsObj.InsAmt | number:'.2':'en-US' }}
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="label-control"> Life Insurance </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{crdRvwCustInfoIncomeAndExpenseDetailsObj.LifeInsAmt |
+                  number:'.2':'en-US'
+                  }} </label>
+              </div>
+            </div>
+            <div class="row" *ngFor="let item of crdRvwCustInfoIncomeAndExpenseDetailsObj.ListAppFeeObj">
+              <div class="col-md-6">
+                <label class="label-control"> {{item.FeeTypeName}} </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{item.AppFeeAmt | number:'.2':'en-US' }} </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="label-control"> Subsidy Rate </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{crdRvwCustInfoIncomeAndExpenseDetailsObj.SubsidyRateAmt |
+                  number:'.2':'en-US' }} </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<lib-ucSubsection [id]="'AllocationId'" [title]="'Allocation'" [panel]="'Allocation'">
-</lib-ucSubsection>
-<div id="Allocation">
-  <label>Allocation</label>
+      <div class="col-md-6">
+        <lib-ucSubsection [id]="'AcquisitionCostId'" [title]="'Acquisition Cost Information'"
+          [panel]="'AcquisitionCost'">
+        </lib-ucSubsection>
+        <div id="AcquisitionCost">
+          <div class="px-3">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="label-control"> Commission </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{crdRvwCustInfoIncomeAndExpenseDetailsObj.CommissionAmt |
+                  number:'.2':'en-US' }} </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="label-control"> Reserve Fund </label>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                <label class="label-control"> {{crdRvwCustInfoIncomeAndExpenseDetailsObj.ReserveFundAmt |
+                  number:'.2':'en-US' }} </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="px-3">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Income </label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="label-control"> {{totalIncomeAmt | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="px-3">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> TAC </label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="label-control" style="text-align: right;"> {{tacAmt | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> TAC Percentage </label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="label-control" style="text-align: right;"> {{totalIncomeAmt/tacAmt | number:'.2':'en-US' }}%
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'AllocationId'" [title]="'Allocation'" [panel]="'Allocation'">
+    </lib-ucSubsection>
+    <div id="Allocation">
+      <div class="card-body">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th style="text-align: center;">
+                <span  name='Allocation' translate>Allocation</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='MaxAllocated' translate>Max Allocated</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='Commission' translate>Commission</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='ReservedFund' translate>Reserved Fund</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr *ngFor="let item of crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj; let i = index">
+              <td style="text-align: left;">{{item.AllocSource}}</td>
+              <td style="text-align: left;">{{item.MaxAllocAmt}}</td>
+              <td style="text-align: left;">{{item.CommissionAmt}}</td>
+              <td style="text-align: left;">{{item.ReservedFundAmt}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

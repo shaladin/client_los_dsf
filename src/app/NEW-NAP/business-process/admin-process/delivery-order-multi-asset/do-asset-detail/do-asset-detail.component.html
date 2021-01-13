@@ -88,16 +88,16 @@
             </thead>
             <tbody formArrayName="DOAssetDocList">
               <tr *ngFor="let item of DOAssetDetail.get('DOAssetDocList')['controls']; index as i" [formGroupName]="i">
-                <td style="text-align: left;">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.DocName.value}}
+                <td class="text-left">
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.DocName.value }}
                 </td>
-                <td style="text-align: left;">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsValueNeeded.value}}
+                <td class="text-center">
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsValueNeeded.value ? "YES" : "NO"}}
                 </td>
-                <td style="text-align: left;">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value : DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value}}
+                <td class="text-center">
+                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value ? "YES" : "NO") : (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value ? "YES" : "NO")}}
                 </td>
-                <td style="text-align: left;">
+                <td class="text-center">
                   <input type="checkbox" formControlName="IsReceived" />
                 </td>
                 <td style="text-align: left;">

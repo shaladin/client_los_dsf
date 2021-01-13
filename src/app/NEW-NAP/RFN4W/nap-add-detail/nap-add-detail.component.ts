@@ -12,6 +12,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -51,7 +54,11 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 7,
     "FIN": 8,
     "TC": 9,
+    "UPD":10
   };
+  dmsObj: DMSObj;
+  appNo: string;
+  isDmsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -70,7 +77,7 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -105,6 +112,9 @@ export class NapAddDetailComponent implements OnInit {
           if (response) {
             if (response["MrCustTypeCode"] != null)
             this.custType = response["MrCustTypeCode"];
+            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.initDms();
+            }
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
             this.stepper.to(this.AppStepIndex);
           } else {
@@ -116,6 +126,48 @@ export class NapAddDetailComponent implements OnInit {
     };
 
     this.MakeViewReturnInfoObj();
+  }
+
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      response => {
+        this.appNo = response[0]['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        let isExisting = response[1]['IsExistingCust'];
+        if(isExisting){
+          let custNo = response[1]['CustNo'];
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+
+        let mouId = response[0]['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
+      }
+    );
   }
 
   MakeViewReturnInfoObj() {
@@ -180,7 +232,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+        case CommonConstant.AppStepUplDoc:
+          this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+          break;
       default:
         break;
     }
@@ -211,6 +265,9 @@ export class NapAddDetailComponent implements OnInit {
         (response) => {
         }
       )
+    }
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
     }
     this.ChangeTab(Step);
     this.ucViewMainProd.initiateForm();

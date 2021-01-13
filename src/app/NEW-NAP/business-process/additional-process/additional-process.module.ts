@@ -22,7 +22,7 @@ import { ReturnHandlingSurveyComponent } from './return-handling/return-handling
 import { ReturnHandlingCollateralDetailComponent } from "./return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component";
 import { ReturnHandlingCollateralEditComponent } from "./return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component";
 import { ReturnHandlingCollateralPagingComponent } from "./return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component";
-import { MatCheckboxModule } from "@angular/material";
+import { MatCheckboxModule, MatTabsModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
@@ -35,6 +35,7 @@ import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-c
 import { DupCheckMdPagingComponent } from "./app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component";
 import { DupCheckMdSubjListComponent } from "./app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component";
 import { DupCheckMdSubjMatchComponent } from "./app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component";
+import { SharedModule } from "app/shared/shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -58,8 +59,9 @@ export const customCurrencyMaskConfig = {
     ViewMainInfoComponentModule,
     MatCheckboxModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    ViewAppComponentModule
-
+    ViewAppComponentModule,
+    SharedModule,
+    MatTabsModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,
