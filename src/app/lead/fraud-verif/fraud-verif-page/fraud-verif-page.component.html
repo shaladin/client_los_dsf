@@ -44,7 +44,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="ResultDuplicate?.length > 0">
                 <ng-container *ngFor="let item of ResultDuplicate; let i = index">
                     <tr>
                         <td>{{i+1}}</td>
@@ -112,7 +112,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="ResultDuplicateNegative?.length > 0">
                     <tr *ngFor="let item of ResultDuplicateNegative; let i = index">
                         <td>{{i+1}}</td>
                         <td>{{item.CustNo}}</td>
@@ -175,7 +175,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="ResultDuplicateAssetNegative?.length > 0">
                     <tr *ngFor="let item of ResultDuplicateAssetNegative; let i = index">
                         <td class="text-left">{{item.AssetTypeName}}</td>
                         <td class="text-left">{{item.AssetCategoryCode}}</td>
@@ -238,7 +238,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="ResultDuplicateDoubleFinancing?.length > 0">
                     <tr *ngFor="let item of ResultDuplicateDoubleFinancing; let i = index">
                         <td>{{i+1}}</td>
                         <td class="text-left">{{item.AppNo}}</td>
@@ -258,123 +258,123 @@
     </div>
 
 </div>
+<div class="row text-left">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header header-title" style="margin-bottom: 10px;">
+                    <div class="px-3">
+                        <lib-ucSubsection [id]="'3RdPartycheckingId'" [title]="'3rd Party Checking'"
+                            [panel]="'3RdPartychecking'">
+                        </lib-ucSubsection>
 
-<lib-ucSubsection [id]="'3RdPartycheckingId'" [title]="'3rd Party Checking'" [panel]="'3RdPartychecking'">
-</lib-ucSubsection>
+                        <div class="form-group" id="3RdPartychecking">
+                            <div class="px-3">
 
-<div class="form-body" id="3RdPartychecking">
-    <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="FraudVerfForm" (ngSubmit)="FraudVerfForm.valid"
-            #enjiForm="ngForm">
-            <div class="form-group row" *ngIf="ResultThirdPartyObj">
-                <div class="row">
-                    <div class="col-md-1">
-                        <label class="label-control" translate>Dukcapil</label>
-                    </div>
-                    <div class="col-md-1">
-                        <span style="float: right;">
-                            <i *ngIf="ResultThirdPartyObj.DukcapilIndicator"
-                                [ngStyle]="{'color': ResultThirdPartyObj.DukcapilIndicator}"
-                                class="font-medium-3 fa fa-circle tooltips">
-                            </i>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>{{ResultThirdPartyObj.DukcapilResult}}</label>
-                    </div>
-                    <div class="col-md-1">
-                        <label class="label-control" translate>Pefindo</label>
-                    </div>
-                    <div class="col-md-1">
-                        <span style="float: right;">
-                            <i *ngIf="ResultThirdPartyObj.PefindoIndicator"
-                                [ngStyle]="{'color': ResultThirdPartyObj.PefindoIndicator}"
-                                class="font-medium-3 fa fa-circle tooltips">
-                            </i>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>{{ResultThirdPartyObj.PefindoResult}}</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-1">
-                        <label class="label-control" translate>Rapindo</label>
-                    </div>
-                    <div class="col-md-1">
-                        <span style="float: right;">
-                            <i *ngIf="ResultThirdPartyObj.RapindoIndicator"
-                                [ngStyle]="{'color': ResultThirdPartyObj.RapindoIndicator}"
-                                class="font-medium-3 fa fa-circle tooltips">
-                            </i>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>{{ResultThirdPartyObj.RapindoResult}}</label>
-                    </div>
-                    <div class="col-md-1">
-                        <label class="label-control" translate>SLIK</label>
-                    </div>
-                    <div class="col-md-1">
-                        <span style="float: right;">
-                            <i *ngIf="ResultThirdPartyObj.SlikIndicator"
-                                [ngStyle]="{'color': ResultThirdPartyObj.SlikIndicator}"
-                                class="font-medium-3 fa fa-circle tooltips">
-                            </i>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>{{ResultThirdPartyObj.SlikResult}}</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-1">
-                        <label class="label-control" translate>Profind</label>
-                    </div>
-                    <div class="col-md-1">
-                        <span style="float: right;">
-                            <i *ngIf="ResultThirdPartyObj.ProfindIndicator"
-                                [ngStyle]="{'color': ResultThirdPartyObj.ProfindIndicator}"
-                                class="font-medium-3 fa fa-circle tooltips">
-                            </i>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>{{ResultThirdPartyObj.ProfindResult}}</label>
-                    </div>
-                    <div class="col-md-1">
-                        <label class="label-control" translate>Profind</label>
-                    </div>
-                    <div class="col-md-1">
-                        <span style="float: right;">
-                            <i *ngIf="ResultThirdPartyObj.ProfindIndicator"
-                                [ngStyle]="{'color': ResultThirdPartyObj.ProfindIndicator}"
-                                class="font-medium-3 fa fa-circle tooltips">
-                            </i>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>{{ResultThirdPartyObj.ProfindResult}}</label>
+                                <div class="form-group" *ngIf="ResultThirdPartyObj">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Dukcapil</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.DukcapilIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.DukcapilIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.DukcapilResult}}</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Pefindo</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.PefindoIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.PefindoIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.PefindoResult}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Rapindo</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.RapindoIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.RapindoIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.RapindoResult}}</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>SLIK</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.SlikIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.SlikIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.SlikResult}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Profind</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.ProfindIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.ProfindIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.ProfindResult}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="form form-horizontal" [formGroup]="FraudVerfForm"
+                                    (ngSubmit)="FraudVerfForm.valid" #enjiForm="ngForm">
+                                    <div class="form-group row">
+                                        <label class="col-md-2  adInsLabel" translate>Notes</label>
+                                        <div class="col-md-4">
+                                            <textarea class="form-control adInsInput" formControlName="Notes"
+                                                [ngClass]="{ 'is-invalid': enjiForm.submitted && FraudVerfForm.controls.Notes.invalid }"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
+                                translate>
+                                <i class="ft-x"></i> Cancel
+                            </button>
+                            <button type="submit" class="btn btn-raised btn-primary" (click)="reject()">
+                                Reject
+                            </button>
+                            <button type="button" class="btn btn-raised btn-primary" (click)="verify()">Verify</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Notes</label>
-                <div class="col-md-4">
-                    <textarea class="form-control adInsInput" formControlName="Notes"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && FraudVerfForm.controls.Notes.invalid }"></textarea>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div class="modal-footer">
-    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()" translate>
-        <i class="ft-x"></i> Cancel
-    </button>
-    <button type="submit" class="btn btn-raised btn-primary" (click)="reject()">
-        Reject
-    </button>
-    <button type="button" class="btn btn-raised btn-primary" (click)="verify()">Verify</button>
 </div>
