@@ -13,7 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model'; 
-import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
