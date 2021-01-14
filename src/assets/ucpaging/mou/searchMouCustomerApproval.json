@@ -208,6 +208,10 @@
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
+                                    },
+                                    {
+                                        "type": "ApvReqId",
+                                        "property": "ApvReqId"
                                     }
                                 ]
                             },
@@ -237,6 +241,10 @@
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
+                                    },
+                                    {
+                                        "type": "ApvReqId",
+                                        "property": "ApvReqId"
                                     }
                                 ]
                             },

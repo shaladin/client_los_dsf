@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,8 @@ import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
@@ -20,7 +22,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
   templateUrl: './credit-review-cfna.component.html',
   styleUrls: []
 })
-export class CreditReviewCfnaComponent implements OnInit {
+export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
 
   appId: number = 0;
   wfTaskListId: number;
@@ -43,7 +45,19 @@ export class CreditReviewCfnaComponent implements OnInit {
   //   ReturnReasonDesc: [''],
   //   ReturnExecNotes: [''],
   // });
+  InputObj: UcInputRFAObj;
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
 
+  ApprovalCreateOutput: any;
+  IsReady: boolean;
+  apvAmt:number;
+  AppNo : string;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -61,13 +75,13 @@ export class CreditReviewCfnaComponent implements OnInit {
 
   FormObj = this.fb.group({
     arr: this.fb.array([]),
-    AppvAmt: [''],
-    CreditScoring: [''],
-    Reason: ['', Validators.required],
-    ReasonDesc: [""],
-    Approver: ['', Validators.required],
-    ApproverDesc: [""],
-    Notes: ['', Validators.required]
+    // AppvAmt: [''],
+    // CreditScoring: [''],
+    Reason: [''],
+    // ReasonDesc: [""],
+    // Approver: ['', Validators.required],
+    // ApproverDesc: [""],
+     Notes: ['']
   });
 
 
@@ -100,6 +114,7 @@ export class CreditReviewCfnaComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
+    console.log(this.createComponent)
     this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
@@ -111,9 +126,13 @@ export class CreditReviewCfnaComponent implements OnInit {
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
+    this.initInputApprovalObj();
     await this.InitDms();
   }
 
+  ngAfterViewInit(){
+    console.log(this.createComponent)
+  }
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
@@ -160,6 +179,7 @@ export class CreditReviewCfnaComponent implements OnInit {
       (response) => {
         if (response != undefined)
           this.GetCreditScoring(response["AppNo"]);
+          this.AppNo = response["AppNo"];
       });
   }
 
@@ -212,9 +232,7 @@ export class CreditReviewCfnaComponent implements OnInit {
     var Obj = { AppId: this.appId };
     await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
-        this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
-        });
+        this.apvAmt = response["ApvAmt"]
       });
   }
 
@@ -296,21 +314,22 @@ export class CreditReviewCfnaComponent implements OnInit {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
     }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
+    
 
-    if (this.isReturnOn)
-      temp.Approver = 0;
-
+    if (!this.isReturnOn) {
+      this.ApprovalCreateOutput = this.createComponent.output();
+    }
+ 
     var apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
-      ApprovedById: temp.Approver,
-      Reason: temp.ReasonDesc,
       Notes: temp.Notes,
       WfTaskListId: this.wfTaskListId,
       RowVersion: "",
       AppId: this.appId,
-      ListDeviationResultObjs: this.ManualDeviationData
+      ListDeviationResultObjs: this.ManualDeviationData,
+      RequestRFAObj: this.ApprovalCreateOutput
     }
-    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
+    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode, });
       });
@@ -349,13 +368,16 @@ export class CreditReviewCfnaComponent implements OnInit {
     });
 
     if (!this.isReturnOn) {
-      this.isReturnOn = true;
-      this.FormObj.controls.Approver.clearValidators();
+      this.isReturnOn = true;;
+      this.FormObj.controls.Reason.setValidators([Validators.required]);
+      this.FormObj.controls.Notes.setValidators([Validators.required]);
     } else {
       this.isReturnOn = false;
-      this.FormObj.controls.Approver.setValidators([Validators.required]);
+      this.FormObj.controls.Reason.clearValidators();
+      this.FormObj.controls.Notes.clearValidators();
     }
-    this.FormObj.controls.Approver.updateValueAndValidity();
+    this.FormObj.controls.Reason.updateValueAndValidity();
+    this.FormObj.controls.Notes.updateValueAndValidity();
 
   }
 
@@ -369,5 +391,37 @@ export class CreditReviewCfnaComponent implements OnInit {
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
+  }
+  initInputApprovalObj(){  
+    this.InputObj = new UcInputRFAObj(); 
+    var Attributes = []
+    var attribute1= { 
+      "AttributeName" : "Approval Amount",
+      "AttributeValue": this.apvAmt
+    }; 
+    console.log(this.apvAmt)
+    Attributes.push(attribute1);
+
+    var TypeCode = {
+      "TypeCode" : "CRD_APV_CF_TYPE",
+      "Attributes" : Attributes,
+    };
+    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
+    this.InputObj.Reason = this.DDLRecommendation;
+    this.InputObj.TrxNo = this.AppNo
+    this.IsReady = true;
+  }
+  cancel(){ 
+    AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
   }
 }

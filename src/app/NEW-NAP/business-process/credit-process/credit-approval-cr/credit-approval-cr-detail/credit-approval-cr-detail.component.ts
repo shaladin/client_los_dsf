@@ -115,8 +115,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.UrlBactToPaging = "/Nap/CreditProcess/CreditApprovalCr/Paging?BizTemplateCode="+ this.BizTemplateCode;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel; 
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
     this.IsReady = true;
   }
