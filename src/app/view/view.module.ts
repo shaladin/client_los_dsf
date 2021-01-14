@@ -193,7 +193,7 @@ import { SharedModule } from "app/shared/shared.module";
     MouViewApprovalHistoryComponent,
 
     //surveyView prototype
-    SurveyViewComponent
+    SurveyViewComponent,
   ],
   entryComponents: [
     UclookupgenericComponent,
