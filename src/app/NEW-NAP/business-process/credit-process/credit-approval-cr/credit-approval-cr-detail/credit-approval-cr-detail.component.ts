@@ -31,10 +31,6 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
-<<<<<<< HEAD
-=======
-
->>>>>>> e198e3a19e9d887d3c15f021b22602ba23263d92
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
   constructor(private toastr: NGXToastrService,
