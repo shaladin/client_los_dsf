@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormArray, FormGroupDirective } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
