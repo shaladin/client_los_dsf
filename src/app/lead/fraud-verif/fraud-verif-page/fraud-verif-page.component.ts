@@ -22,6 +22,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -31,6 +32,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class FraudVerifPageComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  GetFraudResult: string;
+  ResultThirdPartyObj: any;
+  thirdPartyRsltHObj: ThirdPartyRsltHObj;
   
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -45,6 +49,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetLeadAssetForCheckUrl = URLConstant.GetLeadAssetForCheck;
     this.GetLeadAssetByLeadIdUrl = URLConstant.GetLeadAssetByLeadId;
     this.GetAssetNegativeDuplicateCheckUrl = URLConstant.GetAssetNegativeDuplicateCheck;
+    this.GetFraudResult = URLConstant.GetFraudResult;
     this.AddLeadFraudVerfUrl = URLConstant.AddLeadFraudVerf;
   }
   DuplicateCustObj: DuplicateCustObj = new DuplicateCustObj();
@@ -78,6 +83,7 @@ export class FraudVerifPageComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -137,10 +143,15 @@ export class FraudVerifPageComponent implements OnInit {
                   this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
                     (response) => {
                       this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
-                    });
+                    });  
                 });
             });
         }
+        this.thirdPartyRsltHObj.TrxNo = response['LeadNo'];
+        this.http.post(this.GetFraudResult, this.thirdPartyRsltHObj).subscribe(
+          (response) => {
+            this.ResultThirdPartyObj = response;
+          });
       },
       (error) => {
         console.log(error);
