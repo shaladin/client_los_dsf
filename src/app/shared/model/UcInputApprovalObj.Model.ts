@@ -8,7 +8,6 @@ export class UcInputApprovalObj {
     PathUrlGetReasonActive:string;
     PathUrlGetChangeFinalLevel: string;
     TrxNo: string;
-    UrlBactToPaging:string;
     constructor() { 
         this.TaskId = 0;
         this.EnvUrl = "";
@@ -19,6 +18,5 @@ export class UcInputApprovalObj {
         this.PathUrlGetReasonActive = "";
         this.PathUrlGetChangeFinalLevel = "";
         this.TrxNo = "";
-        this.UrlBactToPaging = "";
     }
 }  
