@@ -14,6 +14,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model'; 
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
@@ -46,7 +47,7 @@ export class MouReviewFactoringComponent implements OnInit {
     }
   }
   ApprovalCreateOutput: any;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
@@ -201,6 +202,9 @@ export class MouReviewFactoringComponent implements OnInit {
       "TypeCode": "MOUC_FCTR_APV_TYPE",
       "Attributes": Attributes,
     };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;

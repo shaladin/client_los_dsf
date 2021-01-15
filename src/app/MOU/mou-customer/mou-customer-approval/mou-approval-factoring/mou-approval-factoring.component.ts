@@ -120,6 +120,9 @@ export class MouApprovalFactoringComponent implements OnInit {
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
     this.InputApvObj.TrxNo =  this.resultData.MouCustNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
+    this.InputApvObj.RequestId = this.ApvReqId;
+
     this.IsReady = true;
   }
 }

@@ -406,6 +406,9 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       "TypeCode" : "CRD_APV_CF_TYPE",
       "Attributes" : Attributes,
     };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
