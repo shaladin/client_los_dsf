@@ -192,6 +192,8 @@ export class CreditApprovalCfnaComponent implements OnInit {
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
+    this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }
 }

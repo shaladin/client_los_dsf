@@ -169,6 +169,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
     if(this.pageType == "add"){
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
+      console.log('data nya = ', JSON.stringify(mouCustFormData));
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
