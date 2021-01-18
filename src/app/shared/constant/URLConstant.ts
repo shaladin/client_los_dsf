@@ -153,6 +153,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetGeneralSettingById = "/GeneralSetting/GetGeneralSettingById";
     public static GetGeneralSettingValue = "/GeneralSetting/GetGeneralSettingValue";
     public static GetGeneralSettingByCode = environment.FoundationR3Url + "/GeneralSetting/GetGeneralSettingByCode";
+    public static GetListGeneralSettingByListGsCode = environment.FoundationR3Url + "/GeneralSetting/GetListGeneralSettingByListGsCode";
 
     //REF OFFICE
     public static GetRefOfficeObj = "/RefOffice/GetRefOfficeObj";
@@ -354,7 +355,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/RefMaster/GetListKeyValueActiveByCode"
     public static GetListActiveRefMaster = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMaster"
     public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCode"
-    public static GetListActiveRefMasterWithReserveFieldAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithReserveFieldAll";
+    public static GetListActiveRefMasterWithMappingCodeAll = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterWithMappingCodeAll";
     public static GetListRefMasterByRefMasterTypeCodes = environment.FoundationR3Url + "/RefMaster/GetListRefMasterByRefMasterTypeCodes";
     public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode"
     public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode"
@@ -477,6 +478,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetLeadPersonalForLookupCopy = environment.losUrl + "/Lead/GetLeadPersonalForLookupCopy";
     public static SubmitWorkflowLeadInputKta = environment.losUrl + "/Lead/SubmitWorkflowLeadInputKta";
     public static RejectLead = environment.losUrl + "/Lead/RejectLead";
+    public static CheckRapindo = environment.losUrl + "/Lead/CheckRapindo";
+    public static CheckIntegrator = environment.losUrl + "/Lead/CheckIntegrator";
 
     // LEAD ASSET
     public static GetLeadAssetByLeadId = environment.losUrl + "/LeadAsset/GetLeadAssetByLeadId";
@@ -554,6 +557,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static AddMouCustListedCustFctr = environment.losUrl + "/MouCustListedCustFctr/AddMouCustListedCustFctr";
     public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
     public static SubmitMouReview = environment.losUrl + "/MouCust/SubmitMouReview";
+    public static SubmitMouReviewNew = environment.losUrl + "/MouCust/SubmitMouReviewNew";
     public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
     public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
     public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
@@ -696,6 +700,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderListForNewPOByAppId";
     public static GetPurchaseOrderHByPurchaseOrderHId = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderHByPurchaseOrderHId";
     public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
+    public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
     public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
 
     // LEAD
@@ -1143,6 +1148,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
     public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
     public static CrdRvwMakeNewApproval = environment.losUrl + "/AppCrdRvw/CrdRvwMakeNewApproval";
+    public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
     public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
     //RETURN HANDLING
@@ -1253,10 +1259,13 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetNextNodeMember = "/Approval/GetNextNodeMember";
     public static GetRefReasonActive = "/Approval/GetRefReasonActive";
     public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
+    public static GetTaskHistory = "/Approval/GetTaskHistory";
 
     //Digitalization
     public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
 
     //ThirdPartyRsltH
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
+    public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHForFraudChecking";
+    public static GetFraudResult = environment.losUrl + "/ThirdPartyRsltH/GetFraudResult";
 }

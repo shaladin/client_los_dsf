@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';

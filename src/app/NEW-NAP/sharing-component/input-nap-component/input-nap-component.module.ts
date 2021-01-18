@@ -73,6 +73,7 @@ import { GuarantorComponent } from "./guarantor-data/guarantor.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { SharedModule } from "app/shared/shared.module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -196,7 +197,7 @@ export const customCurrencyMaskConfig = {
     SubsidyComponent,
     SubsidyAddEditComponent,
     FeeComponent,
-    TcDataComponent, // sementara nanti dicross check sama term-conditions
+    TcDataComponent, // sementara nanti dicross check sama term-conditions,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,

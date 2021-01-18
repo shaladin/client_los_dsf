@@ -28,8 +28,8 @@ export class CrdRvwFamGuarComponent implements OnInit {
   //#endregion
   Title: string = "";
   isReady: boolean = false;
-  constructor(
-    private http: HttpClient,) { }
+  
+  constructor(private http: HttpClient) { }
 
   async ngOnInit() {
     this.SetTitle();
@@ -106,9 +106,9 @@ export class CrdRvwFamGuarComponent implements OnInit {
     )
   }
   //#endregion
-  
+
   //#region Link a href
-  ClickLinkCust(CustNo: string){
+  ClickLinkCust(CustNo: string) {
     console.log(CustNo);
     // AdInsHelper.OpenCustomerViewByCustId(0);
   }

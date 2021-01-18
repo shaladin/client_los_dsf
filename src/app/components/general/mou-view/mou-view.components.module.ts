@@ -11,6 +11,7 @@ import { MouViewLegalComponent } from './mou-view-legal/mou-view-legal.component
 import { MouViewSurveyComponent } from './mou-view-survey/mou-view-survey.component';
 import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
 import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
+import { MouViewThirdPartyComponent } from 'app/view/mou-view/mou-view-third-party/mou-view-third-party.component';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-v
         MouViewDetailComponent,
         MouViewDocComponent,
         MouViewFeeComponent,
+        MouViewThirdPartyComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
@@ -34,6 +36,7 @@ import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-v
         MouViewDetailComponent,
         MouViewDocComponent,
         MouViewFeeComponent,
+        MouViewThirdPartyComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,

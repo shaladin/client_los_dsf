@@ -16,7 +16,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: 'app-fraud-verification',

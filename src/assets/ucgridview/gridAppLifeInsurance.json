@@ -10,12 +10,6 @@
         {
             "type": "label",
             "position": "center",
-            "label": "Birth Place/Date",
-            "name": "BirthPlaceDate"
-        },
-        {
-            "type": "label",
-            "position": "center",
             "label": "Age",
             "name": "Age"
         },
@@ -31,11 +25,6 @@
             "type": "text",
             "position": "left",
             "property": "InsuredName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "BirthPlaceDate"
         },
         {
             "type": "text",

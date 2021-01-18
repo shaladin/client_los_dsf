@@ -172,19 +172,17 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
         if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
-            ReserveField1: CommonConstant.CustTypeCompany,
+            MappingCode: CommonConstant.CustTypeCompany,
             RowVersion: ""
           }
         }else{
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-            ReserveField1: CommonConstant.CustTypeCompany,
+            MappingCode: CommonConstant.CustTypeCompany,
             RowVersion: ""
           }
         }
-
-        console.log(refCustRelObj)
-        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
           (response) => {
             this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
             if (this.mode != "edit") {

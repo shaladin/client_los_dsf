@@ -4,6 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-view-agrmnt-fl4w',
@@ -11,6 +15,10 @@ import { environment } from 'environments/environment';
 })
 
 export class ViewAgrmntFl4wComponent implements OnInit {
+  dmsObj: DMSObj;
+  isDmsReady: boolean;
+  appNo: string;
+  custNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -24,7 +32,7 @@ export class ViewAgrmntFl4wComponent implements OnInit {
   AgrmntId: number;
   AppId: number;
   MrCustTypeCode: string;
-  ngOnInit() {
+  async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
