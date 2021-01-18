@@ -14,7 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
@@ -402,6 +402,9 @@ export class CreditReviewMainComponent implements OnInit {
       "TypeCode" : "CRD_APV_CF_TYPE",
       "Attributes" : Attributes,
     };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;

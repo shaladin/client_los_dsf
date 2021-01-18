@@ -6,7 +6,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';

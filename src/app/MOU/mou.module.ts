@@ -64,7 +64,7 @@ import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-perso
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { MouViewComponentsModule } from "app/components/general/mou-view/mou-view.components.module";
-import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";

@@ -1,5 +1,5 @@
 import { AppCollateralObj } from "./AppCollateralObj.Model";
-import { AppAssetObj } from "./AppAssetObj.model";
+import { AppAssetObj } from "./AppAssetObj.Model";
 import { AppObj } from "./App/App.Model";
 import { AppFixedObj } from "./AppFixedObj.Model";
 

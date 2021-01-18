@@ -7,6 +7,8 @@ export class UcInputApprovalObj {
     PathUrlGetNextNodeMember: string;
     PathUrlGetReasonActive:string;
     PathUrlGetChangeFinalLevel: string;
+    RequestId : number;
+    PathUrlGetHistory : string;
     TrxNo: string;
     constructor() { 
         this.TaskId = 0;
@@ -17,6 +19,8 @@ export class UcInputApprovalObj {
         this.PathUrlGetNextNodeMember = "";
         this.PathUrlGetReasonActive = "";
         this.PathUrlGetChangeFinalLevel = "";
+        this.RequestId = 0;
+        this.PathUrlGetHistory = "";
         this.TrxNo = "";
     }
 }  
