@@ -46,14 +46,14 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
     }
   }
 
-  SetupData(){
-    this.ListDiffTypeCustData=this.responseCrdRvwDiffAppToInPrcAppCustObj.ListDiffTypeCustData;
-    this.ListAppNo=this.responseCrdRvwDiffAppToInPrcAppCustObj.ListAppNo;
-    this.DictDiffAppNoIndicator=this.responseCrdRvwDiffAppToInPrcAppCustObj.DictDiffAppNoIndicator;
+  SetupData() {
+    this.ListDiffTypeCustData = this.responseCrdRvwDiffAppToInPrcAppCustObj.ListDiffTypeCustData;
+    this.ListAppNo = this.responseCrdRvwDiffAppToInPrcAppCustObj.ListAppNo;
+    this.DictDiffAppNoIndicator = this.responseCrdRvwDiffAppToInPrcAppCustObj.DictDiffAppNoIndicator;
     this.DictDiffValue = this.responseCrdRvwDiffAppToInPrcAppCustObj.DictDiffValue;
   }
 
-  async ClickLinkApp(AppNo: string){
+  async ClickLinkApp(AppNo: string) {
     await this.http.post<any>(URLConstant.GetAppByAppNo, { AppNo: AppNo }).toPromise().then(
       (response) => {
         AdInsHelper.OpenAppViewByAppId(response.AppId);

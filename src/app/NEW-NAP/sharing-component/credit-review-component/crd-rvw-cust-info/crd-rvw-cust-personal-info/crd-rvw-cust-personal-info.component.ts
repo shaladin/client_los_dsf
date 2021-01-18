@@ -27,11 +27,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
   crdRvwCustPersInfoObj: CrdRvwCustPersInfoObj = new CrdRvwCustPersInfoObj();
-  constructor(
-    private modalService: NgbModal,
-    private http: HttpClient,
-    private toastr: ToastrService
-  ) { }
+  constructor(private modalService: NgbModal, private http: HttpClient, private toastr: ToastrService) { }
 
   async ngOnInit() {
     await this.GetCrdRvwCustPersInfoByCrdRvwCustInfoId();
@@ -133,7 +129,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
       (response) => {
         if (response != null || response != undefined) {
           AdInsHelper.OpenSrvyOrderViewBySrvyOrderId(response.SrvyOrderId);
-        }else{
+        } else {
           this.toastr.warning(ExceptionConstant.NO_SURVEY);
         }
       }
