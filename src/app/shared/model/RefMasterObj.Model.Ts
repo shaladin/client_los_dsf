@@ -9,6 +9,9 @@ export class RefMasterObj {
     ReserveField3 : string;
     ReserveField4 : string;
     ReserveField5 : string;
+    MappingCode : string;
+    DefaultValue : string;
+    IsDefaultValue : boolean;
     IsDeletable: boolean;
     isSystem: boolean;
     IsActive: boolean;

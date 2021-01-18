@@ -6,6 +6,6 @@ export class GeneralSettingObj {
   GsDescr: any;
   RefModuleId: any;
   ModuleCode: any;
-
-  constructor() { this.GeneralSettingId = 0; }
+  ListGsCode : Array<string>;
+  constructor() { this.GeneralSettingId = 0; this.ListGsCode = new Array();}
 }

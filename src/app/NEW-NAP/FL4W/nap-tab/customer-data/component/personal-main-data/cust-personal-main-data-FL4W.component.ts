@@ -175,7 +175,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.InputLookupCustomerObj.addCritInput = arrCrit;
@@ -403,14 +403,16 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   ChangeNationality(ev) {
     if (this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL") {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      var setCountry = this.NationalityObj[idx].DefaultValue.split(';');
+      this.selectedNationalityCountryCode = setCountry[0];
+      this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0] ;
       this.isLocal = true;
     } else {
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
-      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
-      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+      var setCountry = foreign.DefaultValue.split(';');
+      this.InputLookupCountryObj.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: setCountry[1] ? setCountry[1] : setCountry[0]};
+      this.selectedNationalityCountryCode = setCountry[0];
       this.isLocal = false;
     }
   }

@@ -43,6 +43,11 @@
                 <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
               </ng-template>
             </mat-tab>
+            <mat-tab label="Third Party Checking">
+              <ng-template matTabContent>
+                <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+              </ng-template>
+            </mat-tab>
             <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
               <ng-template matTabContent>
                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
@@ -53,75 +58,24 @@
           <p> &nbsp; <span style="display: block;"> <br> </span> &nbsp; </p>
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()"
             #enjiForm="ngForm">
-            <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
-              [panel]="'ApvRecommendation'">
-            </lib-ucSubsection>
-            <div class="form-body" id="ApvRecommendation" formArrayName="ApvRecommendation">
-              <div [formGroupName]="i" *ngFor="let item of MouReviewDataForm.controls.ApvRecommendation['controls']; let i = index" class="form-group row">
-                <label class="col-md-2 adins-required-label">{{MouReviewDataForm.value.ApvRecommendation[i].RecommendationName}}</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="RecommendationValue"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouReviewDataForm.controls.ApvRecommendation.controls[i].controls.RecommendationValue.invalid }">
-                    <lib-uc-show-errors [control]="MouReviewDataForm.controls.ApvRecommendation.controls[i].controls.RecommendationValue" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate>
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3"> 
+                    <div class="form-actions right">
+
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']"
+                      translate>
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1" translate>
+                      <i class="fa fa-reply"></i> Return
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                      <i class="fa fa-check"></i> Submit
+                    </button> 
+                    </div> 
                 </div>
-              </div>
-            </div>
-
-            <lib-ucSubsection [id]="'ApvReqId'" [title]="'Approval Request'" [panel]="'ApvReq'">
-            </lib-ucSubsection>
-            <div class="form-body" id="ApvReq">
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Approval Amount</label>
-                <label class="col-md-2 adInsLabel">{{PlafondAmt | number}}</label>
-                <label class="col-md-2"></label>
-                <label class="col-md-2 adInsLabel adins-required-label">To Be Approved By</label>
-                <div class="col-md-2">
-                  <select type="text" class="form-control adInsInput" formControlName="ListApprover"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouReviewDataForm.controls.ListApprover.invalid }">
-                    <option *ngFor="let item of listApprover" [value]="item.Key">{{item.Value}}</option>
-                  </select>
-                  <lib-uc-show-errors [control]="MouReviewDataForm.controls.ListApprover" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Scoring</label>
-                <label class="col-md-2 adInsLabel">{{ScoreResult}}</label><!-- - {{MrScoreTypeCode}} -->
-                <label class="col-md-2"></label>
-                <label class="col-md-2 adInsLabel adins-required-label">Reason Description</label>
-                <div class="col-md-2">
-                  <select type="text" class="form-control adInsInput" formControlName="Reason"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouReviewDataForm.controls.Reason.invalid }">
-                    <option *ngFor="let item of listReason" [value]="item.Value">{{item.Value}}</option>
-                  </select>
-                  <lib-uc-show-errors [control]="MouReviewDataForm.controls.Reason" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-2 adInsLabel adins-required-label" for="notes" translate>Notes</label>
-                <div class="col-md-4">
-                  <textarea rows="5" id="notes" class="form-control" formControlName="Notes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouReviewDataForm.controls.Notes.invalid }"></textarea>
-                  <lib-uc-show-errors [control]="MouReviewDataForm.controls.Notes" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-
-              <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']"
-                  translate>
-                  <i class="ft-x"></i> Cancel
-                </button>
-                <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1" translate>
-                  <i class="fa fa-reply"></i> Return
-                </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="fa fa-check"></i> Submit
-                </button>
               </div>
             </div>
           </form>

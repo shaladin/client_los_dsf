@@ -56,7 +56,12 @@
           <app-cust-history [AppId]=appId></app-cust-history>
         </ng-template>
       </mat-tab>
-
+      
+      <mat-tab label="Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
     </mat-tab-group>
 
     <div class="card-body">
@@ -87,67 +92,11 @@
               </div>
             </div>
 
-            <lib-ucSubsection *ngIf="!isReturnOn" [id]="'formRequestForAppvId'" [title]="'Request For Approval'"
-              [panel]="'formRequestForAppv'">
-            </lib-ucSubsection>
-            <div *ngIf="!isReturnOn" class="form-body" [id]="'formRequestForAppv'">
-
-              <div class="form-group row">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Approval Amount</label>
-                </div>
-                <div class="col-md-4">
-                  <label class="adInsLabel">{{FormObj.controls.AppvAmt.value | number:'.2':'en-US'}}</label>
-                </div>
-
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Credit Scoring</label>
-                </div>
-                <div class="col-md-4">
-                  <label class="adInsLabel">{{FormObj.controls.CreditScoring.value}}</label>
-                </div>
-              </div>
-
-              <div class="form-group row adins-required">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Recommendation</label>
-                </div>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                    (change)="onChangeReason($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of DDLRecommendation" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Approver</label>
-                </div>
-                <div class="col-md-4">
-                  <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
-                    [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'"
-                    (onChange)="onChangeApprover($event)">
-                  </lib-ucapproveby>
-                  <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-              </div>
-
-              <div class="form-group row adins-required">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Notes</label>
-                </div>
-                <div class="col-md-4">
-                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
-                  <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-
-              </div>
-
-            </div>
+            <br>
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
+            <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
+              [panel]="'formReturnCreditReview'">
+            </lib-ucSubsection> 
 
             <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
               [panel]="'formReturnCreditReview'">
@@ -201,7 +150,6 @@
               <i class="far fa-check-square"></i> Save
             </button>
           </div>
-
         </form>
       </div>
     </div>
