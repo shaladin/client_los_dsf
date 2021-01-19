@@ -24,7 +24,7 @@
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> #AGR Sold (Last {{crdRvwCmoObj.SpanOfMonth}} Month) </label>
+            <label class="label-control"> #AGR Sold (Last {{crdRvwCmoObj.SpanOfMonth != null ? crdRvwCmoObj.SpanOfMonth : 0}} Month) </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwCmoObj.AgrmntSold}} </label>
@@ -32,7 +32,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> #AGR FPD / Repo / WO (Last {{crdRvwCmoObj.SpanOfMonth}} Month) </label>
+            <label class="label-control"> #AGR FPD / Repo / WO (Last {{crdRvwCmoObj.SpanOfMonth != null ? crdRvwCmoObj.SpanOfMonth : 0}} Month) </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwCmoObj.AgrmntFpd}} / {{crdRvwCmoObj.AgrmntRepo}} /

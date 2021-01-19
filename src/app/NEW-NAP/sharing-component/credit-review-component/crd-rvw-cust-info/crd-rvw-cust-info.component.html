@@ -9,6 +9,14 @@
       </div>
       <div class="col-md-6 ">
         <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> As of Date:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCustInfoObj.AsOfDate | date: 'dd/MM/yyyy'}} </label>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <label class="label-control"> 
               <a class="font-weight-bold" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
@@ -64,10 +72,10 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> #Agr FPD (Last X month / All) </label>
+            <label class="label-control"> #Agr FPD (Last {{CustCrdRvwExposureObj.SpanOfMonth != null ? CustCrdRvwExposureObj.SpanOfMonth : 0}} month / All) </label>
           </div>
           <div class="col-md-6">
-            <!-- <label class="label-control"> {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} </label> -->
+            <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntFpd}} </label>
           </div>
         </div>
         <div class="row">

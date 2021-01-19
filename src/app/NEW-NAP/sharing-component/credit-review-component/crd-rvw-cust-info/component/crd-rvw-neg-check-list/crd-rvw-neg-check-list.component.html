@@ -33,12 +33,12 @@
               </tr>
             </tbody>
             <tbody>
-              <tr *ngFor="let stmnt of ListNegCust; let i = index;">
+              <tr *ngFor="let negCust of ListNegCust; let i = index;">
                 <td style="text-align: left;">{{i}}</td>
-                <td style="text-align: left;">{{stmnt.CustName}}</td>
-                <td style="text-align: left;">{{stmnt.MrNegCustTypeCodeDesc}}</td>
-                <td style="text-align: left;">{{stmnt.MrNegCustSourceCodeDesc}}</td>
-                <td style="text-align: left;">{{stmnt.NegCustCause}}</td>
+                <td style="text-align: left;">{{negCust.CustName}}</td>
+                <td style="text-align: left;">{{negCust.MrNegCustTypeCodeDesc}}</td>
+                <td style="text-align: left;">{{negCust.MrNegCustSourceCodeDesc}}</td>
+                <td style="text-align: left;">{{negCust.NegCustCause}}</td>
               </tr>
             </tbody>
           </table>
