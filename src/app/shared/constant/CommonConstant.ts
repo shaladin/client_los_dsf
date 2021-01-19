@@ -590,6 +590,7 @@ export class CommonConstant {
   public static DmsNoApp = "No Application";
   public static DmsNoAgr = "No Agreement";
   public static DmsMouId = "Mou Id";
+  public static DmsLeadId = "Lead Id";
   public static DmsOverideSecurity = "OverideSecurity";
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";
