@@ -23,7 +23,6 @@ export class CommonConstant {
   public static BUSINESS_DT = "BusinessDt";
   public static BUSINESS_DATE = "BusinessDate";
   public static TOKEN = "Token";
-  public static LOCAL_IP = "LocalIp";
   public static BIZ_TEMPLATE_CODE = "BizTemplateCode";
   public static BUSINESS_DATE_RAW = "BusinessDateRaw";
   public static VERSION = "Version";
