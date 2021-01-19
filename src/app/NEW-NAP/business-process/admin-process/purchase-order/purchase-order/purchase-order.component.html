@@ -27,11 +27,26 @@
         </tbody>
     </table>
 </div>
-<lib-ucSubsection [id]="'TermConditionsId'" [title]="'Term & Conditions'" [panel]="'TermConditions'">
-</lib-ucSubsection>
-<div class="form-body" id="TermConditions">
+<div class="form-body">
   <form class="form form-horizontal" [formGroup]="tcForm" (ngSubmit)="tcForm.valid && SaveForm()" #enjiForm="ngForm">
-    <app-term-conditions [AppId]="AppId" [parentForm]="tcForm" [enjiForm]="enjiForm"></app-term-conditions>
+
+    <mat-tab-group>
+      <mat-tab label="Term & Conditions">
+        <ng-template matTabContent>
+          <app-term-conditions [AppId]="AppId" [parentForm]="tcForm" [enjiForm]="enjiForm"></app-term-conditions>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="App Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsAppObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Agreement Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
+      </mat-tab-group>
     <div class="form-actions right">
       <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
         <i class="ft-x"></i> Cancel

@@ -36,6 +36,7 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
 import { ViewAssetCollateralComponent } from "./view-asset-collateral/view-asset-collateral.component";
 import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view-asset-collateral-detail/view-asset-collateral-detail.component";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
     imports: [
@@ -58,7 +59,8 @@ import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view
         UcapprovalhistModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
-        AppViewComponentsModule
+        AppViewComponentsModule,
+        SharedModule
     ],
     declarations: [
         AgreementViewContainerComponent,

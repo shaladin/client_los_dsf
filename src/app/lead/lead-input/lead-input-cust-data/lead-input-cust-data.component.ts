@@ -22,6 +22,11 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { LeadObj } from 'app/shared/model/Lead.Model';
+import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
+import { LeadCustCompareObj } from 'app/shared/model/LeadCustCompareObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
@@ -51,7 +56,7 @@ export class LeadInputCustDataComponent implements OnInit {
   maritalStatCode: RefMasterObj;
   tempMrMaritalStatCode: any;
   getListActiveRefMasterUrl: string;
-  getRefMasterWithReserveField: string;
+  getListActiveRefMasterWithMappingCodeAll: string;
   custModel: RefMasterObj;
   listCustModel: any;
   leadInputObj: LeadInputObj = new LeadInputObj();
@@ -111,11 +116,24 @@ export class LeadInputCustDataComponent implements OnInit {
   });
   inputAddressObjForLegalAddr: any;
   inputAddressObjForResidenceAddr: InputAddressObj;
+  generalSettingObj: GeneralSettingObj;
+  getGeneralSettingByCode: string;
+  returnGeneralSettingObj: any;
+  isNeedCheckBySystem: string;
+  leadObj: LeadObj;
+  returnLeadObj: Object;
+  thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  leadNo: any;
+  latestReqDtCheckIntegrator: string;
+  thirdPartyRsltHId: any;
+  getThirdPartyResultHForFraudChecking: string;
+  reqLatestJson: any;
+  latestCustDataObj: LeadCustCompareObj;
   dmsObj: DMSObj;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefMasterWithReserveField = URLConstant.GetListActiveRefMasterWithReserveFieldAll;
+    this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
     this.addEditLeadCustPersonal = URLConstant.AddEditLeadCustPersonal;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
@@ -125,6 +143,8 @@ export class LeadInputCustDataComponent implements OnInit {
     this.getLeadCustPersonalJobData = URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
     this.getRefProfessionByCode = URLConstant.GetRefProfessionByCode;
     this.getListLeadCustSocmed = URLConstant.GetListLeadCustSocmedByLeadCustId;
+    this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
+    this.getThirdPartyResultHForFraudChecking = URLConstant.GetThirdPartyResultHForFraudChecking;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -202,6 +222,57 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.isRequired = true;
 
+
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
+      (response) => {
+        this.returnGeneralSettingObj = response;
+        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+        this.leadObj = new LeadObj();
+        this.leadObj.LeadId = this.LeadId;
+        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
+          (response) => {
+            this.returnLeadObj = response;
+            this.leadNo = response['LeadNo'];
+
+            this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+            this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
+            this.thirdPartyObj.TrxNo = this.leadNo;
+            this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
+            this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              (response) => {
+                this.latestReqDtCheckIntegrator = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                this.reqLatestJson = JSON.parse(response['ReqJson']);
+                if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+                //   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                    this.latestCustDataObj = new LeadCustCompareObj();
+                    this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                    this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                    this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                    this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                    this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                    this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                    this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                    this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                    this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                    this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                    this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
+                    this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                    this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                    this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                    this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                    this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                    this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                    this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                }
+              }
+            );
+          }
+        );
+      }
+    );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
@@ -239,8 +310,8 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.custModel = new RefMasterObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
-    this.custModel.ReserveField1 = CommonConstant.CustTypePersonal;
-    this.http.post(this.getRefMasterWithReserveField, this.custModel).subscribe(
+    this.custModel.MappingCode = CommonConstant.CustTypePersonal;
+    this.http.post(this.getListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -753,12 +824,14 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
-        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit({ stepMode: "next" });
-          }
-        );
+        if(this.confirmFraudCheck()){
+          this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit({ stepMode: "next" });
+            }
+          );
+        }
       } else {
         this.leadInputObj = new LeadInputObj();
         this.setLeadCust();
@@ -768,12 +841,14 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setResidenceAddr();
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
-        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit({ stepMode: "next" });
-          }
-        );
+        if(this.confirmFraudCheck()){
+          this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit({ stepMode: "next" });
+            }
+          );
+        }
       }
     }
     else {
@@ -785,12 +860,13 @@ export class LeadInputCustDataComponent implements OnInit {
       this.setResidenceAddr();
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
-
-      this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.outputTab.emit({ stepMode: "next" });
-        });
+      if(this.confirmFraudCheck()){
+        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.outputTab.emit({ stepMode: "next" });
+          });
+      }
     }
   }
   
@@ -939,5 +1015,91 @@ export class LeadInputCustDataComponent implements OnInit {
             });
         }
       });
+  }
+
+  checkIntegrator() {
+    if (this.isNeedCheckBySystem == "0"){
+          this.leadInputObj = new LeadInputObj();
+          this.setLeadCust();
+          this.setLeadCustPersonal();
+          this.setLegalAddr();
+          this.setLeadCustPersonalJobData();
+          this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(
+            (response1) => {
+              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+                (response) => {
+                  this.latestReqDtCheckIntegrator = response['ReqDt'];
+                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                  this.reqLatestJson = JSON.parse(response['ReqJson']);
+                  if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+                    this.latestCustDataObj = new LeadCustCompareObj();
+                    this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                    this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                    this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                    this.latestCustDataObj.BirthDt =  formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                    this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                    this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                    this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                    this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                    this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                    this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                    this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
+                    this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                    this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                    this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                    this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                    this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                    this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                    this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                  }
+                }
+              );
+            }
+          );     
+    }
+  }
+
+
+  confirmFraudCheck(){
+    let inputLeadCustObj = new LeadCustCompareObj();
+    inputLeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
+    inputLeadCustObj.Gender = this.CustomerDataForm.controls["Gender"].value;
+    inputLeadCustObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
+    inputLeadCustObj.BirthDt = this.CustomerDataForm.controls["BirthDate"].value;
+    inputLeadCustObj.MaritalStatus = this.CustomerDataForm.controls["MrMaritalStatCode"].value;
+    inputLeadCustObj.CustPhnNo = this.CustomerDataForm.controls["MobilePhone1"].value;
+    inputLeadCustObj.CustEmail = this.CustomerDataForm.controls["Email"].value;
+    inputLeadCustObj.IdNo = this.CustomerDataForm.controls["IdNo"].value;
+    inputLeadCustObj.IdType = this.CustomerDataForm.controls["MrIdTypeCode"].value;
+    inputLeadCustObj.TaxNo = this.CustomerDataForm.controls["Npwp"].value;
+    inputLeadCustObj.Profession = this.professionLookUpObj.nameSelect;
+    inputLeadCustObj.HomeAddr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
+    inputLeadCustObj.HomeRt = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode4.value;
+    inputLeadCustObj.HomeRw = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
+    inputLeadCustObj.HomeZipCode = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
+    inputLeadCustObj.HomeKelurahan = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode2.value;
+    inputLeadCustObj.HomeKecamatan = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode1.value;
+    inputLeadCustObj.HomeCity = this.CustomerDataForm.controls["legalAddress"]["controls"].City.value;
+    
+    let inputLeadString = JSON.stringify(inputLeadCustObj);
+    console.log('inputLeadString = ', inputLeadString);
+    let latestCustDataString =  JSON.stringify(this.latestCustDataObj);
+    console.log('latestCustDataString = ', latestCustDataString);
+
+    console.log(latestCustDataString);
+    console.log(inputLeadString);
+    console.log(inputLeadString != latestCustDataString);
+
+    if(this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString){
+      if(confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return true;
+    }
   }
 }

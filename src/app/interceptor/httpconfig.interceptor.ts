@@ -62,7 +62,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             if (request.body != null) {
                 myObj = request.body;
             }
-            myObj["Ip"] = localStorage.getItem(CommonConstant.LOCAL_IP);
             myObj["RequestDateTime"] = businessDt;
         }
         else {
@@ -70,7 +69,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             if (request.body != null) {
                 myObj = request.body;
             }
-            myObj["Ip"] = localStorage.getItem(CommonConstant.LOCAL_IP);
             myObj["RequestDateTime"] = businessDt;
             token = localStorage.getItem(CommonConstant.TOKEN);
         }

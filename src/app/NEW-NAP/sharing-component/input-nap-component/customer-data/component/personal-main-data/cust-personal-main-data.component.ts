@@ -176,7 +176,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.InputLookupCustomerObj.addCritInput = arrCrit;
@@ -303,7 +303,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if(this.IdTypeObj.length > 0){
-          var idxDefault = this.IdTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
+          var idxDefault = this.IdTypeObj.findIndex(x => x.IsDefaultValue);
           this.parentForm.controls[this.identifier].patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault].MasterCode
           });
@@ -350,7 +350,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if(this.NationalityObj.length > 0){
-          var idxDefault = this.NationalityObj.findIndex(x => x.ReserveField3 == CommonConstant.DEFAULT);
+          var idxDefault = this.NationalityObj.findIndex(x => x.IsDefaultValue);
           this.parentForm.controls[this.identifier].patchValue({
             MrNationalityCode: this.NationalityObj[idxDefault].MasterCode
           });
@@ -397,14 +397,16 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   ChangeNationality(mrNationalityCode){
     if(mrNationalityCode == CommonConstant.NationalityLocal){
-      this.selectedNationalityCountryCode = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).ReserveField2;
+      var setCountry = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).DefaultValue.split(';');
+      this.selectedNationalityCountryCode = setCountry[0];
+      this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
       this.isLocal = true;
     }else{
-      var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
-      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
-      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+      var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);    
+      var setCountry = foreign.DefaultValue.split(';');
+      this.InputLookupCountryObj.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: setCountry[1] ? setCountry[1] : setCountry[0]};
+      this.selectedNationalityCountryCode = setCountry[0];
       this.isLocal = false;
     }
   }

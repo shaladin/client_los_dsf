@@ -27,9 +27,7 @@ import { MouViewLegalComponent } from "./mou-view-legal/mou-view-legal.component
 import { MouViewListedCustFactoringComponent } from "./mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component";
 import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.component";
 import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
-import { DmsIframeComponent } from "app/shared/dms-iframe/dms-iframe.component";
 import { SharedModule } from "app/shared/shared.module";
-
 @NgModule({
     imports: [
         MouViewRoutingModule,

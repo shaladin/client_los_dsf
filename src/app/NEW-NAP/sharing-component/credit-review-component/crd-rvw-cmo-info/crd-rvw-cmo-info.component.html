@@ -1,5 +1,77 @@
 <lib-ucSubsection [id]="'CMOInfoId'" [title]="'CMO Information'" [panel]="'CMOInfo'">
 </lib-ucSubsection>
 <div id="CMOInfo">
-  <label>CMO Information</label>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> CMO Name / Supervisor </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCmoObj.CmoName}} / {{crdRvwCmoObj.SpvName}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Join Date </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCmoObj.JoinDt | date: 'dd-MMM-yyyy'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> #AGR Sold (Last {{crdRvwCmoObj.SpanOfMonth != null ? crdRvwCmoObj.SpanOfMonth : 0}} Month) </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCmoObj.AgrmntSold}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> #AGR FPD / Repo / WO (Last {{crdRvwCmoObj.SpanOfMonth != null ? crdRvwCmoObj.SpanOfMonth : 0}} Month) </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCmoObj.AgrmntFpd}} / {{crdRvwCmoObj.AgrmntRepo}} /
+              {{crdRvwCmoObj.AgrmntWo}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="card-body">
+    <!-- <div class="px-3">     -->
+    <h4 class="form-section card-title" style="font-size: 1rem;" translate>Active Agreement Current Condition</h4>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span  name='No' translate>#AGR</span>
+          </th>
+          <th style="text-align: left;" *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">
+            <span  name='' translate>{{item.BucketRange}}</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='AssetPrice' translate>WO</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='Insurance' translate>REPO</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left;">{{crdRvwCmoObj.AllAgrmnt}}</td>
+          <td style="text-align: left;" *ngFor="let item of crdRvwCmoObj.ListCrdRvwCmoBucketObj; let i = index;">{{item.Value}}</td>
+          <td style="text-align: left;">{{crdRvwCmoObj.AllWo}}</td>
+          <td style="text-align: left;">{{crdRvwCmoObj.AllRepo}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- </div> -->
+  </div>
 </div>

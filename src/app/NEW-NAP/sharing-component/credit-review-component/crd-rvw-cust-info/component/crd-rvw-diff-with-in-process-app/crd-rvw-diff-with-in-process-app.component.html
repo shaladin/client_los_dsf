@@ -1,0 +1,54 @@
+<div class="modal-body">
+  <div class="px-3">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span name='CustData' translate>Customer Data</span>
+          </th>
+          <th style="text-align: left;" *ngFor="let item of ListAppNo; let i = index">
+            <span name='item' translate>
+              <span id="Indicator{{i}}">
+                <i [ngStyle]="{'color': !DictDiffAppNoIndicator[item] ? 'RED' : 'GREEN'}" class="font-medium-3 fa fa-circle tooltips">
+                  <span [ngClass]="'tooltipstext'" *ngIf="!DictDiffAppNoIndicator[item]">
+                    Reviewed Application
+                  </span>
+                  <span [ngClass]="'tooltipstext'" *ngIf="DictDiffAppNoIndicator[item]">
+                    In Process Application
+                  </span>
+                </i>
+              </span>
+              <span><a class="link" (click)="ClickLinkApp(item)">&nbsp; {{item}}</a></span>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="ListDiffTypeCustData.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let item of ListDiffTypeCustData; let i = index">
+          <td style="text-align: left;">{{item}}</td>
+          <td *ngFor="let item2 of ListAppNo; let j = index" style="text-align: left;">
+            <span id="Indicator{{i}}{{j}}">
+              <i [ngStyle]="{'color': DictDiffValue[item2+item].IsDifference ? 'RED' : 'GREEN'}"
+                class="font-medium-3 fa fa-circle tooltips">
+                <span [ngClass]="'tooltipstext'" *ngIf="DictDiffValue[item2+item].IsDifference">
+                  Not Same
+                </span>
+                <span [ngClass]="'tooltipstext'" *ngIf="!DictDiffValue[item2+item].IsDifference">
+                  Same
+                </span>
+              </i>
+            </span>
+            <span class="col-md-11">
+              {{DictDiffValue[item2+item].AppValue}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

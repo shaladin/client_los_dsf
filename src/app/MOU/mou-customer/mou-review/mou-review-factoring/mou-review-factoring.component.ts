@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -12,9 +12,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model'; 
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
+import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
@@ -37,19 +39,25 @@ export class MouReviewFactoringComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: any;
   ScoreResult: number;
-  UploadViewlink: string;
-  Uploadlink: string;
-  Viewlink: string;
+  InputObj: UcInputRFAObj;
+  IsReady: boolean;
+  private createComponent: UcapprovalcreateComponent;
   dmsObj: DMSObj;
-  rootServer: string;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
+  ApprovalCreateOutput: any;
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
     })
   }
 
-  ngOnInit() {
+ async ngOnInit() {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -62,7 +70,7 @@ export class MouReviewFactoringComponent implements OnInit {
       },
     ];
     this.mouCustObject.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
+    await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
         let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
@@ -86,25 +94,25 @@ export class MouReviewFactoringComponent implements OnInit {
         })
       })
 
-    var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
-    var apvRecommendObj = { SchemeCode: 'MOUC_FCTR_APV' }
-    this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
-      (response) => {
-        this.listRecommendationObj = response;
-        for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
-          var ApvRecommendation = this.fb.group({
-            RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
-            RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
-            RecommendationName: this.listRecommendationObj[i].RecommendationName,
-            RecommendationValue: ['', Validators.required]
-          }) as FormGroup;
-          listRec.push(ApvRecommendation);
-        }
-        // this.ApvRecommendation = ApvRecommendation;
-      })
+    // var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
+    // var apvRecommendObj = { SchemeCode: 'MOUC_FCTR_APV' }
+    // this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
+    //   (response) => {
+    //     this.listRecommendationObj = response;
+    //     for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
+    //       var ApvRecommendation = this.fb.group({
+    //         RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
+    //         RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
+    //         RecommendationName: this.listRecommendationObj[i].RecommendationName,
+    //         RecommendationValue: ['', Validators.required]
+    //       }) as FormGroup;
+    //       listRec.push(ApvRecommendation);
+    //     }
+    //     // this.ApvRecommendation = ApvRecommendation;
+    //   })
 
     var mouCustObj = { MouCustId: this.MouCustId };
-    this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
+    await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
       })
@@ -113,7 +121,7 @@ export class MouReviewFactoringComponent implements OnInit {
         this.MrCustTypeCode = response['MrCustTypeCode'];
       });
 
-    this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING }).pipe(first()).subscribe(
+   await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING }).toPromise().then(
       (response) => {
         this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({
@@ -122,11 +130,12 @@ export class MouReviewFactoringComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).pipe(first()).subscribe(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
     );
+    this.initInputApprovalObj();
   }
 
   MouReviewDataForm = this.fb.group({
@@ -145,33 +154,26 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   Submit() {
+    this.ApprovalCreateOutput = this.createComponent.output();  
+    if(this.ApprovalCreateOutput!=undefined){
+
     this.mouCustObj.MouCustId = this.MouCustId;
     this.PlafondAmt = this.PlafondAmt;
+ 
 
-    var ReviewValue = this.MouReviewDataForm.value;
-    var ApvRecValue = ReviewValue.ApvRecommendation;
-
-    this.rfaInfoObj.ApprovedById = ReviewValue.ListApprover;
-    this.rfaInfoObj.Reason = ReviewValue.Reason;
-    this.rfaInfoObj.Notes = ReviewValue.Notes;
-
-    for (let index = 0; index < ApvRecValue.length; index++) {
-      this.keyValueObj = new KeyValueObj()
-      this.keyValueObj.Key = ApvRecValue[index].RefRecommendationId;
-      this.keyValueObj.Value = ApvRecValue[index].RecommendationValue;
-      this.rfaInfoObj.RecommendationObj.push(this.keyValueObj);
-    }
-
+  
     var submitMouReviewObj = {
       WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj, Rfa: this.rfaInfoObj,
-      PlafondAmt: this.PlafondAmt
-    }
-    this.http.post(URLConstant.SubmitMouReview, submitMouReviewObj).subscribe(
+      MouCust: this.mouCustObj, 
+      PlafondAmt: this.PlafondAmt,
+      RequestRFAObj:this.ApprovalCreateOutput
+    } 
+    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
       })
+    }
   }
 
   Return() {
@@ -192,4 +194,42 @@ export class MouReviewFactoringComponent implements OnInit {
         });
     }
   }
+
+  initInputApprovalObj(){  
+    this.InputObj = new UcInputRFAObj();
+    var Attributes = []
+    var attribute1= { 
+      "AttributeName" : "Approval Amount",
+      "AttributeValue": this.PlafondAmt
+    };
+     var attribute2= {
+      "AttributeName" : "Scoring",
+      "AttributeValue": this.ScoreResult
+    }; 
+    Attributes.push(attribute1);
+    Attributes.push(attribute2); 
+    
+    var TypeCode = {
+      "TypeCode": "MOUC_FCTR_APV_TYPE",
+      "Attributes": Attributes,
+    };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_FACTORING;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_FACTORING;
+    this.InputObj.Reason = this.listReason;
+    this.InputObj.TrxNo = this.resultData["MouCustNo"]
+    this.IsReady = true;
+  }
+
 }

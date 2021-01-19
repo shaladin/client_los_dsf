@@ -111,37 +111,78 @@ export class DoAssetDetailComponent implements OnInit {
           ...appAsset
         });
 
-        var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
-        for (const item of appCollateral) {
-          var isMandatory = false;
-          if(item.MrCollateralConditionCode == CommonConstant.AssetConditionNew){
-            if(item.IsMandatoryNew == true){
-              isMandatory = true;
-            }
-          }
-          else{
-            if(item.IsMandatoryUsed == true){
-              isMandatory = true;
-            }
-          }
-          var formGroup = this.fb.group({
-            AppCollateralDocId: [item.AppCollateralDocId, [Validators.required]],
-            AppCollateralId: [item.AppCollateralId, [Validators.required]],
-            DocCode: [item.DocCode],
-            DocName: [item.DocName],
-            DocNo: [item.DocNo, isMandatory ? [Validators.required] : []],
-            IsReceived: [item.IsReceived],
-            ExpiredDt: [item.ExpiredDt],
-            DocNotes: [item.DocNotes],
-            IsValueNeeded: [item.IsValueNeeded],
-            IsMandatoryNew: [item.IsMandatoryNew],
-            IsMandatoryUsed: [item.IsMandatoryUsed],
-            MrCollateralConditionCode: [item.MrCollateralConditionCode]
+
+        // jika first input, ambil isian collateral doc by type
+        if(!appCollateral || appCollateral.length <= 0) 
+          this.GenerateDefaultAssetDocs(appAsset.AssetTypeCode);
+        else
+          this.GenerateAppCollateralDocs(appCollateral)
+      }
+    );
+  }
+
+  GenerateDefaultAssetDocs(AssetTypeCode: string)
+  {
+    var assetDocs = [];
+    var assetDocListobj = { AssetTypeCode: AssetTypeCode }
+    this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
+      (response) => {
+        if (response[CommonConstant.ReturnObj].length > 0)
+        {
+          response[CommonConstant.ReturnObj].forEach(RefAssetDoc => {
+            assetDocs.push({
+              AppCollateralDocId: 0,
+              AppCollateralId: 0,
+              DocCode: RefAssetDoc.AssetDocCode,
+              DocNo: null,
+              DocName: RefAssetDoc.AssetDocName,
+              IsReceived: false,
+              ExpiredDt: null,
+              DocNotes: RefAssetDoc.DocNotes,
+              IsValueNeeded: RefAssetDoc.IsValueNeeded,
+              IsMandatoryNew: RefAssetDoc.IsMandatoryNew,
+              IsMandatoryUsed: RefAssetDoc.IsMandatoryUsed,
+              MrCollateralConditionCode: CommonConstant.AssetConditionUsed,
+            })    
           });
-          formArray.push(formGroup);
+          this.GenerateAppCollateralDocs(assetDocs);
         }
       }
     );
+    return assetDocs;
+  }
+
+  GenerateAppCollateralDocs(appCollateralDocs: any)
+  {
+    var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
+    for (const item of appCollateralDocs) {
+      var isMandatory = false;
+      if(item.MrCollateralConditionCode == CommonConstant.AssetConditionNew){
+        if(item.IsMandatoryNew == true){
+          isMandatory = true;
+        }
+      }
+      else{
+        if(item.IsMandatoryUsed == true){
+          isMandatory = true;
+        }
+      }
+      var formGroup = this.fb.group({
+        AppCollateralDocId: [item.AppCollateralDocId],
+        AppCollateralId: [item.AppCollateralId],
+        DocCode: [item.DocCode],
+        DocName: [item.DocName],
+        DocNo: [item.DocNo, isMandatory ? [Validators.required] : []],
+        IsReceived: [item.IsReceived],
+        ExpiredDt: [item.ExpiredDt],
+        DocNotes: [item.DocNotes],
+        IsValueNeeded: [item.IsValueNeeded],
+        IsMandatoryNew: [item.IsMandatoryNew],
+        IsMandatoryUsed: [item.IsMandatoryUsed],
+        MrCollateralConditionCode: [item.MrCollateralConditionCode]
+      });
+      formArray.push(formGroup);
+    }
   }
 
   Save(){

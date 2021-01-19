@@ -8,6 +8,5 @@ export class BaseObj {
     LastPageAccess: string;
     LastPageAccessTime: string;
     RequestObject: any;
-    LocalIp:string;
   }
   

@@ -23,7 +23,6 @@ export class CommonConstant {
   public static BUSINESS_DT = "BusinessDt";
   public static BUSINESS_DATE = "BusinessDate";
   public static TOKEN = "Token";
-  public static LOCAL_IP = "LocalIp";
   public static BIZ_TEMPLATE_CODE = "BizTemplateCode";
   public static BUSINESS_DATE_RAW = "BusinessDateRaw";
   public static VERSION = "Version";
@@ -76,7 +75,6 @@ export class CommonConstant {
   public static LeadStepNew = "NEW";
   public static LeadStepReject = "RJC";
   public static LeadStepSelfVerification = "SVR";
-
 
   //ASSET CONDITION 
   public static AssetConditionUsed = "USED";
@@ -456,7 +454,10 @@ export class CommonConstant {
   public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO";
   public static RefMasterTypeCodeLifeInsPayMethod = "LIFE_INS_PAY_METHOD";
   public static RefMasterTypeCodeLifeInscoBranch = "LIFE_INSCO_BRANCH";
-  public static RefMasterTypeCodeReturnTask = "RETURN_TASK";
+  public static RefMasterTypeCodeReturnTaskCF4W = "RETURN_TASK_CF4W";
+  public static RefMasterTypeCodeReturnTaskCFNA = "RETURN_TASK_CFNA";
+  public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
+  public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
@@ -468,8 +469,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
   public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
   public static RefMasterTypeCodeFinDataCalcBaseOn = "FIN_DATA_CALC_BASE_ON";
-  public static RefMasterReservedField2NonFee = "NON_FEE";
-  public static RefMasterReservedField2Fee = "FEE";
+  public static PurchaseOrderItemTypeNonFee = "NON_FEE";
+  public static PurchaseOrderItemTypeFee = "FEE";
   public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
   public static RefProdCompAssetCond = "ASSETCOND";
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
@@ -478,6 +479,7 @@ export class CommonConstant {
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   public static RefMasterTypeCodeSalutation = "SALUTATION";
   public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
+  public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
 
   //RATE TYPE
   public static RateTypeFlat = "FLT";
@@ -543,7 +545,44 @@ export class CommonConstant {
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
+  public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
 
+  //Serial Item
+  public static Chassis_No = "Chassis No";
+  // Cust Type  
+  public static WhiteIndicator = "WHITE";
+  public static NoData = "No Data";
+  public static MaritalStatusMarried = "MARRIED";
+  public static ExposureCustTypeCode = "CUST_EXPSR";
+  public static ExposureCustGroupTypeCode = "CUST_GRP_EXPSR";
+  public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
+  
+  // Role Type
+  public static RoleCustData = "CUST_DATA";
+  public static RoleFamilyData = "FAM_DATA";
+  public static RoleGuarantorData = "GUARANTOR_DATA";
+  public static RoleShareholder = "SHAREHOLDER_DATA";
+  //Approval
+  public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
+  public static SCHM_CODE_APV_PRE_GO_LIVE = "PRE_GLV_APV_CF";
+  public static SCHM_CODE_CRD_APV_CF = "CRD_APV_CF";
+
+
+  public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV"; 
+  public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV"; 
+  public static CAT_CODE_CRD_APV = "CRD_APV"; 
+
+
+  
+  //TRX_TYPE_CODE
+  public static APP_TRX_TYPE_CODE = "APP";
+  public static LEAD_TRX_TYPE_CODE = "LEAD";
+
+  //FRAUD CHECK TYPE
+  public static FRAUD_CHCK_ASSET = "ASSET";
+  public static FRAUD_CHCK_CUST = "CUST";
   //DMS
   public static DmsKey = "PHL7KV8RR0VG30K4";
   public static DmsIV = "0G7HFV96AVWXUQ51";

@@ -9,7 +9,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-
+import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
   templateUrl: './offering-validity-checking-approval-detail.component.html'
@@ -19,9 +21,18 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   BizTemplateCode : string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
   token: any = localStorage.getItem(CommonConstant.TOKEN);
+  ApvReqId: number;
+  taskId: number; 
+  InputApvObj : UcInputApprovalObj;
+  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  TrxNo : string;
+  IsReady: boolean = false;
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) {
     this.route.queryParams.subscribe(params => {
 
+      this.TrxNo = params["TrxNo"];
+      this.taskId= params["TaskId"];
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
@@ -50,6 +61,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.initInputApprovalObj();
   }
 
   HoldTask(obj){
@@ -81,4 +93,30 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
     }
   }
 
+  initInputApprovalObj(){
+
+    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
+    this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    
+    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
+    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
+
+    this.InputApvObj = new UcInputApprovalObj();
+    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.TrxNo =  this.TrxNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
+    this.InputApvObj.RequestId = this.ApvReqId;
+    this.IsReady = true;
+  }
 }

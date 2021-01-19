@@ -40,13 +40,13 @@ import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component
     UcSubsectionModule,
     SharingComponentModule,
     UcapprovalhistModule,
-    UcShowErrorsModule
+    UcShowErrorsModule,
   ],
   declarations: [
     MainInfoComponent,
     ViewInsuranceDetailComponent,
     AppInsuranceDetailComponent,
-    LeadMainInfoComponent
+    LeadMainInfoComponent,
   ],
   entryComponents: [
     UclookupgenericComponent,

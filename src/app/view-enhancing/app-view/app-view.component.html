@@ -101,6 +101,12 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab label="Document">
+              <ng-template matTabContent>
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsCommission" label="Commission">
               <ng-template matTabContent>
                 <app-tab-commission [appId]="AppId"></app-tab-commission>
