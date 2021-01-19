@@ -98,6 +98,7 @@ export class ExceptionConstant {
     public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
-
+    
+    public static NO_SURVEY = "No Survey";
 }
 

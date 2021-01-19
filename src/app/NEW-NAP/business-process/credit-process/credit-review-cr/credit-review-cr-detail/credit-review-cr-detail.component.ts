@@ -311,7 +311,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
       RequestRFAObj: RFAPreGoLive
     };
     // console.log(apiObj);
-    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });

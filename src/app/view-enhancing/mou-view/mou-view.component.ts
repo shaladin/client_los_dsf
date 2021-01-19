@@ -7,6 +7,9 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-mou-view',
@@ -25,7 +28,10 @@ export class MouViewComponent implements OnInit {
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-
+  UploadViewlink: string;
+  Uploadlink: string;
+  Viewlink: string;
+  dmsObj: DMSObj;
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
@@ -54,6 +60,15 @@ export class MouViewComponent implements OnInit {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+    
         this.IsResponseProcessed = true;
         this.IsReady = true;
       });
