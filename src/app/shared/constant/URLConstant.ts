@@ -1147,6 +1147,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // App Credit Review
     public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
     public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
+    public static CrdRvwMakeNewApproval = environment.losUrl + "/AppCrdRvw/CrdRvwMakeNewApproval";
     public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
     public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
@@ -1258,6 +1259,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetNextNodeMember = "/Approval/GetNextNodeMember";
     public static GetRefReasonActive = "/Approval/GetRefReasonActive";
     public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
+    public static GetTaskHistory = "/Approval/GetTaskHistory";
 
     //Digitalization
     public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";

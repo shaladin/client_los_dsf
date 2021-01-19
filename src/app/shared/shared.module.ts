@@ -29,7 +29,8 @@ import { CookieModule } from 'ngx-cookie';
         ToggleFullscreenDirective,
         NgbModule,
         TranslateModule,
-        DmsIframeComponent
+        DmsIframeComponent,
+        SafePipe
     ],
     imports: [
         RouterModule,

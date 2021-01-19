@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
+import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info',
@@ -70,10 +71,10 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   ListNegCust: Array<NegCustObj> = new Array<NegCustObj>();
   async GetListNegativeCustByCustNo() {
-    await this.http.post<any>(URLConstant.GetListNegativeCustByCustNo, { CustNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
+    await this.http.post<Array<NegCustObj>>(URLConstant.GetListNegativeCustByCustNo, { CustNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
       (response) => {
-        console.log(response);
-        this.ListNegCust = response[CommonConstant.ReturnObj];
+        // console.log(response);
+        this.ListNegCust = response;
       });
 
   }
@@ -124,12 +125,3 @@ export class CrdRvwCustInfoComponent implements OnInit {
   //#endregion
 }
 
-export class NegCustObj {
-  CustName: string;
-  MrNegCustTypeCode: string;
-  MrNegCustTypeCodeDesc: string;
-  MrNegCustSourceCode: string;
-  MrNegCustSourceCodeDesc: string;
-  NegCustCause: string;
-  constructor() { }
-}

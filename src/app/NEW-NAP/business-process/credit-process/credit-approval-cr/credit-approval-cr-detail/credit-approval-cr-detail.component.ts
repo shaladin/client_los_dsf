@@ -31,8 +31,10 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
+
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
+  
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router,
@@ -117,6 +119,8 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel; 
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
+    this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }
 
