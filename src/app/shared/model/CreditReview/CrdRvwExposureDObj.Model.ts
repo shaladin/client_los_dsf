@@ -31,6 +31,7 @@ export class CrdRvwExposureDObj {
     OverdueIndicatorDescr: string;
     
     constructor() {
+        this.CrdRvwExposureDId = 0;
         this.OsPrincipalAmt = 0;
         this.OsInterestAmt = 0;
         this.OsArBalance = 0;

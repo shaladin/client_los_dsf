@@ -43,7 +43,7 @@ export class ObligorExposureComponent implements OnInit {
   async ngOnInit() {
     this.SetExposureDObj();
     this.initSummaryData();
-    // await this.GetListCrdRvwCustBucketByCrdRvwExposureHId();
+    await this.GetListCrdRvwCustBucketByCrdRvwExposureDId();
     await this.GetListCrdRvwAppAgrHistByCrdRvwExposureHId();
     this.IsReady = true;
   }
@@ -58,8 +58,8 @@ export class ObligorExposureComponent implements OnInit {
   }
 
   ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> = new Array<CrdRvwCustBucketObj>();
-  async GetListCrdRvwCustBucketByCrdRvwExposureHId() {
-    await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureHId, { CrdRvwExposureHId: this.exposureHObj.CrdRvwExposureHId }).toPromise().then(
+  async GetListCrdRvwCustBucketByCrdRvwExposureDId() {
+    await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureDId, { CrdRvwExposureDId: this.ExposureDObj.CrdRvwExposureDId }).toPromise().then(
       (response) => {
         // console.log(response);
         this.ListCrdRvwCustBucketObj = response.ListCrdRvwCustBucketObj;
