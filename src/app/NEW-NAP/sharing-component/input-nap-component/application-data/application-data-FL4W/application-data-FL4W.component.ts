@@ -19,6 +19,7 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 
 @Component({
@@ -107,6 +108,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     MrSlikSecEcoCode: [''],
     CopyFromMailing: [''],
   });
+  slikSecDescr: string ="";
+  defaultSlikSecEcoCode: string;
 
   inputPagingObj;
   inputLookupObj;
@@ -120,6 +123,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   CustNo: string;
   isMainData: boolean = false;
   ngOnInit()  {
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
@@ -361,7 +365,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
-
+        if(code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == ""){
+          this.NapAppModelForm.patchValue({
+            CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode 
+          });
+        }
       });
   }
 
@@ -397,8 +406,23 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json"; 
-    this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
-    this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+    
+    if(this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != ""){
+      this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
+      this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+    }
+    else{
+      var reqSecObj = new RefMasterObj();
+      reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
+      reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
+      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response)=>{
+          console.log(response);
+          this.slikSecDescr = response['Descr'];
+          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
+          this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: response['Descr']};
+        });
+    }
     this.isInputLookupObj = true;
   }
 
