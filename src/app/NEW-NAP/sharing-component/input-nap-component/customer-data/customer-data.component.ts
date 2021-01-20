@@ -1746,6 +1746,17 @@ export class CustomerDataComponent implements OnInit {
       inputLeadCustObj.HomeKelurahan = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
       inputLeadCustObj.HomeKecamatan = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
       inputLeadCustObj.HomeCity = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
+      let inputLeadString = JSON.stringify(inputLeadCustObj);
+      let latestCustDataString = JSON.stringify(this.latestCustDataObj);
+  
+      if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+        if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
     }
     else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
 
@@ -1757,22 +1768,12 @@ export class CustomerDataComponent implements OnInit {
         if (confirm("Recent Customer Main Data. Are you sure want to submit without fraud check again?")) {
           return true;
         }
-        else {
-          return false;
-        }
-      }
-    }
-    let inputLeadString = JSON.stringify(inputLeadCustObj);
-    let latestCustDataString = JSON.stringify(this.latestCustDataObj);
-
-    if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
-      if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
-        return true;
       }
       else {
-        return false;
+        return true;
       }
     }
+
     else {
       return true;
     }
