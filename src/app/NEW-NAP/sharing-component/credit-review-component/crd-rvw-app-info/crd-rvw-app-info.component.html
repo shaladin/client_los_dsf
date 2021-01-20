@@ -36,7 +36,7 @@
             <a class="link" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>
             <span id="CreditScoringIndicator" style="float: right;">
               <i [ngClass]="crdRvwAppObj.CreditScoreIndicator == null ? 'far fa-circle' : crdRvwAppObj.CreditScoreIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                [ngStyle]="{'color': crdRvwAppObj.CreditScoreIndicator == null ? whiteIndicator : crdRvwAppObj.CreditScoreIndicator != whiteIndicator ? crdRvwAppObj.CreditScoreIndicator : whiteIndicator}" class="font-medium-3 tooltips">
+                [ngStyle]="{'color': crdRvwAppObj.CreditScoreIndicator == null ? '' : crdRvwAppObj.CreditScoreIndicator != whiteIndicator ? crdRvwAppObj.CreditScoreIndicator : ''}" class="font-medium-3 tooltips">
                 <span class="tooltipstext">
                   <span *ngIf="crdRvwAppObj.CreditScoreIndicatorDescr != null && crdRvwAppObj.CreditScoreIndicatorDescr != ''"> {{crdRvwAppObj.CreditScoreIndicatorDescr}} </span>
                   <span *ngIf="crdRvwAppObj.CreditScoreIndicatorDescr == null || crdRvwAppObj.CreditScoreIndicatorDescr == ''"> No Data </span>
@@ -134,7 +134,7 @@
           <label class="label-control"> TAC Commission + Reserve Fund </label>
           <span id="TacIndicator" style="float: right;">
             <i [ngClass]="crdRvwAppObj.TacIndicator == null ? 'far fa-circle' : crdRvwAppObj.TacIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-              [ngStyle]="{'color': crdRvwAppObj.TacIndicator == null ? whiteIndicator : crdRvwAppObj.TacIndicator != whiteIndicator ? crdRvwAppObj.TacIndicator : whiteIndicator}" class="font-medium-3 tooltips">
+              [ngStyle]="{'color': crdRvwAppObj.TacIndicator == null ? '' : crdRvwAppObj.TacIndicator != whiteIndicator ? crdRvwAppObj.TacIndicator : ''}" class="font-medium-3 tooltips">
               <span class="tooltipstext">
                 <span *ngIf="crdRvwAppObj.TacIndicatorDescr != null && crdRvwAppObj.TacIndicatorDescr != ''"> {{crdRvwAppObj.TacIndicatorDescr}} </span>
                 <span *ngIf="crdRvwAppObj.TacIndicatorDescr == null || crdRvwAppObj.TacIndicatorDescr == ''"> No Data </span>

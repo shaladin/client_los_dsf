@@ -4,6 +4,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwAppAgrHistObj } from 'app/shared/model/CreditReview/CrdRvwAppAgrHistObj.Model';
 import { CrdRvwCustBucketObj } from 'app/shared/model/CreditReview/CrdRvwCustBucketObj.Model';
+import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
+import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 
 @Component({
@@ -13,8 +15,9 @@ import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureO
 })
 export class ObligorExposureComponent implements OnInit {
 
-  @Input() exposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  
+  @Input() exposureHObj: CrdRvwExposureHObj = new CrdRvwExposureHObj();
+  readonly exposureType: string = CommonConstant.ExposureObligorTypeCode;
+
   SummaryData: {
     CustomerExposureAmt: number,
     FamilyExposureAmt: number,
@@ -22,7 +25,7 @@ export class ObligorExposureComponent implements OnInit {
     ShareholderExposureAmt: number,
     ObligorExposureAmt: number,
   };
-  
+
   //#region Role Type
   readonly RoleCust: string = CommonConstant.RoleCustData;
   readonly RoleFam: string = CommonConstant.RoleFamilyData;
@@ -35,15 +38,28 @@ export class ObligorExposureComponent implements OnInit {
     private http: HttpClient,
   ) { }
 
+  ExposureDObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
+  IsReady: boolean = false;
   async ngOnInit() {
+    this.SetExposureDObj();
     this.initSummaryData();
-    await this.GetListCrdRvwCustBucketByCrdRvwExposureId();
-    await this.GetListCrdRvwAppAgrHistByCrdRvwExposureId();
+    // await this.GetListCrdRvwCustBucketByCrdRvwExposureHId();
+    await this.GetListCrdRvwAppAgrHistByCrdRvwExposureHId();
+    this.IsReady = true;
+  }
+
+  SetExposureDObj() {
+    if (this.exposureHObj.ListCrdRvwExposureDObj.length > 0) {
+      let tempObj: CrdRvwExposureDObj = this.exposureHObj.ListCrdRvwExposureDObj.find(x => x.ExposureType == this.exposureType);
+      if (tempObj != null) {
+        this.ExposureDObj = tempObj;
+      }
+    }
   }
 
   ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> = new Array<CrdRvwCustBucketObj>();
-  async GetListCrdRvwCustBucketByCrdRvwExposureId() {
-    await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureId, { CrdRvwExposureId: this.exposureObj.CrdRvwExposureId }).toPromise().then(
+  async GetListCrdRvwCustBucketByCrdRvwExposureHId() {
+    await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureHId, { CrdRvwExposureHId: this.exposureHObj.CrdRvwExposureHId }).toPromise().then(
       (response) => {
         // console.log(response);
         this.ListCrdRvwCustBucketObj = response.ListCrdRvwCustBucketObj;
@@ -66,8 +82,8 @@ export class ObligorExposureComponent implements OnInit {
     };
   }
 
-  async GetListCrdRvwAppAgrHistByCrdRvwExposureId() {
-    await this.http.post<{ ListCrdRvwAppAgrHistObj: Array<CrdRvwAppAgrHistObj> }>(URLConstant.GetListCrdRvwAppAgrHistByCrdRvwExposureId, { CrdRvwExposureId: this.exposureObj.CrdRvwExposureId }).toPromise().then(
+  async GetListCrdRvwAppAgrHistByCrdRvwExposureHId() {
+    await this.http.post<{ ListCrdRvwAppAgrHistObj: Array<CrdRvwAppAgrHistObj> }>(URLConstant.GetListCrdRvwAppAgrHistByCrdRvwExposureHId, { CrdRvwExposureHId: this.exposureHObj.CrdRvwExposureHId }).toPromise().then(
       (response) => {
         // console.log(response);
         for (let index = 0; index < response.ListCrdRvwAppAgrHistObj.length; index++) {
