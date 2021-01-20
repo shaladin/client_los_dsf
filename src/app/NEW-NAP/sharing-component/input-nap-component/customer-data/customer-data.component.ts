@@ -1750,7 +1750,7 @@ export class CustomerDataComponent implements OnInit {
       let latestCustDataString = JSON.stringify(this.latestCustDataObj);
   
       if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
-        if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
+        if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }
         else {
@@ -1765,7 +1765,7 @@ export class CustomerDataComponent implements OnInit {
       inputLeadCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
       if(this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value || 
       this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value){
-        if (confirm("Recent Customer Main Data. Are you sure want to submit without fraud check again?")) {
+        if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }
       }
