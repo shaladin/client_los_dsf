@@ -123,7 +123,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   CustNo: string;
   isMainData: boolean = false;
   ngOnInit()  {
-    this.defaultSlikSecEcoCode = "930000";
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;

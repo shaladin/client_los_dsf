@@ -601,4 +601,5 @@ export class CommonConstant {
   public static DmsViewCodeMou = "ConfinsMou";
   public static DmsViewCodeLead = "ConfinsLead";
   
+  public static DefaultSlikSecEcoCode = "930000";
 }

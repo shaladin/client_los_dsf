@@ -103,7 +103,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.defaultSlikSecEcoCode = "930000";
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     console.log("APP DATA FCTRING")
     this.isInputLookupObj = false;
     this.loadData();

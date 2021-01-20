@@ -129,7 +129,7 @@ export class ApplicationDataComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.defaultSlikSecEcoCode = "930000";
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
