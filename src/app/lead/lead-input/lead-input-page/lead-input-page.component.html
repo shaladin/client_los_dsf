@@ -42,6 +42,14 @@
             <span class="bs-stepper-label">LEAD DATA</span>
           </button>
         </div>
+        <div class="line"></div>
+        <div class="step" data-target="#upload-data-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab" id="upload-data-tab-trigger"
+        (click)="EnterTab('uploadDocument')">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Upload Document</span>
+          </button>
+        </div>
       </div>
       <br><br>
       <!-- <div class="bs-stepper-content"> -->
@@ -52,6 +60,9 @@
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
         <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
         </app-lead-input-lead-data>
+      </div>
+      <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
+        <app-dms-iframe *ngIf="AppStepIndex == 3" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
       </div>
       <!-- </div> -->
     </div>

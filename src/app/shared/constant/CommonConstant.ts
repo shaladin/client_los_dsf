@@ -23,7 +23,6 @@ export class CommonConstant {
   public static BUSINESS_DT = "BusinessDt";
   public static BUSINESS_DATE = "BusinessDate";
   public static TOKEN = "Token";
-  public static LOCAL_IP = "LocalIp";
   public static BIZ_TEMPLATE_CODE = "BizTemplateCode";
   public static BUSINESS_DATE_RAW = "BusinessDateRaw";
   public static VERSION = "Version";
@@ -592,6 +591,7 @@ export class CommonConstant {
   public static DmsNoApp = "No Application";
   public static DmsNoAgr = "No Agreement";
   public static DmsMouId = "Mou Id";
+  public static DmsLeadId = "Lead Id";
   public static DmsOverideSecurity = "OverideSecurity";
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";

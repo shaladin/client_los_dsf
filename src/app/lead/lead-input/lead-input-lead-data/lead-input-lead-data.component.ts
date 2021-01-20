@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -28,6 +28,7 @@ import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyRes
 
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string;
+  @Output() outputTab: EventEmitter<object> = new EventEmitter();
   typePage: string;
   CopyFrom: string;
   LeadId: string;
