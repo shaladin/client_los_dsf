@@ -62,7 +62,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             if (request.body != null) {
                 myObj = request.body;
             }
-            myObj["Ip"] = localStorage.getItem(CommonConstant.LOCAL_IP);
             myObj["RequestDateTime"] = businessDt;
         }
         else {
@@ -70,7 +69,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             if (request.body != null) {
                 myObj = request.body;
             }
-            myObj["Ip"] = localStorage.getItem(CommonConstant.LOCAL_IP);
             myObj["RequestDateTime"] = businessDt;
             token = localStorage.getItem(CommonConstant.TOKEN);
         }
@@ -93,6 +91,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         request = request.clone({ headers: request.headers.set('Access-Control-Allow-Credentials', 'true') });
         request = request.clone({ headers: request.headers.set('Access-Control-Allow-Methods', 'POST') });
         request = request.clone({ headers: request.headers.set('Access-Control-Allow-Headers', 'Content-Type,Accept,Authorization') });
+        request = request.clone({ headers: request.headers.set('X-Content-Type-Options', 'nosniff') });
         request = request.clone({ body: myObj });
         AdInsHelper.InsertLog(request.url, "API", request.body);
         console.log(JSON.stringify(request.body));

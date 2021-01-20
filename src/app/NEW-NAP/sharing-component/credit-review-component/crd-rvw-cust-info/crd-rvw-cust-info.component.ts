@@ -9,7 +9,7 @@ import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoO
 import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
 import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
-import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.Model';
+import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info',

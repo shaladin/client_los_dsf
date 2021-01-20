@@ -23,6 +23,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -35,6 +37,7 @@ export class FraudVerifPageComponent implements OnInit {
   GetFraudResult: string;
   ResultThirdPartyObj: any;
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
+  dmsObj: DMSObj;
   
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -119,6 +122,15 @@ export class FraudVerifPageComponent implements OnInit {
 
     this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).subscribe(
       (response) => {
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+            this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+            this.dmsObj.MetadataParent = null;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        
         if(response["LobCode"] !== CommonConstant.CFNA){
           this.leadAssetObj.LeadId = this.LeadId;
           this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(

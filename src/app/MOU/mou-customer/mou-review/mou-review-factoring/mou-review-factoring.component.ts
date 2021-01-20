@@ -15,6 +15,8 @@ import { environment } from 'environments/environment';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model'; 
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
@@ -40,6 +42,7 @@ export class MouReviewFactoringComponent implements OnInit {
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
+  dmsObj: DMSObj;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
       // initially setter gets called with undefined
@@ -70,6 +73,14 @@ export class MouReviewFactoringComponent implements OnInit {
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
       }
     );
 
