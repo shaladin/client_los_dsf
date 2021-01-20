@@ -100,5 +100,6 @@ export class ExceptionConstant {
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
     
     public static NO_SURVEY = "No Survey";
+    public static NO_PHONE_VERF = "No Phone Verification";
 }
 

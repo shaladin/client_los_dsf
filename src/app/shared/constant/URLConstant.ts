@@ -924,6 +924,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetVerfResultById = environment.FoundationR3Url + "/VerfResult/GetVerfResultById";
     public static AddVerfResultAndVerfResultH = environment.FoundationR3Url + "/VerfResult/AddVerfResultAndVerfResultH";
     public static GetVerfResultHById = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHById";
+    public static GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode";
     public static GetVerfResultHsByTrxRefNo = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByTrxRefNo";
     public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
     public static GetListVerfResultDInQuestionGrp = environment.FoundationR3Url + "/VerfResultD/GetListVerfResultDInQuestionGrp";

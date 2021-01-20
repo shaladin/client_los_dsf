@@ -61,10 +61,10 @@
   </div>
 </div>
 
-<div class="row">
+<lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
+</lib-ucSubsection>
+<div class="row" id="Financial">
   <div class="col-md-6">
-    <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
-    </lib-ucSubsection>
     <div id="Financial">      
       <div class="row">
         <div class="col-md-6">
@@ -101,18 +101,16 @@
     </div>
   </div>
   <div class="col-md-6">
-    <!-- <lib-ucSubsection [id]="'IncomeAndExpenseId'" [title]="'Income And Expense'" [panel]="'IncomeAndExpense'">
-    </lib-ucSubsection> -->
-    <div class="card-body">
-      <form class="form form-horizontal">
-        <div class="form-body">
-          <h4 class="form-section font-weight-bold">
-            <a class="link" (click)="ClickLinkIncomeExpenseDetail(IncomeExpenseDetail)"> Income And Expense </a>
-          </h4>
-        </div>
-      </form>
-    </div>
     <div id="IncomeAndExpense">
+      <div class="row">
+        <div class="col-md-6">          
+          <label class="label-control"> 
+            <a class="link" (click)="ClickLinkIncomeExpenseDetail(IncomeExpenseDetail)"> Income And Expense </a>
+          </label>
+        </div>
+        <div class="col-md-6 ">
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-6">
           <label class="label-control"> Total Income </label>
