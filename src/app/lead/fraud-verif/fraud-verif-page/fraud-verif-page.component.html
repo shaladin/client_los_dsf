@@ -1,4 +1,9 @@
-<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
+<div class="row text-left">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="px-3">
+                    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
 
 <lib-ucSubsection [id]="'InternalFraudCheckingId'" [title]="'Internal Fraud Checking'"
     [panel]="'InternalFraudChecking'">
@@ -31,17 +36,20 @@
                     </th>
                     <th><span style="float: left;" class="thead-header" name='BirthDt' translate>BIRTH DATE</span>
                     </th>
-                    <th><span style="float: left;" class="thead-header" name='MotherMaidenName' translate>MOTHER MAIDEN NAME</span>
+                    <th><span style="float: left;" class="thead-header" name='MotherMaidenName' translate>MOTHER MAIDEN
+                            NAME</span>
                     </th>
-                    <th><span style="float: left;" class="thead-header" name='MobilePhnNo1' translate>MOBILE PHONE</span>
+                    <th><span style="float: left;" class="thead-header" name='MobilePhnNo1' translate>MOBILE
+                            PHONE</span>
                     </th>
                     <th><span class="thead-header" name='Status' translate>STATUS</span>
                     </th>
-                    <th><span style="float: left;" class="thead-header" name='DuplicateItem' translate>DUPLICATE ITEM</span>
+                    <th><span style="float: left;" class="thead-header" name='DuplicateItem' translate>DUPLICATE
+                            ITEM</span>
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="ResultDuplicate">
                 <ng-container *ngFor="let item of ResultDuplicate; let i = index">
                     <tr>
                         <td>{{i+1}}</td>
@@ -79,7 +87,8 @@
                         </th>
                         <th><span style="float: left;" class="thead-header" name='CustNo' translate>CUSTOMER NO.</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='CustName' translate>CUSTOMER NAME</span>
+                        <th><span style="float: left;" class="thead-header" name='CustName' translate>CUSTOMER
+                                NAME</span>
                         </th>
                         <th><span style="float: left;" class="thead-header" name='MrIdType' translate>ID TYPE</span>
                         </th>
@@ -89,21 +98,26 @@
                         </th>
                         <th><span class="thead-header" name='TaxIdNo' translate>BIRTH DATE</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>MOTHER MAIDEN NAME</span>
+                        <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>MOTHER MAIDEN
+                                NAME</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='MobilePhnNo1' translate>MOBILE PHONE</span>
+                        <th><span style="float: left;" class="thead-header" name='MobilePhnNo1' translate>MOBILE
+                                PHONE</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='MrNegCustSource' translate>NEGATIVE SOURCE</span>
+                        <th><span style="float: left;" class="thead-header" name='MrNegCustSource' translate>NEGATIVE
+                                SOURCE</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='MrNegCustType' translate>NEGATIVE TYPE</span>
+                        <th><span style="float: left;" class="thead-header" name='MrNegCustType' translate>NEGATIVE
+                                TYPE</span>
                         </th>
                         <th><span class="thead-header" name='Status' translate>STATUS</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='DuplicateItem' translate>DUPLICATE ITEM</span>
+                        <th><span style="float: left;" class="thead-header" name='DuplicateItem' translate>DUPLICATE
+                                ITEM</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="ResultDuplicateNegative">
                     <tr *ngFor="let item of ResultDuplicateNegative; let i = index">
                         <td>{{i+1}}</td>
                         <td>{{item.CustNo}}</td>
@@ -140,25 +154,33 @@
                     <tr class="table-header">
                         <th><span class="thead-header" name='No' translate>ASSET TYPE</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='CustNo' translate>ASSET CATEGORY</span>
+                        <th><span style="float: left;" class="thead-header" name='CustNo' translate>ASSET
+                                CATEGORY</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='CustName' translate>FULL ASSET NAME</span>
+                        <th><span style="float: left;" class="thead-header" name='CustName' translate>FULL ASSET
+                                NAME</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo1' translate>SERIAL NO. 1</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo1' translate>SERIAL NO.
+                                1</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo2' translate>SERIAL NO. 2</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo2' translate>SERIAL NO.
+                                2</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo3' translate>SERIAL NO. 3</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo3' translate>SERIAL NO.
+                                3</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo4' translate>SERIAL NO. 4</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo4' translate>SERIAL NO.
+                                4</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo5' translate>SERIAL NO. 5</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo5' translate>SERIAL NO.
+                                5</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='MrNegCustSource' translate>NOTES</span>
+                        <th><span style="float: left;" class="thead-header" name='MrNegCustSource'
+                                translate>NOTES</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="ResultDuplicateAssetNegative">
                     <tr *ngFor="let item of ResultDuplicateAssetNegative; let i = index">
                         <td class="text-left">{{item.AssetTypeName}}</td>
                         <td class="text-left">{{item.AssetCategoryCode}}</td>
@@ -195,25 +217,33 @@
                         </th>
                         <th><span style="float: left;" class="thead-header" name='AgrmntNo' translate>Agrmnt No</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='AssetTypeName' translate>Asset Type</span>
+                        <th><span style="float: left;" class="thead-header" name='AssetTypeName' translate>Asset
+                                Type</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='AssetCategoryCode' translate>Asset Category</span>
+                        <th><span style="float: left;" class="thead-header" name='AssetCategoryCode' translate>Asset
+                                Category</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='FullAssetName' translate>Full Asset Name</span>
+                        <th><span style="float: left;" class="thead-header" name='FullAssetName' translate>Full Asset
+                                Name</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo1' translate>SERIAL NO. 1</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo1' translate>SERIAL NO.
+                                1</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo2' translate>SERIAL NO. 2</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo2' translate>SERIAL NO.
+                                2</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo3' translate>SERIAL NO. 3</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo3' translate>SERIAL NO.
+                                3</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo4' translate>SERIAL NO. 4</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo4' translate>SERIAL NO.
+                                4</span>
                         </th>
-                        <th><span style="float: left;" class="thead-header" name='SerialNo5' translate>SERIAL NO. 5</span>
+                        <th><span style="float: left;" class="thead-header" name='SerialNo5' translate>SERIAL NO.
+                                5</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="ResultDuplicateDoubleFinancing">
                     <tr *ngFor="let item of ResultDuplicateDoubleFinancing; let i = index">
                         <td>{{i+1}}</td>
                         <td class="text-left">{{item.AppNo}}</td>
@@ -233,42 +263,123 @@
     </div>
 
 </div>
+<div class="row text-left">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header header-title" style="margin-bottom: 10px;">
+                    <div class="px-3">
+                        <lib-ucSubsection [id]="'3RdPartycheckingId'" [title]="'3rd Party Checking'"
+                            [panel]="'3RdPartychecking'">
+                        </lib-ucSubsection>
 
-<lib-ucSubsection [id]="'3RdPartycheckingId'" [title]="'3rd Party Checking'" [panel]="'3RdPartychecking'">
-</lib-ucSubsection>
+                        <div class="form-group" id="3RdPartychecking">
+                            <div class="px-3">
 
-<div class="form-body" id="3RdPartychecking">
-    <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="FraudVerfForm"
-        (ngSubmit)="FraudVerfForm.valid" #enjiForm="ngForm">
-        <div class="form-group row"> 
-            <label class="col-md-2  adInsLabel" translate>Pefindo</label>
-            <div class="col-md-4">
-              <label> Pefindo </label>
+                                <div class="form-group" *ngIf="ResultThirdPartyObj">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Dukcapil</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.DukcapilIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.DukcapilIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.DukcapilResult}}</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Pefindo</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.PefindoIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.PefindoIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.PefindoResult}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Rapindo</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.RapindoIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.RapindoIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.RapindoResult}}</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>SLIK</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.SlikIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.SlikIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.SlikResult}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label class="label-control" translate>Profind</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="float: right;">
+                                                <i *ngIf="ResultThirdPartyObj.ProfindIndicator"
+                                                    [ngStyle]="{'color': ResultThirdPartyObj.ProfindIndicator}"
+                                                    class="font-medium-3 fa fa-circle tooltips">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>{{ResultThirdPartyObj.ProfindResult}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="form form-horizontal" [formGroup]="FraudVerfForm"
+                                    (ngSubmit)="FraudVerfForm.valid" #enjiForm="ngForm">
+                                    <div class="form-group row">
+                                        <label class="col-md-2  adInsLabel" translate>Notes</label>
+                                        <div class="col-md-4">
+                                            <textarea class="form-control adInsInput" formControlName="Notes"
+                                                [ngClass]="{ 'is-invalid': enjiForm.submitted && FraudVerfForm.controls.Notes.invalid }"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
+                                translate>
+                                <i class="ft-x"></i> Cancel
+                            </button>
+                            <button type="submit" class="btn btn-raised btn-primary" (click)="reject()">
+                                Reject
+                            </button>
+                            <button type="button" class="btn btn-raised btn-primary" (click)="verify()">Verify</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <label class="col-md-2 adInsLabel" translate>SLIK</label>
-            <div class="col-md-4">
-              <label>SLIK </label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-2  adInsLabel" translate>Notes</label>
-            <div class="col-md-4">
-                <textarea class="form-control adInsInput" formControlName="Notes"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && FraudVerfForm.controls.Notes.invalid }"></textarea>
-            </div> 
-          </div> 
-          </form>
+        </div>
     </div>
-</div>
-
-<div class="modal-footer">
-    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
-    translate>
-    <i class="ft-x"></i> Cancel
-  </button>
-    <button type="submit" class="btn btn-raised btn-primary" (click)="reject()">
-        Reject
-    </button>
-    <button type="button" class="btn btn-raised btn-primary" (click)="verify()">Verify</button>
 </div>

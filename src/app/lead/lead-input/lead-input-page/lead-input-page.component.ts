@@ -11,6 +11,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -27,8 +29,9 @@ export class LeadInputPageComponent implements OnInit {
   titlePageType: string;
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
+  dmsObj: DMSObj;
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
-  AppStepIndex :number =1;
+  AppStepIndex: number = 1;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -37,11 +40,11 @@ export class LeadInputPageComponent implements OnInit {
       if (params["TaskListId"] != null) {
         this.TaskListId = params["TaskListId"];
       }
-      if(params["mode"] == "update"){
+      if (params["mode"] == "update") {
         this.pageType = params["mode"];
         this.titlePageType = "UPDATE";
       }
-      else if(params["mode"] == "edit" || params["mode"] == undefined){
+      else if (params["mode"] == "edit" || params["mode"] == undefined) {
         this.pageType = params["mode"];
         this.titlePageType = "INPUT";
       }
@@ -51,7 +54,19 @@ export class LeadInputPageComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise().then(
+      (response) => {
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+        this.dmsObj.MetadataParent = null;
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+      });
+
     if (this.TaskListId > 0) {
       this.claimTask();
     }
@@ -87,52 +102,76 @@ export class LeadInputPageComponent implements OnInit {
       this.isLeadData = true;
       this.AppStepIndex = 2;
     }
+    if (type == "uploadDocument") {
+      this.AppStepIndex = 3;
+    }
   }
-  
-  editMainInfoHandler(){
-    var modeName : string;
-    if(this.pageType == undefined){
+
+  editMainInfoHandler() {
+    var modeName: string;
+    if (this.pageType == undefined) {
       modeName = "edit";
     }
-    else{
+    else {
       modeName = this.pageType;
     }
-    AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/MainInfo"],{ LeadId: this.LeadId, mode: modeName });
+    AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/MainInfo"], { LeadId: this.LeadId, mode: modeName });
   }
 
-  cancelHandler(){
-    if(this.pageType == "update"){
-      AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
+  cancelHandler() {
+    if (this.pageType == "update") {
+      AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
     }
-    else{
-      AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+    else {
+      AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
     }
   }
 
-  getValue(ev){
-    if (ev.stepMode != undefined){
-      if (ev.stepMode == "next"){
+  getValue(ev) {
+    if (ev.stepMode != undefined) {
+      if (ev.stepMode == "next") {
         this.stepper.next();
-        this.EnterTab("leadData");
-
-        if(this.isLeadData == true){
-          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-          this.leadMainInfo.clear();
-          const component = this.leadMainInfo.createComponent(componentFactory);
-          component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
+        this.AppStepIndex++;
+        if (this.AppStepIndex == 2) {
+          this.EnterTab("leadData");
+          if (this.isLeadData == true) {
+            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+            this.leadMainInfo.clear();
+            const component = this.leadMainInfo.createComponent(componentFactory);
+            component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
+          }
         }
+        else if(this.AppStepIndex == 3){
+          this.EnterTab("")
+        }
+
+
+
       }
-      else{
+      else {
         this.stepper.previous();
       }
     }
   }
-  
+
+  backTabToLeadData() {
+    this.EnterTab("leadData");
+    this.stepper.previous();
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    this.leadMainInfo.clear();
+    const component = this.leadMainInfo.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
+  }
+
   async claimTask() {
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
-    }	
+  }
+  endOfTab() {
+    AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
+  }
 }

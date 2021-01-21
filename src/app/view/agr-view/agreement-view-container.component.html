@@ -68,6 +68,12 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab label="Agreement Document">
+              <ng-template matTabContent>
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsTC" label="Term and Conditions">
               <ng-template matTabContent>
                 <app-app-tc [AppId]="AppId"></app-app-tc>

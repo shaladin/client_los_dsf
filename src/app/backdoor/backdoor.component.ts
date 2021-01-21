@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustObj } from 'app/shared/model/CustObj.Model';
-
+import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-backdoor',
   templateUrl: './backdoor.component.html',
@@ -22,9 +23,11 @@ export class BackdoorComponent implements OnInit {
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
+  dmsObj: DMSObj;
 
   constructor(
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(
       (param: ParamMap) => {
         if (param["CUST_NO"] != undefined && param["KEY"] != undefined && param["IV"] != undefined) {
@@ -38,26 +41,27 @@ export class BackdoorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
-    this.Uploadlink = this.DMSURL(this.custObj,"Upload");
-    this.Viewlink  = this.DMSURL(this.custObj,"View");
+    // this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
+    // this.Uploadlink = this.DMSURL(this.custObj,"Upload");
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj = new DMSObj();
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeCust;
+    this.dmsObj.MetadataParent = null;
+    this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custObj.CustNo));
+    this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUpload));
   }
 
-  DMSURL(custObj: CustObj, permission : string) {
-    if (custObj != undefined) {
-      let Obj: DMSObj = new DMSObj();
-      Obj.User = "Admin";
-      Obj.Role = "SUPUSR";
-      Obj.ViewCode = "ConfinsCust";
-      Obj.MetadataParent = null;
-      Obj.MetadataObject.push(new DMSLabelValueObj("No Customer", custObj.CustNo));
-      Obj.Option.push(new DMSLabelValueObj("OverideSecurity", permission));
-      let ObjFinalForm = "js=" + JSON.stringify(Obj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
-      let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
-      prm = encodeURIComponent(prm);
-      console.log("Final Form : " + ObjFinalForm);
-      console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
-      return "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm;
-    }
-  }
+  // DMSURL(custObj: CustObj, permission : string) {
+  //   if (custObj != undefined) {
+
+  //     let ObjFinalForm = "js=" + JSON.stringify(Obj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
+  //     let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
+  //     prm = encodeURIComponent(prm);
+  //     console.log("Final Form : " + ObjFinalForm);
+  //     console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
+  //     return "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm;
+  //   }
+  // }
 }

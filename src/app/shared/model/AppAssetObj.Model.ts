@@ -43,6 +43,12 @@ export class AppAssetObj {
   InsAssetCoveredByDesc: string;
   RowVersion: string;
 
+  SerialNo1Label: string;
+  SerialNo2Label: string;
+  SerialNo3Label: string;
+  SerialNo4Label: string;
+  SerialNo5Label: string;
+
   constructor() {
     this.AppAssetId = 0;
     this.AppId = 0;

@@ -59,7 +59,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
   })
-
+  slikSecDescr: string ="";
+  defaultSlikSecEcoCode: string;
   refMasterInterestType: RefMasterObj = new RefMasterObj();
   refMasterInsScheme: RefMasterObj = new RefMasterObj();
   refMasterInsType: RefMasterObj = new RefMasterObj();
@@ -102,6 +103,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     console.log("APP DATA FCTRING")
     this.isInputLookupObj = false;
     this.loadData();
@@ -112,7 +114,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   async setDropdown() {
     this.refMasterInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeFactoring;
     this.refMasterInsScheme.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
-    this.refMasterInsScheme.ReserveField1 = CommonConstant.FCTR;
+    this.refMasterInsScheme.MappingCode = CommonConstant.FCTR;
     this.refMasterInsType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstType;
     this.refMasterRecommendation.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSlsRecom;
     this.refMasterWOP.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
@@ -177,7 +179,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, this.refMasterInsScheme).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.refMasterInsScheme).subscribe(
       (response) => {
         this.allInScheme = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
@@ -272,7 +274,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.allCharacteristicCredit = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
-            CharaCredit: this.allCharacteristicCredit[0].Key
+            CharaCredit: this.allCharacteristicCredit[1].Key,
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode 
           });
         }
       });
@@ -466,8 +469,23 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.nameSelect = this.resultData["MrSlikSecEcoDescr"];
-    this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
+    
+    if(this.resultData["MrSlikSecEcoDescr"] != null && this.resultData["MrSlikSecEcoDescr"] != ""){
+      this.inputLookupEconomicSectorObj.nameSelect = this.resultData["MrSlikSecEcoDescr"];
+      this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
+    }
+    else{
+      var reqSecObj = new RefMasterObj();
+      reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
+      reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
+      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response)=>{
+          console.log(response);
+          this.slikSecDescr = response['Descr'];
+          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
+          this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: response['Descr']};
+        });
+    }
     this.isInputLookupObj = true;
 
   }
