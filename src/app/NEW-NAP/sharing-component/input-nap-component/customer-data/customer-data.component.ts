@@ -35,6 +35,12 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyC
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
+import { LeadCustCompareObj } from 'app/shared/model/LeadCustCompareObj.Model';
+import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
+import { CustObjForAddTrxData } from 'app/shared/model/CustObjForAddTrxData.Model';
+import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -65,6 +71,7 @@ export class CustomerDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  isNeedCheckBySystem: string;
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -89,7 +96,7 @@ export class CustomerDataComponent implements OnInit {
   inputFieldMailingCompanyObj: InputFieldObj;
   copyFromMailingCompany: any;
   appCustPersonalId: any;
-  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();inputAddressObjForLegal: InputAddressObj;
+  listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>(); inputAddressObjForLegal: InputAddressObj;
   inputAddressObjForResidence: InputAddressObj;
   inputAddressObjForMailing: InputAddressObj;
   inputAddressObjForLegalCoy: InputAddressObj;
@@ -138,6 +145,15 @@ export class CustomerDataComponent implements OnInit {
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appData: AppObj;
+  generalSettingObj: GeneralSettingObj;
+  returnGeneralSettingObj: any;
+  appObj: any;
+  returnAppObj: any;
+  thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  latestCustDataObj: AppCustCompareObj;
+  thirdPartyRsltHId: any;
+  latestReqDtCheckIntegrator: any;
+  reqLatestJson: any;
 
   constructor(
     private fb: FormBuilder,
@@ -150,10 +166,11 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.GetGS();
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.title = "Legal Address";
     this.inputAddressObjForLegal.showAllPhn = false;
-    
+
     this.inputAddressObjForResidence = new InputAddressObj();
     this.inputAddressObjForResidence.showSubsection = false;
     this.inputAddressObjForResidence.showPhn3 = false;
@@ -187,26 +204,153 @@ export class CustomerDataComponent implements OnInit {
     );
   }
 
+  checkIntegrator() {
+    if (this.isNeedCheckBySystem == "0") {
+      var custObjForAddTrxData = new CustObjForAddTrxData();
+      custObjForAddTrxData.AppId = this.appId;
+      custObjForAddTrxData.MrCustTypeCode = this.MrCustTypeCode;
+
+      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+        var custDataPersonalObj = new CustDataPersonalObj();
+        custDataPersonalObj = this.setCustPersonalObjForSave();
+        custObjForAddTrxData.RequestCustDataPersonalObj = custDataPersonalObj;
+      }
+      else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+        var custDataPersonalObj = new CustDataPersonalObj();
+
+        custObjForAddTrxData.RequestCustDataCompanyObj.AppCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
+        custObjForAddTrxData.RequestCustDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
+        custObjForAddTrxData.RequestCustDataCompanyObj.AppCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
+        custObjForAddTrxData.RequestCustDataCompanyObj.AppCustObj.MrIdTypeCode = "NPWP";
+        custObjForAddTrxData.RequestCustDataCompanyObj.AppCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
+
+      }
+      this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+      this.thirdPartyObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
+      this.thirdPartyObj.TrxNo = this.returnAppObj["AppNo"];
+      this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
+      this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingNAPCust, custObjForAddTrxData).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+            (response) => {
+              this.latestReqDtCheckIntegrator = response['ReqDt'];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              this.reqLatestJson = JSON.parse(response['ReqJson']);
+              if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                this.latestCustDataObj = new AppCustCompareObj();
+
+                this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
+                if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                  this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                  this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                  this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                  this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                  this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                  this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                  this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                }
+              }
+            }
+          );
+
+        });
+
+    }
+
+  }
+  GetGS() {
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).subscribe(
+      (response) => {
+        this.returnGeneralSettingObj = response;
+        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+        this.appObj = new AppObj();
+        this.appObj.AppId = this.appId;
+        this.http.post(URLConstant.GetAppById, this.appObj).subscribe(
+          (response) => {
+            this.returnAppObj = response;
+
+            this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+            this.thirdPartyObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
+            this.thirdPartyObj.TrxNo = this.returnAppObj["AppNo"];
+            this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
+            this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              (response) => {
+                if (response != null) {
+                  this.latestReqDtCheckIntegrator = response['ReqDt'];
+                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                  this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+                    (response) => {
+                      this.latestReqDtCheckIntegrator = response['ReqDt'];
+                      this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                      this.reqLatestJson = JSON.parse(response['ReqJson']);
+                      if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                        this.latestCustDataObj = new AppCustCompareObj();
+
+                        this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                        this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                        this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                        this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                        this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                        this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                        this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                        this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                        this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                        this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                        this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
+                        if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                          this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                          this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                          this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                          this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                          this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                          this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                          this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                        }
+                      }
+                    }
+                  );
+                }
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+
   SaveForm() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       var custDataPersonalObj = new CustDataPersonalObj();
       custDataPersonalObj = this.setCustPersonalObjForSave();
       for (let i = 0; i < custDataPersonalObj.AppCustGrpObjs.length; i++) {
-        for (let j = i+1; j < custDataPersonalObj.AppCustGrpObjs.length; j++) {
-          if (custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+        for (let j = i + 1; j < custDataPersonalObj.AppCustGrpObjs.length; j++) {
+          if (custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == custDataPersonalObj.AppCustGrpObjs[j]["CustNo"]) {
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
 
           if (custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
       }
 
-      if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-        if(custDataPersonalObj.AppCustBankAccObjs.length <= 0){
+      if (this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W) {
+        if (custDataPersonalObj.AppCustBankAccObjs.length <= 0) {
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
           return false;
         }
@@ -215,19 +359,22 @@ export class CustomerDataComponent implements OnInit {
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
 
       if (this.isSpouseOk) {
-        this.http.post(this.addEditCustDataPersonalUrl, custDataPersonalObj).subscribe(
-          (response) => {
-            if (response["StatusCode"] == 200) {
-              this.toastr.successMessage(response["message"]);
-              this.EmitToMainComp();
+        if (this.confirmFraudCheck()) {
+
+          this.http.post(this.addEditCustDataPersonalUrl, custDataPersonalObj).subscribe(
+            (response) => {
+              if (response["StatusCode"] == 200) {
+                this.toastr.successMessage(response["message"]);
+                this.EmitToMainComp();
+              }
+              else {
+                response["ErrorMessages"].forEach((message: string) => {
+                  this.toastr.errorMessage(message["Message"]);
+                });
+              }
             }
-            else {
-              response["ErrorMessages"].forEach((message: string) => {
-                this.toastr.errorMessage(message["Message"]);
-              });
-            }
-          }
-        );
+          );
+        }
       }
       else {
         this.toastr.warningMessage(ExceptionConstant.INPUT_SPOUSE_CONTACT_INFO);
@@ -251,31 +398,33 @@ export class CustomerDataComponent implements OnInit {
       var custDataCompanyObj = new CustDataCompanyObj();
       custDataCompanyObj = this.setCustCompanyObjForSave();
       for (let i = 0; i < custDataCompanyObj.AppCustGrpObjs.length; i++) {
-        for (let j = i+1; j < custDataCompanyObj.AppCustGrpObjs.length; j++) {
-          if (custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+        for (let j = i + 1; j < custDataCompanyObj.AppCustGrpObjs.length; j++) {
+          if (custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == custDataCompanyObj.AppCustGrpObjs[j]["CustNo"]) {
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
 
           if (custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
       }
 
-      if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-        if(custDataCompanyObj.AppCustBankAccObjs.length <= 0){
+      if (this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W) {
+        if (custDataCompanyObj.AppCustBankAccObjs.length <= 0) {
           this.toastr.errorMessage("Must Have At Least 1 Bank Account");
           return false;
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      this.http.post(URLConstant.AddEditCustDataCompany, custDataCompanyObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.EmitToMainComp();
-        });
+      else if (this.confirmFraudCheck()) {
+        this.http.post(URLConstant.AddEditCustDataCompany, custDataCompanyObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.EmitToMainComp();
+          });
+      }
     }
   }
 
@@ -388,7 +537,7 @@ export class CustomerDataComponent implements OnInit {
         appCustObj.IsExistingCust = false;
       }
 
-      if(this.isExisting){
+      if (this.isExisting) {
         appCustObj.RowVersion = this.custDataPersonalObj.AppCustObj.RowVersion;
       }
     }
@@ -410,13 +559,13 @@ export class CustomerDataComponent implements OnInit {
         appCustObj.IsExistingCust = false;
       }
 
-      if(this.isExisting){
+      if (this.isExisting) {
         appCustObj.RowVersion = this.custDataCompanyObj.AppCustObj.RowVersion;
       }
     }
 
     appCustObj.IsCustomer = true;
-    
+
     return appCustObj;
   }
 
@@ -430,7 +579,7 @@ export class CustomerDataComponent implements OnInit {
     appCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
     this.CekDt(appCustCompanyObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustCompanyObj.RowVersion = this.custDataCompanyObj.AppCustCompanyObj.RowVersion;
     }
 
@@ -461,7 +610,7 @@ export class CustomerDataComponent implements OnInit {
     appCustPersonalObj.NoOfResidence = this.CustDataForm.controls["personalMainData"]["controls"].NoOfResidence.value;
     appCustPersonalObj.NoOfDependents = this.CustDataForm.controls["personalMainData"]["controls"].NoOfDependents.value;
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustPersonalObj.RowVersion = this.custDataPersonalObj.AppCustPersonalObj.RowVersion;
     }
     return appCustPersonalObj;
@@ -488,7 +637,7 @@ export class CustomerDataComponent implements OnInit {
       appCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
       appCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
 
-      if(this.isExisting){
+      if (this.isExisting) {
         appCustAddrLegalObj.RowVersion = this.custDataPersonalObj.AppCustAddrLegalObj.RowVersion;
       }
     }
@@ -512,7 +661,7 @@ export class CustomerDataComponent implements OnInit {
       appCustAddrLegalObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
       appCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
 
-      if(this.isExisting){
+      if (this.isExisting) {
         appCustAddrLegalObj.RowVersion = this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion;
       }
     }
@@ -542,7 +691,7 @@ export class CustomerDataComponent implements OnInit {
     appCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
     appCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustAddrResidenceObj.RowVersion = this.custDataPersonalObj.AppCustAddrResidenceObj.RowVersion;
     }
 
@@ -570,7 +719,7 @@ export class CustomerDataComponent implements OnInit {
       appCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
       appCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
 
-      if(this.isExisting){
+      if (this.isExisting) {
         appCustAddrMailingObj.RowVersion = this.custDataPersonalObj.AppCustAddrMailingObj.RowVersion;
       }
     }
@@ -594,7 +743,7 @@ export class CustomerDataComponent implements OnInit {
       appCustAddrMailingObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
       appCustAddrMailingObj.SubZipcode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].SubZipcode.value;
 
-      if(this.isExisting){
+      if (this.isExisting) {
         appCustAddrMailingObj.RowVersion = this.custDataCompanyObj.AppCustAddrMailingObj.RowVersion;
       }
     }
@@ -621,7 +770,7 @@ export class CustomerDataComponent implements OnInit {
     appCustAddrJobObj.FaxArea = this.CustDataForm.controls["jobDataAddr"]["controls"].FaxArea.value;
     appCustAddrJobObj.Fax = this.CustDataForm.controls["jobDataAddr"]["controls"].Fax.value;
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustAddrJobObj.RowVersion = this.custDataPersonalObj.AppCustPersonalJobDataObj.AppCustAddrJobObj.RowVersion;
     }
 
@@ -637,7 +786,7 @@ export class CustomerDataComponent implements OnInit {
     appCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
     appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustPersonalFinDataObj.RowVersion = this.custDataPersonalObj.AppCustPersonalFinDataObj.RowVersion;
     }
 
@@ -673,7 +822,7 @@ export class CustomerDataComponent implements OnInit {
     appCustCompanyFinDataObj.ShareholderEquity = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ShareholderEquity.value;
     appCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustCompanyFinDataObj.RowVersion = this.custDataCompanyObj.AppCustCompanyFinDataObj.RowVersion;
     }
 
@@ -683,49 +832,49 @@ export class CustomerDataComponent implements OnInit {
   setAppCustPersonalJobData(custModelCode) {
     var appCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
     if (custModelCode == CommonConstant.CustModelProfessional) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-     appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
-     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-     appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+      appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
+      appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+      appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
     if (custModelCode == CommonConstant.CustModelEmployee) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-     appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-     appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
-     appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
-     appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
-     appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
-     appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
-     appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+      appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+      appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
+      appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+      appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+      appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+      appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+      appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+      appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
     if (custModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-     appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-     appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
-     appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
-     appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
-     appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
-     appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-     appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
-     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+      appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+      appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+      appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+      appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+      appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+      appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+      appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
+      appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
     if (custModelCode == CommonConstant.CustModelNonProfessional) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
 
     this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
 
-    if(this.isExisting){
+    if (this.isExisting) {
       appCustPersonalJobDataObj.RowVersion = this.custDataPersonalObj.AppCustPersonalJobDataObj.RowVersion;
     }
 
@@ -991,7 +1140,7 @@ export class CustomerDataComponent implements OnInit {
               this.defCustModelCode = this.custDataPersonalObj.AppCustObj.MrCustModelCode;
             }
 
-          
+
             this.setAddrLegalObj(CommonConstant.CustTypePersonal);
             this.setAddrResidenceObj();
             this.setAddrMailingObj(CommonConstant.CustTypePersonal);
@@ -1525,9 +1674,9 @@ export class CustomerDataComponent implements OnInit {
         this.listAppCustPersonalContactInformation = new Array<AppCustPersonalContactPersonObj>();
         this.listAppCustBankAcc = new Array<AppCustBankAccObj>();
         this.custDataPersonalObj.AppCustSocmedObjs = new Array<AppCustSocmedObj>();
-        this.custDataPersonalObj.AppCustPersonalFinDataObj= new AppCustPersonalFinDataObj();
-        this.custDataPersonalObj.AppCustGrpObjs=new Array<AppCustGrpObj>();
-        this.custDataPersonalObj.AppCustPersonalJobDataObj=new AppCustPersonalJobDataObj();
+        this.custDataPersonalObj.AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+        this.custDataPersonalObj.AppCustGrpObjs = new Array<AppCustGrpObj>();
+        this.custDataPersonalObj.AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
 
         this.CustDataForm.controls['personalMainData']['controls']["MrIdTypeCode"].enable();
         this.CustDataForm.controls['personalMainData']['controls']["IdNo"].enable();
@@ -1548,7 +1697,7 @@ export class CustomerDataComponent implements OnInit {
           TaxIdNo: [''],
           IsVip: [false]
         });
-        
+
         this.legalAddrCompanyObj = new AddrObj();
         this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
         this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
@@ -1570,6 +1719,63 @@ export class CustomerDataComponent implements OnInit {
 
         this.CustDataCompanyForm.controls['companyMainData']['controls']["TaxIdNo"].enable();
       }
+    }
+  }
+
+  confirmFraudCheck() {
+    console.log("cehck");
+    let inputLeadCustObj = new AppCustCompareObj();
+
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+
+      inputLeadCustObj.CustName = this.mainDataComponent.InputLookupCustomerObj.nameSelect;
+      inputLeadCustObj.Gender = this.CustDataForm.controls["personalMainData"]["controls"].MrGenderCode.value;
+      inputLeadCustObj.BirthPlace = this.CustDataForm.controls["personalMainData"]["controls"].BirthPlace.value;
+      inputLeadCustObj.BirthDt = this.CustDataForm.controls["personalMainData"]["controls"].BirthDt.value;
+      inputLeadCustObj.MaritalStatus = this.CustDataForm.controls["personalMainData"]["controls"].MrMaritalStatCode.value;
+      inputLeadCustObj.CustPhnNo = this.CustDataForm.controls["personalMainData"]["controls"].MobilePhnNo1.value;
+      inputLeadCustObj.CustEmail = this.CustDataForm.controls["personalMainData"]["controls"].Email1.value;
+      inputLeadCustObj.IdNo = this.CustDataForm.controls["personalMainData"]["controls"].IdNo.value;
+      inputLeadCustObj.IdType = this.CustDataForm.controls["personalMainData"]["controls"].MrIdTypeCode.value;
+      inputLeadCustObj.TaxNo = this.CustDataForm.controls["personalMainData"]["controls"].TaxIdNo.value;
+      inputLeadCustObj.Profession = this.custJobDataComponent.selectedProfessionCode;
+      inputLeadCustObj.HomeAddr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
+      inputLeadCustObj.HomeRt = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
+      inputLeadCustObj.HomeRw = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
+      inputLeadCustObj.HomeZipCode = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
+      inputLeadCustObj.HomeKelurahan = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
+      inputLeadCustObj.HomeKecamatan = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
+      inputLeadCustObj.HomeCity = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
+      let inputLeadString = JSON.stringify(inputLeadCustObj);
+      let latestCustDataString = JSON.stringify(this.latestCustDataObj);
+  
+      if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+        if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+    }
+    else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+
+
+      inputLeadCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
+      inputLeadCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
+      if(this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value || 
+      this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value){
+        if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
+          return true;
+        }
+      }
+      else {
+        return true;
+      }
+    }
+
+    else {
+      return true;
     }
   }
 }
