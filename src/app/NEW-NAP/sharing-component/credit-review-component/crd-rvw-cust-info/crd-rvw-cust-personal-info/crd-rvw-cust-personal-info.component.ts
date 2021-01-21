@@ -4,12 +4,15 @@ import { FormBuilder } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { CrdRvwCustPersInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustPersInfo.Model';
 import { CrdRvwCustPhnStatusObj } from 'app/shared/model/CreditReview/CrdRvwCustPhnStatusObj.Model';
 import { CrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToInPrcAppCustObj.Model';
 import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToMasterCustObj.Model';
+import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crd-rvw-cust-personal-info',
@@ -24,8 +27,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
   crdRvwCustPersInfoObj: CrdRvwCustPersInfoObj = new CrdRvwCustPersInfoObj();
-
-  constructor(private modalService: NgbModal, private http: HttpClient,) { }
+  constructor(private modalService: NgbModal, private http: HttpClient, private toastr: ToastrService) { }
 
   async ngOnInit() {
     await this.GetCrdRvwCustPersInfoByCrdRvwCustInfoId();
@@ -52,11 +54,11 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
     );
   }
 
-  ListCrdRvwDiffAppToInPrcAppCustObj: Array<CrdRvwDiffAppToInPrcAppCustObj> = new Array<CrdRvwDiffAppToInPrcAppCustObj>();
+  responseCrdRvwDiffAppToInPrcAppCustObj: ResponseCrdRvwDiffAppToInPrcAppCustObj = new ResponseCrdRvwDiffAppToInPrcAppCustObj();
   async GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwDiffAppToInPrcAppCustObj: Array<CrdRvwDiffAppToInPrcAppCustObj> }>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true }).toPromise().then(
       (response) => {
-        this.ListCrdRvwDiffAppToInPrcAppCustObj = response.ListCrdRvwDiffAppToInPrcAppCustObj;
+        this.responseCrdRvwDiffAppToInPrcAppCustObj = response;
       }
     );
   }
@@ -127,13 +129,24 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
       (response) => {
         if (response != null || response != undefined) {
           AdInsHelper.OpenSrvyOrderViewBySrvyOrderId(response.SrvyOrderId);
+        } else {
+          this.toastr.warning(ExceptionConstant.NO_SURVEY);
         }
       }
     )
   }
-  ClickLinkPhoneVerif() {
+  async ClickLinkPhoneVerif() {
     console.log("click phn verif");
-    // AdInsHelper.OpenPhoneVerifViewByAppId(this.crdRvwCustInfoObj.AppId, 0,"");
+    let tempReqObj: object = { TrxRefNo: this.crdRvwCustInfoObj.AppNo, MrVerfTrxTypeCode: "PHN_VERIF", MrVerfObjCode: "CUSTOMER" };
+    await this.http.post<{ VerfResultHId: number }>(URLConstant.GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode, tempReqObj).toPromise().then(
+      (response) => {
+        if (response != null || response != undefined) {
+          AdInsHelper.OpenPhoneVerifViewByAppId(this.crdRvwCustInfoObj.AppId, response.VerfResultHId, this.crdRvwCustInfoObj.CustName);
+        } else {
+          this.toastr.warning(ExceptionConstant.NO_PHONE_VERF);
+        }
+      }
+    )
   }
 
   // GetPhnVerfSubjData() {

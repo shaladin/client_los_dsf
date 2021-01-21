@@ -17,7 +17,7 @@ export class CustCompanyFinancialDataComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() appCustCompanyFinDataObj: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
-
+  isReady : boolean = false;
 
 
   constructor(
@@ -27,6 +27,18 @@ export class CustCompanyFinancialDataComponent implements OnInit {
 
   ngOnInit() {
     this.parentForm.removeControl(this.identifier);
+this.addControl();
+    this.bindAppCustCompanyFinData();
+  }
+
+  bindAppCustCompanyFinData(){
+    if(this.appCustCompanyFinDataObj.AppCustCompanyFinDataId != 0){
+      this.parentForm.controls[this.identifier].patchValue({
+        DateAsOf: this.appCustCompanyFinDataObj.DateAsOf != undefined ? formatDate(this.appCustCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US') : ''
+      });
+    }
+  }
+  addControl(){
     this.parentForm.addControl(this.identifier, this.fb.group({
       GrossMonthlyIncomeAmt: [0],
       GrossMonthlyExpenseAmt: [0],
@@ -53,16 +65,6 @@ export class CustCompanyFinancialDataComponent implements OnInit {
       CurrRatio: [0],
       DateAsOf: ['']
     }));
-
-    this.bindAppCustCompanyFinData();
+    this.isReady = true;
   }
-
-  bindAppCustCompanyFinData(){
-    if(this.appCustCompanyFinDataObj.AppCustCompanyFinDataId != 0){
-      this.parentForm.controls[this.identifier].patchValue({
-        DateAsOf: this.appCustCompanyFinDataObj.DateAsOf != undefined ? formatDate(this.appCustCompanyFinDataObj.DateAsOf, 'yyyy-MM-dd', 'en-US') : ''
-      });
-    }
-  }
-
 }

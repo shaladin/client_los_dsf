@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';

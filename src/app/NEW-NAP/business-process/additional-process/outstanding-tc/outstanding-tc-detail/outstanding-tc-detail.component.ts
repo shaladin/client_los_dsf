@@ -11,9 +11,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -27,13 +27,11 @@ export class OutstandingTcDetailComponent implements OnInit {
   appTC: any;
   outstandingTcObj: any;
   BizTemplateCode: any;
-  dmsObj: DMSObj;
-  isDmsReady: boolean = false;
-  custNo: string;
-  appNo: string;
-  agrmntNo: string;
-  mouCustNo: string;
-
+  dmsObj : DMSObj = new DMSObj();
+  custNo: string = "";
+  appNo: string = "";
+  mouCustNo: string ="";
+  isDmsReady: boolean;
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -43,7 +41,7 @@ export class OutstandingTcDetailComponent implements OnInit {
 
   OustandingTCForm = this.fb.group({});
 
-  async ngOnInit() {
+  ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -52,7 +50,6 @@ export class OutstandingTcDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    await this.InitDms();
   }
   async InitDms(){
     this.dmsObj = new DMSObj();
@@ -121,12 +118,12 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/OutstandingTC/Paging"], {  BizTemplateCode: this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/OutstandingTC/Paging"], {  BizTemplateCode: this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
   }
 }

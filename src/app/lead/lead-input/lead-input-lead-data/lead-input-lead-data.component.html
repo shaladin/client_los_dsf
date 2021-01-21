@@ -251,7 +251,7 @@
             <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
               <i class="fa fa-check-square-o"></i> Save
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
+            <button *ngIf="typePage == 'update' || originPage == 'teleVerif' " type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
               <i class="fa fa-check-square-o"></i> Submit
             </button>
             <!-- <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && test()"

@@ -36,6 +36,7 @@ export class URLConstant {
     public static CopyCancelledAppForMainData = environment.losUrl + "/Application/CopyCancelledAppForMainData";
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
     public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
+    public static CheckMouCustIntegrator = environment.losUrl + "/MouCust/CheckMouCustIntegrator";
 
     //App Loan Purpose
     public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -557,6 +558,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static AddMouCustListedCustFctr = environment.losUrl + "/MouCustListedCustFctr/AddMouCustListedCustFctr";
     public static SubmitWorkflowMouRequest = environment.losUrl + "/MouCust/SubmitWorkflowMouRequest";
     public static SubmitMouReview = environment.losUrl + "/MouCust/SubmitMouReview";
+    public static SubmitMouReviewNew = environment.losUrl + "/MouCust/SubmitMouReviewNew";
     public static ReturnMouReview = environment.losUrl + "/MouCust/ReturnMouReview";
     public static EditMouForCancelByMouId = environment.losUrl + "/MouCust/EditMouForCancelByMouId";
     public static GetListMouByAppIdAndMouType = environment.losUrl + "/MouCust/GetListMouByAppIdAndMouType";
@@ -923,6 +925,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetVerfResultById = environment.FoundationR3Url + "/VerfResult/GetVerfResultById";
     public static AddVerfResultAndVerfResultH = environment.FoundationR3Url + "/VerfResult/AddVerfResultAndVerfResultH";
     public static GetVerfResultHById = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHById";
+    public static GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode";
     public static GetVerfResultHsByTrxRefNo = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByTrxRefNo";
     public static GetVerfResultHsByVerfResultIdAndSubjRelationCode = environment.FoundationR3Url + "/VerfResultH/GetVerfResultHsByVerfResultIdAndSubjRelationCode";
     public static GetListVerfResultDInQuestionGrp = environment.FoundationR3Url + "/VerfResultD/GetListVerfResultDInQuestionGrp";
@@ -1146,6 +1149,8 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     // App Credit Review
     public static GetAppCrdRvwById = environment.losUrl + "/AppCrdRvw/GetAppCrdRvwById";
     public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
+    public static CrdRvwMakeNewApproval = environment.losUrl + "/AppCrdRvw/CrdRvwMakeNewApproval";
+    public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
     public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
     //RETURN HANDLING
@@ -1228,8 +1233,9 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCrdRvwCustCoyInfoByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustCoyInfo/GetCrdRvwCustCoyInfoByCrdRvwCustInfoId";
     public static GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustPhnStatus/GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId";
     public static GetListCrdRvwExposureByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwExposureByCrdRvwCustInfoId";
-    public static GetListCrdRvwCustBucketByCrdRvwExposureId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwCustBucketByCrdRvwExposureId";
-    public static GetListCrdRvwAppAgrHistByCrdRvwExposureId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwAppAgrHistByCrdRvwExposureId";
+    public static GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType = environment.losUrl + "/CrdRvwExposure/GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType";
+    public static GetListCrdRvwCustBucketByCrdRvwExposureDId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwCustBucketByCrdRvwExposureDId";
+    public static GetListCrdRvwAppAgrHistByCrdRvwExposureHId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwAppAgrHistByCrdRvwExposureHId";
     public static GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDiffAppToInPrcAppCust/GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId";
     public static GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDiffAppToMasterCust/GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId";
     public static GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwAsset/GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId";
@@ -1256,15 +1262,18 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetNextNodeMember = "/Approval/GetNextNodeMember";
     public static GetRefReasonActive = "/Approval/GetRefReasonActive";
     public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
+    public static GetTaskHistory = "/Approval/GetTaskHistory";
 
     // Digitalization
     public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO";
     public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset";
     public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
+    public static DigitalizationAddTrxSrcDataForFraudCheckingNAPCust = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingNAPCust";
 
     //ThirdPartyRsltH
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
     public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultForFraudChecking";
     public static GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking";
 
+    public static GetFraudResult = environment.losUrl + "/ThirdPartyRsltH/GetFraudResult";
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -20,7 +20,7 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { LoanObjectComponent } from './loan-object/loan-object.component';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -115,6 +115,8 @@ export class ApplicationDataComponent implements OnInit {
     ApplicationNotes: [''],
     CopyFromMailing: [''],
   });
+  slikSecDescr: string ="";
+  defaultSlikSecEcoCode: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
@@ -127,7 +129,7 @@ export class ApplicationDataComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log(this.BizTemplateCode);
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
@@ -145,9 +147,11 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
     this.initMailingAddress();
+
     var AppObj = {
       AppId: this.appId
     }
+
     var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => { 
@@ -162,14 +166,15 @@ export class ApplicationDataComponent implements OnInit {
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
             
-
             // if(this.resMouCustObj.length > 0)
             // {
             //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
             // }
           }
         );
-      });
+      }
+    );
+
     if (this.BizTemplateCode != CommonConstant.OPL) {
       this.GetCrossInfoData();
     }
@@ -183,7 +188,6 @@ export class ApplicationDataComponent implements OnInit {
       this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
       this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
     }
-    
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){
@@ -372,6 +376,12 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
+        if(code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == ""){
+          this.NapAppModelForm.patchValue({
+            CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode 
+          });
+        }
       });
   }
 
@@ -408,8 +418,23 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json"; 
-    this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
-    this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+
+    if(this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != ""){
+      this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
+      this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+    }
+    else{
+      var reqSecObj = new RefMasterObj();
+      reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
+      reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
+      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response)=>{
+          console.log(response);
+          this.slikSecDescr = response['Descr'];
+          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
+          this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: response['Descr']};
+        });
+    }
     this.isInputLookupObj = true;
   }
 
@@ -474,6 +499,7 @@ export class ApplicationDataComponent implements OnInit {
       this.PatchNumOfInstallment(total);
     }
   }
+
   ChangeCharacteristicOfCredit(){
     if (this.NapAppModelForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {  
      this.NapAppModelForm.controls.WayRestructure.setValidators(Validators.required);
@@ -570,7 +596,6 @@ export class ApplicationDataComponent implements OnInit {
         temp.MaturityDt = this.resultCrossApp[i].MaturityDt;
         temp.ContractStat = this.resultCrossApp[i].ContractStat;
         arr.push(temp);
-      
     }
     return arr;
   }
@@ -609,7 +634,7 @@ export class ApplicationDataComponent implements OnInit {
         PrevAgrNo: null,
         WayRestructure: null
       });   
-     }
+    }
     if(this.BizTemplateCode == CommonConstant.CFNA){
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
         (response) => {

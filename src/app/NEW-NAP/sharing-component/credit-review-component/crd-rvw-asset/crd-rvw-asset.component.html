@@ -1,7 +1,7 @@
 <lib-ucSubsection [id]="'AssetId'" [title]="'Asset Information'" [panel]="'Asset'">
 </lib-ucSubsection>
 <div id="Asset">
-  <div class="card-body" *ngIf="crdRvwCustInfoObj.BizTemplateCode == BizTemplateCF4W">
+  <div class="card-body" *ngIf="!isMultiAsset">
     <div class="row">
       <div class="col-md-6 ">
         <div class="row">
@@ -24,18 +24,11 @@
           <div class="col-md-6">
             <label class="label-control"> Negative Asset </label>
             <span id="NegAssetIndicator" style="float: right;">
-              <i *ngIf="crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator"
-                [ngStyle]="{'color': crdRvwAssetObj.NegativeAssetIndicator}"
-                class="font-medium-3 fa fa-circle tooltips">
-                <span [ngClass]="'tooltipstext'">
-                  {{crdRvwAssetObj.NegativeAssetIndicatorDescr}}
-                </span>
-              </i>
-              <i *ngIf="crdRvwCustInfoObj.NegativeAssetIndicator == whiteIndicator"
-                class="font-medium-3 far fa-circle tooltips">
-                <span [ngClass]="'tooltipstext'">
-                  <span *ngIf="crdRvwAssetObj?.NegativeAssetIndicatorDescr"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
-                  <span> No Data </span>
+              <i [ngClass]="crdRvwAssetObj.NegativeAssetIndicator == null ? 'far fa-circle' : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                [ngStyle]="{'color': crdRvwAssetObj.NegativeAssetIndicator == null ? white : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? crdRvwAssetObj.NegativeAssetIndicator : white}" class="font-medium-3 tooltips">
+                <span class="tooltipstext">
+                  <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr != null && crdRvwAssetObj.NegativeAssetIndicatorDescr != ''"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
+                  <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr == null || crdRvwAssetObj.NegativeAssetIndicatorDescr == ''"> No Data </span>
                 </span>
               </i>
             </span>
@@ -76,7 +69,7 @@
       </div>
     </div>
   </div>
-  <div class="card-body" *ngIf="crdRvwCustInfoObj.BizTemplateCode != BizTemplateCF4W">
+  <div class="card-body" *ngIf="isMultiAsset">
     <!-- <div class="px-3">     -->
       <table class="table table-responsive-md text-center table-hover">
         <thead>

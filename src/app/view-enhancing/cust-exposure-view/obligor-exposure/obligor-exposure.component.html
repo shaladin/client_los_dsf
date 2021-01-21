@@ -1,6 +1,6 @@
 
 <div class="card-body">
-  <div class="px-3">
+  <div class="px-3" *ngIf="IsReady">
     <lib-ucSubsection [id]="'OutstandingAmountInfoId'" [title]="'Outstanding Amount'" [panel]="'OutstandingAmountInfo'">
     </lib-ucSubsection>
     <div id="OutstandingAmountInfo">
@@ -11,7 +11,7 @@
               <label class="label-control"> OS Principal Amount </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.OsPrincipalAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{ExposureDObj.OsPrincipalAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -19,7 +19,7 @@
               <label class="label-control"> OS Interest Amount </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.OsInterestAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{ExposureDObj.OsInterestAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -27,7 +27,7 @@
               <label class="label-control"> OS AR Balance </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.OsArBalance | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{ExposureDObj.OsArBalance | number:'.2':'en-US'}} </label>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
               <label class="label-control"> Max AR </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.MaxAr | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{ExposureDObj.MaxAr | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -55,7 +55,7 @@
               <label class="label-control"> Max Installment Amount </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.MaxInstallmentAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{ExposureDObj.MaxInstallmentAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
               <label class="label-control"> Max Overdue Amount </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.MaxOverdueAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{ExposureDObj.MaxOverdueAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -74,7 +74,7 @@
               <label class="label-control"> Max Overdue Days </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.MaxOverdueDays}} </label>
+              <label class="label-control"> {{ExposureDObj.MaxOverdueDays}} </label>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
               <label class="label-control"> Active Agreement </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.ActiveAgrmnt}} </label>
+              <label class="label-control"> {{ExposureDObj.ActiveAgrmnt}} </label>
             </div>
           </div>
           <div class="row">
@@ -99,7 +99,7 @@
               <label class="label-control"> Agreement In Process </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AgrmntInProcess}} </label>
+              <label class="label-control"> {{ExposureDObj.AgrmntInProcess}} </label>
             </div>
           </div>
           <div class="row">
@@ -107,7 +107,7 @@
               <label class="label-control"> Asset In Financing </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AssetInFinancing}} </label>
+              <label class="label-control"> {{ExposureDObj.AssetInFinancing}} </label>
             </div>
           </div>
           <div class="row">
@@ -115,7 +115,7 @@
               <label class="label-control"> Rejected Agreement </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AgrmntRejected}} </label>
+              <label class="label-control"> {{ExposureDObj.AgrmntRejected}} </label>
             </div>
           </div>
           <div class="row">
@@ -123,7 +123,7 @@
               <label class="label-control"> Cancelled Agreement </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AgrmntCancelled}} </label>
+              <label class="label-control"> {{ExposureDObj.AgrmntCancelled}} </label>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@
               <label class="label-control"> Asset Repossessed </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AssetRepossessed}} </label>
+              <label class="label-control"> {{ExposureDObj.AssetRepossessed}} </label>
             </div>
           </div>
           <div class="row">
@@ -142,7 +142,7 @@
               <label class="label-control"> Asset Inventoried </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AssetInventoried}} </label>
+              <label class="label-control"> {{ExposureDObj.AssetInventoried}} </label>
             </div>
           </div>
           <div class="row">
@@ -150,7 +150,7 @@
               <label class="label-control"> Written Off Agreement </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AgrmntWrittenOff}} </label>
+              <label class="label-control"> {{ExposureDObj.AgrmntWrittenOff}} </label>
             </div>
           </div>
           <div class="row">
@@ -158,7 +158,7 @@
               <label class="label-control"> Non Acrual Agreement </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.AgrmntNonAcrual}} </label>
+              <label class="label-control"> {{ExposureDObj.AgrmntNonAcrual}} </label>
             </div>
           </div>
           <div class="row">
@@ -166,7 +166,7 @@
               <label class="label-control"> Bounce Cheque </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control"> {{exposureObj.BounceCheque}} </label>
+              <label class="label-control"> {{ExposureDObj.BounceCheque}} </label>
             </div>
           </div>
         </div>

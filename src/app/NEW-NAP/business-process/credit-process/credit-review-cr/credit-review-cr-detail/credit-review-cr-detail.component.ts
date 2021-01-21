@@ -250,6 +250,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
       "TypeCode" : "CRD_APV_CF_TYPE",
       "Attributes" : Attributes,
     };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
@@ -262,7 +265,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
-    this.InputObj.UrlBactToPaging = '/Nap/CreditProcess/CreditReviewCr/Paging?BizTemplateCode=' + BizTemplateCode;
     this.InputObj.TrxNo = this.appNo;
     this.IsReady = true;
   }
@@ -309,7 +311,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
       RequestRFAObj: RFAPreGoLive
     };
     // console.log(apiObj);
-    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationData, apiObj).subscribe(
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });

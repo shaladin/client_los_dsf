@@ -13,6 +13,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -68,13 +71,20 @@ TCList : any;
   LeadId: string;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   MouCustId: any;
-
+  ApvReqId: number;
+  taskId: number; 
+  InputApvObj : UcInputApprovalObj;
+  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  IsReady: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
       this.TrxNo = params["TrxNo"];
+      this.taskId = params["TaskId"];
+      this.ApvReqId = params["ApvReqId"];
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
@@ -116,7 +126,6 @@ TCList : any;
       AgrmntNo: this.TrxNo,
       RowVersion: ""
     }
-
 
 
     this.http.post(URLConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
@@ -208,7 +217,7 @@ TCList : any;
 
       }
     ); 
-
+      this.initInputApprovalObj();
 
   }
   HoldTask(obj) {
@@ -246,7 +255,10 @@ TCList : any;
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited() {  
+  onApprovalSubmited(event) {  
+
+    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
+
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
@@ -271,11 +283,10 @@ TCList : any;
 
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
-        this.toastr.successMessage("Success");
+        // this.toastr.successMessage("Success");
         AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
- 
   }
 
   onCancelClick() {
@@ -289,5 +300,30 @@ TCList : any;
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });
+  }
+  initInputApprovalObj(){
+    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
+    this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    
+    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
+    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
+
+    this.InputApvObj = new UcInputApprovalObj();
+    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.TrxNo =  this.AgrmntNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
+    this.InputApvObj.RequestId = this.ApvReqId;
+    this.IsReady = true;
   }
 }

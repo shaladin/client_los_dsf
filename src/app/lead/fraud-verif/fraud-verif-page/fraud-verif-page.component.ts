@@ -22,6 +22,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -31,6 +34,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class FraudVerifPageComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  GetFraudResult: string;
+  ResultThirdPartyObj: any;
+  thirdPartyRsltHObj: ThirdPartyRsltHObj;
+  dmsObj: DMSObj;
   
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -45,6 +52,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetLeadAssetForCheckUrl = URLConstant.GetLeadAssetForCheck;
     this.GetLeadAssetByLeadIdUrl = URLConstant.GetLeadAssetByLeadId;
     this.GetAssetNegativeDuplicateCheckUrl = URLConstant.GetAssetNegativeDuplicateCheck;
+    this.GetFraudResult = URLConstant.GetFraudResult;
     this.AddLeadFraudVerfUrl = URLConstant.AddLeadFraudVerf;
   }
   DuplicateCustObj: DuplicateCustObj = new DuplicateCustObj();
@@ -78,6 +86,7 @@ export class FraudVerifPageComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -113,6 +122,15 @@ export class FraudVerifPageComponent implements OnInit {
 
     this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).subscribe(
       (response) => {
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+            this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+            this.dmsObj.MetadataParent = null;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        
         if(response["LobCode"] !== CommonConstant.CFNA){
           this.leadAssetObj.LeadId = this.LeadId;
           this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
@@ -137,10 +155,15 @@ export class FraudVerifPageComponent implements OnInit {
                   this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
                     (response) => {
                       this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
-                    });
+                    });  
                 });
             });
         }
+        this.thirdPartyRsltHObj.TrxNo = response['LeadNo'];
+        this.http.post(this.GetFraudResult, this.thirdPartyRsltHObj).subscribe(
+          (response) => {
+            this.ResultThirdPartyObj = response;
+          });
       },
       (error) => {
         console.log(error);

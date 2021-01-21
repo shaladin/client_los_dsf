@@ -12,7 +12,8 @@ export class UcInputRFAObj {
     SchemeCode : string;
     TrxNo : string;
     Reason : any;
-    UrlBactToPaging : string;
+    OfficeCode: string;
+    RequestedBy: string;
     constructor() { 
         this.ApvTypecodes = [];
         this.EnvUrl = "";
@@ -26,7 +27,8 @@ export class UcInputRFAObj {
         this.CategoryCode = "";
         this.SchemeCode = "";
         this.TrxNo = "";
+        this.RequestedBy = "";
+        this.OfficeCode = "";
         this.Reason =[];
-        this.UrlBactToPaging = "";
     }
 }  

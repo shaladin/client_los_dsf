@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html'
@@ -21,16 +23,20 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   AgrmntNo: any;
   itemReason: any;
 
-  MainInfoForm = this.fb.group({
-    Reason: ['', Validators.required],
-    ApprovedBy: ['', Validators.required],
-    Notes: ['', Validators.required]
-  })
   RFAPreGoLive: any;
   TaskListId: any;
   AgrmntId: any;
   token: any = localStorage.getItem(CommonConstant.TOKEN);
-
+  InputObj: UcInputRFAObj;
+  IsReady: boolean;
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) { 
+      // initially setter gets called with undefined
+      this.createComponent = content;
+    }
+  }
+  ApprovalCreateOutput: any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -40,20 +46,12 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+ async ngOnInit() {
     var schmCodeObj = {
       SchmCode: "PRE_GLV_APV_CF",
       RowVersion: ""
-    }
-    this.http.post(URLConstant.GetListApprovedByForPreGoLive, schmCodeObj).subscribe(
-      (response) => {
-        this.itemApprovedBy = response[CommonConstant.ReturnObj];
-        this.MainInfoForm.patchValue({
-          ApprovedBy: this.itemApprovedBy[0].Key
-        });
-      }
-    );
-    this.LoadRefReason();
+    } 
+   
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -74,6 +72,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    await this.LoadRefReason();
+    this.initInputApprovalObj();
   }
 
   GetCallBack(ev) {
@@ -85,35 +85,56 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
   }
 
-  LoadRefReason() {
+  async LoadRefReason() {
     var refReasonObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodePreGlvApv
     }
-    this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
       (response) => {
         this.itemReason = response[CommonConstant.ReturnObj];
-        this.MainInfoForm.patchValue({
-          Reason: this.itemReason[0].Value
-        });
       }
     );
   }
   SaveForm() {
-    this.RFAPreGoLive = new RFAPreGoLiveObj();
-    this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
-    this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
-    this.RFAPreGoLive.ApprovedBy = this.MainInfoForm.controls.ApprovedBy.value;
-    this.RFAPreGoLive.Reason = this.MainInfoForm.controls.Reason.value;
-    this.RFAPreGoLive.TaskListId = this.TaskListId;
-    this.RFAPreGoLive.RowVersion = "";
-
-    this.http.post(URLConstant.CreateRFAPreGoLive, this.RFAPreGoLive).subscribe((response) => {
+    this.ApprovalCreateOutput = this.createComponent.output();  
+    if(this.ApprovalCreateOutput!=undefined){
+      this.RFAPreGoLive = new RFAPreGoLiveObj();
+     this.RFAPreGoLive.TaskListId = this.TaskListId;
+      this.RFAPreGoLive.RowVersion = "";
+      this.RFAPreGoLive.RequestRFAObj = this.ApprovalCreateOutput
+         this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
       this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
     });
+    }  
   }
 
   Cancel() {
     this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Detail?AgrmntId=' + this.AgrmntId + '&AppId=' + this.AppId + '&TaskListId=' + this.TaskListId + '&AgrmntNo=' + this.AgrmntNo);
+  }
+  initInputApprovalObj(){  
+    this.InputObj = new UcInputRFAObj();
+    var Attributes = [{}] 
+    var TypeCode = {
+      "TypeCode" : "PRE_GLV_APV_TYPE",
+      "Attributes" : Attributes,
+    };
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_PRE_GO_LIVE;
+    this.InputObj.Reason = this.itemReason;
+    this.InputObj.TrxNo = this.AgrmntNo
+    this.IsReady = true;
   }
 
 }

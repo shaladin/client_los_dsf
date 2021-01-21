@@ -13,6 +13,7 @@ import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoO
 export class CrdRvwAssetComponent implements OnInit {
 
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
+  isMultiAsset: boolean = false;
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly BizTemplateCF4W: string = CommonConstant.CF4W;
 
@@ -29,12 +30,14 @@ export class CrdRvwAssetComponent implements OnInit {
 
   async GetCrdRvwAssetData() {
     if (this.crdRvwCustInfoObj.BizTemplateCode == this.BizTemplateCF4W) {
+      this.isMultiAsset=false;
       await this.http.post<CrdRvwAssetObj>(URLConstant.GetSingleAssetCrdRvwAssetByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
         (response) => {
           this.crdRvwAssetObj = response;
         }
       );
     } else {
+      this.isMultiAsset=true;
       await this.http.post<{ ListCrdRvwAssetObj: Array<CrdRvwAssetObj> }>(URLConstant.GetMultiAssetCrdRvwAssetByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
         (response) => {
           this.ListCrdRvwAssetObj = response.ListCrdRvwAssetObj;

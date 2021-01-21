@@ -6,7 +6,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
+import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
+import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info',
@@ -27,6 +30,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
 
+  readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   constructor(
     private modalService: NgbModal, private http: HttpClient) { }
 
@@ -38,14 +42,14 @@ export class CrdRvwCustInfoComponent implements OnInit {
   }
 
 
-  CustCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  CustGroupCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  ObligorCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
+  CustCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
+  CustGroupCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
+  ObligorCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: "SELF_CUST" }).toPromise().then(
       (response) => {
-        for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
-          const element = response.ListCrdRvwExposureObj[index];
+        for (let index = 0; index < response.ListCrdRvwExposureDObj.length; index++) {
+          const element = response.ListCrdRvwExposureDObj[index];
           if (element.ExposureType == this.ExposureCustTypeCode) {
             this.CustCrdRvwExposureObj = element;
           }
@@ -70,10 +74,10 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   ListNegCust: Array<NegCustObj> = new Array<NegCustObj>();
   async GetListNegativeCustByCustNo() {
-    await this.http.post<any>(URLConstant.GetListNegativeCustByCustNo, { CustNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
+    await this.http.post<{ ListNegativeCustObj: Array<NegCustObj> }>(URLConstant.GetListNegativeCustByCustNo, { CustNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
       (response) => {
-        console.log(response);
-        this.ListNegCust = response[CommonConstant.ReturnObj];
+        // console.log(response);
+        this.ListNegCust = response.ListNegativeCustObj;
       });
 
   }
@@ -124,12 +128,3 @@ export class CrdRvwCustInfoComponent implements OnInit {
   //#endregion
 }
 
-export class NegCustObj {
-  CustName: string;
-  MrNegCustTypeCode: string;
-  MrNegCustTypeCodeDesc: string;
-  MrNegCustSourceCode: string;
-  MrNegCustSourceCodeDesc: string;
-  NegCustCause: string;
-  constructor() { }
-}
