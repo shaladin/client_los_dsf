@@ -25,6 +25,11 @@ import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { MouCustSocmedObj } from 'app/shared/model/MouCustSocmedObj.Model';
 import { MouCustGrpObj } from 'app/shared/model/MouCustGrpObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
+import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
+import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxData.Model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -36,6 +41,15 @@ export class MouCustTabComponent implements OnInit {
   @ViewChild(MouCustJobDataComponent) custJobDataComponent;
   @ViewChild(MouCustGrpMbrComponent) custGrpMemberComponent;
 
+  isNeedCheckBySystem: string;
+  generalSettingObj: GeneralSettingObj;
+  returnGeneralSettingObj: any;
+  mouObj: MouCustObj = new MouCustObj();
+  thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  latestCustDataObj: AppCustCompareObj;
+  thirdPartyRsltHId: any;
+  latestReqDtCheckIntegrator: any;
+  reqLatestJson: any;
 
   CustDataForm = this.fb.group({
     CopyFromResidence: [''],
@@ -49,7 +63,7 @@ export class MouCustTabComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  @Output() ResponseMouCust: EventEmitter<any> = new EventEmitter();t
+  @Output() ResponseMouCust: EventEmitter<any> = new EventEmitter(); t
 
   countryObj = {
     CountryCode: ""
@@ -71,7 +85,9 @@ export class MouCustTabComponent implements OnInit {
   inputFieldMailingCompanyObj: InputFieldObj;
   copyFromMailingCompany: any;
   MouCustPersonalId: any;
-  listMouCustPersonalContactInformation: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();;
+  listMouCustPersonalContactInformation: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
+  returnMouObj: any;
+
   listMouCustBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
   listMouCustBankAccCompany: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
   listShareholder: Array<MouCustCompanyMgmntShrholderObj> = new Array<MouCustCompanyMgmntShrholderObj>();
@@ -131,6 +147,7 @@ export class MouCustTabComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     console.log("help");
+    this.GetGS();
     await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
@@ -141,36 +158,38 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj = new MouCustPersonalDataObj();
       this.setCustPersonalObjForSave();
       for (let i = 0; i < this.custDataPersonalObj.MouCustGrpObjs.length; i++) {
-        for (let j = i+1; j < this.custDataPersonalObj.MouCustGrpObjs.length; j++) {
-          if (this.custDataPersonalObj.MouCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.MouCustGrpObjs[j]["CustNo"] ) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+        for (let j = i + 1; j < this.custDataPersonalObj.MouCustGrpObjs.length; j++) {
+          if (this.custDataPersonalObj.MouCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.MouCustGrpObjs[j]["CustNo"]) {
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
           if (this.custDataPersonalObj.MouCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.MouCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
       if (this.isSpouseOk) {
-        this.http.post(URLConstant.AddEditMouCustPersonalData, this.custDataPersonalObj).subscribe(
-          (response) => {
-            if (response["StatusCode"] == 200) {
-              this.toastr.successMessage(response["message"]);
-              this.ResponseMouCust.emit({ StatusCode: "200" });
-              this.EmitToMainComp();
+        if (this.confirmFraudCheck()) {
+          this.http.post(URLConstant.AddEditMouCustPersonalData, this.custDataPersonalObj).subscribe(
+            (response) => {
+              if (response["StatusCode"] == 200) {
+                this.toastr.successMessage(response["message"]);
+                this.ResponseMouCust.emit({ StatusCode: "200" });
+                this.EmitToMainComp();
+              }
+              else {
+                response["ErrorMessages"].forEach((message: string) => {
+                  this.toastr.errorMessage(message["Message"]);
+                });
+              }
+            },
+            (error) => {
+              console.log(error);
             }
-            else {
-              response["ErrorMessages"].forEach((message: string) => {
-                this.toastr.errorMessage(message["Message"]);
-              });
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+          );
+        }
       }
       else {
         this.toastr.warningMessage(ExceptionConstant.INPUT_SPOUSE_CONTACT_INFO);
@@ -186,7 +205,7 @@ export class MouCustTabComponent implements OnInit {
           totalSharePrcnt += this.listShareholder[i].SharePrcnt;
         }
         for (const item of this.listShareholder) {
-          if(item.IsActive){
+          if (item.IsActive) {
             isActiveSignerExist = true;
             break;
           }
@@ -197,39 +216,42 @@ export class MouCustTabComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
       }
-      if(!isActiveSignerExist){
+      if (!isActiveSignerExist) {
         this.toastr.warningMessage("At Least 1 Active Signer is Required");
         return false;
-      }   
+      }
       this.custDataCompanyObj = new MouCustCompanyDataObj();
       this.setCustCompanyObjForSave();
       for (let i = 0; i < this.custDataCompanyObj.MouCustGrpObjs.length; i++) {
-        for (let j = i+1; j < this.custDataCompanyObj.MouCustGrpObjs.length; j++) {
-          if (this.custDataCompanyObj.MouCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.MouCustGrpObjs[j]["CustNo"] ) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+        for (let j = i + 1; j < this.custDataCompanyObj.MouCustGrpObjs.length; j++) {
+          if (this.custDataCompanyObj.MouCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.MouCustGrpObjs[j]["CustNo"]) {
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
           if (this.custDataCompanyObj.MouCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.MouCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
       }
-      if(this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      this.http.post(URLConstant.AddEditMouCustCompanyData, this.custDataCompanyObj).subscribe(
-        (response) => {
-          this.ResponseMouCust.emit({ StatusCode: "200" });
-          this.toastr.successMessage(response["message"]);
-          this.EmitToMainComp();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
+      if (this.confirmFraudCheck()) {
+
+        this.http.post(URLConstant.AddEditMouCustCompanyData, this.custDataCompanyObj).subscribe(
+          (response) => {
+            this.ResponseMouCust.emit({ StatusCode: "200" });
+            this.toastr.successMessage(response["message"]);
+            this.EmitToMainComp();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
 
-  Cancel(){
+  Cancel() {
     this.ResponseMouCust.emit();
   }
 
@@ -271,14 +293,14 @@ export class MouCustTabComponent implements OnInit {
   isExpiredBirthDt: boolean = false;
   isExpiredEstablishmentDt: boolean = false;
   isExpiredDate: boolean = false;
-  CekDt(inputDate: Date, type: string){
+  CekDt(inputDate: Date, type: string) {
     var UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let max17Yodt = new Date(Max17YO);
     let d1 = new Date(inputDate);
     let d2 = new Date(MaxDate);
-    max17Yodt.setFullYear(d2.getFullYear()-17);
+    max17Yodt.setFullYear(d2.getFullYear() - 17);
 
     if (type == ExceptionConstant.DateErrorMessageIdExpiredDate) {
       d2.setDate(d2.getDate() - 1);
@@ -289,18 +311,18 @@ export class MouCustTabComponent implements OnInit {
       return;
     }
 
-    if(d1 > d2){
+    if (d1 > d2) {
       this.toastr.warningMessage(type + "  can not be more than " + MaxDate);
       if (type == ExceptionConstant.DateErrorMessageEstablishmentDate)
         this.isExpiredEstablishmentDt = true;
       if (type == ExceptionConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = true;
 
-    }else if(type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt){
+    } else if (type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt) {
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       this.isExpiredBirthDt = true;
     }
-    else{
+    else {
       if (type == ExceptionConstant.DateErrorMessageBirthDate)
         this.isExpiredBirthDt = false;
       if (type == ExceptionConstant.DateErrorMessageEstablishmentDate)
@@ -317,8 +339,9 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustObj.MrIdTypeCode = this.CustDataForm.controls["PersonalMain"]["controls"].MrIdTypeCode.value;
       this.custDataPersonalObj.MouCustObj.IdNo = this.CustDataForm.controls["PersonalMain"]["controls"].IdNo.value;
       this.custDataPersonalObj.MouCustObj.IdExpiredDt = this.CustDataForm.controls["PersonalMain"]["controls"].IdExpiredDt.value;
-      if(this.custDataPersonalObj.MouCustObj.MrIdTypeCode=="KITAS" || this.custDataPersonalObj.MouCustObj.MrIdTypeCode=="SIM"){
-        this.CekDt(this.custDataPersonalObj.MouCustObj.IdExpiredDt, ExceptionConstant.DateErrorMessageIdExpiredDate);}
+      if (this.custDataPersonalObj.MouCustObj.MrIdTypeCode == "KITAS" || this.custDataPersonalObj.MouCustObj.MrIdTypeCode == "SIM") {
+        this.CekDt(this.custDataPersonalObj.MouCustObj.IdExpiredDt, ExceptionConstant.DateErrorMessageIdExpiredDate);
+      }
       this.custDataPersonalObj.MouCustObj.TaxIdNo = this.CustDataForm.controls["PersonalMain"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.MouCustObj.IsVip = this.CustDataForm.controls["PersonalMain"]["controls"].IsVip.value;
       this.custDataPersonalObj.MouCustObj.MouCustId = this.MouCustId;
@@ -587,7 +610,7 @@ export class MouCustTabComponent implements OnInit {
     if (this.custDataPersonalObj.MouCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
-    this.CekDt(this.custDataPersonalObj.MouCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);      
+    this.CekDt(this.custDataPersonalObj.MouCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
   }
 
   setMouCustSocmedObj() {
@@ -820,7 +843,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async getCustData() {
-    await this.http.post(URLConstant.GetMouCustByMouCustId, {"MouCustId": this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustByMouCustId, { "MouCustId": this.MouCustId }).toPromise().then(
       (response) => {
         if (response["MouCustObj"]["MouCustId"] > 0) {
           if (response["MouCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -881,8 +904,8 @@ export class MouCustTabComponent implements OnInit {
             this.MrCustTypeCode = this.custDataCompanyObj.MouCustObj.MrCustTypeCode;
           }
         }
-        else{
-            this.MrCustTypeCode = this.CustTypeObj[0].Key;
+        else {
+          this.MrCustTypeCode = this.CustTypeObj[0].Key;
         }
         this.isBindDataDone = true;
       },
@@ -1002,9 +1025,9 @@ export class MouCustTabComponent implements OnInit {
 
         this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.MouCustAddrLegalObj.Zipcode;
         this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataCompanyObj.MouCustAddrLegalObj.Zipcode };
-        
-    this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
-    this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
+
+        this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
+        this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
       }
     }
   }
@@ -1104,7 +1127,7 @@ export class MouCustTabComponent implements OnInit {
     if (event["CustPersonalFinDataObj"] != undefined) {
       this.custDataPersonalObj.MouCustPersonalFinDataObj = event["CustPersonalFinDataObj"];
       this.custDataPersonalObj.MouCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
-      
+
       let TotalMonthlyIncome = this.custDataPersonalObj.MouCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
       let TotalMonthlyExpense = this.custDataPersonalObj.MouCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.MouCustPersonalFinDataObj.MonthlyInstallmentAmt;
       this.CustDataForm.controls["financialData"].patchValue({
@@ -1182,9 +1205,9 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldLegalObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
       this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
-      
-    this.inputAddrLegalPersonalObj.default = this.legalAddrObj;
-    this.inputAddrLegalPersonalObj.inputField = this.inputFieldLegalObj;
+
+      this.inputAddrLegalPersonalObj.default = this.legalAddrObj;
+      this.inputAddrLegalPersonalObj.inputField = this.inputFieldLegalObj;
     }
 
     if (event["CustAddrResidenceObj"] != undefined) {
@@ -1206,8 +1229,8 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = event["CustAddrResidenceObj"].Zipcode;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrResidenceObj"].Zipcode };
-    this.inputAddrResidenceObj.default = this.residenceAddrObj;
-    this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
+      this.inputAddrResidenceObj.default = this.residenceAddrObj;
+      this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
 
     if (event["CustAddrMailingObj"] != undefined) {
@@ -1254,10 +1277,10 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
       this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
-      
-      
-    this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
-    this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
+
+
+      this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
+      this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
     }
 
     if (event["CustAddrMailingObj"] != undefined) {
@@ -1285,14 +1308,14 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async bindCustTypeObj() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {'RefMasterTypeCode': CommonConstant.RefMasterTypeCodeCustType}).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { 'RefMasterTypeCode': CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  EmitToMainComp(){
+  EmitToMainComp() {
     this.outputTab.emit(this.MrCustTypeCode);
   }
 
@@ -1318,6 +1341,182 @@ export class MouCustTabComponent implements OnInit {
     }
     else {
       this.IsSpouseExist = false;
+    }
+  }
+
+  checkIntegrator() {
+    if (this.isNeedCheckBySystem == "0") {
+      this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+      this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
+      this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
+
+      var custObjForAddTrxData = new MouCustObjForAddTrxData();
+
+      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+        this.setCustPersonalObjForSave();
+        custObjForAddTrxData.MouCustPersonalObj = this.custDataPersonalObj.MouCustPersonalObj;
+        custObjForAddTrxData.MouCustObj = this.custDataPersonalObj.MouCustObj;
+        custObjForAddTrxData.MouCustPersonalJobDataObj = this.custDataPersonalObj.MouCustPersonalJobDataObj;
+        custObjForAddTrxData.MouCustAddrLegalObj = this.custDataPersonalObj.MouCustAddrLegalObj;
+        this.thirdPartyObj.TrxNo = this.returnMouObj["MouCustNo"];
+      }
+      else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+        this.setCustCompanyObjForSave();
+        custObjForAddTrxData.MouCustCompanyObj = this.custDataCompanyObj.MouCustCompanyObj;
+        custObjForAddTrxData.MouCustObj = this.custDataCompanyObj.MouCustObj;
+        this.thirdPartyObj.TrxNo = this.returnMouObj["MouCustNo"];
+      }
+
+      this.http.post(URLConstant.CheckMouCustIntegrator, custObjForAddTrxData).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+            (response) => {
+              this.latestReqDtCheckIntegrator = response['ReqDt'];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              this.reqLatestJson = JSON.parse(response['ReqJson']);
+              if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                this.latestCustDataObj = new AppCustCompareObj();
+
+                this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                  this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                  this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                  this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                  this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                  this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                  this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                  this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                }
+              }
+            }
+          );
+        });
+    }
+  }
+
+  GetGS() {
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).subscribe(
+      (response) => {
+        this.returnGeneralSettingObj = response;
+        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+        this.mouObj = new MouCustObj();
+        this.mouObj.MouCustId = this.MouCustId;
+        this.http.post(URLConstant.GetMouCustById, this.mouObj).subscribe(
+          (response) => {
+            this.returnMouObj = response;
+
+            this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+            this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
+            this.thirdPartyObj.TrxNo = this.returnMouObj["MouCustNo"];
+            this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
+            this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              (response) => {
+                if (response != null) {
+                  this.latestReqDtCheckIntegrator = response['ReqDt'];
+                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                  this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+                    (response) => {
+                      this.latestReqDtCheckIntegrator = response['ReqDt'];
+                      this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                      this.reqLatestJson = JSON.parse(response['ReqJson']);
+                      if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                        this.latestCustDataObj = new AppCustCompareObj();
+
+                        this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                        this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                        this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                        this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                        this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                        this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                        this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                        this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                        this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                        this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                        if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                          this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                          this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                          this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                          this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                          this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                          this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                          this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                        }
+                      }
+                    }
+                  );
+                }
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+  confirmFraudCheck() {
+    let inputCustObj = new AppCustCompareObj();
+
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+
+      inputCustObj.CustName = this.CustDataForm.controls["PersonalMain"]["controls"].CustFullName.value;
+      inputCustObj.Gender = this.CustDataForm.controls["PersonalMain"]["controls"].MrGenderCode.value;
+      inputCustObj.BirthPlace = this.CustDataForm.controls["PersonalMain"]["controls"].BirthPlace.value;
+      inputCustObj.BirthDt = this.CustDataForm.controls["PersonalMain"]["controls"].BirthDt.value;
+      inputCustObj.MaritalStatus = this.CustDataForm.controls["PersonalMain"]["controls"].MrMaritalStatCode.value;
+      inputCustObj.CustPhnNo = this.CustDataForm.controls["PersonalMain"]["controls"].MobilePhnNo1.value;
+      inputCustObj.CustEmail = this.CustDataForm.controls["PersonalMain"]["controls"].Email1.value;
+      inputCustObj.IdNo = this.CustDataForm.controls["PersonalMain"]["controls"].IdNo.value;
+      inputCustObj.IdType = this.CustDataForm.controls["PersonalMain"]["controls"].MrIdTypeCode.value;
+      inputCustObj.TaxNo = this.CustDataForm.controls["PersonalMain"]["controls"].TaxIdNo.value;
+
+      inputCustObj.HomeAddr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
+      inputCustObj.HomeRt = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
+      inputCustObj.HomeRw = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
+      inputCustObj.HomeZipCode = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
+      inputCustObj.HomeKelurahan = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
+      inputCustObj.HomeKecamatan = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
+      inputCustObj.HomeCity = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
+      let inputLeadString = JSON.stringify(inputCustObj);
+      let latestCustDataString = JSON.stringify(this.latestCustDataObj);
+  
+      if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+        if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+    }
+    else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+
+
+      inputCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
+      inputCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
+      if (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value ||
+        this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value) {
+        if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
+          return true;
+        }
+      }
+      else {
+        return true;
+      }
+    }
+
+    else {
+      return true;
     }
   }
 }

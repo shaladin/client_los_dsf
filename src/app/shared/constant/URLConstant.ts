@@ -36,6 +36,7 @@ export class URLConstant {
     public static CopyCancelledAppForMainData = environment.losUrl + "/Application/CopyCancelledAppForMainData";
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
     public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
+    public static CheckMouCustIntegrator = environment.losUrl + "/MouCust/CheckMouCustIntegrator";
 
     //App Loan Purpose
     public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
