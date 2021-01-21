@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
+import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 
 @Component({
@@ -52,25 +54,11 @@ export class CustExposureViewComponent implements OnInit {
     );
   }
   
-  CustCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  CustGroupCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  ObligorCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
+  CrdRvwExposureHObj: CrdRvwExposureHObj = new CrdRvwExposureHObj();
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: "SELF_CUST" }).toPromise().then(
       (response) => {
-        // console.log(response);
-        for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
-          const element = response.ListCrdRvwExposureObj[index];
-          if (element.ExposureType == this.ExposureCustTypeCode) {
-            this.CustCrdRvwExposureObj = element;
-          }
-          if (element.ExposureType == this.ExposureCustGroupTypeCode) {
-            this.CustGroupCrdRvwExposureObj = element;
-          }
-          if (element.ExposureType == this.ExposureObligorTypeCode) {
-            this.ObligorCrdRvwExposureObj = element;
-          }
-        }
+        this.CrdRvwExposureHObj = response;
       }
     );
   }

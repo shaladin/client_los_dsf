@@ -3,12 +3,9 @@
 <div id="CustInfo">
   <div class="card-body">
     <div class="row">
+      <div class="col-md-6"></div>      
       <div class="col-md-6">
-        <app-crd-rvw-cust-personal-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info>
-        <app-crd-rvw-cust-company-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info>
-      </div>
-      <div class="col-md-6 ">
-        <div class="row">
+        <div class="row" style="font-weight: bold;">
           <div class="col-md-6">
             <label class="label-control"> As of Date:  </label>
           </div>
@@ -16,6 +13,14 @@
             <label class="label-control"> {{crdRvwCustInfoObj.AsOfDate | date: 'dd/MM/yyyy'}} </label>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <app-crd-rvw-cust-personal-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info>
+        <app-crd-rvw-cust-company-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info>
+      </div>
+      <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-12">
             <label class="label-control"> 
@@ -73,6 +78,15 @@
         <div class="row">
           <div class="col-md-6">
             <label class="label-control"> #Agr FPD (Last {{CustCrdRvwExposureObj.SpanOfMonth != null ? CustCrdRvwExposureObj.SpanOfMonth : 0}} month / All) </label>
+            <span id="FpdIndicator" style="float: right;">
+              <i [ngClass]="CustCrdRvwExposureObj.FpdIndicator == null ? 'far fa-circle' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                [ngStyle]="{'color': CustCrdRvwExposureObj.FpdIndicator == null ? '' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? CustCrdRvwExposureObj.FpdIndicator : ''}" class="font-medium-3 tooltips">
+                <span class="tooltipstext">
+                  <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr != null && CustCrdRvwExposureObj.FpdIndicatorDescr != ''"> {{CustCrdRvwExposureObj.FpdIndicatorDescr}} </span>
+                  <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr == null || CustCrdRvwExposureObj.FpdIndicatorDescr == ''"> No Data </span>
+                </span>
+              </i>
+            </span>
           </div>
           <div class="col-md-6">
             <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntFpd}} </label>

@@ -50,7 +50,7 @@
                     <label class="label-control"> Relation With Customer </label>
                   </div>
                   <div class="col-md-6 ">
-                    <label class="label-control"> {{CustCrdRvwExposureObj.RelationWithCust}} </label>
+                    <label class="label-control"> {{CrdRvwExposureHObj.RelationWithCust}} </label>
                   </div>
                 </div>
               </div>
@@ -59,17 +59,17 @@
           <mat-tab-group *ngIf="IsReady">
             <mat-tab label="Customer Exposure">
               <ng-template matTabContent>
-                <app-cust-exposure [exposureObj]="CustCrdRvwExposureObj"></app-cust-exposure>
+                <app-cust-exposure [exposureHObj]="CrdRvwExposureHObj"></app-cust-exposure>
               </ng-template>
             </mat-tab>
             <mat-tab label="Customer Group Exposure">
               <ng-template matTabContent>
-                <app-cust-exposure [exposureObj]="CustGroupCrdRvwExposureObj"></app-cust-exposure>
+                <app-cust-exposure [exposureHObj]="CrdRvwExposureHObj"></app-cust-exposure>
               </ng-template>
             </mat-tab>
             <mat-tab label="Obligor Exposure">
               <ng-template matTabContent>
-                <app-obligor-exposure [exposureObj]="ObligorCrdRvwExposureObj"></app-obligor-exposure>
+                <app-obligor-exposure [exposureHObj]="CrdRvwExposureHObj"></app-obligor-exposure>
               </ng-template>
             </mat-tab>
           </mat-tab-group>
