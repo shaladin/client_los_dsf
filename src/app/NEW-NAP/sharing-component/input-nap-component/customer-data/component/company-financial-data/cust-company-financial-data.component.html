@@ -1,4 +1,4 @@
-<div formGroupName="{{identifier}}">
+<div *ngIf="isReady" formGroupName="{{identifier}}">
   <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialDataCompany'">
   </lib-ucSubsection>
   <div id="financialDataCompany">

@@ -234,6 +234,7 @@
                   </div>
                 </div>
 
+
                 <div class="col-md-6">
                   <div formArrayName="items">
                     <div *ngFor="let item of items.controls; let i = index;">
@@ -255,6 +256,21 @@
                 </div>
 
               </div>
+              <div *ngIf="IntegratorCheckBySystemGsValue == 0">
+              <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
+              </lib-ucSubsection>
+              <div [id]="fraudChecking">
+                <div class="form-group row">
+                  <label class="col-md-2" translate>RAPINDO</label>
+                  <div class="col-md-8">
+                    <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
+                      HIT RAPINDO
+                    </button>
+                    <label *ngIf="LastRequestedDate != ''" class="col-md-4" translate>Last Requested At : {{LastRequestedDate}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
               <div *ngIf="AppAssetAttrObj != null && isAssetAttrReady == 1">
                 <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
                 </lib-ucSubsection>
@@ -467,7 +483,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2" translate >Copy Address</label>
+                  <label class="col-md-2" translate>Copy Address</label>
                   <div class="col-md-4">
                     <div class="input-group">
                       <select class="form-control" formControlName="OwnerAddrType"

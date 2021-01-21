@@ -578,6 +578,7 @@ export class CommonConstant {
   
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
+  public static MOU_TRX_TYPE_CODE = "MOU";
   public static LEAD_TRX_TYPE_CODE = "LEAD";
 
   //FRAUD CHECK TYPE
