@@ -1272,7 +1272,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
 
     //ThirdPartyRsltH
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
-    public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultForFraudChecking";
+    public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHForFraudChecking";
     public static GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking";
 
     public static GetFraudResult = environment.losUrl + "/ThirdPartyRsltH/GetFraudResult";
