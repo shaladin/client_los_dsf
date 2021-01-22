@@ -60,6 +60,21 @@
       </tbody>
     </table>
   </div>
+  <div *ngIf="isNeedCheckBySystem == '0' && type == 'Paging'">
+    <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
+    </lib-ucSubsection>
+    <div [id]="fraudChecking">
+      <div class="form-group row">
+        <label class="col-md-2" translate>RAPINDO</label>
+        <div class="col-md-8">
+          <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
+            HIT RAPINDO
+          </button>
+          <label *ngIf="latestReqDtCheckIntegrator != ''" class="col-md-4" translate>Requested At {{this.latestReqDtCheckIntegrator | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="type == 'Paging'" class="col-md-12" style="padding: 0; text-align: right;">
     <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
       <i class="ft-x"></i> Cancel

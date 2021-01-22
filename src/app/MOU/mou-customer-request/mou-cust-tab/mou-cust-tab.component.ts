@@ -1494,9 +1494,9 @@ export class MouCustTabComponent implements OnInit {
         if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }
-        else {
-          return false;
-        }
+      }
+      else {
+        return true;
       }
     }
     else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
