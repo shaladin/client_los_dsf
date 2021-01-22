@@ -615,7 +615,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListCollateralByListCollateralNo = environment.FoundationR3Url + "/Collateral/GetListCollateralByListCollateralNo";
     public static GetMouCustCollateralDataExistingByCollateralNo = environment.losUrl + "/MouCustCollateral/GetMouCustCollateralDataExistingByCollateralNo";
 
-
+    public static CheckMouCustCollateralIntegrator = environment.losUrl + "/MouCustCollateral/CheckMouCustCollateralIntegrator";
     // MOU CUST COLLATERAL DOC
 
     // MOU CUST RVW H
