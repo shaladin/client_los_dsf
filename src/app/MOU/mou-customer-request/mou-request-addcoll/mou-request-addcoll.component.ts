@@ -44,6 +44,7 @@ export class MouRequestAddcollComponent implements OnInit {
   generalSettingObj: GeneralSettingObj;
   returnGeneralSettingObj: any;
   isNeedCheckBySystem: string = "0";
+  thirdPartyRsltHId: any = "";
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupCollateral = content;
@@ -138,6 +139,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.bindMouData();
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
+    this.isNeedCheckBySystem = "0";
   }
 
   bindUcAddToTempData() {
@@ -169,6 +171,7 @@ export class MouRequestAddcollComponent implements OnInit {
           (response) => {
             if (response != null) {
               this.latestReqDtCheckIntegrator = response['ReqDt'];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
             }
           });
       });
@@ -219,7 +222,7 @@ export class MouRequestAddcollComponent implements OnInit {
           MrIdType: this.IdTypeList[0].Key
         });
       })
-    
+
   }
 
   CollateralPortionTypeChange() {
@@ -983,12 +986,14 @@ export class MouRequestAddcollComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
       return;
     }
-    if (!this.IsCalledIntegrator) {
-      if(confirm("Continue without integrator ?")){
-      this.ResponseMouAddColl.emit({ StatusCode: "200" });
+    if (this.isNeedCheckBySystem == "0") {
+      if (!this.IsCalledIntegrator) {
+        if (confirm("Continue without integrator ?")) {
+          this.ResponseMouAddColl.emit({ StatusCode: "200" });
+        }
       }
     }
-    else{
+    else {
       this.ResponseMouAddColl.emit({ StatusCode: "200" });
     }
   }
@@ -1030,6 +1035,7 @@ export class MouRequestAddcollComponent implements OnInit {
             (response) => {
               if (response != null) {
                 this.latestReqDtCheckIntegrator = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
               }
             });
         }

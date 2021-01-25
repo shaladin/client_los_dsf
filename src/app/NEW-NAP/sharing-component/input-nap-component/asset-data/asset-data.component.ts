@@ -351,7 +351,7 @@ export class AssetDataComponent implements OnInit {
           for (let i = 0; i < this.items.length; i++) {
             if (this.items.controls[i] != null) {
               this.items.controls[i]['controls']['SerialNoValue'].value = this.appAssetObj.ResponseAppAssetObj["SerialNo" + (i + 1)];
-              if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No"){
+              if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No") {
                 this.indexChassis = i;
               }
             }
@@ -522,40 +522,49 @@ export class AssetDataComponent implements OnInit {
       if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
       if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
     }
-    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-      if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
-          });
-      }
-    }
-    else if (!this.IsIntegrator) {
-      if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0) {
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
-          });
-      }
-      else{
-        if (confirm("Submit data without Integrator ?")) {
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit();
-          });
+    if (this.IntegratorCheckBySystemGsValue == "0") {
+      if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+        if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit();
+            });
         }
       }
+      else if (!this.IsIntegrator) {
+        if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit();
+            });
+        }
+        else {
+          if (confirm("Submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.outputTab.emit();
+              });
+          }
+        }
+      }
+      else if (this.IsIntegrator) {
+        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+              (response) => {
+              });
+            this.outputTab.emit();
+          });
+      }
     }
-    else if (this.IsIntegrator) {
+    else {
       this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-            (response) => {
-            });
           this.outputTab.emit();
         });
     }
@@ -565,16 +574,16 @@ export class AssetDataComponent implements OnInit {
   Cancel() {
     this.outputCancel.emit();
   }
-  async GetThirdPartyResultH(){
+  async GetThirdPartyResultH() {
     var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
-    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, {TrxNo : this.AppObj.AppNo, TrxTypeCode : "APP", ChassisNo : ChassisNoValue}).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, { TrxNo: this.AppObj.AppNo, TrxTypeCode: "APP", ChassisNo: ChassisNoValue }).toPromise().then(
       (response) => {
         console.log(response);
-        if(response["AppAssetObject"]["SerialNo1"] != null){
+        if (response["AppAssetObject"]["SerialNo1"] != null) {
           this.currentChassisNo = response["AppAssetObject"]["SerialNo1"];
         }
-        if(response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null){
-        this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
+        if (response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null) {
+          this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
         }
       }
     );
