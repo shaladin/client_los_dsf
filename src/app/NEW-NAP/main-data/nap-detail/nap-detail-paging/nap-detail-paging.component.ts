@@ -80,6 +80,9 @@ export class NapDetailPagingComponent implements OnInit {
         case CommonConstant.CFNA :
           AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
         break;
+        case CommonConstant.OPL :
+          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
+        break;
       }
     }
   }
