@@ -342,6 +342,13 @@ export class CreditReviewCrDetailComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
+
+  ReCaptureDataR2(){    
+    this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
   
   BindAppCrdRvwDObj(objArr: any) {
     let AppCrdRvwDObjs = new Array();
