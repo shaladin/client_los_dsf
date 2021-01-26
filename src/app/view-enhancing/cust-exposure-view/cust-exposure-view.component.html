@@ -20,26 +20,18 @@
                 <div class="row">
                   <div class="col-md-6">
                     <label class="label-control"> Customer Name </label>
-                    <span id="CustIndicator" style="float: right;">
-                      <i *ngIf="crdRvwCustInfoObj.CustIndicator != whiteIndicator"
-                        [ngStyle]="{'color': crdRvwCustInfoObj.CustIndicator}" class="font-medium-3 fa fa-circle tooltips">
-                        <span
-                          *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != ''"
-                          [ngClass]="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != '' ? 'tooltipstext' : ''">
-                          {{crdRvwCustInfoObj.CustIndicatorDescr}}
-                        </span>
-                      </i>
-                      <i *ngIf="crdRvwCustInfoObj.CustIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
-                        <span
-                          *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != ''"
-                          [ngClass]="crdRvwCustInfoObj.CustIndicatorDescr != undefined && crdRvwCustInfoObj.CustIndicatorDescr != '' ? 'tooltipstext' : ''">
-                          {{crdRvwCustInfoObj.CustIndicatorDescr}}
+                    <span id="CustIndicator" style="float: right;">                    
+                      <i [ngClass]="CrdRvwExposureHObj.CustIndicator == null ? 'far fa-circle' : CrdRvwExposureHObj.CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                      [ngStyle]="{'color': CrdRvwExposureHObj.CustIndicator == null ? '' : CrdRvwExposureHObj.CustIndicator != whiteIndicator ? CrdRvwExposureHObj.CustIndicator : ''}" class="font-medium-3 tooltips">
+                        <span class="tooltipstext">
+                          <span *ngIf="CrdRvwExposureHObj.CustIndicatorDescr != null && CrdRvwExposureHObj.CustIndicatorDescr != ''"> {{CrdRvwExposureHObj.CustIndicatorDescr}} </span>
+                          <span *ngIf="CrdRvwExposureHObj.CustIndicatorDescr == null || CrdRvwExposureHObj.CustIndicatorDescr == ''"> No Data </span>
                         </span>
                       </i>
                     </span>
                   </div>
                   <div class="col-md-6 ">
-                    <label class="label-control"> {{crdRvwCustInfoObj.CustName}} </label>
+                    <label class="label-control"> {{CrdRvwExposureHObj.CustName}} </label>
                   </div>
                 </div>
               </div>

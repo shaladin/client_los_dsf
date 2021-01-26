@@ -32,6 +32,7 @@ export class LeadInputPageComponent implements OnInit {
   dmsObj: DMSObj;
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
+  customObj: any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -141,11 +142,13 @@ export class LeadInputPageComponent implements OnInit {
             component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
           }
         }
-        else if(this.AppStepIndex == 3){
-          this.EnterTab("")
+        else if (this.AppStepIndex == 3 && this.pageType != "update") {
+          this.customObj = ev;
+          this.EnterTab("uploadDocument")
         }
-
-
+        else if (this.AppStepIndex == 3 && this.pageType == "update") {
+          AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
+        }
 
       }
       else {
@@ -172,6 +175,20 @@ export class LeadInputPageComponent implements OnInit {
       });
   }
   endOfTab() {
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
+    this.http.post(URLConstant.GetLeadAssetByLeadId, { LeadId: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
+      (response) => {
+        this.customObj.LeadInputLeadDataObj.LeadAssetObj.RowVersion = response["RowVersion"];
+        this.http.post(URLConstant.GetLeadAppByLeadId, { LeadId: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
+          (response) => {
+            this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
+            this.http.post(this.customObj.urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
+              (response) => {
+                AdInsHelper.RedirectUrl(this.router, [this.customObj.paging], {});
+              }
+            );
+          });
+      });
+
+
   }
 }

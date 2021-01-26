@@ -146,9 +146,9 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + "/View/Survey/SurveyOrder?SrvyOrderId=" + SrvyOrderId + "&Token=" + token, '_blank');
   }
 
-  public static OpenCustExposureViewByCrdRvwCustInfoId(AppId) {
+  public static OpenCustExposureViewByCrdRvwExposureHId(CrdRvwExposureHId: number) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + "/View/CustExposureView?AppId=" + AppId + "&Token=" + token, '_blank');
+    window.open(environment.losR3Web + "/View/CustExposureView?CrdRvwExposureHId=" + CrdRvwExposureHId + "&Token=" + token, '_blank');
   }
 
   public static CreateUserAccess(response) {

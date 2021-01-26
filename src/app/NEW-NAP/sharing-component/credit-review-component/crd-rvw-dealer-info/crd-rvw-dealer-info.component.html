@@ -73,7 +73,7 @@
         <tbody>
           <tr>
             <td style="text-align: left;">{{crdRvwDealerObj.AllAgrmnt}}</td>
-            <td style="text-align: left;" *ngFor="let item of crdRvwDealerObj.ListCrdRvwDealerBucketObj; let i = index;">{{item.Value}}</td>
+            <td style="text-align: left;" *ngFor="let item of crdRvwDealerObj.ListCrdRvwDealerBucketObj; let i = index;">{{item.Value | number:'.2':'en-US'}}</td>
             <td style="text-align: left;">{{crdRvwDealerObj.AllWo}}</td>
             <td style="text-align: left;">{{crdRvwDealerObj.AllRepo}}</td>
           </tr>

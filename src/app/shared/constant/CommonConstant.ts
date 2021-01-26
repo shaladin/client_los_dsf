@@ -559,10 +559,10 @@ export class CommonConstant {
   public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
   
   // Role Type
-  public static RoleCustData = "CUST_DATA";
-  public static RoleFamilyData = "FAM_DATA";
-  public static RoleGuarantorData = "GUARANTOR_DATA";
-  public static RoleShareholder = "SHAREHOLDER_DATA";
+  public static RoleCustData = "CUST";
+  public static RoleFamilyData = "SPOUSE";
+  public static RoleGuarantorData = "GUARANTOR";
+  public static RoleShareholder = "SHAREHOLDER";
   //Approval
   public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
@@ -604,4 +604,14 @@ export class CommonConstant {
   public static DmsViewCodeLead = "ConfinsLead";
   
   public static DefaultSlikSecEcoCode = "930000";
+  
+  // CrdRvw
+  public static CrdRvwRelationTypeCustomer = "Customer";
+  public static CrdRvwRelationTypeFamily = "Family";
+  public static CrdRvwRelationTypeShrholder = "Shareholder";
+  public static CrdRvwRelationTypeGuarantor = "Guarantor";
+  
+  public static CaptureStatReq = "REQ";
+  public static CaptureStatScs = "SCS";
+  public static CaptureStatFail = "FAIL";
 }
