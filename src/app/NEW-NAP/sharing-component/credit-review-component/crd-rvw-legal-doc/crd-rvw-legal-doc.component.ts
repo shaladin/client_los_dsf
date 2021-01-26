@@ -18,9 +18,7 @@ export class CrdRvwLegalDocComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    await this.GetListActiveRefMaster(CommonConstant.RefMasterTypeCodeLegalDocType);
     await this.LoadListLegalDocData();
-    console.log(this.DictRefMaster);
   }
 
   ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
@@ -29,20 +27,6 @@ export class CrdRvwLegalDocComponent implements OnInit {
       (response) => {
         console.log(response);
         this.ListLegalDoc = response.ListCompanyLegalDoc;
-      }
-    );
-  }
-
-  DictRefMaster: { [Id: string]: string } = {};
-  async GetListActiveRefMaster(RefMasterTypeCode: string) {
-    await this.http.post<{RefMasterObjs: Array<RefMasterObj>}>(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { "RefMasterTypeCode": RefMasterTypeCode }).toPromise().then(
-      (response) => {
-        console.log(response);
-        for (let index = 0; index < response.RefMasterObjs.length; index++) {
-          const element = response.RefMasterObjs[index];
-          
-          this.DictRefMaster[element.MasterCode] = element.Descr;
-        }
       }
     );
   }

@@ -135,9 +135,18 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
       }
     )
   }
-  ClickLinkPhoneVerif() {
+  async ClickLinkPhoneVerif() {
     console.log("click phn verif");
-    // AdInsHelper.OpenPhoneVerifViewByAppId(this.crdRvwCustInfoObj.AppId, 0,"");
+    let tempReqObj: object = { TrxRefNo: this.crdRvwCustInfoObj.AppNo, MrVerfTrxTypeCode: "PHN_VERIF", MrVerfObjCode: "CUSTOMER" };
+    await this.http.post<{ VerfResultHId: number }>(URLConstant.GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode, tempReqObj).toPromise().then(
+      (response) => {
+        if (response != null || response != undefined) {
+          AdInsHelper.OpenPhoneVerifViewByAppId(this.crdRvwCustInfoObj.AppId, response.VerfResultHId, this.crdRvwCustInfoObj.CustName);
+        } else {
+          this.toastr.warning(ExceptionConstant.NO_PHONE_VERF);
+        }
+      }
+    )
   }
 
   // GetPhnVerfSubjData() {

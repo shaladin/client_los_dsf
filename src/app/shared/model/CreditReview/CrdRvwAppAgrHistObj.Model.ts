@@ -1,7 +1,7 @@
 export class CrdRvwAppAgrHistObj {
 
     CrdRvwAppAgrHistId: number;
-    CrdRvwExposureId: number;
+    CrdRvwExposureHId: number;
     AppNo: string;
     AgrmntNo: string;
     GoLiveDt: Date;

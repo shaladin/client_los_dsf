@@ -10,6 +10,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -34,8 +35,14 @@ export class AssetDataPagingComponent implements OnInit {
   AppCollateralId: number;
   editAsset: string;
   editColl: string;
-  selectedAsset : any;
-  units : number = 0;
+  selectedAsset: any;
+  units: number = 0;
+  appObj: any;
+  generalSettingObj: GeneralSettingObj;
+  IntegratorCheckBySystemGsValue: string = "1";
+  LastRequestedDate: any;
+  IsCalledIntegrator: boolean = false;
+  thirdPartyRsltHId: any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListAppAssetData = URLConstant.GetAppAssetListByAppId;
     this.getListAppCollateral = URLConstant.GetListAdditionalCollateralByAppId;
@@ -46,7 +53,48 @@ export class AssetDataPagingComponent implements OnInit {
       }
     });
   }
+  async GetThirdPartyResultH() {
 
+    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.appObj = response;
+        this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
+          (response) => {
+            if (response["ThirdPartyRsltHId"] != null) {
+              this.LastRequestedDate = response["ReqDt"];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+            }
+          }
+        );
+      }
+    );
+
+
+  }
+
+  HitAPI() {
+    console.log(this.gridAssetDataObj.resultData.Data);
+    let assetData = this.gridAssetDataObj.resultData.Data;
+    if (assetData.length != 0) {
+      for (let i = 0; i < assetData.length; i++) {
+        if (assetData[i]["SerialNo1"] == '') {
+          this.toastr.warningMessage("Please Input Chassis No in asset name " + assetData[i].FullAssetName + ".");
+          return;
+        }
+      }
+      this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
+        (response) => {
+          this.IsCalledIntegrator = true;
+          this.toastr.successMessage("Success !");
+          this.GetThirdPartyResultH();
+        }
+      );
+
+    }
+    else {
+      this.toastr.warningMessage("Must have atleast 1 asset.");
+    }
+  }
   addAsset() {
     this.outputValue.emit({ mode: 'addAsset' });
   }
@@ -57,6 +105,16 @@ export class AssetDataPagingComponent implements OnInit {
 
   Cancel() {
     this.outputCancel.emit();
+  }
+
+  async GetGS() {
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).toPromise().then(
+      (response) => {
+        this.IntegratorCheckBySystemGsValue = response["GsValue"];
+      }
+    );
   }
 
   event(ev) {
@@ -82,6 +140,7 @@ export class AssetDataPagingComponent implements OnInit {
             }
 
             this.gridAssetDataObj.resultData = DetailForGridAsset;
+            this.IsCalledIntegrator = false;
             this.getGridCollateral();
           }
         );
@@ -118,38 +177,38 @@ export class AssetDataPagingComponent implements OnInit {
       }
     }
   }
-  CopyAsset(){
-    if(this.units == 0){
+  CopyAsset() {
+    if (this.units == 0) {
       this.toastr.warningMessage("Unit cannot be 0.");
     }
-    else{
-    var splitted = this.selectedAsset.split(";");
+    else {
+      var splitted = this.selectedAsset.split(";");
 
-    this.http.post(URLConstant.CopyAppAsset, {
-      AppId : this.AppId, 
-      Code : this.selectedAsset, 
-      count : this.units,
-      FullAssetCode: splitted[0],
-      ManufacturingYear: splitted[1],
-      Color: splitted[2],
-      MrAssetConditionCode: splitted[3],
-      AssetPriceAmt: +splitted[4]
-    }).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.ngOnInit();
-      }
-    );
+      this.http.post(URLConstant.CopyAppAsset, {
+        AppId: this.AppId,
+        Code: this.selectedAsset,
+        count: this.units,
+        FullAssetCode: splitted[0],
+        ManufacturingYear: splitted[1],
+        Color: splitted[2],
+        MrAssetConditionCode: splitted[3],
+        AssetPriceAmt: +splitted[4]
+      }).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.ngOnInit();
+        }
+      );
     }
   }
-  getListDataForDDLCopy(){
+  getListDataForDDLCopy() {
     this.http.post(URLConstant.GetListAppAssetForCopyByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listDataAsset = response[CommonConstant.ReturnObj];
-        if(this.listDataAsset.length > 0) this.selectedAsset = this.listDataAsset[0].Code;
+        if (this.listDataAsset.length > 0) this.selectedAsset = this.listDataAsset[0].Code;
       });
   }
-  getListDataAsset(){
+  getListDataAsset() {
     this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
@@ -164,16 +223,17 @@ export class AssetDataPagingComponent implements OnInit {
       });
   }
   ngOnInit() {
+
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
     this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;
-    
+
     this.appAssetObj = new AppAssetObj();
     // this.appAssetObj.AppAssetId = "-";
     this.appAssetObj.AppId = this.AppId;
-this.getListDataAsset();
+    this.getListDataAsset();
 
-  
+
     this.gridAppCollateralObj = new InputGridObj();
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
     this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;
@@ -191,6 +251,8 @@ this.getListDataAsset();
 
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       });
+    this.GetGS();
+    this.GetThirdPartyResultH();
   }
 
   getGridCollateral() {
@@ -217,11 +279,20 @@ this.getListDataAsset();
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
-  next(){
-    if(this.gridAssetDataObj.resultData.Data.length < 1)
-    {
+  next() {
+    if (this.gridAssetDataObj.resultData.Data.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
+    }
+    if (this.IntegratorCheckBySystemGsValue == "0") {
+      if (!this.IsCalledIntegrator) {
+        if (confirm("Submit without Integrator ? ")) {
+          this.outputValue.emit({ mode: 'submit' });
+        }
+      }
+      else {
+        this.outputValue.emit({ mode: 'submit' });
+      }
     }
     else {
       this.outputValue.emit({ mode: 'submit' });

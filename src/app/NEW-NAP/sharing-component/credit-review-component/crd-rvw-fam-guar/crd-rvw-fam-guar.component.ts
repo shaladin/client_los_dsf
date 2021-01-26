@@ -4,7 +4,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
+import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
+import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-fam-guar',
@@ -93,13 +96,25 @@ export class CrdRvwFamGuarComponent implements OnInit {
     );
   }
 
-  DictCrdRvwExposure: { [Id: string]: CrdRvwExposureObj } = {};
+  //#region Exposure Type
+  readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
+  readonly ExposureCustGroupTypeCode: string = CommonConstant.ExposureCustGroupTypeCode;
+  readonly ExposureObligorTypeCode: string = CommonConstant.ExposureObligorTypeCode;
+  //#endregion
+
+  DictCrdRvwExposure: { [Id: string]: CrdRvwExposureDObj } = {};
+  DictCrdRvwGuarantorExposure: { [Id: string]: CrdRvwOvdObj } = {};
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwExposureHObj: Array<CrdRvwExposureHObj>, ListCrdRvwOvdObj: Array<CrdRvwOvdObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
-          const element = response.ListCrdRvwExposureObj[index];
-          this.DictCrdRvwExposure[element.CustNo + element.RelationWithCust] = element;
+        for (let index = 0; index < response.ListCrdRvwExposureHObj.length; index++) {
+          const element = response.ListCrdRvwExposureHObj[index];
+          this.DictCrdRvwExposure[element.CustNo + element.RelationWithCust] = element.ListCrdRvwExposureDObj.find(x=>x.ExposureType == this.ExposureCustTypeCode);
+        }
+
+        for (let index = 0; index < response.ListCrdRvwOvdObj.length; index++) {
+          const element = response.ListCrdRvwOvdObj[index];
+          this.DictCrdRvwGuarantorExposure[element.CustNo] = element;
         }
       }
 

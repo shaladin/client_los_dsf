@@ -293,7 +293,7 @@ export class NapDetailFormComponent implements OnInit {
       default:
         break;
     }
-    if (AppStep == CommonConstant.AppStepTC)
+    if (AppStep == CommonConstant.AppStepUplDoc)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
@@ -357,10 +357,6 @@ export class NapDetailFormComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      if (!this.IsSavedTC) {
-        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
-      }
-      else {
         var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
         ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
         ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
@@ -377,7 +373,6 @@ export class NapDetailFormComponent implements OnInit {
           }
         )
       }
-    }
   }
 
   ClaimTask() {

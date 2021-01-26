@@ -25,7 +25,7 @@
               <td style="text-align: left;">
                 <span id="CustFamilyIndicator{{i}}">
                   <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? '' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : ''}" class="font-medium-3 tooltips">
                     <span class="tooltipstext">
                       <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
                       <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
@@ -52,11 +52,11 @@
                 *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined">
                 <span id="CustFamilyOverdueIndicator{{i}}">
                   <!-- ini belom selesai karena belom ada indicator utk overdue -->
-                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
+                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator == null ? '' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator : ''}" class="font-medium-3 tooltips">
                     <span class="tooltipstext">
-                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
-                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
+                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
+                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr == ''"> No Data </span>
                     </span>
                   </i>
                   <span> / DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].TotalAgrmntOverdue /
@@ -94,7 +94,7 @@
               <td style="text-align: left;">
                 <span id="CustShareholderIndicator{{i}}">
                   <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? '' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : ''}" class="font-medium-3 tooltips">
                     <span class="tooltipstext">
                       <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
                       <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
@@ -116,11 +116,11 @@
                 *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined">
                 <span id="CustShareholderOverdueIndicator{{i}}">
                   <!-- ini belom selesai karena belom ada indicator utk overdue -->
-                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
+                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator == null ? '' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator : ''}" class="font-medium-3 tooltips">
                     <span class="tooltipstext">
-                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
-                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
+                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
+                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr == ''"> No Data </span>
                     </span>
                   </i>
                   <span> / DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].TotalAgrmntOverdue /
@@ -161,7 +161,7 @@
               <td style="text-align: left;">
                 <span id="CustGuarantorIndicator{{i}}">
                   <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? '' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : ''}" class="font-medium-3 tooltips">
                     <span class="tooltipstext">
                       <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
                       <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
@@ -190,11 +190,11 @@
                 *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined">
                 <span id="CustGuarantorOverdueIndicator{{i}}">
                   <!-- ini belom selesai karena belom ada indicator utk overdue -->
-                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
+                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator == null ? '' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicator : ''}" class="font-medium-3 tooltips">
                     <span class="tooltipstext">
-                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
-                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
+                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
+                      <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].OverdueIndicatorDescr == ''"> No Data </span>
                     </span>
                   </i>
                   <span> / DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].TotalAgrmntOverdue /
@@ -207,23 +207,23 @@
               
               <!-- #AGR / Days Ovd / Total Ovd Amt As Guarantor -->
               <td style="text-align: left;"
-                *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] != undefined">
-                <span id="CustGuarantorOverdueIndicator{{i}}">
+                *ngIf="DictCrdRvwGuarantorExposure[item.CustNo] != undefined">
+                <span id="CustAsGuarantorOverdueIndicator{{i}}">
                   <!-- ini belom selesai karena belom ada indicator utk overdue -->
-                  <i [ngClass]="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? 'far fa-circle' : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                  [ngStyle]="{'color': DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator == null ? white : DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator != whiteIndicator ? DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicator : white}" class="font-medium-3 tooltips">
-                  <span class="tooltipstext">
-                    <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != null && DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr != ''"> {{DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr}} </span>
-                    <span *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == null || DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].CustIndicatorDescr == ''"> No Data </span>
-                  </span>
-                </i>
-                  <span> / DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].TotalAgrmntOverdue /
-                    DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].MaxOverdueDays /
-                    DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode].MaxOverdueAmt </span>
+                  <i [ngClass]="DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicator == null ? 'far fa-circle' : DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicator == null ? '' : DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicator != whiteIndicator ? DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicator : ''}" class="font-medium-3 tooltips">
+                    <span class="tooltipstext">
+                      <span *ngIf="DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicatorDescr != null && DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicatorDescr != ''"> {{DictCrdRvwGuarantorExposure[item.CustNo].CustIndicatorDescr}} </span>
+                      <span *ngIf="DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicatorDescr == null || DictCrdRvwGuarantorExposure[item.CustNo].OverdueIndicatorDescr == ''"> No Data </span>
+                    </span>
+                  </i>
+                  <span> / DictCrdRvwGuarantorExposure[item.CustNo].TotalAgrmntOverdue /
+                    DictCrdRvwGuarantorExposure[item.CustNo].MaxOverdueDays /
+                    DictCrdRvwGuarantorExposure[item.CustNo].MaxOverdueAmt </span>
                 </span>
               </td>
               <td style="text-align: left;"
-                *ngIf="DictCrdRvwExposure[item.CustNo+item.MrCustRelationshipCode] == undefined"> - </td>
+                *ngIf="DictCrdRvwGuarantorExposure[item.CustNo] == undefined"> - </td>
             </tr>
           </tbody>
         </table>

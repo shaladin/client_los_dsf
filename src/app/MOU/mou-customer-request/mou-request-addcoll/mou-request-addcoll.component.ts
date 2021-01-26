@@ -21,6 +21,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxData.Model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -35,6 +38,13 @@ export class MouRequestAddcollComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   private ucLookupCollateral: UclookupgenericComponent;
+  IsCalledIntegrator: boolean = false;
+  thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  latestReqDtCheckIntegrator: any;
+  generalSettingObj: GeneralSettingObj;
+  returnGeneralSettingObj: any;
+  isNeedCheckBySystem: string = "0";
+  thirdPartyRsltHId: any = "";
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupCollateral = content;
@@ -129,6 +139,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.bindMouData();
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
+    this.isNeedCheckBySystem = "0";
   }
 
   bindUcAddToTempData() {
@@ -152,6 +163,17 @@ export class MouRequestAddcollComponent implements OnInit {
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.custNo = this.returnMouCust.CustNo;
+        this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+        this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
+        this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
+        this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
+        this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+          (response) => {
+            if (response != null) {
+              this.latestReqDtCheckIntegrator = response['ReqDt'];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+            }
+          });
       });
 
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
@@ -200,6 +222,7 @@ export class MouRequestAddcollComponent implements OnInit {
           MrIdType: this.IdTypeList[0].Key
         });
       })
+
   }
 
   CollateralPortionTypeChange() {
@@ -963,11 +986,63 @@ export class MouRequestAddcollComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
       return;
     }
-    this.ResponseMouAddColl.emit({ StatusCode: "200" });
+    if (this.isNeedCheckBySystem == "0") {
+      if (!this.IsCalledIntegrator) {
+        if (confirm("Continue without integrator ?")) {
+          this.ResponseMouAddColl.emit({ StatusCode: "200" });
+        }
+      }
+    }
+    else {
+      this.ResponseMouAddColl.emit({ StatusCode: "200" });
+    }
   }
 
   back() {
     this.modeDetail.emit({ mode: "edit" });
     this.ResponseMouAddColl.emit({ StatusCode: "-1" });
+  }
+  GetGS() {
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).subscribe(
+      (response) => {
+        this.returnGeneralSettingObj = response;
+        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+      });
+  }
+  HitAPI() {
+    var mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
+    mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
+
+    let assetData = this.listCollateralData;
+    if (assetData.length != 0) {
+      for (let i = 0; i < assetData.length; i++) {
+        if (assetData[i]["SerialNo1"] == '') {
+          this.toastr.warningMessage("Please Input Chassis No in asset name " + assetData[i].FullAssetName + ".");
+          return;
+        }
+      }
+      this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
+        (response) => {
+          this.IsCalledIntegrator = true;
+          this.toastr.successMessage("Success !");
+          this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+          this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
+          this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
+          this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+            (response) => {
+              if (response != null) {
+                this.latestReqDtCheckIntegrator = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              }
+            });
+        }
+      );
+    }
+    else {
+      this.toastr.warningMessage("Must have atleast 1 asset.");
+    }
   }
 }

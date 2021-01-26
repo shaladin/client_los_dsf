@@ -5,7 +5,32 @@
     </lib-ucSubsection>
     <div id="BankAccount">
       <div class="col-md-12" *ngIf="ListAppCustBankAccObjs.length == 0">
-        <span aria-colspan="100%">No Data Available</span>
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th style="text-align: left;">
+                <span  name='month' translate>MONTH</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='year' translate>YEAR</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='debit' translate>DEBIT (-)</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='credit' translate>CREDIT (+)</span>
+              </th>
+              <th style="text-align: left;">
+                <span  name='endingBalance' translate>ENDING BALANCE</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="col-md-12" *ngFor="let item of ListAppCustBankAccObjs; let i = index">
