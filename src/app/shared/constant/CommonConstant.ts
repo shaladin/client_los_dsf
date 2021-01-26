@@ -610,4 +610,7 @@ export class CommonConstant {
   public static CrdRvwRelationTypeShrholder = "Shareholder";
   public static CrdRvwRelationTypeGuarantor = "Guarantor";
   
+  public static CaptureStatReq = "REQ";
+  public static CaptureStatScs = "SCS";
+  public static CaptureStatFail = "FAIL";
 }

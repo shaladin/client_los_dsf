@@ -42,6 +42,10 @@ export class CreditReviewCrDetailComponent implements OnInit {
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
   
+  readonly CaptureStatReq: string = CommonConstant.CaptureStatReq;
+  readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
+  readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
+
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],

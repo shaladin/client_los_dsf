@@ -37,7 +37,7 @@
           </span>
           &nbsp;
           <span id="Cust{{CustType}}Link{{i}}">
-            <a class="success" *ngIf="DictCrdRvwExposureHId[item.CustNo+CustType] != undefined" (click)="ClickLinkCust(DictCrdRvwExposureHId[item.CustNo+CustType])">
+            <a class="link" *ngIf="DictCrdRvwExposureHId[item.CustNo+CustType] != undefined" (click)="ClickLinkCust(DictCrdRvwExposureHId[item.CustNo+CustType])">
               {{item.CustName}}</a>
             <span *ngIf="DictCrdRvwExposureHId[item.CustNo+CustType] == undefined">{{item.CustName}}</span>
             &nbsp;-&nbsp;
