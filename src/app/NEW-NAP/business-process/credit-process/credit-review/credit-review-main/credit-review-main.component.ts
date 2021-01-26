@@ -363,6 +363,24 @@ export class CreditReviewMainComponent implements OnInit {
 
   BindManualDeviationData(ev) {
     this.ManualDeviationData = ev;
+    console.log('MAN DEVVV', this.ManualDeviationData);
+
+    if(this.ManualDeviationData.length > 0){
+      var Attributes = []
+      var attribute1= { 
+        "AttributeName" : "ApvAt",
+        "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
+      };
+      Attributes.push(attribute1);
+      
+      let TypeCode = {
+        "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
+        "Attributes" : Attributes,
+      };
+  
+      this.InputObj.ApvTypecodes.push(TypeCode);
+    }
+
     this.isExistedManualDeviationData = true;
   }
 
@@ -424,6 +442,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = listTypeCode;
+    console.log('listtype', JSON.stringify(listTypeCode));
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
     this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
