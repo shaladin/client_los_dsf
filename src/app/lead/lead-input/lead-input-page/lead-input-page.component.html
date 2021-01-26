@@ -45,6 +45,7 @@
         <div class="line"></div>
         <div class="step" data-target="#upload-data-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab" id="upload-data-tab-trigger"
+          [disabled]="!(AppStepIndex >= 3)"
         (click)="EnterTab('uploadDocument')">
             <span class="bs-stepper-circle">3</span>
             <span class="bs-stepper-label">Upload Document</span>
@@ -63,6 +64,12 @@
       </div>
       <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
         <app-dms-iframe *ngIf="AppStepIndex == 3" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
+        <div class="form-actions right" style="text-align: right;">
+          <!-- <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && test()"
+            translate>
+            <i class="fa fa-check-square-o"></i> test
+          </button> -->
+        </div>
       </div>
       <!-- </div> -->
     </div>
