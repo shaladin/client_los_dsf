@@ -42,6 +42,7 @@ export class AssetDataPagingComponent implements OnInit {
   IntegratorCheckBySystemGsValue: string = "1";
   LastRequestedDate: any;
   IsCalledIntegrator: boolean = false;
+  thirdPartyRsltHId: any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListAppAssetData = URLConstant.GetAppAssetListByAppId;
     this.getListAppCollateral = URLConstant.GetListAdditionalCollateralByAppId;
@@ -61,6 +62,7 @@ export class AssetDataPagingComponent implements OnInit {
           (response) => {
             if (response["ThirdPartyRsltHId"] != null) {
               this.LastRequestedDate = response["ReqDt"];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
             }
           }
         );
@@ -84,6 +86,7 @@ export class AssetDataPagingComponent implements OnInit {
         (response) => {
           this.IsCalledIntegrator = true;
           this.toastr.successMessage("Success !");
+          this.GetThirdPartyResultH();
         }
       );
 
@@ -281,7 +284,7 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
     }
-    else {
+    if (this.IntegratorCheckBySystemGsValue == "0") {
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
           this.outputValue.emit({ mode: 'submit' });
@@ -290,6 +293,9 @@ export class AssetDataPagingComponent implements OnInit {
       else {
         this.outputValue.emit({ mode: 'submit' });
       }
+    }
+    else {
+      this.outputValue.emit({ mode: 'submit' });
     }
   }
 }

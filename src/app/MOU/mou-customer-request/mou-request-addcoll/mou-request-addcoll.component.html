@@ -70,7 +70,7 @@
           <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
             HIT RAPINDO
           </button>
-          <label *ngIf="latestReqDtCheckIntegrator != ''" class="col-md-4" translate>Requested At {{this.latestReqDtCheckIntegrator | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
+          <label *ngIf="thirdPartyRsltHId != '' && thirdPartyRsltHId != null" class="col-md-4" translate>Requested At {{this.latestReqDtCheckIntegrator | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
         </div>
       </div>
     </div>
