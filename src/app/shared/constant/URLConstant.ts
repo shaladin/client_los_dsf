@@ -1171,6 +1171,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListDeviationResultForDeviationDataByAppId = environment.losUrl + "/DeviationResult/GetListDeviationResultForDeviationDataByAppId";
     public static GetListDeviationResultByAppNo = environment.losUrl + "/DeviationResult/GetListDeviationResultByAppNo";
     public static AddListManualDeviationResultByAppId = environment.losUrl + "/DeviationResult/AddListManualDeviationResultByAppId";
+    public static GetListDeviationTypeByAppNo = environment.losUrl + "/DeviationResult/GetListDeviationTypeByAppNo";
 
     // Upload
     public static UploadFile = environment.FoundationR3Url + "/Upload/UploadFile";

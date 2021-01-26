@@ -18,6 +18,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -39,6 +40,7 @@ export class CreditReviewMainComponent implements OnInit {
   arrValue = []; 
   InputObj: UcInputRFAObj;
   private createComponent: UcapprovalcreateComponent;
+  responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
       // initially setter gets called with undefined
@@ -114,7 +116,15 @@ export class CreditReviewMainComponent implements OnInit {
     this.ClaimTask();
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+
     await this.GetAppNo();
+    var appObj = new AppObj();
+    appObj.AppNo = this.AppNo;
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, appObj).toPromise().then(
+      (response) => {
+          this.responseListTypeCodes = response['ApvTypecodes'];
+      });
+
     await this.GetAppCustData();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -162,7 +172,7 @@ export class CreditReviewMainComponent implements OnInit {
           this.isDmsReady = true;
         }
       }
-    );
+    );    
   }
 
 
@@ -395,17 +405,25 @@ export class CreditReviewMainComponent implements OnInit {
     var attribute1= { 
       "AttributeName" : "Approval Amount",
       "AttributeValue": this.apvAmt
-    }; 
+    };
     Attributes.push(attribute1);
-
+    
+    var listTypeCode = [];
     var TypeCode = {
       "TypeCode" : "CRD_APV_CF_TYPE",
       "Attributes" : Attributes,
     };
+    listTypeCode.push(TypeCode);
+
+    if(this.responseListTypeCodes.length > 0){
+     
+      listTypeCode = listTypeCode.concat(this.responseListTypeCodes);
+    }
+
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
-    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
     this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
