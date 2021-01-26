@@ -15,6 +15,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -79,6 +80,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
+    await this.ClaimTask();
     await this.GetAppNo();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -119,6 +121,17 @@ export class CreditReviewCrDetailComponent implements OnInit {
           this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
         }
+      });
+  }
+  
+  async ClaimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+
+    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then(
+      (response) => {
       });
   }
   
@@ -313,7 +326,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -322,7 +335,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
   

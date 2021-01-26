@@ -46,8 +46,9 @@ export class CrdRvwCustInfoComponent implements OnInit {
   CustGroupCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
   ObligorCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: "SELF_CUST" }).toPromise().then(
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: CommonConstant.CrdRvwRelationTypeCustomer }).toPromise().then(
       (response) => {
+        console.log(response);
         for (let index = 0; index < response.ListCrdRvwExposureDObj.length; index++) {
           const element = response.ListCrdRvwExposureDObj[index];
           if (element.ExposureType == this.ExposureCustTypeCode) {
@@ -83,7 +84,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
   }
 
   ClickLinkViewCustExposure() {
-    AdInsHelper.OpenCustExposureViewByCrdRvwCustInfoId(this.appId);
+    AdInsHelper.OpenCustExposureViewByCrdRvwExposureHId(this.CustCrdRvwExposureObj.CrdRvwExposureHId);
   }
 
   //#region Link a href

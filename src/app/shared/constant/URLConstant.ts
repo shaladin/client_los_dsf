@@ -1234,6 +1234,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustPhnStatus/GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId";
     public static GetListCrdRvwExposureByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwExposureByCrdRvwCustInfoId";
     public static GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType = environment.losUrl + "/CrdRvwExposure/GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType";
+    public static GetCrdRvwExposureHandDByCrdRvwExposureHId = environment.losUrl + "/CrdRvwExposure/GetCrdRvwExposureHandDByCrdRvwExposureHId";
     public static GetListCrdRvwCustBucketByCrdRvwExposureDId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwCustBucketByCrdRvwExposureDId";
     public static GetListCrdRvwAppAgrHistByCrdRvwExposureHId = environment.losUrl + "/CrdRvwExposure/GetListCrdRvwAppAgrHistByCrdRvwExposureHId";
     public static GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwDiffAppToInPrcAppCust/GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId";
