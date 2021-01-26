@@ -176,63 +176,20 @@
     <lib-ucSubsection [id]="'BucketInfoId'" [title]="'Bucket'" [panel]="'BucketInfo'">
     </lib-ucSubsection>
     <div id="BucketInfo">
-      <div class="row">
-        <div class="col-md-6">
-          <table class="table table-responsive-md text-center table-hover">
-            <thead>
-              <tr class="table-header">
-                <th style="text-align: left;">
-                  <span class="thead-header" name='Bucket' translate>Bucket</span>
-                </th>
-                <th style="text-align: center;">
-                  <span class="thead-header" name='TotalPastDue' translate>Total Past Due</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody *ngIf="ListCrdRvwCustBucketObj.length == 0">
-              <tr>
-                <td colspan="100%">No Data Available</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr *ngFor="let item of ListCrdRvwCustBucketObj; let i = index; let odd = odd;">
-                <span *ngIf="odd">
-                  <td style="text-align: left;"> {{item.BucketRange}} </td>
-                  <td style="text-align: right;"> {{item.Value | number:'.2':'en-US'}} </td>
-                </span>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-    
-        <div class="col-md-6" *ngIf="ListCrdRvwCustBucketObj.length > 0">
-          <table class="table table-responsive-md text-center table-hover">
-            <thead>
-              <tr class="table-header">
-                <th style="text-align: left;">
-                  <span class="thead-header" name='Bucket' translate>Bucket</span>
-                </th>
-                <th style="text-align: center;">
-                  <span class="thead-header" name='TotalPastDue' translate>Total Past Due</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody *ngIf="ListCrdRvwCustBucketObj.length == 0">
-              <tr>
-                <td colspan="100%">No Data Available</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr *ngFor="let item of ListCrdRvwCustBucketObj; let i = index; let even = even;">
-                <span *ngIf="even">
-                  <td style="text-align: left;"> {{item.BucketRange}} </td>
-                  <td style="text-align: right;"> {{item.Value | number:'.2':'en-US'}} </td>
-                </span>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <table class="table table-responsive-md text-center table-hover">
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='Bucket' translate>Bucket</span>
+          </th>
+          <td style="text-align: right;" *ngFor="let item of ListCrdRvwCustBucketObj; let i = index;">
+            <span class="thead-header" translate>{{item.BucketRange}}</span>
+          </td>
+        </tr>
+        <tr>
+          <th style="text-align: left;"> Total Past Due </th>
+          <td style="text-align: right;" *ngFor="let item of ListCrdRvwCustBucketObj; let i = index;"> {{item.Value | number:'.2':'en-US'}} </td>
+        </tr>
+      </table>
     </div>
 
     <lib-ucSubsection [id]="'SummaryInfoId'" [title]="'Summary'" [panel]="'SummaryInfo'">
@@ -302,10 +259,10 @@
             <th style="text-align: center;">
               <span class="thead-header" name='OfferingName' translate>Product Offering Name</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='OutstandingAR' translate>Outstanding AR</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='ApplicationStep' translate>Application Step</span>
             </th>
             <th style="text-align: center;">
@@ -327,9 +284,9 @@
             <td style="text-align: center;">{{item.AgrmntNo}}</td>
             <td style="text-align: center;">{{item.OfferingName}}</td>
             <td style="text-align: right;">{{item.OsPrincipal | number:'.2':'en-US'}}</td>
-            <td style="text-align: left;">{{item.AppStep}}</td>
-            <td style="text-align: left;">{{item.AppStat}}</td>
-            <td style="text-align: left;">{{item.ContractStat}}</td>
+            <td style="text-align: center;">{{item.AppStep}}</td>
+            <td style="text-align: center;">{{item.AppStat}}</td>
+            <td style="text-align: center;">{{item.ContractStat}}</td>
           </tr>
         </tbody>
       </table>
@@ -353,10 +310,10 @@
             <th style="text-align: center;">
               <span class="thead-header" name='OfferingName' translate>Product Offering Name</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='OutstandingAR' translate>Outstanding AR</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='ApplicationStep' translate>Application Step</span>
             </th>
             <th style="text-align: center;">
@@ -379,9 +336,9 @@
             <td style="text-align: center;">{{item.CustName}}</td>
             <td style="text-align: center;">{{item.OfferingName}}</td>
             <td style="text-align: right;">{{item.OsPrincipal | number:'.2':'en-US'}}</td>
-            <td style="text-align: left;">{{item.AppStep}}</td>
-            <td style="text-align: left;">{{item.AppStat}}</td>
-            <td style="text-align: left;">{{item.ContractStat}}</td>
+            <td style="text-align: center;">{{item.AppStep}}</td>
+            <td style="text-align: center;">{{item.AppStat}}</td>
+            <td style="text-align: center;">{{item.ContractStat}}</td>
           </tr>
         </tbody>
       </table>
@@ -405,10 +362,10 @@
             <th style="text-align: center;">
               <span class="thead-header" name='OfferingName' translate>Product Offering Name</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='OutstandingAR' translate>Outstanding AR</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='ApplicationStep' translate>Application Step</span>
             </th>
             <th style="text-align: center;">
@@ -431,9 +388,9 @@
             <td style="text-align: center;">{{item.CustName}}</td>
             <td style="text-align: center;">{{item.OfferingName}}</td>
             <td style="text-align: right;">{{item.OsPrincipal | number:'.2':'en-US'}}</td>
-            <td style="text-align: left;">{{item.AppStep}}</td>
-            <td style="text-align: left;">{{item.AppStat}}</td>
-            <td style="text-align: left;">{{item.ContractStat}}</td>
+            <td style="text-align: center;">{{item.AppStep}}</td>
+            <td style="text-align: center;">{{item.AppStat}}</td>
+            <td style="text-align: center;">{{item.ContractStat}}</td>
           </tr>
         </tbody>
       </table>
@@ -457,10 +414,10 @@
             <th style="text-align: center;">
               <span class="thead-header" name='OfferingName' translate>Product Offering Name</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='OutstandingAR' translate>Outstanding AR</span>
             </th>
-            <th style="text-align: left;">
+            <th style="text-align: center;">
               <span class="thead-header" name='ApplicationStep' translate>Application Step</span>
             </th>
             <th style="text-align: center;">
@@ -471,21 +428,21 @@
             </th>
           </tr>
         </thead>
-        <tbody *ngIf="ListGuarantorDataCrdRvwAppAgrHist.length == 0">
+        <tbody *ngIf="ListShareholderDataCrdRvwAppAgrHist.length == 0">
           <tr>
             <td colspan="100%">No Data Available</td>
           </tr>
         </tbody>
         <tbody>
-          <tr *ngFor="let item of ListGuarantorDataCrdRvwAppAgrHist; let i = index">
+          <tr *ngFor="let item of ListShareholderDataCrdRvwAppAgrHist; let i = index">
             <td style="text-align: center;">{{item.AppNo}}</td>
             <td style="text-align: center;">{{item.AgrmntNo}}</td>
             <td style="text-align: center;">{{item.CustName}}</td>
             <td style="text-align: center;">{{item.OfferingName}}</td>
             <td style="text-align: right;">{{item.OsPrincipal | number:'.2':'en-US'}}</td>
-            <td style="text-align: left;">{{item.AppStep}}</td>
-            <td style="text-align: left;">{{item.AppStat}}</td>
-            <td style="text-align: left;">{{item.ContractStat}}</td>
+            <td style="text-align: center;">{{item.AppStep}}</td>
+            <td style="text-align: center;">{{item.AppStat}}</td>
+            <td style="text-align: center;">{{item.ContractStat}}</td>
           </tr>
         </tbody>
       </table>
