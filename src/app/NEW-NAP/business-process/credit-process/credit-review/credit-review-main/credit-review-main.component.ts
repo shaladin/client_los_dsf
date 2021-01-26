@@ -363,23 +363,23 @@ export class CreditReviewMainComponent implements OnInit {
 
   BindManualDeviationData(ev) {
     this.ManualDeviationData = ev;
-    console.log('MAN DEVVV', this.ManualDeviationData);
+    // console.log('MAN DEVVV', this.ManualDeviationData);
 
-    if(this.ManualDeviationData.length > 0){
-      var Attributes = []
-      var attribute1= { 
-        "AttributeName" : "ApvAt",
-        "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
-      };
-      Attributes.push(attribute1);
+    // if(this.ManualDeviationData.length > 0){
+    //   var Attributes = []
+    //   var attribute1= { 
+    //     "AttributeName" : "ApvAt",
+    //     "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
+    //   };
+    //   Attributes.push(attribute1);
       
-      let TypeCode = {
-        "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
-        "Attributes" : Attributes,
-      };
+    //   let TypeCode = {
+    //     "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
+    //     "Attributes" : Attributes,
+    //   };
   
-      this.InputObj.ApvTypecodes.push(TypeCode);
-    }
+    //   this.InputObj.ApvTypecodes.push(TypeCode);
+    // }
 
     this.isExistedManualDeviationData = true;
   }
