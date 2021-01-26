@@ -54,7 +54,7 @@ export class CustExposureComponent implements OnInit {
   async GetListCrdRvwCustBucketByCrdRvwExposureDId() {
     await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureDId, { CrdRvwExposureDId: this.ExposureDObj.CrdRvwExposureDId }).toPromise().then(
       (response) => {
-        // console.log(response);
+        console.log(response);
         this.ListCrdRvwCustBucketObj = response.ListCrdRvwCustBucketObj;
       }
     );

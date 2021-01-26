@@ -148,7 +148,7 @@
         </div>
 
         <div class="form-actions right">
-          <button type="button" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
             <i class="far fa-check-square"></i> Re-Captured Data
           </button>
         </div>
@@ -163,7 +163,7 @@
           <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
           <i class="fa fa-check-square-o"></i> Check
         </button> -->
-          <button type="submit" class="btn btn-raised btn-primary" translate>
+          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary" translate>
             <i class="far fa-check-square"></i> Save
           </button>
         </div>
