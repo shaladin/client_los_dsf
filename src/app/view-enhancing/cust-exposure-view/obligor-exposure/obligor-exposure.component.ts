@@ -85,7 +85,7 @@ export class ObligorExposureComponent implements OnInit {
   async GetListCrdRvwAppAgrHistByCrdRvwExposureHId() {
     await this.http.post<{ ListCrdRvwAppAgrHistObj: Array<CrdRvwAppAgrHistObj> }>(URLConstant.GetListCrdRvwAppAgrHistByCrdRvwExposureHId, { CrdRvwExposureHId: this.exposureHObj.CrdRvwExposureHId }).toPromise().then(
       (response) => {
-        // console.log(response);
+        console.log(response);
         for (let index = 0; index < response.ListCrdRvwAppAgrHistObj.length; index++) {
           const element = response.ListCrdRvwAppAgrHistObj[index];
           if (element.RoleCust == this.RoleCust) {
@@ -101,6 +101,7 @@ export class ObligorExposureComponent implements OnInit {
             this.SummaryData.GuarantorExposureAmt += element.OsPrincipal;
           }
           else if (element.RoleCust == this.RoleShareholder) {
+            console.log(element);
             this.ListShareholderDataCrdRvwAppAgrHist.push(element);
             this.SummaryData.ShareholderExposureAmt += element.OsPrincipal;
           }

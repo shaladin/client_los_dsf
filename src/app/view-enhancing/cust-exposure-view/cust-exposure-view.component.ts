@@ -16,7 +16,7 @@ import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureO
 })
 export class CustExposureViewComponent implements OnInit {
 
-  appId: number = 0;
+  CrdRvwExposureHId: number = 0;
   IsReady: boolean = false;
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   //#region Exposure Type
@@ -31,32 +31,21 @@ export class CustExposureViewComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {
-        this.appId = params["AppId"];
+      if (params["CrdRvwExposureHId"] != null) {
+        this.CrdRvwExposureHId = params["CrdRvwExposureHId"];
       }
     });
   }
 
   async ngOnInit() {
-    await this.GetCrdRvwCustInfoByAppId();
-    await this.GetListCrdRvwExposureByCrdRvwCustInfoId();
+    await this.GetCrdRvwExposureHandDByCrdRvwExposureHId();
     this.IsReady = true;
   }
 
-  //#region Get Data
-  crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
-  async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
-      (response) => {
-        console.log(response);
-        this.crdRvwCustInfoObj = response;
-      }
-    );
-  }
-  
+  //#region Get Data  
   CrdRvwExposureHObj: CrdRvwExposureHObj = new CrdRvwExposureHObj();
-  async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: "SELF_CUST" }).toPromise().then(
+  async GetCrdRvwExposureHandDByCrdRvwExposureHId() {
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureHandDByCrdRvwExposureHId, { CrdRvwExposureHId: this.CrdRvwExposureHId }).toPromise().then(
       (response) => {
         this.CrdRvwExposureHObj = response;
       }
