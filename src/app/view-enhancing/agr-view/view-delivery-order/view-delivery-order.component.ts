@@ -7,6 +7,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe, formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: "agrmnt-view-delivery-order",
@@ -14,14 +16,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewDeliveryOrderComponent implements OnInit {
-  DeliveryDt: any;
-  @Input() agrmntId: any;
+  DeliveryDt: string;
+  @Input() agrmntId: number;
 
   agrmntObj = {
     AgrmntId: 0,
   };
 
-  DeliverOrderData: any;
+  DeliverOrderData: { DeliveryOrderH: DeliveryOrderHObj, AssetData: AppAssetObj };
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -33,13 +35,13 @@ export class ViewDeliveryOrderComponent implements OnInit {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
     this.agrmntObj.AgrmntId = this.agrmntId;
-    this.GetDeliveryOrderData();
+    await this.GetDeliveryOrderData();
   }
 
-  GetDeliveryOrderData() {
-    this.http.post(URLConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, this.agrmntObj).subscribe(
+  async GetDeliveryOrderData() {
+    await this.http.post<{ DeliveryOrderH: DeliveryOrderHObj, AssetData: AppAssetObj }>(URLConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, this.agrmntObj).toPromise().then(
       (response) => {
         this.DeliverOrderData = response;
         this.DeliveryDt = formatDate(this.DeliverOrderData.DeliveryOrderH.DeliveryDt, 'yyyy-MM-dd', 'en-US');
