@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
+import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 
 @Component({
   selector: 'app-phone-verif',
@@ -40,10 +42,10 @@ export class PhoneVerifComponent implements OnInit {
 
   phoneVerifObj: any;
   AppObj: AppObj = new AppObj();
-  verifResultObj: any;
-  verifResultHObj: any;
+  verifResultObj: VerfResultObj = new VerfResultObj();
+  verifResultHObj: VerfResultHObj = new VerfResultHObj();
   verifResultHDetailObj: any;
-  listVerifResultHObj: any;
+  listVerifResultHObj: Array<VerfResultHObj> = new Array<VerfResultHObj>();
   listVerifResultDObj: any;
   subjectName: string;
   arrValue = [];
@@ -77,7 +79,7 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async GetVerfResultData() {
-    await this.http.post(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, this.verfResObj).toPromise().then(
+    await this.http.post<VerfResultObj>(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, this.verfResObj).toPromise().then(
       (response) => {
         this.verifResultObj = response;
         this.verfResHObj.VerfResultId = this.verifResultObj.VerfResultId;
@@ -86,7 +88,7 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post(URLConstant.GetVerfResultHById, this.verfResHObj).toPromise().then(
+    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, this.verfResHObj).toPromise().then(
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
@@ -95,9 +97,9 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async GetListVerfResulHtData(verfResHObj) {
-    await this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode, verfResHObj).toPromise().then(
+    await this.http.post<{ responseVerfResultHCustomObjs: Array<VerfResultHObj> }>(URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode, verfResHObj).toPromise().then(
       (response) => {
-        this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
+        this.listVerifResultHObj = response.responseVerfResultHCustomObjs;
       }
     );
   }
