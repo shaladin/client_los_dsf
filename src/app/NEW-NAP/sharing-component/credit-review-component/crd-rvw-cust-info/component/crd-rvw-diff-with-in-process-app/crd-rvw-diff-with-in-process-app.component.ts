@@ -27,7 +27,6 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
   ngOnInit() {
     // this.SetDictDiffValue();
     this.SetupData();
-    console.log(this.DictDiffValue);
   }
 
   SetDictDiffValue() {
