@@ -1,16 +1,22 @@
 <div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Customer Name </label>
-      <span id="CustIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustInfoObj.CustIndicator == null ? 'far fa-circle' : crdRvwCustInfoObj.CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustInfoObj.CustIndicator == null ? '' : crdRvwCustInfoObj.CustIndicator != whiteIndicator ? crdRvwCustInfoObj.CustIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != null && crdRvwCustInfoObj.CustIndicatorDescr != ''"> {{crdRvwCustInfoObj.CustIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustInfoObj.CustIndicatorDescr == null || crdRvwCustInfoObj.CustIndicatorDescr == ''"> No Data </span>
+      <div class="row">
+        <div class="col-md-10">
+          <label class="label-control"> Customer Name </label>
+        </div>
+        <div class="col-md-2">
+          <span id="CustIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustInfoObj.CustIndicator == null ? 'far fa-circle' : crdRvwCustInfoObj.CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustInfoObj.CustIndicator == null ? '' : crdRvwCustInfoObj.CustIndicator != whiteIndicator ? crdRvwCustInfoObj.CustIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustInfoObj.CustIndicatorDescr != null && crdRvwCustInfoObj.CustIndicatorDescr != ''"> {{crdRvwCustInfoObj.CustIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustInfoObj.CustIndicatorDescr == null || crdRvwCustInfoObj.CustIndicatorDescr == ''"> No Data </span>
+              </span>
+            </i>
           </span>
-        </i>
-      </span>
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustInfoObj.CustName}} / {{crdRvwCustPersInfoObj.Age}} /
@@ -27,16 +33,22 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Residence Address </label>
-      <span id="ResidenceIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustPersInfoObj.HouseOwnershipIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.HouseOwnershipIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustPersInfoObj.HouseOwnershipIndicator == null ? '' : crdRvwCustPersInfoObj.HouseOwnershipIndicator != whiteIndicator? crdRvwCustPersInfoObj.HouseOwnershipIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr != null && crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr != ''"> {{crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr == null || crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr == ''"> No Data </span>
+      <div class="row">
+        <div class="col-md-10">
+          <label class="label-control"> Residence Address </label>
+        </div>
+        <div class="col-md-2">
+          <span id="ResidenceIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustPersInfoObj.HouseOwnershipIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.HouseOwnershipIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustPersInfoObj.HouseOwnershipIndicator == null ? '' : crdRvwCustPersInfoObj.HouseOwnershipIndicator != whiteIndicator? crdRvwCustPersInfoObj.HouseOwnershipIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr != null && crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr != ''"> {{crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr == null || crdRvwCustPersInfoObj.HouseOwnershipIndicatorDescr == ''"> No Data </span>
+              </span>
+            </i>
           </span>
-        </i>
-      </span>
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustPersInfoObj.ResidenceAddr}} </label>
@@ -44,16 +56,22 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Occupation </label>
-      <span id="OccupationIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustPersInfoObj.OccupationIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.OccupationIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustPersInfoObj.OccupationIndicator == null ? '' : crdRvwCustPersInfoObj.OccupationIndicator != whiteIndicator ? crdRvwCustPersInfoObj.OccupationIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustPersInfoObj.OccupationIndicatorDescr != '' && crdRvwCustPersInfoObj.OccupationIndicatorDescr != null"> {{crdRvwCustPersInfoObj.OccupationIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustPersInfoObj.OccupationIndicatorDescr == '' || crdRvwCustPersInfoObj.OccupationIndicatorDescr == null"> No Data </span>
+      <div class="row">
+        <div class="col-md-10">
+          <label class="label-control"> Occupation </label>
+        </div>
+        <div class="col-md-2">
+          <span id="OccupationIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustPersInfoObj.OccupationIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.OccupationIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustPersInfoObj.OccupationIndicator == null ? '' : crdRvwCustPersInfoObj.OccupationIndicator != whiteIndicator ? crdRvwCustPersInfoObj.OccupationIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustPersInfoObj.OccupationIndicatorDescr != '' && crdRvwCustPersInfoObj.OccupationIndicatorDescr != null"> {{crdRvwCustPersInfoObj.OccupationIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustPersInfoObj.OccupationIndicatorDescr == '' || crdRvwCustPersInfoObj.OccupationIndicatorDescr == null"> No Data </span>
+              </span>
+            </i>
           </span>
-        </i>
-      </span>
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustPersInfoObj.Occupation}} </label>
@@ -61,16 +79,22 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Marital Status </label>
-      <span id="MaritalStatusIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustPersInfoObj.SpouseIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.SpouseIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustPersInfoObj.SpouseIndicator == null ? '' : crdRvwCustPersInfoObj.SpouseIndicator != whiteIndicator ? crdRvwCustPersInfoObj.SpouseIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustPersInfoObj.SpouseIndicatorDescr != null && crdRvwCustPersInfoObj.SpouseIndicatorDescr != ''"> {{crdRvwCustPersInfoObj.SpouseIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustPersInfoObj.SpouseIndicatorDescr == null || crdRvwCustPersInfoObj.SpouseIndicatorDescr == ''"> No Data </span>
+      <div class="row">
+        <div class="col-md-10">
+          <label class="label-control"> Marital Status </label>
+        </div>
+        <div class="col-md-2">
+          <span id="MaritalStatusIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustPersInfoObj.SpouseIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.SpouseIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustPersInfoObj.SpouseIndicator == null ? '' : crdRvwCustPersInfoObj.SpouseIndicator != whiteIndicator ? crdRvwCustPersInfoObj.SpouseIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustPersInfoObj.SpouseIndicatorDescr != null && crdRvwCustPersInfoObj.SpouseIndicatorDescr != ''"> {{crdRvwCustPersInfoObj.SpouseIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustPersInfoObj.SpouseIndicatorDescr == null || crdRvwCustPersInfoObj.SpouseIndicatorDescr == ''"> No Data </span>
+              </span>
+            </i>
           </span>
-        </i>
-      </span>
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustPersInfoObj.MaritalStatus}} </label>
@@ -80,16 +104,22 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> NPWP </label>
-      <span id="NpwpIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustPersInfoObj.NpwpIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.NpwpIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustPersInfoObj.NpwpIndicator == null ? '' : crdRvwCustPersInfoObj.NpwpIndicator != whiteIndicator ? crdRvwCustPersInfoObj.NpwpIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustPersInfoObj.NpwpIndicatorDescr != null && crdRvwCustPersInfoObj.NpwpIndicatorDescr != ''"> {{crdRvwCustPersInfoObj.NpwpIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustPersInfoObj.NpwpIndicatorDescr == null || crdRvwCustPersInfoObj.NpwpIndicatorDescr == ''"> No Data </span>
+      <div class="row">
+        <div class="col-md-10">
+          <label class="label-control"> NPWP </label>  
+        </div>
+        <div class="col-md-2">
+          <span id="NpwpIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustPersInfoObj.NpwpIndicator == null ? 'far fa-circle' : crdRvwCustPersInfoObj.NpwpIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustPersInfoObj.NpwpIndicator == null ? '' : crdRvwCustPersInfoObj.NpwpIndicator != whiteIndicator ? crdRvwCustPersInfoObj.NpwpIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustPersInfoObj.NpwpIndicatorDescr != null && crdRvwCustPersInfoObj.NpwpIndicatorDescr != ''"> {{crdRvwCustPersInfoObj.NpwpIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustPersInfoObj.NpwpIndicatorDescr == null || crdRvwCustPersInfoObj.NpwpIndicatorDescr == ''"> No Data </span>
+              </span>
+            </i>
           </span>
-        </i>
-      </span>
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustPersInfoObj.Npwp}} </label>
@@ -143,37 +173,49 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control">         
-        <a class="link" (click)="ClickLinkDiffCust(DiffCustContent)"> Difference with master customer </a>
-      </label>
-      <span id="DiffToMasterCustIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustInfoObj.DiffToMasterIndicator == null ? 'far fa-circle' : crdRvwCustInfoObj.DiffToMasterIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustInfoObj.DiffToMasterIndicator == null ? '' : crdRvwCustInfoObj.DiffToMasterIndicator != whiteIndicator ? crdRvwCustInfoObj.DiffToMasterIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustInfoObj.DiffToMasterIndicatorDescr != null && crdRvwCustInfoObj.DiffToMasterIndicatorDescr != ''"> {{crdRvwCustInfoObj.DiffToMasterIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustInfoObj.DiffToMasterIndicatorDescr == null || crdRvwCustInfoObj.DiffToMasterIndicatorDescr == ''"> No Data </span>
-          </span>
-        </i>
-      </span>
+      <div class="row">
+        <div class="col-md-10">  
+          <label class="label-control">         
+            <a class="link" (click)="ClickLinkDiffCust(DiffCustContent)"> Difference with master customer </a>
+          </label>        
+        </div>
+        <div class="col-md-2">
+          <span id="DiffToMasterCustIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustInfoObj.DiffToMasterIndicator == null ? 'far fa-circle' : crdRvwCustInfoObj.DiffToMasterIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustInfoObj.DiffToMasterIndicator == null ? '' : crdRvwCustInfoObj.DiffToMasterIndicator != whiteIndicator ? crdRvwCustInfoObj.DiffToMasterIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustInfoObj.DiffToMasterIndicatorDescr != null && crdRvwCustInfoObj.DiffToMasterIndicatorDescr != ''"> {{crdRvwCustInfoObj.DiffToMasterIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustInfoObj.DiffToMasterIndicatorDescr == null || crdRvwCustInfoObj.DiffToMasterIndicatorDescr == ''"> No Data </span>
+              </span>
+            </i>
+          </span>        
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustInfoObj.DiffToMasterCust}} </label>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">      
-      <label class="label-control"> 
-        <a class="link" (click)="ClickLinkDiffApp(DiffAppContent)"> Difference with in process Application </a>
-      </label>
-      <span id="DiffToInProcessIndicator" style="float: right;">
-        <i [ngClass]="crdRvwCustInfoObj.DiffToInPrcssIndicator == null ? 'far fa-circle' : crdRvwCustInfoObj.DiffToInPrcssIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-          [ngStyle]="{'color': crdRvwCustInfoObj.DiffToInPrcssIndicator == null ? '' : crdRvwCustInfoObj.DiffToInPrcssIndicator != whiteIndicator ? crdRvwCustInfoObj.DiffToInPrcssIndicator : ''}" class="font-medium-3 tooltips">
-          <span class="tooltipstext">
-            <span *ngIf="crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr != null && crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr != ''"> {{crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr}} </span>
-            <span *ngIf="crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr == null || crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr == ''"> No Data </span>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-10">
+          <label class="label-control"> 
+            <a class="link" (click)="ClickLinkDiffApp(DiffAppContent)"> Difference with in process Application </a>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <span id="DiffToInProcessIndicator" style="float: right;">
+            <i [ngClass]="crdRvwCustInfoObj.DiffToInPrcssIndicator == null ? 'far fa-circle' : crdRvwCustInfoObj.DiffToInPrcssIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwCustInfoObj.DiffToInPrcssIndicator == null ? '' : crdRvwCustInfoObj.DiffToInPrcssIndicator != whiteIndicator ? crdRvwCustInfoObj.DiffToInPrcssIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr != null && crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr != ''"> {{crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr}} </span>
+                <span *ngIf="crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr == null || crdRvwCustInfoObj.DiffToInPrcssIndicatorDescr == ''"> No Data </span>
+              </span>
+            </i>
           </span>
-        </i>
-      </span>
+        </div>
+      </div>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustInfoObj.DiffToInPrcssCust}} </label>

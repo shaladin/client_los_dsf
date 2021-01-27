@@ -2,7 +2,7 @@
   <div class="pl-3 mb-2 mt-2">
     <h4 class="card-title ucSearch-title" translate> Difference with in process Application </h4>
   </div>
-  <div class="px-3 table-responsive" id="DiffApp">
+  <div class="px-3" id="DiffApp">
     <table class="table text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -11,17 +11,19 @@
           </th>
           <th style="text-align: left;" *ngFor="let item of ListAppNo; let i = index">
             <span name='item' translate>
-              <span id="Indicator{{i}}">
-                <i [ngStyle]="{'color': DictDiffAppNoIndicator[item] ? 'RED' : 'GREEN'}" class="font-medium-3 fa fa-circle tooltips">
-                  <span [ngClass]="'tooltipstext'" *ngIf="!DictDiffAppNoIndicator[item]">
-                    Reviewed Application
-                  </span>
-                  <span [ngClass]="'tooltipstext'" *ngIf="DictDiffAppNoIndicator[item]">
-                    In Process Application
-                  </span>
-                </i>
+              <span class="row">
+                <span class="col-md-2" id="Indicator{{i}}">
+                  <i [ngStyle]="{'color': DictDiffAppNoIndicator[item] ? 'RED' : 'GREEN'}" class="font-medium-3 fa fa-circle tooltips">
+                    <span [ngClass]="'tooltipstext'" *ngIf="!DictDiffAppNoIndicator[item]">
+                      Reviewed Application
+                    </span>
+                    <span [ngClass]="'tooltipstext'" *ngIf="DictDiffAppNoIndicator[item]">
+                      In Process Application
+                    </span>
+                  </i>
+                </span>
+                <span class="col-md-10"><a class="link" (click)="ClickLinkApp(item)">&nbsp; {{item}}</a></span>
               </span>
-              <span><a class="link" (click)="ClickLinkApp(item)">&nbsp; {{item}}</a></span>
             </span>
           </th>
         </tr>
