@@ -3,7 +3,16 @@
 <div id="CustInfo">
   <div class="card-body">
     <div class="row">
-      <div class="col-md-6"></div>      
+      <div class="col-md-6">
+        <div class="row" style="font-weight: bold;">
+          <div class="col-md-6">
+            <label class="label-control"> Capture Status:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCustInfoObj.CaptureStat}} </label>
+          </div>
+        </div>
+      </div>      
       <div class="col-md-6">
         <div class="row" style="font-weight: bold;">
           <div class="col-md-6">
@@ -116,7 +125,7 @@
 </ng-template>
 <ng-template #NegCheckListContent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Negative List</h4>
+    <h4 class="modal-title"></h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
