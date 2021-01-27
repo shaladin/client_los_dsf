@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-app-view',
   templateUrl: './app-view.component.html',
-  styleUrls: ['./app-view.component.scss']
+  styleUrls: []
 })
 export class AppViewComponent implements OnInit {
 
