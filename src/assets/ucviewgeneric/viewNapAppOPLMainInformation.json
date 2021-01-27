@@ -1,0 +1,55 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "path" : "/View/AppView", 
+          "target" : "_blank", 
+          "param" : [ 
+              {
+                  "type" : "AppId", 
+                  "property" : "AppId" 
+              }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering", 
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Rental Period (In Months)",
+          "property": "RentPeriod"
+        },
+        {
+          "type": "text",
+          "label": "Total Asset", 
+          "property": "TotalAsset"
+        }
+      ],
+      "querystring": {
+        "name": "viewNapAppOPLMainInformation"
+      }
+    }
+  ]
+}
