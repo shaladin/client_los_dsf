@@ -2,8 +2,8 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-
       <div class="card-body">
+
         <div class="card-header header-title" style="margin-bottom: 10px;">
           <div class="row">
             <div class="col-md-8">
@@ -13,6 +13,7 @@
             </div>
           </div>
         </div>
+
         <div class="px-3">
           <ng-template #mainInfoContainerA></ng-template>
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
@@ -137,11 +138,11 @@
               </ng-template>
             </mat-tab> -->
 
-            <!-- <mat-tab label="Deviation">
+            <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
                 <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>
               </ng-template>
-            </mat-tab> -->
+            </mat-tab>
 
             <mat-tab *ngIf="IsAnalysisResult" label="Analysis Result">
               <ng-template matTabContent>
@@ -153,10 +154,10 @@
               <ng-template matTabContent>
                 <app-approval-hist [AppId]="AppId"></app-approval-hist>
               </ng-template>
-            </mat-tab>           
-
+            </mat-tab>
           </mat-tab-group>
         </div>
+
       </div>
     </div>
   </div>
