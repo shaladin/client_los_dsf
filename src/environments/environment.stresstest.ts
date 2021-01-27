@@ -6,15 +6,13 @@
 export const environment = {
     production: true,
     navbarColor: 'lime',
-    losUrl: 'http://R3STWEBBE.ad-ins.com/LOS_BE',
-    FoundationR3Url: 'http://R3STWEBBE.ad-ins.com/FOUNDATION_BE',
+    losUrl: 'https://R3STWEBBE.ad-ins.com/LOS_BE',
+    FoundationR3Url: 'https://R3STWEBBE.ad-ins.com/FOUNDATION_BE',
     DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
-    DashboardURL: 'http://R3STWEBBE.ad-ins.com/Dashboard',
-    WebSocketURL: 'http://R3STWEBBE.ad-ins.com/FOUNDATION_BE',
-    
-    FoundationR3Web: 'http://R3STWEBFE.ad-ins.com/FOUNDATION_FE',
-    losR3Web: 'http://R3STWEBFE.ad-ins.com/LOS_FE',
-
+    DashboardURL: 'https://R3STWEBBE.ad-ins.com/Dashboard',
+    WebSocketURL: 'https://R3STWEBBE.ad-ins.com/FOUNDATION_BE',    
+    FoundationR3Web: 'https://R3STWEBFE.ad-ins.com/FOUNDATION_FE',
+    losR3Web: 'https://R3STWEBFE.ad-ins.com/LOS_FE',
     WorkflowR3Url: 'http://r3stengine.ad-ins.com/WORKFLOW',
     ApprovalR3Url: 'http://r3stengine.ad-ins.com/approval',
     Module: "LOS"
