@@ -5,38 +5,32 @@
     <div>
       <label class="col-md-2  adInsLabel" translate>Cover Life Insurance</label>
       <span *ngIf="AgrmntLifeInsObj?.IsCustCover">
-        <label class="col-md-4  adinslabel" translate *ngIf="AgrmntLifeInsObj.IsCustCover == true">Yes</label>
-        <label class="col-md-4  adinslabel" translate *ngIf="AgrmntLifeInsObj.IsCustCover == false">No</label>
+        <label class="col-md-4  adinslabel" translate *ngIf="AgrmntLifeInsObj.IsCustCover">Yes</label>
+        <label class="col-md-4  adinslabel" translate *ngIf="!AgrmntLifeInsObj.IsCustCover">No</label>
       </span>
       <label class="col-md-2  adInsLabel" translate>Life Insurance Company</label>
-      <label class="col-md-4  adinslabel" translate
-        *ngIf="AgrmntLifeInsObj?.LifeInscoBranchName">{{this.AgrmntLifeInsObj.LifeInscoBranchName}}</label>
+      <label class="col-md-4  adinslabel" translate>{{AgrmntLifeInsObj.LifeInscoBrnchName}}</label>
     </div>
     <div>
       <label class="col-md-2  adInsLabel" translate>Total Premi to Customer</label>
-      <label class="col-md-4  adinslabel" translate
-        *ngIf="AgrmntLifeInsObj?.TotalPremiToCust">{{this.AgrmntLifeInsObj.TotalPremiToCust}}</label>
+      <label class="col-md-4  adinslabel" translate>{{AgrmntLifeInsObj.TotalPremiToCust}}</label>
       <label class="col-md-2  adInsLabel" translate>Total Premi from Insco</label>
-      <label class="col-md-4  adinslabel" translate
-        *ngIf="AgrmntLifeInsObj?.TotalPremiFromInsco">{{this.AgrmntLifeInsObj.TotalPremiFromInsco}}</label>
+      <label class="col-md-4  adinslabel" translate>{{AgrmntLifeInsObj.TotalPremiFromInsco}}</label>
     </div>
     <div>
       <label class="col-md-2  adInsLabel" translate>Admin Fee to Customer</label>
-      <label class="col-md-4  adinslabel" translate
-        *ngIf="AgrmntLifeInsObj?.CustAdminFeeAmt">{{this.AgrmntLifeInsObj.CustAdminFeeAmt}}</label>
+      <label class="col-md-4  adinslabel" translate>{{AgrmntLifeInsObj.CustAdminFeeAmt}}</label>
       <label class="col-md-2  adInsLabel" translate>Admin Fee from Insco</label>
-      <label class="col-md-4  adinslabel" translate
-        *ngIf="AgrmntLifeInsObj?.InscoAdminFeeAmt">{{this.AgrmntLifeInsObj.InscoAdminFeeAmt}}</label>
+      <label class="col-md-4  adinslabel" translate>{{AgrmntLifeInsObj.LifeInscoAdminFeeAmt}}</label>
     </div>
     <div>
       <label class="col-md-2  adInsLabel" translate>Capitalized Premi</label>
-      <label class="col-md-4  adinslabel" translate
-        *ngIf="AgrmntLifeInsObj?.TotalLifeInsCptlzAmt">{{this.AgrmntLifeInsObj.TotalLifeInsCptlzAmt}}</label>
+      <label class="col-md-4  adinslabel" translate>{{AgrmntLifeInsObj.TotalLifeInsCptlzAmt}}</label>
     </div>
   </div>
-  <lib-ucSubsection [id]="'lifeinsObjId'" [title]="'Life Insurance Object'" [panel]="'lifeinsobj'">
+  <lib-ucSubsection [id]="'lifeinsObjId'" [title]="'Life Insurance Object'" [panel]="'lifeins'">
   </lib-ucSubsection>
-  <div id="lifeinsobj">
+  <div id="lifeins">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -47,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of AgrmntLifeInsObj.ListAgrmntLifeInsD;let i=index">
+        <tr *ngFor="let item of AgrmntLifeInsObj?.ListAgrmntLifeInsD;let i=index">
           <td class="text-left">{{i+1}}</td>
           <td class="text-left">{{item.InsuredName}}</td>
           <td class="text-left">{{item.Age}}</td>

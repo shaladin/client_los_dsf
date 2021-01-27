@@ -20,7 +20,10 @@ export class CrdRvwCustInfoObj {
     CustIndicatorDescr: string;
     DiffToMasterIndicatorDescr: string;
     DiffToInPrcssIndicatorDescr: string;
-
+    AsOfDate: Date;
+    CaptureStat: string;
+    RowVersion: string;
+    
     constructor() {
         this.CrdRvwCustInfoId = 0;
         this.AppId = 0;

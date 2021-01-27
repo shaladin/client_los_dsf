@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
+import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 
 @Component({
@@ -14,7 +16,7 @@ import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureO
 })
 export class CustExposureViewComponent implements OnInit {
 
-  appId: number = 0;
+  CrdRvwExposureHId: number = 0;
   IsReady: boolean = false;
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   //#region Exposure Type
@@ -29,48 +31,23 @@ export class CustExposureViewComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {
-        this.appId = params["AppId"];
+      if (params["CrdRvwExposureHId"] != null) {
+        this.CrdRvwExposureHId = params["CrdRvwExposureHId"];
       }
     });
   }
 
   async ngOnInit() {
-    await this.GetCrdRvwCustInfoByAppId();
-    await this.GetListCrdRvwExposureByCrdRvwCustInfoId();
+    await this.GetCrdRvwExposureHandDByCrdRvwExposureHId();
     this.IsReady = true;
   }
 
-  //#region Get Data
-  crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
-  async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+  //#region Get Data  
+  CrdRvwExposureHObj: CrdRvwExposureHObj = new CrdRvwExposureHObj();
+  async GetCrdRvwExposureHandDByCrdRvwExposureHId() {
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureHandDByCrdRvwExposureHId, { CrdRvwExposureHId: this.CrdRvwExposureHId }).toPromise().then(
       (response) => {
-        console.log(response);
-        this.crdRvwCustInfoObj = response;
-      }
-    );
-  }
-  
-  CustCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  CustGroupCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  ObligorCrdRvwExposureObj: CrdRvwExposureObj = new CrdRvwExposureObj();
-  async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
-      (response) => {
-        // console.log(response);
-        for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
-          const element = response.ListCrdRvwExposureObj[index];
-          if (element.ExposureType == this.ExposureCustTypeCode) {
-            this.CustCrdRvwExposureObj = element;
-          }
-          if (element.ExposureType == this.ExposureCustGroupTypeCode) {
-            this.CustGroupCrdRvwExposureObj = element;
-          }
-          if (element.ExposureType == this.ExposureObligorTypeCode) {
-            this.ObligorCrdRvwExposureObj = element;
-          }
-        }
+        this.CrdRvwExposureHObj = response;
       }
     );
   }

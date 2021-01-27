@@ -15,6 +15,14 @@ export class AppCollateralRegistrationObj {
   MrOwnerRelationshipCode: string;
   UserName: string;
   MrUserRelationshipCode: string;
+  DelivAddr: string;
+  DelivAreaCode1: string;
+  DelivAreaCode2: string;
+  DelivAreaCode3: string;
+  DelivAreaCode4: string;
+  DelivCity: string;
+  DelivZipcode: string;
+  DelivOwnership: string;
   LocationAddr: string;
   LocationAreaCode1: string;
   LocationAreaCode2: string;
@@ -22,6 +30,7 @@ export class AppCollateralRegistrationObj {
   LocationAreaCode4: string;
   LocationCity: string;
   LocationZipcode: string;
+  LocationOwnership: string;
   Notes: string;
   RowVersion: string;
 

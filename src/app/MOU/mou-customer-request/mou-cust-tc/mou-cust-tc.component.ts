@@ -249,8 +249,8 @@ export class MouCustTcComponent implements OnInit {
       this.httpClient.post(URLConstant.EditListMouCustTc, formFinal).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          // this.ResponseMouCustTc.emit(response);
-          this.router.navigate(["/Mou/Request/Paging"]);
+          this.ResponseMouCustTc.emit(response);
+          // this.router.navigate(["/Mou/Request/Paging"]);
         });
     }
   }

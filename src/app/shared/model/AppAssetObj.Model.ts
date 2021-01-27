@@ -41,7 +41,16 @@ export class AppAssetObj {
   RsvField4: string;
   RsvField5: string;
   InsAssetCoveredByDesc: string;
+  Discount: number;
+  ExpectedDelivDt: Date;
+  IsNeedReplacementCar: boolean;
   RowVersion: string;
+
+  SerialNo1Label: string;
+  SerialNo2Label: string;
+  SerialNo3Label: string;
+  SerialNo4Label: string;
+  SerialNo5Label: string;
 
   constructor() {
     this.AppAssetId = 0;
@@ -77,6 +86,9 @@ export class AppAssetObj {
     this.RsvField3 = "";
     this.RsvField4 = "";
     this.RsvField5 = "";
+    this.Discount = 0;
+    this.ExpectedDelivDt = new Date();
+    this.IsNeedReplacementCar = false;
     this.RowVersion = "";
   }
 }

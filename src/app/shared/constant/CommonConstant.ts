@@ -23,7 +23,6 @@ export class CommonConstant {
   public static BUSINESS_DT = "BusinessDt";
   public static BUSINESS_DATE = "BusinessDate";
   public static TOKEN = "Token";
-  public static LOCAL_IP = "LocalIp";
   public static BIZ_TEMPLATE_CODE = "BizTemplateCode";
   public static BUSINESS_DATE_RAW = "BusinessDateRaw";
   public static VERSION = "Version";
@@ -559,10 +558,10 @@ export class CommonConstant {
   public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
   
   // Role Type
-  public static RoleCustData = "CUST_DATA";
-  public static RoleFamilyData = "FAM_DATA";
-  public static RoleGuarantorData = "GUARANTOR_DATA";
-  public static RoleShareholder = "SHAREHOLDER_DATA";
+  public static RoleCustData = "CUST";
+  public static RoleFamilyData = "SPOUSE";
+  public static RoleGuarantorData = "GUARANTOR";
+  public static RoleShareholder = "SHAREHOLDER";
   //Approval
   public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
@@ -579,6 +578,7 @@ export class CommonConstant {
   
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
+  public static MOU_TRX_TYPE_CODE = "MOU";
   public static LEAD_TRX_TYPE_CODE = "LEAD";
 
   //FRAUD CHECK TYPE
@@ -591,6 +591,7 @@ export class CommonConstant {
   public static DmsNoApp = "No Application";
   public static DmsNoAgr = "No Agreement";
   public static DmsMouId = "Mou Id";
+  public static DmsLeadId = "Lead Id";
   public static DmsOverideSecurity = "OverideSecurity";
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";
@@ -601,4 +602,15 @@ export class CommonConstant {
   public static DmsViewCodeMou = "ConfinsMou";
   public static DmsViewCodeLead = "ConfinsLead";
   
+  public static DefaultSlikSecEcoCode = "930000";
+  
+  // CrdRvw
+  public static CrdRvwRelationTypeCustomer = "Customer";
+  public static CrdRvwRelationTypeFamily = "Family";
+  public static CrdRvwRelationTypeShrholder = "Shareholder";
+  public static CrdRvwRelationTypeGuarantor = "Guarantor";
+  
+  public static CaptureStatReq = "REQ";
+  public static CaptureStatScs = "SCS";
+  public static CaptureStatFail = "FAIL";
 }

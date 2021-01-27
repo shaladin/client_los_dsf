@@ -33,17 +33,13 @@
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-6">
-            <a class="success" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>
+            <a class="link" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>
             <span id="CreditScoringIndicator" style="float: right;">
-              <i *ngIf="crdRvwAppObj.CreditScoreIndicator != whiteIndicator"
-                [ngStyle]="{'color': crdRvwAppObj.CreditScoreIndicator}" class="font-medium-3 fa fa-circle tooltips">
-                <span [ngClass]="'tooltipstext'">
-                  {{crdRvwAppObj.CreditScoreIndicatorDescr}}
-                </span>
-              </i>
-              <i *ngIf="crdRvwAppObj.CreditScoreIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
-                <span [ngClass]="'tooltipstext'">
-                  {{crdRvwAppObj.CreditScoreIndicatorDescr}}
+              <i [ngClass]="crdRvwAppObj.CreditScoreIndicator == null ? 'far fa-circle' : crdRvwAppObj.CreditScoreIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                [ngStyle]="{'color': crdRvwAppObj.CreditScoreIndicator == null ? '' : crdRvwAppObj.CreditScoreIndicator != whiteIndicator ? crdRvwAppObj.CreditScoreIndicator : ''}" class="font-medium-3 tooltips">
+                <span class="tooltipstext">
+                  <span *ngIf="crdRvwAppObj.CreditScoreIndicatorDescr != null && crdRvwAppObj.CreditScoreIndicatorDescr != ''"> {{crdRvwAppObj.CreditScoreIndicatorDescr}} </span>
+                  <span *ngIf="crdRvwAppObj.CreditScoreIndicatorDescr == null || crdRvwAppObj.CreditScoreIndicatorDescr == ''"> No Data </span>
                 </span>
               </i>
             </span>
@@ -65,10 +61,10 @@
   </div>
 </div>
 
-<div class="row">
+<lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
+</lib-ucSubsection>
+<div class="row" id="Financial">
   <div class="col-md-6">
-    <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
-    </lib-ucSubsection>
     <div id="Financial">      
       <div class="row">
         <div class="col-md-6">
@@ -105,21 +101,16 @@
     </div>
   </div>
   <div class="col-md-6">
-    <!-- <lib-ucSubsection [id]="'IncomeAndExpenseId'" [title]="'Income And Expense'" [panel]="'IncomeAndExpense'">
-    </lib-ucSubsection> -->
-    <div class="card-body">
-      <form class="form form-horizontal">
-        <div class="form-body">
-          <h4 class="form-section font-weight-bold">
-            <div [id]="'IncomeAndExpenseId'" class="btn no-padding">
-              <i class="fa" style="font-size: 15px; margin: 0px 0px 5px -15px;color: white;"></i>
-            </div> 
-            <a class="success" (click)="ClickLinkIncomeExpenseDetail(IncomeExpenseDetail)"> Income And Expense </a>
-          </h4>
-        </div>
-      </form>
-    </div>
     <div id="IncomeAndExpense">
+      <div class="row">
+        <div class="col-md-6">          
+          <label class="label-control"> 
+            <a class="link" (click)="ClickLinkIncomeExpenseDetail(IncomeExpenseDetail)"> Income And Expense </a>
+          </label>
+        </div>
+        <div class="col-md-6 ">
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-6">
           <label class="label-control"> Total Income </label>
@@ -140,15 +131,11 @@
         <div class="col-md-6">
           <label class="label-control"> TAC Commission + Reserve Fund </label>
           <span id="TacIndicator" style="float: right;">
-            <i *ngIf="crdRvwAppObj.TacIndicator != whiteIndicator"
-              [ngStyle]="{'color': crdRvwAppObj.TacIndicator}" class="font-medium-3 fa fa-circle tooltips">
-              <span [ngClass]="'tooltipstext'">
-                {{crdRvwAppObj.TacIndicatorDescr}}
-              </span>
-            </i>
-            <i *ngIf="crdRvwAppObj.TacIndicator == whiteIndicator" class="font-medium-3 far fa-circle tooltips">
-              <span [ngClass]="'tooltipstext'">
-                {{crdRvwAppObj.TacIndicatorDescr}}
+            <i [ngClass]="crdRvwAppObj.TacIndicator == null ? 'far fa-circle' : crdRvwAppObj.TacIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+              [ngStyle]="{'color': crdRvwAppObj.TacIndicator == null ? '' : crdRvwAppObj.TacIndicator != whiteIndicator ? crdRvwAppObj.TacIndicator : ''}" class="font-medium-3 tooltips">
+              <span class="tooltipstext">
+                <span *ngIf="crdRvwAppObj.TacIndicatorDescr != null && crdRvwAppObj.TacIndicatorDescr != ''"> {{crdRvwAppObj.TacIndicatorDescr}} </span>
+                <span *ngIf="crdRvwAppObj.TacIndicatorDescr == null || crdRvwAppObj.TacIndicatorDescr == ''"> No Data </span>
               </span>
             </i>
           </span>
@@ -173,7 +160,7 @@
 
 <ng-template #CreditScoring let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Credit Scoring</h4>
+    <h4 class="modal-title"></h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
