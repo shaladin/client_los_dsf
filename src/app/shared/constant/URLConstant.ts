@@ -1230,6 +1230,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetCrdRvwCustInfoByAppId = environment.losUrl + "/CrdRvwCustInfo/GetCrdRvwCustInfoByAppId";
     public static GetCrdRvwCustInfoIncomeAndExpenseDetails = environment.losUrl + "/CrdRvwCustInfo/GetCrdRvwCustInfoIncomeAndExpenseDetails";
     public static CrdRvwDataReCapture = environment.losUrl + "/CrdRvwCustInfo/CrdRvwDataReCapture";
+    public static ReCaptureDataR2 = environment.losUrl + "/CrdRvwCustInfo/ReCaptureDataR2";
     public static GetCrdRvwCustPersInfoByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustPersInfo/GetCrdRvwCustPersInfoByCrdRvwCustInfoId";
     public static GetCrdRvwCustCoyInfoByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustCoyInfo/GetCrdRvwCustCoyInfoByCrdRvwCustInfoId";
     public static GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId = environment.losUrl + "/CrdRvwCustPhnStatus/GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId";
