@@ -143,7 +143,6 @@ export class CrdRvwFamGuarComponent implements OnInit {
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwExposureHObj: Array<CrdRvwExposureHObj>, ListCrdRvwOvdObj: Array<CrdRvwOvdObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        console.log(response);
         for (let index = 0; index < response.ListCrdRvwExposureHObj.length; index++) {
           const element: CrdRvwExposureHObj = response.ListCrdRvwExposureHObj[index];
           this.DictCrdRvwExposureHId[element.CustNo + element.RelationType] = element.CrdRvwExposureHId;
@@ -154,8 +153,6 @@ export class CrdRvwFamGuarComponent implements OnInit {
           const element = response.ListCrdRvwOvdObj[index];
           this.DictCrdRvwGuarantorExposure[element.CustNo] = element;
         }
-        console.log(this.DictCrdRvwExposure);
-        console.log(this.DictCrdRvwGuarantorExposure);
       }
 
     )

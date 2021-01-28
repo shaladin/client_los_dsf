@@ -22,16 +22,22 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Negative Asset </label>
-            <span id="NegAssetIndicator" style="float: right;">
-              <i [ngClass]="crdRvwAssetObj.NegativeAssetIndicator == null ? 'far fa-circle' : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                [ngStyle]="{'color': crdRvwAssetObj.NegativeAssetIndicator == null ? white : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? crdRvwAssetObj.NegativeAssetIndicator : white}" class="font-medium-3 tooltips">
-                <span class="tooltipstext">
-                  <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr != null && crdRvwAssetObj.NegativeAssetIndicatorDescr != ''"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
-                  <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr == null || crdRvwAssetObj.NegativeAssetIndicatorDescr == ''"> No Data </span>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="label-control"> Negative Asset </label>
+              </div>
+              <div class="col-md-2">
+                <span id="NegAssetIndicator" style="float: right;">
+                  <i [ngClass]="crdRvwAssetObj.NegativeAssetIndicator == null ? 'far fa-circle' : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': crdRvwAssetObj.NegativeAssetIndicator == null ? white : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? crdRvwAssetObj.NegativeAssetIndicator : white}" class="font-medium-3 tooltips">
+                    <span class="tooltipstext">
+                      <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr != null && crdRvwAssetObj.NegativeAssetIndicatorDescr != ''"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
+                      <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr == null || crdRvwAssetObj.NegativeAssetIndicatorDescr == ''"> No Data </span>
+                    </span>
+                  </i>
                 </span>
-              </i>
-            </span>
+              </div>
+            </div>
           </div>
           <div class="col-md-6 ">
             <label class="label-control" *ngIf="crdRvwAssetObj.IsNegativeAsset"> Yes </label>

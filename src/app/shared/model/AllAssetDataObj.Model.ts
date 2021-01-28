@@ -20,6 +20,9 @@ export class AllAssetDataObj {
   AppAssetAttrObj: Array<AppAssetAttrObj>;
   LOBCode: string;
   IsAppAssetAccessoryChanged: boolean;
+  VendorEmpId: number;
+  BizTemplateCode: string;
+  Copy: string;
   RowVersion: any;
 
   constructor() {
@@ -34,6 +37,9 @@ export class AllAssetDataObj {
     this.AppAssetAttrObj = new Array<AppAssetAttrObj>();
     this.RowVersion = "";
     this.LOBCode = "";
+    this.VendorEmpId = 0;
+    this.BizTemplateCode = "";
+    this.Copy = "No";
     this.IsAppAssetAccessoryChanged = false;
   }
 }

@@ -3,7 +3,16 @@
 <div id="CustInfo">
   <div class="card-body">
     <div class="row">
-      <div class="col-md-6"></div>      
+      <div class="col-md-6">
+        <div class="row" style="font-weight: bold;">
+          <div class="col-md-6">
+            <label class="label-control"> Capture Status:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCustInfoObj.CaptureStat}} </label>
+          </div>
+        </div>
+      </div>      
       <div class="col-md-6">
         <div class="row" style="font-weight: bold;">
           <div class="col-md-6">
@@ -77,16 +86,22 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> #Agr FPD (Last {{CustCrdRvwExposureObj.SpanOfMonth != null ? CustCrdRvwExposureObj.SpanOfMonth : 0}} month / All) </label>
-            <span id="FpdIndicator" style="float: right;">
-              <i [ngClass]="CustCrdRvwExposureObj.FpdIndicator == null ? 'far fa-circle' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-                [ngStyle]="{'color': CustCrdRvwExposureObj.FpdIndicator == null ? '' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? CustCrdRvwExposureObj.FpdIndicator : ''}" class="font-medium-3 tooltips">
-                <span class="tooltipstext">
-                  <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr != null && CustCrdRvwExposureObj.FpdIndicatorDescr != ''"> {{CustCrdRvwExposureObj.FpdIndicatorDescr}} </span>
-                  <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr == null || CustCrdRvwExposureObj.FpdIndicatorDescr == ''"> No Data </span>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="label-control"> #Agr FPD (Last {{CustCrdRvwExposureObj.SpanOfMonth != null ? CustCrdRvwExposureObj.SpanOfMonth : 0}} month / All) </label>
+              </div>
+              <div class="col-md-2">
+                <span id="FpdIndicator" style="float: right;">
+                  <i [ngClass]="CustCrdRvwExposureObj.FpdIndicator == null ? 'far fa-circle' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': CustCrdRvwExposureObj.FpdIndicator == null ? '' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? CustCrdRvwExposureObj.FpdIndicator : ''}" class="font-medium-3 tooltips">
+                    <span class="tooltipstext">
+                      <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr != null && CustCrdRvwExposureObj.FpdIndicatorDescr != ''"> {{CustCrdRvwExposureObj.FpdIndicatorDescr}} </span>
+                      <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr == null || CustCrdRvwExposureObj.FpdIndicatorDescr == ''"> No Data </span>
+                    </span>
+                  </i>
                 </span>
-              </i>
-            </span>
+              </div>
+            </div>
           </div>
           <div class="col-md-6">
             <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntFpd}} </label>
@@ -116,7 +131,7 @@
 </ng-template>
 <ng-template #NegCheckListContent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Negative List</h4>
+    <h4 class="modal-title"></h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

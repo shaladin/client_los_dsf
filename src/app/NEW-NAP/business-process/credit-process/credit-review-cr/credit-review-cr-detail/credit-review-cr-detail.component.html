@@ -148,6 +148,9 @@
         </div>
 
         <div class="form-actions right">
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1" translate>
+            <i class="far fa-check-square"></i> Re-Captured Data R2
+          </button>
           <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
             <i class="far fa-check-square"></i> Re-Captured Data
           </button>

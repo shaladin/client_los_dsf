@@ -1,1 +1,1 @@
-<lib-ucpaging [searchObj]="inputPagingObj" (callback)="getEvent($event)"></lib-ucpaging>
+<lib-ucpaging *ngIf="isReady" [searchObj]="inputPagingObj" (callback)="getEvent($event)"></lib-ucpaging>

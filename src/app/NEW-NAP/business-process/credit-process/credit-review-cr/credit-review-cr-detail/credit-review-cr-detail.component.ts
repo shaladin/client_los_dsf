@@ -226,7 +226,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
       }
@@ -338,6 +337,13 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  ReCaptureDataR2(){    
+    this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
