@@ -1,0 +1,115 @@
+<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Detail Verification</h4>
+<app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <lib-ucSubsection [id]="'verificationModuleId'" [title]="'Verification Module'" [panel]="'verificationModule'">
+      </lib-ucSubsection>
+      <div id="verificationModule" *ngIf="verifResultObj">
+        <div>
+          <label class="col-md-3">Verification No</label>
+          <label class="col-md-3">{{verifResultObj.VerfResultNo}}</label>
+          <label class="col-md-3">Verification By</label>
+          <label class="col-md-3">{{verifResultObj.EmpName}}</label>
+        </div>
+        <div>
+          <label class="col-md-3">Verification Date</label>
+          <label class="col-md-3" *ngIf="verifResultHObj">{{verifResultHObj.VerfDt | date: 'dd-MM-yyyy'}}</label>
+        </div>
+      </div>
+      <lib-ucSubsection [id]="'subjectInformationId'" [title]="'Subject Information'" [panel]="'subjectInformation'">
+      </lib-ucSubsection>
+      <div id="subjectInformation" *ngIf="verifResultHObj">
+        <div>
+          <label class="col-md-3">Subject Type</label>
+          <label class="col-md-3">{{verifResultHObj.MrVerfObjectCode}}</label>
+          <label class="col-md-3">Result Status</label>
+          <label class="col-md-3">{{verifResultHObj.MrVerfResultHStatName}}</label>
+        </div>
+        <div>
+          <label class="col-md-3">Subject Name</label>
+          <label class="col-md-3">{{subjectName}}</label>
+          <label class="col-md-3">Time</label>
+          <label class="col-md-3">{{verifResultHObj.VerfDt | date:'HH:mm'}}</label>
+        </div>
+        <div>
+          <label class="col-md-3">Subject Relation</label>
+          <label class="col-md-3">{{verifResultHObj.MrVerfSubjectRelationName}}</label>
+        </div>
+        <div *ngIf="!isViewSubDetail">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th class="text-left">Phone No</th>
+              <th class="text-left">Status</th>
+              <th class="text-left">Notes</th>
+              <th class="text-left">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listVerifResultHObj">
+              <td class="text-left">{{item.PhnType}} : {{item.Phn}}</td>
+              <td class="text-left">{{item.MrVerfResultHStatName}}</td>
+              <td class="text-left">{{item.Notes}}</td>
+              <td class="text-left">
+                <a class="success p-0" (click)="ViewSubjDetail(item.VerfResultHId)">
+                  <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+      <div *ngIf="isViewSubDetail">
+        <div *ngIf="verifResultHDetailObj">
+          <div class="ucSearch-Button-Right">
+            <span class="mr-1">
+              <button type="button" class="backButton" (click)="BackSubj()" translate>
+                <i class="ft-arrow-left"></i> Back
+              </button>
+            </span>
+          </div>
+          <lib-ucSubsection [id]="'detailVerifSubjId'" [title]="'Detail Verification'" [panel]="'detailVerifSubj'">
+          </lib-ucSubsection>
+          <div id="detailVerifSubj">
+            <div>
+              <label class="col-md-3">Phone Number</label>
+              <label class="col-md-3">{{verifResultHDetailObj[0].Phn}}</label>
+            </div>
+            <div>
+              <label class="col-md-3">Status</label>
+              <label class="col-md-3">{{verifResultHDetailObj[0].MrVerfResultHStatName}}</label>
+            </div>
+            <div *ngIf="listVerifResultDObj">
+              <div *ngFor="let item of listVerifResultDObj; let i = index">
+                <lib-ucSubsection [id]="'verfResult'+i+'id'" [title]="item.VerfQuestionGrpName" [panel]="'verfResult'+i">
+                </lib-ucSubsection>
+                <div id="verfResult{{i}}">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left">Question</th>
+                        <th class="text-left">Answer</th>
+                        <th class="text-left">Notes</th>
+
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="item.VerResultList">
+                      <tr *ngFor="let value of item.VerResultList">
+                        <td class="text-left">{{value.VerfQuestionText}}</td>
+                        <td class="text-left">{{value.Answer}}</td>
+                        <td class="text-left">{{value.Notes}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+
