@@ -80,7 +80,7 @@ export class MouRequestAddcollComponent implements OnInit {
     },
   ];
 
-  CollTypeList: any;
+  CollTypeList: Array<any> = new Array();
   AssetConditionList: any;
   CollateralPortionTypeObj: Array<KeyValueObj> = new Array();
   IdTypeList: any;
@@ -139,7 +139,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.bindMouData();
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
-    this.isNeedCheckBySystem = "0";
+    this.GetGS();
   }
 
   bindUcAddToTempData() {
@@ -352,7 +352,35 @@ export class MouRequestAddcollComponent implements OnInit {
     this.listSelectedId = ev.TempListId;
   }
 
+  ResetForm() {
+    this.inputAddressObjForLegalAddr = new InputAddressObj();
+    this.inputAddressObjForLocAddr = new InputAddressObj();
+
+    this.AddCollForm.patchValue({
+      MouCustCollateralId: 0,
+      MouCustCollateralRegistrationId: 0,
+      CopyFromLegal: '',
+      AssetTypeCode: this.CollTypeList[0].Key,
+      CollateralValueAmt: 0,
+      CollateralPrcnt: 0,
+      FullAssetCode: '',
+      AssetCategoryCode: '',
+      OwnerName: '',
+      OwnerRelationship: this.OwnerRelationshipObj[0].Key,
+      OwnerIdNo: '',
+      MrIdType: this.IdTypeList[0].Key,
+      Notes: '',
+      RowVersionCollateral: '',
+      RowVersionCollateralRegistration: '',
+      MrCollateralConditionCode: '',
+      ManufacturingYear: '',
+      CollateralPortionAmt: 0,
+      CollateralPortionType: this.CollateralPortionTypeObj[0].Key ,
+    });
+  }
+
   open(pageType) {
+    this.ResetForm();
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
     this.type = pageType;
     if (pageType == 'AddExisting') {
@@ -986,11 +1014,13 @@ export class MouRequestAddcollComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
       return;
     }
-    if (this.isNeedCheckBySystem == "0") {
+    if (this.isNeedCheckBySystem == "1") {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
           this.ResponseMouAddColl.emit({ StatusCode: "200" });
         }
+      }else{
+        this.ResponseMouAddColl.emit({ StatusCode: "200" });
       }
     }
     else {
