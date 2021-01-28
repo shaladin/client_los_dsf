@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -66,6 +66,7 @@ export class CreditReviewMainComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
+    private ref: ApplicationRef,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -362,25 +363,30 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   BindManualDeviationData(ev) {
+    this.IsReady = false;
+    this.ref.tick();
     this.ManualDeviationData = ev;
-    // console.log('MAN DEVVV', this.ManualDeviationData);
+    console.log('MAN DEVVV', this.ManualDeviationData);
+    let manualDevList = []
+    if(this.ManualDeviationData.length > 0){
+      for(let i=0;i< this.ManualDeviationData.length;i++){
 
-    // if(this.ManualDeviationData.length > 0){
-    //   var Attributes = []
-    //   var attribute1= { 
-    //     "AttributeName" : "ApvAt",
-    //     "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
-    //   };
-    //   Attributes.push(attribute1);
-      
-    //   let TypeCode = {
-    //     "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
-    //     "Attributes" : Attributes,
-    //   };
-  
-    //   this.InputObj.ApvTypecodes.push(TypeCode);
-    // }
-
+        var Attributes = []
+        var attribute1= { 
+          "AttributeName" : "ApvAt",
+          "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
+        };
+        Attributes.push(attribute1);
+        
+        let TypeCode = {
+          "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
+          "Attributes" : Attributes,
+        };
+    
+        manualDevList.push(TypeCode);
+      }
+    }
+    this.initInputApprovalObj(manualDevList);
     this.isExistedManualDeviationData = true;
   }
 
@@ -417,7 +423,8 @@ export class CreditReviewMainComponent implements OnInit {
       });
   }
 
-  initInputApprovalObj(){  
+  initInputApprovalObj(manualDevList = null){  
+    
     this.InputObj = new UcInputRFAObj(); 
     var Attributes = []
     var attribute1= { 
@@ -434,8 +441,10 @@ export class CreditReviewMainComponent implements OnInit {
     listTypeCode.push(TypeCode);
 
     if(this.responseListTypeCodes.length > 0){
-     
       listTypeCode = listTypeCode.concat(this.responseListTypeCodes);
+    }
+    if(manualDevList != null){
+     listTypeCode = listTypeCode.concat(manualDevList);
     }
 
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
