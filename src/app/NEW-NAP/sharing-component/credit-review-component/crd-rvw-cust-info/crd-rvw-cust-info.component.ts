@@ -48,7 +48,6 @@ export class CrdRvwCustInfoComponent implements OnInit {
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
     await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: CommonConstant.CrdRvwRelationTypeCustomer }).toPromise().then(
       (response) => {
-        console.log(response);
         for (let index = 0; index < response.ListCrdRvwExposureDObj.length; index++) {
           const element = response.ListCrdRvwExposureDObj[index];
           if (element.ExposureType == this.ExposureCustTypeCode) {

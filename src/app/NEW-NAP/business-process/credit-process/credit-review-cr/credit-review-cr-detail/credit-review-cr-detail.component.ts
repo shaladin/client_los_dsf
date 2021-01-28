@@ -226,7 +226,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
       }
