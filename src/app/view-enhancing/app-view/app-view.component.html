@@ -54,6 +54,11 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab *ngIf="IsAssetExpense" label="Asset Expense">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsMultiAsset" label="Asset & Collateral Data">
               <ng-template matTabContent>
                 <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
@@ -153,6 +158,11 @@
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>
                 <app-approval-hist [AppId]="AppId"></app-approval-hist>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsPefindoResult" label="Pefindo Result">
+              <ng-template matTabContent>
               </ng-template>
             </mat-tab>
           </mat-tab-group>
