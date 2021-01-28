@@ -75,7 +75,7 @@ export class AssetDataComponent implements OnInit {
     TaxIssueDt: [''],
     Discount: [0],
     ExpectedDelivDt: [],
-    IsNeedReplacementCar: [''],
+    IsNeedReplacementCar: [false],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
 
     /* AppAsset Value That required but not in form*/
@@ -771,7 +771,6 @@ export class AssetDataComponent implements OnInit {
       }
 
       if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
-        console.log(this.appAssetObj);
         this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
         this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
         this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
@@ -1004,8 +1003,12 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
     this.allAssetDataObj.AppAssetObj.Discount = this.AssetDataForm.controls.Discount.value;
-    this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.AssetDataForm.controls.ExpectedDelivDt.value;
-    this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.AssetDataForm.controls.IsNeedReplacementCar.value;
+    
+    if(this.AssetDataForm.controls.ExpectedDelivDt.value !== null) {
+      this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.AssetDataForm.controls.ExpectedDelivDt.value;
+    }
+    if(this.AssetDataForm.controls.IsNeedReplacementCar.value !== null) {this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.AssetDataForm.controls.IsNeedReplacementCar.value;
+    }
 
     this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AssetDataForm.controls.AssetSeqNo.value;
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls.FullAssetCode.value;
@@ -1195,11 +1198,6 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  ChangeAssetUsage() {
-    if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
-      this.SetDpValue();
-    }
-  }
   SalesPersonChanged(event) {
     if (event.target.value != "") {
       //this.vendorEmpObj.VendorEmpId = event.target.value;

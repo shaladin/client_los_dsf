@@ -177,7 +177,6 @@
                     <label class="col-md-4 adins-required-label" translate>Asset Usage</label>
                     <div class="col-md-8">
                       <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
-                        (change)="ChangeAssetUsage()"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }"
                         style="width:50%">
                         <option value="">-Select One-</option>

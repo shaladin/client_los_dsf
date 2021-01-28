@@ -38,6 +38,7 @@ export class FraudVerifPageComponent implements OnInit {
   ResultThirdPartyObj: any;
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
   dmsObj: DMSObj;
+  isDmsReady: boolean = false;
   
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -126,10 +127,11 @@ export class FraudVerifPageComponent implements OnInit {
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
-            this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
-            this.dmsObj.MetadataParent = null;
-            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        this.isDmsReady = true;
         
         if(response["LobCode"] !== CommonConstant.CFNA){
           this.leadAssetObj.LeadId = this.LeadId;

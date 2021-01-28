@@ -44,6 +44,7 @@ import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
+import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 
 @NgModule({
     imports: [
@@ -94,6 +95,7 @@ import { SharedModule } from "app/shared/shared.module";
         ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent,
+        TabDeviationComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

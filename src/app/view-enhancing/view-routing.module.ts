@@ -33,6 +33,10 @@ const routes: Routes = [
             {
                 path: 'CustExposureView',
                 loadChildren: './cust-exposure-view/cust-exposure-view.module#CustExposureViewModule'
+            },
+            {
+                path: 'PhoneVerifView',
+                loadChildren: './phone-verif/phone-verif-view.module#PhoneVerifViewModule'
             }
         ]
     }
