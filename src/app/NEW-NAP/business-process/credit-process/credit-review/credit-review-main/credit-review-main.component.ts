@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -18,6 +18,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -39,6 +40,7 @@ export class CreditReviewMainComponent implements OnInit {
   arrValue = []; 
   InputObj: UcInputRFAObj;
   private createComponent: UcapprovalcreateComponent;
+  responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
       // initially setter gets called with undefined
@@ -64,6 +66,7 @@ export class CreditReviewMainComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
+    private ref: ApplicationRef,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -114,7 +117,15 @@ export class CreditReviewMainComponent implements OnInit {
     this.ClaimTask();
     this.InitData();
     this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+
     await this.GetAppNo();
+    var appObj = new AppObj();
+    appObj.AppNo = this.AppNo;
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, appObj).toPromise().then(
+      (response) => {
+          this.responseListTypeCodes = response['ApvTypecodes'];
+      });
+
     await this.GetAppCustData();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -162,7 +173,7 @@ export class CreditReviewMainComponent implements OnInit {
           this.isDmsReady = true;
         }
       }
-    );
+    );    
   }
 
 
@@ -352,7 +363,30 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   BindManualDeviationData(ev) {
+    this.IsReady = false;
+    this.ref.tick();
     this.ManualDeviationData = ev;
+    console.log('MAN DEVVV', this.ManualDeviationData);
+    let manualDevList = []
+    if(this.ManualDeviationData.length > 0){
+      for(let i=0;i< this.ManualDeviationData.length;i++){
+
+        var Attributes = []
+        var attribute1= { 
+          "AttributeName" : "ApvAt",
+          "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
+        };
+        Attributes.push(attribute1);
+        
+        let TypeCode = {
+          "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
+          "Attributes" : Attributes,
+        };
+    
+        manualDevList.push(TypeCode);
+      }
+    }
+    this.initInputApprovalObj(manualDevList);
     this.isExistedManualDeviationData = true;
   }
 
@@ -389,23 +423,35 @@ export class CreditReviewMainComponent implements OnInit {
       });
   }
 
-  initInputApprovalObj(){  
+  initInputApprovalObj(manualDevList = null){  
+    
     this.InputObj = new UcInputRFAObj(); 
     var Attributes = []
     var attribute1= { 
       "AttributeName" : "Approval Amount",
       "AttributeValue": this.apvAmt
-    }; 
+    };
     Attributes.push(attribute1);
-
+    
+    var listTypeCode = [];
     var TypeCode = {
       "TypeCode" : "CRD_APV_CF_TYPE",
       "Attributes" : Attributes,
     };
+    listTypeCode.push(TypeCode);
+
+    if(this.responseListTypeCodes.length > 0){
+      listTypeCode = listTypeCode.concat(this.responseListTypeCodes);
+    }
+    if(manualDevList != null){
+     listTypeCode = listTypeCode.concat(manualDevList);
+    }
+
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
-    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.ApvTypecodes = listTypeCode;
+    console.log('listtype', JSON.stringify(listTypeCode));
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
     this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;

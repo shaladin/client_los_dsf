@@ -33,6 +33,7 @@ export class LeadInputPageComponent implements OnInit {
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
   customObj: any;
+  isDmsReady: boolean = false;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -63,9 +64,11 @@ export class LeadInputPageComponent implements OnInit {
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
-        this.dmsObj.MetadataParent = null;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        this.isDmsReady = true;
+        console.log('dmsobj = ', JSON.stringify(this.dmsObj));
       });
 
     if (this.TaskListId > 0) {
