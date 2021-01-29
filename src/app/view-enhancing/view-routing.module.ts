@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SurveyViewModule } from './survey-view-prototype/survey-view.module';
 
 const routes: Routes = [
     {
@@ -37,6 +36,10 @@ const routes: Routes = [
             {
                 path: 'PhoneVerifView',
                 loadChildren: './phone-verif/phone-verif-view.module#PhoneVerifViewModule'
+            },
+            {
+                path: 'PurchaseTracking',
+                loadChildren: './purchase-tracking-view/purchase-tracking-view.module#PurchaseTrackingViewModule'
             }
         ]
     }

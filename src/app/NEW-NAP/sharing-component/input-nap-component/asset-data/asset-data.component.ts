@@ -401,6 +401,7 @@ export class AssetDataComponent implements OnInit {
 
   AddAsset() {
     this.mode = "Add";
+    this.salesSupervisor = "";
     this.InputLookupSupplierObj.jsonSelect = null;
     this.InputLookupSupplierObj.nameSelect = "";
 
@@ -579,6 +580,12 @@ export class AssetDataComponent implements OnInit {
         }
       }
     );
+  }
+  
+  updateValueAssetPrice() {
+    var assetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
+    var discount = this.AssetDataForm.controls.Discount.value;
+    this.priceAfterDiscount = assetPriceAmt - discount;
   }
   
   async GetGS() {
