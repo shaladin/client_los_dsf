@@ -24,7 +24,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   providers: [NGXToastrService]
 })
 export class CommissionReservedFundDetailComponent implements OnInit {
-
+//test
   ReturnHandlingHObj: ReturnHandlingHObj;
   AllAppReservedFundObj: AllAppReservedFundObj;
   StepIndex: number = 1;
