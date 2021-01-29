@@ -220,7 +220,7 @@ TCList : any;
       this.initInputApprovalObj();
 
   }
-  HoldTask(obj) {
+  HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
       },

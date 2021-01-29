@@ -97,6 +97,19 @@
                   </div>
                 </div>
 
+                <div class="form-group row adins-required">
+                  <!-- Tenor -->
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'">Tenor</label>
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'OPL'">Rental Period (In Months)</label>
+                  <div class="col-md-8">
+                    <input type="number" class="form-control adInsInput" style="width: 50%" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
+                      (change)="ChangeNumOfInstallmentTenor()">
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                
                 <div class="form-group row" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Num of Installment -->
                   <label class="col-md-4 adInsLabel">Num of Installment</label>
@@ -212,19 +225,6 @@
                     </lib-uc-show-errors>
                   </div>
                 </div> -->
-
-                <div class="form-group row adins-required">
-                  <!-- Tenor -->
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'">Tenor</label>
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'OPL'">Rental Period (In Months)</label>
-                  <div class="col-md-8">
-                    <input type="number" class="form-control adInsInput" style="width: 50%" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
-                      (change)="ChangeNumOfInstallmentTenor()">
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

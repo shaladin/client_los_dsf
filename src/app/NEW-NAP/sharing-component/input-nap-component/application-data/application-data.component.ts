@@ -103,7 +103,7 @@ export class ApplicationDataComponent implements OnInit {
     RsvField3: [''],
     RsvField4: [''],
     RsvField5: [''],
-    MrInstSchemeCode: ["", Validators.required],
+    MrInstSchemeCode: ['', Validators.required],
     InterestType: ['', Validators.required],
     InterestTypeDesc: [''],
     FloatingPeriod: [''],
@@ -262,6 +262,7 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         this.resultResponse = response;
+        console.log(response);
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
@@ -311,7 +312,7 @@ export class ApplicationDataComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
-          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode != null ? this.resultResponse.MrInstSchemeCode : "",
           InterestType: this.resultResponse.InterestType,
           FloatingPeriod: this.resultResponse.FloatingPeriodCode,
           ApplicationNotes: this.resultResponse.ApplicationNotes,
