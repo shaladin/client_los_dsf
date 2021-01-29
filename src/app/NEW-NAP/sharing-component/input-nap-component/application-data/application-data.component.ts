@@ -262,7 +262,6 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post(url, obj).subscribe(
       (response) => {
         this.resultResponse = response;
-        console.log(response);
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
