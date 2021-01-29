@@ -1205,11 +1205,6 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  ChangeAssetUsage() {
-    if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
-      this.SetDpValue();
-    }
-  }
   SalesPersonChanged(event) {
     if (event.target.value != "") {
       //this.vendorEmpObj.VendorEmpId = event.target.value;
