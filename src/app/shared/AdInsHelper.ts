@@ -103,7 +103,7 @@ export class AdInsHelper {
   }
   public static OpenPhoneVerifViewByAppId(AppId, VerfResultHId, Name) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + AppId + "&VerfResultHId=" + VerfResultHId + "&Name=" + Name + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + "/View/PhoneVerifView?AppId=" + AppId + "&VerfResultHId=" + VerfResultHId + "&Name=" + Name + "&Token=" + token, "_blank");
   }
 
   public static OpenProdOfferingViewByCodeAndVersion(Code, Version) {

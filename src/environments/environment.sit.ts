@@ -11,7 +11,7 @@ export const environment = {
   losUrl: 'http://r3app-server.ad-ins.com/LOS_SIT_CY4',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_SIT_CY4',
   DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
-  ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_BE_SIT_CY4',
+  ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_SIT',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/FOUNDATION_SIT_CY4',
   losR3Web: 'http://r3web-server.ad-ins.com/LOS_SIT_CY4',
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_SIT_CY4',

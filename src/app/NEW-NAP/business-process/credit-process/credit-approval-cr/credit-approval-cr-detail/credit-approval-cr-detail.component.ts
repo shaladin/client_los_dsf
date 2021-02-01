@@ -83,7 +83,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     );
   }
 
-  HoldTask(obj) {
+  HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
       },

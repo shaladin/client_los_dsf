@@ -63,7 +63,7 @@
         </app-lead-input-lead-data>
       </div>
       <div *ngIf="pageType != 'update'" id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
-        <app-dms-iframe *ngIf="AppStepIndex == 3" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
+        <app-dms-iframe *ngIf="AppStepIndex == 3 && isDmsReady" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
       </div>
       <!-- </div> -->
     </div>

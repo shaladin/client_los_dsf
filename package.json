@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-592",
+  "version": "1.0.0-604",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -23,8 +23,8 @@
     "@adins/ucaddress": "^1.0.53",
     "@adins/ucaddtotemp": "^1.0.15",
     "@adins/ucapproval": "^1.0.9",
+    "@adins/ucapproval-r3": "^1.0.20",
     "@adins/ucapproval-history": "^1.0.5",
-    "@adins/ucapproval-r3": "^1.0.16",
     "@adins/ucapprovalcreate": "^1.0.28",
     "@adins/ucapprovalgeneralinfo": "^1.0.2",
     "@adins/ucapprovalhist": "^1.0.16",
