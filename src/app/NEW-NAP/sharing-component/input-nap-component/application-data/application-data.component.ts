@@ -20,6 +20,7 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -102,7 +103,7 @@ export class ApplicationDataComponent implements OnInit {
     RsvField3: [''],
     RsvField4: [''],
     RsvField5: [''],
-    MrInstSchemeCode: ["", Validators.required],
+    MrInstSchemeCode: ['', Validators.required],
     InterestType: ['', Validators.required],
     InterestTypeDesc: [''],
     FloatingPeriod: [''],
@@ -114,6 +115,8 @@ export class ApplicationDataComponent implements OnInit {
     ApplicationNotes: [''],
     CopyFromMailing: [''],
   });
+  slikSecDescr: string ="";
+  defaultSlikSecEcoCode: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute) { 
@@ -126,6 +129,7 @@ export class ApplicationDataComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
     this.getAppModelInfo();
@@ -307,7 +311,7 @@ export class ApplicationDataComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
-          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode != null ? this.resultResponse.MrInstSchemeCode : "",
           InterestType: this.resultResponse.InterestType,
           FloatingPeriod: this.resultResponse.FloatingPeriodCode,
           ApplicationNotes: this.resultResponse.ApplicationNotes,
@@ -372,6 +376,12 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
+        if(code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == ""){
+          this.NapAppModelForm.patchValue({
+            CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode 
+          });
+        }
       });
   }
 
@@ -408,8 +418,23 @@ export class ApplicationDataComponent implements OnInit {
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json"; 
-    this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
-    this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+
+    if(this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != ""){
+      this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
+      this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+    }
+    else{
+      var reqSecObj = new RefMasterObj();
+      reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
+      reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
+      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response)=>{
+          console.log(response);
+          this.slikSecDescr = response['Descr'];
+          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
+          this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: response['Descr']};
+        });
+    }
     this.isInputLookupObj = true;
   }
 

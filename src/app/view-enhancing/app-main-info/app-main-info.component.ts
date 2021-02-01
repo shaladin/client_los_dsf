@@ -11,11 +11,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   templateUrl: './app-main-info.component.html'
 })
 export class AppMainInfoComponent implements OnInit {
-
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
-
   AppObj: any;
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -24,9 +23,14 @@ export class AppMainInfoComponent implements OnInit {
         this.AppObj = response;
         if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-        } else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
+        }
+        else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
-        } else {
+        }
+        else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
+        }
+        else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
         this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -57,5 +61,4 @@ export class AppMainInfoComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
-
 }

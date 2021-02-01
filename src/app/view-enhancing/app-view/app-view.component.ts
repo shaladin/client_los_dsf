@@ -12,10 +12,9 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 @Component({
   selector: 'app-app-view',
   templateUrl: './app-view.component.html',
-  styleUrls: ['./app-view.component.scss']
+  styleUrls: []
 })
 export class AppViewComponent implements OnInit {
-
   AppId: number;
   arrValue = [];
   CustType: string = "";
@@ -42,13 +41,16 @@ export class AppViewComponent implements OnInit {
   IsMultiCollateral: boolean = true;
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
+  IsDeviation: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
   appNo: any;
   custNo: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private componentFactoryResolver: ComponentFactoryResolver) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -72,12 +74,14 @@ export class AppViewComponent implements OnInit {
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.AppId };
 
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj);
+
     forkJoin([getApp, getAppCust]).subscribe(
       (response) => {
         this.appNo = response[0]['AppNo'];
         this.custNo = response[1]['CustNo'];
+
         if(this.custNo != null && this.custNo != ''){
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
@@ -107,6 +111,7 @@ export class AppViewComponent implements OnInit {
     var appObj = {
       AppId: this.AppId,
     };
+
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.bizTemplateCode = response["BizTemplateCode"];
@@ -123,7 +128,7 @@ export class AppViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
-
+          this.IsDeviation = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -132,6 +137,7 @@ export class AppViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
+          this.IsDeviation = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
@@ -140,6 +146,7 @@ export class AppViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
+          this.IsDeviation = false;
         }
         else if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -147,6 +154,7 @@ export class AppViewComponent implements OnInit {
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
           this.IsInsurance = false;
+          this.IsDeviation = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
@@ -155,10 +163,28 @@ export class AppViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
           this.IsCollateral = false;
+          this.IsDeviation = false;
+        }
+        else if (this.bizTemplateCode == CommonConstant.OPL) {
+          this.IsCollateral = false;
+          this.IsReferantor = false;
+          this.IsInvoice = false;
+          this.IsMultiInsurance = false;
+          this.IsCommission = false;
+          this.IsCollateral = false;
+          this.IsReservedFund = false;
+          this.IsPhoneVerification = false;
+          this.IsMultiAsset = false;
+          this.IsFraudDetectionMulti = false;
+          this.IsInsurance = false;
+          this.IsLifeInsurance = false;
+          this.IsFraudDetectionResult = false;
+          this.IsCollateral = false;
         }
       }
     );
   }
+
   tabChangeEvent(tabChangeEvent: MatTabChangeEvent) {
     if (tabChangeEvent.index == 0) {
       this.GetApp();
@@ -168,5 +194,4 @@ export class AppViewComponent implements OnInit {
     const component = this.mainInfoContainer.createComponent(componentFactory);
     component.instance.arrValue = this.arrValue;
   }
-
 }

@@ -238,7 +238,7 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
-    if (AppStep == CommonConstant.AppStepTC)
+    if (AppStep == CommonConstant.AppStepUplDoc)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;

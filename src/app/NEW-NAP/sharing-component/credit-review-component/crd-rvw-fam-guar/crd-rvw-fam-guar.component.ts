@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
+import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
+import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-fam-guar',
@@ -26,6 +30,13 @@ export class CrdRvwFamGuarComponent implements OnInit {
   readonly RefMasterTypeCustGuarCompanyRelationship = CommonConstant.RefMasterTypeCodeGuarCompanyRelationship;
   readonly RefMasterTypeCodeGuarPersonalRelationship = CommonConstant.RefMasterTypeCodeGuarPersonalRelationship;
   //#endregion
+
+  //#region RelationType
+  readonly RelationTypeCustomer = CommonConstant.CrdRvwRelationTypeCustomer;
+  readonly RelationTypeFamily = CommonConstant.CrdRvwRelationTypeFamily;
+  readonly RelationTypeShrholder = CommonConstant.CrdRvwRelationTypeShrholder;
+  readonly RelationTypeGuarantor = CommonConstant.CrdRvwRelationTypeGuarantor;
+  //#endregion
   Title: string = "";
   isReady: boolean = false;
   
@@ -43,10 +54,10 @@ export class CrdRvwFamGuarComponent implements OnInit {
 
   SetTitle() {
     if (this.crdRvwCustInfoObj.MrCustTypeCode == this.CustTypePersonal) {
-      this.Title = "Family";
+      this.Title = this.RelationTypeFamily;
     }
     else {
-      this.Title = "Shareholder";
+      this.Title = this.RelationTypeShrholder;
     }
   }
 
@@ -57,6 +68,15 @@ export class CrdRvwFamGuarComponent implements OnInit {
     await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsFamily: true }).toPromise().then(
       (response) => {
         this.ListAppCustFamily = response.ListAppCustObj;
+        for (let index = 0; index < this.ListAppCustFamily.length; index++) {
+          const element = this.ListAppCustFamily[index];
+          if(element.MrCustTypeCode == this.CustTypePersonal){
+            this.ListAppCustFamily[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
+          }
+          if(element.MrCustTypeCode == this.CustTypeCompany){
+            this.ListAppCustFamily[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
+          }
+        }
       }
     );
   }
@@ -67,6 +87,15 @@ export class CrdRvwFamGuarComponent implements OnInit {
     await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsShareholder: true }).toPromise().then(
       (response) => {
         this.ListAppCustShareholder = response.ListAppCustObj;
+        for (let index = 0; index < this.ListAppCustShareholder.length; index++) {
+          const element = this.ListAppCustShareholder[index];
+          if(element.MrCustTypeCode == this.CustTypePersonal){
+            this.ListAppCustShareholder[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
+          }
+          if(element.MrCustTypeCode == this.CustTypeCompany){
+            this.ListAppCustShareholder[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
+          }
+        }
       }
     );
   }
@@ -76,6 +105,15 @@ export class CrdRvwFamGuarComponent implements OnInit {
     await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsGuarantor: true }).toPromise().then(
       (response) => {
         this.ListAppCustGuarantor = response.ListAppCustObj;
+        for (let index = 0; index < this.ListAppCustGuarantor.length; index++) {
+          const element = this.ListAppCustGuarantor[index];
+          if(element.MrCustTypeCode == this.CustTypePersonal){
+            this.ListAppCustGuarantor[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
+          }
+          if(element.MrCustTypeCode == this.CustTypeCompany){
+            this.ListAppCustGuarantor[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
+          }
+        }
       }
     );
   }
@@ -93,13 +131,27 @@ export class CrdRvwFamGuarComponent implements OnInit {
     );
   }
 
-  DictCrdRvwExposure: { [Id: string]: CrdRvwExposureObj } = {};
+  //#region Exposure Type
+  readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
+  readonly ExposureCustGroupTypeCode: string = CommonConstant.ExposureCustGroupTypeCode;
+  readonly ExposureObligorTypeCode: string = CommonConstant.ExposureObligorTypeCode;
+  //#endregion
+
+  DictCrdRvwExposure: { [Id: string]: CrdRvwExposureDObj } = {};
+  DictCrdRvwExposureHId: { [Id: string]: number } = {};
+  DictCrdRvwGuarantorExposure: { [Id: string]: CrdRvwOvdObj } = {};
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwExposureObj: Array<CrdRvwExposureObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwExposureHObj: Array<CrdRvwExposureHObj>, ListCrdRvwOvdObj: Array<CrdRvwOvdObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        for (let index = 0; index < response.ListCrdRvwExposureObj.length; index++) {
-          const element = response.ListCrdRvwExposureObj[index];
-          this.DictCrdRvwExposure[element.CustNo + element.RelationWithCust] = element;
+        for (let index = 0; index < response.ListCrdRvwExposureHObj.length; index++) {
+          const element: CrdRvwExposureHObj = response.ListCrdRvwExposureHObj[index];
+          this.DictCrdRvwExposureHId[element.CustNo + element.RelationType] = element.CrdRvwExposureHId;
+          this.DictCrdRvwExposure[element.CustNo + element.RelationType] = element.ListCrdRvwExposureDObj.find(x=>x.ExposureType == this.ExposureCustTypeCode);
+        }
+
+        for (let index = 0; index < response.ListCrdRvwOvdObj.length; index++) {
+          const element = response.ListCrdRvwOvdObj[index];
+          this.DictCrdRvwGuarantorExposure[element.CustNo] = element;
         }
       }
 
@@ -108,9 +160,9 @@ export class CrdRvwFamGuarComponent implements OnInit {
   //#endregion
 
   //#region Link a href
-  ClickLinkCust(CustNo: string) {
-    console.log(CustNo);
-    // AdInsHelper.OpenCustomerViewByCustId(0);
+  ClickLinkCust(CrdRvwExposureHId: number) {
+    console.log(CrdRvwExposureHId);
+    // AdInsHelper.OpenCustExposureViewByCrdRvwExposureHId(CrdRvwExposureHId);
   }
   //#endregion
 

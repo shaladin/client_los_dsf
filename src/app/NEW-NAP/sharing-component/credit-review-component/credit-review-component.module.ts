@@ -23,6 +23,7 @@ import { CrdRvwNegCheckListComponent } from './crd-rvw-cust-info/component/crd-r
 import { CrdRvwDiffWithMasterCustComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-master-cust/crd-rvw-diff-with-master-cust.component';
 import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-in-process-app/crd-rvw-diff-with-in-process-app.component';
 import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.component';
+import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
 
 @NgModule({
     exports: [
@@ -66,7 +67,8 @@ import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.c
         CrdRvwNegCheckListComponent,
         CrdRvwDiffWithMasterCustComponent,
         CrdRvwDiffWithInProcessAppComponent,
-        CrdRvwLegalDocComponent
+        CrdRvwLegalDocComponent,
+        CrdRvwTableCustComponent
     ],
     providers: [
         NGXToastrService

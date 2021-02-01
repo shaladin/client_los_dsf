@@ -15,6 +15,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -41,6 +42,10 @@ export class CreditReviewCrDetailComponent implements OnInit {
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
   
+  readonly CaptureStatReq: string = CommonConstant.CaptureStatReq;
+  readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
+  readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
+
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -79,6 +84,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
+    await this.ClaimTask();
     await this.GetAppNo();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -119,6 +125,17 @@ export class CreditReviewCrDetailComponent implements OnInit {
           this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
         }
+      });
+  }
+  
+  async ClaimTask() {
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+
+    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then(
+      (response) => {
       });
   }
   
@@ -209,7 +226,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
       }
@@ -313,7 +329,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -322,7 +338,14 @@ export class CreditReviewCrDetailComponent implements OnInit {
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  ReCaptureDataR2(){    
+    this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
   

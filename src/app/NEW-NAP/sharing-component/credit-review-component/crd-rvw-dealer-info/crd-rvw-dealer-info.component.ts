@@ -27,7 +27,6 @@ export class CrdRvwDealerInfoComponent implements OnInit {
   async GetCrdRvwDealerByCrdRvwCustInfoId() {
     await this.http.post<CrdRvwDealerObj>(URLConstant.GetCrdRvwDealerByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        console.log(response);
         this.crdRvwDealerObj = response;
       }
     );
