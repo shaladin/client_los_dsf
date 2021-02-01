@@ -46,10 +46,6 @@ export class MouApprovalFactoringComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
-      this.inputObj = new ApvViewInfo();
-      this.inputObj.taskId = params["TaskId"];
-      this.inputObj.instanceId =  params["InstanceId"];
-      this.inputObj.approvalBaseUrl = environment.ApprovalR3Url;
     });
   }
   
