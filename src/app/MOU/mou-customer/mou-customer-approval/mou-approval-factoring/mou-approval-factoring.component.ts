@@ -12,6 +12,9 @@ import { ApvViewInfo } from 'app/shared/model/ApvViewInfo.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-mou-approval-factoring',
@@ -33,6 +36,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
+  dmsObj: DMSObj;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -63,12 +67,20 @@ export class MouApprovalFactoringComponent implements OnInit {
     this.mouCustObj.MouCustId = this.MouCustId;
    await this.http.post(URLConstant.GetMouCustById, this.mouCustObj).toPromise().then(
       (response: MouCustObj) => {
-        console.log(response)
         this.resultData = response;
         this.MrCustTypeCode = response.MrCustTypeCode;
+        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response['MouCustNo']));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
       }
     );
     this.initInputApprovalObj();
+
   }
 
   MouApprovalDataForm = this.fb.group({
