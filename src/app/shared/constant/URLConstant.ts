@@ -1268,4 +1268,16 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
     public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHForFraudChecking";
     public static GetFraudResult = environment.losUrl + "/ThirdPartyRsltH/GetFraudResult";
+
+    //App Asset OPL
+    public static GetAppAssetOplMainInfoByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAppAssetOplMainInfoByAppAssetId";
+    public static GetAssetRegionFromRuleByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAssetRegionFromRuleByAppAssetId";
+    public static GetListAppAssetExpenseByAppId = environment.losUrl + "/AppAssetOpl/GetListAppAssetExpenseByAppId";
+  public static GetMaintenancePackageByAppAssetId = environment.losUrl + "/AppAssetOpl/GetMaintenancePackageByAppAssetId";
+  public static GetMaintenanceDetailByAppAssetIdAndPackageCode = environment.losUrl + "/AppAssetOpl/GetMaintenanceDetailByAppAssetIdAndPackageCode";
+  public static ExecuteInsRateRuleOpl = environment.losUrl + "/AppAssetOpl/ExecuteInsRateRuleOpl";
+  public static GetOtherExpenseByAppAssetId = environment.losUrl + "/AppAssetOpl/GetOtherExpenseByAppAssetId";
+  public static GetFeeExpenseByAppAssetId = environment.losUrl + "/AppAssetOpl/GetFeeExpenseByAppAssetId";
+  public static SubmitAssetExpense = environment.losUrl + "/AssetExpenseOpl/SubmitAssetExpense";
+  public static GetAssetExpenseDataByAppAssetId = environment.losUrl + "/AssetExpenseOpl/GetAssetExpenseDataByAppAssetId";
 }

@@ -452,6 +452,9 @@ export class CommonConstant {
   public static RefMasterTypeCodeInsAddCvgType = "INS_ADD_CVG_TYPE";
   public static RefMasterTypeCodeInsCoverPeriod = "INS_COVER_PERIOD";
   public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO";
+  public static RefMasterTypeCodeOtherExpenseOpl = "OTH_EXPENSE_OPL";
+  public static RefMasterTypeCodeFeeTypeOpl = "FEE_TYPE_OPL";
+  public static RefMasterTypeCodeInpFeeTypeOpl = "INP_FEE_TYPE_OPL";
   public static RefMasterTypeCodeLifeInsPayMethod = "LIFE_INS_PAY_METHOD";
   public static RefMasterTypeCodeLifeInscoBranch = "LIFE_INSCO_BRANCH";
   public static RefMasterTypeCodeReturnTaskCF4W = "RETURN_TASK_CF4W";
@@ -546,6 +549,8 @@ export class CommonConstant {
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
   public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
+  public static GSCodeInputOPLFeeType = "INPOPLFEETYPE";
+  public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
 
   //Serial Item
   public static Chassis_No = "Chassis No";
