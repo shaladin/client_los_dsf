@@ -45,7 +45,6 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
   async GetCrdRvwThirdPartyData() {
     await this.http.post<ThirdPartyResultHObj>(URLConstant.GetCrdRvwThirdPartyData, { TrxNo: this.AppNo }).toPromise().then(
       (response) => {
-        console.log(response);
         this.ThirdPartyDukcapilRsltObj = response.ThirdPartyDukcapilRsltObj;
         this.ThirdPartyPefindoRsltObj = response.ThirdPartyPefindoRsltObj;
         this.ThirdPartyProfindRsltObj = response.ThirdPartyProfindRsltObj;
@@ -55,7 +54,7 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
         for (let index = 0; index < this.ListThirdPartyRapindoRsltObj.length; index++) {
           const element = this.ListThirdPartyRapindoRsltObj[index];
           if(element.IsExists) this.RapindoDataObj.DataExist++;
-          
+
           if(element.IsActive) this.RapindoDataObj.DataActive++;
           else this.RapindoDataObj.DataNoActive++;
         }
