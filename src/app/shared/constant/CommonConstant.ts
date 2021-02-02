@@ -328,12 +328,14 @@ export class CommonConstant {
   public static RefProdCompntLob = "LOB";
   public static RefProdCompntCurr = "CURR";
   public static RefProdCompntPayFreq = "PAYFREQ";
-  public static RefProdCompntProdType = "PROD_TYPE";
+    public static RefProdCompntProdType = "PROD_TYPE";
+  public static RefProdCompntDocChecklist = "DOC_CHKLST_APV";
 
   // REF REASON TYPE CODE
   public static RefReasonTypeCodeAppAgrCncl = "APP_AGR_CNCL";
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
+  public static RefReasonTypeDocChecklist = "DCK_LIST";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -578,7 +580,7 @@ export class CommonConstant {
   public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV"; 
   public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV"; 
   public static CAT_CODE_CRD_APV = "CRD_APV"; 
-
+  public static CAT_CODE_DOC_CHCLIST_APV = "DOC_CHCKLIST_APV"; 
 
   
   //TRX_TYPE_CODE

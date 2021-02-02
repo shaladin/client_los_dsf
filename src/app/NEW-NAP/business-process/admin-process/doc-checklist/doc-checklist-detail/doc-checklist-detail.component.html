@@ -1,0 +1,37 @@
+<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Pre Go Live</h4>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
+            (ngSubmit)="MainInfoForm.valid && SaveForm()">
+
+            <lib-ucSubsection [id]="'tcId'" [title]="'Terms & Conditions'"
+              [panel]="'tc'">
+            </lib-ucSubsection>
+            <div id="tc">
+              <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                                   (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+              </app-term-conditions>
+            </div>
+            <div class="form-actions right">
+              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
+                translate>
+                <i class="fa fa-check-square-o"></i> Request For Approval
+              </button>
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                [routerLink]="['/Nap/AdminProcess/DocChecklist/Paging']" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
