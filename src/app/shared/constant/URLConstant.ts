@@ -37,6 +37,7 @@ export class URLConstant {
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
     public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
     public static CheckMouCustIntegrator = environment.losUrl + "/MouCust/CheckMouCustIntegrator";
+    public static AddNap1FromLead = environment.losUrl + "/Application/AddNap1FromLead";
 
     //App Loan Purpose
     public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";

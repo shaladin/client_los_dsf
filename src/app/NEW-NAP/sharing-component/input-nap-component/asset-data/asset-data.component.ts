@@ -772,7 +772,7 @@ export class AssetDataComponent implements OnInit {
 
       if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
         this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
-        this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
+        if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null ) this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
         this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
         if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
         if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
