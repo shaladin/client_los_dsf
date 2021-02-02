@@ -1,0 +1,64 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "AssetId",
+            "subSectionTitle": "Asset",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Asset Name",
+                    "property": "FullAssetName"
+                },
+                {
+                    "type": "currency",
+                    "position": "right",
+                    "label": "Asset Price",
+                    "property": "AssetPriceAmt"
+                },
+                {
+                    "type": "text",
+                    "label": "Asset Condition",
+                    "property": "AssetCondition"
+                },
+                {
+                    "type": "currency",
+                    "position": "right",
+                    "label": "Discount",
+                    "property": "Discount"
+                },
+                {
+                    "type": "text",
+                    "label": "Asset Usage",
+                    "property": "AssetUsage"
+                },
+                {
+                    "type": "currency",
+                    "position": "right",
+                    "label": "Asset Price After Discount",
+                    "property": "AssetPriceAfterDiscount"
+                },
+                {
+                    "type": "text",
+                    "position": "right",
+                    "label": "Manufacturing Year",
+                    "property": "ManufacturingYear"
+                },
+                {
+                    "type": "boolean",
+                    "label": "Need Replacement Car",
+                    "property": "IsNeedReplacementCar"
+                },
+                {
+                    "type": "text",
+                    "label": "BPKB City Issuer",
+                    "property": "TaxCityIssuer"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppAssetAssetInfo"
+            }
+        }
+    ]
+}  

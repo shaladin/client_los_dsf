@@ -2,7 +2,7 @@ import { environment } from "environments/environment";
 import { Component, OnInit } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
@@ -19,8 +19,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
   isReady: boolean = false;
 
   constructor(private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router) {
+    private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -50,7 +49,6 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critLobObj);
 
     this.isReady = true;
-    console.log(this.isReady);
   }
 
   getEvent(event) {
@@ -72,8 +70,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
       
     }
     else if(event.Key == "View") {
-      // window.open(environment.losR3Web + "/View/PurchaseTracking?AppId=" + event.RowObj.AppId, "_blank");
-      window.open("http://localhost:4200/View/PurchaseTracking?AppId=" + event.RowObj.AppId, "_blank");
+      window.open(environment.losR3Web + "/View/PurchaseTracking?AppId=" + event.RowObj.AppId, "_blank");
     }
   }
 }

@@ -40,6 +40,10 @@ const routes: Routes = [
             {
                 path: 'PurchaseTracking',
                 loadChildren: './purchase-tracking-view/purchase-tracking-view.module#PurchaseTrackingViewModule'
+            },
+            {
+                path: 'AppAsset',
+                loadChildren: './app-asset-view/app-asset-view.module#AppAssetViewModule'
             }
         ]
     }
