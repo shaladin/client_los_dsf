@@ -25,6 +25,7 @@ export class MouViewComponent implements OnInit {
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  MouCustNo: string;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
@@ -54,6 +55,7 @@ export class MouViewComponent implements OnInit {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
+        this.MouCustNo = this.resultData['MouCustNo'];
         this.IsResponseProcessed = true;
         this.IsReady = true;
       });
