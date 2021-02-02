@@ -61,6 +61,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
 import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { FraudDetectionDataComponent } from './credit-review/fraud-detection-data/fraud-detection-data.component';
 
 
 
@@ -148,7 +149,8 @@ export const customCurrencyMaskConfig = {
     CreditReviewCrDetailComponent,
     CreditReviewCrPagingComponent,
     CreditApprovalCrDetailComponent,
-    CreditApprovalCrPagingComponent
+    CreditApprovalCrPagingComponent,
+    FraudDetectionDataComponent
   ],
   providers: [
     NGXToastrService
