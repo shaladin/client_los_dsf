@@ -46,7 +46,7 @@ export class DocChecklistPagingComponent implements OnInit {
     var critInput = new CriteriaObj();
     critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = "DCK_" + this.bizTemplateCode;
+    critInput.value = "DCK_DEC_" + this.bizTemplateCode;
     this.inputPagingObj.addCritInput.push(critInput);
   }
 

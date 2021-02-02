@@ -42,7 +42,7 @@
                 <label class="col-md-2 adins-required-label" for="assetRegion" translate>Asset Region</label>
                 <div class="col-md-4">
                   <select class="form-control width-75-per" id="assetRegion" formControlName="InsAssetRegion"
-                          (change)="AssetRegionChanged($event)"
+                          (change)="AssetRegionChanged()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of insAssetRegionObj" [value]="item.Key">
@@ -72,7 +72,7 @@
                   <input type="" currencyMask id="cvgAmt" class="form-control" formControlName="CvgAmt"
                          [options]="{ allowNegative: false, nullable: false }"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
-                         (ngModelChange)="CvgAmtChanged($event)">
+                         (ngModelChange)="CvgAmtChanged()">
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -81,7 +81,7 @@
                 <div class="col-md-4">
                   <input type="text" id="insLength" min="minInsLength" max="maxInsLength"
                          class="form-control adInsInput width-25-per" formControlName="InsLength"
-                         (change)="InsLengthChanged($event)"
+                         (change)="InsLengthChanged()"
                          [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -212,7 +212,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngIf="InsuranceDataForm.controls['SparePartObjs'].controls == 0">
+                        <tr *ngIf="InsuranceDataForm.controls['SparePartObjs']['controls'].length == 0">
                           <td align="center" colspan="3">No data available</td>
                         </tr>
                         <tr *ngFor="let item of InsuranceDataForm.controls['SparePartObjs'].controls;let i = index">
@@ -272,10 +272,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="InsuranceDataForm.controls['OtherExpenseObjs'].controls == 0">
+                      <tr *ngIf="InsuranceDataForm.controls['OtherExpenseObjs']['controls'].length == 0">
                         <td align="center" colspan="3">No data available</td>
                       </tr>
-                      <tr *ngFor="let item of InsuranceDataForm.controls['OtherExpenseObjs'].controls;let i = index">
+                      <tr *ngFor="let item of InsuranceDataForm.controls['OtherExpenseObjs']['controls'];let i = index">
                         <td [formGroupName]="i" class="text-center">
                           <select class="form-control width-75-per" id="othExpenseCode{{i}}" formControlName="OthExpenseCode">
                             <option *ngFor="let item of otherExpenseObj" [value]="item.Key">
@@ -326,10 +326,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="InsuranceDataForm.controls['FeeObjs'].controls == 0">
+                      <tr *ngIf="InsuranceDataForm.controls['FeeObjs']['controls'].length == 0">
                         <td align="center" colspan="3">No data available</td>
                       </tr>
-                      <tr *ngFor="let item of InsuranceDataForm.controls['FeeObjs'].controls;let i = index">
+                      <tr *ngFor="let item of InsuranceDataForm.controls['FeeObjs']['controls'];let i = index">
                         <td [formGroupName]="i">
                           {{InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls']["FeeTypeName"].value}}
                         </td>

@@ -110,34 +110,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
 
 
   onApprovalSubmited(event) {
-    this.outstandingTcObj = new OutstandingTcObj();
-    this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
-
-    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
-      this.appTC = new AppTCObj();
-      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
-      this.listAppTCObj.AppTCObj.push(this.appTC);
-    }
-
-    this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
-
-    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
-      response => {
-        // this.toastr.successMessage("Success");
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/Approval/Paging"], { "BizTemplateCode": this.bizTemplateCode });
-      }
-    );
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/Approval/Paging"], { "BizTemplateCode": this.bizTemplateCode });
   }
 
   onCancelClick() {
