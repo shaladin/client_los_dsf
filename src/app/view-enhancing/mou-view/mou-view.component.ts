@@ -32,6 +32,7 @@ export class MouViewComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
+  MouCustNo: string;
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
@@ -60,6 +61,7 @@ export class MouViewComponent implements OnInit {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
+        this.MouCustNo = this.resultData['MouCustNo'];
         let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
