@@ -28,6 +28,7 @@ import { MouViewListedCustFactoringComponent } from "./mou-view-listed-cust-fact
 import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.component";
 import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
 import { SharedModule } from "app/shared/shared.module";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -48,7 +49,8 @@ import { SharedModule } from "app/shared/shared.module";
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
-        SharedModule
+        SharedModule,
+        UcapprovalHistoryModule
     ],
     declarations: [
         MouViewComponent,
