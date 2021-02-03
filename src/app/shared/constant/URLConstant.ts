@@ -1271,6 +1271,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
 
     // Digitalization
     public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO";
+    public static DigitalizationAddTrxSrcDataForFraudCheckingCollRAPINDO = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingCollRAPINDO";
     public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset";
     public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
     public static DigitalizationAddTrxSrcDataForFraudCheckingNAPCust = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingNAPCust";
