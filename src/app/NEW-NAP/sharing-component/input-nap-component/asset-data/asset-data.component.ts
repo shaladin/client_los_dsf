@@ -401,6 +401,7 @@ export class AssetDataComponent implements OnInit {
 
   AddAsset() {
     this.mode = "Add";
+    this.salesSupervisor = "";
     this.InputLookupSupplierObj.jsonSelect = null;
     this.InputLookupSupplierObj.nameSelect = "";
 
@@ -579,6 +580,12 @@ export class AssetDataComponent implements OnInit {
         }
       }
     );
+  }
+  
+  updateValueAssetPrice() {
+    var assetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
+    var discount = this.AssetDataForm.controls.Discount.value;
+    this.priceAfterDiscount = assetPriceAmt - discount;
   }
   
   async GetGS() {
@@ -772,7 +779,7 @@ export class AssetDataComponent implements OnInit {
 
       if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
         this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
-        this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
+        if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null ) this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
         this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
         if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
         if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;

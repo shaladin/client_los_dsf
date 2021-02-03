@@ -27,6 +27,7 @@ import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCus
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -36,6 +37,12 @@ export class CollateralDetailComponent implements OnInit {
 
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
   private ucLookupCollateralExisting: UclookupgenericComponent;
+  generalSettingObj: GeneralSettingObj;
+  indexChassis: number;
+  currentChassisNo: any;
+  LastRequestedDate: any;
+  IsIntegrator: boolean = false;
+  ThirdPartyRsltHId: any = "";
   @ViewChild('LookupCollateralExisting') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupCollateralExisting = content;
@@ -47,6 +54,7 @@ export class CollateralDetailComponent implements OnInit {
   @Input() AppCollateralId: number = 0;
   @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  bizTemplateCode: string = "";
 
   AppCollateralAttrObj: any;
   ListAttrAnswer = [];
@@ -125,7 +133,7 @@ export class CollateralDetailComponent implements OnInit {
   appAssetId: any = 0;
   isDiffWithRefAttr: boolean;
   AppCustData: AppCustObj;
-
+  IntegratorCheckBySystemGsValue: string = "0";
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {
@@ -153,6 +161,7 @@ export class CollateralDetailComponent implements OnInit {
       await this.getAppCollData(this.AppId, 0);
     }
     this.GenerateAppCollateralAttr(false);
+    this.GetGS();
     // this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
@@ -176,6 +185,41 @@ export class CollateralDetailComponent implements OnInit {
     this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
+  }
+  async GetThirdPartyResultH() {
+    var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
+    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, { TrxNo: this.AppNo, TrxTypeCode: "APP", ChassisNo: ChassisNoValue }).toPromise().then(
+      (response) => {
+        this.ThirdPartyRsltHId = response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"];
+        if (response["AppAssetObject"]["SerialNo1"] != null) {
+          this.currentChassisNo = response["AppAssetObject"]["SerialNo1"];
+        }
+        if (response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null) {
+          this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
+        }
+      }
+    );
+  }
+  async GetGS() {
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).toPromise().then(
+      (response) => {
+        this.IntegratorCheckBySystemGsValue = response["GsValue"];
+        if (this.IntegratorCheckBySystemGsValue == "0") {
+          this.GetThirdPartyResultH();
+        }
+      }
+    );
+  }
+  HitAPI() {
+    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
+      this.toastr.warningMessage("Please Input Chassis No !");
+    }
+    else {
+      this.toastr.successMessage("Submit with Integrator");
+      this.IsIntegrator = true;
+    }
   }
 
   SetInputLookupColl() {
@@ -336,6 +380,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   AppCustId: number = 0;
+  AppNo: string = "";
   async GetAppCustByAppId() {
     await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
       (response) => {
@@ -346,6 +391,8 @@ export class CollateralDetailComponent implements OnInit {
   async getAppData() {
     await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       async (response) => {
+        this.AppNo = response["AppNo"];
+        this.bizTemplateCode = response["BizTemplateCode"];
         await this.getProdOffering(response.ProdOfferingCode, response.ProdOfferingVersion);
         if (response["BizTemplateCode"] == CommonConstant.CFRFN4W) {
           this.AddCollForm.patchValue({
@@ -756,15 +803,18 @@ export class CollateralDetailComponent implements OnInit {
           for (var i = 0; i < this.items.controls.length; i++) {
             var formGroupItem = this.items.controls[i] as FormGroup;
             formGroupItem.patchValue({
-              SerialNoValue: fouExistingObj["SerialNo"+(i+1)]
-            });    
-                this.items["controls"][i]["controls"]["SerialNoValue"].disable(); 
+              SerialNoValue: fouExistingObj["SerialNo" + (i + 1)]
+            });
+            this.items["controls"][i]["controls"]["SerialNoValue"].disable();
           }
         } else {
           if (this.appCollateralObj != null) {
             for (var i = 0; i < this.items.length; i++) {
               if (this.items.controls[i] != null) {
                 this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)];
+                if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No") {
+                  this.indexChassis = i;
+                }
               }
             }
           }
@@ -1000,19 +1050,113 @@ export class CollateralDetailComponent implements OnInit {
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
-    if (this.mode == 'add') {
-      this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.outputValue.emit();
-        });
+    if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
+      if (this.IntegratorCheckBySystemGsValue != "0") {
+        if (this.mode == 'add') {
+          this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputValue.emit();
+
+            });
+        }
+        else {
+          this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputValue.emit();
+            });
+        }
+      }
+      else if (this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.IsIntegrator && this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value != "") {
+          if (this.mode == 'add') {
+            this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+              (response) => {
+                this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).subscribe(
+                  (response) => {
+                    this.toastr.successMessage(response["message"]);
+                    this.outputValue.emit();
+                  });
+              });
+          }
+
+          else {
+            this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+              (response) => {
+                this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).subscribe(
+                  (response) => {
+
+                    this.toastr.successMessage(response["message"]);
+                    this.outputValue.emit();
+                  });
+              });
+          }
+        }
+        else if (this.IsIntegrator && this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == "") {
+          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+            if (this.mode == 'add') {
+              this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+                (response) => {
+                  this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).subscribe(
+                    (response) => {
+                      this.toastr.successMessage(response["message"]);
+                      this.outputValue.emit();
+                    });
+                });
+            }
+
+            else {
+              this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+                (response) => {
+                  this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).subscribe(
+                    (response) => {
+
+                      this.toastr.successMessage(response["message"]);
+                      this.outputValue.emit();
+                    });
+                });
+            }
+          }
+        }
+        else if (!this.IsIntegrator) {
+          if (confirm("Submit without Integrator ?")) {
+            if (this.mode == 'add') {
+              this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.outputValue.emit();
+                });
+            }
+
+            else {
+                this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+                  (response) => {
+                    this.toastr.successMessage(response["message"]);
+                    this.outputValue.emit();
+                  });
+            }
+          }
+        }
+
+      }
     }
     else {
-      this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.outputValue.emit();
-        });
+      if (this.mode == 'add') {
+        this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.outputValue.emit();
+
+          });
+      }
+      else {
+        this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.outputValue.emit();
+          });
+      }
     }
   }
 

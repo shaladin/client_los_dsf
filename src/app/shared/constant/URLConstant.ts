@@ -37,6 +37,7 @@ export class URLConstant {
     public static GetSummaryAppByAppId = environment.losUrl + "/Application/GetSummaryAppByAppId";
     public static AddAppFromMou = environment.losUrl + "/Application/AddAppFromMou";
     public static CheckMouCustIntegrator = environment.losUrl + "/MouCust/CheckMouCustIntegrator";
+    public static AddNap1FromLead = environment.losUrl + "/Application/AddNap1FromLead";
 
     //App Loan Purpose
     public static AddAppLoanPurpose = environment.losUrl + "/AppLoanPurpose/AddAppLoanPurpose";
@@ -1278,6 +1279,13 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
     public static GetThirdPartyResultHForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetThirdPartyResultHForFraudChecking";
     public static GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking = environment.losUrl + "/ThirdPartyRsltH/GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking";
+    public static GetCrdRvwThirdPartyData = environment.losUrl + "/ThirdPartyRsltH/GetCrdRvwThirdPartyData";
 
     public static GetFraudResult = environment.losUrl + "/ThirdPartyRsltH/GetFraudResult";
+
+    // App Asset View
+    public static GetListAppAssetAccessoryByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryByAppAssetId";
+    public static GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId";
+    public static GetAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetAllAssetExpenseData";
+    public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
 }
