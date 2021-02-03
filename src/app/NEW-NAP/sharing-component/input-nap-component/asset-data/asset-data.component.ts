@@ -1083,7 +1083,7 @@ export class AssetDataComponent implements OnInit {
 
     for (var i = 0; i < this.items.length; i++) {
       if (this.items.controls[i] != null) {
-        this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+        this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
       }
     }
 

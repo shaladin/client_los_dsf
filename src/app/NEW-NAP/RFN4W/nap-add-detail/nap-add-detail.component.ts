@@ -60,7 +60,7 @@ export class NapAddDetailComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
+    constructor(private route: ActivatedRoute, private http: HttpClient,     private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -285,14 +285,19 @@ export class NapAddDetailComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
+        WfTaskListId : this.wfTaskListId,
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
         ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
         ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
+        MrReturnTaskCode : this.ResponseReturnInfoObj.MrReturnTaskCode,
+        ReturnStat : this.ResponseReturnInfoObj.ReturnStat,
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
       this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFRFN4W });
         })
     }
   }

@@ -165,7 +165,7 @@
               <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="true" (outputCancel)="Cancel()" [dmsObj]="dmsObj" ></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="ReturnHandlingHId == 0" (outputCancel)="Cancel()" [dmsObj]="dmsObj" ></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -280,7 +280,7 @@
               <app-tc-data *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY'" [AppId]="appId"  (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="true" (outputCancel)="Cancel()" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="ReturnHandlingHId == 0" (outputCancel)="Cancel()" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
