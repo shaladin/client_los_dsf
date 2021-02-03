@@ -21,13 +21,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { environment } from 'environments/environment';
-import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
