@@ -13,6 +13,8 @@ export class CommonConstant {
   public static DEFAULT = 'DEF';
 
   //Application Item
+  public static MENU = "Menu";
+  public static ENVIRONMENT_MODULE = 'EnvironmentModule';
   public static USER_ACCESS = "UserAccess";
   public static USER_NAME = "UserName";
   public static USER_NAME_LOCAL_STORAGE = "Username";
@@ -56,7 +58,7 @@ export class CommonConstant {
   public static CustMainDataModeGuarantor = "GUARANTOR";
   public static CustMainDataModeFamily = "FAMILY";
   public static CustMainDataModeMgmntShrholder = "SHAREHOLDER";
-  
+
 
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
@@ -189,8 +191,8 @@ export class CommonConstant {
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
-  public static ProductBehaviourDefault= "DEFAULT";
-  
+  public static ProductBehaviourDefault = "DEFAULT";
+
   //VERIFICATION
   public static VerificationNew = "NEW";
   public static VerificationFail = "FAIL";
@@ -210,9 +212,9 @@ export class CommonConstant {
 
   //APP CUST 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
-  public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
+  public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
-  public static AttrGroupCustPersonalFinData= "CUST_PERSONAL_FINDATA"
+  public static AttrGroupCustPersonalFinData = "CUST_PERSONAL_FINDATA"
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";
@@ -424,7 +426,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeRecourseType = "RECOURSE_TYPE";
   public static RefMasterTypeCodePaidBy = "PAID_BY";
   public static RefMasterTypeCodeInstType = "INST_TYPE";
-  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD"; 
+  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD";
   public static RefMasterTypeCodeGender = "GENDER";
   public static RefMasterTypeCodeMaritalStat = "MARITAL_STAT";
   public static RefMasterTypeCodeCustModel = "CUST_MODEL";
@@ -535,7 +537,7 @@ export class CommonConstant {
 
   // Negative Customer Source Code
   public static NegCustSourceCodeConfins = "CONFINS";
-  
+
   //ASSET ATTRIBUTE
   public static AttrTypeCodeTrx = "TRX";
 
@@ -556,7 +558,7 @@ export class CommonConstant {
   public static ExposureCustTypeCode = "CUST_EXPSR";
   public static ExposureCustGroupTypeCode = "CUST_GRP_EXPSR";
   public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
-  
+
   // Role Type
   public static RoleCustData = "CUST";
   public static RoleFamilyData = "SPOUSE";
@@ -570,12 +572,12 @@ export class CommonConstant {
 
 
   public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
-  public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV"; 
-  public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV"; 
-  public static CAT_CODE_CRD_APV = "CRD_APV"; 
+  public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
+  public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV";
+  public static CAT_CODE_CRD_APV = "CRD_APV";
 
 
-  
+
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
   public static MOU_TRX_TYPE_CODE = "MOU";
@@ -601,15 +603,15 @@ export class CommonConstant {
   public static DmsViewCodeAgr = "ConfinsAgr";
   public static DmsViewCodeMou = "ConfinsMou";
   public static DmsViewCodeLead = "ConfinsLead";
-  
+
   public static DefaultSlikSecEcoCode = "930000";
-  
+
   // CrdRvw
   public static CrdRvwRelationTypeCustomer = "Customer";
   public static CrdRvwRelationTypeFamily = "Family";
   public static CrdRvwRelationTypeShrholder = "Shareholder";
   public static CrdRvwRelationTypeGuarantor = "Guarantor";
-  
+
   public static CaptureStatReq = "REQ";
   public static CaptureStatScs = "SCS";
   public static CaptureStatFail = "FAIL";

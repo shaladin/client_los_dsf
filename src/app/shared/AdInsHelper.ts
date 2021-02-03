@@ -3,17 +3,19 @@ import { Router } from "@angular/router";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { environment } from "environments/environment";
 import { CommonConstant } from "./constant/CommonConstant";
-declare const CryptoJS: any;
+import { CookieService } from "ngx-cookie";
+import * as CryptoJS from 'crypto-js';
 
 export class AdInsHelper {
   //Function
-  public static InsertLog(url, type, param = "") {
+  public static InsertLog(cookieService: CookieService, url, type, param = "") {
     let today = new Date();
     var dateNow = formatDate(today, 'yyyy-MM-dd hh:mm:ss', 'en-US');
 
     var listPageAccess = [];
     listPageAccess = JSON.parse(localStorage.getItem(CommonConstant.PAGE_ACCESS));
-    var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var userAccess = this.GetCookie(cookieService, CommonConstant.USER_ACCESS);
+    var userAcc = userAccess ? JSON.parse(userAccess) : null;
     var pageAccess = listPageAccess;
     if (listPageAccess == null) {
       pageAccess = [];
@@ -68,16 +70,17 @@ export class AdInsHelper {
     localStorage.setItem("Version", version);
   }
 
-  public static ClearPageAccessLog() {
+  public static ClearPageAccessLog(cookieService: CookieService) {
     localStorage.removeItem("PageAccess");
+    cookieService.remove("PageAccess");
   }
 
-  public static CheckSessionTimeout() {
+  public static CheckSessionTimeout(cookieService: CookieService) {
     let today = new Date();
-    var businessDtBefore = localStorage.getItem(CommonConstant.LAST_ACCESS_TIME);
+    var businessDtBefore = this.GetCookie(cookieService, CommonConstant.LAST_ACCESS_TIME);
     var businessDtNow = formatDate(today, 'yyyy-MM-dd HH:mm:ss', 'en-US');
     if (businessDtBefore == undefined || businessDtBefore == null) {
-      localStorage.setItem(CommonConstant.LAST_ACCESS_TIME, businessDtNow);
+      this.SetCookie(cookieService, CommonConstant.LAST_ACCESS_TIME, businessDtNow);
     }
     else {
       var bsDtBefore = new Date(businessDtBefore);
@@ -87,7 +90,7 @@ export class AdInsHelper {
         AdInsHelper.ClearAllLog();
         return "1";
       }
-      localStorage.setItem(CommonConstant.LAST_ACCESS_TIME, businessDtNow);
+      this.SetCookie(cookieService, CommonConstant.LAST_ACCESS_TIME, businessDtNow);
     }
     return "0";
   }
@@ -152,16 +155,7 @@ export class AdInsHelper {
   }
 
   public static CreateUserAccess(response) {
-    // var currentUserContext = new CurrentUserContext;
-    // currentUserContext.UserName = response["Identity"].UserName;
-    // currentUserContext.Office = response["Identity"].OfficeCode;
-    // currentUserContext.Role = response["Identity"].RoleCode;
-    // currentUserContext.BusinessDate = response["Identity"].BusinessDt;
-    localStorage.setItem("BusinessDateRaw", response["Identity"].BusinessDt);
-    var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
-    localStorage.setItem("BusinessDate", DateParse);
-    localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-    //localStorage.setItem("UserContext",JSON.stringify(currentUserContext));
+    // unused
   }
 
   public static IsGrantAccess(formPath) {
@@ -220,5 +214,49 @@ export class AdInsHelper {
 
   public static RedirectUrl(router: Router, url: Array<string>, queryParams: {}) {
     router.navigate(url, { queryParams: queryParams, skipLocationChange: false });
+  }
+
+  public static SetLocalStorage(key:string, value:string)
+  {
+      return localStorage.setItem(key, this.EncryptString(value, environment.ChipperKeyLocalStorage));
+  }
+
+  public static GetLocalStorage(key:string)
+  {
+      return this.DecryptString(localStorage.getItem(key), environment.ChipperKeyLocalStorage);
+  }
+
+  public static SetCookie(cookieService: CookieService, key:string, value:string)
+  {
+      cookieService.put(key, this.EncryptString(value, environment.ChipperKeyCookie));
+  }
+
+  public static GetCookie(cookieService: CookieService, key:string)
+  {
+      var value = cookieService.get(key);
+      if(value == undefined || value.trim() == '') return null;
+      return this.DecryptString(value, environment.ChipperKeyCookie);
+  }
+
+  private static EncryptString(plaintext: string, chipperKey:string="")
+  {
+      if(chipperKey == undefined || chipperKey.trim() == '') return plaintext;
+      var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+      var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
+      var encrypted = CryptoJS.AES.encrypt(plaintext, chipperKeyArr, { iv: iv});
+      var result = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+      return result;
+  }
+
+  private static DecryptString(chipperText: string, chipperKey:string){
+      if(
+          chipperKey == undefined || chipperKey.trim() == '' ||
+          chipperText == undefined || chipperText.trim() == ''
+      ) return chipperText;
+      var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+      var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);  
+      var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, {iv: iv}); 
+      var plainText =  decrypted.toString(CryptoJS.enc.Utf8);   
+      return plainText;
   }
 }

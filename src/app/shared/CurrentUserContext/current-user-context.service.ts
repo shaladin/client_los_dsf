@@ -21,15 +21,6 @@ export class CurrentUserContextService {
     })
   }
 
-  addCurrentUserContext(data : any): void {
-    localStorage.setItem(location, JSON.stringify(data));
-    this.db.openDatabase(1).then(() =>
-    {
-      this.db.add(ObjectStoreName,{code : "UserContext" , description : data});
-    });
-    
-  }
-
   getCurrentUserContext(): Object {
     let values : string; 
     values = localStorage.getItem(location) || "";

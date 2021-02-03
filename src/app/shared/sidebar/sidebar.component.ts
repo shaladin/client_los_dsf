@@ -59,16 +59,14 @@ export class SidebarComponent implements OnInit {
                     JobTitleCode: currentUserContext.JobTitleCode,
                     RequestDateTime: currentUserContext.BusinessDt,
                     ModuleCode: environment.Module,
-                    Ip: "",
                     RowVersion: ""
                 };
                 var updateRoleUrl = environment.FoundationR3Url + URLConstant.UpdateToken;
                 this.http.post(updateRoleUrl, roleObject).subscribe(
                 (response) => {
-                    localStorage.setItem("Token", response["Token"]);
-                    localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
-                    localStorage.setItem("EnvironmentModule", environment.Module); 
-                    this.menuItems = JSON.parse(localStorage.getItem("Menu"));
+                    AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
+                    AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module); 
+                    this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
                 });
             }
             else

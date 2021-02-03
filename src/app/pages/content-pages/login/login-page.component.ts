@@ -57,16 +57,6 @@ export class LoginPageComponent implements OnInit {
       this.http.post(URLConstant.LoginWithToken, { ModuleCode: environment.Module }).subscribe(
         (response) => {
           AdInsHelper.CreateUserAccess(response);
-          // var currentUserContext = new CurrentUserContext;
-          // currentUserContext.UserName = response["Identity"].UserName;
-          // currentUserContext.Office = response["Identity"].OfficeCode;
-          // currentUserContext.Role = response["Identity"].RoleCode;
-          // currentUserContext.BusinessDate = response["Identity"].BusinessDt;
-          // localStorage.setItem("BusinessDateRaw",response["Identity"].BusinessDt);
-          // var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
-          // localStorage.setItem("BusinessDate", DateParse);
-          // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-          // this.currentUserContextService.addCurrentUserContext(currentUserContext);
           this.router.navigate(['dashboard/dash-board']);
         });
     }
