@@ -150,7 +150,7 @@
                 <button type="button" (click)="FlaggingIsNeedIntegrator()" class="btn btn-raised btn-primary">
                   <i class="" style="background-color: #23dc29;"></i> HIT Integrator
                 </button>
-                <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate}}</label>
+                <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
               </div>
             </div>
           </div>
