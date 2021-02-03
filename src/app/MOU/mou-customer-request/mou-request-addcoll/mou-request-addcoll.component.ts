@@ -1014,7 +1014,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
       return;
     }
-    if (this.isNeedCheckBySystem == "1") {
+    if (this.isNeedCheckBySystem == "0") {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
           this.ResponseMouAddColl.emit({ StatusCode: "200" });

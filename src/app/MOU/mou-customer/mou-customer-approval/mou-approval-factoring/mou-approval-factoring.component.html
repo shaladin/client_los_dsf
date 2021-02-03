@@ -44,6 +44,11 @@
                 <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
               </ng-template>
             </mat-tab>
+            <mat-tab label="Third Party Checking">
+              <ng-template matTabContent>
+                <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+              </ng-template>
+            </mat-tab>
             <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
               <ng-template matTabContent>
                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>

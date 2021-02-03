@@ -796,7 +796,7 @@ export class AssetDataComponent implements OnInit {
           }
         }
         else if (!this.IsIntegrator) {
-          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0) {
+          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
@@ -1083,7 +1083,7 @@ export class AssetDataComponent implements OnInit {
 
     for (var i = 0; i < this.items.length; i++) {
       if (this.items.controls[i] != null) {
-        this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+        this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
       }
     }
 
