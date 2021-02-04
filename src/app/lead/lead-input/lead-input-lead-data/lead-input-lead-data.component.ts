@@ -27,9 +27,9 @@ import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyRes
 })
 
 export class LeadInputLeadDataComponent implements OnInit {
-  @Input() originPage: string;
+  @Input() originPage: string = "";
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  typePage: string;
+  typePage: string = "";
   CopyFrom: string;
   LeadId: string;
   assetConditionObj: RefMasterObj;
