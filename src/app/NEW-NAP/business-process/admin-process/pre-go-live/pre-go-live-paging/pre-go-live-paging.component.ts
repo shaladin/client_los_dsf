@@ -43,10 +43,19 @@ export class PreGoLivePagingComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
+    let userContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     var critInput = new CriteriaObj();
     critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
     critInput.value = "PGLV_" + this.bizTemplateCode;
+
+    var critUserObj = new CriteriaObj();
+    critUserObj.DataType = 'text';
+    critUserObj.restriction = AdInsConstant.RestrictionEq;
+    critUserObj.propName = 'wFht.USERNAME';
+    critUserObj.value = userContext.UserName;
+        
+    this.inputPagingObj.addCritInput.push(critUserObj);
     this.inputPagingObj.addCritInput.push(critInput);
   }
 
