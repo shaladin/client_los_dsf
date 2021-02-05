@@ -86,13 +86,9 @@ export class AssetDataPagingComponent implements OnInit {
           return;
         }
       }
-      this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
-        (response) => {
           this.IsCalledIntegrator = true;
-          this.toastr.successMessage("Success !");
-          this.GetThirdPartyResultH();
-        }
-      );
+      this.toastr.successMessage("Submit with integrator.");
+        
 
     }
     else {
@@ -289,13 +285,19 @@ export class AssetDataPagingComponent implements OnInit {
       return;
     }
     if (this.IntegratorCheckBySystemGsValue == "0") {
+      
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
           this.outputValue.emit({ mode: 'submit' });
         }
       }
       else {
-        this.outputValue.emit({ mode: 'submit' });
+        this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
+          (response) => {
+            this.toastr.successMessage("Success !");
+            this.outputValue.emit({ mode: 'submit' });
+          }
+        );
       }
     }
     else {
