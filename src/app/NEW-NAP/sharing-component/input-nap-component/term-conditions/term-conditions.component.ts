@@ -37,9 +37,10 @@ export class TermConditionsComponent implements OnInit {
   ngOnInit() {
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-
+    this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
+    
     var appTcObj = {
       AppId: this.AppId
     }
