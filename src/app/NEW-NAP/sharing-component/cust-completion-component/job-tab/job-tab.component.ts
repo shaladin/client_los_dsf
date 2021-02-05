@@ -67,7 +67,7 @@ export class JobTabComponent implements OnInit {
   IsCustomer: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
-
+  bizTemplateCode : string ="";
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
@@ -114,6 +114,10 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
     this.GetGeneralSetting();
     await this.InitLookup();
+    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
+      (response) => {
+        this.bizTemplateCode = response["BizTemplateCode"];
+      });
     await this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
@@ -236,7 +240,7 @@ export class JobTabComponent implements OnInit {
 
   SaveForm() {
     if (this.IsIntegratorCheckBySystem == "0") {
-      if (this.IsCustomer) {
+      if (this.IsCustomer && this.bizTemplateCode != CommonConstant.FCTR) {
         if (!this.IsNeedIntegrator) {
           if (confirm("Do you want to submit this data without Integrator ?")) {
             this.SubmitData();
