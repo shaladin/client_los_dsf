@@ -31,7 +31,7 @@
   </button>
 </div>
 
-<div *ngIf="IntegratorCheckBySystemGsValue == '0'">
+<div *ngIf="IntegratorCheckBySystemGsValue == '0' && mouCustId==0">
   <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
   </lib-ucSubsection>
   <div [id]="fraudChecking">
