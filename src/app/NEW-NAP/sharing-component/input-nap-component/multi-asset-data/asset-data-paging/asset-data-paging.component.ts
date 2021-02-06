@@ -43,6 +43,7 @@ export class AssetDataPagingComponent implements OnInit {
   LastRequestedDate: any;
   IsCalledIntegrator: boolean = false;
   thirdPartyRsltHId: any;
+  mouCustId: number=0;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListAppAssetData = URLConstant.GetAppAssetListByAppId;
     this.getListAppCollateral = URLConstant.GetListAdditionalCollateralByAppId;
@@ -58,6 +59,9 @@ export class AssetDataPagingComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.appObj = response;
+        if(response['MouCustId'] != null){
+          this.mouCustId = response['MouCustId'];
+        }
         this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
           (response) => {
             if (response["ThirdPartyRsltHId"] != null) {
@@ -82,13 +86,9 @@ export class AssetDataPagingComponent implements OnInit {
           return;
         }
       }
-      this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
-        (response) => {
           this.IsCalledIntegrator = true;
-          this.toastr.successMessage("Success !");
-          this.GetThirdPartyResultH();
-        }
-      );
+      this.toastr.successMessage("Submit with integrator.");
+        
 
     }
     else {
@@ -285,13 +285,19 @@ export class AssetDataPagingComponent implements OnInit {
       return;
     }
     if (this.IntegratorCheckBySystemGsValue == "0") {
+      
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
           this.outputValue.emit({ mode: 'submit' });
         }
       }
       else {
-        this.outputValue.emit({ mode: 'submit' });
+        this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
+          (response) => {
+            this.toastr.successMessage("Success !");
+            this.outputValue.emit({ mode: 'submit' });
+          }
+        );
       }
     }
     else {

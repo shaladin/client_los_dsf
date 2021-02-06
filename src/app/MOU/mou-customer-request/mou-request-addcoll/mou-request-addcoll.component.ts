@@ -375,7 +375,7 @@ export class MouRequestAddcollComponent implements OnInit {
       MrCollateralConditionCode: '',
       ManufacturingYear: '',
       CollateralPortionAmt: 0,
-      CollateralPortionType: this.CollateralPortionTypeObj[0].Key ,
+      CollateralPortionType: this.CollateralPortionTypeObj[0].Key,
     });
   }
 
@@ -1005,6 +1005,8 @@ export class MouRequestAddcollComponent implements OnInit {
 
   next() {
     var sumCollateralValue = 0;
+    var mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
+    mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
     for (let i = 0; i < this.listCollateralData.length; i++) {
       if (this.listCollateralData[i].CollateralPortionAmt != null) {
         sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
@@ -1019,8 +1021,14 @@ export class MouRequestAddcollComponent implements OnInit {
         if (confirm("Continue without integrator ?")) {
           this.ResponseMouAddColl.emit({ StatusCode: "200" });
         }
-      }else{
-        this.ResponseMouAddColl.emit({ StatusCode: "200" });
+      } else {
+        this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
+          (response) => {
+            this.toastr.successMessage("Success !");
+            this.ResponseMouAddColl.emit({ StatusCode: "200" });
+
+          }
+        );
       }
     }
     else {
@@ -1042,9 +1050,6 @@ export class MouRequestAddcollComponent implements OnInit {
       });
   }
   HitAPI() {
-    var mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
-    mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
-
     let assetData = this.listCollateralData;
     if (assetData.length != 0) {
       for (let i = 0; i < assetData.length; i++) {
@@ -1053,23 +1058,8 @@ export class MouRequestAddcollComponent implements OnInit {
           return;
         }
       }
-      this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
-        (response) => {
-          this.IsCalledIntegrator = true;
-          this.toastr.successMessage("Success !");
-          this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
-          this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
-          this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
-          this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
-          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-            (response) => {
-              if (response != null) {
-                this.latestReqDtCheckIntegrator = response['ReqDt'];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-              }
-            });
-        }
-      );
+      this.IsCalledIntegrator = true;
+      this.toastr.successMessage("Submit with integrator.");
     }
     else {
       this.toastr.warningMessage("Must have atleast 1 asset.");

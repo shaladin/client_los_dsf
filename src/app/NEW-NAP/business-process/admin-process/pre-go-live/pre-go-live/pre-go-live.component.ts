@@ -19,6 +19,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -69,6 +70,7 @@ export class PreGoLiveComponent implements OnInit {
   appNo: any;
   dmsAppObj: DMSObj;
   mouCustNo: any;
+  InputApprovalHistoryObj: UcInputApprovalHistoryObj;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -91,17 +93,11 @@ export class PreGoLiveComponent implements OnInit {
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];
         this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
-        for (let i = 0; i < this.ListRfaLogObj.length; i++) {
-          this.listPreGoLiveAppvrObj[i] = {
-            approvalBaseUrl: environment.ApprovalR3Url,
-            type: 'task',
-            refId: this.ListRfaLogObj[i].RfaNo,
-            apvStat: this.ListRfaLogObj[i].ApvStat,
-          };
-          if (this.ListRfaLogObj[i].ApvStat == "ApproveFinal") {
-            this.IsCheckedAll = true;
-            this.hasApproveFinal = true;
-          }
+        this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
+        this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
+        this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+        if(response['ListRfaLogObj'].length > 0){
+          this.InputApprovalHistoryObj.RequestId = response['ListRfaLogObj'][0]['RfaNo'];  
         }
         this.IsApvReady = true;
       });

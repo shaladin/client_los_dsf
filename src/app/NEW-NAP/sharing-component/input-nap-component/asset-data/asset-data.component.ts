@@ -796,7 +796,7 @@ export class AssetDataComponent implements OnInit {
           }
         }
         else if (!this.IsIntegrator) {
-          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0) {
+          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
