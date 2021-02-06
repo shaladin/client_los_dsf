@@ -91,6 +91,8 @@ export class PreGoLiveComponent implements OnInit {
   async ngOnInit() {
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.AgrmntNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
+        this.ListRfaLogObj = response["ListRfaLogObj"];
+        this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
         this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
         this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
