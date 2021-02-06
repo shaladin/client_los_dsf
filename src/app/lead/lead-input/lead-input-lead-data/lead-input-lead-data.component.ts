@@ -404,7 +404,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
         });
     }
-    if (this.typePage == "edit" || this.typePage == "update") {
+    //if (this.typePage == "edit" || this.typePage == "update") {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.LeadId;
       this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
@@ -529,7 +529,7 @@ export class LeadInputLeadDataComponent implements OnInit {
               });
             });
         });
-    }
+    //}
 
   }
 
@@ -739,6 +739,9 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
+    if(this.resLeadAppObj.LeadAppId !=0 && this.resLeadAssetObj.LeadAssetId != 0){
+      this.typePage = "edit";
+    }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
@@ -883,6 +886,9 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
+    if(this.resLeadAppObj.LeadAppId !=0 && this.resLeadAssetObj.LeadAssetId != 0){
+      this.typePage = "edit";
+    }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
