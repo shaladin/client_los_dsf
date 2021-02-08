@@ -873,7 +873,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck(){
-    if(this.isNeedCheckBySystem == "1"){
+    if(this.isNeedCheckBySystem == "0"){
       if(!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")){
         return true;
       }
@@ -1043,10 +1043,8 @@ export class LeadInputLeadDataComponent implements OnInit {
       });
     }
   }
-
-////////////////////////////////////////
   checkRapindo() {
-    if (this.isNeedCheckBySystem == "1"){
+    if (this.isNeedCheckBySystem == "0"){
         if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
