@@ -44,7 +44,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   getThirdPartyResultHByTrxTypeCodeAndTrxNo: string;
   leadNo: string;
   reqLatestJson: any;
-  latestCheckChassisNo: any;
+  latestCheckChassisNo: string ="";
   isAssetReady: boolean =false;
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
@@ -115,6 +115,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   thirdPartyRsltHId: string;
   getThirdPartyResultHForFraudChecking: string;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  isAlreadySubmittedByIntegrator: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -869,8 +870,17 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck(){
-    if(this.isNeedCheckBySystem == "0" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo){
-      if(confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")){
+    if(this.isNeedCheckBySystem == "1"){
+      if(!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")){
+        return true;
+      }
+      else if(this.latestCheckChassisNo != "" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo && confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")){
+        return true;
+      }
+      else if(this.latestCheckChassisNo != "" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == this.latestCheckChassisNo){
+        return true;
+      }
+      else if(this.isAlreadySubmittedByIntegrator){
         return true;
       }
       else{
@@ -1028,15 +1038,16 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
 
-
+////////////////////////////////////////
   checkRapindo() {
-    if (this.isNeedCheckBySystem == "0"){
+    if (this.isNeedCheckBySystem == "1"){
         if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
           this.leadInputLeadDataObj = new LeadInputLeadDataObj();
           this.setLeadAsset();
           this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
             (response1) => {
+              this.isAlreadySubmittedByIntegrator = true;
               this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response) => {
                   this.latestReqDtCheckRapindo = response['ReqDt'];

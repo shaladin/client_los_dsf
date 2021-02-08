@@ -112,10 +112,10 @@
                 </div>
               </div>
             </div>
-            <lib-ucSubsection *ngIf="this.isNeedCheckBySystem == '0'" [id]="'assetDataId'"
+            <lib-ucSubsection *ngIf="this.isNeedCheckBySystem == '1'" [id]="'assetDataId'"
               [title]="'Fraud Checking Asset'" [panel]="'fraudCheckingAsset'">
             </lib-ucSubsection>
-            <div *ngIf="this.isNeedCheckBySystem == '0'" id="fraudCheckingAsset">
+            <div *ngIf="this.isNeedCheckBySystem == '1'" id="fraudCheckingAsset">
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Rapindo</label>
                 <div class="col-md-4">
