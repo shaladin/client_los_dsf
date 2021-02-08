@@ -8,6 +8,8 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { NapAddComponent } from "./nap-add/nap-add.component";
 import { NapPagingComponent } from "./nap-paging/nap-paging.component";
 import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component";
+import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
+import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component
   declarations: [
     NapAddComponent,
     NapPagingComponent,
-    NapAddDetailComponent
+    NapAddDetailComponent,
+    NapCustMainDataComponent,
+    NapDetailFormComponent
   ],
   providers: [
     NGXToastrService
