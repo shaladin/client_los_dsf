@@ -1,0 +1,85 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "DlvryAddrId",
+            "subSectionTitle": "Delivery Address",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Address",
+                    "property": "DlvryAddr"
+                },
+                {
+                    "type": "text",
+                    "label": "RT / RW",
+                    "property": "DlvryRtRw"
+                },
+                {
+                    "type": "text",
+                    "label": "Zipcode",
+                    "property": "DlvryZipcode"
+                },
+                {
+                    "type": "text",
+                    "label": "Kelurahan",
+                    "property": "DlvryKelurahan"
+                },
+                {
+                    "type": "text",
+                    "label": "Kecamatan",
+                    "property": "DlvryKecamatan"
+                },
+                {
+                    "type": "text",
+                    "label": "City",
+                    "property": "DlvryCity"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppAssetDlvryAddrInfo"
+            }
+        },
+        {
+            "subSectionId": "AssetLocId",
+            "subSectionTitle": "Asset Location",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Address",
+                    "property": "LocationAddr"
+                },
+                {
+                    "type": "text",
+                    "label": "RT / RW",
+                    "property": "LocationRtRw"
+                },
+                {
+                    "type": "text",
+                    "label": "Zipcode",
+                    "property": "LocationZipcode"
+                },
+                {
+                    "type": "text",
+                    "label": "Kelurahan",
+                    "property": "LocationKelurahan"
+                },
+                {
+                    "type": "text",
+                    "label": "Kecamatan",
+                    "property": "LocationKecamatan"
+                },
+                {
+                    "type": "text",
+                    "label": "City",
+                    "property": "LocationCity"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppAssetAssetLocInfo"
+            }
+        }
+    ]
+}  

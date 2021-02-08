@@ -1,0 +1,122 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "SupplInfoId",
+            "subSectionTitle": "Supplier Info",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Supplier Branch Name",
+                    "property": "SupplName"
+                },
+                {
+                    "type": "text",
+                    "label": "Sales Person Name",
+                    "property": "SalesPersonName"
+                },
+                {
+                    "type": "text",
+                    "label": "Admin Head",
+                    "property": "AdminHead"
+                },
+                {
+                    "type": "text",
+                    "label": "Sales Supervisor",
+                    "property": "SalesSupervisor"
+                },
+                {
+                    "type": "text",
+                    "label": "Branch Manager",
+                    "property": "BranchManager"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppAssetSupplInfo"
+            }
+        },
+        {
+            "subSectionId": "AssetInfoId",
+            "subSectionTitle": "Asset Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "link",
+                    "label": "Asset Name",
+                    "property": "FullAssetName",
+                    "path": "",
+                    "target": "_blank",
+                    "param": [
+                        { 
+                            "type": "AppAssetId",
+                            "property": "AppAssetId" 
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "label": "Asset Condition",
+                    "property": "AssetCondition"
+                },
+                {
+                    "type": "currency",
+                    "position": "right",
+                    "label": "Asset Price",
+                    "property": "AssetPriceAmt"
+                },
+                {
+                    "type": "text",
+                    "label": "Asset Usage",
+                    "property": "AssetUsage"
+                },
+                {
+                    "type": "currency",
+                    "position": "right",
+                    "label": "Discount",
+                    "property": "Discount"
+                },
+                {
+                    "type": "text",
+                    "position": "right",
+                    "label": "Manufacturing Year",
+                    "property": "ManufacturingYear"
+                },
+                {
+                    "type": "currency",
+                    "position": "right",
+                    "label": "Asset Price After Discount",
+                    "property": "AssetPriceAfterDiscount"
+                },
+                {
+                    "type": "text",
+                    "label": "BPKB City Issuer",
+                    "property": "TaxCityIssuer"
+                },
+                {
+                    "type": "date",
+                    "label": "Expected Delivery Date",
+                    "property": "ExpectedDlvryDt"
+                },
+                {
+                    "type": "text",
+                    "label": "Color",
+                    "property": "Color"
+                },
+                {
+                    "type": "text",
+                    "label": "Notes",
+                    "property": "AssetNotes"
+                },
+                {
+                    "type": "boolean",
+                    "label": "Need Replacement Car",
+                    "property": "IsNeedReplacementCar"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppAssetAssetInfo"
+            }
+        }
+    ]
+}  

@@ -48,7 +48,7 @@
           [disabled]="!(AppStepIndex >= 3)"
         (click)="EnterTab('uploadDocument')">
             <span class="bs-stepper-circle">3</span>
-            <span class="bs-stepper-label">Upload Document</span>
+            <span class="bs-stepper-label">UPLOAD DOCUMENT</span>
           </button>
         </div>
       </div>
@@ -63,7 +63,7 @@
         </app-lead-input-lead-data>
       </div>
       <div *ngIf="pageType != 'update'" id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
-        <app-dms-iframe *ngIf="AppStepIndex == 3 && isDmsReady" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
+        <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
       </div>
       <!-- </div> -->
     </div>

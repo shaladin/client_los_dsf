@@ -1,0 +1,238 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+
+          <app-app-asset-view-asset-info [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-asset-info>
+
+          <div class="px-3">
+            <lib-ucSubsection [id]="'InsId'" [title]="'INSURANCE'" [panel]="'Ins'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Ins">
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Paid By</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.PaidBy}} (Hardcode)</label>
+                <label class="col-md-3 adins-label">Payment Period to Insco</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.PaymentPeriod}} (Hardcode)</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Asset Region</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.AssetRegion}}</label>
+                <label class="col-md-3 adins-label">Insco Branch Name</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.InscoBranchName}} (Hardcode)</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Coverage Amount</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceObj.CoverageAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label">Cover Period</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.CoverPeriod}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Insurance Notes</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.InsuranceNotes}}</label>
+                <label class="col-md-3 adins-label">Insurance Length</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.InsuranceLength}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Main Coverage</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.MainCoverage}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Additional Coverage</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj.AdditionalCoverage}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Premi</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceObj.TotalPremi | number:'1.2-2':'en-US'}} (Hardcode)</label>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'MaintId'" [title]="'MAINTENANCE'" [panel]="'Maint'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Maint">
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Package Name</label>
+                <label class="col-md-3 adins-label">{{MaintenanceObj.MaintPackage}}</label>
+              </div>
+
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>Service Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Service Amount</span>
+                    </th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngIf="MaintenanceObj.AppAssetMaintDObjsForService.length === 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                  <tr *ngFor="let item of MaintenanceObj.AppAssetMaintDObjsForService">
+                    <td class="align-left">{{item.Service}}</td>
+                    <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>Sparepart Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Sparepart Amount</span>
+                    </th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngIf="MaintenanceObj.AppAssetMaintDObjsForSparepart.length === 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                  <tr *ngFor="let item of MaintenanceObj.AppAssetMaintDObjsForSparepart">
+                    <td class="align-left">{{item.Sparepart}}</td>
+                    <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Service Amount</label>
+                <label class="col-md-3 adins-label text-right">{{MaintenanceObj.TotalServiceAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Sparepart Amount</label>
+                <label class="col-md-3 adins-label text-right">{{MaintenanceObj.TotalSparepartAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'OthExpenseId'" [title]="'OTHER EXPENSE'" [panel]="'OthExpense'">
+            </lib-ucSubsection>
+            <div class="form-body" id="OthExpense">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>Other Expense Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Amount</span>
+                    </th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngIf="ExpenseObj.length === 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                  <tr *ngFor="let item of ExpenseObj">
+                    <td class="align-left">{{item.OthExpenseTypeOpl}}</td>
+                    <td class="text-right">{{item.OthExpenseAmt | number:'1.2-2':'en-US'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Other Expense</label>
+                <label class="col-md-3 adins-label text-right">{{ExpenseAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'FeeId'" [title]="'FEE'" [panel]="'Fee'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Fee">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>Fee Type</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Amount Before VAT</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>VAT</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Fee Capitalize</span>
+                    </th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngIf="FeeObj.length === 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                  <tr *ngFor="let item of FeeObj">
+                    <td class="align-left">{{item.FeeType}}</td>
+                    <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.VatAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.CapitalizedAmt | number:'1.2-2':'en-US'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Fee Amount Before VAT</label>
+                <label class="col-md-3 adins-label text-right">{{FeeAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total VAT Amount</label>
+                <label class="col-md-3 adins-label text-right">{{VatAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Fee Capitalized Amount</label>
+                <label class="col-md-3 adins-label text-right">{{FeeCapitalizedAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'SummId'" [title]="'SUMMARY'" [panel]="'Summ'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Summ">
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Insurance At Cost</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Maintenance At Cost</label>
+                <label class="col-md-3 adins-label text-right">{{MaintenanceAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Expense</label>
+                <label class="col-md-3 adins-label text-right">{{ExpenseAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Fee Capitalized</label>
+                <label class="col-md-3 adins-label text-right">{{FeeCapitalizedAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label"><b>Asset Expense</b></label>
+                <label class="col-md-3 adins-label text-right"><b>{{AssetExpenseAmt | number:'1.2-2':'en-US'}}</b></label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

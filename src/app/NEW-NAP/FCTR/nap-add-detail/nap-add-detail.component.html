@@ -135,7 +135,7 @@
               <app-tc-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 8 && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 8 && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

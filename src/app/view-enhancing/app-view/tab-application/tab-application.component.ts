@@ -19,30 +19,34 @@ export class TabApplicationComponent implements OnInit {
   isReady: boolean = false;
   isLoanObjectNeeded: boolean = false;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   async ngOnInit() {
-    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR){
+    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.OPL) {
       this.isLoanObjectNeeded = false;
     }
-    else{
+    else {
       this.isLoanObjectNeeded = true;
     }
+
     if (this.BizTemplateCode == CommonConstant.FCTR) {
       await this.http.post(URLConstant.GetAppFctrByAppId, {AppId: this.appId}).toPromise().then(
       (response) => {
         if(response["MrInstTypeCode"] == CommonConstant.SINGLE_INST_TYPE){
           this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringSingleInfo.json";
-        }else if(response["MrInstTypeCode"] == CommonConstant.MULTIPLE_INST_TYPE){
+        }
+        else if(response["MrInstTypeCode"] == CommonConstant.MULTIPLE_INST_TYPE){
           this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringMulInfo.json";
         }
       });
     }
+    else if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfo.json";
+    }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
     }
+
     this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewProdMainInfoObj.ddlEnvironments = [
       {

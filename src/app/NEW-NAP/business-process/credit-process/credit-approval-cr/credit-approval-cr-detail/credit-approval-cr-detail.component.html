@@ -9,7 +9,7 @@
         </app-crd-rvw-fam-guar>
         <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
         
-        <app-crd-rvw-third-party-checking [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-third-party-checking *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo">
         </app-crd-rvw-third-party-checking>
         <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
         </app-crd-rvw-app-info>
@@ -30,7 +30,7 @@
           <div class="card">
             <div class="card-body">
               <div class="px-3">
-                <app-approval-hist [AppId]="appId"></app-approval-hist>
+                <app-approval-hist [AppNo]="AppObj.AppNo"  [AppId]="appId"></app-approval-hist>
               </div>
             </div>
           </div>
