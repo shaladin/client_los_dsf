@@ -141,7 +141,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="IsIntegratorCheckBySystem == '0' && IsCustomer">
+          <div *ngIf="IsIntegratorCheckBySystem == '0' && IsCustomer && mouCustId == 0 && bizTemplateCode != 'FCTR'">
             <lib-ucSubsection [id]="'IntegratorId'" [title]="'Fraud Checking Customer'" [panel]="'Integrator'">
             </lib-ucSubsection>
             <div id="Integrator" class="form-group row">

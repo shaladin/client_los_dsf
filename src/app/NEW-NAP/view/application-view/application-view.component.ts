@@ -39,6 +39,7 @@ export class ApplicationViewComponent implements OnInit {
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
   bizTemplateCode : string = "";
+  appNo: string;
   constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -59,6 +60,7 @@ export class ApplicationViewComponent implements OnInit {
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
+        this.appNo = response['AppNo'];
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
 
