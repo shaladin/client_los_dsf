@@ -34,6 +34,11 @@ import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-ord
 import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
 import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
 import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
+import { DocChecklistPagingComponent } from './doc-checklist/doc-checklist-paging/doc-checklist-paging.component';
+import { DocChecklistDetailComponent } from './doc-checklist/doc-checklist-detail/doc-checklist-detail.component';
+import { DocChecklistRequestForApprovalComponent } from './doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component';
+import { DocChecklistApprovalPagingComponent } from './doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component';
+import { DocChecklistApprovalDetailComponent } from './doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component';
 
 const routes: Routes = [
   {
@@ -270,6 +275,41 @@ const routes: Routes = [
           title: 'Delivery Order Detail'
         }
       },
+      {
+        path: 'DocChecklist/Paging',
+        component: DocChecklistPagingComponent,
+        data: {
+          title: 'Document Checklist Paging'
+        }
+      },
+      {
+        path: 'DocChecklist/Detail',
+        component: DocChecklistDetailComponent,
+        data: {
+          title: 'Document Checklist Detail'
+        }
+      },
+      {
+        path: 'DocChecklist/RequestApproval',
+        component: DocChecklistRequestForApprovalComponent,
+        data: {
+          title: 'Document Checklist Request For Approval'
+        }
+      },
+      {
+        path: 'DocChecklist/Approval/Paging',
+        component: DocChecklistApprovalPagingComponent,
+        data: {
+          title: 'Document Checklist Paging For Approval'
+        }
+      },
+      {
+        path: 'DocChecklist/Approval/Detail',
+        component: DocChecklistApprovalDetailComponent,
+        data: {
+          title: 'Document Checklist Detail For Approval'
+        }
+      }
     ]
   }
 ];
