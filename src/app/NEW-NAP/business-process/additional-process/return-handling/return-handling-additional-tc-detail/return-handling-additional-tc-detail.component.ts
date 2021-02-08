@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
@@ -16,6 +15,7 @@ import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 import { formatDate } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NumberValueAccessor } from '@angular/forms/src/directives';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -24,27 +24,35 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
-  getAppUrl: any;
-  getRefTcUrl : any;
-  rtnHandlingDUrl: any;
-  editRtnHandlingDUrl: any;
+  getAppUrl: string;
+  getRefTcUrl : string;
+  rtnHandlingDUrl: string;
+  editRtnHandlingDUrl: string;
   isReturnHandling: boolean = false;
   modal: any;
   closeResult: any;
-  mode: any;
-  currentEditedIndex: any;
-  defaultDocType : any;
-  CustType : any;
+  mode: string;
+  currentEditedIndex: number;
+  defaultDocType : string;
+  CustType : string;
+  appId: number;
+  returnHandlingHId: number;
+  wfTaskListId: number;
+  AppObj: any;
+  returnHandlingDObj: any;
+  ReturnHandlingDData: ReturnHandlingDObj;
+  BizTemplateCode: string;
+  arrValue = [];
+  listAddTc : Array<AppTCObj> = new Array<AppTCObj>();
+  appTcObj : Array<AppTCObj> = new Array<AppTCObj>();
+  listTcCode : Array<AppTCObj> = new Array<AppTCObj>();
+  inputGridObj: InputGridObj;
+  ReqTCObj = new ReqTCObj();
 
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
     AppTcs: this.fb.array([])
   });
-  viewObj: any;
-
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
 
   appObj = {
     AppId: 0,
@@ -58,18 +66,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     TcName: ['', [Validators.required, Validators.maxLength(50)]],
     Notes: ['', [Validators.maxLength(50)]]
   });
-
-  AppObj: any;
-  returnHandlingDObj: any;
-  ReturnHandlingDData: ReturnHandlingDObj;
-  BizTemplateCode: string;
-  arrValue = [];
-  listAddTc : Array<AppTCObj> = new Array<AppTCObj>();
-  appTcObj : Array<AppTCObj> = new Array<AppTCObj>();
-  listTcCode : Array<AppTCObj> = new Array<AppTCObj>();
-
-  inputGridObj: InputGridObj;
-  ReqTCObj = new ReqTCObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router,
     private modalService: NgbModal,) {
@@ -119,7 +115,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.initUrl();
     this.appObj.AppId = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.initExistingTc();
     await this.GetAppData();
     this.getCustType();

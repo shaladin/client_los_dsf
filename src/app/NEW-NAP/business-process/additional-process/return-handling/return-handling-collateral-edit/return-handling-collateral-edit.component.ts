@@ -20,20 +20,24 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class ReturnHandlingCollateralEditComponent implements OnInit {
 
-  getAppUrl: any;
-  rtnHandlingDUrl: any;
-  editRtnHandlingDUrl: any;
-  getListAppCollateralUrl: any;
+  getAppUrl: string;
+  rtnHandlingDUrl: string;
+  editRtnHandlingDUrl: string;
+  getListAppCollateralUrl: string;
   isReturnHandling: boolean = false;
+  appId: any;
+  returnHandlingHId: any;
+  wfTaskListId: any;
+  appCollateralObj: any;
+  AppObj: any;
+  returnHandlingDObj: any;
+  ReturnHandlingDData: ReturnHandlingDObj;
+  BizTemplateCode: string;
+  arrValue = [];
 
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
   });
-  viewObj: any;
-
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
 
   appObj = {
     AppId: 0,
@@ -46,14 +50,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   appCollObj = {
     AppCollateralId: 0,
   };
-
-  appCollateralObj: any;
-  AppObj: any;
-  returnHandlingDObj: any;
-  ReturnHandlingDData: ReturnHandlingDObj;
-  BizTemplateCode: string;
-  arrValue = [];
-
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
@@ -83,7 +79,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.initUrl();
     this.appObj.AppId = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {

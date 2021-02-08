@@ -613,4 +613,8 @@ export class CommonConstant {
   public static CaptureStatReq = "REQ";
   public static CaptureStatScs = "SCS";
   public static CaptureStatFail = "FAIL";
+
+  //MOU TYPE
+  public static MOU_TYPE_GENERAL = "GENERAL";
+  public static MOU_TYPE_FACTORING = "FACTORING";
 }

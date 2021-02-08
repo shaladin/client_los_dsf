@@ -8,6 +8,7 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { NapAddComponent } from "./nap-add/nap-add.component";
 import { NapPagingComponent } from "./nap-paging/nap-paging.component";
 import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component";
+import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component
     AdInsModule,
     InputNapComponentModule,
     ArchwizardModule,
+    ViewMainInfoComponentModule
   ],
   declarations: [
     NapAddComponent,

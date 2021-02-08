@@ -15,6 +15,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -25,12 +26,10 @@ export class NapDetailFormComponent implements OnInit {
 
   custType: string = CommonConstant.CustTypePersonal;
   private stepper: Stepper;
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
@@ -39,6 +38,9 @@ export class NapDetailFormComponent implements OnInit {
   showCancel: boolean = true;
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  arrValue = [];
+  
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -78,24 +80,9 @@ export class NapDetailFormComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
-    this.viewProdMainInfoObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
+    this.arrValue.push(this.appId);
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
@@ -234,7 +221,8 @@ export class NapDetailFormComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      this.ucViewMainProd.initiateForm();
+
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -252,7 +240,6 @@ export class NapDetailFormComponent implements OnInit {
       this.initDms();
     }
     this.ChangeTab(Step);
-    this.ucViewMainProd.initiateForm();
     this.stepper.to(this.AppStepIndex)
   }
   
@@ -291,9 +278,5 @@ export class NapDetailFormComponent implements OnInit {
   }
   Cancel() {
     AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFRFN4W });
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

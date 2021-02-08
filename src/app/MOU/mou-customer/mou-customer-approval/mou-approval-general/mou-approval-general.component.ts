@@ -30,7 +30,6 @@ export class MouApprovalGeneralComponent implements OnInit {
   inputObj: ApvViewInfo;
   link: any;
   resultData: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   mouCustObject: MouCustObj = new MouCustObj();
   MrCustTypeCode: string;
   ApvReqId: number; 
@@ -39,6 +38,8 @@ export class MouApprovalGeneralComponent implements OnInit {
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   dmsObj: DMSObj;
+  arrValue= [];
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
@@ -58,16 +59,9 @@ export class MouApprovalGeneralComponent implements OnInit {
 
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
+    this.arrValue.push(this.MouCustId);
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObj).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -99,16 +93,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
   }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-
-  }
+  
   initInputApprovalObj(){
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;

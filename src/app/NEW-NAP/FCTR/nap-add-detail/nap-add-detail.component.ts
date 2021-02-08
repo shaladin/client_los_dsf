@@ -14,24 +14,26 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-add-detail',
   templateUrl: './nap-add-detail.component.html'
 })
 export class NapAddDetailComponent implements OnInit {
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
+  arrValue = [];
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -66,27 +68,11 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
+    this.arrValue.push(this.appId);
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
@@ -218,7 +204,7 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -232,8 +218,8 @@ export class NapAddDetailComponent implements OnInit {
         this.stepper.next();
       }
     )
-    this.ucViewMainProd.initiateForm();
   }
+  
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
@@ -266,9 +252,5 @@ export class NapAddDetailComponent implements OnInit {
       (response) => {
 
       });
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

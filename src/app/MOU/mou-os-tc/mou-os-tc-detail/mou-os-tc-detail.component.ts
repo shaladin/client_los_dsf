@@ -10,7 +10,6 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-os-tc-detail',
@@ -23,10 +22,11 @@ export class MouOsTcDetailComponent implements OnInit {
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   MouCustId: number = 0;
   mouType: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
   mouCustObject: MouCustObj = new MouCustObj();
+  arrValue = [];
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -38,15 +38,8 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObject.MouCustId = this.MouCustId;
+    this.arrValue.push(this.MouCustId);
     this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -74,15 +67,6 @@ export class MouOsTcDetailComponent implements OnInit {
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
-    }
-  }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
     }
   }
 }

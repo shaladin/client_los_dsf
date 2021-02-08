@@ -1,17 +1,15 @@
-import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-cust-main-data',
@@ -19,20 +17,20 @@ import { environment } from 'environments/environment';
 })
 export class NapCustMainDataComponent implements OnInit {
 
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
-  
+  arrValue = [];
+
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -67,24 +65,8 @@ export class NapCustMainDataComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
-    
     this.NapObj.AppId = this.appId;
+    this.arrValue.push(this.appId);
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
@@ -101,8 +83,7 @@ export class NapCustMainDataComponent implements OnInit {
 
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
       (response) => {
-        if (response.AppCustObj) 
-        {
+        if (response.AppCustObj) {
           this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
           this.appCustId = response.AppCustObj.AppCustId;
           this.isMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
@@ -118,7 +99,7 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
   }
 
   MakeViewReturnInfoObj() {
@@ -150,27 +131,27 @@ export class NapCustMainDataComponent implements OnInit {
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
         break;
       case CommonConstant.AppStepShr:
-          this.AppStepIndex = this.AppStep[CommonConstant.AppStepShr];
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepShr];
         break;
       default:
         break;
     }
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   getEvent(event) {
-    this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
-    this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
+    this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED' ? true : false;
+    this.MrCustTypeCode = event.MrCustTypeCode != undefined ? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
-    
+
     //Fix untuk data kosong saat kembali ke step cust jika save new cust
-    if(!this.appCustId){
+    if (!this.appCustId) {
       this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
         (response) => {
-          if (response['AppCustObj']){
+          if (response['AppCustObj']) {
             this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
             this.appCustId = response['AppCustObj'].AppCustId;
-            this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED'? true : false;
+            this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED' ? true : false;
           }
         }
       );
@@ -187,12 +168,12 @@ export class NapCustMainDataComponent implements OnInit {
     )
   }
 
-  LastStep(){
+  LastStep() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
@@ -208,9 +189,4 @@ export class NapCustMainDataComponent implements OnInit {
       () => {
       });
   }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-  }
-
 }

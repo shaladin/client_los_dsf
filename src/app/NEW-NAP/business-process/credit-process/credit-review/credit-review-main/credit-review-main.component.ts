@@ -97,7 +97,6 @@ export class CreditReviewMainComponent implements OnInit {
     this.isReturnOn = false;
   }
 
-  viewProdMainInfoObj;
   AppStepIndex: number = 0;
   AppStep = {
     "CUST": 0,
@@ -116,7 +115,6 @@ export class CreditReviewMainComponent implements OnInit {
     this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
     await this.GetAppNo();
     var appObj = new AppObj();

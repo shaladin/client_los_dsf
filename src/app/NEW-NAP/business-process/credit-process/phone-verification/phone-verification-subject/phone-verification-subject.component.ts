@@ -39,8 +39,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     IsAnyUpdate: [''],
     UpdateNotes: ['', Validators.maxLength(4000)],
     ExecNotes: ['', Validators.maxLength(4000)],
-  });
-  viewObj: any;
+  });;
 
   appId: any;
   returnHandlingHId: any;
@@ -106,7 +105,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
     this.initUrl();
     this.appObj.AppId = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetPhnVerfSubjData();

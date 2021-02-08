@@ -11,7 +11,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -19,7 +18,6 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 
 export class DocSignerDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -40,6 +38,7 @@ export class DocSignerDetailComponent implements OnInit {
   ContactPersonName: string;
   BizTemplateCode: string;
   isHidden: boolean;
+  arrValue = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -58,18 +57,7 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
+    this.arrValue.push(this.AppId);
     await this.getAllData();
     this.setLookupObj();
   }
@@ -79,7 +67,6 @@ export class DocSignerDetailComponent implements OnInit {
       AppId: this.AppId,
       AgrmntId: this.AgrmntId
     }
-
     await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
       (response) => {
         this.ResponseAppCustDataObj = response;
@@ -280,16 +267,6 @@ export class DocSignerDetailComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
-    }
-  }
-  
-  Callback(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
-    }
-    if(ev.Key == "agrmnt")
-    {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
     }
   }
 }

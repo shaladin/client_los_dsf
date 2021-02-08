@@ -9,10 +9,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { formatDate } from '@angular/common';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
@@ -31,7 +29,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mode: string;
   pageType: string;
   pageTitle: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -40,6 +37,8 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   Viewlink: string;
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
+  arrValue = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -64,15 +63,8 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObject.MouCustId = this.mouCustId;
+    this.arrValue.push(this.mouCustId);
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -265,15 +257,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         break;
     }
   }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-  }
+  
   endOfTab() {
     this.toastr.successMessage("Success");
     this.router.navigate(["/Mou/Request/Paging"]);

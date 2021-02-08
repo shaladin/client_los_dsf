@@ -36,13 +36,14 @@ export class MouReviewFactoringComponent implements OnInit {
   MrCustTypeCode: string;
   link: any;
   resultData: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: any;
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
-  private createComponent: UcapprovalcreateComponent;
   dmsObj: DMSObj;
+  arrValue = [];
+
+  private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
       // initially setter gets called with undefined
@@ -61,15 +62,8 @@ export class MouReviewFactoringComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObject.MouCustId = this.MouCustId;
+    this.arrValue.push(this.MouCustId);
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -183,16 +177,6 @@ export class MouReviewFactoringComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
       })
-  }
-
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 
   initInputApprovalObj(){  

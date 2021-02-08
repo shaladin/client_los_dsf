@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -18,14 +19,13 @@ import { environment } from 'environments/environment';
   templateUrl: './nap-cust-main-data.component.html'
 })
 export class NapCustMainDataComponent implements OnInit {
-
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
@@ -34,7 +34,8 @@ export class NapCustMainDataComponent implements OnInit {
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
-  
+  arrValue = [];
+
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -69,24 +70,8 @@ export class NapCustMainDataComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
-    
     this.NapObj.AppId = this.appId;
+    this.arrValue.push(this.appId);
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {
@@ -157,8 +142,8 @@ export class NapCustMainDataComponent implements OnInit {
       default:
         break;
     }
-    this.ucViewMainProd.initiateForm();
     this.NextStep(AppStep, true);
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   getEvent(event) {
@@ -211,9 +196,4 @@ export class NapCustMainDataComponent implements OnInit {
       () => {
       });
   }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-  }
-
 }

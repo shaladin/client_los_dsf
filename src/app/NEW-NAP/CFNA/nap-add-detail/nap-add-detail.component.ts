@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -16,6 +15,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -23,13 +23,13 @@ import { forkJoin } from 'rxjs';
   styles: []
 })
 export class NapAddDetailComponent implements OnInit {
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
@@ -41,7 +41,7 @@ export class NapAddDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
-  @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  arrValue = [];
 
   AppStep = {
     // "NEW": 1,
@@ -91,25 +91,9 @@ export class NapAddDetailComponent implements OnInit {
   async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-
+    this.arrValue.push(this.appId);
     // this.ChangeStepper();
 
     if (this.ReturnHandlingHId > 0) {
@@ -132,11 +116,6 @@ export class NapAddDetailComponent implements OnInit {
         });
     }
     this.MakeViewReturnInfoObj();
-
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewGenericObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   async initDms() {
@@ -308,13 +287,8 @@ export class NapAddDetailComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewGenericObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
-
-    //  this.ucViewMainProd.initiateForm();
+      
+      this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -332,12 +306,6 @@ export class NapAddDetailComponent implements OnInit {
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewGenericObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
-    // this.ucViewMainProd.initiateForm();
   }
 
   UpdateAppStep(Step: string) {
@@ -402,9 +370,4 @@ export class NapAddDetailComponent implements OnInit {
     this.ChangeStepper();
     this.NextStep(CommonConstant.AppStepGuar);
   }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-  }
-
 }

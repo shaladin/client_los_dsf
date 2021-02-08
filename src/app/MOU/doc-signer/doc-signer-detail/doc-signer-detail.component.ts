@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
@@ -15,7 +15,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -56,16 +56,6 @@ export class DocSignerDetailComponent implements OnInit {
   page: number;
   custId: number;
   custUrl: string;
-  MouCustSignerForm = this.fb.group({
-    MfSigner1: [''],
-    MfSignerPosition1: [''],
-    MfSigner2: [''],
-    MfSignerPosition2: [''],
-    CustSigner1: [''],
-    CustSignerPosition1: [''],
-    CustSigner2: [''],
-    CustSignerPosition2: [''],
-  });
   mouUrl: string;
   MrCustTypeCode: string;
   customerLookUpObj2: InputLookupObj;
@@ -77,9 +67,20 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
-  resultData: any;
+  arrValue = [];
+
+  MouCustSignerForm = this.fb.group({
+    MfSigner1: [''],
+    MfSignerPosition1: [''],
+    MfSigner2: [''],
+    MfSignerPosition2: [''],
+    CustSigner1: [''],
+    CustSignerPosition1: [''],
+    CustSigner2: [''],
+    CustSignerPosition2: [''],
+  });
+
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getMouCustById = URLConstant.GetMouCustById;
     this.addMouCustSigner = URLConstant.AddMouCustSigner;
@@ -156,15 +157,6 @@ export class DocSignerDetailComponent implements OnInit {
       });
   }
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
-
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -212,6 +204,7 @@ export class DocSignerDetailComponent implements OnInit {
 
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
+    this.arrValue.push(this.MouCustId);
     this.http.post(this.getMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
@@ -267,17 +260,5 @@ export class DocSignerDetailComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,["/Mou/DocSigner/Paging"],{});
       });
-  }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.returnMouCust['CustNo'] };
-      if(!this.returnMouCust.IsExistingCust)
-        AdInsHelper.OpenMOUCustViewByMouCustId(this.returnMouCust.MouCustId);
-
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 }

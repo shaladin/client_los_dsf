@@ -28,7 +28,6 @@ export class MouApprovalFactoringComponent implements OnInit {
   instanceId: number;
   inputObj: ApvViewInfo;
   MouType : string = "FACTORING";
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   resultData: any;
   MrCustTypeCode: string;
   ApvReqId: number; 
@@ -37,6 +36,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   dmsObj: DMSObj;
+  arrValue = [];
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -51,16 +51,9 @@ export class MouApprovalFactoringComponent implements OnInit {
   
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
+    this.arrValue.push(this.MouCustId);
    await this.http.post(URLConstant.GetMouCustById, this.mouCustObj).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -97,16 +90,6 @@ export class MouApprovalFactoringComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
   }
   
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-
-  }
   initInputApprovalObj(){
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;

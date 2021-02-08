@@ -19,7 +19,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   styles: []
 })
 export class DocSignerCfnaDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -43,6 +42,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   BizTemplateCode: string;
   isHidden: boolean;
   isSupplierExists: boolean;
+  arrValue = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -64,18 +64,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
+    this.arrValue.push(this.AppId);
     await this.getAllData();
     this.setLookupObj();
   }
@@ -366,26 +355,4 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       );
     }
   }
-  
-  Callback(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
-    }
-    if(ev.Key == "agrmnt")
-    {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
-    }
-
-    // if(ev.Key == "prodOff"){
-    //   this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
-    //     response => {
-    //       window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    // }
-  }
-
 }

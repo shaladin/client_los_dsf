@@ -54,7 +54,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   saveVerfResultHDetailUrl: any;
   getPhnNumberUrl: any;
   custId: number;
-  viewObj: any;
   VerfResultAfterAddObj: any;
   appId: number;
   returnHandlingHId: number;
@@ -148,7 +147,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.setPhnObj();
     this.appObj.AppId = this.appId;
     this.verfResHObj.VerfResultHId = this.verfResultHId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.bindResultObj();
     this.bindSubjectRelationObj();
     this.GetPhoneNumber(this.phnObj);

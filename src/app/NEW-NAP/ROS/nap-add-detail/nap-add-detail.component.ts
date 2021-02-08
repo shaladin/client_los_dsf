@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -22,13 +23,11 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 })
 export class NapAddDetailComponent implements OnInit {
 
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
@@ -40,6 +39,8 @@ export class NapAddDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.OPL;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  arrValue = [];
 
   AppStep = {
     "NEW": 1,
@@ -83,25 +84,9 @@ export class NapAddDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-
+    this.arrValue.push(this.appId);
     // this.ChangeStepper();
 
     if (this.ReturnHandlingHId > 0) {
@@ -243,8 +228,8 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      
-     this.ucViewMainProd.initiateForm();
+
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -260,7 +245,6 @@ export class NapAddDetailComponent implements OnInit {
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-    this.ucViewMainProd.initiateForm();
   }
 
   UpdateAppStep(Step: string) {
@@ -279,34 +263,34 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
-        ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
-        ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
-        ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
-        ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
-        ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
-        ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
-        ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
 
-          }
-        )
-      }
+        }
+      )
+    }
   }
 
   ClaimTask() {
@@ -325,9 +309,5 @@ export class NapAddDetailComponent implements OnInit {
     this.custType = ev;
     this.ChangeStepper();
     this.NextStep(CommonConstant.AppStepGuar);
-  }
-
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

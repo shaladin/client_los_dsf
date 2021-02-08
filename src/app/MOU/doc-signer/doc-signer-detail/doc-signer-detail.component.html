@@ -3,7 +3,7 @@
 <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+        <app-mou-main-info [arrValue]="arrValue"></app-mou-main-info>
         <div class="px-3">
             <div class="customerData">
                 <form class="form form-horizontal" [formGroup]="MouCustSignerForm" (ngSubmit)="MouCustSignerForm.valid && SaveForm()"

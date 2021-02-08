@@ -8,8 +8,7 @@
         </button>
         </div>
         </div>
-    <!-- <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
-    <ng-template #FL4WMainInfoContainer></ng-template>
+    <app-app-main-info [arrValue]="arrValue" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">

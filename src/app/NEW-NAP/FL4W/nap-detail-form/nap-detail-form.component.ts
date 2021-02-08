@@ -16,6 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -23,8 +24,7 @@ import { forkJoin } from 'rxjs';
   providers: [NGXToastrService]
 })
 export class NapDetailFormComponent implements OnInit {
-  @ViewChild('ucMainInfo') ucMainInfo: any;
-
+  
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
   wfTaskListId: number;
@@ -32,7 +32,6 @@ export class NapDetailFormComponent implements OnInit {
   AppStepIndex: number = 1;
   appId: number;
   mode: string;
-  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj = new AppObj();
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
@@ -45,7 +44,8 @@ export class NapDetailFormComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  @ViewChild("FL4WMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  arrValue = [];
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -88,19 +88,8 @@ export class NapDetailFormComponent implements OnInit {
 
   ngOnInit() {
     this.ClaimTask();
-    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
-    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
-    this.viewProdMainInfoObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj.AppId = this.appId;
+    this.arrValue.push(this.appId);
 
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
@@ -122,11 +111,6 @@ export class NapDetailFormComponent implements OnInit {
         });
     }
     this.MakeViewReturnInfoObj();
-
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewProdMainInfoObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   async initDms() {
@@ -254,11 +238,6 @@ export class NapDetailFormComponent implements OnInit {
     if(Step == CommonConstant.AppStepUplDoc){
       this.initDms();
     }
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewProdMainInfoObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
   }
 
   UpdateAppStep(Step: string) {
@@ -319,7 +298,7 @@ export class NapDetailFormComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-    // this.ucMainInfo.OnInit();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   Submit() {
@@ -352,10 +331,6 @@ export class NapDetailFormComponent implements OnInit {
     this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
       () => {
       });
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
   CheckCustType(ev: string) {

@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
+  <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
   <div class="card">
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
         <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"

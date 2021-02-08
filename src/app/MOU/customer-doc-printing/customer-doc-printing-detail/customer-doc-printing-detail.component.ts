@@ -14,14 +14,15 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
   templateUrl: './customer-doc-printing-detail.component.html',
 })
 export class CustomerDocPrintingDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  
   MouCustId: number;
   GetListMouCustDocPrintForViewByMouCustIdUrl: string = URLConstant.GetListMouCustDocPrintForViewByMouCustId;
   responseObj: Array<any> = new Array<any>();
   EditMouCustDocPrintSequenceNoUrl: string = URLConstant.EditMouCustDocPrintSequenceNo;
   link: any;
   mouCustObj: any;
-  resultData: any;
+  arrValue = [];
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -35,23 +36,10 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
-      (response: MouCustObj) => {
-        this.resultData = response;
-      }
-    );
-    var mouObj = { "MouCustId": this.MouCustId };
-    this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouObj).subscribe(
+    this.arrValue.push(this.MouCustId);
+    this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, this.mouCustObj).subscribe(
       response => {
         this.responseObj = response[CommonConstant.ReturnObj];
       },
@@ -89,14 +77,5 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
         this.router.navigateByUrl('Error');
       }
     );
-  }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 }

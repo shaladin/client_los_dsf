@@ -13,8 +13,7 @@
       </span>
     </div>
     <div class="card-body">
-      <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
-      </lib-ucviewgeneric>
+      <app-app-main-info [arrValue]="arrValue" #viewAppMainInfo></app-app-main-info>
       <div class="px-3">
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">

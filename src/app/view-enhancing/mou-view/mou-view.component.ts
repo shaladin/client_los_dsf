@@ -27,12 +27,13 @@ export class MouViewComponent implements OnInit {
   IsResponseProcessed: boolean = false;
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
   MouCustNo: string;
+  arrValue = [];
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
@@ -45,17 +46,9 @@ export class MouViewComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-
+    this.arrValue.push(this.MouCustId);
     this.http.post(this.getMouCustByIdUrl, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -74,16 +67,6 @@ export class MouViewComponent implements OnInit {
         this.IsResponseProcessed = true;
         this.IsReady = true;
       });
-  }
-
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 
   isDetail: boolean;

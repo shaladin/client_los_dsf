@@ -74,7 +74,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     Other: []
   };
 
-  viewProdMainInfoObj;
   arrValue = [];
 
   ngOnInit() {
@@ -82,7 +81,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
     this.arrValue.push(this.ReturnHandlingHObj.AppId);
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
