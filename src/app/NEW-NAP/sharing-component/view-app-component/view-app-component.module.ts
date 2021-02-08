@@ -41,6 +41,7 @@ import { ViewAppScoreGradeDsrComponent } from "./view-app-score-grade-dsr/view-a
 import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukcapil/view-app-score-grade-dukcapil.component";
 import { ViewSummaryAppCfnaComponent } from './view-summary-app-cfna/view-summary-app-cfna.component';
 import { ViewSummaryAppROSComponent } from "./view-summary-app-ros/view-summary-app-ros.component";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
 @NgModule({
   exports: [
@@ -86,7 +87,8 @@ import { ViewSummaryAppROSComponent } from "./view-summary-app-ros/view-summary-
     ViewSharingComponentModule,
     UcviewgenericModule,
     UcSubsectionModule,
-    UcapprovalhistModule
+    UcapprovalhistModule,
+    UcapprovalHistoryModule
   ],
   declarations: [
     InvoiceDataFctrComponent,

@@ -143,8 +143,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
   
   onCancelClick() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS);
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
   }
   //#endregion
 }

@@ -47,6 +47,7 @@ export class PreGoLivePagingComponent implements OnInit {
     critInput.propName = "wFht.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
     critInput.value = "PGLV_" + this.bizTemplateCode;
+
     this.inputPagingObj.addCritInput.push(critInput);
   }
 
@@ -54,5 +55,10 @@ export class PreGoLivePagingComponent implements OnInit {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
+    else if(ev.Key == "Edit"){
+      AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/PreGoLive/Detail"], { "AgrmntId": ev.RowObj.AgrmntId,"AppId": ev.RowObj.AppId,  "TaskListId": ev.RowObj.TaskListId, "AgrmntNo": ev.RowObj.AgrmntNo });
+    }
+
+
   }
 }
