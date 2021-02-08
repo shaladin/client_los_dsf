@@ -8,7 +8,9 @@ export class AppAssetInsAddCvgOplObj {
   InscoAddPremiRate: number;
   InscoAddPremiAmt: number;
   RowVersion: string;
-
+  InscoAddPremiPrcnt: number;
+  CustAddPremiPrcnt: number;
+  CustAddPremiAmt: number;
   constructor() {
     this.AppAssetInsMainCvgOplId = 0;
     this.MrAddCvgTypeCode = "";
@@ -17,5 +19,8 @@ export class AppAssetInsAddCvgOplObj {
     this.InscoAddPremiRate = 0;
     this.InscoAddPremiAmt = 0;
     this.RowVersion = "";
+    this.InscoAddPremiPrcnt = 0;
+    this.CustAddPremiPrcnt = 0;
+    this.CustAddPremiAmt = 0;
   }
 }

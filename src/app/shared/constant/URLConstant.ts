@@ -1292,6 +1292,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
   public static GetFeeExpenseByAppAssetId = environment.losUrl + "/AppAssetOpl/GetFeeExpenseByAppAssetId";
   public static SubmitAssetExpense = environment.losUrl + "/AssetExpenseOpl/SubmitAssetExpense";
     public static GetAssetExpenseDataByAppAssetId = environment.losUrl + "/AssetExpenseOpl/GetAssetExpenseDataByAppAssetId";
+  public static CalculateAssetInsurance = environment.losUrl + "/AssetExpenseOpl/CalculateAssetInsurance";
 
     //Document Checklist
   public static SubmitDocChecklist = environment.losUrl + "/DocChecklist/SubmitDocChecklist";

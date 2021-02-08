@@ -96,7 +96,12 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-              <div *ngIf="isGenerate">
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance(undefined)">
+                  <i class="fa fa-check-square-o"></i> Generate Insurance
+                </button>
+              </div>
+              <div *ngIf="showGenerate == true">
                 <div class="form-group row">
                   <label class="col-md-2" for="mainCvg" translate>Main Coverage</label>
                   <div class="col-md-4">
@@ -115,7 +120,7 @@
                            class="custom-control display-inline-block">
                       <div [formGroupName]="i">
                         <label [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'">
-                          <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{insAddCvgTypeRuleObj[i].value}}
+                          <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{insAddCvgTypeRuleObj[i].Value}}
                         </label>
                       </div>
                     </label>
@@ -126,10 +131,10 @@
                     <i class="fa fa-check-square-o"></i> Calculate Insurance
                   </button>
                 </div>
-                <div class="form-group row">
-                  <label class="col-md-2" for="paidBy" translate>Total Premi</label>
-                  <label class="col-md-4" for="paidBy" translate>{{InsuranceDataForm.controls.TotalInscoFeeAmt.value}}</label>
-                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="paidBy" translate>Total Premi</label>
+                <label class="col-md-4" for="paidBy" translate>{{InsuranceDataForm.controls.TotalInsInscoAmt.value}}</label>
               </div>
             </div>
             <div>
@@ -377,7 +382,7 @@
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Insurance At Cost</label>
                   <label class="col-md-4 text-right" style="font-size: 90%"
-                         translate>{{InsuranceDataForm.controls.TotalInscoFeeAmt.value | number:'.2':'en-US'}}</label>
+                         translate>{{InsuranceDataForm.controls.TotalInsInscoAmt.value | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Maintenance At Cost</label>

@@ -14,8 +14,10 @@ export class AppAssetInsMainCvgOplObj {
   TotalInscoFeeAmt: number;
   TotalInsInscoAmt: number;
   AppAssetInsAddCvgOplObjs : Array<AppAssetInsAddCvgOplObj>;
-  RowVersion: string;
-
+    RowVersion: string;
+  CustMainPremiRate: number;
+  CustMainPremiAmt: number;
+  TotalCustAddPremiAmt: number;
   constructor() {
     this.AppAssetInsOplId = 0;
     this.MrMainCvgTypeCode = "";
@@ -30,5 +32,8 @@ export class AppAssetInsMainCvgOplObj {
     this.TotalInsInscoAmt = 0;
     this.AppAssetInsAddCvgOplObjs = new Array<AppAssetInsAddCvgOplObj>();
     this.RowVersion = "";
+    this.CustMainPremiRate = 0;
+    this.CustMainPremiAmt = 0;
+    this.TotalCustAddPremiAmt = 0;
   }
 }

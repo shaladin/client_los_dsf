@@ -18,6 +18,13 @@ export class AppAssetInsOplObj {
   AppAssetInsFeeOplObjs: Array<AppAssetInsFeeOplObj>;
   RowVersion: string;
 
+  InsAssetPaidBy: string;
+  TotalCustMainPremiAmt: number;
+  TotalCustAddPremiAmt: number;
+  TotalCustDiscAmt: number;
+  TotalInscoDiscAmt: number;
+  TotalInsCustAmt: number;
+  TotalCustFeeAmt: number;
   constructor() {
     this.AppAssetId = 0;
     this.InscoBranchCode = "";
@@ -33,5 +40,12 @@ export class AppAssetInsOplObj {
     this.AppAssetInsMainCvgOplObjs = new Array<AppAssetInsMainCvgOplObj>();
     this.AppAssetInsFeeOplObjs = new Array<AppAssetInsFeeOplObj>();
     this.RowVersion = "";
+    this.InsAssetPaidBy = "";
+    this.TotalCustMainPremiAmt = 0;
+    this.TotalCustAddPremiAmt = 0;
+    this.TotalCustDiscAmt = 0;
+    this.TotalInscoDiscAmt = 0;
+    this.TotalInsCustAmt = 0;
+    this.TotalCustFeeAmt = 0;
   }
 }
