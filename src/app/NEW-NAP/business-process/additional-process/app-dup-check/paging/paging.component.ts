@@ -9,6 +9,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 @Component({
@@ -83,19 +84,19 @@ export class PagingComponent implements OnInit {
     }
 
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Personal"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PERSONAL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
       
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"],{ "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL],{ "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
 
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Company"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
       
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
   }
 }

@@ -11,6 +11,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -180,7 +181,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     this.http.post(URLConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"],{});        
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING],{});
       });
   }
 
@@ -197,9 +198,9 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   Back() {
-    // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"],{ "BizTemplateCode": BizTemplateCode });
+    // this.router.navigateByUrl("/Nap/AddProcess/AppDupCheck/Company?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING],{ "BizTemplateCode": BizTemplateCode });
     
   }
 

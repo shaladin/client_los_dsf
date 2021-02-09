@@ -175,7 +175,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit",
+                "path": "/Nap/AddProcess/ReturnHandlingCollateral/Edit",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -205,7 +205,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit",
+                "path": "/Nap/AddProcess/ReturnHandlingCollateral/Edit",
                 "icon": "ft-edit-2",
                 "param": [
                   {

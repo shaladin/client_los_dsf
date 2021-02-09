@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-return-handling-edit-app-paging',
@@ -61,17 +62,17 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   GetCallback(ev) {
     if (ev.Key == "Edit") {
       if (this.BizTemplateCode == CommonConstant.CF4W) {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/ConsumerFinance/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
         
       }
       if (this.BizTemplateCode == CommonConstant.FL4W) {
-        AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FL4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
       if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
       if (this.BizTemplateCode == CommonConstant.CFNA) {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
     }
     if(ev.Key == "ViewProdOffering"){

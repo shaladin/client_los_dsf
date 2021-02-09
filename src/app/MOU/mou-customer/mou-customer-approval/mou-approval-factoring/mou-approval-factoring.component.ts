@@ -15,6 +15,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-approval-factoring',
@@ -89,12 +90,12 @@ export class MouApprovalFactoringComponent implements OnInit {
 
   onApprovalSubmited(event)
   { 
-    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
   }
 
   onCancelClick()
   {
-    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
   }
   
   GetCallBack(event) {

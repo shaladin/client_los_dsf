@@ -14,6 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -51,6 +52,8 @@ export class LegalReviewDetailComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -163,7 +166,7 @@ export class LegalReviewDetailComponent implements OnInit {
       this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,["/Mou/CustomerLegalReview/Paging"],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
 
         });
       this.mouTc.Save();

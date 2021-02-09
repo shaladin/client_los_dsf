@@ -34,237 +34,238 @@ import { NewPurchaseOrderComponent } from './new-purchase-order/new-purchase-ord
 import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purchase-order-detail/new-purchase-order-detail.component';
 import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
 import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'PurchaseOrder/Paging',
+        path: PathConstant.PO_PAGING,
         component: PurchaseOrderPagingComponent,
         data: {
           title: 'Purchase Order Paging'
         }
       },
       {
-        path: 'PurchaseOrder/PO',
+        path: PathConstant.PO_PO_EXT,
         component: PurchaseOrderComponent,
         data: {
           title: 'Purchase Order'
         }
       },
       {
-        path: 'PurchaseOrder/PO/Detail',
+        path: PathConstant.PO_PO_EXT_DETAIL,
         component: PurchaseOrderDetailComponent,
         data: {
           title: 'Purchase Order Detail'
         }
       },
       {
-        path: "NewPurchaseOrder/Paging",
+        path: PathConstant.NEW_PO_PAGING,
         component: NewPurchaseOrderComponent,
         data: {
           title: "Purchase Order Paging"
         }
       },
       {
-        path: "NewPurchaseOrder/Detail",
+        path: PathConstant.NEW_PO_DETAIL,
         component: NewPurchaseOrderDetailComponent,
         data: {
           title: "Purchase Order Detail"
         }
       },
       {
-        path: 'DeliveryOrder/Paging',
+        path: PathConstant.DO_PAGING,
         component: DeliveryOrderPagingComponent,
         data: {
           title: 'Delivery Order Paging'
         }
       },
       {
-        path: 'DeliveryOrder/Detail',
+        path: PathConstant.DO_DETAIL,
         component: DeliveryOrderDetailComponent,
         data: {
           title: 'Delivery Order'
         }
       },
       {
-        path: 'CustConfirmation/Paging',
+        path: PathConstant.CUST_CONFIRM_PAGING,
         component: CustConfirmationPagingComponent,
         data: {
           title: 'Customer Confirmation Paging'
         }
       },
       {
-        path: 'CustConfirmation/Detail',
+        path: PathConstant.CUST_CONFIRM_DETAIL,
         component: CustConfirmationDetailComponent,
         data: {
           title: 'Customer Confirmation Detail'
         }
       },
       {
-        path: 'CustConfirmation/Subj/Detail',
+        path: PathConstant.CUST_CONFIRM_SUBJ_DETAIL,
         component: CustConfirmationSubjDetailComponent,
         data: {
           title: 'Customer Confirmation Subject Detail'
         }
       },
       {
-        path: 'CustConfirmation/Subj/View',
+        path: PathConstant.CUST_CONFIRM_SUBJ_VIEW,
         component: CustConfirmationSubjViewComponent,
         data: {
           title: 'Customer Confirmation Subject View'
         }
       },
       {
-        path: 'PreGoLive/Paging',
+        path: PathConstant.PGL_PAGING,
         component: PreGoLivePagingComponent,
         data: {
           title: 'PreGoLive Paging'
         }
       },
       {
-        path: 'PreGoLive/Detail',
+        path: PathConstant.PGL_DETAIL,
         component: PreGoLiveComponent,
         data: {
           title: 'PreGoLive Detail'
         }
       },
       {
-        path: 'PreGoLive/RequestApproval',
+        path: PathConstant.PGL_REQ_APPRVL,
         component: PreGoLiveRequestForApprovalComponent,
         data: {
           title: 'PreGoLive Request For Approval'
         }
       },
       {
-        path: 'PreGoLive/Approval/Paging',
+        path: PathConstant.PGL_APPRVL_PAGING,
         component: PreGoLiveApprovalPagingComponent,
         data: {
           title: 'PreGoLive Paging For Approval'
         }
       },
       {
-        path: 'PreGoLive/Approval/Detail',
+        path: PathConstant.PGL_APPRVL_DETAIL,
         component: PreGoLiveApprovalDetailComponent,
         data: {
           title: 'PreGoLive Detail For Approval'
         }
       },
       {
-        path: 'AgreementCancellation/Paging',
+        path: PathConstant.AGRMNT_CANCEL_PAGING,
         component: ApplicationAgreementCancellationPagingComponent,
         data: {
           title: 'Agreement Cancellation Paging'
         }
       },
       {
-        path: 'AgreementCancellation/Detail',
+        path: PathConstant.AGRMNT_CANCEL_DETAIL,
         component: ApplicationAgreementCancellationDetailComponent,
         data: {
           title: 'Agreement Cancellation Detail'
         }
       },
       {
-        path: 'AgrmntActivation/Paging',
+        path: PathConstant.AGRMNT_ACT_PAGING,
         component: AgrmntActivationPagingComponent,
         data: {
           title: 'Agreement Activation Paging'
         }
       },
       {
-        path: 'AgrmntActivation/Detail',
+        path: PathConstant.AGRMNT_ACT_DETAIL,
         component: AgrmntActivationDetailComponent,
         data: {
           title: 'Agreement Activation Detail'
         }
       },
       {
-        path: 'OfferingValidityApproval/Paging',
+        path: PathConstant.OFFERING_VALIDITY_APPRV_PAGING,
         component: OfferingValidityCheckingApprovalPagingComponent,
         data: {
           title: 'Offering Validity Checking And Approval Paging'
         }
       },
       {
-        path: 'OfferingValidityApproval/Detail',
+        path: PathConstant.OFFERING_VALIDITY_APPRV_DETAIL,
         component: OfferingValidityCheckingApprovalDetailComponent,
         data: {
           title: 'Offering Validity Checking And Approval Detail'
         }
       },
       {
-        path: 'DocumentSigner/Paging',
+        path: PathConstant.NAP_DOC_SIGNER_PAGING,
         component: DocSignerPagingComponent,
         data: {
           title: 'Document Signer Paging'
         }
       },
       {
-        path: 'DocumentSigner/Detail',
+        path: PathConstant.NAP_DOC_SIGNER_DETAIL,
         component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
         }
       },
       {
-        path: 'NewDocumentSigner/Paging',
+        path: PathConstant.NAP_CFNA_DOC_SIGNER_PAGING,
         component: DocSignerCfnaComponent,
         data: {
           title: 'Document Signer Paging'
         }
       },
       {
-        path: 'NewDocumentSigner/Detail',
+        path: PathConstant.NAP_CFNA_DOC_SIGNER_DETAIL,
         component: DocSignerCfnaDetailComponent,
         data: {
           title: 'Document Signer Detail'
         }
       },
       {
-        path: 'Invoice/Detail',
+        path: PathConstant.INVOICE_DETAIL,
         component: InvoiceDetailComponent,
         data: {
           title: 'Invoice Detail'
         }
       },
       {
-        path: 'DocPrint/Paging',
+        path: PathConstant.NAP_DOC_PRINT_PAGING,
         component: DocumentPagingComponent,
         data: {
           title: 'Document Printing Paging'
         }
       },
       {
-        path: 'DocPrint/View',
+        path: PathConstant.NAP_DOC_PRINT_VIEW,
         component: DocumentViewComponent,
         data: {
           title: 'Document Printing View'
         }
       },
       {
-        path: 'DeliveryOrderMultiAsset/Paging',
+        path: PathConstant.DO_MULTI_ASSET_PAGING,
         component: DeliveryOrderMultiAssetComponent,
         data: {
           title: 'Delivery Order Detail'
         }
       },
       {
-        path: 'DeliveryOrderMultiAsset/Detail',
+        path: PathConstant.DO_MULTI_ASSET_DETAIL,
         component: DeliveryOrderMultiAssetDetailComponent,
         data: {
           title: 'Delivery Order Detail'
         }
       },
       {
-        path: 'InvoiceVerif/Paging',
+        path: PathConstant.INVOICE_VERIF_PAGING,
         component: InvoiceVerifPagingComponent,
         data: {
           title: 'Delivery Order Paging'
         }
       },
       {
-        path: 'InvoiceVerif/Detail',
+        path: PathConstant.INVOICE_VERIF_DETAIL,
         component: InvoiceVerifDetailComponent,
         data: {
           title: 'Delivery Order Detail'

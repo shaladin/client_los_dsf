@@ -5,6 +5,7 @@ import { CustomerSelfVerificationComponent } from './external-page/customer-self
 import { PagesComponent } from './pages/pages.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RequestNewPasswordComponent } from './request-new-password/request-new-password.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
  
 
 const routes: Routes = [
@@ -12,35 +13,35 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'content',
+        path: PathConstant.CONTENT_PAGE,
         component: PagesComponent,
         data: {
           title: 'Pages'
         }
       },
       {
-        path: 'login',
+        path: PathConstant.CONTENT_PAGE_LOGIN,
         component: LoginPageComponent,
         data: {
           title: 'Login Page'
         }
       },
       {
-        path: 'SelfVerification',
+        path: PathConstant.CONTENT_PAGE_SELF_VERIF,
         component: CustomerSelfVerificationComponent,
         data: {
           title: 'Lead Customer Self Verification'
         }
       },
       {
-        path: 'RequestPassword',
+        path: PathConstant.CONTENT_PAGE_REQ_PASSWORD,
         component: RequestNewPasswordComponent,
         data: {
           title: 'Request New Password Page'
         }
       },
       {
-        path: 'ResetPassword/:code',
+        path: PathConstant.CONTENT_PAGE_RESET_PASSWORD,
         component: ResetPasswordComponent,
         data: {
           title: 'Reset Password Page'

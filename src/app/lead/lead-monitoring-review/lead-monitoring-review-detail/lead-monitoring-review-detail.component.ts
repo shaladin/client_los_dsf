@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -23,6 +24,8 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   UploadMonitoringHId: number;
   UploadNo: string;
   taskListId: number;
+
+  readonly BackLink: string = NavigationConstant.LEAD_RVW_MONITORING_PAGING;
 
   constructor(
     private router: Router, 
@@ -89,7 +92,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Lead/ReviewMonitoring/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_RVW_MONITORING_PAGING],{});
       }
     );
   }

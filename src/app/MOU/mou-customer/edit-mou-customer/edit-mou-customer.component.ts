@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -28,7 +29,7 @@ export class EditMouCustomerComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"],{});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
       return;
     }
     else

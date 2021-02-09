@@ -14,6 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: "reserved-fund",
@@ -118,7 +119,7 @@ export class ReservedFundComponent implements OnInit {
             if (this.allAppReservedFundObj.ReturnHandlingHId != 0 || this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
               this.outputTab.emit(this.allAppReservedFundObj);
             } else {
-              AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode});
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
             }
           }
         );

@@ -16,6 +16,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -80,6 +81,8 @@ export class DocSignerDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
+
+  readonly CancelLink: string = NavigationConstant.MOU_DOC_SIGNER_PAGING;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getMouCustById = URLConstant.GetMouCustById;
     this.addMouCustSigner = URLConstant.AddMouCustSigner;
@@ -265,7 +268,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DocSigner/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DOC_SIGNER_PAGING],{});
       });
   }
   GetCallBack(event) {

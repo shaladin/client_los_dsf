@@ -13,6 +13,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-add',
@@ -78,6 +79,7 @@ export class NapAddComponent implements OnInit {
     RsvField5: ['']
   });
 
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(private fb: FormBuilder, private router: Router,
     private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -225,7 +227,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": response["AppId"] });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": response["AppId"] });
         
       });
   }

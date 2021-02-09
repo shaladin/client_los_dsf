@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-tele-verif-detail',
@@ -18,6 +19,8 @@ export class TeleVerifDetailComponent implements OnInit {
   isCustData: boolean;
   isLeadData: boolean;
   WfTaskListId: number;
+
+  readonly CancelLink: string = NavigationConstant.LEAD_TELE_VERIF_PAGING;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {

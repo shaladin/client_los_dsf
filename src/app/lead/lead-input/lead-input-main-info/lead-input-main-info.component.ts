@@ -17,6 +17,7 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -114,10 +115,10 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   backHandler(){
     if(this.pageType == "update"){
-        AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
       }
       else{
-        AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
       }
   
   }
@@ -425,10 +426,10 @@ GetOfficeDDL(){
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "mode": this.pageType });
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType });
             }
             else{
-              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
             }
           }
         );
@@ -440,7 +441,7 @@ GetOfficeDDL(){
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
           }
         );
       }
@@ -458,10 +459,10 @@ GetOfficeDDL(){
           (response) => {
             this.toastr.successMessage(response["message"]);
             if(this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
             }
             else{
-              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
             }
           }
         );
@@ -473,7 +474,7 @@ GetOfficeDDL(){
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
           }
         );
       }

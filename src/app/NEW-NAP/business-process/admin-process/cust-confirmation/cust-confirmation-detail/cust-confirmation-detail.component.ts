@@ -13,6 +13,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -33,6 +34,10 @@ export class CustConfirmationDetailComponent implements OnInit {
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
   BizTemplateCode: string;
   link: any;
+
+  readonly ViewLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW;
+  readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -138,7 +143,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
     else if (this.CustCnfrmObj.IsSkip == true) {
@@ -149,7 +154,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         () => {
           this.toastr.successMessage("Success !");
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
           // this.toastr.successMessage(response["message"]);
           // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         });

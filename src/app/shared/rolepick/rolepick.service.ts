@@ -11,6 +11,7 @@ import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 
 @Injectable()
 export class RolePickService {
@@ -79,7 +80,7 @@ export class RolePickService {
                         // localStorage.setItem("BusinessDate", DateParse);
                         // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
                         // this.currentUserContextService.addCurrentUserContext(currentUserContext);
-                        this.router.navigate(['dashboard/dash-board']);
+                        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
                     }
                 )
             }

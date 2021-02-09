@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 @Injectable()
@@ -44,7 +45,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (checkSession == "1") {
             // this.errorDialogService.openDialog(AdInsErrorMessage.SessionTimeout);
             this.spinner.hide();
-            this.router.navigate(["/pages/login"]);
+            this.router.navigate([NavigationConstant.PAGES_LOGIN]);
         }
 
         if (request.url.includes("Add") || request.url.includes("Edit") || request.url.includes("Delete")) {

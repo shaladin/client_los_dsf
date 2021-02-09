@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-review-paging',
@@ -20,6 +21,7 @@ export class CreditReviewComponent implements OnInit {
     ProdOfferingName : ['']
   });
 
+  readonly ActionLink: string = NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_DETAIL;
   constructor(private http: HttpClient, private spinner: NgxSpinnerService,
     private toastr: NGXToastrService, private fb: FormBuilder) { }
 

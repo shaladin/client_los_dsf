@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-os-tc-detail',
@@ -65,7 +66,7 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   redirect() {
-    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/OutstandingTC/Paging"],{});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_OUTSTANDING_TC_PAGING],{});
   }
 
   saveMouTc() {

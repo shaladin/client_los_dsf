@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -22,13 +23,14 @@ export class MouCustomerRequestComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   user: any;
   
+  readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;
   constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"],{});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
       return;
     }
     else

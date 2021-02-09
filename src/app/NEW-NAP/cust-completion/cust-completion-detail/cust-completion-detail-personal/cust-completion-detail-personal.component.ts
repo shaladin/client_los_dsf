@@ -11,6 +11,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -104,7 +106,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   }
   
   Back() {
-    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_DETAIL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode });
   }
 
   EnterTab(type: string) {

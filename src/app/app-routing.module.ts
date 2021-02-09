@@ -8,11 +8,12 @@ import { Full_ROUTES } from "app/shared/routes/full-layout.routes";
 import { CONTENT_ROUTES } from "app/shared/routes/content-layout.routes";
 
 import { AuthGuard } from 'app/shared/auth/auth-guard.service';
+import { NavigationConstant } from './shared/constant/NavigationConstant';
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'pages/login',
+    redirectTo: NavigationConstant.PAGES_LOGIN,
     pathMatch: 'full',
   },
   { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [AuthGuard] },

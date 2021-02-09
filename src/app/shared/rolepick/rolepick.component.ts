@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 
 @Component({
   selector: 'app-rolepick',
@@ -48,7 +49,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           localStorage.setItem("EnvironmentModule", environment.Module); 
           AdInsHelper.CreateUserAccess(response);
           let currPath = this.router.routerState.snapshot.url;
-          this.router.navigateByUrl("/pages/content", { skipLocationChange: true }).then(() => {
+          this.router.navigateByUrl(NavigationConstant.PAGES_CONTENT, { skipLocationChange: true }).then(() => {
             this.router.navigateByUrl(currPath);
             this.dialog.closeAll();
           });
@@ -62,7 +63,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
           localStorage.setItem("EnvironmentModule", environment.Module);
           AdInsHelper.CreateUserAccess(response);
-          this.router.navigate(["/dashboard/dash-board"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
           this.dialog.closeAll();
         });
     }

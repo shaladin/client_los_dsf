@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -194,7 +195,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   }
 
   buttonCancelOnClick() {
-    this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/SubjList"], { queryParams: { "AppId" : this.AppId, "WfTaskListId": this.WfTaskListId } });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
   }
   
   viewMainInfoCallback(event){

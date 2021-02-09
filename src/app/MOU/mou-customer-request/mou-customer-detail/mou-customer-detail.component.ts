@@ -14,6 +14,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { formatDate } from '@angular/common';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -46,17 +47,15 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     private httpClient: HttpClient,
     private toastr: NGXToastrService
   ) {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.get('MOUType') != null) {
-        this.mouType = params.get('MOUType');
-      }
-    });
     this.route.queryParams.subscribe(params => {
       if (params['mouCustId'] != null) {
         this.mouCustId = params['mouCustId'];
       }
       if (params['mode'] != null) {
         this.pageType = params['mode'];
+      }
+      if (params['MOUType'] != null) {
+        this.mouType = params['MOUType'];
       }
     });
     this.currentStepIndex = 1;
@@ -181,19 +180,19 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   editMainInfoHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Detail"], { MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_DETAIL], { MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType });
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Detail"], { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_DETAIL], { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType });
     }
   }
 
   cancelHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, ["Mou/EditMouCustomer/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
     }
   }
 
@@ -204,10 +203,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
-            AdInsHelper.RedirectUrl(this.router, ["/Mou/EditMouCustomer/Paging"], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
           }
           else {
-            AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
           }
         });
     }
@@ -230,10 +229,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/EditMouCustomer/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
         }
         else {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
         }
         break;
       default:
@@ -255,10 +254,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/EditMouCustomer/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
         }
         else {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
         }
         break;
       default:
@@ -276,6 +275,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
   endOfTab() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Mou/Request/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
   }
 }

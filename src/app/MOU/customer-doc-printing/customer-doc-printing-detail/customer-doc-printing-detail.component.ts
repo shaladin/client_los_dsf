@@ -8,6 +8,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-customer-doc-printing-detail',
@@ -22,6 +23,8 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   link: any;
   mouCustObj: any;
   resultData: any;
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_DOC_PAGING;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,

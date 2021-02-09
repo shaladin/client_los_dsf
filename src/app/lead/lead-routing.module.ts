@@ -17,125 +17,126 @@ import { LeadUpdateComponent } from './lead-update/lead-update.component';
 import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'Verif',
+        path: PathConstant.VERIF,
         component: LeadVerifComponent,
         data: {
           title: 'Lead Verif Paging'
         }
       },
       {
-        path: 'Cancel',
+        path: PathConstant.CANCEL,
         component: LeadCancelComponent,
         data: {
           title: 'Lead Cancel'
         }
       },
       {
-        path: 'ConfirmCancel',
+        path: PathConstant.LEAD_CONFIRM_CANCEL,
         component: LeadCancelConfirmComponent,
         data: {
           title: 'Lead Cancel Confirm'
         }
       },
       {
-        path: 'Lead/Paging',
+        path: PathConstant.LEAD_PAGING,
         component: LeadInputComponent,
         data: {
           title: 'Lead Input Paging'
         }
       },
       {
-        path: 'LeadInput/CustData',
+        path: PathConstant.LEAD_INPUT_CUST_DATA,
         component: LeadInputCustDataComponent,
         data: {
           title: 'Lead Paging'
         }
       },
       {
-        path: 'LeadInput/Page',
+        path: PathConstant.LEAD_INPUT_PAGE,
         component: LeadInputPageComponent,
         data: {
           title: 'Lead Input Page'
         }
       },
       {
-        path: 'LeadInput/MainInfo',
+        path: PathConstant.LEAD_INPUT_MAIN_INFO,
         component: LeadInputMainInfoComponent,
         data: {
           title: 'Lead Input Main Info'
         }
       },
       {
-        path: 'FraudVerif/Paging',
+        path: PathConstant.LEAD_FRAUD_VERIF_PAGING,
         component: FraudVerifPagingComponent,
         data: {
           title: 'Fraud verif paging'
         },
       },
       {
-        path: 'FraudVerif/Page',
+        path: PathConstant.LEAD_FRAUD_VERIF_PAGE,
         component: FraudVerifPageComponent,
         data: {
           title: 'Fraud verif page'
         },
       },
       {
-        path: 'LeadInquiry',
+        path: PathConstant.LEAD_INQUIRY,
         component: LeadInquiryComponent,
         data: {
           title: 'Lead Inquiry'
         }
       },
       {
-        path: 'TeleVerif/Paging',
+        path: PathConstant.LEAD_TELE_VERIF_PAGING,
         component: TeleVerifPagingComponent,
         data: {
           title: 'Tele Verif Paging'
         }
       },
       {
-        path: 'TeleVerif/Detail',
+        path: PathConstant.LEAD_TELE_VERIF_DETAIL,
         component: TeleVerifDetailComponent,
         data: {
           title: 'Tele Verif Detail'
         }
       },
       {
-        path: 'LeadInput/LeadData',
+        path: PathConstant.LEAD_INPUT_LEAD_DATA,
         component: LeadInputLeadDataComponent,
         data: {
           title: 'Lead Input Main Info'
         }
       },
       {
-        path: 'LeadUpdate/Paging',
+        path: PathConstant.LEAD_UPDATE_PAGING,
         component: LeadUpdateComponent,
         data: {
           title: 'Lead Update Paging'
         }
       },
       {
-        path: 'Monitoring',
+        path: PathConstant.LEAD_MONITORING,
         component: LeadMonitoringComponent,
         data: {
           title: 'Lead Monitoring'
         }
       },
       {
-        path: 'ReviewMonitoring/Paging',
+        path: PathConstant.LEAD_RVW_MONITORING_PAGING,
         component: LeadMonitoringReviewComponent,
         data: {
           title: 'Lead Review Monitoring'
         }
       },
       {
-        path: 'ReviewMonitoring/Detail',
+        path: PathConstant.LEAD_RVW_MONITORING_DETAIL,
         component: LeadMonitoringReviewDetailComponent,
         data: {
           title: 'Lead Review Monitoring Detail'

@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
@@ -100,7 +102,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
 
   Back() {
-    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_DETAIL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode });
   }
   
   EnterTab(type: string) { 

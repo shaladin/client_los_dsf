@@ -16,6 +16,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 @Component({
@@ -60,6 +61,8 @@ export class MouReviewGeneralComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_RVW_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -173,7 +176,7 @@ export class MouReviewGeneralComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_RVW_PAGING],{});
       })
     }
 }
@@ -183,7 +186,7 @@ export class MouReviewGeneralComponent implements OnInit {
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_RVW_PAGING],{});
       })
   }
 

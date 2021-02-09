@@ -28,6 +28,7 @@ import { CreditReviewCrDetailComponent } from './credit-review-cr/credit-review-
 import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-cr-paging/credit-review-cr-paging.component';
 import { CreditApprovalCrPagingComponent } from './credit-approval-cr/credit-approval-cr-paging/credit-approval-cr-paging.component';
 import { CreditApprovalCrDetailComponent } from './credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 
 const routes: Routes = [
@@ -35,203 +36,203 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'CommissionReservedFund/Paging',
+        path: PathConstant.COMM_RSV_FUND_PAGING,
         component: CommissionReservedFundPagingComponent,
         data: {
           title: 'Commission Reserved Fund Paging'
         }
       },
       {
-        path: 'CommissionReservedFund/Detail',
+        path: PathConstant.COMM_RSV_FUND_DETAIL,
         component: CommissionReservedFundDetailComponent,
         data: {
           title: 'Commission Reserved Fund Detail'
         }
       },
       {
-        path: 'PhoneVerification/Paging',
+        path: PathConstant.PHN_VRF_PAGING,
         component: PhoneVerificationPagingComponent,
         data: {
           title: 'Phone Verification Paging'
         }
       },
       {
-        path: 'PhoneVerification/Subject',
+        path: PathConstant.PHN_VRF_SUBJECT,
         component: PhoneVerificationSubjectComponent,
         data: {
           title: 'Phone Verification Subject View'
         }
       },
       {
-        path: 'PhoneVerification/Subject/View',
+        path: PathConstant.PHN_VRF_SUBJECT_VIEW,
         component: PhoneVerificationSubjectViewComponent,
         data: {
           title: 'Phone Verification Subject View Detail'
         }
       },
       {
-        path: 'PhoneVerification/Subject/Verif',
+        path: PathConstant.PHN_VRF_SUBJECT_VERIF,
         component: PhoneVerificationSubjectVerifComponent,
         data: {
           title: 'Phone Verification Subject Verif'
         }
       },
       {
-        path: 'CreditInvestigation/Paging',
+        path: PathConstant.CRD_INVESTIGATION_PAGING,
         component: CreditInvestigationPagingComponent,
         data: {
           title: 'Credit Investigation'
         }
       },
       {
-        path: 'CreditInvestigation/Detail',
+        path: PathConstant.CRD_INVESTIGATION_DETAIL,
         component: CreditInvestigationDetailComponent,
         data: {
           title: 'Credit Investigation'
         }
       },
       {
-        path: 'NewCreditInvestigation/Paging',
+        path: PathConstant.NEW_CRD_INVESTIGATION_PAGING,
         component: NewCreditInvestigationComponent,
         data: {
           title: 'Credit Investigation'
         }
       },
       {
-        path: 'NewCreditInvestigation/Detail',
+        path: PathConstant.NEW_CRD_INVESTIGATION_DETAIL,
         component: NewCreditInvestigationDetailComponent,
         data: {
           title: 'Credit Investigation'
         }
       },
       {
-        path: 'CreditReview/Paging',
+        path: PathConstant.CRD_REVIEW_PAGING,
         component: CreditReviewPagingComponent,
         data: {
           title: 'Credit Review Paging'
         }
       },
       {
-        path: 'CreditReviewPrototype/Paging',
+        path: PathConstant.CRD_REVIEW_PROTOTYPE_PAGING,
         component: CreditReviewComponent,
         data: {
           title: 'Credit Review Paging'
         }
       },
       {
-        path: 'CreditReviewPrototype/Detail',
+        path: PathConstant.CRD_REVIEW_PROTOTYPE_DETAIL,
         component: CreditReviewDetailPersonalComponent,
         data: {
           title: 'Credit Review Detail'
         }
       },
       {
-        path: 'CreditReview/Main',
+        path: PathConstant.CRD_REVIEW_MAIN,
         component: CreditReviewMainComponent,
         data: {
           title: 'Credit Review Main'
         }
       },
       {
-        path: 'CreditReviewCfna/Paging',
+        path: PathConstant.CRD_REVIEW_CFNA_PAGING,
         component: CreditReviewCfnaPagingComponent,
         data: {
           title: 'Credit Review Paging'
         }
       },
       {
-        path: 'CreditReviewCfna/Main',
+        path: PathConstant.CRD_REVIEW_CFNA_MAIN,
         component: CreditReviewCfnaComponent,
         data: {
           title: 'Credit Review Main'
         }
       },
       {
-        path: 'CreditApproval/Paging',
+        path: PathConstant.CRD_APPRV_PAGING,
         component: CreditApprovalPagingComponent,
         data: {
           title: 'Credit Approval Paging'
         }
       },
       {
-        path: 'CreditApproval/Detail',
+        path: PathConstant.CRD_APPRV_DETAIL,
         component: CreditApprovalDetailComponent,
         data: {
           title: 'Credit Approval Detail'
         }
       },
       {
-        path: 'CreditApprovalCfna/Paging',
+        path: PathConstant.CRD_APPRV_CFNA_PAGING,
         component: CreditApprovalCfnaPagingComponent,
         data: {
           title: 'Credit Approval Paging'
         }
       },
       {
-        path: 'CreditApprovalCfna/Detail',
+        path: PathConstant.CRD_APPRV_CFNA_DETAIL,
         component: CreditApprovalCfnaComponent,
         data: {
           title: 'Credit Approval Detail'
         }
       },
       {
-        path: 'FraudDetection/Detail',
+        path: PathConstant.FRAUD_DETECTION_DETAIL,
         component: FraudDetectionVerifComponent,
         data: {
           title: 'Fraud Detection'
         }
       },
       {
-        path: 'FraudDetection/Paging',
+        path: PathConstant.FRAUD_DETECTION_PAGING,
         component: FraudDetectionPagingComponent,
         data: {
           title: 'Fraud Detection Paging'
         }
       },
       {
-        path: 'FraudVerifMultiAsset/Paging',
+        path: PathConstant.FRAUD_VERIF_MULTI_ASSET_PAGING,
         component: FraudVerificationMultiAssetComponent,
         data: {
           title: 'Fraud Verification'
         }
       },
       {
-        path: 'CreditInquiry/Paging',
+        path: PathConstant.CRD_INQUIRY_PAGING,
         component: CreditInquiryComponent,
         data: {
           title: 'Credit Process Inquiry'
         }
       },
       {
-        path: 'FraudDetection/NegativeAssetDuplicateChecking',
+        path: PathConstant.FRAUD_DETECTION_NEG_ASSET_DUP_CHECK,
       component: FraudVerificationMultiAssetComponent,
         data: {
           title: 'Credit Process Inquiry'
         }
       },
       {
-          path: 'CreditReviewCr/Paging',
+          path: PathConstant.CRD_REVIEW_CR_PAGING,
           component: CreditReviewCrPagingComponent,
           data: {
               title: 'Credit Review Paging'
           }
       },
       {
-          path: 'CreditReviewCr/Detail',
+          path: PathConstant.CRD_REVIEW_CR_DETAIL,
           component: CreditReviewCrDetailComponent,
           data: {
               title: 'Credit Review Detail'
           }
       },
       {
-          path: 'CreditApprovalCr/Paging',
+          path: PathConstant.CRD_APPRV_CR_PAGING,
           component: CreditApprovalCrPagingComponent,
           data: {
               title: 'Credit Approval Paging'
           }
       },
       {
-          path: 'CreditApprovalCr/Detail',
+          path: PathConstant.CRD_APPRV_CR_DETAIL,
           component: CreditApprovalCrDetailComponent,
           data: {
               title: 'Credit Approval Detail'

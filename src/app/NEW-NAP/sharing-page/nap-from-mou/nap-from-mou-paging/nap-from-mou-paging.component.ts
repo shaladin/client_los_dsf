@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-from-mou-paging',
@@ -76,7 +77,7 @@ export class NapFromMouPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
-          AdInsHelper.RedirectUrl(this.router,["/Nap/Sharing/NapFromMou/Detail"], { "MouCustId": ev.RowObj.MouCustId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_SHARING_FROM_MOU_DETAIL], { "MouCustId": ev.RowObj.MouCustId});
         }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }

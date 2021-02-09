@@ -15,6 +15,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-fraud-verification-multi-asset',
@@ -69,6 +70,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   idNo: any;
   bizTemplateCode: any;
 
+  readonly CancelLink: string = NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING;
   constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -238,7 +240,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerfUrl, verfObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/FraudDetection/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING], {});
       }
     )
   }

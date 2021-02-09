@@ -9,6 +9,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-dup-check-md-subj-list',
@@ -96,7 +97,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
 
   buttonBackOnClick() {
     var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { "BizTemplateCode": bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING], { "BizTemplateCode": bizTemplateCode });
   }
 
   buttonSubmitOnClick(){

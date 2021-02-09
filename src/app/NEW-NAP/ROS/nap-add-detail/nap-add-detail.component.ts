@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -59,6 +60,7 @@ export class NapAddDetailComponent implements OnInit {
   });
   OnFormReturnInfo = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -279,13 +281,13 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
   }
 
   Submit() {
@@ -302,7 +304,7 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
 
           }
         )

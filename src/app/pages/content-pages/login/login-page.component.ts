@@ -11,6 +11,7 @@ import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-login-page',
@@ -43,7 +44,7 @@ export class LoginPageComponent implements OnInit {
     });
 
     if (localStorage.getItem(CommonConstant.USER_ACCESS) != null) {
-      this.router.navigate(['dashboard/dash-board']);
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
     }
   }
 
@@ -67,7 +68,7 @@ export class LoginPageComponent implements OnInit {
           // localStorage.setItem("BusinessDate", DateParse);
           // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
           // this.currentUserContextService.addCurrentUserContext(currentUserContext);
-          this.router.navigate(['dashboard/dash-board']);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
         });
     }
   }
@@ -111,7 +112,7 @@ export class LoginPageComponent implements OnInit {
   }
   // On Forgot password link click
   onForgotPassword() {
-    this.router.navigate(['RequestPassword'], { relativeTo: this.route.parent });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_REQ_PASSWORD], {});
   }
   // On registration link click
   onRegister() {

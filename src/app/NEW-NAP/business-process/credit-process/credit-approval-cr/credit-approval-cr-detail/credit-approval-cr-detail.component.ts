@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
@@ -88,7 +89,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
@@ -143,7 +144,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
   
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
   //#endregion
 }

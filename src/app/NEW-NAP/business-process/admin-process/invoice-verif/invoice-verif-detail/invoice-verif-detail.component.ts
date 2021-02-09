@@ -10,6 +10,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -103,7 +104,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/InvoiceVerif/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
   }
   SaveData() {
     var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
@@ -117,7 +118,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
     var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId };
     this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/InvoiceVerif/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
     });
 
   }

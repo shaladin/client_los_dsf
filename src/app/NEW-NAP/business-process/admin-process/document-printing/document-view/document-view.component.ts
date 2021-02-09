@@ -18,6 +18,7 @@ import { forkJoin } from 'rxjs';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-document-view',
@@ -53,6 +54,7 @@ export class DocumentViewComponent implements OnInit {
   BizTemplateCode: string;
   isDocSignerAvailable: boolean;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING;
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {

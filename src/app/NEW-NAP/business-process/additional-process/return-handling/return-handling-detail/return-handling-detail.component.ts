@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -36,6 +37,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     ReturnHandlingNotes: ['',[Validators.required, Validators.maxLength(4000)]]
   });
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING;
   constructor(private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -73,7 +75,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/Paging"], { BizTemplateCode: this.lobCode });
+        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.lobCode });
       });
   }
 

@@ -12,6 +12,7 @@ import { NotificationHObj } from '../model/NotificationH/NotificationHObj.model'
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 
 @Component({
     selector: 'app-navbar',
@@ -138,7 +139,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         var url = environment.FoundationR3Url + URLConstant.Logout;
         this.http.post(url, "");
         AdInsHelper.ClearAllLog();
-        this.router.navigate(['pages/login']);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_LOGIN], {});
     }
 
     ShowRole() {

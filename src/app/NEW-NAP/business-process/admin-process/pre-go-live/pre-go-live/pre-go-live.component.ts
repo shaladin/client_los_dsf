@@ -19,6 +19,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -54,9 +55,9 @@ export class PreGoLiveComponent implements OnInit {
   RfaLogObj: {
     RfaNo: any
   }
-  ListRfaLogObj: any = new Array(this.RfaLogObj);
+  ListRfaLogObj: any = new Array();
   inputObj2: any
-  listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
+  listPreGoLiveAppvrObj: any = new Array();
   TrxNo: any;
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
@@ -70,6 +71,7 @@ export class PreGoLiveComponent implements OnInit {
   dmsAppObj: DMSObj;
   mouCustNo: any;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
@@ -254,7 +256,7 @@ export class PreGoLiveComponent implements OnInit {
     }
     this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/RequestApproval"],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);
 
       });
@@ -315,7 +317,7 @@ export class PreGoLiveComponent implements OnInit {
 
     this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router,[this.CancelLink],{});
         this.toastr.successMessage(response['message']);
 
       });

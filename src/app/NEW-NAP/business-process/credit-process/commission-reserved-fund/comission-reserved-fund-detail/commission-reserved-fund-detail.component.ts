@@ -16,6 +16,7 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -212,7 +213,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     }
     else {
       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CommissionReservedFund/Paging"],{ BizTemplateCode: lobCode });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ BizTemplateCode: lobCode });
 
     }
   }
@@ -237,7 +238,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
         })
     }
   }
@@ -245,9 +246,9 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   Back() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandling/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
     } else {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
     }
   }
 

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-invoice-view',
@@ -35,6 +36,6 @@ export class InvoiceViewComponent implements OnInit {
       });
   }
   ToDetail(ev) {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/Invoice/Detail"], { "AppInvoiceFctrId": ev });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_DETAIL], { "AppInvoiceFctrId": ev });
   }
 }

@@ -14,6 +14,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -52,6 +53,8 @@ export class NapAddDetailComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
+  readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -153,7 +156,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_PAGING], {});
   }
 
   MakeViewReturnInfoObj() {
@@ -238,7 +241,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_PAGING], {});
       })
   }
 

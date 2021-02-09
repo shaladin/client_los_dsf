@@ -16,6 +16,7 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -58,9 +59,9 @@ TCList : any;
   RfaLogObj: {
     RfaNo: any
   }
-  ListRfaLogObj: any = new Array(this.RfaLogObj);
+  ListRfaLogObj: any = new Array();
   inputObj2: any
-  listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
+  listPreGoLiveAppvrObj: any = new Array();
 
   MainInfoForm = this.fb.group({
 
@@ -225,7 +226,7 @@ TCList : any;
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -257,7 +258,7 @@ TCList : any;
   }
   onApprovalSubmited(event) {  
 
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
 
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
@@ -284,13 +285,13 @@ TCList : any;
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         // this.toastr.successMessage("Success");
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   openView(custNo) {

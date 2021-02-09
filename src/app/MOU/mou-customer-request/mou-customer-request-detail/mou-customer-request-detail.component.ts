@@ -12,6 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -158,7 +159,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   Back(): void {
-    this.router.navigate(['/Mou/Request/Paging']);
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
   }
 
   Save(){
@@ -174,7 +175,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response["MouCustId"];
-          AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustId });    
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
     }
     else if(this.pageType == "edit" || this.pageType == "return"){
@@ -182,10 +183,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
-            AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustFormData.MouCustId, mode : "return" });    
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });    
           }
           else{
-            AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustFormData.MouCustId });    
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType });    
           }
         });
     }

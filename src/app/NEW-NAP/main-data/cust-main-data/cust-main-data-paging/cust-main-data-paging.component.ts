@@ -9,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'cust-main-data-paging',
@@ -68,7 +69,7 @@ export class CustMainDataPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/MainData/NAP1/Add"],{ "BizTemplateCode": this.bizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_ADD],{ "BizTemplateCode": this.bizTemplateCode });
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -82,19 +83,19 @@ export class CustMainDataPagingComponent implements OnInit {
     if (ev.Key == "Edit") {
       switch(this.bizTemplateCode) {
         case CommonConstant.CF4W :
-          AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.CFRFN4W :
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.FCTR :
-          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.FL4W :
-          AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FL4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
         case CommonConstant.CFNA :
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
       }
     }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from '../constant/CommonConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class AuthGuard implements CanActivate {
     // }
 
     if (currentUser == null) {
-      this.router.navigate(['pages/login'])
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_LOGIN], {});
       return false;
     }
     else {

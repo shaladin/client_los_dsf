@@ -16,6 +16,7 @@ import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 import { formatDate } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -71,6 +72,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   inputGridObj: InputGridObj;
   ReqTCObj = new ReqTCObj();
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router,
     private modalService: NgbModal,) {
 
@@ -167,7 +169,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     // this.http.post(URLConstant.DeleteRangeAppTc, this.ReqTCObj).subscribe(
     //   (response) => {
     //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    //     this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
     //   }
     // );
   }
@@ -219,7 +221,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { BizTemplateCode: lobCode });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING], { BizTemplateCode: lobCode });
         },
         (error) => {
           console.log(error);
@@ -230,7 +232,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       //   (response) => {
       //     this.toastr.successMessage(response["message"]);
       //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      //     this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+      //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
       //   });
 
     }
@@ -276,7 +278,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     //     (response) => {
     //       this.toastr.successMessage(response["message"]);
     //       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    //       this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    //       this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
     //     });
     // } 
   }
@@ -311,7 +313,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { BizTemplateCode: lobCode });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING], { BizTemplateCode: lobCode });
         }
       );
     // }

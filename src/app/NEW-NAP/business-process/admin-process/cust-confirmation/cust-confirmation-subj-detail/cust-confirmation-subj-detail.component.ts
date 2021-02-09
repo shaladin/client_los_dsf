@@ -14,6 +14,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -46,6 +47,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   SubjectResponse: RefMasterObj = new RefMasterObj();
   cust: any;
   isFailed: boolean = false;
+
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -259,7 +262,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (activeButton == "save") {
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Detail"], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
           this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);

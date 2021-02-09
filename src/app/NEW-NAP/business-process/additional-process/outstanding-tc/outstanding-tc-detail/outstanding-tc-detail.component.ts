@@ -14,6 +14,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -119,12 +120,12 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 }

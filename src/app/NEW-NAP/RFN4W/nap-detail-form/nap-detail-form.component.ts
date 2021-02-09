@@ -15,6 +15,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -58,6 +59,7 @@ export class NapDetailFormComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -290,7 +292,7 @@ export class NapDetailFormComponent implements OnInit {
       });
   }
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFRFN4W });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
   }
 
   GetCallback(ev) {
