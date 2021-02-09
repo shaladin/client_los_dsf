@@ -33,6 +33,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
 
       this.TrxNo = params["TrxNo"];
       this.taskId= params["TaskId"];
+      this.ApvReqId = params["ApvReqId"];
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
