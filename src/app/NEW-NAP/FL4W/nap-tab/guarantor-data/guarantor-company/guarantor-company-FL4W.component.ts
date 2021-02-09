@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
@@ -19,6 +18,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-guarantor-company-FL4W',
@@ -33,7 +34,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Input() mode: string;
   @Output() close: EventEmitter<any> = new EventEmitter();
-  @Input() ListCustNoCompany : any[];
+  @Input() ListCustNoCompany: any[];
   criteria: CriteriaObj[] = [];
   resultData: any;
   inputLookupObj: InputLookupObj;
@@ -74,15 +75,15 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   businessDt: Date = new Date();
   selectedListLegalDocType: any = new Array();
   inputAddressObj: InputAddressObj;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal, private cookieService: CookieService) {
   }
 
-  async ngOnInit(): Promise<void> {  
+  async ngOnInit(): Promise<void> {
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.title = "Address";
     this.inputAddressObj.showAllPhn = false;
 
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.initLookup();
@@ -159,23 +160,23 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
       RowVersion: ""
     }
-  
 
- 
+
+
     var AppCust = {
       AppId: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
-      (response) => {  
+      (response) => {
 
-        if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
+        if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypeCompany,
             RowVersion: ""
           }
-        }else{
+        } else {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypeCompany,
@@ -195,7 +196,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
       }
     );
-  
+
     var refJobObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
       RowVersion: ""
@@ -210,7 +211,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
         }
       }
     );
- 
+
     this.http.post(URLConstant.GetListActiveRefMaster, refJobObj).subscribe(
       (response) => {
         this.MrJobPositionCode = response[CommonConstant.ReturnObj];
@@ -241,7 +242,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.isRequired = false;
 
-    if(this.ListCustNoCompany.length > 0 ){   
+    if (this.ListCustNoCompany.length > 0) {
       var arrCopyLookupCrit = new Array();
       var addCrit = new CriteriaObj();
       addCrit.DataType = "text";

@@ -133,7 +133,8 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     logout() {
         var url = environment.FoundationR3Url + URLConstant.Logout;
         this.http.post(url, "");
-        AdInsHelper.ClearAllLog();
+        AdInsHelper.ClearAllLog(this.cookieService);
+        this.cookieService.removeAll();
         this.router.navigate(['pages/login']);
     }
 
@@ -148,7 +149,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     }
 
     changeModul() {
-        var token = localStorage.getItem(CommonConstant.TOKEN);
+        var token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
         var url = environment.FoundationR3Web + URLConstant.LoginURLFrontEnd + "?token=" + token;
         window.open(url, "_blank");
     }

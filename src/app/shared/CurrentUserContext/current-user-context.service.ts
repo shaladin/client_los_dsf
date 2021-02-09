@@ -21,14 +21,14 @@ export class CurrentUserContextService {
     })
   }
 
-  getCurrentUserContext(): Object {
-    let values : string; 
-    values = localStorage.getItem(location) || "";
-    return values;
-  }
+  // getCurrentUserContext(): Object {
+  //   let values : string; 
+  //   values = localStorage.getItem(location) || "";
+  //   return values;
+  // }
 
-  clear(): void {
-    localStorage.removeItem(location);
-    this.db.clear(ObjectStoreName);
-  }
+  // clear(): void {
+  //   localStorage.removeItem(location);
+  //   this.db.clear(ObjectStoreName);
+  // }
 }

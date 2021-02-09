@@ -22,6 +22,8 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-job-tab',
@@ -97,7 +99,7 @@ export class JobTabComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) {
+    public formValidate: FormValidateService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
       if (params['AppCustId'] != null) {
@@ -110,7 +112,7 @@ export class JobTabComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
     this.GetGeneralSetting();
     await this.InitLookup();

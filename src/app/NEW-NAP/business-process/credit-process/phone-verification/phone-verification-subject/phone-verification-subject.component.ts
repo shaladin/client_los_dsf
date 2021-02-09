@@ -1,22 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { DatePipe } from '@angular/common';
-import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { replaceAll } from 'chartist';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-
-
+import { CookieService } from 'ngx-cookie';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -74,7 +71,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
   arrValue = [];
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -121,7 +118,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async SaveForm() {
     if (this.blankCount == 0) {
-      var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+      var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       if (this.isReturnHandling == false) {
         this.setReturnHandlingH();
         this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
@@ -141,7 +138,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
       }
     }
-    else{
+    else {
       this.toastr.warningMessage("Please verify all the subject.");
     }
   }
@@ -236,7 +233,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
 
-      var useraccess = localStorage.getItem(CommonConstant.USER_ACCESS);
       this.addVerifResultObj = new VerfResultObj();
 
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
@@ -249,7 +245,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.Notes = "-";
 
       await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
-        (response) => {
+        () => {
         }
       );
     }
@@ -267,7 +263,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    this.router.navigate([]).then(() => { window.open(link, '_blank'); });
 
     //window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
@@ -283,19 +279,19 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = {
       pWFTaskListID: this.wfTaskListId,
       pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.isReturnHandling == false) {
       AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Paging"], { "BizTemplateCode": BizTemplateCode });
     }

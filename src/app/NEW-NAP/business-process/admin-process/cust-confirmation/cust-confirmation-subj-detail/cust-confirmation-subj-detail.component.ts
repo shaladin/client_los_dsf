@@ -13,6 +13,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -47,7 +48,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   cust: any;
   isFailed: boolean = false;
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
-    private router: Router, private toastr: NGXToastrService) {
+    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
         this.VerfResultHId = params["VerfResultHId"];
@@ -203,7 +204,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               this.ListVerfAnswer[i].push("");
             }
           } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-            if(result == CommonConstant.VerfResultStatSuccess){
+            if (result == CommonConstant.VerfResultStatSuccess) {
               QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
             }
             this.ListVerfAnswer[i].push("");
@@ -236,7 +237,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         VerfResultDList.push(VerfResultD);
       }
     }
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -259,7 +260,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (activeButton == "save") {
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Detail"], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/CustConfirmation/Detail"], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
           this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);
@@ -269,14 +270,14 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       });
   }
 
-  ResultHandler(){
+  ResultHandler() {
     var value = this.CustConfirm.controls["MrVerfResultHStatCode"].value;
-    if(value != CommonConstant.VerfResultStatSuccess){
+    if (value != CommonConstant.VerfResultStatSuccess) {
       this.isFailed = true;
     }
     this.clearform(value, false);
   }
-  
+
   clearform(resultStat, isInit) {
     this.CustConfirm.reset();
     this.CustConfirm = this.fb.group({
@@ -296,30 +297,30 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       });
     }
 
-    if(isInit){
+    if (isInit) {
       if (this.RefStatusList.length > 0) {
         this.CustConfirm.patchValue({
           MrVerfResultHStatCode: this.RefStatusList[0].Key
         });
       }
     }
-    else{
+    else {
       this.CustConfirm.patchValue({
         MrVerfResultHStatCode: resultStat
       });
     }
-    
+
   }
 
-  OpenView(key: string){
-    if(key == "app"){
+  OpenView(key: string) {
+    if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(this.AppId);
-    }else if(key == "agrmnt"){
+    } else if (key == "agrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
-    }else if(key == "lead"){
+    } else if (key == "lead") {
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
-    else if(key == "cust"){
+    else if (key == "cust") {
       var custObj = { CustNo: this.agrmntObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {

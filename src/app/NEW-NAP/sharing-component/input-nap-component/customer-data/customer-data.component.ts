@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
@@ -37,10 +36,10 @@ import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
-import { LeadCustCompareObj } from 'app/shared/model/LeadCustCompareObj.Model';
-import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
 import { CustObjForAddTrxData } from 'app/shared/model/CustObjForAddTrxData.Model';
 import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-customer-data',
@@ -159,7 +158,7 @@ export class CustomerDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
     })
@@ -478,7 +477,7 @@ export class CustomerDataComponent implements OnInit {
   isExpiredEstablishmentDt: boolean = false;
   isExpiredDate: boolean = false;
   CekDt(inputDate: Date, type: string) {
-    var UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let max17Yodt = new Date(Max17YO);
@@ -1187,7 +1186,7 @@ export class CustomerDataComponent implements OnInit {
         }
         this.isBindDataDone = true;
       },
-      (error) => {
+      () => {
         this.isBindDataDone = true;
       }
     );
@@ -1747,7 +1746,7 @@ export class CustomerDataComponent implements OnInit {
       inputLeadCustObj.HomeCity = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
       let inputLeadString = JSON.stringify(inputLeadCustObj);
       let latestCustDataString = JSON.stringify(this.latestCustDataObj);
-  
+
       if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
         if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
@@ -1762,8 +1761,8 @@ export class CustomerDataComponent implements OnInit {
 
       inputLeadCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       inputLeadCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      if(this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value || 
-      this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value){
+      if (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value ||
+        this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value) {
         if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }

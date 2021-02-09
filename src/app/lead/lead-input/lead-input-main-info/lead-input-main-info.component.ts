@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
@@ -17,6 +15,7 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -86,7 +85,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.addLead = URLConstant.AddLead;
     this.editLead = URLConstant.EditLead;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
@@ -104,22 +103,22 @@ export class LeadInputMainInfoComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.WfTaskListId = params["WfTaskListId"];
       }
-      
+
     });
   }
 
-  AddView(){
+  AddView() {
     AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
   }
 
-  backHandler(){
-    if(this.pageType == "update"){
-        AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
-      }
-      else{
-        AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
-      }
-  
+  backHandler() {
+    if (this.pageType == "update") {
+      AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
+    }
+    else {
+      AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
+    }
+
   }
 
   getLookUpAgency(event) {
@@ -157,7 +156,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           LobName: this.returnExistLead.LobName,
           LeadSource: this.returnExistLead.MrLeadSourceCode,
         });
-        
+
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
         this.http.post(this.getVendorByVendorCode, this.vendorExistObj).subscribe(
@@ -213,9 +212,9 @@ export class LeadInputMainInfoComponent implements OnInit {
     }
     this.MakeLookUpObj();
     this.GetOfficeDDL();
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    
-    this.http.post(this.getListActiveRefMasterUrl, {RefMasterTypeCode: "LOB"}).subscribe(
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
+    this.http.post(this.getListActiveRefMasterUrl, { RefMasterTypeCode: "LOB" }).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
@@ -232,7 +231,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
-  if (this.pageType == "edit" || this.pageType == "update") {
+    if (this.pageType == "edit" || this.pageType == "update") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
@@ -278,36 +277,36 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
 
           this.cmoObj = new RefEmpForLookupObj();
-          this.cmoObj.Username = this.returnLead.CmoUsername; 
+          this.cmoObj.Username = this.returnLead.CmoUsername;
           this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
             (response) => {
-                this.returnCmoObj = response;
-                this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.Username;
-                this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
+              this.returnCmoObj = response;
+              this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.Username;
+              this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
             });
 
           this.surveyorObj = new RefEmpForLookupObj();
           this.surveyorObj.Username = this.returnLead.SurveyorUsername;
           this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
             (response) => {
-                this.returnSurveyorObj = response;
-                this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.Username;
-                this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
+              this.returnSurveyorObj = response;
+              this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.Username;
+              this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
             });
 
           this.salesObj = new RefEmpForLookupObj();
           this.salesObj.Username = this.returnLead.TeleMarketingUsername;
           this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.salesObj).subscribe(
             (response) => {
-                this.returnSalesObj = response;
-                this.salesNameLookUpObj.nameSelect = this.returnSalesObj.Username;
-                this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
+              this.returnSalesObj = response;
+              this.salesNameLookUpObj.nameSelect = this.returnSalesObj.Username;
+              this.salesNameLookUpObj.jsonSelect = this.returnSalesObj;
             });
         });
     }
   }
 
-  MakeLookUpObj(){
+  MakeLookUpObj() {
     this.leadPersonalLookUpObj = new InputLookupObj();
     this.leadPersonalLookUpObj.isRequired = false;
     this.leadPersonalLookUpObj.urlJson = "./assets/uclookup/lookupLeadPersonal.json";
@@ -366,34 +365,34 @@ export class LeadInputMainInfoComponent implements OnInit {
     });
   }
 
-GetOfficeDDL(){
-  this.refOfficeObj = new RefOfficeObj();
-  this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
-    (response) => {
-      this.listRefOffice = response[CommonConstant.ReturnObj];
-      // this.MainInfoForm.patchValue({
-      //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
-      //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
-      // });
+  GetOfficeDDL() {
+    this.refOfficeObj = new RefOfficeObj();
+    this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
+      (response) => {
+        this.listRefOffice = response[CommonConstant.ReturnObj];
+        // this.MainInfoForm.patchValue({
+        //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
+        //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
+        // });
 
-      if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
-        this.MainInfoForm.patchValue({
-          CrtOfficeCode: this.user.OfficeCode,
-          OfficeCode : this.listRefOffice[0].Key,
-          OfficeName : this.listRefOffice[0].Value,
-        });
-        // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);    
-      }
-      else{
-        this.MainInfoForm.controls.OfficeCode.disable();
-        this.MainInfoForm.patchValue({
-          CrtOfficeCode: this.user.OfficeCode,
-          OfficeCode : this.user.OfficeCode,
-          OfficeName : this.user.OfficeName
-        });
-      }
-    });
-}
+        if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
+          this.MainInfoForm.patchValue({
+            CrtOfficeCode: this.user.OfficeCode,
+            OfficeCode: this.listRefOffice[0].Key,
+            OfficeName: this.listRefOffice[0].Value,
+          });
+          // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);    
+        }
+        else {
+          this.MainInfoForm.controls.OfficeCode.disable();
+          this.MainInfoForm.patchValue({
+            CrtOfficeCode: this.user.OfficeCode,
+            OfficeCode: this.user.OfficeCode,
+            OfficeName: this.user.OfficeName
+          });
+        }
+      });
+  }
 
 
   setLead() {
@@ -415,32 +414,32 @@ GetOfficeDDL(){
   }
 
   SaveForm() {
-    if(this.MainInfoForm.valid){
-      if (this.pageType == "edit" || this.pageType == "update" ) {
+    if (this.MainInfoForm.valid) {
+      if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
-        this.leadObj.RowVersion = this.returnLead.RowVersion; 
+        this.leadObj.RowVersion = this.returnLead.RowVersion;
         this.setLead();
         this.http.post(this.editLead, this.leadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "mode": this.pageType });
+            if (this.pageType == "edit") {
+              AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/Page"], { "LeadId": this.LeadId, "mode": this.pageType });
             }
-            else{
-              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+            else {
+              AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/Page"], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
             }
           }
         );
       } else {
         this.leadObj = new LeadObj();
-        this.setLead(); 
+        this.setLead();
         this.http.post(this.addLead, this.leadObj).subscribe(
           (response) => {
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Lead/LeadInput/Page"],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
+            AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/Page"], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
           }
         );
       }
@@ -448,20 +447,20 @@ GetOfficeDDL(){
   }
 
   save() {
-    if(this.MainInfoForm.valid){
-      if (this.pageType == "edit" || this.pageType == "update" ) {
+    if (this.MainInfoForm.valid) {
+      if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
-        this.leadObj.RowVersion = this.returnLead.RowVersion; 
+        this.leadObj.RowVersion = this.returnLead.RowVersion;
         this.setLead();
         this.http.post(this.editLead, this.leadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+            if (this.pageType == "edit") {
+              AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
             }
-            else{
-              AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
+            else {
+              AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
             }
           }
         );
@@ -473,7 +472,7 @@ GetOfficeDDL(){
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+            AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
           }
         );
       }
@@ -481,10 +480,10 @@ GetOfficeDDL(){
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
-    }	
+  }
 }

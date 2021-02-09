@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Model';
 import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
@@ -16,6 +15,7 @@ import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -33,7 +33,7 @@ export class AppAddFixedComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["LobCode"] != null) {
@@ -103,7 +103,7 @@ export class AppAddFixedComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
 
@@ -422,7 +422,7 @@ export class AppAddFixedComponent implements OnInit {
           (response) => {
             this.returnAllAppDataObj = response;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["Nap/CF2W/Add/Detail"], { "AppId": response["AppId"], "LobCode": this.LobCode });
+            AdInsHelper.RedirectUrl(this.router, ["Nap/CF2W/Add/Detail"], { "AppId": response["AppId"], "LobCode": this.LobCode });
           }
         );
       });

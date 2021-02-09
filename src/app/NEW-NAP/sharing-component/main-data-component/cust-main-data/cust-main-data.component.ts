@@ -24,6 +24,8 @@ import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPer
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -84,7 +86,7 @@ export class CustMainDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    public formValidate: FormValidateService) {
+    public formValidate: FormValidateService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["appId"];
     })
@@ -93,7 +95,7 @@ export class CustMainDataComponent implements OnInit {
   CustMainDataForm = this.fb.group({
     MrCustModelCode: ['', Validators.required],
     MrCustTypeCode: [],
-    MrCustRelationshipCode: ['',Validators.maxLength(50)],
+    MrCustRelationshipCode: ['', Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
     MrMaritalStatCode: ['', Validators.required],
@@ -117,7 +119,7 @@ export class CustMainDataComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
     await this.initcustMainDataMode();
@@ -233,15 +235,15 @@ export class CustMainDataComponent implements OnInit {
     }
   }
 
-  RelationshipChange(relationship: string){
+  RelationshipChange(relationship: string) {
     let idxMarried = this.DictRefMaster[this.MasterMaritalStat].findIndex(x => x.Key == CommonConstant.MasteCodeMartialStatsMarried);
 
-    if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
+    if (relationship == CommonConstant.MasteCodeRelationshipSpouse) {
       this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       this.CustMainDataForm.controls.MrMaritalStatCode.disable();
-    }else{
+    } else {
       this.CustMainDataForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
-      if(!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+      if (!this.isExisting) this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     }
     this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
   }
@@ -253,20 +255,20 @@ export class CustMainDataComponent implements OnInit {
     });
   }
 
-  async GetListActiveRefMaster(RefMasterTypeCode: string){
+  async GetListActiveRefMaster(RefMasterTypeCode: string) {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
       });
   }
-  
+
   async getRefMaster() {
     await this.GetListActiveRefMaster(this.MasterCustType);
     await this.GetListActiveRefMaster(this.MasterGender);
     await this.GetListActiveRefMaster(this.MasterMaritalStat);
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
-    
+
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
@@ -282,7 +284,7 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    if(this.DictRefMaster[this.MasterCustType].length != 0) await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
+    if (this.DictRefMaster[this.MasterCustType].length != 0) await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
     if (this.isIncludeCustRelation) {
       await this.getCustRelationship();
     }
@@ -554,7 +556,8 @@ export class CustMainDataComponent implements OnInit {
       this.MaritalStatLookup = CustPersonalObj.MrMaritalStatCode;
       if (!IsCopyCust) {
         this.CustMainDataForm.patchValue({
-          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode})
+          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode
+        })
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       }
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
@@ -744,7 +747,7 @@ export class CustMainDataComponent implements OnInit {
       // if (this.CustMainDataForm.controls.CustNo.value == this.AppCustData.CustNo) {
       //   throw this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
       // }
-      
+
       // Sementara
       const TempCust1 = this.CustMainDataForm.value.lookupCustomer.value.toLowerCase();
       const TempCust2 = this.AppCustData.CustName.toLowerCase();
@@ -757,7 +760,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   SaveForm() {
-    if(this.CekIsCustomer()) return;
+    if (this.CekIsCustomer()) return;
     let max17Yodt = new Date(this.MaxDate);
     let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
     let d2 = new Date(this.MaxDate);

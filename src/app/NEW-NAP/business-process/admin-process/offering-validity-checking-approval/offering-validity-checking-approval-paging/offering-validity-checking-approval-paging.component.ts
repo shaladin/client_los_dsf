@@ -10,6 +10,7 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -22,10 +23,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
+  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -64,7 +65,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     critObj.propName = 'vApv.CURRENT_USER_ID';
     critObj.value = this.userContext.UserName;
     arrCrit.push(critObj);
-    
+
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionOr;
@@ -78,20 +79,20 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
 
   CallbackHandler(ev: any) {
     var ApvReqObj = new ApprovalObj();
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
-    else if(ev.Key == "Process"){
+    else if (ev.Key == "Process") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/OfferingValidityApproval/Detail"],{"TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId  });
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/OfferingValidityApproval/Detail"], { "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
       }
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
-      }else {
+      } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
         this.httpClient.post(URLConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
           (response) => {

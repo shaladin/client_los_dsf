@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router,public errorDialogService: ErrorDialogService, private cookieService: CookieService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    var currentUser = AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS);
+    var currentUser = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.previousUrl = route.url;
     this.currentUrl = state.url;

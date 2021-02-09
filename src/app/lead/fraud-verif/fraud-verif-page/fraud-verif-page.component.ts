@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +14,6 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { ResDuplicateNegativeCustomerObj } from 'app/shared/model/Lead/ResDuplicateNegativeCustomerObj.Model';
 import { ResDuplicateNegativeAssetObj } from 'app/shared/model/Lead/ResDuplicateNegativeAssetObj.Model';
-import { ResLeadCustObj } from 'app/shared/model/Lead/ResLeadCustObj.Model';
 import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/Lead/ResDuplicateDoubleFinancingObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -25,6 +23,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -39,8 +38,8 @@ export class FraudVerifPageComponent implements OnInit {
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
-  
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
@@ -123,7 +122,7 @@ export class FraudVerifPageComponent implements OnInit {
 
     this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).subscribe(
       (response) => {
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -132,8 +131,8 @@ export class FraudVerifPageComponent implements OnInit {
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
         this.isDmsReady = true;
-        
-        if(response["LobCode"] !== CommonConstant.CFNA){
+
+        if (response["LobCode"] !== CommonConstant.CFNA) {
           this.leadAssetObj.LeadId = this.LeadId;
           this.http.post(this.GetLeadAssetByLeadIdUrl, this.leadAssetObj).subscribe(
             (response) => {
@@ -148,16 +147,16 @@ export class FraudVerifPageComponent implements OnInit {
                   this.negativeAssetCheckObj.SerialNo3 = this.tempLeadAsset.SerialNo3;
                   this.negativeAssetCheckObj.SerialNo4 = this.tempLeadAsset.SerialNo4;
                   this.negativeAssetCheckObj.SerialNo5 = this.tempLeadAsset.SerialNo5;
-      
+
                   this.http.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
                     (response) => {
                       this.ResultDuplicateDoubleFinancing = response[CommonConstant.ReturnObj];
                     })
-      
+
                   this.http.post(this.GetAssetNegativeDuplicateCheckUrl, this.negativeAssetCheckObj).subscribe(
                     (response) => {
                       this.ResultDuplicateAssetNegative = response[CommonConstant.ReturnObj];
-                    });  
+                    });
                 });
             });
         }
@@ -181,7 +180,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Lead/FraudVerif/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
       });
   }
 
@@ -195,20 +194,20 @@ export class FraudVerifPageComponent implements OnInit {
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Lead/FraudVerif/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
       });
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
   backHandler() {
-    AdInsHelper.RedirectUrl(this.router,["/Lead/FraudVerif/Paging"],{});
+    AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
   }
 }

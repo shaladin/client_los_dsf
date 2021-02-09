@@ -18,7 +18,7 @@ export class RolePickService {
         if (type == "modal") {
             var loginByRole = environment.FoundationR3Url + URLConstant.LoginByToken;
             var roleObject2 = {
-                RequestDateTime: localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW),
+                RequestDateTime: AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW),
                 RowVersion: ""
 
             };
@@ -54,11 +54,11 @@ export class RolePickService {
                     RoleCode: item.RoleCode,
                     JobTitleCode: item.JobTitleCode,
                     RequestDateTime: item.BusinessDt,
-                    ModuleCode : "LOS",
+                    ModuleCode: "LOS",
                     RowVersion: ""
 
                 };
-                this.http.post(url, roleObject, { withCredentials: true}).subscribe(
+                this.http.post(url, roleObject, { withCredentials: true }).subscribe(
                     (response) => {
                         //Cookie sudah diambil dari BE (Di set manual dulu)
 
@@ -68,7 +68,7 @@ export class RolePickService {
                         AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
                         AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
                         AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
-                        
+
                         AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response["returnObject"]));
                         AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
                         this.router.navigate(['dashboard/dash-board']);

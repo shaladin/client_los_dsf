@@ -7,6 +7,7 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper'
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -58,7 +59,7 @@ export class NapDetailFormComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -109,8 +110,8 @@ export class NapDetailFormComponent implements OnInit {
         (response: AppObj) => {
           if (response) {
             if (response["MrCustTypeCode"] != null)
-            this.custType = response["MrCustTypeCode"];
-            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.custType = response["MrCustTypeCode"];
+            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
             }
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
@@ -129,7 +130,7 @@ export class NapDetailFormComponent implements OnInit {
   async initDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -142,32 +143,32 @@ export class NapDetailFormComponent implements OnInit {
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         let isExisting = response[1]['IsExistingCust'];
-        if(isExisting){
+        if (isExisting) {
           let custNo = response[1]['CustNo'];
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
 
         let mouId = response[0]['MouCustId'];
-        if(mouId != null && mouId != ""){
-          let mouObj = {MouCustId : mouId};
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result =>{
+            result => {
               let mouCustNo = result['MouCustNo'];
               this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
               this.isDmsReady = true;
             }
           )
         }
-        else{
+        else {
           this.isDmsReady = true;
         }
       }
     );
   }
-  
+
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
@@ -234,7 +235,7 @@ export class NapDetailFormComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      this.ucViewMainProd.initiateForm();
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -248,14 +249,14 @@ export class NapDetailFormComponent implements OnInit {
         }
       )
     }
-    if(Step == CommonConstant.AppStepUplDoc){
+    if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
     this.ChangeTab(Step);
     this.ucViewMainProd.initiateForm();
     this.stepper.to(this.AppStepIndex)
   }
-  
+
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
@@ -279,7 +280,7 @@ export class NapDetailFormComponent implements OnInit {
     }
   }
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
@@ -290,7 +291,7 @@ export class NapDetailFormComponent implements OnInit {
       });
   }
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFRFN4W });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: CommonConstant.CFRFN4W });
   }
 
   GetCallback(ev) {

@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -13,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -30,17 +29,17 @@ export class ReturnHandlingDetailComponent implements OnInit {
   returnHandlingHObj: ReturnHandlingHObj;
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
-  MrCustTypeCode : string;
+  MrCustTypeCode: string;
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
-    ReturnHandlingNotes: ['',[Validators.required, Validators.maxLength(4000)]]
+    ReturnHandlingNotes: ['', [Validators.required, Validators.maxLength(4000)]]
   });
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -51,13 +50,13 @@ export class ReturnHandlingDetailComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
-      if(params["MrCustTypeCode"] != null){
+      if (params["MrCustTypeCode"] != null) {
         this.MrCustTypeCode = params["MrCustTypeCode"];
       }
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.arrValue.push(this.appId);
@@ -65,7 +64,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     await this.getReturnHandling();
   }
 
-  SubmitAll(){
+  SubmitAll() {
     var reqObj = new ReturnHandlingHObj();
     reqObj.WfTaskListId = this.wfTaskListId;
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
@@ -73,11 +72,11 @@ export class ReturnHandlingDetailComponent implements OnInit {
     this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/Paging"], { BizTemplateCode: this.lobCode });
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/Paging"], { BizTemplateCode: this.lobCode });
       });
   }
 
-  AddTask(){
+  AddTask() {
     var reqObj = new ReturnHandlingDObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     reqObj.MrReturnTaskCode = this.ReturnHandlingForm.controls.MrReturnTaskCode.value;
@@ -87,11 +86,11 @@ export class ReturnHandlingDetailComponent implements OnInit {
     this.http.post(URLConstant.AddReturnHandlingD, reqObj).subscribe(
       (response) => {
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
-        this.toastr.successMessage(response["message"]); 
+        this.toastr.successMessage(response["message"]);
       });
   }
 
-  Submit(item, i){
+  Submit(item, i) {
     if (confirm("Are you sure to submit this record?")) {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
@@ -104,12 +103,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
       this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
-          this.toastr.successMessage(response["message"]); 
+          this.toastr.successMessage(response["message"]);
         });
     }
   }
 
-  Delete(item, i){
+  Delete(item, i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
@@ -118,12 +117,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
       this.http.post(URLConstant.DeleteReturnHandlingD, reqObj).subscribe(
         (response) => {
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
-          this.toastr.successMessage(response["message"]); 
+          this.toastr.successMessage(response["message"]);
         });
     }
   }
 
-  async getReturnHandling(){
+  async getReturnHandling() {
     var reqObj = new ReturnHandlingHObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
@@ -139,29 +138,29 @@ export class ReturnHandlingDetailComponent implements OnInit {
       });
   }
 
-  async bindTaskObj(){
+  async bindTaskObj() {
     let refMasterTypeCode = '';
-    switch(this.lobCode){
-      case CommonConstant.CF4W :
+    switch (this.lobCode) {
+      case CommonConstant.CF4W:
         refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
         break;
-      case CommonConstant.CFNA :
+      case CommonConstant.CFNA:
         refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFNA;
         break;
-      case CommonConstant.CFRFN4W :
+      case CommonConstant.CFRFN4W:
         refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFRFN4W;
         break;
-      case CommonConstant.FL4W :
-        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;    
+      case CommonConstant.FL4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;
         break;
     }
-    if(!refMasterTypeCode) return;
-    
-    var refMasterObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode};
+    if (!refMasterTypeCode) return;
+
+    var refMasterObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode };
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response[CommonConstant.ReturnObj];
-        if(this.taskObj.length > 0){
+        if (this.taskObj.length > 0) {
           this.ReturnHandlingForm.patchValue({
             MrReturnTaskCode: this.taskObj[0].Key
           });
@@ -170,15 +169,15 @@ export class ReturnHandlingDetailComponent implements OnInit {
     );
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
   }
 }

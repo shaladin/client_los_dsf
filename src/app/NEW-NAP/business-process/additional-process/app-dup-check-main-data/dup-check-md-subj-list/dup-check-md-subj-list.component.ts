@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -22,16 +23,15 @@ export class DupCheckMdSubjListComponent implements OnInit {
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   gridSubjectObj: InputGridObj = new InputGridObj();
   addObj: any = {};
-  
+
   constructor(
-    private http: HttpClient, 
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private toastr: NGXToastrService) 
-  {
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null)  this.appId = params['AppId'];
-      if (params['WfTaskListId'] != null)  this.wfTaskListId = params['WfTaskListId'];
+      if (params['AppId'] != null) this.appId = params['AppId'];
+      if (params['WfTaskListId'] != null) this.wfTaskListId = params['WfTaskListId'];
     });
   }
 
@@ -42,40 +42,39 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe((response) => {});
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe((response) => { });
   }
 
-  initViewMainInfo()
-  {
+  initViewMainInfo() {
     this.gridSubjectObj.pagingJson = "./assets/ucpaging/searchAppDupCheckSubject.json";
     this.addObj["AppId"] = this.appId;
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubject.json";
     this.viewMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewMainInfoObj.ddlEnvironments = [
-      { name: "AppNo", environment: environment.losR3Web},
-      { name: "MouCustNo", environment: environment.losR3Web},
+      { name: "AppNo", environment: environment.losR3Web },
+      { name: "MouCustNo", environment: environment.losR3Web },
       { name: "LeadNo", environment: environment.losR3Web },
     ];
   }
 
-  getSubjectList(){
-    this.http.post(URLConstant.MD_GetSubjectDuplicateCheckByAppId, {"AppId": this.appId}).subscribe(
+  getSubjectList() {
+    this.http.post(URLConstant.MD_GetSubjectDuplicateCheckByAppId, { "AppId": this.appId }).subscribe(
       (response) => {
-        let keyProp : string = 'ListSubject';
-        if(!response[keyProp] || response[keyProp].length <= 0) return;
+        let keyProp: string = 'ListSubject';
+        if (!response[keyProp] || response[keyProp].length <= 0) return;
         let arSubject = new Array();
-        
+
         response[keyProp].forEach(row => {
           let subjectType = '';
-          if(row.IsCustomer) subjectType = 'CUSTOMER';
-          else if(row.IsGuarantor) subjectType = 'GUARANTOR';
-          else if(row.IsShareholder) subjectType = 'SHARE HOLDER';
-          else if(row.IsFamily) subjectType = 'FAMILY';
+          if (row.IsCustomer) subjectType = 'CUSTOMER';
+          else if (row.IsGuarantor) subjectType = 'GUARANTOR';
+          else if (row.IsShareholder) subjectType = 'SHARE HOLDER';
+          else if (row.IsFamily) subjectType = 'FAMILY';
 
           arSubject.push({
             'AppCustId': row.AppCustId,
@@ -89,18 +88,18 @@ export class DupCheckMdSubjListComponent implements OnInit {
             'IsShowEdit': !row.ApplicantNo && !row.CustNo ? 1 : 0,
           });
         });
-        this.gridSubjectObj.resultData = {Data: arSubject}
+        this.gridSubjectObj.resultData = { Data: arSubject }
       }
     );
   }
 
   buttonBackOnClick() {
-    var bizTemplateCode = localStorage.getItem("BizTemplateCode")
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { "BizTemplateCode": bizTemplateCode });
+    var bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheckMainData/Paging"], { "BizTemplateCode": bizTemplateCode });
   }
 
-  buttonSubmitOnClick(){
-    this.http.post(URLConstant.MD_SubmitAppDupCheck, {"AppId": this.appId, "WfTaskListId":this.wfTaskListId}).subscribe(
+  buttonSubmitOnClick() {
+    this.http.post(URLConstant.MD_SubmitAppDupCheck, { "AppId": this.appId, "WfTaskListId": this.wfTaskListId }).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.buttonBackOnClick();

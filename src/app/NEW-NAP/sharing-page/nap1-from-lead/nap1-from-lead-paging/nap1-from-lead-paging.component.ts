@@ -9,6 +9,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap1-from-lead-paging',
@@ -24,7 +25,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
   constructor(private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -34,7 +35,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();

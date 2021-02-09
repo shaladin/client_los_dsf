@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -18,28 +17,27 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 @Component({
   selector: 'app-mou-approval-general',
-  templateUrl: './mou-approval-general.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './mou-approval-general.component.html'
 })
 export class MouApprovalGeneralComponent implements OnInit {
   mouCustObj: MouCustObj;
   MouCustId: number;
   taskId: number;
   instanceId: number;
-  MouType : string = CommonConstant.GENERAL;
+  MouType: string = CommonConstant.GENERAL;
   inputObj: ApvViewInfo;
   link: any;
   resultData: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   mouCustObject: MouCustObj = new MouCustObj();
   MrCustTypeCode: string;
-  ApvReqId: number; 
-  InputApvObj : UcInputApprovalObj;
-  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  ApvReqId: number;
+  InputApvObj: UcInputApprovalObj;
+  InputApprovalHistoryObj: UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   dmsObj: DMSObj;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
       if (params["MouCustId"] != null) {
@@ -47,7 +45,7 @@ export class MouApprovalGeneralComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
-      
+
       // this.inputObj = new ApvViewInfo();
       // this.inputObj.taskId = params["TaskId"];
       // this.inputObj.instanceId =  params["InstanceId"];
@@ -72,7 +70,7 @@ export class MouApprovalGeneralComponent implements OnInit {
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrCustTypeCode = response.MrCustTypeCode;
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -93,11 +91,11 @@ export class MouApprovalGeneralComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
+    AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/Approval"], {});
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/Approval"],{});
+    AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/Approval"], {});
   }
   GetCallBack(event) {
     if (event.Key == "customer") {
@@ -109,12 +107,12 @@ export class MouApprovalGeneralComponent implements OnInit {
     }
 
   }
-  initInputApprovalObj(){
+  initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
-    
+
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
     this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
@@ -129,7 +127,7 @@ export class MouApprovalGeneralComponent implements OnInit {
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.TrxNo =  this.resultData.MouCustNo;
+    this.InputApvObj.TrxNo = this.resultData.MouCustNo;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;

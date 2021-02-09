@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
@@ -16,21 +17,19 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
   BizTemplateCode: string;
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,) {
-      this.route.queryParams.subscribe(params => {
-        if (params["BizTemplateCode"] != null) {
-          this.BizTemplateCode = params["BizTemplateCode"];
-          localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
-        }
-      });
-     }
-  
+  constructor(private route: ActivatedRoute, private router: Router, private cookieService: CookieService) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
+  }
+
   inputPagingObj;
   userAccess;
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingApp.json";
@@ -46,8 +45,8 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
 
-  ActAndOfficeCriteria() : Array<CriteriaObj>{
-    var critObjs : Array<CriteriaObj> = new Array<CriteriaObj>();
+  ActAndOfficeCriteria(): Array<CriteriaObj> {
+    var critObjs: Array<CriteriaObj> = new Array<CriteriaObj>();
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
@@ -61,21 +60,21 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   GetCallback(ev) {
     if (ev.Key == "Edit") {
       if (this.BizTemplateCode == CommonConstant.CF4W) {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/ConsumerFinance/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
-        
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/ConsumerFinance/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+
       }
       if (this.BizTemplateCode == CommonConstant.FL4W) {
-        AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router, ["Nap/FinanceLeasing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
       if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
       if (this.BizTemplateCode == CommonConstant.CFNA) {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
     }
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);  
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
 }

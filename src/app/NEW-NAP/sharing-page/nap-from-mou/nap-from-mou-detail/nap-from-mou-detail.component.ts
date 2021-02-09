@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
@@ -28,7 +29,7 @@ export class NapFromMouDetailComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -94,7 +95,7 @@ export class NapFromMouDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     console.log("nap from mou")
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     this.MakeLookUpObj();
@@ -139,7 +140,7 @@ export class NapFromMouDetailComponent implements OnInit {
   }
 
   async GetLead() {
-    await this.http.post(URLConstant.GetMouCustById, {MouCustId : this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).toPromise().then(
       (response) => {
         this.MouCustObj = response as MouCustObj;
         this.NapAppForm.patchValue({
@@ -196,7 +197,7 @@ export class NapFromMouDetailComponent implements OnInit {
         //   this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
         // }
         // if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
+        AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
         //}
       });
 

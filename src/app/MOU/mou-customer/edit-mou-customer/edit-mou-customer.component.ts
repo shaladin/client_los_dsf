@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
@@ -20,19 +21,18 @@ export class EditMouCustomerComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  user:any;
-  
-  constructor(private http: HttpClient, private toastr: NGXToastrService,private router: Router) { }
+  user: any;
+
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"],{});
+      AdInsHelper.RedirectUrl(this.router, ["/Mou/UnauthorizedPage"], {});
       return;
     }
-    else
-    {
+    else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
@@ -55,15 +55,15 @@ export class EditMouCustomerComponent implements OnInit {
     }
   }
 
-  getEvent(event){
-    if(event.Key == "customer"){
-        var link : string;
-        var custObj = { CustNo: event.RowObj.CustNo };
-        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-          response => {
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-          }
-        );
+  getEvent(event) {
+    if (event.Key == "customer") {
+      var link: string;
+      var custObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
     }
   }
 }

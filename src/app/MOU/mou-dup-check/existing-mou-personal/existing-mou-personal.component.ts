@@ -8,6 +8,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustPersonalObj } from 'app/shared/model/MouCustPersonalObj.Model';
 import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/MouCustDupCheck/RequestSubmitMouCustDupCheckObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-existing-mou-personal',
@@ -50,7 +52,7 @@ export class ExistingMouPersonalComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
@@ -141,10 +143,10 @@ export class ExistingMouPersonalComponent implements OnInit {
 
   Checked(type: string, Id: any, isChecked: any): void {
     if (isChecked) {
-      this["ListSelectedId"+type].push(Id);
+      this["ListSelectedId" + type].push(Id);
     } else {
-      const index = this["ListSelectedId"+type].indexOf(Id)
-      if (index > -1) { this["ListSelectedId"+type].splice(index, 1); }
+      const index = this["ListSelectedId" + type].indexOf(Id)
+      if (index > -1) { this["ListSelectedId" + type].splice(index, 1); }
     }
   }
 
@@ -277,21 +279,20 @@ export class ExistingMouPersonalComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Mou/DuplicateCheck/Paging"], {});
       });
   }
 
   Back() {
     // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?MouCustId=" + this.MouCustId + "&WfTaskListId=" + this.WfTaskListId);
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
-    AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});
+    AdInsHelper.RedirectUrl(this.router, ["/Mou/DuplicateCheck/Paging"], {});
   }
 
-  OpenView(key: string, value: number){
-    if(key == "app"){
+  OpenView(key: string, value: number) {
+    if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(value);
-    }else if( key == "cust"){
-        AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+    } else if (key == "cust") {
+      AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
     }
   }
 }

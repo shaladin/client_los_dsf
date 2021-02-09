@@ -8,6 +8,8 @@ import { MatTabChangeEvent } from '@angular/material';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-app-view',
@@ -21,33 +23,33 @@ export class AppViewComponent implements OnInit {
   CustType: string = "";
   AppCustObj: any;
   @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
-  IsCustomer : boolean = true;
-  IsGuarantor : boolean = true;
-  IsReferantor : boolean = true;
-  IsApplication : boolean = true;
-  IsInvoice : boolean = true;
-  IsAsset : boolean = true;
-  IsMultiAsset : boolean = true;
-  IsInsurance : boolean = true;
-  IsMultiInsurance : boolean = true;
-  IsLifeInsurance : boolean = true;
-  IsFinancial : boolean = true;
-  IsTC : boolean = true;
-  IsCommission : boolean = true;
-  IsReservedFund : boolean = true;
-  IsPhoneVerification : boolean = true;
-  IsFraudDetectionResult : boolean = true;
-  IsAnalysisResult : boolean = true;
-  IsCollateral : boolean = true;
-  IsMultiCollateral : boolean = true;
+  IsCustomer: boolean = true;
+  IsGuarantor: boolean = true;
+  IsReferantor: boolean = true;
+  IsApplication: boolean = true;
+  IsInvoice: boolean = true;
+  IsAsset: boolean = true;
+  IsMultiAsset: boolean = true;
+  IsInsurance: boolean = true;
+  IsMultiInsurance: boolean = true;
+  IsLifeInsurance: boolean = true;
+  IsFinancial: boolean = true;
+  IsTC: boolean = true;
+  IsCommission: boolean = true;
+  IsReservedFund: boolean = true;
+  IsPhoneVerification: boolean = true;
+  IsFraudDetectionResult: boolean = true;
+  IsAnalysisResult: boolean = true;
+  IsCollateral: boolean = true;
+  IsMultiCollateral: boolean = true;
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
-  bizTemplateCode : string = "";
+  bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
   appNo: any;
   custNo: any;
-  constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
+  constructor(private route: ActivatedRoute, private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -65,7 +67,7 @@ export class AppViewComponent implements OnInit {
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -77,10 +79,10 @@ export class AppViewComponent implements OnInit {
       (response) => {
         this.appNo = response[0]['AppNo'];
         this.custNo = response[1]['CustNo'];
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -111,8 +113,7 @@ export class AppViewComponent implements OnInit {
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
 
-        if(this.bizTemplateCode == CommonConstant.FCTR)
-        {
+        if (this.bizTemplateCode == CommonConstant.FCTR) {
           this.IsCollateral = false;
           this.IsGuarantor = false;
           this.IsReferantor = false;
@@ -123,9 +124,9 @@ export class AppViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
-      
+
         }
-        else if(this.bizTemplateCode == CommonConstant.CFRFN4W){
+        else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -133,7 +134,7 @@ export class AppViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(this.bizTemplateCode == CommonConstant.CF4W){
+        else if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
@@ -141,15 +142,14 @@ export class AppViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
         }
-        else if(this.bizTemplateCode == CommonConstant.FL4W)
-        {
+        else if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
           this.IsCollateral = false;
           this.IsMultiCollateral = false;
           this.IsInvoice = false;
           this.IsInsurance = false;
         }
-        else if(this.bizTemplateCode == CommonConstant.CFNA){
+        else if (this.bizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
           this.IsInvoice = false;
           this.IsMultiAsset = false;
@@ -160,8 +160,8 @@ export class AppViewComponent implements OnInit {
       }
     );
   }
-  tabChangeEvent( tabChangeEvent : MatTabChangeEvent){
-    if(tabChangeEvent.index == 0){
+  tabChangeEvent(tabChangeEvent: MatTabChangeEvent) {
+    if (tabChangeEvent.index == 0) {
       this.GetApp();
     }
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);

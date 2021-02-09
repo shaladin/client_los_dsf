@@ -42,7 +42,7 @@ export class AdInsHelper {
     localStorage.setItem('PageAccess', JSON.stringify(pageAccess));
   }
 
-  public static ForceLogOut(timeLeft, toastr) {
+  public static ForceLogOut(cookieService: CookieService, timeLeft, toastr) {
     let interval = setInterval(() => {
       if (timeLeft > 0) {
         console.log("Time Left : " + timeLeft)
@@ -50,24 +50,17 @@ export class AdInsHelper {
         toastr.clearToast();
         timeLeft--;
       } else {
-        this.ClearAllLog();
+        this.ClearAllLog(cookieService);
         window.location.reload();
       }
     }, 1000)
   }
 
-  public static ClearAllLog() {
-    // localStorage.removeItem("UserContext");
-    // localStorage.removeItem("PageAccess");
-    // localStorage.removeItem("RoleId");
-    // localStorage.removeItem("Username");
-    // localStorage.removeItem("BusinessDate");
-    // localStorage.removeItem("UserAccess");
-    // localStorage.removeItem("Token");
-    // localStorage.removeItem("Menu");
+  public static ClearAllLog(cookieService: CookieService) {
     let version = localStorage.getItem(CommonConstant.VERSION);
     localStorage.clear();
     localStorage.setItem("Version", version);
+    cookieService.removeAll();
   }
 
   public static ClearPageAccessLog(cookieService: CookieService) {
@@ -87,7 +80,7 @@ export class AdInsHelper {
       var tempDate = today.getTime() - bsDtBefore.getTime();
       if (tempDate > AdInsConstant.TimeoutSession) {
         var data = { status: "001", reason: "Session Time Out" };
-        AdInsHelper.ClearAllLog();
+        AdInsHelper.ClearAllLog(cookieService);
         return "1";
       }
       this.SetCookie(cookieService, CommonConstant.LAST_ACCESS_TIME, businessDtNow);
@@ -216,47 +209,42 @@ export class AdInsHelper {
     router.navigate(url, { queryParams: queryParams, skipLocationChange: false });
   }
 
-  public static SetLocalStorage(key:string, value:string)
-  {
-      return localStorage.setItem(key, this.EncryptString(value, environment.ChipperKeyLocalStorage));
+  public static SetLocalStorage(key: string, value: string) {
+    return localStorage.setItem(key, this.EncryptString(value, environment.ChipperKeyLocalStorage));
   }
 
-  public static GetLocalStorage(key:string)
-  {
-      return this.DecryptString(localStorage.getItem(key), environment.ChipperKeyLocalStorage);
+  public static GetLocalStorage(key: string) {
+    return this.DecryptString(localStorage.getItem(key), environment.ChipperKeyLocalStorage);
   }
 
-  public static SetCookie(cookieService: CookieService, key:string, value:string)
-  {
-      cookieService.put(key, this.EncryptString(value, environment.ChipperKeyCookie));
+  public static SetCookie(cookieService: CookieService, key: string, value: string) {
+    cookieService.put(key, this.EncryptString(value, environment.ChipperKeyCookie));
   }
 
-  public static GetCookie(cookieService: CookieService, key:string)
-  {
-      var value = cookieService.get(key);
-      if(value == undefined || value.trim() == '') return null;
-      return this.DecryptString(value, environment.ChipperKeyCookie);
+  public static GetCookie(cookieService: CookieService, key: string) {
+    var value = cookieService.get(key);
+    if (value == undefined || value.trim() == '') return null;
+    return this.DecryptString(value, environment.ChipperKeyCookie);
   }
 
-  private static EncryptString(plaintext: string, chipperKey:string="")
-  {
-      if(chipperKey == undefined || chipperKey.trim() == '') return plaintext;
-      var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
-      var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
-      var encrypted = CryptoJS.AES.encrypt(plaintext, chipperKeyArr, { iv: iv});
-      var result = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
-      return result;
+  private static EncryptString(plaintext: string, chipperKey: string = "") {
+    if (chipperKey == undefined || chipperKey.trim() == '') return plaintext;
+    var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+    var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
+    var encrypted = CryptoJS.AES.encrypt(plaintext, chipperKeyArr, { iv: iv });
+    var result = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+    return result;
   }
 
-  private static DecryptString(chipperText: string, chipperKey:string){
-      if(
-          chipperKey == undefined || chipperKey.trim() == '' ||
-          chipperText == undefined || chipperText.trim() == ''
-      ) return chipperText;
-      var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
-      var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);  
-      var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, {iv: iv}); 
-      var plainText =  decrypted.toString(CryptoJS.enc.Utf8);   
-      return plainText;
+  private static DecryptString(chipperText: string, chipperKey: string) {
+    if (
+      chipperKey == undefined || chipperKey.trim() == '' ||
+      chipperText == undefined || chipperText.trim() == ''
+    ) return chipperText;
+    var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+    var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
+    var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
+    var plainText = decrypted.toString(CryptoJS.enc.Utf8);
+    return plainText;
   }
 }

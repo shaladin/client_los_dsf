@@ -4,9 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -14,6 +12,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustPersonalJobDataObj } from 'app/shared/model/MouCustPersonalJobDataObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-cust-job-data',
@@ -61,24 +61,22 @@ export class MouCustJobDataComponent implements OnInit {
   testing: Date = new Date();
 
   constructor(
-    private fb: FormBuilder, 
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private fb: FormBuilder,
+    private http: HttpClient, private cookieService: CookieService) {
 
-     }
+  }
 
-   MaxDate: Date;
-   UserAccess: any;
+  MaxDate: Date;
+  UserAccess: any;
 
-   inputAddressObjForJobData: InputAddressObj;
+  inputAddressObjForJobData: InputAddressObj;
 
-   ngOnInit() {
+  ngOnInit() {
     this.inputAddressObjForJobData = new InputAddressObj();
     this.inputAddressObjForJobData.showPhn3 = false;
     this.inputAddressObjForJobData.showSubsection = false;
-    
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.removeControl(this.identifier);
@@ -98,14 +96,14 @@ export class MouCustJobDataComponent implements OnInit {
 
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
-    
+
     this.initLookup();
     this.bindCustModelObj();
     this.bindAllRefMasterObj();
     this.bindMouCustPersonalJobData();
   }
 
-  CriteriaAddLookUpProfessionName(){
+  CriteriaAddLookUpProfessionName() {
     var arrCopyLookupCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -116,40 +114,40 @@ export class MouCustJobDataComponent implements OnInit {
     this.InputLookupProfessionObj.addCritInput = arrCopyLookupCrit;
   }
 
-  CustModelChanged(){
+  CustModelChanged() {
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     this.CriteriaAddLookUpProfessionName();
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF") {
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.parentForm.removeControl("jobDataAddr");
       this.parentForm.removeControl("jobDataAddrZipcode");
       this.parentForm.removeControl("lookupIndustryType");
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "PROF"){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "PROF") {
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP"){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP") {
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME"){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME") {
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
     }
   }
 
-  GetProfession(event){
+  GetProfession(event) {
     this.selectedProfessionCode = event.ProfessionCode;
   }
 
-  GetIndustryType(event){
+  GetIndustryType(event) {
     this.selectedIndustryTypeCode = event.IndustryTypeCode;
   }
 
-  setProfessionName(professionCode){
+  setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
     this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-        this.InputLookupProfessionObj.jsonSelect = response;     
+        this.InputLookupProfessionObj.jsonSelect = response;
       },
       (error) => {
         console.log(error);
@@ -157,12 +155,12 @@ export class MouCustJobDataComponent implements OnInit {
     );
   }
 
-  setIndustryTypeName(industryTypeCode){
+  setIndustryTypeName(industryTypeCode) {
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
-        this.InputLookupIndustryTypeObj.jsonSelect = response;     
+        this.InputLookupIndustryTypeObj.jsonSelect = response;
       },
       (error) => {
         console.log(error);
@@ -170,9 +168,9 @@ export class MouCustJobDataComponent implements OnInit {
     );
   }
 
-  setAddrJobDataObj(){
+  setAddrJobDataObj() {
     console.log("test")
-    if(this.MouCustPersonalJobDataObj.MouCustAddrJobObj != undefined){
+    if (this.MouCustPersonalJobDataObj.MouCustAddrJobObj != undefined) {
       this.jobDataAddrObj.Addr = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Addr;
       this.jobDataAddrObj.AreaCode1 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.AreaCode1;
       this.jobDataAddrObj.AreaCode2 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.AreaCode2;
@@ -187,16 +185,16 @@ export class MouCustJobDataComponent implements OnInit {
       this.jobDataAddrObj.PhnArea2 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.PhnArea2;
       this.jobDataAddrObj.PhnExt1 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.PhnExt1;
       this.jobDataAddrObj.PhnExt2 = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.PhnExt2;
-      
+
       this.inputFieldJobDataObj.inputLookupObj.nameSelect = this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode;
-      this.inputFieldJobDataObj.inputLookupObj.jsonSelect = {Zipcode: this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode};  
-    
+      this.inputFieldJobDataObj.inputLookupObj.jsonSelect = { Zipcode: this.MouCustPersonalJobDataObj.MouCustAddrJobObj.Zipcode };
+
       this.inputAddressObjForJobData.inputField = this.inputFieldJobDataObj;
       this.inputAddressObjForJobData.default = this.jobDataAddrObj;
     }
   }
 
-  initLookup(){
+  initLookup() {
     this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -212,14 +210,14 @@ export class MouCustJobDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
   }
 
-  bindMouCustPersonalJobData(){
+  bindMouCustPersonalJobData() {
     this.jobDataAddrObj = new AddrObj();
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
 
     if (this.custModelCode != undefined && this.custModelCode != null && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
-    if(this.MouCustPersonalJobDataObj.MouCustPersonalId != 0){
+    if (this.MouCustPersonalJobDataObj.MouCustPersonalId != 0) {
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.MouCustPersonalJobDataObj.ProfessionalNo,
@@ -243,20 +241,20 @@ export class MouCustJobDataComponent implements OnInit {
     }
   }
 
-  bindAllRefMasterObj(){
+  bindAllRefMasterObj() {
     this.bindJobPositionObj();
     this.bindCompanyScaleObj();
     this.bindInvestmentTypeObj();
     this.bindJobStatObj();
   }
-  
 
-  bindJobPositionObj(){
+
+  bindJobPositionObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
-        if(this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")){
+        if (this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrJobPositionCode: this.JobPositionObj[0].Key
           });
@@ -265,12 +263,12 @@ export class MouCustJobDataComponent implements OnInit {
     );
   }
 
-  bindCompanyScaleObj(){
+  bindCompanyScaleObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCoyScale;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyScaleObj = response[CommonConstant.ReturnObj];
-        if(this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")){
+        if (this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyScaleCode: this.CompanyScaleObj[0].Key
           });
@@ -279,12 +277,12 @@ export class MouCustJobDataComponent implements OnInit {
     );
   }
 
-  bindJobStatObj(){
+  bindJobStatObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobStat;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobStatObj = response[CommonConstant.ReturnObj];
-        if(this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")){
+        if (this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrJobStatCode: this.JobStatObj[0].Key
           });
@@ -293,12 +291,12 @@ export class MouCustJobDataComponent implements OnInit {
     );
   }
 
-  bindInvestmentTypeObj(){
+  bindInvestmentTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInvestmentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
-        if(this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")){
+        if (this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrInvestmentTypeCode: this.InvestmentTypeObj[0].Key
           });
@@ -307,12 +305,12 @@ export class MouCustJobDataComponent implements OnInit {
     );
   }
 
- bindCustModelObj(){
+  bindCustModelObj() {
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
-     this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        if(this.CustModelObj.length > 0 && this.custModelCode == undefined){
+        if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {
           this.custModelCode = this.CustModelObj[0].Key;
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model'
@@ -9,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
@@ -45,7 +45,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -211,14 +211,14 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     this.http.post(URLConstant.SubmitAppDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/Paging"], {});
 
       });
 
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
@@ -230,15 +230,15 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   }
   Back() {
     // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
-    var BizTemplateCode = localStorage.getItem("BizTemplateCode")
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"],{ "BizTemplateCode": BizTemplateCode});
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/Paging"], { "BizTemplateCode": BizTemplateCode });
   }
 
-  OpenView(key: string, value: number){
-    if(key == "app"){
+  OpenView(key: string, value: number) {
+    if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(value);
-    }else if( key == "cust"){
-        AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+    } else if (key == "cust") {
+      AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
     }
   }
 }

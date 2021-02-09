@@ -30,6 +30,8 @@ import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyRes
 import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxData.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -139,7 +141,7 @@ export class MouCustTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["mouCustId"];
     })
@@ -294,7 +296,7 @@ export class MouCustTabComponent implements OnInit {
   isExpiredEstablishmentDt: boolean = false;
   isExpiredDate: boolean = false;
   CekDt(inputDate: Date, type: string) {
-    var UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let max17Yodt = new Date(Max17YO);
@@ -1489,7 +1491,7 @@ export class MouCustTabComponent implements OnInit {
       inputCustObj.HomeCity = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
       let inputLeadString = JSON.stringify(inputCustObj);
       let latestCustDataString = JSON.stringify(this.latestCustDataObj);
-  
+
       if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
         if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
