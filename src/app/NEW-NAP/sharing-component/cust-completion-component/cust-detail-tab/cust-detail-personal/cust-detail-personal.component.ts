@@ -249,18 +249,12 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   VIPCheck(IsVip: boolean = false){
-  let Vip = false;
-  if(IsVip != undefined){
-    Vip = IsVip;
-  }else{
-    Vip = this.CustDetailForm.controls.IsVip.value
-  }
-  if (Vip == true) {
+  if (IsVip == true) {
     this.CustDetailForm.controls.VIPNotes.enable();     
     this.CustDetailForm.controls.VIPNotes.setValidators([Validators.required]);
   } else {
-    this.CustDetailForm.controls.VIPNotes.disable();
     this.CustDetailForm.controls.VIPNotes.patchValue(null);
+    this.CustDetailForm.controls.VIPNotes.disable();
     this.CustDetailForm.controls.VIPNotes.clearValidators();
   }
   this.CustDetailForm.controls.VIPNotes.updateValueAndValidity();
