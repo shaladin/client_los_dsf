@@ -8,7 +8,7 @@ export class InsuranceDataInsRateRuleObj {
     RegionCode: string;
     AppCollateralId: number;
     RowVersion: string;
-
+  AppAssetId: number;
 constructor() { 
     this.RowVersion = "";
     }

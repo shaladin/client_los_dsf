@@ -1,0 +1,207 @@
+<div *ngIf="isReady">
+  <lib-ucSubsection [id]="'summaryId'" [title]="'Summary'" [panel]="'summary'">
+  </lib-ucSubsection>
+  <div id="summary">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Rental Period </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control"> {{appRvwSummaryAsset.SummaryAppReviewObj.Tenor}} / {{appRvwSummaryAsset.SummaryAppReviewObj.MrFirstInstTypeName}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total # of Asset </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalAsset}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Asset Value </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalAssetValue | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Residual Value (%/Amt) </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.ResidualValuePrcnt | number:'.2':'en-US'}} / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalResidualValueAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Depreciation (%/Amt) </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalDepreciationPrcnt | number:'.2':'en-US'}} / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalDepreciationAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Asset Expense </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalAssetExpense | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Cost Before Margin </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalCostAmt | number:'.2':'en-US'}}  </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Margin Amount (%/Amt) </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.MarginPrcnt | number:'.2':'en-US'}} / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalMarginAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Cost After Margin </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalCostAmtAfterMargin | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 ">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Rental Amount per Period </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalRentAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Rental Amount + VAT per Period </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalRentAmtAfterVat | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Gross Yield (%) </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control"> {{appRvwSummaryAsset.SummaryAppReviewObj.GrossYieldPrcnt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Fee Non Capitalized </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalFeeAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Security Deposit </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalSecurityDeposit | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Total Paid In Advance </label>
+            </div>
+            <div class="col-md-6 " style="text-align: right;">
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalPaidInAdvance | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'assetInfoId'" [title]="'Asset Information'" [panel]="'assetInfo'">
+  </lib-ucSubsection>
+  <div id="assetInfo">
+    <div class="card-body">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: left;">
+              <span name='AssetName' translate>Asset Name</span>
+            </th>
+            <th style="text-align: right;">
+              <span name='AssetPrice' translate>Asset Value</span>
+            </th>
+            <th style="text-align: right;">
+              <span name='ResiValue' translate>Residual Value (%/Amt)</span>
+            </th>
+            <th style="text-align: right;">
+              <span name='AssetExpense' translate>Asset Expense</span>
+            </th>
+            <th style="text-align: right;">
+              <span name='Margin' translate>Margin (%/Amt)</span>
+            </th>
+            <th style="text-align: right;">
+              <span name='RentaAmt' translate>Rental Amount</span>
+            </th>
+            <th style="text-align: right;">
+              <span name='GrossYield' translate>Gross Yield(%)</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="appRvwSummaryAsset.AppRvwRentDataCustomObjs.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let item of appRvwSummaryAsset.AppRvwRentDataCustomObjs; let i = index">
+            <td style="text-align: left;">{{item.AssetName}} - {{item.ManuFacturingYear}} - {{item.Color}} - {{item.MrAssetConditionName}}</td>
+            <td style="text-align: right;">{{item.AssetPriceBefDiscAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.ResidualValuePrcnt | number:'.2':'en-US'}} / {{item.ResidualValueAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.TotalAssetExpense | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.MarginPrcnt | number:'.2':'en-US'}} / {{item.MarginAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.RentAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.GrossYieldPrcnt | number:'.2':'en-US'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

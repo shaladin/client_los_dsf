@@ -1,0 +1,67 @@
+{
+  "title": "Lookup Service",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "MASTER_CODE",
+      "id": "accessoryCode",
+      "value": "",
+      "label": "Service Code",
+      "placeholder": "Service Code"
+    },
+    {
+      "type": "textbox",
+      "name": "DESCR",
+      "id": "accessoryName",
+      "value": "",
+      "label": "Service Name",
+      "placeholder": "Service Name"
+    }
+  ],
+  "querystring": {
+    "name": "lookupServiceExpense"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Service Code",
+      "name": "ServiceCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Service Name",
+      "name": "ServiceName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ServiceCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ServiceName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "ServiceCode"
+        }
+      ]
+    }
+  ],
+  "propertyId": "ServiceCode",
+  "propertyName": "ServiceName"
+}
