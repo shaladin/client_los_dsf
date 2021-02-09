@@ -130,6 +130,7 @@ export class URLConstant {
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
   public static GetAppAssetForDealerDataByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppAssetId";
   public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode";
+  public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.FoundationR3Url + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode"
   public static GetProdOfferingDByProdOfferingHIdAndCompCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingHIdAndCompCode";
   // App Commission
   public static GetAppCommissionDataDetailByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataDetailByAppId";

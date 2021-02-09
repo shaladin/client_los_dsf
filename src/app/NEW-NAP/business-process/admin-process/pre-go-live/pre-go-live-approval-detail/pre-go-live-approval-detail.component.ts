@@ -143,7 +143,7 @@ TCList : any;
           RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing,
           RowVersion: ""
         }
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
+        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
@@ -155,7 +155,7 @@ TCList : any;
           RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing,
           RowVersion: ""
         }
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(
+        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
           (response) => {
             this.result3 = response;
             this.PurposeOfFinancing = this.result3.CompntValueDesc;
