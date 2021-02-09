@@ -117,7 +117,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
-    console.log(this.createComponent)
     this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
@@ -368,7 +367,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
-    console.log('MAN DEVVV', this.ManualDeviationData);
     let manualDevList = []
     if(this.ManualDeviationData.length > 0){
       for(let i=0;i< this.ManualDeviationData.length;i++){
@@ -432,7 +430,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       "AttributeName" : "Approval Amount",
       "AttributeValue": this.apvAmt
     }; 
-    console.log(this.apvAmt)
     Attributes.push(attribute1);
     var listTypeCode = [];
     var TypeCode = {
