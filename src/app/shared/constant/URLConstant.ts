@@ -1058,7 +1058,7 @@ public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
     public static GetPayFreqByProdOfferingD = environment.FoundationR3Url + "/ProductOffering/GetPayFreqByProdOfferingD";
     public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
     public static GetProdOfferingHByCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingHByCode";
-
+    public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.FoundationR3Url + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
     //Ref Pay Freq
     public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.FoundationR3Url + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";
     public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat";
