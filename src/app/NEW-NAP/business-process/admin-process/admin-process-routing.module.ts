@@ -35,6 +35,11 @@ import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purcha
 import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
 import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { DocChecklistPagingComponent } from './doc-checklist/doc-checklist-paging/doc-checklist-paging.component';
+import { DocChecklistDetailComponent } from './doc-checklist/doc-checklist-detail/doc-checklist-detail.component';
+import { DocChecklistRequestForApprovalComponent } from './doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component';
+import { DocChecklistApprovalPagingComponent } from './doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component';
+import { DocChecklistApprovalDetailComponent } from './doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component';
 
 const routes: Routes = [
   {
@@ -271,6 +276,41 @@ const routes: Routes = [
           title: 'Delivery Order Detail'
         }
       },
+      {
+        path: PathConstant.DOC_CHECK_LIST_PAGING,
+        component: DocChecklistPagingComponent,
+        data: {
+          title: 'Document Checklist Paging'
+        }
+      },
+      {
+        path: PathConstant.DOC_CHECK_LIST_DETAIL,
+        component: DocChecklistDetailComponent,
+        data: {
+          title: 'Document Checklist Detail'
+        }
+      },
+      {
+        path: PathConstant.DOC_CHECK_LIST_REQ_APPRV,
+        component: DocChecklistRequestForApprovalComponent,
+        data: {
+          title: 'Document Checklist Request For Approval'
+        }
+      },
+      {
+        path: PathConstant.DOC_CHECK_LIST_APPRV_PAGING,
+        component: DocChecklistApprovalPagingComponent,
+        data: {
+          title: 'Document Checklist Paging For Approval'
+        }
+      },
+      {
+        path: PathConstant.DOC_CHECK_LIST_APPRV_DETAIL,
+        component: DocChecklistApprovalDetailComponent,
+        data: {
+          title: 'Document Checklist Detail For Approval'
+        }
+      }
     ]
   }
 ];

@@ -40,9 +40,9 @@
             <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
               [panel]="'PreGoLiveApprovalHistory'">
             </lib-ucSubsection>
-            <div *ngIf='IsApvReady' id="PreGoLiveApprovalHistory">
-              <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj">
-              </lib-ucapprovalhist>
+            <div id="PreGoLiveApprovalHistory">
+              <lib-ucapprovalHistory *ngIf="IsApvReady" [InputObj]="InputApprovalHistoryObj">
+              </lib-ucapprovalHistory>
             </div>
             <mat-tab-group>
               <mat-tab label="Term & Conditions">

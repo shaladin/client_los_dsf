@@ -98,6 +98,11 @@ export class NavigationConstant {
     public static NAP_ADM_PRCS_PO_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.PO_PAGING]); //"/Nap/AdminProcess/PurchaseOrder/Paging"
     public static NAP_ADM_PRCS_NEW_PO_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NEW_PO_PAGING]); //'/Nap/AdminProcess/NewPurchaseOrder/Paging'
     public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NEW_PO_DETAIL]); //'/Nap/AdminProcess/NewPurchaseOrder/Detail'
+    public static NAP_ADM_PRCS_DOC_CHECK_LIST_REQ_APPRV = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DOC_CHECK_LIST_REQ_APPRV]); //'/Nap/AdminProcess/DocChecklist/RequestApproval'
+    public static NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DOC_CHECK_LIST_PAGING]); //'/Nap/AdminProcess/DocChecklist/Paging'
+    public static NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DOC_CHECK_LIST_DETAIL]); //'/Nap/AdminProcess/DocChecklist/Detail'
+    public static NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DOC_CHECK_LIST_APPRV_PAGING]); //'/Nap/AdminProcess/DocChecklist/Approval/Paging'
+    public static NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DOC_CHECK_LIST_APPRV_DETAIL]); //'/Nap/AdminProcess/DocChecklist/Approval/Detail'
     //#endregion
 
     //#region CreditProcess

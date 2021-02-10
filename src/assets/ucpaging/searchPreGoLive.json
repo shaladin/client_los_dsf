@@ -194,24 +194,39 @@
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "NAP_ADM_PRCS_PGL_DETAIL",
-          "param": [
+          "type": "switch",
+          "case": [
             {
-              "type": "AgrmntId",
-              "property": "AgrmntId"
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "Username",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "Edit",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
             },
             {
-              "type": "AppId",
-              "property": "AppId"
-            },
-            {
-              "type": "TaskListId",
-              "property": "TaskListId"
-            },
-            {
-              "type": "AgrmntNo",
-              "property": "AgrmntNo"
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "Username",
+                  "value": "",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "Edit",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
             }
           ]
         }

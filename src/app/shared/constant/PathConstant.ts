@@ -76,6 +76,7 @@ export class PathConstant {
     public static NAP_VIEW_ASSET = "ViewAsset";
     public static NAP_MAIN_DATA = "MainData";
     public static NAP_CUST_COMPL = "CustCompletion";
+    public static NAP_APP_PRCS = "ApplicationProcess";
     //#endregion
     
     //#region Nap-CF2W
@@ -207,6 +208,13 @@ export class PathConstant {
     public static INVOICE_VERIF = "InvoiceVerif";
     public static INVOICE_VERIF_PAGING = PathConstant.CombinePath([PathConstant.INVOICE_VERIF, PathConstant.PAGING]);
     public static INVOICE_VERIF_DETAIL = PathConstant.CombinePath([PathConstant.INVOICE_VERIF, PathConstant.DETAIL]);
+    public static DOC_CHECK_LIST = "DocChecklist";
+    public static DOC_CHECK_LIST_PAGING = PathConstant.CombinePath([PathConstant.DOC_CHECK_LIST, PathConstant.PAGING]);
+    public static DOC_CHECK_LIST_DETAIL = PathConstant.CombinePath([PathConstant.DOC_CHECK_LIST, PathConstant.DETAIL]);
+    public static DOC_CHECK_LIST_REQ_APPRV = PathConstant.PGL + "/RequestApproval";
+    public static DOC_CHECK_LIST_APPRV = PathConstant.CombinePath([PathConstant.DOC_CHECK_LIST, PathConstant.APPRV]);
+    public static DOC_CHECK_LIST_APPRV_PAGING = PathConstant.CombinePath([PathConstant.DOC_CHECK_LIST_APPRV, PathConstant.PAGING]);
+    public static DOC_CHECK_LIST_APPRV_DETAIL = PathConstant.CombinePath([PathConstant.DOC_CHECK_LIST_APPRV, PathConstant.DETAIL]);
     //#endregion
     
     //#region Nap-Crd-Prcs
@@ -255,6 +263,12 @@ export class PathConstant {
     public static CRD_APPRV_CR_DETAIL = PathConstant.CombinePath([PathConstant.CRD_APPRV_CR, PathConstant.DETAIL]);
     //#endregion
     
+    //#region Nap-App_Prcs
+    public static APP_RVW = "ApplicationReview";
+    public static APP_RVW_PAGING = PathConstant.CombinePath([PathConstant.APP_RVW, PathConstant.PAGING]);
+    public static APP_RVW_DETAIL = PathConstant.CombinePath([PathConstant.APP_RVW, PathConstant.DETAIL]);
+    //#endregion
+
     //#region MOU-Module
     public static MOU_DOC_SIGNER = "DocSigner";
     public static MOU_DOC_SIGNER_PAGING = PathConstant.CombinePath([PathConstant.MOU_DOC_SIGNER, PathConstant.PAGING]);

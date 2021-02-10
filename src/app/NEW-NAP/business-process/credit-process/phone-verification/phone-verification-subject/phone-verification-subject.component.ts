@@ -304,4 +304,15 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
     }
   }
+
+  required: boolean = false;
+
+  CheckState(value: String){
+    if (value == "YES"){
+      this.ReturnHandlingForm.controls.UpdateNotes.setValidators(Validators.required);
+    }else{
+      this.ReturnHandlingForm.controls.UpdateNotes.clearValidators();
+    }
+    this.ReturnHandlingForm.controls.UpdateNotes.updateValueAndValidity();
+  }
 }

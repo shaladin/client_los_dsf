@@ -80,6 +80,10 @@ const routes: Routes = [
       {
         path: PathConstant.NAP_CUST_COMPL,
         loadChildren: './cust-completion/cust-completion.module#CustCompletionModule'
+      },
+      {
+        path: PathConstant.NAP_APP_PRCS,
+        loadChildren: './business-process/application-process/application-process.module#ApplicationProcessSharingModule'
       }
       // {
       //   path: 'Single',

@@ -104,8 +104,6 @@
         </tr>
       </tbody>
     </table>
-    <label class="col-md-2  adInsLabel" translate>Total Reserved Fund Amount</label>
-    <label class="col-md-4  adinslabel" translate>{{this.totalRsvFund | number:'.2':'en-US'}}</label>
   </div>
   <lib-ucSubsection [id]="'agreementId'" [title]="'Agreement'" [panel]="'agreement'">
   </lib-ucSubsection>
@@ -129,7 +127,7 @@
     <div>
       <label class="col-md-2  adInsLabel" translate>Installment Scheme</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.MrInstSchemeCode}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.MrInstSchemeDescr}}</label>
       <label class="col-md-2  adInsLabel" translate>Pre Go Live Date</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveDt  | date: 'dd-MMMM-yyyy'}}</label>
@@ -137,7 +135,7 @@
     <div *ngIf="SummaryObj?.AppCustPersonal">
       <label class="col-md-2  adInsLabel" translate>Way of Payment</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrWopCode}}</label>
+        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrWopDescr}}</label>
       <label class="col-md-2  adInsLabel" translate>Pre Go Live Notes</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveNotes}}</label>
@@ -170,7 +168,7 @@
           *ngIf="SummaryObj?.AppAsset?.SerialNo1Label">{{SummaryObj.AppAsset.SerialNo1}}</label>
         <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
         <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetUsageCode}}</label>
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetUsageCodeDesc}}</label>
       </div>
       <div>
         <label class="col-md-2  adInsLabel" translate
@@ -347,7 +345,7 @@
         <div>
           <label class="col-md-2  adInsLabel" translate>Insurance Paid By</label>
           <label class="col-md-4  adinslabel" translate
-            *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsAssetPaidBy}}</label>
+            *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsAssetPaidByDescr}}</label>
           <label class="col-md-2  adInsLabel" translate>Total Fee</label>
           <label class="col-md-4  adinslabel" translate
             *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
@@ -505,7 +503,7 @@
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.NtfAmt | number:'.2':'en-US'}}</label>
       <label class="col-md-4  adInsLabel" translate>First Installment Type</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrFirstInstTypeCode}}</label>
+        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrFirstInstTypeDescr}}</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
