@@ -151,12 +151,9 @@ export class LeadInputPageComponent implements OnInit {
             component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
           }
         }
-        else if (this.AppStepIndex == 3 && this.pageType != "update") {
+        else if (this.AppStepIndex == 3) {
           this.customObj = ev;
           this.EnterTab("uploadDocument")
-        }
-        else if (this.AppStepIndex == 3 && this.pageType == "update") {
-          AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
         }
 
       }
