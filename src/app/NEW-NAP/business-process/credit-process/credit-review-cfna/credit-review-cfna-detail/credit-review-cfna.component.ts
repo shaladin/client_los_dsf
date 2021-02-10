@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -64,6 +64,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
+    private ref: ApplicationRef,
     private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -115,7 +116,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
-    console.log(this.createComponent)
     this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
@@ -362,7 +362,29 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   }
 
   BindManualDeviationData(ev) {
+    this.IsReady = false;
+    this.ref.tick();
     this.ManualDeviationData = ev;
+    let manualDevList = []
+    if(this.ManualDeviationData.length > 0){
+      for(let i=0;i< this.ManualDeviationData.length;i++){
+
+        var Attributes = []
+        var attribute1= { 
+          "AttributeName" : "ApvAt",
+          "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
+        };
+        Attributes.push(attribute1);
+        
+        let TypeCode = {
+          "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
+          "Attributes" : Attributes,
+        };
+    
+        manualDevList.push(TypeCode);
+      }
+    }
+    this.initInputApprovalObj(manualDevList);
     this.isExistedManualDeviationData = true;
   }
 
@@ -399,14 +421,13 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       (response) => {
       });
   }
-  initInputApprovalObj(){  
+  initInputApprovalObj(manualDevList = null){  
     this.InputObj = new UcInputRFAObj(); 
     var Attributes = []
     var attribute1= { 
       "AttributeName" : "Approval Amount",
       "AttributeValue": this.apvAmt
     }; 
-    console.log(this.apvAmt)
     Attributes.push(attribute1);
     var listTypeCode = [];
     var TypeCode = {
@@ -419,6 +440,9 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
      
       listTypeCode = listTypeCode.concat(this.responseListTypeCodes);
     }
+    if(manualDevList != null){
+      listTypeCode = listTypeCode.concat(manualDevList);
+     }
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];

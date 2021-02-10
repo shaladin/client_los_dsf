@@ -38,7 +38,8 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
   arrValue = [];
-
+  isDmsReady: boolean = false;
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -74,20 +75,26 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         else if (this.resultData.MrMouTypeCode == CommonConstant.FACTORING) {
           this.pageTitle = "MOU Factoring";
         }
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-
       }
     );
 
   }
 
+  async initDms(){
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
+      (response: MouCustObj) => {
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        this.isDmsReady = true;
+        console.log('DMS11111', JSON.stringify(this.dmsObj));
+      });
+  }
   ngAfterViewInit(): void {
     if (this.mouType == CommonConstant.GENERAL) {
       this.stepperGeneral = new Stepper(document.querySelector('#stepperGeneral'), {
@@ -208,7 +215,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  stepHandlerGeneral(response) {
+  async stepHandlerGeneral(response) {
     switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperGeneral.next();
@@ -231,9 +238,13 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+
+    if(this.currentStepIndex == 5){
+      await this.initDms();
+    }
   }
 
-  stepHandlerFactoring(response) {
+  async stepHandlerFactoring(response) {
     switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperFactoring.next();
@@ -255,6 +266,9 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         break;
       default:
         break;
+    }
+    if(this.currentStepIndex == 6){
+      await this.initDms();
     }
   }
   

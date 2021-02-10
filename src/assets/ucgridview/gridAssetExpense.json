@@ -1,0 +1,94 @@
+{
+  "isSeq": true,
+  "headerList": [
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Asset Name",
+      "name": "AssetName"
+    },
+    {
+      "type": "label",
+      "position": "right",
+      "label": "Insurance At Cost",
+      "name": "InsuranceAtCost"
+    },
+    {
+      "type": "label",
+      "position": "right",
+      "label": "Maintenance At Cost",
+      "name": "MaintenanceAtCost"
+    },
+    {
+      "type": "label",
+      "position": "right",
+      "label": "Other Expense",
+      "name": "OtherExpense"
+    },
+    {
+      "type": "label",
+      "position": "right",
+      "label": "Fee",
+      "name": "Fee"
+    },
+    {
+      "type": "label",
+      "position": "right",
+      "label": "Total Asset Expense",
+      "name": "TotalAssetExpense"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AssetName"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "InsuranceAtCost"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "MaintenanceAtCost"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "OtherExpense"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "Fee"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "TotalAssetExpense"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "edit",
+          "property": [
+            {
+              "type": "AppAssetId",
+              "property": "AppAssetId"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

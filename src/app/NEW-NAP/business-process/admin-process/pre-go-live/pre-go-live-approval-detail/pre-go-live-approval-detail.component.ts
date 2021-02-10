@@ -62,9 +62,6 @@ TCList : any;
   inputObj2: any
   listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
 
-  MainInfoForm = this.fb.group({
-
-  });
   AppId: any;
   AgrmntId: any;
   token = localStorage.getItem(CommonConstant.TOKEN);
@@ -101,6 +98,7 @@ TCList : any;
   }
 
   ngOnInit() {
+    console.log("HELLOW")
     this.arrValue.push(this.AgrmntId);
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.TrxNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {
@@ -145,7 +143,7 @@ TCList : any;
           RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing,
           RowVersion: ""
         }
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
+        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
@@ -157,7 +155,7 @@ TCList : any;
           RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing,
           RowVersion: ""
         }
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(
+        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
           (response) => {
             this.result3 = response;
             this.PurposeOfFinancing = this.result3.CompntValueDesc;
@@ -255,27 +253,24 @@ TCList : any;
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited(event) {  
-
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
-
+  onApprovalSubmited(event) {
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
 
-    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+    for (var i = 0; i < this.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
-      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
+      this.appTC.AppId = this.TCList[i].AppId;
+      this.appTC.AppTcId = this.TCList[i].AppTcId;
+      this.appTC.TcCode = this.TCList[i].TcCode;
+      this.appTC.TcName = this.TCList[i].TcName;
+      this.appTC.PriorTo = this.TCList[i].PriorTo;
+      this.appTC.IsChecked = this.TCList[i].IsChecked;
+      this.appTC.ExpiredDt = this.TCList[i].ExpiredDt;
+      this.appTC.IsMandatory = this.TCList[i].IsMandatory;
+      this.appTC.PromisedDt = this.TCList[i].PromisedDt;
+      this.appTC.CheckedDt = this.TCList[i].CheckedDt;
+      this.appTC.Notes = this.TCList[i].Notes;
       this.listAppTCObj.AppTCObj.push(this.appTC);
     }
 

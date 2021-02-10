@@ -15,11 +15,9 @@
           </div>
           <div>
             <label class="col-md-2  adInsLabel" translate>Admin Head</label>
-            <label class="col-md-4  adinslabel" translate
-              *ngIf="AppAssetObj?.ResponseAdminHeadSupp?.SupplName">{{this.AppAssetObj.ResponseAdminHeadSupp.SupplEmpName}}</label>
+            <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj.ResponseAdminHeadSupp != null ? this.AppAssetObj.ResponseAdminHeadSupp.SupplEmpName  : '-'}}</label>
             <label class="col-md-2  adInsLabel" translate>Branch Manager</label>
-            <label class="col-md-4  adinslabel" translate
-              *ngIf="AppAssetObj?.ResponseBranchManagerSupp?.SupplEmpName">{{this.AppAssetObj.ResponseBranchManagerSupp.SupplEmpName}}</label>
+            <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj.ResponseBranchManagerSupp != null ?  this.AppAssetObj.ResponseBranchManagerSupp.SupplEmpName : '-'}}</label>
           </div>
         </div>
         <lib-ucSubsection [id]="'assetId'" [title]="'Asset Information'" [panel]="'asset'">

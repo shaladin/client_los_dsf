@@ -74,6 +74,9 @@ import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/gu
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
 import { SharedModule } from "app/shared/shared.module";
+import { AssetExpenseComponent } from "./asset-expense-opl/asset-expense.component";
+import { AssetExpenseAddEditComponent } from "./asset-expense-opl/asset-expense-add-edit/asset-expense-add-edit.component";
+import { AssetOplMainInfoComponent } from "./asset-opl-main-info/asset-opl-main-info.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -149,7 +152,10 @@ export const customCurrencyMaskConfig = {
     ApplicationDataFL4WComponent,
     CollateralDataCfnaComponent,
     CollateralDataCfnaPagingComponent,
-    CollateralDataCfnaDetailComponent
+    CollateralDataCfnaDetailComponent,
+    AssetExpenseComponent,
+    AssetExpenseAddEditComponent,
+    AssetOplMainInfoComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -164,7 +170,8 @@ export const customCurrencyMaskConfig = {
     MatSelectModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     CustSharingComponentModule,
-    UcaddtotempModule
+    UcaddtotempModule,
+
   ],
   declarations: [
     CustomerDataComponent,
@@ -231,7 +238,10 @@ export const customCurrencyMaskConfig = {
     MultiAssetLeasingComponent,
     AssetLeasingPagingComponent,
     AssetLeasingAddEditComponent,
-    CollateralLeasingAddEditComponent
+    CollateralLeasingAddEditComponent,
+    AssetExpenseComponent,
+    AssetExpenseAddEditComponent,
+    AssetOplMainInfoComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [
