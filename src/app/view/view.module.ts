@@ -92,6 +92,7 @@ import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -115,7 +116,8 @@ import { SharedModule } from "app/shared/shared.module";
     UcapprovalhistModule,
     UcShowErrorsModule,
     AppCustViewComponentsModule,
-    SharedModule
+    SharedModule,
+    UcapprovalHistoryModule
   ],
   declarations: [
     MainInfoComponent,

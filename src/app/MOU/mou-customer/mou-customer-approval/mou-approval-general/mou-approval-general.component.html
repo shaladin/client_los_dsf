@@ -36,7 +36,7 @@
                         </mat-tab>
                         <mat-tab label="Document">
                             <ng-template matTabContent>
-                                <app-mou-view-doc></app-mou-view-doc>
+                                <app-dms-iframe [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
                             </ng-template>
                         </mat-tab>
                         <mat-tab label="Survey">
@@ -44,14 +44,14 @@
                                 <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
                             </ng-template>
                         </mat-tab>
+                        <mat-tab label="Third Party Checking">
+                            <ng-template matTabContent>
+                              <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+                            </ng-template>
+                          </mat-tab>
                         <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
                             <ng-template matTabContent>
                                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
-                            </ng-template>
-                        </mat-tab>
-                        <mat-tab label="Analysis Result">
-                            <ng-template matTabContent>
-                                <app-mou-view-analysis-result [inputObj]="inputObj"></app-mou-view-analysis-result>
                             </ng-template>
                         </mat-tab>
                         <!-- <mat-tab label="Review">

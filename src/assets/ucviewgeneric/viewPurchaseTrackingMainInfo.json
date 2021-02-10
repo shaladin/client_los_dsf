@@ -1,0 +1,48 @@
+{
+    "title": "PURCHASE TRACKING VIEW",
+    "subsection": [
+        {
+            "subSectionId": "AppInfoId",
+            "subSectionTitle": "Application Info",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Application",
+                    "label": "Application No",
+                    "property": "AppNo"
+                },
+                {
+                    "type": "callback",
+                    "key": "Agreement",
+                    "label": "Agreement No",
+                    "property": "AgrmntNo"
+                },
+                {
+                    "type": "callback",
+                    "key": "AppAsset",
+                    "label": "App Asset No",
+                    "property": "AppAssetNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "Asset Name",
+                    "property": "FullAssetName"
+                },
+                {
+                    "type": "date",
+                    "label": "Expected Delivery Date",
+                    "property": "ExpectedDlvryDt"
+                }
+            ],
+            "querystring": {
+                "name": "viewPurchaseTrackingAppInfo"
+            }
+        }
+    ]
+}

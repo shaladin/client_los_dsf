@@ -7,9 +7,10 @@ import { UcpagingModule } from "@adins/ucpaging";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
-import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
+import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { InquiryRoutingComponent } from "./inquiry-routing.module";
 import { AppInquiryPagingComponent } from "./app-inquiry/app-inquiry-paging.component";
+import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/purchase-tracking-inquiry.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { AppInquiryPagingComponent } from "./app-inquiry/app-inquiry-paging.comp
     SharingComponentModule
   ],
   declarations: [
-    AppInquiryPagingComponent
+    AppInquiryPagingComponent,
+    PurchaseTrackingInquiryComponent
   ]
 })
 export class InquiryModule { }

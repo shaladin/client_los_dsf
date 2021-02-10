@@ -17,6 +17,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
 
   @Input() CrdRvwCustInfoId: number = 0;
   @Input() appId: number = 0;
+  @Input() BizTemplateCode: string = "";
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
 
   constructor(

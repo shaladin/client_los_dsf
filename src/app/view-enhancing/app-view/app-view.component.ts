@@ -42,6 +42,8 @@ export class AppViewComponent implements OnInit {
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
   IsDeviation: boolean = true;
+  IsAssetExpense: boolean = true;
+  IsPefindoResult: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
@@ -129,6 +131,8 @@ export class AppViewComponent implements OnInit {
           this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
           this.IsDeviation = false;
+          this.IsAssetExpense = false;
+          this.IsPefindoResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -138,6 +142,8 @@ export class AppViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
           this.IsDeviation = false;
+          this.IsAssetExpense = false;
+          this.IsPefindoResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
@@ -147,6 +153,8 @@ export class AppViewComponent implements OnInit {
           this.IsMultiInsurance = false;
           this.IsFraudDetectionMulti = false;
           this.IsDeviation = false;
+          this.IsAssetExpense = false;
+          this.IsPefindoResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -155,6 +163,8 @@ export class AppViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsInsurance = false;
           this.IsDeviation = false;
+          this.IsAssetExpense = false;
+          this.IsPefindoResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
@@ -164,6 +174,8 @@ export class AppViewComponent implements OnInit {
           this.IsFraudDetectionMulti = false;
           this.IsCollateral = false;
           this.IsDeviation = false;
+          this.IsAssetExpense = false;
+          this.IsPefindoResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.OPL) {
           this.IsCollateral = false;
@@ -179,7 +191,7 @@ export class AppViewComponent implements OnInit {
           this.IsInsurance = false;
           this.IsLifeInsurance = false;
           this.IsFraudDetectionResult = false;
-          this.IsCollateral = false;
+          this.IsMultiCollateral = false;
         }
       }
     );

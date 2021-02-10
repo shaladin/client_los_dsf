@@ -4,6 +4,8 @@ import { NapFromLeadPagingComponent } from './nap-from-lead/paging/nap-from-lead
 import { NapFromLeadDetailComponent } from './nap-from-lead/detail/nap-from-lead-detail.component';
 import { NapFromMouDetailComponent } from './nap-from-mou/nap-from-mou-detail/nap-from-mou-detail.component';
 import { NapFromMouPagingComponent } from './nap-from-mou/nap-from-mou-paging/nap-from-mou-paging.component';
+import { Nap1FromLeadPagingComponent } from './nap1-from-lead/nap1-from-lead-paging/nap1-from-lead-paging.component';
+import { Nap1FromLeadDetailComponent } from './nap1-from-lead/nap1-from-lead-detail/nap1-from-lead-detail.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,20 @@ const routes: Routes = [
           component: NapFromMouPagingComponent,
           data: {
               title: 'Nap From Mou Paging'
+          }
+      },
+      {
+          path: 'Nap1FromLead/Paging',
+          component: Nap1FromLeadPagingComponent,
+          data: {
+              title: 'Nap1 From Lead Paging'
+          }
+      },
+      {
+          path: 'Nap1FromLead/Detail',
+          component: Nap1FromLeadDetailComponent,
+          data: {
+              title: 'Nap1 From Lead Detail'
           }
       }
     ]

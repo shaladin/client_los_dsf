@@ -54,6 +54,11 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { MatTabsModule } from "@angular/material";
 import { SharedModule } from "app/shared/shared.module";
+import { DocChecklistPagingComponent } from "./doc-checklist/doc-checklist-paging/doc-checklist-paging.component";
+import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detail/doc-checklist-detail.component";
+import { DocChecklistRequestForApprovalComponent } from "./doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component";
+import { DocChecklistApprovalPagingComponent } from "./doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component";
+import { DocChecklistApprovalDetailComponent } from "./doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -120,7 +125,12 @@ export const customCurrencyMaskConfig = {
     NewPurchaseOrderDetailComponent,
     PoEntryComponent,
     DocSignerCfnaComponent,
-    DocSignerCfnaDetailComponent
+    DocSignerCfnaDetailComponent,
+    DocChecklistPagingComponent,
+    DocChecklistDetailComponent,
+    DocChecklistRequestForApprovalComponent,
+    DocChecklistApprovalPagingComponent,
+    DocChecklistApprovalDetailComponent
   ],
   providers: [
     NGXToastrService

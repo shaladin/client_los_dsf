@@ -50,6 +50,7 @@ export class OutstandingTcDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.InitDms();
   }
   async InitDms(){
     this.dmsObj = new DMSObj();

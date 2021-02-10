@@ -141,7 +141,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="IsIntegratorCheckBySystem == '0' && IsCustomer">
+          <div *ngIf="IsIntegratorCheckBySystem == '0' && IsCustomer && mouCustId == 0 && bizTemplateCode != 'FCTR'">
             <lib-ucSubsection [id]="'IntegratorId'" [title]="'Fraud Checking Customer'" [panel]="'Integrator'">
             </lib-ucSubsection>
             <div id="Integrator" class="form-group row">
@@ -150,7 +150,7 @@
                 <button type="button" (click)="FlaggingIsNeedIntegrator()" class="btn btn-raised btn-primary">
                   <i class="" style="background-color: #23dc29;"></i> HIT Integrator
                 </button>
-                <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate}}</label>
+                <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
               </div>
             </div>
           </div>

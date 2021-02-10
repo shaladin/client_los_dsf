@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericSupplAssetObj"></lib-ucviewgeneric>
+
+          <div class="px-3">
+            <lib-ucSubsection [id]="'AssetAttrId'" [title]="'ASSET ATTRIBUTE'" [panel]="'AssetAttr'">
+            </lib-ucSubsection>
+            <div class="form-body" id="AssetAttr">
+              <div class="form-group row" *ngFor="let item of AttributeList">
+                <label class="col-md-3 adins-label">{{item.AssetAttrName}}</label>
+                <label class="col-md-3 adins-label">{{item.AttrValue}}</label>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'AccessoriesId'" [title]="'ACCESSORIES'" [panel]="'Accessories'">
+            </lib-ucSubsection>
+            <div class="form-body" id="Accessories">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Supplier Branch Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Accessory Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Accessory Price</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Notes</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Action</span>
+                    </th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngIf="AccessoriesList.length === 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                  <tr *ngFor="let item of AccessoriesList; let i = index">
+                    <td>{{i+1}}</td>
+                    <td class="align-left">{{item.SupplName}}</td>
+                    <td class="align-left">{{item.AssetAccessoryName}}</td>
+                    <td class="text-right">{{item.AccessoryPriceAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="align-left">{{item.AccessoryNotes}}</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericAddressObj"></lib-ucviewgeneric>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

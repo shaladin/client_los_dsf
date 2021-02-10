@@ -1,30 +1,23 @@
-<div *ngIf="result">
-  <div *ngIf="count1>0 && IsApvReady">
+
     <lib-ucSubsection [id]="'CreditApprovalHistoryId'" [title]="'Credit Approval History'"
       [panel]="'CreditApprovalHistory'">
     </lib-ucSubsection>
     <div id="CreditApprovalHistory">
-      <lib-ucapprovalhist [inputObj]="listCreditApprvObj">
-      </lib-ucapprovalhist>
+      <lib-ucapprovalHistory *ngIf="IsCrdApvReady"  [InputObj]="CrdApvObj">
+      </lib-ucapprovalHistory>
     </div>
-  </div>
 
-  <div *ngIf="count2>0 && IsApvReady">
-    <lib-ucSubsection [id]="'PackageValidityId'" [title]="'Package Validity Checking Approval History'"
+    <lib-ucSubsection [id]="'PackageValidityId'" [title]="'Offering Validity Checking Approval History'"
       [panel]="'PackageValidity'">
     </lib-ucSubsection>
     <div id="PackageValidity">
-      <lib-ucapprovalhist [inputObj]="listPckgValObj">
-      </lib-ucapprovalhist>
+      <lib-ucapprovalHistory *ngIf="IsOfferingReady"  [InputObj]="OfferingObj">
+      </lib-ucapprovalHistory>
     </div>
-  </div>
 
-  <div *ngIf="count3>0 && IsApvReady">
     <lib-ucSubsection [id]="'PreGoId'" [title]="'Pre Go Live Approval'" [panel]="'PreGo'">
     </lib-ucSubsection>
     <div id="PreGo">
-      <lib-ucapprovalhist [inputObj]="listPreGoObj">
-      </lib-ucapprovalhist>
+        <lib-ucapprovalHistory *ngIf="IsPregoliveApvReady"  [InputObj]="PregoliveApvObj">
+        </lib-ucapprovalHistory>
     </div>
-  </div>
-</div>

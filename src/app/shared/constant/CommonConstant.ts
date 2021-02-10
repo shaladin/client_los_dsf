@@ -40,6 +40,7 @@ export class CommonConstant {
   public static ApvCategoryCreditApproval = "CRD_APV"
   public static ApvCategoryPackageValidityChecking = "PCKG_VLDT_APV"
   public static ApvCategoryPreGoLive = "PRE_GPV_APV"
+  public static ApvCategoryOfferingValidity = "OFF_VLD_APV"
 
   public static INV_VERF_RESULT_STAT = "INV_VERF_RESULT_STAT";
 
@@ -329,12 +330,14 @@ export class CommonConstant {
   public static RefProdCompntLob = "LOB";
   public static RefProdCompntCurr = "CURR";
   public static RefProdCompntPayFreq = "PAYFREQ";
-  public static RefProdCompntProdType = "PROD_TYPE";
+    public static RefProdCompntProdType = "PROD_TYPE";
+  public static RefProdCompntDocChecklist = "DOC_CHKLST_APV";
 
   // REF REASON TYPE CODE
   public static RefReasonTypeCodeAppAgrCncl = "APP_AGR_CNCL";
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
+  public static RefReasonTypeDocChecklist = "DCK_LIST";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -453,6 +456,9 @@ export class CommonConstant {
   public static RefMasterTypeCodeInsAddCvgType = "INS_ADD_CVG_TYPE";
   public static RefMasterTypeCodeInsCoverPeriod = "INS_COVER_PERIOD";
   public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO";
+  public static RefMasterTypeCodeOtherExpenseOpl = "OTH_EXPENSE_OPL";
+  public static RefMasterTypeCodeFeeTypeOpl = "FEE_TYPE_OPL";
+  public static RefMasterTypeCodeInpFeeTypeOpl = "INP_FEE_TYPE_OPL";
   public static RefMasterTypeCodeLifeInsPayMethod = "LIFE_INS_PAY_METHOD";
   public static RefMasterTypeCodeLifeInscoBranch = "LIFE_INSCO_BRANCH";
   public static RefMasterTypeCodeReturnTaskCF4W = "RETURN_TASK_CF4W";
@@ -547,6 +553,8 @@ export class CommonConstant {
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
   public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
+  public static GSCodeInputOPLFeeType = "INPOPLFEETYPE";
+  public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
 
   //Serial Item
   public static Chassis_No = "Chassis No";
@@ -574,7 +582,7 @@ export class CommonConstant {
   public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV"; 
   public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV"; 
   public static CAT_CODE_CRD_APV = "CRD_APV"; 
-
+  public static CAT_CODE_DOC_CHCLIST_APV = "DOC_CHCKLIST_APV"; 
 
   
   //TRX_TYPE_CODE

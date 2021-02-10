@@ -341,11 +341,16 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   // Insurance Methods
   SaveForm(formDirective: FormGroupDirective) {
     var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
-
+    var insCpltzAmt;
     if (insuredBy == CommonConstant.InsuredByCompany || insuredBy == CommonConstant.InsuredByCustomerCompany) {
       var custDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       var totalPremiToCust = this.InsuranceDataForm.controls.TotalCustMainPremiAmt.value + this.InsuranceDataForm.controls.TotalCustAddPremiAmt.value + this.InsuranceDataForm.controls.TotalCustFeeAmt.value;
-      var insCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      if(this.InsuranceDataForm.controls.InsCpltzAmt.value == null){
+        insCpltzAmt = 0;
+      }
+      else{
+      insCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      }
 
       if (this.isGenerate == false) {
         this.toastr.warningMessage(ExceptionConstant.CLICK_GENERATE_INSURANCE);
@@ -436,7 +441,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.CvgAmt = this.InsuranceDataForm.controls.CvgAmt.value;
       this.saveObj.AppInsObjObj.Notes = this.InsuranceDataForm.controls.Notes.value;
       this.saveObj.AppInsObjObj.InsAssetRegion = this.InsuranceDataForm.controls.InsAssetRegion.value;
-      this.saveObj.AppInsObjObj.InsCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      if(this.InsuranceDataForm.controls.InsCpltzAmt.value == null){
+        this.saveObj.AppInsObjObj.InsCpltzAmt = 0;  
+      }
+      else{
+        this.saveObj.AppInsObjObj.InsCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      }
+      
       this.saveObj.AppInsObjObj.CustAdminFeeAmt = this.InsuranceDataForm.controls.CustAdminFeeAmt.value;;
       this.saveObj.AppInsObjObj.InscoAdminFeeAmt = this.InsuranceDataForm.controls.InscoAdminFeeAmt.value;
       this.saveObj.AppInsObjObj.CustStampDutyFee = this.InsuranceDataForm.controls.CustStampDutyFeeAmt.value;
@@ -513,7 +524,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.saveObj.AppInsuranceObj.TotalInscoFeeAmt = this.InsuranceDataForm.controls.InscoAdminFeeAmt.value + this.InsuranceDataForm.controls.InscoStampDutyFeeAmt.value;
       this.saveObj.AppInsuranceObj.TotalInscoDiscAmt = 0;
       this.saveObj.AppInsuranceObj.TotalInscoPremiAmt = this.saveObj.AppInsuranceObj.TotalInscoMainPremiAmt + this.saveObj.AppInsuranceObj.TotalInscoAddPremiAmt + this.saveObj.AppInsuranceObj.TotalInscoFeeAmt - this.saveObj.AppInsuranceObj.TotalInscoDiscAmt;
+      if(this.InsuranceDataForm.controls.InsCpltzAmt.value == null){
+        this.saveObj.AppInsuranceObj.TotalInsCptlzAmt =0;  
+      }
+      else{
       this.saveObj.AppInsuranceObj.TotalInsCptlzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      }
       this.saveObj.AppInsuranceObj.TotalPremiPaidByCustAmt = this.saveObj.AppInsuranceObj.TotalCustPremiAmt - this.saveObj.AppInsuranceObj.TotalInsCptlzAmt;
       this.saveObj.AppInsuranceObj.TotalInsIncomeAmt = this.saveObj.AppInsuranceObj.TotalCustPremiAmt - this.saveObj.AppInsuranceObj.TotalInscoPremiAmt;
     }
@@ -527,7 +543,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.CvgAmt = this.InsuranceDataForm.controls.CvgAmt.value;;
       this.saveObj.AppInsObjObj.Notes = this.InsuranceDataForm.controls.Notes.value;
       this.saveObj.AppInsObjObj.InsAssetRegion = this.InsuranceDataForm.controls.InsAssetRegion.value;
-      this.saveObj.AppInsObjObj.InsCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      if(this.InsuranceDataForm.controls.InsCpltzAmt.value == null){
+        this.saveObj.AppInsObjObj.InsCpltzAmt =0;  
+      }
+      else{
+        this.saveObj.AppInsObjObj.InsCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      }
       this.saveObj.AppInsObjObj.CustAdminFeeAmt = this.InsuranceDataForm.controls.CustAdminFeeAmt.value;
       this.saveObj.AppInsObjObj.InscoAdminFeeAmt = this.InsuranceDataForm.controls.InscoAdminFeeAmt.value;
       this.saveObj.AppInsObjObj.CustStampDutyFee = this.InsuranceDataForm.controls.CustStampDutyFeeAmt.value;
@@ -613,7 +634,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.saveObj.AppInsuranceObj.TotalInscoFeeAmt = this.InsuranceDataForm.controls.InscoAdminFeeAmt.value + this.InsuranceDataForm.controls.InscoStampDutyFeeAmt.value;
       this.saveObj.AppInsuranceObj.TotalInscoDiscAmt = 0;
       this.saveObj.AppInsuranceObj.TotalInscoPremiAmt = this.saveObj.AppInsuranceObj.TotalInscoMainPremiAmt + this.saveObj.AppInsuranceObj.TotalInscoAddPremiAmt + this.saveObj.AppInsuranceObj.TotalInscoFeeAmt - this.saveObj.AppInsuranceObj.TotalInscoDiscAmt;
-      this.saveObj.AppInsuranceObj.TotalInsCptlzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      if(this.InsuranceDataForm.controls.InsCpltzAmt.value == null){
+        this.saveObj.AppInsuranceObj.TotalInsCptlzAmt = 0;  
+      }
+      else{
+        this.saveObj.AppInsuranceObj.TotalInsCptlzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      }
+      
       this.saveObj.AppInsuranceObj.TotalPremiPaidByCustAmt = this.saveObj.AppInsuranceObj.TotalCustPremiAmt - this.saveObj.AppInsuranceObj.TotalInsCptlzAmt;
       this.saveObj.AppInsuranceObj.TotalInsIncomeAmt = this.saveObj.AppInsuranceObj.TotalCustPremiAmt - this.saveObj.AppInsuranceObj.TotalInscoPremiAmt;
     }
