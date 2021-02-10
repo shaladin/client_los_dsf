@@ -174,7 +174,7 @@ export class CustDetailPersonalComponent implements OnInit {
           VIPNotes: response.AppCustObj.VipNotes,
           CustPrefixName: response.AppCustPersonalObj.CustPrefixName,
           CustSuffixName: response.AppCustPersonalObj.CustSuffixName,
-          MrNationalityCode: response.AppCustPersonalObj.MrNationalityCode != "" ? response.AppCustPersonalObj.MrNationalityCode : this.NationalityObj[1]["MasterCode"],
+          MrNationalityCode: response.AppCustPersonalObj.MrNationalityCode != null && response.AppCustPersonalObj.MrNationalityCode != "" ? response.AppCustPersonalObj.MrNationalityCode : this.NationalityObj[1]["MasterCode"],
           MrEducationCode: response.AppCustPersonalObj.MrEducationCode != null ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
           MrReligionCode: response.AppCustPersonalObj.MrReligionCode != null ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
           MrSalutationCode: response.AppCustPersonalObj.MrSalutationCode != null ? response.AppCustPersonalObj.MrSalutationCode : this.SalutationObj[0].Key
@@ -197,7 +197,7 @@ export class CustDetailPersonalComponent implements OnInit {
           this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
         }
           
-        if (response.AppCustPersonalObj.MrNationalityCode != "" && response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
+        if ((response.AppCustPersonalObj.MrNationalityCode != null && response.AppCustPersonalObj.MrNationalityCode != "" ) && response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
           this.isLocal = false;
           this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
             (responseCountry) => {
@@ -205,6 +205,8 @@ export class CustDetailPersonalComponent implements OnInit {
               this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"]};
               this.lookupCountryObj.isReady = true;
             });
+        }else{
+          this.ChangeNationality(CommonConstant.NationalityLocal);
         }
       }
     );
