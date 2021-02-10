@@ -10,6 +10,8 @@ import { NapPagingComponent } from "./nap-paging/nap-paging.component";
 import { NapAddDetailComponent } from "./nap-add-detail/nap-add-detail.component";
 import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
+import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
   imports: [
@@ -18,6 +20,8 @@ import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-dat
     AdInsModule,
     InputNapComponentModule,
     ArchwizardModule,
+    MainDataComponentModule,
+    SharedModule
   ],
   declarations: [
     NapAddComponent,

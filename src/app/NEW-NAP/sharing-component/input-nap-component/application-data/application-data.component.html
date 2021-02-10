@@ -4,7 +4,7 @@
       <div class="card-body">
         <!-- <div class="px-3"> -->
         <form class="form form-horizontal" [formGroup]="NapAppModelForm"
-              (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
+          (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
 
           <!-- Sales Info -->
           <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
@@ -16,17 +16,18 @@
                 <label class="adInsLabel">Sales Officer </label>
               </div>
               <div class="col-md-4" *ngIf="isInputLookupObj">
-                <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm'
-                  [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
-                  (lookup)="getLookupEmployeeResponse($event)">
+                <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm' [enjiForm]='enjiForm'
+                  [identifier]="'employeeIdentifier'" (lookup)="getLookupEmployeeResponse($event)">
                 </lib-uclookupgeneric>
-                <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName"
-                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
               </div>
               <!-- Sales Supervisor -->
               <label class="col-md-2 adInsLabel">Sales Supervisor </label>
-              <label class="col-md-4 adInsLabel" *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
-              <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value"> -  </label>
+              <label class="col-md-4 adInsLabel"
+                *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}}
+              </label>
+              <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value"> - </label>
             </div>
 
             <div class="form-group row">
@@ -40,7 +41,8 @@
           </div>
 
           <!-- Application Info -->
-          <lib-ucSubsection [id]="'applicationInfomationId'" [title]="'Application Information'" [panel]="'applicationInfomation'">
+          <lib-ucSubsection [id]="'applicationInfomationId'" [title]="'Application Information'"
+            [panel]="'applicationInfomation'">
           </lib-ucSubsection>
           <div class="form-body" id="applicationInfomation">
             <div class="row">
@@ -62,11 +64,12 @@
                       [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
-                
+
                 <div class="form-group row">
                   <!-- First Installment Type -->
                   <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'">First Installment Type</label>
-                  <label class="col-md-4 adins-required-label" *ngIf="BizTemplateCode == 'OPL'"> First Rental Type </label>
+                  <label class="col-md-4 adins-required-label" *ngIf="BizTemplateCode == 'OPL'"> First Rental Type
+                  </label>
                   <div class="col-md-8">
                     <!-- <label class="adInsLabel"> {{FirstInstType}} </label> -->
                     <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
@@ -76,7 +79,8 @@
                         {{it.Value}}
                       </option>
                     </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode"
+                      [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -86,21 +90,21 @@
                   <label class="col-md-4 adInsLabel">Payment Frequency</label>
                   <div class="col-md-8">
                     <select class="form-control adInsInput" style="width: 50%" formControlName="PayFreqCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }" (change)="ChangeNumOfInstallmentPayFreq($event)">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }"
+                      (change)="ChangeNumOfInstallmentPayFreq($event)">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of applicationDDLitems['PAYFREQ']" value="{{it.Key}}">
                         {{it.Value}}
                       </option>
                     </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.PayFreqCode"
-                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
 
-                <div class="form-group row adins-required">
+                <div class="form-group row adins-required" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Tenor -->
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'">Tenor</label>
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode == 'OPL'">Rental Period (In Months)</label>
+                  <label class="col-md-4 adInsLabel">Tenor</label>
                   <div class="col-md-8">
                     <input type="number" class="form-control adInsInput" style="width: 50%" formControlName="Tenor"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
@@ -109,7 +113,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-                
+
                 <div class="form-group row" *ngIf="BizTemplateCode != 'OPL'">
                   <!-- Num of Installment -->
                   <label class="col-md-4 adInsLabel">Num of Installment</label>
@@ -137,15 +141,15 @@
                     <label class="adInsLabel">Interest Type</label>
                   </div>
                   <div class="col-md-8">
-                    <select  class="form-control adInsInput" style="width: auto" formControlName="InterestType"
+                    <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
                       (change)="ChangeInterestType()"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
                         {{it.Value}} </option>
                     </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.InterestType"
-                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
 
@@ -215,22 +219,25 @@
                   </div>
                 </div>
 
-                <!-- <div class="form-group row" *ngIf="BizTemplateCode == 'OPL'">
-                  Application Notes [Dikomen]
-                  <label class="col-md-4 adInsLabel">Application Notes</label>
+
+                <div class="form-group row adins-required" *ngIf="BizTemplateCode == 'OPL'">
+                  <label class="col-md-4 adInsLabel">Rental Period (In Months)</label>
                   <div class="col-md-8">
-                    <textarea class="form-control adInsInput width-100-per" id="basicTextarea" formControlName="ApplicationNotes"
-                      rows="3"></textarea>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.ApplicationNotes" [submit]="enjiForm.submitted">
+                    <input type="number" class="form-control adInsInput" style="width: 50%" formControlName="Tenor"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
+                      (change)="ChangeNumOfInstallmentTenor()">
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-                </div> -->
+                </div>
+
               </div>
             </div>
           </div>
 
           <div *ngIf="BizTemplateCode != 'OPL'">
-            <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'" [panel]="'crossInfomation'">
+            <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'"
+              [panel]="'crossInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="crossInfomation">
               <div class="form-actions right">
@@ -298,10 +305,12 @@
           <!-- Cross Info -->
           <!-- Loan Object -->
           <div *ngIf="BizTemplateCode != 'OPL'">
-            <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true" (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
+            <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true"
+              (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
           </div>
 
-          <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'" *ngIf="isIncludeMailingAddress">
+          <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'"
+            *ngIf="isIncludeMailingAddress">
           </lib-ucSubsection>
           <div id="mailingAddr" *ngIf="isIncludeMailingAddress">
             <div class="form-group row">
@@ -321,74 +330,77 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
-              [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
+              [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 
-          <div *ngIf="BizTemplateCode != 'OPL'">
-            <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
-            </lib-ucSubsection>
-            <div class="form-body" id="restData">
-              <div class="row">
-                <div class="col-md-6">
+          <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
+          </lib-ucSubsection>
+          <div class="form-body" id="restData">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <div class="form-group col-md-4 ">
+                    <label class="adins-required-label">Characteristic of Credit </label>
+                  </div>
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"
+                      (change)="ChangeCharacteristicOfCredit()">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
+                        {{it.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.CharaCredit" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div
+                  *ngIf="NapAppModelForm.controls.CharaCredit.value != 'OTHER' && NapAppModelForm.controls.CharaCredit.value != ''">
                   <div class="form-group row">
-                    <div class="form-group col-md-4 ">
-                      <label class="adins-required-label">Characteristic of Credit </label>
-                    </div>
+                    <label class="col-md-4 adInsLabel">Previous Agreement No </label>
                     <div class="col-md-8">
-                      <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"(change)= "ChangeCharacteristicOfCredit()">
+                      <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
+                      <lib-uc-show-errors [control]="NapAppModelForm.controls.PrevAgrNo" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 adins-required-label">Way of Restructure</label>
+                    <div class="col-md-8">
+                      <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
+                        <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
                           {{it.Value}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="NapAppModelForm.controls.CharaCredit"
+                      <lib-uc-show-errors [control]="NapAppModelForm.controls.WayRestructure"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                   </div>
-                  <div *ngIf="NapAppModelForm.controls.CharaCredit.value != 'OTHER' && NapAppModelForm.controls.CharaCredit.value != ''">
-                    <div class="form-group row">
-                      <label class="col-md-4 adInsLabel">Previous Agreement No </label>
-                      <div class="col-md-8">
-                        <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
-                        <lib-uc-show-errors [control]="NapAppModelForm.controls.PrevAgrNo" [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-md-4 adins-required-label">Way of Restructure</label>
-                      <div class="col-md-8">
-                        <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
-                          <option value="">-Select One-</option>
-                          <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
-                            {{it.Value}}
-                          </option>
-                        </select>
-                        <lib-uc-show-errors [control]="NapAppModelForm.controls.WayRestructure"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                      </div>
-                    </div>  
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-4 adins-required-label">Economic Sector (Slik)</label>
-                    <div class="col-md-8">  
-                    <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupEconomicSectorObj" [parentForm]='NapAppModelForm' [enjiForm]='enjiForm'
-                      [identifier]="'economicSectorIdentifier'" (lookup)="getLookupEconomicSector($event)">
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label">Economic Sector (Slik)</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupEconomicSectorObj"
+                      [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'economicSectorIdentifier'"
+                      (lookup)="getLookupEconomicSector($event)">
                     </lib-uclookupgeneric>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr"
+                      [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-                    </div> 
-                  </div> 
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="form-actions right">
-            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+              translate>
               <i class="ft-x"></i> Cancel
             </button>
             <button type="submit" class="btn btn-raised btn-primary">
