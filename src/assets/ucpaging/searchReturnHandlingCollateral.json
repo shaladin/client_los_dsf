@@ -138,7 +138,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/View/AppView",
+      "path": "VIEW_APP",
       "param": [
         {
           "type": "AppId",
@@ -175,7 +175,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/AddProcess/ReturnHandlingCollateral/Edit",
+                "path": "NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -205,7 +205,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/AddProcess/ReturnHandlingCollateral/Edit",
+                "path": "NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT",
                 "icon": "ft-edit-2",
                 "param": [
                   {

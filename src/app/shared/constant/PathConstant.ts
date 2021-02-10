@@ -364,4 +364,12 @@ export class PathConstant {
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     //#endregion
+
+    //#region FOU-View-Module
+    public static VIEW_FOU_CUST_PERSONAL_DETAIL = "Customer/PersonalDetail";
+    public static VIEW_FOU_OFFERING = "Offering";
+    public static VIEW_FOU_VENDOR_BRANCH = "Vendor/VendorBranch";
+    public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
+    public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";
+    //#endregion
 }

@@ -135,7 +135,7 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "param": [
               {
                 "type": "AppId",
@@ -165,7 +165,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/AgrmntActivation/Detail",
+                    "path": "NAP_ADM_PRCS_AGRMNT_ACT_DETAIL",
                     "param": [
                         {
                             "type": "AppId",

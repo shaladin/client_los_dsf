@@ -116,7 +116,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_NEW_PO_PAGING],{ "BizTemplateCode":  CommonConstant.CFNA});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PAGING],{ "BizTemplateCode":  CommonConstant.CFNA});
   }
 
   async Save(){

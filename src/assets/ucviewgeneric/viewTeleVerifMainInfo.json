@@ -10,7 +10,7 @@
           "type": "link",
           "label": "Lead No",
           "property": "LeadNo",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "param": [
             {
               "type": "LeadId",
@@ -27,7 +27,7 @@
           "type": "link",
           "label": "Copy From",
           "property": "CopyFrom",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "param": [
             {
               "type": "LeadId",

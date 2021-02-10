@@ -157,7 +157,7 @@
             "position": "center",
             "property": "AppNo",
             "target" : "_blank",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "param": [
               {
                 "type": "AppId",
@@ -188,7 +188,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/PurchaseOrder/PO",
+                    "path": "NAP_ADM_PRCS_PO_PO_EXT",
                     "param": [
                         {
                             "type": "AgrmntId",

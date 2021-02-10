@@ -165,7 +165,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Lead/ReviewMonitoring/Detail",
+          "path": "LEAD_RVW_MONITORING_DETAIL",
           "param": [
             {
               "type": "UploadMonitoringHId",

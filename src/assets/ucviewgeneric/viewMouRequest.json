@@ -10,7 +10,7 @@
             "label": "Mou No",
             "property": "MouCustNo",
             "name": "MouCustNo",
-            "path": "/Mou/Cust/View",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
               {

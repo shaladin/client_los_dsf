@@ -102,7 +102,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "../Detail/Personal",
+                                "path": "BACK_TO_DETAIL_PERSONAL",
                                 "param": [
                                     {
                                         "type": "AppId",
@@ -135,7 +135,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "../Detail/Company",
+                                "path": "BACK_TO_DETAIL_COY",
                                 "param": [
                                     {
                                         "type": "AppId",

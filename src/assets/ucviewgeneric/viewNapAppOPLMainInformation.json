@@ -11,7 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "name": "AppNo",
-          "path" : "/View/AppView", 
+          "path" : "VIEW_APP", 
           "target" : "_blank", 
           "param" : [ 
               {

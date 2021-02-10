@@ -75,7 +75,7 @@
               ],
               "result": {
                 "type" : "url",
-                "path" : "/Nap/AddProcess/AppDupCheckMainData/SubjMatch", 
+                "path" : "NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH", 
                 "param" : [ 
                   {"type": "AppId", 
                    "property" : "AppId",

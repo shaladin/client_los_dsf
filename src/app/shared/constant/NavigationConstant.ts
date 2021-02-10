@@ -8,6 +8,12 @@ export class NavigationConstant {
     public static BACK_TO_REQ_PASSWORD = PathConstant.CombinePath(['..', PathConstant.CONTENT_PAGE_REQ_PASSWORD]); //'../RequestPassword'
     public static BACK_TO_PAGING = PathConstant.CombinePath(['..', PathConstant.PAGING]); //'../Paging'
     public static BACK_TO_PAGING2 = PathConstant.CombinePath(['..', '..', PathConstant.PAGING]); //'../../Paging'
+    public static BACK_TO_DETAIL = PathConstant.CombinePath(['..', PathConstant.DETAIL]); //'../Detail'
+    public static BACK_TO_DETAIL_COY = PathConstant.CombinePath(['..', PathConstant.DETAIL, PathConstant.COY]); //'../Detail/Company'
+    public static BACK_TO_DETAIL_PERSONAL = PathConstant.CombinePath(['..', PathConstant.DETAIL, PathConstant.PERSONAL]); //'../Detail/Personal'
+    public static BACK_TO_MAIN = PathConstant.CombinePath(['..', PathConstant.MAIN]); //'../Main'
+    public static BACK_TO_SUBJECT = PathConstant.CombinePath(['..', PathConstant.SUBJECT]); //'../Subject'
+    public static BACK_TO_VIEW = PathConstant.CombinePath(['..', '..', PathConstant.VIEW]); //'../../View'
     public static CONTENT_PAGE_SELF_VERIF = PathConstant.CombinePath([PathConstant.PAGES, PathConstant.CONTENT_PAGE_SELF_VERIF]); //"/pages/SelfVerification"
     public static FORMS_REPORT = "/" + PathConstant.CombinePath([PathConstant.LR_FORMS, PathConstant.REPORT]); //'/forms/Report'
     public static INTEGRATION_LOS_ERR_DATA_MONITORING = "/" + PathConstant.CombinePath([PathConstant.LR_INTEGRATION, PathConstant.LOS_ERR_DATA_MONITORING]); //'/Integration/LosErrorDataMonitoring'
@@ -18,6 +24,7 @@ export class NavigationConstant {
     //#endregion
 
     //#region NAP
+    public static NAP_VIEW_ASSET = PathConstant.CombinePath([PathConstant.LR_NAP, PathConstant.NAP_VIEW_ASSET]); //"/Nap/ViewAsset"
     
     //#region MainData
     public static NAP_MAIN_DATA_NAP1_PAGING = PathConstant.CombinePath([PathConstant.LR_NAP, PathConstant.NAP_MAIN_DATA, PathConstant.NAP1_PAGING]); //"/Nap/MainData/NAP1/Paging"
@@ -39,12 +46,16 @@ export class NavigationConstant {
     public static NAP_ADD_PRCS_APP_DUP_CHECK_COY = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.APP_DUP_CHECK_COY]); //"/Nap/AddProcess/AppDupCheck/Company"
     public static NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.APP_DUP_CHECK_MAIN_DATA_PAGING]); //"/Nap/AddProcess/AppDupCheckMainData/Paging"
     public static NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST]); //"/Nap/AddProcess/AppDupCheckMainData/SubjList"
+    public static NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH]); //"/Nap/AddProcess/AppDupCheckMainData/SubjMatch"
     public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.CRD_APPRVL_RES_EXT_PAGING]); //"/Nap/AddProcess/CreditApprovalResultExt/Paging"
+    public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.CRD_APPRVL_RES_EXT_DETAIL]); //"/Nap/AddProcess/CreditApprovalResultExt/Detail"
     public static NAP_ADD_PRCS_COPY_CANCEL_APP = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.COPY_CANCEL_APP]); //'/Nap/AddProcess/CopyCancelledApplication'
     public static NAP_ADD_PRCS_OUTSTANDING_TC_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.OUTSTANDING_TC_PAGING]); //"/Nap/AddProcess/OutstandingTC/Paging"
+    public static NAP_ADD_PRCS_OUTSTANDING_TC_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.OUTSTANDING_TC_DETAIL]); //"/Nap/AddProcess/OutstandingTC/Detail"
     public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_ADD_TC_PAGING]); //'/Nap/AddProcess/ReturnHandlingAddTc/Paging'
-    public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_COLL_EDIT]); //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
+    public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_ADD_TC_DETAIL]); //'/Nap/AddProcess/ReturnHandlingAddTc/Detail'
     public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_COLL_PAGING]); //'/Nap/AddProcess/ReturnHandlingCollateral/Paging'
+    public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_COLL_EDIT]); //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
     public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_PAGING]); //'/Nap/AddProcess/ReturnHandling/Paging'
     public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_EDIT_APP_PAGING]); //'Nap/AddProcess/ReturnHandling/EditAppPaging'
     public static NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADD_PRCS_HEADER, PathConstant.RETURN_HANDLING_COMM_RSV_FUND_PAGING]); //"/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"
@@ -55,19 +66,26 @@ export class NavigationConstant {
     //#region AdminProcess
     public static NAP_ADM_PRCS_HEADER = PathConstant.CombinePath([PathConstant.LR_NAP, PathConstant.NAP_ADM_PRCS]); //'Nap/AdminProcess'
     public static NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.AGRMNT_CANCEL_PAGING]); //'/Nap/AdminProcess/AgreementCancellation/Paging'
+    public static NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.AGRMNT_CANCEL_DETAIL]); //'/Nap/AdminProcess/AgreementCancellation/Detail'
     public static NAP_ADM_PRCS_AGRMNT_ACT_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.AGRMNT_ACT_PAGING]); //'/Nap/AdminProcess/AgrmntActivation/Paging'
+    public static NAP_ADM_PRCS_AGRMNT_ACT_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.AGRMNT_ACT_DETAIL]); //'/Nap/AdminProcess/AgrmntActivation/Detail'
     public static NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.CUST_CONFIRM_SUBJ_VIEW]); //'/Nap/AdminProcess/CustConfirmation/Subj/View'
     public static NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.CUST_CONFIRM_SUBJ_DETAIL]); //'/Nap/AdminProcess/CustConfirmation/Subj/Detail'
     public static NAP_ADM_PRCS_CUST_CONFIRM_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.CUST_CONFIRM_PAGING]); //'/Nap/AdminProcess/CustConfirmation/Paging'
     public static NAP_ADM_PRCS_CUST_CONFIRM_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.CUST_CONFIRM_DETAIL]); //'/Nap/AdminProcess/CustConfirmation/Detail'
     public static NAP_ADM_PRCS_DO_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DO_PAGING]); //'/Nap/AdminProcess/DeliveryOrder/Paging'
+    public static NAP_ADM_PRCS_DO_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DO_DETAIL]); //'/Nap/AdminProcess/DeliveryOrder/Detail'
     public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DO_MULTI_ASSET_PAGING]); //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
+    public static NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.DO_MULTI_ASSET_DETAIL]); //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail"
     public static NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NAP_DOC_SIGNER_PAGING]); //'/Nap/AdminProcess/DocumentSigner/Paging'
+    public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NAP_DOC_SIGNER_DETAIL]); //'/Nap/AdminProcess/DocumentSigner/Detail'
     public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NAP_CFNA_DOC_SIGNER_PAGING]); //'/Nap/AdminProcess/NewDocumentSigner/Paging'  => '/Nap/AdminProcess/CfnaDocumentSigner/Paging'
+    public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NAP_CFNA_DOC_SIGNER_DETAIL]); //'/Nap/AdminProcess/NewDocumentSigner/Detail'  => '/Nap/AdminProcess/CfnaDocumentSigner/Detail'
     public static NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NAP_DOC_PRINT_PAGING]); //'/Nap/AdminProcess/DocPrint/Paging/'
+    public static NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NAP_DOC_PRINT_VIEW]); //'/Nap/AdminProcess/DocPrint/View/'
     public static NAP_ADM_PRCS_INVOICE_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.INVOICE_DETAIL]); //"/Nap/AdminProcess/Invoice/Detail"
     public static NAP_ADM_PRCS_INVOICE_VERIF_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.INVOICE_VERIF_PAGING]); //"/Nap/AdminProcess/InvoiceVerif/Paging"
-    public static NAP_ADM_PRCS_INVOICE_NEW_PO_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NEW_PO_PAGING]); //"/Nap/AdminProcess/NewPurchaseOrder/Paging"
+    public static NAP_ADM_PRCS_INVOICE_VERIF_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.INVOICE_VERIF_DETAIL]); //"/Nap/AdminProcess/InvoiceVerif/Detail"
     public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.OFFERING_VALIDITY_APPRV_PAGING]); //"/Nap/AdminProcess/OfferingValidityApproval/Paging"
     public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.OFFERING_VALIDITY_APPRV_DETAIL]); //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
     public static NAP_ADM_PRCS_PGL_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.PGL_PAGING]); //'/Nap/AdminProcess/PreGoLive/Paging'
@@ -79,11 +97,13 @@ export class NavigationConstant {
     public static NAP_ADM_PRCS_PO_PO_EXT_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.PO_PO_EXT_DETAIL]); //"/Nap/AdminProcess/PurchaseOrder/PO/Detail"
     public static NAP_ADM_PRCS_PO_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.PO_PAGING]); //"/Nap/AdminProcess/PurchaseOrder/Paging"
     public static NAP_ADM_PRCS_NEW_PO_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NEW_PO_PAGING]); //'/Nap/AdminProcess/NewPurchaseOrder/Paging'
+    public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_ADM_PRCS_HEADER, PathConstant.NEW_PO_DETAIL]); //'/Nap/AdminProcess/NewPurchaseOrder/Detail'
     //#endregion
 
     //#region CreditProcess
     public static NAP_CRD_PRCS_HEADER = PathConstant.CombinePath([PathConstant.LR_NAP, PathConstant.NAP_CRD_PRCS]); //'Nap/CreditProcess'
     public static NAP_CRD_PRCS_COMM_RSV_FUND_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_CRD_PRCS_HEADER, PathConstant.COMM_RSV_FUND_PAGING]); //"/Nap/CreditProcess/CommissionReservedFund/Paging"
+    public static NAP_CRD_PRCS_COMM_RSV_FUND_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_CRD_PRCS_HEADER, PathConstant.COMM_RSV_FUND_DETAIL]); //"/Nap/CreditProcess/CommissionReservedFund/Detail"
     public static NAP_CRD_PRCS_CRD_APPRV_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_CRD_PRCS_HEADER, PathConstant.CRD_APPRV_PAGING]); //"/Nap/CreditProcess/CreditApproval/Paging"
     public static NAP_CRD_PRCS_CRD_APPRV_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_CRD_PRCS_HEADER, PathConstant.CRD_APPRV_DETAIL]); //"/Nap/CreditProcess/CreditApproval/Detail"
     public static NAP_CRD_PRCS_CRD_APPRV_CFNA_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_CRD_PRCS_HEADER, PathConstant.CRD_APPRV_CFNA_DETAIL]); //"/Nap/CreditProcess/CreditApprovalCfna/Detail"
@@ -181,7 +201,22 @@ export class NavigationConstant {
     //#endregion
     
     //#region NAP-VIEW
+    public static VIEW_APP = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_APP]); //'/View/AppView'
+    public static BACK_VIEW_APP = PathConstant.CombinePath(['..', '..', NavigationConstant.VIEW_APP]); //'../../View/AppView'
+    public static VIEW_AGRMNT = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_AGRMNT]); //"/View/AgrmntView"
+    public static VIEW_CUST_EXPSR = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_CUST_EXPSR]); //"/View/CustExposureView"
+    public static VIEW_LEAD = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_LEAD]); //"/View/Lead"
+    public static VIEW_MOU_CUST = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_MOU_CUST]); //"/View/Mou/CustView"
+    public static VIEW_PHN_VERIF = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_PHN_VERIF]); //"/View/PhoneVerifView"
     public static VIEW_SRVY = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_SRVY]); //'/View/SurveyView'
+    //#endregion
+
+    //#region FOU-VIEW
+    public static VIEW_FOU_CUST_PERSONAL_DETAIL = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_FOU_CUST_PERSONAL_DETAIL]); //'/View/Customer/PersonalDetail'
+    public static VIEW_FOU_OFFERING = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_FOU_OFFERING]); //'/View/Offering'
+    public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_FOU_SRVY_ORDER]); //'/View/Survey/SurveyOrder'
+    public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_FOU_SRVY_TASK]); //'/View/Survey/SurveyTask'
+    public static VIEW_FOU_VENDOR_BRANCH = "/" + PathConstant.CombinePath([PathConstant.VIEW, PathConstant.VIEW_FOU_VENDOR_BRANCH]); //'/View/Vendor/VendorBranch'
     //#endregion
 
     //#region MOU
@@ -189,9 +224,16 @@ export class NavigationConstant {
     public static MOU_CUST_CANCEL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_CANCEL]); //'/Mou/Cust/Cancel'
     public static MOU_CUST_INQUIRY = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_INQUIRY]); //'/Mou/Cust/Inquiry'
     public static MOU_CUST_DOC_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_DOC_PAGING]); //'/Mou/CustomerDoc/Paging'
+    public static MOU_CUST_DOC_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_DOC_DETAIL]); //'/Mou/CustomerDoc/Detail'
     public static MOU_DOC_SIGNER_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_DOC_SIGNER_PAGING]); //'/Mou/DocSigner/Paging'
+    public static MOU_DOC_SIGNER_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_DOC_SIGNER_DETAIL]); //'/Mou/DocSigner/Detail'
     public static MOU_CUST_LEGAL_RVW_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_LEGAL_RVW_PAGING]); //'/Mou/CustomerLegalReview/Paging'
+    public static MOU_CUST_LEGAL_RVW_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_LEGAL_RVW_DETAIL]); //'/Mou/CustomerLegalReview/Detail'
     public static MOU_CUST_RVW_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_RVW_PAGING]); //'/Mou/Cust/ReviewPaging'
+    public static MOU_CUST_RVW_FCTR = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_RVW_FCTR]); //'/Mou/Cust/ReviewFactoring'
+    public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_RVW_GENERAL]); //'/Mou/Cust/ReviewGeneral'
+    public static MOU_CUST_APPRV_FCTR = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_APPRV_FCTR]); //'/Mou/Cust/ApprovalFactoring'
+    public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_APPRV_GENERAL]); //'/Mou/Cust/ApprovalGeneral'
     public static MOU_REQ_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_REQ_PAGING]); //"/Mou/Request/Paging"
     public static MOU_REQ_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_REQ_DETAIL]); //'/Mou/Request/Detail'
     public static MOU_CUST_APPRV = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_APPRV]); //"/Mou/Cust/Approval"
@@ -203,7 +245,9 @@ export class NavigationConstant {
     public static MOU_DUP_CHECK_SIMILAR_COY = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_DUP_CHECK_SIMILAR_COY]); //"/Mou/DuplicateCheck/SimilarCompany"
     public static MOU_DUP_CHECK_EXIST_COY = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_DUP_CHECK_EXIST_COY]); //"/Mou/DuplicateCheck/ExistingCompany"
     public static MOU_EXECUTION_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_EXECUTION_PAGING]); //"/Mou/Execution/Paging"
+    public static MOU_EXECUTION_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_EXECUTION_DETAIL]); //"/Mou/Execution/Detail"
     public static MOU_CUST_OUTSTANDING_TC_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_OUTSTANDING_TC_PAGING]); //"/Mou/Cust/OutstandingTC/Paging"
+    public static MOU_CUST_OUTSTANDING_TC_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_MOU, PathConstant.MOU_CUST_OUTSTANDING_TC_DETAIL]); //"/Mou/Cust/OutstandingTC/Detail"
     //#endregion
 
     //#region LEAD
@@ -211,8 +255,11 @@ export class NavigationConstant {
     public static LEAD_INQUIRY = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_INQUIRY]); //'/Lead/LeadInquiry'
     public static LEAD_INPUT_MAIN_INFO = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_INPUT_MAIN_INFO]); //'/Lead/LeadInput/MainInfo'
     public static LEAD_RVW_MONITORING_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_RVW_MONITORING_PAGING]); //'/Lead/ReviewMonitoring/Paging'
+    public static LEAD_RVW_MONITORING_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_RVW_MONITORING_DETAIL]); //'/Lead/ReviewMonitoring/Detail'
     public static LEAD_TELE_VERIF_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_TELE_VERIF_PAGING]); //'/Lead/TeleVerif/Paging'
+    public static LEAD_TELE_VERIF_DETAIL = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_TELE_VERIF_DETAIL]); //'/Lead/TeleVerif/Detail'
     public static LEAD_FRAUD_VERIF_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_FRAUD_VERIF_PAGING]); //"/Lead/FraudVerif/Paging"
+    public static LEAD_FRAUD_VERIF_PAGE = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_FRAUD_VERIF_PAGE]); //"/Lead/FraudVerif/Page"
     public static LEAD_CONFIRM_CANCEL = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_CONFIRM_CANCEL]); //"/Lead/ConfirmCancel"
     public static LEAD_UPDATE_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_UPDATE_PAGING]); //"Lead/LeadUpdate/Paging"
     public static LEAD_PAGING = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_PAGING]); //"/Lead/Lead/Paging"
