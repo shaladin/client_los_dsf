@@ -25,7 +25,8 @@
                 <label class="col-md-4  " translate>{{subjectName}}</label>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Customer Name</label>
+                <label class="col-md-2 adInsLabel" *ngIf="this.AppObj.BizTemplateCode != 'FL4W'" translate>Customer Name</label> 
+                <label class="col-md-2 adInsLabel" *ngIf="this.AppObj.BizTemplateCode == 'FL4W'" translate>Lessee Name</label> 
                 <label class="col-md-4  " translate
                   >{{this.AppCustObj?.CustName}}</label>
                 <!-- <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
