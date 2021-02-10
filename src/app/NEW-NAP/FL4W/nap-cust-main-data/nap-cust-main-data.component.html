@@ -20,7 +20,7 @@
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <div class="step" data-target="#customer-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
-                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
+                id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="NextStep('CUST')">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Customer Data</span>
               </button>
@@ -28,14 +28,14 @@
             <div class="line"></div>
             <div class="step" data-target="#family-tab" [hidden]="MrCustTypeCode != 'PERSONAL'">
               <button type="button" class="step-trigger" role="tab" aria-controls="family-tab" id="family-tab-trigger"
-                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('FAM')" [hidden]="MrCustTypeCode != 'PERSONAL'">
+                [disabled]="!(AppStepIndex >= 2)" (click)="NextStep('FAM')" [hidden]="MrCustTypeCode != 'PERSONAL'">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Family Data</span>
               </button>
             </div>
             <div class="step" data-target="#mgmnt-shrholder-tab" [hidden]="MrCustTypeCode != 'COMPANY'">
               <button type="button" class="step-trigger" role="tab" aria-controls="mgmnt-shrholder-tab" id="mgmnt-shrholder-tab-trigger" 
-                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('SHR')" [hidden]="MrCustTypeCode != 'COMPANY'">
+                [disabled]="!(AppStepIndex >= 3)" (click)="NextStep('SHR')" [hidden]="MrCustTypeCode != 'COMPANY'">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Management Shareholder Data</span>
               </button>
@@ -43,7 +43,7 @@
             <div class="line"></div>
             <div class="step" data-target="#guarantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('GUAR')">
+                id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="NextStep('GUAR')">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Guarantor Data</span>
               </button>
