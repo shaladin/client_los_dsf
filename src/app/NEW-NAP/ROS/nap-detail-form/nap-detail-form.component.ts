@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
@@ -14,13 +13,16 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-nap-add-detail',
-  templateUrl: './nap-add-detail.component.html',
+  selector: 'app-nap-detail-form',
+  templateUrl: './nap-detail-form.component.html',
   providers: [NGXToastrService]
 })
-export class NapAddDetailComponent implements OnInit {
+export class NapDetailFormComponent implements OnInit {
 
   @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepperPersonal: Stepper;
@@ -39,15 +41,16 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  BizTemplateCode: string = CommonConstant.OPL;
+  bizTemplateCode: string;
 
   AppStep = {
+    "NAPD": 1,
     "APP": 1,
     "ASSET": 2,
-    "INS": 3,
-    "LFI": 4,
-    "FIN": 5,
-    "TC": 6,
+    "AEX": 3,
+    "FIN": 4,
+    "TC": 5,
+    "UPD": 6
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -55,6 +58,9 @@ export class NapAddDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   OnFormReturnInfo = false;
+  dmsObj: DMSObj;
+  appNo: string;
+  isDmsReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -80,7 +86,7 @@ export class NapAddDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -111,8 +117,11 @@ export class NapAddDetailComponent implements OnInit {
             this.NapObj = response;
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
-
+            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
+              this.initDms();
+            }
             this.ChangeStepper();
+            this.bizTemplateCode = this.NapObj.BizTemplateCode;
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
           }
@@ -121,6 +130,48 @@ export class NapAddDetailComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      response => {
+        this.appNo = response[0]['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        let isExisting = response[1]['IsExistingCust'];
+        if(isExisting){
+          let custNo = response[1]['CustNo'];
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+        }
+        else{
+          this.dmsObj.MetadataParent = null;
+        }
+
+        let mouId = response[0]['MouCustId'];
+        if(mouId != null && mouId != ""){
+          let mouObj = {MouCustId : mouId};
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result =>{
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else{
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+  
   stepperMode: string = CommonConstant.CustTypeCompany;
   ChangeStepper() {
     if (this.custType == CommonConstant.CustTypePersonal) {
@@ -132,12 +183,13 @@ export class NapAddDetailComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
+        "NAPD": 1,
         "APP": 1,
         "ASSET": 2,
-        "INS": 3,
-        "LFI": 4,
-        "FIN": 5,
-        "TC": 6,
+        "AEX": 3,
+        "FIN": 4,
+        "TC": 5,
+        "UPD": 6
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -148,12 +200,13 @@ export class NapAddDetailComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
+        "NAPD": 1,
         "APP": 1,
         "ASSET": 2,
-        "INS": 3,
-        "LFI": 4,
-        "FIN": 5,
-        "TC": 6,
+        "AEX": 3,
+        "FIN": 4,
+        "TC": 5,
+        "UPD": 6
       };
     }
   }
@@ -201,24 +254,24 @@ export class NapAddDetailComponent implements OnInit {
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
+    this.AppStep = {
+      "NAPD": 1,
+      "APP": 1,
+      "ASSET": 2,
+      "AEX": 3,
+      "FIN": 4,
+      "TC": 5,
+      "UPD": 6
+    };
     switch (AppStep) {
-      case CommonConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
-        break;
-      case CommonConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
-        break;
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
       case CommonConstant.AppStepAsset:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case CommonConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
-        break;
-      case CommonConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
+      case CommonConstant.AppStepAssetExpense:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAssetExpense];
         break;
       case CommonConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
@@ -226,7 +279,9 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
@@ -234,8 +289,8 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      
-     this.ucViewMainProd.initiateForm();
+
+    this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -244,7 +299,9 @@ export class NapAddDetailComponent implements OnInit {
     } else {
       this.UpdateAppStep(Step);
     }
-
+    if(Step == CommonConstant.AppStepUplDoc){
+      this.initDms();
+    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
@@ -270,13 +327,14 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
   }
 
   Submit() {
@@ -293,8 +351,7 @@ export class NapAddDetailComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
-
+            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
           }
         )
       }
@@ -318,7 +375,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallback(ev) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

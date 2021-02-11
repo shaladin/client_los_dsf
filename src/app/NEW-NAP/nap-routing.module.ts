@@ -38,7 +38,7 @@ const routes: Routes = [
         loadChildren: './FCTR/input-nap.module#InputNapFCTRModule'
       },
       {
-        path: 'ROS',
+        path: 'OPL',
         loadChildren: './ROS/input-nap.module#InputNapROSModule'
       },
       {

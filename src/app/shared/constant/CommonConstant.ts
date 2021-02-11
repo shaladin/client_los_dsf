@@ -123,6 +123,7 @@ export class CommonConstant {
   public static AppStepCNFR = "CNFR";
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
+  public static AppStepAssetExpense = "AEX";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
   public static FCTR = "FCTR";

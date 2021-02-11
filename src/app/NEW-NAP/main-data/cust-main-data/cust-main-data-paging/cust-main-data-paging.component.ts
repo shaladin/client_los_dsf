@@ -96,6 +96,9 @@ export class CustMainDataPagingComponent implements OnInit {
         case CommonConstant.CFNA :
           AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
         break;
+        case CommonConstant.OPL :
+          AdInsHelper.RedirectUrl(this.router,["Nap/OPL/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
+        break;
       }
     }
   }
