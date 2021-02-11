@@ -146,7 +146,8 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
-    this.initMailingAddress();
+
+    // this.initMailingAddress(); pindah ke dalem getAppModelInfo() karena pas dicheck biz template disini masih undefined
 
     var AppObj = {
       AppId: this.appId
@@ -174,20 +175,6 @@ export class ApplicationDataComponent implements OnInit {
         );
       }
     );
-
-    if (this.BizTemplateCode != CommonConstant.OPL) {
-      this.GetCrossInfoData();
-    }
-    else {
-      this.NapAppModelForm.controls.PayFreqCode.clearValidators();
-      this.NapAppModelForm.controls.PayFreqCode.updateValueAndValidity();
-      this.NapAppModelForm.controls.InterestTypeDesc.clearValidators();
-      this.NapAppModelForm.controls.InterestTypeDesc.updateValueAndValidity();
-      this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
-      this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
-      this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
-      this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
-    }
   }
 
   getDDLFromProdOffering(refProdCompntCode:string){
@@ -320,9 +307,21 @@ export class ApplicationDataComponent implements OnInit {
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
         }); 
-        
+        console.log("TEST");
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
+        if(this.BizTemplateCode != CommonConstant.OPL){
+          this.getInterestTypeCode();
+          this.initMailingAddress();
+          this.GetCrossInfoData();
+        }
+        else {
+          this.NapAppModelForm.controls.InterestType.clearValidators();
+          this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
+          this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+          this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
+          this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
+          this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
+        }
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
         this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);

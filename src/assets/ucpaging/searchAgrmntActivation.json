@@ -27,23 +27,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "DISTRIBUTION_STAT",
-            "id": "DistributionStatusId",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "isSelectOne": false,
-            "url": "",
-            "path":"/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Distribution Status",
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "DISTRIBUTION_STAT",
-            "items": [],
-            "itemsUrl": []
-        },
-        {
             "type" : "textbox",
             "name" : "WF.USERNAME",
             "id" : "TaskClaimById",
@@ -108,12 +91,6 @@
             "name": "A.PROD_OFFERING_NAME"
         },
         {
-            "type": "sort",
-            "position": "left",
-            "label": "Distribution Status",
-            "name": ""
-        },
-        {
             "type": "label",
             "position": "center",
             "label": "Action"
@@ -153,11 +130,6 @@
             "key": "ViewProdOffering",
             "position": "left",
             "property": "ProdOfferingName"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": ""
         },
         {
             "type": "action",

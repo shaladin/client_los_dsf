@@ -381,7 +381,7 @@ export class CustomerDataComponent implements OnInit {
       }
     }
 
-    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+    else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       var totalSharePrcnt = 0;
 
       if (this.listShareholder != undefined) {
@@ -871,8 +871,9 @@ export class CustomerDataComponent implements OnInit {
     if (custModelCode == CommonConstant.CustModelNonProfessional) {
       appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
-
-    this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
+    if (custModelCode != CommonConstant.CustModelNonProfessional) {
+      this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
+    }
 
     if (this.isExisting) {
       appCustPersonalJobDataObj.RowVersion = this.custDataPersonalObj.AppCustPersonalJobDataObj.RowVersion;
@@ -1124,9 +1125,27 @@ export class CustomerDataComponent implements OnInit {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
             this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
-            this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
-            this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
+            if(response["AppCustAddrLegalObj"] == null){
+              this.custDataPersonalObj.AppCustAddrLegalObj = new AppCustAddrObj();
+            }
+            else{
+              this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
+
+            }
+            if(response["AppCustAddrResidenceObj"] == null){
+              this.custDataPersonalObj.AppCustAddrResidenceObj = new AppCustAddrObj();
+            }
+            else{
+              this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
+            }
+            
+            if(response["AppCustAddrMailingObj"] == null){
+              this.custDataPersonalObj.AppCustAddrMailingObj = new AppCustAddrObj();
+            }
+            else{
             this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+            }
+            
             this.custDataPersonalObj.AppCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"];
             this.listAppCustPersonalContactInformation = this.custDataPersonalObj.AppCustPersonalContactPersonObjs;
             this.custDataPersonalObj.AppCustPersonalFinDataObj = response["AppCustPersonalFinDataObj"];

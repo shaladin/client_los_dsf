@@ -28,7 +28,7 @@ export class CustMainDataAddComponent implements OnInit {
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
   bizTemplateCode: string;
-  isDisableCopyAppFrom: boolean = true;
+  isCopyData: boolean = false;
   user: any;
 
   NapAppForm = this.fb.group({
@@ -89,7 +89,6 @@ export class CustMainDataAddComponent implements OnInit {
     });
   }
 
-  isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
     this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -240,6 +239,9 @@ export class CustMainDataAddComponent implements OnInit {
           break;
           case CommonConstant.CFNA :
             AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": response["AppId"]});
+          break;
+          case CommonConstant.OPL :
+            AdInsHelper.RedirectUrl(this.router,["Nap/OPL/NAP1"], { "AppId": response["AppId"]});
           break;
         }
       }
