@@ -6,8 +6,9 @@ export const ROUTES: RouteInfo[] = [
   {
     Path: '', Title: 'OPL', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
-      { Path: '/Inquiry/AppInquiry', Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: '/Nap/ApplicationProcess/ApplicationReview/Paging', Title: 'Application Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: '/requisitiondecision/paging', Title: 'Requisition Decision', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: '/Inquiry/AppInquiry', Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: '/Inquiry/PurchaseTrackingInquiry', Title: 'Purchase Tracking Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
     ], Params: []
   },
