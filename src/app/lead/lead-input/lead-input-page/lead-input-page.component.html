@@ -42,8 +42,8 @@
             <span class="bs-stepper-label">LEAD DATA</span>
           </button>
         </div>
-        <div  *ngIf="pageType != 'update'" class="line"></div>
-        <div *ngIf="pageType != 'update'" class="step" data-target="#upload-data-tab">
+        <div  class="line"></div>
+        <div class="step" data-target="#upload-data-tab">
           <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab" id="upload-data-tab-trigger"
           [disabled]="!(AppStepIndex >= 3)"
         (click)="EnterTab('uploadDocument')">
@@ -62,7 +62,7 @@
         <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
         </app-lead-input-lead-data>
       </div>
-      <div *ngIf="pageType != 'update'" id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
+      <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
         <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
       </div>
       <!-- </div> -->
