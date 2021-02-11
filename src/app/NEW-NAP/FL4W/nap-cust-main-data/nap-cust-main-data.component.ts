@@ -69,7 +69,7 @@ export class NapCustMainDataComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -158,7 +158,6 @@ export class NapCustMainDataComponent implements OnInit {
         break;
     }
     this.ucViewMainProd.initiateForm();
-    this.NextStep(AppStep, true);
   }
 
   getEvent(event) {
@@ -180,11 +179,11 @@ export class NapCustMainDataComponent implements OnInit {
     }
   }
 
-  async NextStep(Step, IsChangeByUser: boolean = false) {
+  async NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       async (response) => {
-        if(!IsChangeByUser) await this.ChangeTab(Step);
+        this.ChangeTab(Step);
         this.stepper.to(this.AppStepIndex);
       }
     )
