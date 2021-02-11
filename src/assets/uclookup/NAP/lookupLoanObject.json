@@ -6,7 +6,7 @@
             "name": "MASTER_CODE",
             "id": "MasterCodeId",
             "value": "",
-            "label": "Master Code",
+            "label": "Loan Object Code",
             "placeholder": "Placeholder"
         },
         {
@@ -14,7 +14,7 @@
             "name": "DESCR",
             "id": "DescrId",
             "value": "",
-            "label": "Description",
+            "label": "Loan Object Name",
             "placeholder": "Placeholder"
         },
         {
@@ -47,13 +47,13 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Master Code",
+            "label": "Loan Object Code",
             "name" : "MasterCode"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Description",
+            "label": "Loan Object Name",
             "name" : "Descr"
         },
         {
