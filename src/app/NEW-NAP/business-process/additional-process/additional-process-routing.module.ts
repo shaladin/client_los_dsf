@@ -25,6 +25,7 @@ import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/ret
 import { DupCheckMdPagingComponent } from './app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component';
 import { DupCheckMdSubjListComponent } from './app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component';
 import { DupCheckMdSubjMatchComponent } from './app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component';
+import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,13 @@ const routes: Routes = [
         component: ReturnHandlingEditAppPagingComponent,
         data: {
           title: 'Return Handling Edit App Paging'
+        }
+      },
+      {
+        path: 'ReturnHandling/NAP2',
+        component: ReturnHandlingNewEditAppPagingComponent,
+        data: {
+          title: 'Return Handling Edit NAP2 Paging'
         }
       },
       {
