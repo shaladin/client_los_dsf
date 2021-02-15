@@ -111,8 +111,16 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       this.toastr.warningMessage("All Asset Must Select Decision");
     }
     else {
-      this.toastr.successMessage("Submit Requisition Decision Success");
-      this.router.navigate(['../paging'], { relativeTo: this.route });
+      var requestRequisitionDecisionObj = {
+        AppId: this.AppId
+      };
+
+      this.http.post(URLConstant.SubmitRequisitionDecision, requestRequisitionDecisionObj).toPromise().then(
+        (response) => {
+          this.toastr.successMessage("Submit Requisition Decision Success");
+          this.router.navigate(['../paging'], { relativeTo: this.route });
+        }
+      );
     }
   }
 

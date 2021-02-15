@@ -810,8 +810,7 @@
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
                       <div class="col-md-8">
-                        <input type="number" class="form-control" formControlName="ManufacturingYear"
-                          (focusout)="ChangeManuYear()">
+                        <input type="number" class="form-control" formControlName="ManufacturingYear">
                         <lib-uc-show-errors [control]="AssetDataForm.controls.ManufacturingYear"
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>

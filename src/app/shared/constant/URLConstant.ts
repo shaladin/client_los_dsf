@@ -1313,4 +1313,5 @@ export class URLConstant {
   
   // Requisition Decision
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
+  public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
 }
