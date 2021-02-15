@@ -324,7 +324,7 @@ export class AssetDataComponent implements OnInit {
     await this.GetRefProdCompt();
     await this.GetAppCust();
     await this.GetAppCustPhone();
-    this.bindAllRefMasterObj();
+    await this.bindAllRefMasterObj();
     this.initLookup();
     this.locationAddrObj = new AddrObj();
     this.delivAddrObj = new AddrObj();
@@ -1197,11 +1197,13 @@ export class AssetDataComponent implements OnInit {
       FullAssetName: event.FullAssetName,
       AssetCategoryCode: event.AssetCategoryCode
     });
-    if (this.AssetDataForm.controls.SupplCode.value != undefined && this.AssetDataForm.controls.SupplCode.value != '') {
-      this.SetMinManuYear()
-    }
-    if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
-      this.SetDpValue();
+    if(this.BizTemplateCode != CommonConstant.OPL){
+      if (this.AssetDataForm.controls.SupplCode.value != undefined && this.AssetDataForm.controls.SupplCode.value != '') {
+        this.SetMinManuYear()
+      }
+      if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
+        this.SetDpValue();
+      }
     }
   }
 
@@ -1727,7 +1729,7 @@ export class AssetDataComponent implements OnInit {
     var critAssetObj = new CriteriaObj();
     critAssetObj.DataType = 'text';
     critAssetObj.restriction = AdInsConstant.RestrictionEq;
-    critAssetObj.propName = 'B.ASSET_TYPE_NAME';
+    critAssetObj.propName = 'B.ASSET_TYPE_CODE';
     critAssetObj.value = this.RefProdCmptAssetType.CompntValue;
     assetCrit.push(critAssetObj);
 
@@ -1781,13 +1783,6 @@ export class AssetDataComponent implements OnInit {
     critSuppObj.value = this.OfficeCode;
     suppCrit.push(critSuppObj);
 
-    var critSupp2Obj = new CriteriaObj();
-    critSupp2Obj.DataType = 'text';
-    critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
-    critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
-    critSupp2Obj.value = 'SUPPLIER_BRANCH';
-    suppCrit.push(critSupp2Obj);
-
     var critSuppSupplSchmObj = new CriteriaObj();
     critSuppSupplSchmObj.DataType = 'text';
     critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
@@ -1832,58 +1827,58 @@ export class AssetDataComponent implements OnInit {
     return this.InputLookupAccSupObj;
   }
 
-  bindAllRefMasterObj() {
-    this.bindAssetUsageObj();
-    this.bindIdTypeObj();
-    this.bindUserOwnerRelationshipObj();
-    this.bindAsseConditionObj();
-    this.bindDownPaymentTypeObj();
+  async bindAllRefMasterObj() {
+    await this.bindAssetUsageObj();
+    await this.bindIdTypeObj();
+    await this.bindUserOwnerRelationshipObj();
+    await this.bindAsseConditionObj();
+    await this.bindDownPaymentTypeObj();
   }
 
-  bindAssetUsageObj() {
+  async bindAssetUsageObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  bindAsseConditionObj() {
+  async bindAsseConditionObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.AssetConditionObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  bindIdTypeObj() {
+  async bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  bindDownPaymentTypeObj() {
+  async bindDownPaymentTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.DpObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  bindUserOwnerRelationshipObj() {
+  async bindUserOwnerRelationshipObj() {
     if (this.CustType == CommonConstant.CustTypePersonal) {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     }
     else {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     }
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.UserRelationObj = response[CommonConstant.ReturnObj];
         this.OwnerRelationObj = response[CommonConstant.ReturnObj];
@@ -2042,6 +2037,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetAssetMaster(assetMasterObj) {
+    console.log("BOOM GOT CALLED")
     this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, assetMasterObj).subscribe(
       (response) => {
         this.AssetMasterObj = response;
@@ -2058,6 +2054,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   AssetConditionChanged(mode: string = "add") {
+    console.log("ASSET CONDITION");
     if (this.AssetConditionObj != null) {
       var filter: any;
       filter = this.AssetConditionObj.filter(
