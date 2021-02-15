@@ -1,0 +1,92 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "MainInfoId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application No",
+            "property": "AppNo",
+            "name": "AppNo",
+            "target": "_blank",
+            "path": "/View/AppView",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "isHide": true,
+            "path": "/View/Mou/CustView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          },
+          {
+            "type": "callback",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "key": "agrmnt"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Interest Type",
+            "property": "MrInterestTypeName"
+          },
+          {
+            "type": "callback",
+            "label": "Product Offering Name",
+            "key": "ViewProdOffering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Installment Scheme",
+            "property": "MrInstSchemeName"
+          },
+          {
+            "type": "text",
+            "label": "Application Status",
+            "property": "Stat"
+          },
+          {
+            "type": "text",
+            "label": "Application Current Step",
+            "property": "CurrStep"
+          },
+          {
+            "type": "text",
+            "label": "Application Last Step",
+            "property": "LastStep"
+          }
+        ],
+        "querystring": {
+          "name": "viewDocSigner"
+        }
+      }
+    ]
+  }
+  

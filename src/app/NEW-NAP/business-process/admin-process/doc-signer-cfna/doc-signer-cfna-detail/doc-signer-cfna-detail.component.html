@@ -3,7 +3,7 @@
       <div class="card">
           <div class="card-body">
               <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Document Signer-Detail</h4>
-              <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="Callback($event)"></lib-ucviewgeneric>
+              <lib-ucviewgeneric *ngIf="isViewReady" [viewGenericObj]="viewGenericObj" (callback)="Callback($event)"></lib-ucviewgeneric>
               <div class="px-3">
                   <form class="form form-horizontal" [formGroup]="DocSignerForm"
                       (ngSubmit)="DocSignerForm.valid && SaveForm()" #enjiForm="ngForm">

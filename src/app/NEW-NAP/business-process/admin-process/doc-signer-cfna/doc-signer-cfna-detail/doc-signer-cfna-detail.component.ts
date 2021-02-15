@@ -43,6 +43,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   BizTemplateCode: string;
   isHidden: boolean;
   isSupplierExists: boolean;
+  isViewReady: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -64,7 +65,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -76,6 +76,14 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+
+    if(this.BizTemplateCode == CommonConstant.CFNA){
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSignerCfna.json";
+    }
+    else{
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
+    }
+    this.isViewReady = true;
     await this.getAllData();
     this.setLookupObj();
   }
