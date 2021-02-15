@@ -152,7 +152,8 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> DP Asset </label>
+            <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'"> DP Asset </label>
+            <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'"> Security Deposit </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{agrmntFinDataObj?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
@@ -172,7 +173,8 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> DP Asset - Subsidy DP </label>
+            <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'"> DP Asset - Subsidy DP </label>
+            <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'"> Security Deposit  - Subsidy DP </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{agrmntFinDataObj?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
