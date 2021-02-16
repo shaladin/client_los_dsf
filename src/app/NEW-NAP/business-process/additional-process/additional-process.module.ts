@@ -37,6 +37,7 @@ import { DupCheckMdSubjListComponent } from "./app-dup-check-main-data/dup-check
 import { DupCheckMdSubjMatchComponent } from "./app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component";
 import { SharedModule } from "app/shared/shared.module";
 import { ReturnHandlingEditNap4Component } from './return-handling/return-handling-edit-nap4/return-handling-edit-nap4.component';
+import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -93,6 +94,7 @@ export const customCurrencyMaskConfig = {
     DupCheckMdSubjListComponent,
     DupCheckMdSubjMatchComponent,
     ReturnHandlingEditNap4Component,
+    ReturnHandlingNewEditAppPagingComponent,
   ],
   providers: [
     NGXToastrService
