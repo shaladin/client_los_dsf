@@ -32,7 +32,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 export class AssetDataComponent implements OnInit {
   @Input() AppId: any;
   @Input() showCancel: boolean = true;
-  @Input() BizTemplateCode: string = "OPL";
+  @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   BranchManagerName: string = "-";
@@ -782,54 +782,79 @@ export class AssetDataComponent implements OnInit {
         }
       }
 
-      if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
-        this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
-        if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null ) this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
-        this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
-        if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
-        if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
-        if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
-      }
-      if (this.IntegratorCheckBySystemGsValue == "0") {
-        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.outputTab.emit();
-              });
-          }
+      if(this.BizTemplateCode !== "OPL") {
+        if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
+          this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
+          if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null ) this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
+          this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
+          if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
+          if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
+          if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
         }
-        else if (!this.IsIntegrator) {
-          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.outputTab.emit();
-              });
-          }
-          else {
-            if (confirm("Submit data without Integrator ?")) {
+        if (this.IntegratorCheckBySystemGsValue == "0") {
+          if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+            if (confirm("Chassis No not filled, submit data without Integrator ?")) {
               this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   this.outputTab.emit();
-                });
+                }
+              );
             }
           }
+          else if (!this.IsIntegrator) {
+            if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.outputTab.emit();
+                }
+              );
+            }
+            else {
+              if (confirm("Submit data without Integrator ?")) {
+                this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                  (response) => {
+                    this.toastr.successMessage(response["message"]);
+                    this.outputTab.emit();
+                  }
+                );
+              }
+            }
+          }
+          else if (this.IsIntegrator) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                  (response) => {
+                  });
+                this.outputTab.emit();
+              }
+            );
+          }
         }
-        else if (this.IsIntegrator) {
+        else {
           this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
-              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-                (response) => {
-                });
-              this.outputTab.emit();
-            });
+              if(this.isListAsset === true) {
+                this.outputTab.emit();
+              }
+              else if(this.isListAsset === false) {
+                if(this.mode === "Add") {
+                  this.listAsset.push(this.allAssetDataObj);
+                }
+                else if(this.mode === "Edit") {
+                  this.listAsset[this.index] = this.allAssetDataObj;
+                }
+                this.isListAsset = true;
+              }
+            }
+          );
         }
       }
-      else {
+      else if(this.BizTemplateCode === "OPL") {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -856,8 +881,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   Back() {
-    this.findInvalidControls();
-    // this.isListAsset = true;
+    this.isListAsset = true;
   }
 
   Save() {
@@ -955,7 +979,6 @@ export class AssetDataComponent implements OnInit {
         //     }
         //   }
         // }
-
       });
   }
 
@@ -1222,8 +1245,7 @@ export class AssetDataComponent implements OnInit {
       //this.GetVendorEmpSupervisi();
 
       var temp: any;
-      temp = this.EmpObj.filter(
-        emp => emp.VendorEmpId == event.target.value);
+      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.target.value);
       this.AssetDataForm.patchValue({
         SalesPersonId: temp[0].VendorEmpId,
         SalesPersonName: temp[0].VendorEmpName,
@@ -1699,9 +1721,6 @@ export class AssetDataComponent implements OnInit {
           for (var i = 0; i < this.items.length; i++) {
             if (this.items.controls[i] != null) {
               this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
-
-
-
             }
           }
         }
