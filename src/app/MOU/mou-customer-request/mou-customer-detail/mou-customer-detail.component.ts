@@ -96,11 +96,16 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+
+        if(response['CustNo'] != null && response['CustNo'] != ""){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+        }
+        else{
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['ApplicantNo']));
+        }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response.MouCustNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         this.isDmsReady = true;
-        console.log('DMS11111', JSON.stringify(this.dmsObj));
       });
   }
   ngAfterViewInit(): void {
