@@ -33,6 +33,7 @@ export class LeadInputPageComponent implements OnInit {
   AppStepIndex: number = 1;
   customObj: any;
   isDmsReady: boolean = false;
+  isDmsData: boolean;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -98,14 +99,19 @@ export class LeadInputPageComponent implements OnInit {
     if (type == "custData") {
       this.isCustData = true;
       this.isLeadData = false;
+      this.isDmsData = false;
       this.AppStepIndex = 1;
     }
     if (type == "leadData") {
       this.isCustData = false;
       this.isLeadData = true;
+      this.isDmsData = false;
       this.AppStepIndex = 2;
     }
     if (type == "uploadDocument") {
+      this.isCustData = false;
+      this.isLeadData = false;
+      this.isDmsData = true;
       this.AppStepIndex = 3;
     }
   }
@@ -144,12 +150,9 @@ export class LeadInputPageComponent implements OnInit {
             component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
           }
         }
-        else if (this.AppStepIndex == 3 && this.pageType != "update") {
+        else if (this.AppStepIndex == 3) {
           this.customObj = ev;
           this.EnterTab("uploadDocument")
-        }
-        else if (this.AppStepIndex == 3 && this.pageType == "update") {
-          AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
         }
 
       }
@@ -169,7 +172,7 @@ export class LeadInputPageComponent implements OnInit {
     component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
   }
 
-  async claimTask() { 
+  async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(

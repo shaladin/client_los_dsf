@@ -1,0 +1,186 @@
+{
+  "title": "Document Checklist",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "app.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "app.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "isQueryIn": true,
+      "url": "",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "agr.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "app.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "wFht.USERNAME",
+      "id": "TaskClaimById",
+      "value": "",
+      "label": "Task Claim By",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "wFht.CLAIM_STAT",
+      "id": "ActiveStatusId",
+      "label": "Task Claim Status",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "isSelectOne": false,
+      "items": [
+        {
+          "key": "CLAIMED",
+          "value": "CLAIMED"
+        },
+        {
+          "key": "UNCLAIMED",
+          "value": "UNCLAIMED"
+        }
+      ],
+      "itemsUrl": []
+    }
+  ],
+  "querystring": {
+    "name": "searchDocChecklist"
+  },
+  "orderby": {
+    "key": "app.APP_NO",
+    "value": "false"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "SLA",
+      "name": "SlaColor"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "wFht.USERNAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "OFFICE",
+      "name": "app.ORI_OFFICE_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "app.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "agr.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "agr.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "sla",
+      "position": "center",
+      "property": "SlaColor"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Username"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "/View/AppView",
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "callback",
+      "key": "ViewProdOffering",
+      "position": "left",
+      "property": "ProdOfferingName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "/Nap/AdminProcess/DocChecklist/Detail",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            },
+            {
+              "type": "TaskListId",
+              "property": "TaskListId"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

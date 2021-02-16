@@ -33,6 +33,7 @@ import { CookieService } from 'ngx-cookie';
 export class JobTabComponent implements OnInit {
   requestedDate: any = "";
   private ucLookupProfession: UclookupgenericComponent;
+  mouCustId: number=0;
   @ViewChild('LookupProfession') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupProfession = content;
@@ -69,7 +70,7 @@ export class JobTabComponent implements OnInit {
   IsCustomer: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
-
+  bizTemplateCode : string ="";
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
@@ -116,6 +117,10 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
     this.GetGeneralSetting();
     await this.InitLookup();
+    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
+      (response) => {
+        this.bizTemplateCode = response["BizTemplateCode"];
+      });
     await this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
@@ -237,7 +242,7 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.IsIntegratorCheckBySystem == "0") {
+    if (this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
       if (this.IsCustomer) {
         if (!this.IsNeedIntegrator) {
           if (confirm("Do you want to submit this data without Integrator ?")) {
@@ -252,7 +257,7 @@ export class JobTabComponent implements OnInit {
         this.SubmitData();
       }
     }
-    else if (this.IsIntegratorCheckBySystem == "1") {
+    else if (this.IsIntegratorCheckBySystem == "1" || this.mouCustId > 0) {
       this.SubmitData();
     }
   }
@@ -464,6 +469,9 @@ export class JobTabComponent implements OnInit {
   GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
     this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
       (response) => {
+        if(response['MouCustId'] != null){
+          this.mouCustId = response['MouCustId'];
+        }
         this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
           (response) => {
             if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {

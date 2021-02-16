@@ -46,6 +46,7 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
 import { SharedModule } from "app/shared/shared.module";
 import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 import { FraudDetectionDataModule } from "app/NEW-NAP/business-process/credit-process/credit-review/fraud-detection-data/fraud-detection-data.module";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
 @NgModule({
     imports: [
@@ -66,6 +67,7 @@ import { FraudDetectionDataModule } from "app/NEW-NAP/business-process/credit-pr
         UcSubsectionModule,
         SharingComponentModule,
         UcapprovalhistModule,
+        UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
         SharedModule,

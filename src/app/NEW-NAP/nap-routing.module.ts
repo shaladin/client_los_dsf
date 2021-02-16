@@ -31,7 +31,7 @@ const routes: Routes = [
         loadChildren: './FCTR/input-nap.module#InputNapFCTRModule'
       },
       {
-        path: 'ROS',
+        path: 'OPL',
         loadChildren: './ROS/input-nap.module#InputNapROSModule'
       },
       {
@@ -72,6 +72,10 @@ const routes: Routes = [
       {
         path: 'CustCompletion',
         loadChildren: './cust-completion/cust-completion.module#CustCompletionModule'
+      },
+      {
+        path: 'ApplicationProcess',
+        loadChildren: './business-process/application-process/application-process.module#ApplicationProcessSharingModule'
       }
       // {
       //   path: 'Single',

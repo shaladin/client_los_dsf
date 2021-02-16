@@ -1,0 +1,20 @@
+<div *ngIf="!isEdit">
+  <div *ngIf="isReady">
+    <lib-ucSubsection [id]="'assetListId'" [title]="'List of Asset'" [panel]="'assetList'">
+    </lib-ucSubsection>
+    <div id="assetList">
+      <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
+    </div>
+    <div class="form-actions right" style="text-align: right;">
+      <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+        <i class="ft-x"></i> Cancel
+      </button>
+      <button type="submit" class="btn btn-raised btn-primary" (click)="test()" translate>
+        <i class="far fa-check-square"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isEdit">
+  <app-asset-expense-add-edit [AppAssetId]="AppAssetId" (backToPaging)="paging()"></app-asset-expense-add-edit>
+</div>

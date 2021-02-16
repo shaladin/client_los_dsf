@@ -123,24 +123,6 @@ export class MouCustTcComponent implements OnInit {
     );
   }
 
-  async InitDms() {
-    this.dmsObj = new DMSObj();
-    this.dmsObj.User = "Admin";
-    this.dmsObj.Role = "SUPUSR";
-    this.dmsObj.ViewCode = "ConfinsApp";
-    var mouObj = { MouCustId: this.MouCustId };
-    await this.httpClient.post(URLConstant.GetMouCustById, mouObj).toPromise().then(
-      (response) => {
-        this.custNo = response['CustNo'];
-      }
-    );
-    this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
-
-    this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Mou Id", this.MouCustId.toString()));
-    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload View"));
-    this.isDmsReady = true;
-  }
-
   checkedHandler(e, i) {
     var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
     if (e.target.checked == true) {

@@ -24,6 +24,7 @@ import { CrdRvwDiffWithMasterCustComponent } from './crd-rvw-cust-info/component
 import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-in-process-app/crd-rvw-diff-with-in-process-app.component';
 import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.component';
 import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
+import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 
 @NgModule({
     exports: [
@@ -40,7 +41,8 @@ import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/
         CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
         CrdRvwDukcapilHistComponent,
-        CrdRvwLegalDocComponent
+    CrdRvwLegalDocComponent,
+    AppRvwSummaryAssetComponent
     ],
     imports: [
         CommonModule,
@@ -68,7 +70,8 @@ import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/
         CrdRvwDiffWithMasterCustComponent,
         CrdRvwDiffWithInProcessAppComponent,
         CrdRvwLegalDocComponent,
-        CrdRvwTableCustComponent
+      CrdRvwTableCustComponent,
+      AppRvwSummaryAssetComponent
     ],
     providers: [
         NGXToastrService

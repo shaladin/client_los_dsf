@@ -148,6 +148,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.latestCustDataObj = new AppCustCompareObj();
     console.log("help");
     this.GetGS();
     await this.bindCustTypeObj();

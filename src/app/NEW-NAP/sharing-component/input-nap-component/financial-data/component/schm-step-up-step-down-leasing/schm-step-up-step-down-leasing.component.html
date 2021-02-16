@@ -75,7 +75,8 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label>DP Asset</label>
+                <label *ngIf="result.BizTemplateCode != 'FL4W'">DP Asset</label>
+                <label *ngIf="result.BizTemplateCode == 'FL4W'">Security Deposit</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
@@ -93,7 +94,8 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label>DP Asset - Subsidy DP</label>
+                <label *ngIf="result.BizTemplateCode != 'FL4W'">DP Asset - Subsidy DP</label>
+                <label *ngIf="result.BizTemplateCode == 'FL4W'">Security Deposit - Subsidy DP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
