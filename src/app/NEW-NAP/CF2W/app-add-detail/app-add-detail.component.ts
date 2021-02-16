@@ -191,17 +191,4 @@ export class AppAddDetailComponent implements OnInit {
         })
     }
   }
-
-  // ClaimTask(){
-  //   var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-  //   var wfClaimObj = new AppObj();
-  //   wfClaimObj.AppId = this.appId;
-  //   wfClaimObj.Username = currentUserContext["UserName"];
-  //   wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-  //   this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-  //     (response) => {
-    
-  //     });
-  // }
 }

@@ -8,6 +8,8 @@ import { AppMainInfoComponent } from '../app-main-info/app-main-info.component';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-app-view',
@@ -52,7 +54,7 @@ export class AppViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
-    private componentFactoryResolver: ComponentFactoryResolver) {
+    private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -68,7 +70,7 @@ export class AppViewComponent implements OnInit {
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -82,10 +84,10 @@ export class AppViewComponent implements OnInit {
         this.appNo = response[0]['AppNo'];
         this.custNo = response[1]['CustNo'];
 
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));

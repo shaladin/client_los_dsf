@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -26,18 +24,18 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   RFAPreGoLive: any;
   TaskListId: any;
   AgrmntId: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       // initially setter gets called with undefined
       this.createComponent = content;
     }
   }
   ApprovalCreateOutput: any;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -46,12 +44,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     });
   }
 
- async ngOnInit() {
-    var schmCodeObj = {
-      SchmCode: "PRE_GLV_APV_CF",
-      RowVersion: ""
-    } 
-   
+  async ngOnInit() {
+
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -96,29 +90,29 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     );
   }
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output();  
-    if(this.ApprovalCreateOutput!=undefined){
+    this.ApprovalCreateOutput = this.createComponent.output();
+    if (this.ApprovalCreateOutput != undefined) {
       this.RFAPreGoLive = new RFAPreGoLiveObj();
-     this.RFAPreGoLive.TaskListId = this.TaskListId;
+      this.RFAPreGoLive.TaskListId = this.TaskListId;
       this.RFAPreGoLive.RowVersion = "";
       this.RFAPreGoLive.RequestRFAObj = this.ApprovalCreateOutput
-         this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
-      this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
-    });
-    }  
+      this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe(() => {
+        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
+      });
+    }
   }
 
   Cancel() {
     this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Detail?AgrmntId=' + this.AgrmntId + '&AppId=' + this.AppId + '&TaskListId=' + this.TaskListId + '&AgrmntNo=' + this.AgrmntNo);
   }
-  initInputApprovalObj(){  
+  initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj();
-    var Attributes = [{}] 
+    var Attributes = [{}]
     var TypeCode = {
-      "TypeCode" : "PRE_GLV_APV_TYPE",
-      "Attributes" : Attributes,
+      "TypeCode": "PRE_GLV_APV_TYPE",
+      "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];

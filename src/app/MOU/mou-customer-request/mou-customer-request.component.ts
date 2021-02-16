@@ -4,10 +4,9 @@ import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
@@ -21,18 +20,17 @@ export class MouCustomerRequestComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj;
   user: any;
-  
-  constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router) { }
+
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"],{});
+      AdInsHelper.RedirectUrl(this.router, ["/Mou/UnauthorizedPage"], {});
       return;
     }
-    else
-    {
+    else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchMouCustomerRequest.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
@@ -48,12 +46,12 @@ export class MouCustomerRequestComponent implements OnInit {
     }
   }
 
-  customerView(ev){
+  customerView(ev) {
     var custNo = ev.RowObj.CustNo;
-    var custObj = {CustNo : custNo};
-    var custId : number
+    var custObj = { CustNo: custNo };
+    var custId: number
     this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-      (response) => { 
+      (response) => {
         custId = response['CustId'];
         AdInsHelper.OpenCustomerViewByCustId(custId);
       });

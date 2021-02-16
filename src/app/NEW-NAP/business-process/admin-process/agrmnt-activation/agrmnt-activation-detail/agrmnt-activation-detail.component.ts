@@ -10,6 +10,7 @@ import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.mod
 import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -32,14 +33,14 @@ export class AgrmntActivationDetailComponent implements OnInit {
   IsEnd: boolean = false;
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
 
-  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["WFTaskListId"];
       this.TrxNo = params["TrxNo"];
     });
 
-    this.AgrmntActForm = fb.group({
+    this.AgrmntActForm = this.fb.group({
       'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
       'AgrmntNo': [''],
       'isOverwrite': [this.isOverwrite]
@@ -83,7 +84,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   async ClaimTask(WfTaskListId) {
-    let currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }

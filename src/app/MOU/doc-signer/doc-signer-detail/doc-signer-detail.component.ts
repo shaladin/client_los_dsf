@@ -13,6 +13,7 @@ import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
@@ -68,7 +69,8 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyCrit: CriteriaObj;
   custNo: any;
   link: any;
-
+  resultData: any;
+  
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],
@@ -80,7 +82,7 @@ export class DocSignerDetailComponent implements OnInit {
     CustSignerPosition2: [''],
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.getMouCustById = URLConstant.GetMouCustById;
     this.addMouCustSigner = URLConstant.AddMouCustSigner;
     this.getMouCustSignerByMouCustId = URLConstant.GetMouCustSignerByMouCustId;
@@ -149,7 +151,7 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
@@ -256,7 +258,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DocSigner/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Mou/DocSigner/Paging"], {});
       });
   }
 }

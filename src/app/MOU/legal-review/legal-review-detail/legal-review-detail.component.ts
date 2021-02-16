@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
@@ -56,7 +56,7 @@ export class LegalReviewDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
@@ -76,7 +76,7 @@ export class LegalReviewDetailComponent implements OnInit {
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -115,10 +115,10 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
@@ -155,7 +155,7 @@ export class LegalReviewDetailComponent implements OnInit {
       this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,["/Mou/CustomerLegalReview/Paging"],{});
+          AdInsHelper.RedirectUrl(this.router, ["/Mou/CustomerLegalReview/Paging"], {});
 
         });
       this.mouTc.Save();

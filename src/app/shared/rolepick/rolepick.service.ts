@@ -3,26 +3,22 @@ import { MatDialog } from '@angular/material';
 import { RolepickComponent } from 'app/shared/rolepick/rolepick.component';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
+import { CookieService } from 'ngx-cookie';
+import { formatDate } from '@angular/common';
 
 @Injectable()
 export class RolePickService {
     constructor(public dialog: MatDialog, private http: HttpClient,
-        private currentUserContextService: CurrentUserContextService,
-        private router: Router) { }
+        private router: Router, private cookieService: CookieService) { }
     openDialog(data, type = ""): void {
         if (type == "modal") {
             var loginByRole = environment.FoundationR3Url + URLConstant.LoginByToken;
             var roleObject2 = {
-                RequestDateTime: localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW),
-                Ip: "",
+                RequestDateTime: AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW),
                 RowVersion: ""
 
             };
@@ -41,7 +37,7 @@ export class RolePickService {
                         data: object
                     });
 
-                    dialogRef.afterClosed().subscribe(result => {
+                    dialogRef.afterClosed().subscribe(() => {
                     });
                 }
             );
@@ -58,27 +54,23 @@ export class RolePickService {
                     RoleCode: item.RoleCode,
                     JobTitleCode: item.JobTitleCode,
                     RequestDateTime: item.BusinessDt,
-                    ModuleCode : "LOS",
-                    Ip: "",
+                    ModuleCode: "LOS",
                     RowVersion: ""
 
                 };
-                this.http.post(url, roleObject).subscribe(
+                this.http.post(url, roleObject, { withCredentials: true }).subscribe(
                     (response) => {
-                        localStorage.setItem("Menu", JSON.stringify(response["Menu"]));
-                        localStorage.setItem("Token", response["Token"]);
-                        localStorage.setItem("EnvironmentModule", environment.Module);
-                        AdInsHelper.CreateUserAccess(response);
-                        // var currentUserContext = new CurrentUserContext;
-                        // currentUserContext.UserName = localStorage.getItem("Username");
-                        // currentUserContext.Office = item.OfficeCode;
-                        // currentUserContext.Role = item.RoleCode;
-                        // currentUserContext.BusinessDate = item.BusinessDt;
-                        // localStorage.setItem("BusinessDateRaw",item.BusinessDt);
-                        // var DateParse = formatDate(item.BusinessDt, 'yyyy/MM/dd', 'en-US');
-                        // localStorage.setItem("BusinessDate", DateParse);
-                        // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-                        // this.currentUserContextService.addCurrentUserContext(currentUserContext);
+                        //Cookie sudah diambil dari BE (Di set manual dulu)
+
+                        var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+                        AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+                        AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+                        AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+                        AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+                        AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+
+                        AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response["returnObject"]));
+                        AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
                         this.router.navigate(['dashboard/dash-board']);
                     }
                 )
@@ -94,7 +86,7 @@ export class RolePickService {
                     data: data
                 });
 
-                dialogRef.afterClosed().subscribe(result => {
+                dialogRef.afterClosed().subscribe(() => {
                 });
             }
         }

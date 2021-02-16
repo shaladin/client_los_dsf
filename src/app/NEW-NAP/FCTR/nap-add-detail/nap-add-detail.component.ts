@@ -3,10 +3,10 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -53,7 +53,7 @@ export class NapAddDetailComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -97,7 +97,7 @@ export class NapAddDetailComponent implements OnInit {
   async initDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -110,26 +110,26 @@ export class NapAddDetailComponent implements OnInit {
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         let isExisting = response[1]['IsExistingCust'];
-        if(isExisting){
+        if (isExisting) {
           let custNo = response[1]['CustNo'];
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
 
         let mouId = response[0]['MouCustId'];
-        if(mouId != null && mouId != ""){
-          let mouObj = {MouCustId : mouId};
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result =>{
+            result => {
               let mouCustNo = result['MouCustNo'];
               this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
               this.isDmsReady = true;
             }
           )
         }
-        else{
+        else {
           this.isDmsReady = true;
         }
       }
@@ -211,7 +211,7 @@ export class NapAddDetailComponent implements OnInit {
       this.initDms();
     }
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) => {
+      () => {
         this.ChangeTab(Step);
         this.stepper.next();
       }
@@ -221,7 +221,7 @@ export class NapAddDetailComponent implements OnInit {
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
-      (response) => {
+      () => {
         AdInsHelper.RedirectUrl(this.router, ["/Nap/Factoring/Paging"], {});
       })
   }
@@ -236,18 +236,18 @@ export class NapAddDetailComponent implements OnInit {
       };
 
       this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
-        (response) => {
+        () => {
         })
     }
   }
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
+      () => {
 
       });
   }

@@ -7,6 +7,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-tele-verif-detail',
@@ -19,7 +21,7 @@ export class TeleVerifDetailComponent implements OnInit {
   isLeadData: boolean;
   WfTaskListId: number;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.WfTaskListId = params["WfTaskListId"];
     })
@@ -57,8 +59,8 @@ export class TeleVerifDetailComponent implements OnInit {
     }
   }
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    var wfClaimObj : ClaimWorkflowObj = new ClaimWorkflowObj();
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(

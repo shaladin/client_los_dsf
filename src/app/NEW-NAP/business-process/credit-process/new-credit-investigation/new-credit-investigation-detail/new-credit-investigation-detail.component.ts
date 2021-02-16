@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCrdInvstgDObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgDObj.Model';
 import { RequestAppCrdInvstgObj } from 'app/shared/model/AppCrdInvstg/RequestAppCrdInvstgObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-credit-investigation-detail',
@@ -32,12 +33,12 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { 
+    private router: Router, private cookieService: CookieService
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -51,7 +52,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
@@ -59,10 +60,10 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     this.generateFormAnalysisItem();
   }
 
-  SaveForm(){
+  SaveForm() {
     var reqAppCrdInvstg = new RequestAppCrdInvstgObj();
 
-    var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     reqAppCrdInvstg.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.AppId = this.appId;
     reqAppCrdInvstg.AppCrdInvstgHObj.CrdInvstgStat = "DONE";
@@ -70,7 +71,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     reqAppCrdInvstg.AppCrdInvstgHObj.SubmitDt = user.BusinessDt;
     reqAppCrdInvstg.AppCrdInvstgHObj.RowVersion = this.appCrdInvstgHObj.RowVersion;
 
-    for(let i = 0; i < this.CreditInvestigationForm.controls["AppCrdInvstgDs"]["controls"].length; i++){
+    for (let i = 0; i < this.CreditInvestigationForm.controls["AppCrdInvstgDs"]["controls"].length; i++) {
       var appCrdInvstgD = new AppCrdInvstgDObj();
 
       appCrdInvstgD.MrAnalysisItemCode = this.CreditInvestigationForm.controls["AppCrdInvstgDs"]["controls"][i]["controls"].MrAnalysisItemCode.value;
@@ -83,8 +84,8 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
-        this.toastr.successMessage(response["message"]);       
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditInvestigation/Paging"], {  BizTemplateCode: lobCode});
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/CreditInvestigation/Paging"], { BizTemplateCode: lobCode });
       });
 
   }
@@ -93,19 +94,19 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     this.type = type;
   }
 
-  generateFormAnalysisItem(){
-    if(this.appCrdInvstgHObj.AppId == 0){
-      for(let i = 0; i < this.analysisItemObj.length; i++){
+  generateFormAnalysisItem() {
+    if (this.appCrdInvstgHObj.AppId == 0) {
+      for (let i = 0; i < this.analysisItemObj.length; i++) {
         (this.CreditInvestigationForm.controls.AppCrdInvstgDs as FormArray).push(this.addGroupByRefMaster(this.analysisItemObj[i]));
       }
-    }else if(this.appCrdInvstgHObj.AppCrdInvstgDObjs != null){
-      for(let i = 0; i < this.appCrdInvstgHObj.AppCrdInvstgDObjs.length; i++){
+    } else if (this.appCrdInvstgHObj.AppCrdInvstgDObjs != null) {
+      for (let i = 0; i < this.appCrdInvstgHObj.AppCrdInvstgDObjs.length; i++) {
         (this.CreditInvestigationForm.controls.AppCrdInvstgDs as FormArray).push(this.addGroupByAppCrdInvstgH(this.appCrdInvstgHObj.AppCrdInvstgDObjs[i]));
       }
     }
   }
 
-  addGroupByAppCrdInvstgH(appCrdInvstgDObj){
+  addGroupByAppCrdInvstgH(appCrdInvstgDObj) {
     var group = this.fb.group({
       MrAnalysisItemCode: appCrdInvstgDObj.MrAnalysisItemCode,
       AnalysisItemName: appCrdInvstgDObj.AnalysisItemName,
@@ -114,7 +115,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
 
     return group;
   }
-  addGroupByRefMaster(analysisItem){
+  addGroupByRefMaster(analysisItem) {
     var group = this.fb.group({
       MrAnalysisItemCode: analysisItem.Key,
       AnalysisItemName: analysisItem.Value,
@@ -124,7 +125,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     return group;
   }
 
-  async bindAnalysisItemObj(){
+  async bindAnalysisItemObj() {
 
     var reqObj = { AppId: this.appId };
 
@@ -133,7 +134,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
         this.appCrdInvstgHObj = response;
       }
     );
-    if(this.appCrdInvstgHObj.AppId == 0){
+    if (this.appCrdInvstgHObj.AppId == 0) {
       var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdInvstgAnalysisItem };
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
         (response) => {
@@ -143,20 +144,20 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
     }
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
   }
   Back() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/NewCreditInvestigation/Paging"], {  BizTemplateCode: lobCode });
+    AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/NewCreditInvestigation/Paging"], { BizTemplateCode: lobCode });
   }
 
 }

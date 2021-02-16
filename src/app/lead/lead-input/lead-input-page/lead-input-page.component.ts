@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { CustPersonalObj } from 'app/shared/model/CustPersonalObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
@@ -13,6 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -35,7 +34,7 @@ export class LeadInputPageComponent implements OnInit {
   customObj: any;
   isDmsReady: boolean = false;
   isDmsData: boolean;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -60,7 +59,7 @@ export class LeadInputPageComponent implements OnInit {
   async ngOnInit() {
     await this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise().then(
       (response) => {
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -174,10 +173,10 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
   endOfTab() {
@@ -188,7 +187,7 @@ export class LeadInputPageComponent implements OnInit {
           (response) => {
             this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
             this.http.post(this.customObj.urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
-              (response) => {
+              () => {
                 AdInsHelper.RedirectUrl(this.router, [this.customObj.paging], {});
               }
             );

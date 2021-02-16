@@ -1,14 +1,11 @@
 import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
-import { formatDate } from '@angular/common';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { HttpClient } from '@angular/common/http';
 import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { environment } from 'environments/environment';
-import { CurrentUserContextService } from 'app/shared/CurrentUserContext/current-user-context.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
@@ -31,8 +28,7 @@ export class LoginPageComponent implements OnInit {
   result: any;
   isLocked: boolean = false;
   constructor(private router: Router, private http: HttpClient, public rolePickService: RolePickService,
-    private route: ActivatedRoute,
-    private currentUserContextService: CurrentUserContextService) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     //Ini buat check klo misal udah login jadi lgsg lempar ke tempat laennya lagi
 
     this.version = localStorage.getItem(CommonConstant.VERSION);
@@ -42,7 +38,7 @@ export class LoginPageComponent implements OnInit {
       }
     });
 
-    if (localStorage.getItem(CommonConstant.USER_ACCESS) != null) {
+    if (AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS) != null) {
       this.router.navigate(['dashboard/dash-board']);
     }
   }
@@ -57,16 +53,6 @@ export class LoginPageComponent implements OnInit {
       this.http.post(URLConstant.LoginWithToken, { ModuleCode: environment.Module }).subscribe(
         (response) => {
           AdInsHelper.CreateUserAccess(response);
-          // var currentUserContext = new CurrentUserContext;
-          // currentUserContext.UserName = response["Identity"].UserName;
-          // currentUserContext.Office = response["Identity"].OfficeCode;
-          // currentUserContext.Role = response["Identity"].RoleCode;
-          // currentUserContext.BusinessDate = response["Identity"].BusinessDt;
-          // localStorage.setItem("BusinessDateRaw",response["Identity"].BusinessDt);
-          // var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
-          // localStorage.setItem("BusinessDate", DateParse);
-          // localStorage.setItem("UserAccess", JSON.stringify(response["Identity"]));
-          // this.currentUserContextService.addCurrentUserContext(currentUserContext);
           this.router.navigate(['dashboard/dash-board']);
         });
     }
@@ -103,7 +89,7 @@ export class LoginPageComponent implements OnInit {
 
               }
             },
-            (error) => {
+            () => {
 
             })
         }

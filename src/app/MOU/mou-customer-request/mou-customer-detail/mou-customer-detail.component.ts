@@ -7,6 +7,7 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
@@ -43,7 +44,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       if (params.get('MOUType') != null) {
@@ -79,7 +80,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   async initDms(){
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.dmsObj = new DMSObj();

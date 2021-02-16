@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
@@ -15,7 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-fraud-verification-multi-asset',
   templateUrl: './fraud-verification-multi-asset.component.html'
@@ -69,7 +68,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   idNo: any;
   bizTemplateCode: any;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -84,9 +83,9 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.arrValue.push(this.AppId);
-  //  this.viewObj = "./assets/ucviewgeneric/viewFraudVerifMultiAssetMainInfo.json";
-    await this.ClaimTask(); 
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    //  this.viewObj = "./assets/ucviewgeneric/viewFraudVerifMultiAssetMainInfo.json";
+    await this.ClaimTask();
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.verfUser = context[CommonConstant.USER_NAME];
     this.verfDt = context[CommonConstant.BUSINESS_DT];
     this.verfCode = context[CommonConstant.EMP_NO];
@@ -95,13 +94,13 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfoFL4W.json";
     this.viewDukcapilObj.viewEnvironment = environment.losUrl;
     this.viewDukcapilObj.whereValue = this.arrValue;
-    
+
     this.isDataAlreadyLoaded = true;
     this.bizTemplateCode = CommonConstant.FL4W;
   }
 
   async ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
@@ -168,11 +167,11 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   getFraudDukcapil() {
-        var fraudDukcapilReqObj = { "IdNo": this.idNo };
-        this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
-          response => {
-            this.dukcapilObj = response[CommonConstant.ReturnObj];
-          });
+    var fraudDukcapilReqObj = { "IdNo": this.idNo };
+    this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
+      response => {
+        this.dukcapilObj = response[CommonConstant.ReturnObj];
+      });
   }
 
   getAppDupCheckCust(AppId) {
@@ -238,7 +237,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     }
     this.http.post(this.addAppFraudVerfUrl, verfObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/FraudDetection/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/FraudDetection/Paging"], {});
       }
     )
   }

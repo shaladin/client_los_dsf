@@ -10,6 +10,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -34,7 +35,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   BizTemplateCode: string;
   link: any;
   constructor(private route: ActivatedRoute, private http: HttpClient,
-    private router: Router, private toastr: NGXToastrService) {
+    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -138,7 +139,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
     else if (this.CustCnfrmObj.IsSkip == true) {
@@ -149,7 +150,7 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
         () => {
           this.toastr.successMessage("Success !");
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/CustConfirmation/Paging"], { "BizTemplateCode": this.BizTemplateCode });
           // this.toastr.successMessage(response["message"]);
           // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
         });
@@ -159,7 +160,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];

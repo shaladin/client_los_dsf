@@ -10,6 +10,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-view',
@@ -32,8 +33,8 @@ export class MouViewComponent implements OnInit {
   Viewlink: string;
   dmsObj: DMSObj;
   MouCustNo: string;
-
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  
+  constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
@@ -43,7 +44,7 @@ export class MouViewComponent implements OnInit {
     });
 
   }
-  
+
   ngOnInit() {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
@@ -53,7 +54,7 @@ export class MouViewComponent implements OnInit {
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
         this.MouCustNo = this.resultData['MouCustNo'];
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -67,7 +68,7 @@ export class MouViewComponent implements OnInit {
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-    
+
         this.IsResponseProcessed = true;
         this.IsReady = true;
       });

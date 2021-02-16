@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -12,6 +12,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
@@ -29,7 +30,7 @@ export class NapFromLeadDetailComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       this.leadId = params["LeadId"];
@@ -95,7 +96,7 @@ export class NapFromLeadDetailComponent implements OnInit {
   bizTemplateCode: string;
 
   async ngOnInit(): Promise<void> {
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     this.MakeLookUpObj();
@@ -190,19 +191,19 @@ export class NapFromLeadDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/ConsumerFinance/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.FL4W) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/FinanceLeasing/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.CFNA) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/Add/Detail"], { "AppId": response["AppId"] });
         }
       });
 

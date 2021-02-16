@@ -10,6 +10,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOfficeMbrObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-paging',
@@ -26,7 +27,7 @@ export class NapPagingComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -36,7 +37,7 @@ export class NapPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
@@ -56,7 +57,7 @@ export class NapPagingComponent implements OnInit {
 
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
-  
+
   makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
@@ -83,7 +84,6 @@ export class NapPagingComponent implements OnInit {
           critObj.listValue = listDataTemp;
         })
     }
-    // critObj.value = localStorage.getItem("LobCode");
     this.arrCrit.push(critObj);
   }
 
@@ -92,19 +92,19 @@ export class NapPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add"], {});
+          AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/Add"], {});
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
       });
   }
-  
+
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
     }
   }
 }

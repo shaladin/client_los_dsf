@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
@@ -13,6 +12,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -37,7 +37,7 @@ export class PreGoLiveComponent implements OnInit {
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   IsCheckedAll: boolean = false;
 
@@ -52,12 +52,8 @@ export class PreGoLiveComponent implements OnInit {
   ListAppTCObj: ListAppTCObj;
 
   count1: number = 0;
-  RfaLogObj: {
-    RfaNo: any
-  }
-  ListRfaLogObj: any = new Array(this.RfaLogObj);
-  inputObj2: any
-  listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
+  ListRfaLogObj: any;
+  listPreGoLiveAppvrObj: Array<any> = new Array<any>();
   TrxNo: any;
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
@@ -72,7 +68,7 @@ export class PreGoLiveComponent implements OnInit {
   mouCustNo: any;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
@@ -134,14 +130,14 @@ export class PreGoLiveComponent implements OnInit {
         this.AgrmntId = this.result.AgrmntId;
         this.AppId = this.result.AppId;
       });
-      await this.InitDms();
+    await this.InitDms();
   }
 
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
     this.dmsAppObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
@@ -163,11 +159,11 @@ export class PreGoLiveComponent implements OnInit {
         this.appNo = response[2]['AppNo'];
         let mouId = response[2]['MouCustId'];
 
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
           this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsAppObj.MetadataParent = null;
         }
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -196,8 +192,8 @@ export class PreGoLiveComponent implements OnInit {
 
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 
@@ -217,7 +213,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   RFA() {
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     this.ListAppTCObj = new ListAppTCObj();
     this.ListAppTCObj["ListAppTcObj"] = new Array();
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
@@ -250,7 +246,7 @@ export class PreGoLiveComponent implements OnInit {
     }
     this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/RequestApproval"],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/PreGoLive/RequestApproval"], { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);
 
       });
@@ -258,7 +254,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   SaveForm(flag = true) {
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
@@ -311,7 +307,7 @@ export class PreGoLiveComponent implements OnInit {
 
     this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/PreGoLive/Paging"], {});
         this.toastr.successMessage(response['message']);
 
       });
@@ -319,7 +315,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];

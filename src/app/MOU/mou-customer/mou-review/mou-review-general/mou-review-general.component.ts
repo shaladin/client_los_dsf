@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { first } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -49,7 +49,7 @@ export class MouReviewGeneralComponent implements OnInit {
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       // initially setter gets called with undefined
       this.createComponent = content;
     }
@@ -60,8 +60,7 @@ export class MouReviewGeneralComponent implements OnInit {
     Notes: [''],
     ApvRecommendation: this.fb.array([])
   })
-
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
@@ -76,7 +75,7 @@ export class MouReviewGeneralComponent implements OnInit {
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -90,7 +89,7 @@ export class MouReviewGeneralComponent implements OnInit {
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-  
+
       }
     );
 
@@ -140,7 +139,7 @@ export class MouReviewGeneralComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId }).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -149,62 +148,62 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();  
-    if(this.ApprovalCreateOutput!=undefined){
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.PlafondAmt = this.PlafondAmt;
+    this.ApprovalCreateOutput = this.createComponent.output();
+    if (this.ApprovalCreateOutput != undefined) {
+      this.mouCustObj.MouCustId = this.MouCustId;
+      this.PlafondAmt = this.PlafondAmt;
 
- 
-    var submitMouReviewObj = {
-      WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj,
-      PlafondAmt: this.PlafondAmt,
-      RequestRFAObj:this.ApprovalCreateOutput
+
+      var submitMouReviewObj = {
+        WfTaskListId: this.WfTaskListId,
+        MouCust: this.mouCustObj,
+        PlafondAmt: this.PlafondAmt,
+        RequestRFAObj: this.ApprovalCreateOutput
+      }
+      this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+        })
     }
-    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
-      })
-    }
-}
+  }
 
   Return() {
     var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
       })
   }
-  
-  initInputApprovalObj(){  
+
+  initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj();
     var Attributes = []
-    var attribute1= { 
-      "AttributeName" : "Approval Amount",
+    var attribute1 = {
+      "AttributeName": "Approval Amount",
       "AttributeValue": this.PlafondAmt
-    }; 
-  
-     var attribute2= {
-      "AttributeName" : "Scoring",
+    };
+
+    var attribute2 = {
+      "AttributeName": "Scoring",
       "AttributeValue": this.ScoreResult
     };
     Attributes.push(attribute1);
-    Attributes.push(attribute2); 
+    Attributes.push(attribute2);
     var TypeCode = {
       "TypeCode": "MOUC_GEN_APV_TYPE",
       "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
