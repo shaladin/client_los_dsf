@@ -16,6 +16,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -23,7 +24,7 @@ import { forkJoin } from 'rxjs';
   styles: []
 })
 export class NapDetailFormComponent implements OnInit {
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
@@ -129,12 +130,9 @@ export class NapDetailFormComponent implements OnInit {
           }
         });
     }
-    this.MakeViewReturnInfoObj();
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewGenericObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
+    this.MakeViewReturnInfoObj();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   async initDms() {
@@ -297,14 +295,6 @@ export class NapDetailFormComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewGenericObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
-
-    //  this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
@@ -322,12 +312,7 @@ export class NapDetailFormComponent implements OnInit {
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.viewGenericObj = this.viewGenericObj;
-    component.instance.callback.subscribe((e) => this.GetCallback(e));
-    // this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   UpdateAppStep(Step: string) {

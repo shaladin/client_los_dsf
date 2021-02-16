@@ -21,7 +21,6 @@ export class MouViewComponent implements OnInit {
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
   MouCustNo: string;
-  arrValue = [];
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
@@ -36,8 +35,7 @@ export class MouViewComponent implements OnInit {
   
   ngOnInit() {
     this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
+    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(this.getMouCustByIdUrl, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;

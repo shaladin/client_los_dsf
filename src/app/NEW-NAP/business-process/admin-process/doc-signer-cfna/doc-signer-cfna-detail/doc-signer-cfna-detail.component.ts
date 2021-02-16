@@ -42,7 +42,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   BizTemplateCode: string;
   isHidden: boolean;
   isSupplierExists: boolean;
-  arrValue = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -64,7 +63,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.arrValue.push(this.AppId);
     await this.getAllData();
     this.setLookupObj();
   }

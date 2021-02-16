@@ -38,7 +38,6 @@ export class DocSignerDetailComponent implements OnInit {
   ContactPersonName: string;
   BizTemplateCode: string;
   isHidden: boolean;
-  arrValue = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -57,7 +56,6 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.arrValue.push(this.AppId);
     await this.getAllData();
     this.setLookupObj();
   }

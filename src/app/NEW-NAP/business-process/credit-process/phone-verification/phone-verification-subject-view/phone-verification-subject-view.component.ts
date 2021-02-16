@@ -53,7 +53,6 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   listVerifResultHObj: any;
   listVerifResultDObj: any;
   subjectName: string;
-  arrValue = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
 
@@ -76,7 +75,6 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
     this.initUrl();
     this.appObj.AppId = this.appId;
     this.verfResHObj.VerfResultHId = this.verfResultHId;
-    this.arrValue.push(this.appId);
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetVerfResultHData();

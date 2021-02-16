@@ -17,7 +17,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   providers: [AdminProcessService]
 })
 export class AgrmntActivationDetailComponent implements OnInit {
-  arrValue = [];
   AssetObj: any;
   AppFees: any;
   AppFinData: any;
@@ -66,7 +65,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.arrValue.push(this.AppId);
     this.ClaimTask(this.WfTaskListId);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";

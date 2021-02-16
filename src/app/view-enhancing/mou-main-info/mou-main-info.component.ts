@@ -19,7 +19,7 @@ export class MouMainInfoComponent implements OnInit {
     }
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @Input() arrValue = [];
+  @Input() MouCustId: number;
   MouCustObj: MouCustObj = new MouCustObj();
 
   constructor(private http: HttpClient) { }
@@ -34,7 +34,7 @@ export class MouMainInfoComponent implements OnInit {
       },
     ];
 
-    this.http.post(URLConstant.GetMouCustById, { MouCustId: this.arrValue[0] }).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.MouCustObj  = response;
       });
@@ -47,7 +47,7 @@ export class MouMainInfoComponent implements OnInit {
   GetCallBack(ev: any) {
     if (ev.Key == "customer") {
       if (!this.MouCustObj.IsExistingCust) {
-        AdInsHelper.OpenMOUCustViewByMouCustId(this.arrValue[0]);
+        AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
       } else {
         this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.MouCustObj.CustNo }).subscribe(
           responseCust => {

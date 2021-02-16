@@ -20,7 +20,6 @@ export class AppViewComponent implements OnInit {
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
-  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
   IsCustomer : boolean = true;
   IsGuarantor : boolean = true;
   IsReferantor : boolean = true;
@@ -47,6 +46,8 @@ export class AppViewComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: any;
   custNo: any;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+
   constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -56,9 +57,7 @@ export class AppViewComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AppId);
     this.GetApp();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.arrValue = this.arrValue;
+    this.viewAppMainInfo.ReloadUcViewGeneric();
     await this.InitDms();
   }
 
@@ -164,10 +163,7 @@ export class AppViewComponent implements OnInit {
     if(tabChangeEvent.index == 0){
       this.GetApp();
     }
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.arrValue = this.arrValue;
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
 }

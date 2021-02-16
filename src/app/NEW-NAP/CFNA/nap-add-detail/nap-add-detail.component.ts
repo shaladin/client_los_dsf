@@ -41,7 +41,6 @@ export class NapAddDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
-  arrValue = [];
 
   AppStep = {
     // "NEW": 1,
@@ -93,7 +92,6 @@ export class NapAddDetailComponent implements OnInit {
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
     // this.ChangeStepper();
 
     if (this.ReturnHandlingHId > 0) {

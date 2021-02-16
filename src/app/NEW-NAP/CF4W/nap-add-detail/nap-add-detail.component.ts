@@ -37,7 +37,6 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  arrValue = [];
   
   AppStep = {
     "NEW": 1,
@@ -88,7 +87,6 @@ export class NapAddDetailComponent implements OnInit {
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
 
     // this.ChangeStepper();
 

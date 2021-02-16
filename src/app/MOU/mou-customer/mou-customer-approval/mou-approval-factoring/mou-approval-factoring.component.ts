@@ -36,7 +36,6 @@ export class MouApprovalFactoringComponent implements OnInit {
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   dmsObj: DMSObj;
-  arrValue = [];
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -53,7 +52,6 @@ export class MouApprovalFactoringComponent implements OnInit {
   async ngOnInit() {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
    await this.http.post(URLConstant.GetMouCustById, this.mouCustObj).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;

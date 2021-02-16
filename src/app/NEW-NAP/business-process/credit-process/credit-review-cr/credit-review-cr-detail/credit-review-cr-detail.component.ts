@@ -30,7 +30,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
   @ViewChild(UcapprovalcreateComponent) createComponent;
   appId: number = 0;
   wfTaskListId: number = 0;
-  arrValue = [];
   isReturnOn: boolean = false;
   UserAccess: any;
   Arr: FormArray;
@@ -77,7 +76,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   initData(){
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.arrValue.push(this.appId);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
   }

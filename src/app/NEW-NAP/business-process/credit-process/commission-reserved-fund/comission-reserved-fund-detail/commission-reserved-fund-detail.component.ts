@@ -74,13 +74,10 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     Other: []
   };
 
-  arrValue = [];
-
   ngOnInit() {
     console.log(this.BizTemplateCode);
     this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
-    this.arrValue.push(this.ReturnHandlingHObj.AppId);
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

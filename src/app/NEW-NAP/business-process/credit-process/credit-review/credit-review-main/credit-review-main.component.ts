@@ -37,7 +37,6 @@ export class CreditReviewMainComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
-  arrValue = []; 
   InputObj: UcInputRFAObj;
   private createComponent: UcapprovalcreateComponent;
   responseListTypeCodes: Array<any>;
@@ -112,7 +111,6 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
-    this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
 

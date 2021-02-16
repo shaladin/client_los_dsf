@@ -21,7 +21,6 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   EditMouCustDocPrintSequenceNoUrl: string = URLConstant.EditMouCustDocPrintSequenceNo;
   link: any;
   mouCustObj: any;
-  arrValue = [];
 
   constructor(
     private http: HttpClient,
@@ -38,7 +37,6 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   ngOnInit(): void {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
     this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, this.mouCustObj).subscribe(
       response => {
         this.responseObj = response[CommonConstant.ReturnObj];

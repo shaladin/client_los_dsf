@@ -39,7 +39,6 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
-  arrValue = [];
   
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -82,7 +81,6 @@ export class NapDetailFormComponent implements OnInit {
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true

@@ -25,7 +25,6 @@ export class MouOsTcDetailComponent implements OnInit {
   link: any;
   resultData: any;
   mouCustObject: MouCustObj = new MouCustObj();
-  arrValue = [];
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -39,7 +38,6 @@ export class MouOsTcDetailComponent implements OnInit {
 
   ngOnInit() {
     this.mouCustObject.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
     this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;

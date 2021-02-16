@@ -41,7 +41,6 @@ export class MouReviewFactoringComponent implements OnInit {
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   dmsObj: DMSObj;
-  arrValue = [];
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -63,7 +62,6 @@ export class MouReviewFactoringComponent implements OnInit {
       this.claimTask();
     }
     this.mouCustObject.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;

@@ -27,8 +27,6 @@ export class AppAddDetailComponent implements OnInit {
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
-  arrValue = [];
-
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -70,7 +68,6 @@ export class AppAddDetailComponent implements OnInit {
     this.AppStepIndex = 0;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {

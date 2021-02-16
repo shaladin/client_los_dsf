@@ -20,14 +20,17 @@ export class MouMainInfoComponent implements OnInit {
     }
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @Input() arrValue = [];
+  @Input() MouCustId : number;
+  whereValue = [];
   MouCustObj: MouCustObj = new MouCustObj();
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.whereValue.push(this.MouCustId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.whereValue;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -35,7 +38,7 @@ export class MouMainInfoComponent implements OnInit {
       },
     ];
 
-    this.http.post(URLConstant.GetMouCustById, { MouCustId: this.arrValue[0] }).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.MouCustObj  = response;
       });
@@ -48,7 +51,7 @@ export class MouMainInfoComponent implements OnInit {
   GetCallBack(ev: any) {
     if (ev.Key == "customer") {
       if (!this.MouCustObj.IsExistingCust) {
-        AdInsHelper.OpenMOUCustViewByMouCustId(this.arrValue[0]);
+        AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
       } else {
         this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.MouCustObj.CustNo }).subscribe(
           responseCust => {

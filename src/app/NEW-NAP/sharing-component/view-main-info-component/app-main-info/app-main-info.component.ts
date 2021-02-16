@@ -15,19 +15,21 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 export class AppMainInfoComponent implements OnInit {
 
   private viewGeneric : UcviewgenericComponent;
+  whereValue = [];
   @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.viewGeneric = content;
     }
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @Input() arrValue = [];
+  @Input() AppId: number ;
   
   AppObj: any;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.post(URLConstant.GetAppById, { AppId: this.arrValue[0] }).subscribe(
+    this.whereValue.push(this.AppId);
+    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
       (response) => {
         this.AppObj = response;
         if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {
@@ -38,7 +40,7 @@ export class AppMainInfoComponent implements OnInit {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
         this.viewGenericObj.viewEnvironment = environment.losUrl;
-        this.viewGenericObj.whereValue = this.arrValue;
+        this.viewGenericObj.whereValue = this.whereValue;
         this.viewGenericObj.ddlEnvironments = [
           {
             name: "AppNo",

@@ -26,7 +26,6 @@ export class ReturnHandlingDetailComponent implements OnInit {
   wfTaskListId: number;
   lobCode: string;
   viewObj: string;
-  arrValue = [];
   returnHandlingHObj: ReturnHandlingHObj;
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
@@ -60,7 +59,6 @@ export class ReturnHandlingDetailComponent implements OnInit {
   async ngOnInit() : Promise<void> {
     this.lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
-    this.arrValue.push(this.appId);
     await this.bindTaskObj();
     await this.getReturnHandling();
   }

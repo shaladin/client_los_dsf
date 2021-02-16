@@ -68,7 +68,6 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyCrit: CriteriaObj;
   custNo: any;
   link: any;
-  arrValue = [];
 
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
@@ -203,8 +202,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.customerLookUpObj1.genericJson = "./assets/uclookup/lookupCustPersonal.json";
 
     this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
+    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(this.getMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;

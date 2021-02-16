@@ -50,7 +50,6 @@ export class LegalReviewDetailComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
-  arrValue = [];
 
   constructor(
     private http: HttpClient,
@@ -73,8 +72,7 @@ export class LegalReviewDetailComponent implements OnInit {
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
+    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;

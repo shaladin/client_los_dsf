@@ -46,7 +46,6 @@ export class MouReviewGeneralComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
-  arrValue = [];
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -73,8 +72,7 @@ export class MouReviewGeneralComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.mouCustObject.MouCustId = this.MouCustId;
-    this.arrValue.push(this.MouCustId);
+    this.mouCustObject.MouCustId = this.MouCustId;    
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;

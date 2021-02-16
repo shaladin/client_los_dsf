@@ -34,7 +34,6 @@ export class NapCustMainDataComponent implements OnInit {
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
-  arrValue = [];
 
   AppStep = {
     "NEW": 1,
@@ -71,7 +70,6 @@ export class NapCustMainDataComponent implements OnInit {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {

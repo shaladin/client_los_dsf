@@ -35,7 +35,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
-  arrValue = [];
   isDmsReady: boolean;
   dmsObj: DMSObj;
   appNo: any;
@@ -116,7 +115,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
-    this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
     await this.GetAppNo();

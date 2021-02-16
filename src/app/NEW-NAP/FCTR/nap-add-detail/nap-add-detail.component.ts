@@ -33,7 +33,6 @@ export class NapAddDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-  arrValue = [];
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -72,7 +71,6 @@ export class NapAddDetailComponent implements OnInit {
     this.AppStepIndex = 0;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
       (response: AppObj) => {
         if (response) {

@@ -29,7 +29,6 @@ export class CreditInvestigationDetailComponent implements OnInit {
   mrCustTypeCode: string;
   BizTemplateCode: string = "";
   viewObj: string;
-  arrValue = [];
   analysisItemObj: Array<KeyValueObj>;
   appCrdInvstgHObj: AppCrdInvstgHObj;
   type: string;
@@ -58,7 +57,6 @@ export class CreditInvestigationDetailComponent implements OnInit {
   async ngOnInit() : Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
-    this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     await this.bindAnalysisItemObj();
     this.generateFormAnalysisItem();

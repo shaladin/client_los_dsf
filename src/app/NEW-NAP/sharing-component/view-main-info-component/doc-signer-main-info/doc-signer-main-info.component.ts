@@ -10,8 +10,8 @@ import { environment } from 'environments/environment';
 export class DocSignerMainInfoComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @Input() arrValue = [];
-
+  @Input() AppId: number;
+  
   constructor() { }
 
   ngOnInit() {

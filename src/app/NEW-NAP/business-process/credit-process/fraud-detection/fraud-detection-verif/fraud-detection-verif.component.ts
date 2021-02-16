@@ -64,7 +64,6 @@ export class FraudDetectionVerifComponent implements OnInit {
   GetNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
   ListNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   viewObj: string;
-  arrValue = [];
 
   respAppDupCheck: any;
   respNegativeCust: any;
@@ -98,7 +97,6 @@ export class FraudDetectionVerifComponent implements OnInit {
       this.claimTask();
 
     this.getApp();
-    this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.verfUser = context[CommonConstant.USER_NAME];

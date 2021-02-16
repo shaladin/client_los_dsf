@@ -37,7 +37,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   Viewlink: string;
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
-  arrValue = [];
   isDmsReady: boolean = false;
   
   constructor(
@@ -65,7 +64,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.mouCustObject.MouCustId = this.mouCustId;
-    this.arrValue.push(this.mouCustId);
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;

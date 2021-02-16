@@ -44,7 +44,6 @@ export class NapAddDetailComponent implements OnInit {
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  arrValue = [];
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   FormReturnObj = this.fb.group({
@@ -91,7 +90,6 @@ export class NapAddDetailComponent implements OnInit {
   async ngOnInit() {
     this.ClaimTask();
     this.NapObj.AppId = this.appId;
-    this.arrValue.push(this.appId);
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);

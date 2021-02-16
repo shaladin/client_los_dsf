@@ -42,7 +42,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
-  arrValue = [];
   listAddTc : Array<AppTCObj> = new Array<AppTCObj>();
   appTcObj : Array<AppTCObj> = new Array<AppTCObj>();
   listTcCode : Array<AppTCObj> = new Array<AppTCObj>();
@@ -112,7 +111,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
-    this.arrValue.push(this.appId);
     this.initUrl();
     this.appObj.AppId = this.appId;
     this.initExistingTc();
