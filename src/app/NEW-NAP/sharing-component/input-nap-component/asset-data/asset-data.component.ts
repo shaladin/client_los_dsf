@@ -1606,125 +1606,127 @@ export class AssetDataComponent implements OnInit {
 
           this.listAsset.push(this.allAssetDataObj);
         }
-
-        if (this.appAssetObj.ResponseAppAssetObj != null) {
-          let mode = this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0 ? "edit" : "add";
-          this.AssetDataForm.patchValue({
-            FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
-            FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
-            MrAssetConditionCode: this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode,
-            MrAssetUsageCode: this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode,
-            SupplName: this.appAssetObj.ResponseAppAssetObj.SupplName,
-            SupplCode: this.appAssetObj.ResponseAppAssetObj.SupplCode,
-            ManufacturingYear: this.appAssetObj.ResponseAppAssetObj.ManufacturingYear,
-            AssetPriceAmt: this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt,
-            Discount: this.appAssetObj.ResponseAppAssetObj.Discount,
-            ExpectedDelivDt: this.appAssetObj.ResponseAppAssetObj.ExpectedDelivDt,
-            IsNeedReplacementCar: this.appAssetObj.ResponseAppAssetObj.IsNeedReplacementCar,
-            DownPaymentAmt: this.appAssetObj.ResponseAppAssetObj.DownPaymentAmt,
-            DownPaymentPrctg: this.appAssetObj.ResponseAppAssetObj.DownPaymentPrctg,
-            AssetNotes: this.appAssetObj.ResponseAppAssetObj.AssetNotes,
-            Color: this.appAssetObj.ResponseAppAssetObj.Color,
-            TaxCityIssuer: this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer,
-            AssetSeqNo: this.appAssetObj.ResponseAppAssetObj.AssetSeqNo,
-            AssetStat: this.appAssetObj.ResponseAppAssetObj.AssetStat,
-            AssetTypeCode: this.appAssetObj.ResponseAppAssetObj.AssetTypeCode,
-            AssetCategoryCode: this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode,
-            IsCollateral: this.appAssetObj.ResponseAppAssetObj.IsCollateral,
-            IsInsurance: this.appAssetObj.ResponseAppAssetObj.IsInsurance,
-            IsEditableDp: this.appAssetObj.ResponseAppAssetObj.IsEditableDp,
-            selectedDpType: 'AMT'
-          });
-
-          if (this.appAssetObj.ResponseAppAssetObj.TaxIssueDt != null) {
+        else {
+          if (this.appAssetObj.ResponseAppAssetObj != null) {
+            let mode = this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0 ? "edit" : "add";
             this.AssetDataForm.patchValue({
-              TaxIssueDt: formatDate(this.appAssetObj.ResponseAppAssetObj.TaxIssueDt, 'yyyy-MM-dd', 'en-US')
+              FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
+              FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
+              MrAssetConditionCode: this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode,
+              MrAssetUsageCode: this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode,
+              SupplName: this.appAssetObj.ResponseAppAssetObj.SupplName,
+              SupplCode: this.appAssetObj.ResponseAppAssetObj.SupplCode,
+              ManufacturingYear: this.appAssetObj.ResponseAppAssetObj.ManufacturingYear,
+              AssetPriceAmt: this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt,
+              Discount: this.appAssetObj.ResponseAppAssetObj.Discount,
+              ExpectedDelivDt: this.appAssetObj.ResponseAppAssetObj.ExpectedDelivDt,
+              IsNeedReplacementCar: this.appAssetObj.ResponseAppAssetObj.IsNeedReplacementCar,
+              DownPaymentAmt: this.appAssetObj.ResponseAppAssetObj.DownPaymentAmt,
+              DownPaymentPrctg: this.appAssetObj.ResponseAppAssetObj.DownPaymentPrctg,
+              AssetNotes: this.appAssetObj.ResponseAppAssetObj.AssetNotes,
+              Color: this.appAssetObj.ResponseAppAssetObj.Color,
+              TaxCityIssuer: this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer,
+              AssetSeqNo: this.appAssetObj.ResponseAppAssetObj.AssetSeqNo,
+              AssetStat: this.appAssetObj.ResponseAppAssetObj.AssetStat,
+              AssetTypeCode: this.appAssetObj.ResponseAppAssetObj.AssetTypeCode,
+              AssetCategoryCode: this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode,
+              IsCollateral: this.appAssetObj.ResponseAppAssetObj.IsCollateral,
+              IsInsurance: this.appAssetObj.ResponseAppAssetObj.IsInsurance,
+              IsEditableDp: this.appAssetObj.ResponseAppAssetObj.IsEditableDp,
+              selectedDpType: 'AMT'
             });
+  
+            if (this.appAssetObj.ResponseAppAssetObj.TaxIssueDt != null) {
+              this.AssetDataForm.patchValue({
+                TaxIssueDt: formatDate(this.appAssetObj.ResponseAppAssetObj.TaxIssueDt, 'yyyy-MM-dd', 'en-US')
+              });
+            }
+  
+            if (this.appAssetObj.ResponseBranchManagerSupp != null) {
+              this.AssetDataForm.patchValue({
+                BranchManagerName: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName,
+                BranchManagerNo: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo,
+                BranchManagerPositionCode: this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode
+              });
+              this.BranchManagerName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
+            }
+  
+            if (this.appAssetObj.ResponseAdminHeadSupp != null) {
+              this.AssetDataForm.patchValue({
+                AdminHeadName: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName,
+                AdminHeadNo: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo,
+                AdminHeadPositionCode: this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode,
+              })
+            }
+  
+            if (this.appAssetObj.ResponseSalesPersonSupp != null) {
+              this.AssetDataForm.patchValue({
+                SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
+                SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
+                SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
+              });
+            }
+  
+            if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
+              this.AssetDataForm.patchValue({
+                UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
+                MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
+                OwnerName: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerName,
+                MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
+                OwnerIdNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerIdNo,
+                MrOwnerRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode,
+                OwnerAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr,
+                OwnerAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1,
+                OwnerAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode2,
+                OwnerAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3,
+                OwnerAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4,
+                OwnerCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerCity,
+                OwnerZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode,
+                OwnerMobilePhnNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo,
+                LocationAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAddr,
+                LocationAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode1,
+                LocationAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode2,
+                LocationAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3,
+                LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
+                LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
+                LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
+                SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
+                SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
+              });
+            }
+  
+            this.AssetConditionChanged(mode);
+            this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
+            this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
+            this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
+  
+            if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
+              this.setAddrOwnerObj();
+              this.setAddrDelivObj();
+              this.setAddrLocationObj();
+            }
+  
+            this.DpTypeBefore = "AMT";
+            this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
+            this.GetAssetMaster(this.assetMasterObj);
+            this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
+            this.GetVendorForView();
+            this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
+            this.GetProvDistrict();
+            this.bindAccessories();
+            this.updateValueDownPaymentPrctg();
           }
-
-          if (this.appAssetObj.ResponseBranchManagerSupp != null) {
-            this.AssetDataForm.patchValue({
-              BranchManagerName: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName,
-              BranchManagerNo: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo,
-              BranchManagerPositionCode: this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode
-            });
-            this.BranchManagerName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
-          }
-
-          if (this.appAssetObj.ResponseAdminHeadSupp != null) {
-            this.AssetDataForm.patchValue({
-              AdminHeadName: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName,
-              AdminHeadNo: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo,
-              AdminHeadPositionCode: this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode,
-            })
-          }
-
-          if (this.appAssetObj.ResponseSalesPersonSupp != null) {
-            this.AssetDataForm.patchValue({
-              SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
-              SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
-              SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
-            });
-          }
-
-          if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
-            this.AssetDataForm.patchValue({
-              UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
-              MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
-              OwnerName: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerName,
-              MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
-              OwnerIdNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerIdNo,
-              MrOwnerRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode,
-              OwnerAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr,
-              OwnerAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1,
-              OwnerAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode2,
-              OwnerAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3,
-              OwnerAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4,
-              OwnerCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerCity,
-              OwnerZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode,
-              OwnerMobilePhnNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo,
-              LocationAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAddr,
-              LocationAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode1,
-              LocationAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode2,
-              LocationAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3,
-              LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
-              LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
-              LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
-              SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
-              SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
-            });
-          }
-
-          this.AssetConditionChanged(mode);
-          this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
-          this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-          this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
-
-          if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
-            this.setAddrOwnerObj();
-            this.setAddrDelivObj();
-            this.setAddrLocationObj();
-          }
-
-          this.DpTypeBefore = "AMT";
-          this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-          this.GetAssetMaster(this.assetMasterObj);
-          this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
-          this.GetVendorForView();
-          this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-          this.GetProvDistrict();
-          this.bindAccessories();
-          this.updateValueDownPaymentPrctg();
-        }
-
-        if (this.appAssetObj != null) {
-          for (var i = 0; i < this.items.length; i++) {
-            if (this.items.controls[i] != null) {
-              this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
+  
+          if (this.appAssetObj != null) {
+            for (var i = 0; i < this.items.length; i++) {
+              if (this.items.controls[i] != null) {
+                this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
+              }
             }
           }
         }
-      });
+      }
+    );
   }
 
   initLookup() {
