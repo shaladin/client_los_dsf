@@ -42,6 +42,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   bizTemplateCode: string;
+  isReady:boolean = false;
 
   AppStep = {
     "NAPD": 1,
@@ -124,6 +125,7 @@ export class NapDetailFormComponent implements OnInit {
             this.bizTemplateCode = this.NapObj.BizTemplateCode;
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
+            this.isReady = true;
           }
         });
     }

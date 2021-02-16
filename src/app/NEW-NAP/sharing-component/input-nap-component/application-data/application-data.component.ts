@@ -307,7 +307,6 @@ export class ApplicationDataComponent implements OnInit {
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
         }); 
-        console.log("TEST");
         this.makeNewLookupCriteria();
         if(this.BizTemplateCode != CommonConstant.OPL){
           this.getInterestTypeCode();
