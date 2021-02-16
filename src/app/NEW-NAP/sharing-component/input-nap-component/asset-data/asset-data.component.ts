@@ -59,6 +59,8 @@ export class AssetDataComponent implements OnInit {
   deleteAppAssetObj: AppAssetObj = new AppAssetObj();
   IsIntegrator: boolean = false;
   indexChassis: number = 0;
+  isAddressObjDelvReady: boolean = false;
+  isAddressObjLocReady: boolean = false;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -315,7 +317,7 @@ export class AssetDataComponent implements OnInit {
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
     if(this.BizTemplateCode === "OPL") {
-      this.inputAddressObjForLoc.showOwnership = true;
+      this.inputAddressObjForLoc.showOwnership = false;
 
       this.AssetDataForm.controls.DownPaymentAmt.clearValidators();
       this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
@@ -345,7 +347,9 @@ export class AssetDataComponent implements OnInit {
       await this.GetAppCustCoy();
     }
     await this.GetListAddr();
-    this.AssetConditionChanged();
+    if(this.BizTemplateCode !== CommonConstant.OPL){
+      this.AssetConditionChanged();
+    }
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
@@ -418,7 +422,7 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
+    this.inputAddressObjForDeliv.showOwnership = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForDeliv.default = null;
@@ -426,7 +430,7 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = true;
+    this.inputAddressObjForLoc.showOwnership = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForLoc.default = null;
@@ -481,7 +485,7 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
+    this.inputAddressObjForDeliv.showOwnership = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode;
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode };
     this.delivAddrObj = new AddrObj();
@@ -497,7 +501,7 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = true;
+    this.inputAddressObjForLoc.showOwnership = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode };
     this.locationAddrObj = new AddrObj();
@@ -855,6 +859,7 @@ export class AssetDataComponent implements OnInit {
         }
       }
       else if(this.BizTemplateCode === "OPL") {
+        console.log("LALALA")
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -1695,7 +1700,9 @@ export class AssetDataComponent implements OnInit {
             });
           }
 
-          this.AssetConditionChanged(mode);
+          if(this.BizTemplateCode !== CommonConstant.OPL){
+            this.AssetConditionChanged(mode);
+          }
           this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
           this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
           this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
@@ -1919,8 +1926,10 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
-        this.GetProdOfferingAssetCond();
         this.OfficeCode = this.AppObj.OriOfficeCode;
+        if(this.BizTemplateCode != CommonConstant.OPL){
+          this.GetProdOfferingAssetCond();
+        }          
       }
     );
   }
@@ -2127,6 +2136,7 @@ export class AssetDataComponent implements OnInit {
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivZipcode };
     this.inputAddressObjForDeliv.default = this.delivAddrObj;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
+    this.inputAddressObjForDeliv.showOwnership = false;
   }
 
   setAddrLocationObj() {
@@ -2143,6 +2153,7 @@ export class AssetDataComponent implements OnInit {
 
     if(this.BizTemplateCode === "OPL") {
     this.locationAddrObj.MrHouseOwnershipCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationOwnership;
+    this.inputAddressObjForLoc.showOwnership = false;
     }
 
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode;
