@@ -56,7 +56,7 @@ export class NapAddDetailComponent implements OnInit {
     "GUAR": 2,
     "REF": 3,
     "APP": 4,
-    "COLL": 5,
+    "ASSET": 5,
     "INS": 6,
     "LFI": 7,
     "FIN": 8,
@@ -173,7 +173,7 @@ export class NapAddDetailComponent implements OnInit {
         "GUAR": 2,
         "REF": 3,
         "APP": 4,
-        "COLL": 5,
+        "ASSET": 5,
         "INS": 6,
         "LFI": 7,
         "FIN": 8,
@@ -194,7 +194,7 @@ export class NapAddDetailComponent implements OnInit {
         "GUAR": 2,
         "REF": 3,
         "APP": 4,
-        "COLL": 5,
+        "ASSET": 5,
         "INS": 6,
         "LFI": 7,
         "FIN": 7,
@@ -281,8 +281,8 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case CommonConstant.AppStepColl:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
+      case CommonConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
       case CommonConstant.AppStepIns:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];

@@ -43,15 +43,12 @@ export class NapAddDetailComponent implements OnInit {
   arrValue = [];
 
   AppStep = {
-    "NEW": 1,
-    "CUST": 1,
-    "GUAR": 2,
-    "APP": 3,
-    "ASSET": 5,
-    "INS": 6,
-    "LFI": 7,
-    "FIN": 8,
-    "TC": 9,
+    "APP": 1,
+    "ASSET": 2,
+    "INS": 3,
+    "LFI": 4,
+    "FIN": 5,
+    "TC": 6,
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -120,15 +117,12 @@ export class NapAddDetailComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
-        "NEW": 1,
-        "CUST": 1,
-        "GUAR": 2,
-        "APP": 3,
-        "ASSET": 5,
-        "INS": 6,
-        "LFI": 7,
-        "FIN": 8,
-        "TC": 9,
+        "APP": 1,
+        "ASSET": 2,
+        "INS": 3,
+        "LFI": 4,
+        "FIN": 5,
+        "TC": 6,
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -139,15 +133,12 @@ export class NapAddDetailComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
-        "NEW": 1,
-        "CUST": 1,
-        "GUAR": 2,
-        "APP": 3,
-        "ASSET": 5,
-        "INS": 6,
-        "LFI": 7,
-        "FIN": 7,
-        "TC": 8,
+        "APP": 1,
+        "ASSET": 2,
+        "INS": 3,
+        "LFI": 4,
+        "FIN": 5,
+        "TC": 6,
       };
     }
   }

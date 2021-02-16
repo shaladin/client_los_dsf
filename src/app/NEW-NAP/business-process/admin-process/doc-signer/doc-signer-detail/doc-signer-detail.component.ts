@@ -22,6 +22,7 @@ export class DocSignerDetailComponent implements OnInit {
   AgrmntId: number;
   ResponseAppAssetObj: any;
   result2: any;
+  ResponseAppCustObj: any;
   ResponseAgrmntSignerObj: any;
   SupplCode: string;
   OfficeCode: string;
@@ -65,25 +66,34 @@ export class DocSignerDetailComponent implements OnInit {
       AppId: this.AppId,
       AgrmntId: this.AgrmntId
     }
-    await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
-      (response) => {
-        this.ResponseAppCustDataObj = response;
-        this.MrCustTypeCode = this.ResponseAppCustDataObj.MrCustTypeCode;
-        this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
-        this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
-      });
-
-    await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
-      (response) => {
-        this.ResponseAppAssetObj = response;
-        this.SupplCode = this.ResponseAppAssetObj.SupplCode;
-      });
 
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
       (response) => {
         this.result2 = response;
         this.OfficeCode = this.result2.OfficeCode;
         this.CustNo = this.result2.CustNo;
+      });
+
+    await this.http.post(URLConstant.GetAppCustMainDataByAppId, obj).toPromise().then(
+      (response) => {
+        this.ResponseAppCustObj = response;
+        if (this.ResponseAppCustObj.AppCustObj != undefined) {
+          this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
+          if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
+              (response) => {
+                this.ResponseAppCustDataObj = response;
+                this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
+                this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
+              });
+          }
+        }
+      });
+
+    await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
+      (response) => {
+        this.ResponseAppAssetObj = response;
+        this.SupplCode = this.ResponseAppAssetObj.SupplCode;
       });
 
     await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
@@ -236,7 +246,7 @@ export class DocSignerDetailComponent implements OnInit {
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
     let tempJobCode: string = "-";
-    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
       MrJobPositionMgmntShrholder1Code: tempJobCode,
     })
@@ -257,13 +267,13 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
   }

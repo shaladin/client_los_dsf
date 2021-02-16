@@ -54,7 +54,7 @@ export class NapDetailFormComponent implements OnInit {
     "NAPD": 1,
     "REF": 1,
     "APP": 2,
-    "COLL": 3,
+    "ASSET": 3,
     "INS": 4,
     "LFI": 5,
     "FIN": 6,
@@ -170,7 +170,7 @@ export class NapDetailFormComponent implements OnInit {
         "NAPD": 1,
         "REF": 1,
         "APP": 2,
-        "COLL": 3,
+        "ASSET": 3,
         "INS": 4,
         "LFI": 5,
         "FIN": 6,
@@ -189,7 +189,7 @@ export class NapDetailFormComponent implements OnInit {
         "NAPD": 1,
         "REF": 1,
         "APP": 2,
-        "COLL": 3,
+        "ASSET": 3,
         "INS": 4,
         "LFI": 5,
         "FIN": 5,
@@ -270,8 +270,8 @@ export class NapDetailFormComponent implements OnInit {
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
-      case CommonConstant.AppStepColl:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
+      case CommonConstant.AppStepAsset:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
       case CommonConstant.AppStepIns:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];

@@ -98,7 +98,6 @@ TCList : any;
   }
 
   ngOnInit() {
-    console.log("HELLOW")
     this.arrValue.push(this.AgrmntId);
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.TrxNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
       (response) => {

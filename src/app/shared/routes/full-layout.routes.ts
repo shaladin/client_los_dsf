@@ -58,5 +58,9 @@ export const Full_ROUTES: Routes = [
     data: {
       title: 'Backdoor Component'
     }
+  },
+  {
+    path: 'requisitiondecision',
+    loadChildren: './requisition-decision/requisition-decision.module#RequisitionDecisionModule'
   }
 ];

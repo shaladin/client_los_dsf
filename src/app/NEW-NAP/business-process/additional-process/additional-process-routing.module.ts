@@ -25,6 +25,8 @@ import { ReturnHandlingAdditionalTcDetailComponent } from './return-handling/ret
 import { DupCheckMdPagingComponent } from './app-dup-check-main-data/dup-check-md-paging/dup-check-md-paging.component';
 import { DupCheckMdSubjListComponent } from './app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component';
 import { DupCheckMdSubjMatchComponent } from './app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component';
+import { ReturnHandlingEditNap4Component } from './return-handling/return-handling-edit-nap4/return-handling-edit-nap4.component';
+import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
 
 const routes: Routes = [
   {
@@ -85,6 +87,20 @@ const routes: Routes = [
         data: {
           title: 'Return Handling Edit App Paging'
         }
+      },
+      {
+        path: 'ReturnHandling/NAP4',
+        component: ReturnHandlingEditNap4Component,
+        data: {
+          title: 'Return Handling Edit NAP 4'
+        },
+      },
+      {
+        path: 'ReturnHandling/NAP2',
+        component: ReturnHandlingNewEditAppPagingComponent,
+        data: {
+          title: 'Return Handling Edit NAP2 Paging'
+        },
       },
       {
         path: 'AppDupCheck/Paging',
@@ -188,17 +204,17 @@ const routes: Routes = [
       {
         path: 'AppDupCheckMainData/Paging',
         component: DupCheckMdPagingComponent,
-        data: {title: 'App Duplicate Check'}
+        data: { title: 'App Duplicate Check' }
       },
       {
         path: 'AppDupCheckMainData/SubjList',
         component: DupCheckMdSubjListComponent,
-        data: {title: 'App Duplicate Check Subject List'}
+        data: { title: 'App Duplicate Check Subject List' }
       },
       {
         path: 'AppDupCheckMainData/SubjMatch',
         component: DupCheckMdSubjMatchComponent,
-        data: {title: 'App Duplicate Check Subject Match'}
+        data: { title: 'App Duplicate Check Subject Match' }
       },
     ]
   }

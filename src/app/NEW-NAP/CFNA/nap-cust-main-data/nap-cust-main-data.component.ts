@@ -140,7 +140,6 @@ export class NapCustMainDataComponent implements OnInit {
       default:
         break;
     }
-    this.NextStep(AppStep, true);
   }
 
   getEvent(event) {
@@ -162,12 +161,11 @@ export class NapCustMainDataComponent implements OnInit {
     }
   }
 
-  async NextStep(Step, IsChangeByUser: boolean = false) {
+  async NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       async (response) => {
-        if(!IsChangeByUser) await this.ChangeTab(Step);
-        else this.viewAppMainInfo.ReloadUcViewGeneric();
+        this.ChangeTab(Step);
         this.stepper.to(this.AppStepIndex);
       }
     )

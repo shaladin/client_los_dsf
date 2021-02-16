@@ -240,6 +240,9 @@ export class CustMainDataAddComponent implements OnInit {
           case CommonConstant.CFNA :
             AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": response["AppId"]});
           break;
+          case CommonConstant.OPL :
+            AdInsHelper.RedirectUrl(this.router,["Nap/OPL/NAP1"], { "AppId": response["AppId"]});
+          break;
         }
       }
     );
