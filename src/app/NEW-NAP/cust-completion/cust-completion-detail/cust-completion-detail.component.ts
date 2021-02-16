@@ -7,8 +7,10 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-cust-completion-detail',
@@ -23,12 +25,19 @@ export class CustCompletionDetailComponent implements OnInit {
   wfTaskListId: number;
   BizTemplateCode: string;
   addObj: any = {};
-
+  FormReturnObj = this.fb.group({
+    ReturnExecNotes: ['']
+  });
+  ReturnHandlingHId: number = 0;
+  ResponseReturnInfoObj: ReturnHandlingDObj;
+  OnFormReturnInfo: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, 
+    private fb: FormBuilder,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -38,6 +47,9 @@ export class CustCompletionDetailComponent implements OnInit {
       }
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
+      }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
       }
     });
   }
@@ -53,12 +65,36 @@ export class CustCompletionDetailComponent implements OnInit {
     ];
 
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+    if (this.ReturnHandlingHId != 0) {
+      this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionDataRtn.json";
+      this.MakeViewReturnInfoObj();
+      this.addObj["ReturnHandlingHId"] = this.ReturnHandlingHId;
+    }
+    else {
+      this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+    }
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
 
     this.loadCustCompletionListData();
     this.claimTask();
+  }
+
+  MakeViewReturnInfoObj() {
+    if (this.ReturnHandlingHId > 0) {
+      var obj = {
+        ReturnHandlingHId: this.ReturnHandlingHId,
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditNAP4
+      }
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+        (response) => {
+          this.ResponseReturnInfoObj = response;
+          this.FormReturnObj.patchValue({
+            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
+          });
+          this.OnFormReturnInfo = true;
+        });
+    }
   }
 
   loadCustCompletionListData() {
@@ -95,5 +131,25 @@ export class CustCompletionDetailComponent implements OnInit {
 
   GetCallback(event) {
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
+  }
+
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+        }
+      )
+    }
   }
 }
