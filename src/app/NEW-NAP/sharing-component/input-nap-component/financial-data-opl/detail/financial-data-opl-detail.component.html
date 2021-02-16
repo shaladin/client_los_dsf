@@ -1,0 +1,129 @@
+<div class="col-md-12" *ngIf="isReady">
+  <div class="card">
+    <div class="card-body">
+      <app-asset-opl-main-info [AppAssetId]="AppAssetId"></app-asset-opl-main-info>
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="FinancialDataForm" #formDirective="ngForm" (ngSubmit)="FinancialDataForm.valid && SaveForm(formDirective)"
+              #enjiForm="ngForm">
+          <div class="form-body">
+            <lib-ucSubsection [id]="'rentalcalcId'" [title]="'Rental Calculation'" [panel]="'rentalCalc'">
+            </lib-ucSubsection>
+            <div id="rentalCalc">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Rental Period</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.RentalPeriod.value }} / {{this.FinancialDataForm.controls.RentalPeriodName.value }}</label>
+                <label class="col-md-3 adInsLabel" translate>Margin Type</label>
+                <div class="col-md-3">
+                  <mat-radio-group formControlName="OperatingType" name="OperatingType" (change)="ChangeOperatingType()">
+                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of OperatingMarginObj"
+                                      [value]="item.Key">
+                      {{item.Value}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Total Asset Price (After Disc + Accessory)</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalAssetPrice.value  | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" translate>Margin (%/Amt)</label>
+                <div class="col-md-1" style="border-right: 1px solid grey">
+                  <input type="" currencyMask id="operatingMarginPrcnt" class="form-control" formControlName="OperatingMarginPrcnt" (focusout)="updateOperatingMarginAmt()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginPrcnt.invalid}">
+                  <lib-uc-show-errors [control]="FinancialDataForm.controls.OperatingMarginPrcnt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-2">
+                  <input type="" currencyMask id="operatingMarginAmt" class="form-control" formControlName="OperatingMarginAmt" (focusout)="updateOperatingMarginPrctg()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginAmt.invalid}">
+                  <lib-uc-show-errors [control]="FinancialDataForm.controls.OperatingMarginAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Residual Value Type</label>
+                <div class="col-md-3">
+                  <mat-radio-group formControlName="ResidualType" name="ResidualType" (change)="ChangeResidualType()">
+                    <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of ResidualTypeObj"
+                                      [value]="item.Key">
+                      {{item.Value}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <label class="col-md-3 adInsLabel" translate>Total Rental Amount</label>
+                <label class="col-md-3 adInsLabel" translate>{{this.FinancialDataForm.controls.RentAmt.value * this.FinancialDataForm.controls.RentalPeriod.value   | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Residual Value (%/Amt)</label>
+                <div class="col-md-1" style="border-right: 1px solid grey">
+                  <input type="" currencyMask id="residualValuePrcnt" class="form-control" formControlName="ResidualValuePrcnt" (focusout)="updateResiduAmt()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValuePrcnt.invalid}">
+                  <lib-uc-show-errors [control]="FinancialDataForm.controls.ResidualValuePrcnt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-2">
+                  <input type="" currencyMask id="residualValueAmt" class="form-control" formControlName="ResidualValueAmt" (focusout)="updateResiduPrctg()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValueAmt.invalid}">
+                  <lib-uc-show-errors [control]="FinancialDataForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-3 adInsLabel" translate>Rental Amount (Per Period)</label>
+                <div class="col-md-3">
+                  <input type="" currencyMask id="rentAmt" class="form-control" formControlName="RentAmt"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.RentAmt.invalid}">
+                  <lib-uc-show-errors [control]="FinancialDataForm.controls.RentAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Depreciation</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.DepreciationAmt.value | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" translate>Rental Amount + VAT (Per Period)</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.RentAmt.value * 1.1 | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Asset Expense</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalOthExpenseAmt.value | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" translate>Gross Yield (%)</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.GrossYieldPrcnt.value| number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>COF Interest</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.CofAmt.value | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Total Cost Before Margin</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalOperatingCostAmt.value | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Total Fee (Excl. VAT)</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalFeeAmt.value | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Security Deposit</label>
+                <div class="col-md-3">
+                  <input type="" currencyMask id="securityDepositAmt" class="form-control" formControlName="SecurityDepositAmt"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.SecurityDepositAmt.invalid}">
+                  <lib-uc-show-errors [control]="FinancialDataForm.controls.SecurityDepositAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Total Paid In Advance</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.CustomerPaidAtCostAmt.value  | number:'.2':'en-US'}}</label>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                      translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

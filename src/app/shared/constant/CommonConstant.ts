@@ -487,7 +487,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeSalutation = "SALUTATION";
   public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
   public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
-
+  public static RefMasterTypeCodeResidualType = "RESIDUAL_TYPE";
+  public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";

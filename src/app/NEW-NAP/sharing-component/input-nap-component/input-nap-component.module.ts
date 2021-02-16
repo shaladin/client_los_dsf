@@ -77,6 +77,8 @@ import { SharedModule } from "app/shared/shared.module";
 import { AssetExpenseComponent } from "./asset-expense-opl/asset-expense.component";
 import { AssetExpenseAddEditComponent } from "./asset-expense-opl/asset-expense-add-edit/asset-expense-add-edit.component";
 import { AssetOplMainInfoComponent } from "./asset-opl-main-info/asset-opl-main-info.component";
+import { FinancialDataOplEditComponent } from "./financial-data-opl/detail/financial-data-opl-detail.component";
+import { FinancialDataOplComponent } from "./financial-data-opl/financial-data-opl.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -155,7 +157,9 @@ export const customCurrencyMaskConfig = {
     CollateralDataCfnaDetailComponent,
     AssetExpenseComponent,
     AssetExpenseAddEditComponent,
-    AssetOplMainInfoComponent
+    AssetOplMainInfoComponent,
+    FinancialDataOplEditComponent,
+    FinancialDataOplComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -241,7 +245,9 @@ export const customCurrencyMaskConfig = {
     CollateralLeasingAddEditComponent,
     AssetExpenseComponent,
     AssetExpenseAddEditComponent,
-    AssetOplMainInfoComponent
+    AssetOplMainInfoComponent,
+    FinancialDataOplEditComponent,
+    FinancialDataOplComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [
