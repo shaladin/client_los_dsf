@@ -60,18 +60,24 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+    }
+    else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+      this.viewGenericObj.ddlEnvironments = [
+        {
+          name: "AppNo",
+          environment: environment.losR3Web
+        },
+        {
+          name: "MouCustNo",
+          environment: environment.losR3Web
+        },
+      ];
+    }
     await this.getAllData();
     this.setLookupObj();
   }
