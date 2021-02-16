@@ -391,6 +391,7 @@ export class CommonConstant {
   // RETURN HANDLING
   public static ModeResultHandling = "ReturnHandling";
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
