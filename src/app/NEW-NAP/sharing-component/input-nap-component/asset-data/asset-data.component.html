@@ -781,7 +781,6 @@
                       <label class="col-md-4 adins-required-label" translate>Asset Usage</label>
                       <div class="col-md-8">
                         <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
-                          (change)="ChangeAssetUsage()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }"
                           style="width:100%">
                           <option value="">-Select One-</option>
@@ -1059,8 +1058,8 @@
                 </div>
                 
                 <div class="form-actions right">
-                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()"
-                    translate>
+                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
+                    (click)="Back()" translate>
                     <i class="ft-x"></i> Cancel
                   </button>
                   <button type="submit" class="btn btn-raised btn-primary">
