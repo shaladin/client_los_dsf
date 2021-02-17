@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -12,6 +11,8 @@ import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model'
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-bank-account',
@@ -61,7 +62,7 @@ export class CustBankAccountComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal, private cookieService: CookieService) {
 
   }
 
@@ -213,8 +214,8 @@ export class CustBankAccountComponent implements OnInit {
       var dateYear = 0;
       if (this.CustBankAccountForm.value['BankStmntObjs'].length > 0)
         dateYear = this.CustBankAccountForm.value['BankStmntObjs'][0].Year;
-      else{
-        var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+      else {
+        var userAcc = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var month = new Date(userAcc.BusinessDt).getMonth();
         dateYear = new Date(userAcc.BusinessDt).getFullYear();
         if (month == 0) dateYear--;

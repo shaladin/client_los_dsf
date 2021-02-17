@@ -9,6 +9,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-from-lead-paging',
@@ -24,23 +26,23 @@ export class NapFromLeadPagingComponent implements OnInit {
   constructor(private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
-      this.route.queryParams.subscribe(params => {
-        if (params["BizTemplateCode"] != null) {
-          this.BizTemplateCode = params["BizTemplateCode"];
-          localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
-        }
-      });
-     }
+    private route: ActivatedRoute, private cookieService: CookieService) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
+  }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.arrCrit = new Array();    
+    this.arrCrit = new Array();
     this.makeCriteria();
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchAppFromLead.json";
+    this.inputPagingObj._url = "./assets/ucpaging/searchAppFromLead.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromLead.json";
@@ -59,7 +61,7 @@ export class NapFromLeadPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  makeCriteria(){
+  makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
@@ -74,12 +76,12 @@ export class NapFromLeadPagingComponent implements OnInit {
     this.arrCrit.push(critObj);
   }
 
-  AddApp(ev){
+  AddApp(ev) {
     var obj = { OfficeCode: this.userAccess.OfficeCode };
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
-          AdInsHelper.RedirectUrl(this.router,["/Nap/Sharing/NapFromLead/Detail"], { "LeadId": ev.RowObj.LeadId});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_SHARING_FROM_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId});
         }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }

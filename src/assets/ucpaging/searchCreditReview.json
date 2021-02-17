@@ -142,7 +142,7 @@
         "position": "center",
         "property": "AppNo",
         "target": "_blank",
-        "path": "/View/AppView",
+        "path": "VIEW_APP",
         "param": [
           {
             "type": "AppId",
@@ -179,7 +179,7 @@
                 ],
                 "result": {
                   "type": "url",
-                  "path": "../Main",
+                  "path": "BACK_TO_MAIN",
                   "icon": "ft-edit-2",
                   "param": [
                     {
@@ -205,7 +205,7 @@
                 ],
                 "result": {
                   "type": "url",
-                  "path": "../Main",
+                  "path": "BACK_TO_MAIN",
                   "icon": "ft-edit-2",
                   "param": [
                     {

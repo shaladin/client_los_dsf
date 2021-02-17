@@ -128,7 +128,7 @@
             "type": "link",
             "position": "center",
             "property": "mouCustNo",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
                 {
@@ -163,7 +163,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Mou/Request/Detail",
+                    "path": "MOU_REQ_DETAIL",
                     "param": [
                         {
                             "type": "MouCustId",

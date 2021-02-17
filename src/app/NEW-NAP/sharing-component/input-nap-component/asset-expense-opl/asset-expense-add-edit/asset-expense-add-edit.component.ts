@@ -114,6 +114,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   isCalculate: boolean = false;
   businessDt: Date = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
   isLookupDisable: boolean = false;
+  maintBehaCode: string = "";
   InsuranceDataForm = this.fb.group({
     InsAssetCoveredBy: ['CO', [Validators.required, Validators.maxLength(50)]],
     InsAssetPaidBy: ['CO', [Validators.required, Validators.maxLength(50)]],
@@ -240,7 +241,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
     this.saveObj.AppAssetMaintHObj.MrMaintPackageCode = this.InsuranceDataForm.controls.PackageType.value;
     this.saveObj.AppAssetMaintHObj.TotalServiceAmt = this.InsuranceDataForm.controls.TotalServiceAmt.value;
     this.saveObj.AppAssetMaintHObj.TotalSparepartAmt = this.InsuranceDataForm.controls.TotalSparepartAmt.value;
-
+    this.saveObj.AppAssetMaintHObj.AppAssetMaintBehaviourCode = this.maintBehaCode;
+    this.saveObj.AppAssetMaintHObj.IsAddable = this.isCanBeAddedMaintenance;
     //Maintenance
     for (let i = 0; i < this.InsuranceDataForm.controls["ServiceObjs"]["controls"].length; i++) {
       var mainpackageservice = new AppAssetMaintDObj();
@@ -281,6 +283,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
       othExpense.AppAssetId = this.AppAssetId;
       othExpense.MrOthExpenseTypeOplCode = this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseCode"].value;
       othExpense.OthExpenseAmt = this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseAmt"].value;
+      othExpense.OthExpBehaviourCode = this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["BehaviourCode"].value;
+      othExpense.IsAddable = this.isExpenseCanAdd;
+      
       this.saveObj.AppAssetOthExpenseOplObjs.push(othExpense);
     }
     //Fee
@@ -296,6 +301,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
       fee.VatAmt = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["VATAmt"].value;
       fee.CapitalizedAmt = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["CptlzAmt"].value;
+      fee.FeeBehaviourCode = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeBehaviour"].value;
+      fee.FeeCapBehaviourCode = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["CptlzBehaviour"].value;
       this.saveObj.AppAssetFeeOplObjs.push(fee);
     }
 
@@ -1304,16 +1311,22 @@ export class AssetExpenseAddEditComponent implements OnInit {
           this.InsuranceDataForm.patchValue({
             PackageType: response["AppAssetMaintHObj"].MrMaintPackageCode
           });
+          this.isCanBeAddedMaintenance = response["AppAssetMaintHObj"].IsAddable;
+          this.maintBehaCode = response["AppAssetMaintHObj"].AppAssetMaintBehaviourCode;
           this.InsuranceDataForm.controls["SparePartObjs"] = this.fb.array([]);
           this.InputLookupSparePartObjs = new Array<InputLookupObj>();
           this.InsuranceDataForm.controls["ServiceObjs"] = this.fb.array([]);
           this.InputLookupServiceObjs = new Array<InputLookupObj>();
+          var mainLock = false;
+          if (this.maintBehaCode == "LOCK") {
+            mainLock = true;
+          }
           for (let i = 0; i < response["AppAssetMaintHObj"].SparepartObjs.length; i++) {
             var packsparepart = {
               SparePartCode: response["AppAssetMaintHObj"].SparepartObjs[i].MrSparepartCode,
               SparePartName: response["AppAssetMaintHObj"].SparepartObjs[i].MrSparepartName,
               SparePartAmt: response["AppAssetMaintHObj"].SparepartObjs[i].FeeAmt,
-              IsLock: false
+              IsLock: mainLock
             }
             this.addSparePart(packsparepart);
           }
@@ -1322,24 +1335,58 @@ export class AssetExpenseAddEditComponent implements OnInit {
               ServiceCode: response["AppAssetMaintHObj"].ServiceObjs[i].MrServiceCode,
               ServiceName: response["AppAssetMaintHObj"].ServiceObjs[i].MrServiceName,
               ServiceAmt: response["AppAssetMaintHObj"].ServiceObjs[i].FeeAmt,
-              IsLock: false
+              IsLock: mainLock
             }
             this.addService(packservice);
           }
-          this.isCanBeAddedMaintenance = true;
           this.calculateService();
           this.calculateSparepart();
+          if (this.maintBehaCode == "LOCK") {
+            for (let i = 0; i < this.InsuranceDataForm.controls["SparePartObjs"]["controls"].length; i++) {
+              this.InsuranceDataForm["controls"]["SparePartObjs"]["controls"][i]["controls"]["SparePartAmt"].disable();
+              this.InputLookupSparePartObjs[i].isDisable = true;
+            }
+            for (let i = 0; i < this.InsuranceDataForm.controls["ServiceObjs"]["controls"].length; i++) {
+              this.InsuranceDataForm["controls"]["ServiceObjs"]["controls"][i]["controls"]["ServiceAmt"].disable();
+              this.InputLookupServiceObjs[i].isDisable = true;
+            }
+            //this.isLookupDisable = true;
+          }
+          else {
+            for (let i = 0; i < this.InsuranceDataForm.controls["SparePartObjs"]["controls"].length; i++) {
+              this.InsuranceDataForm["controls"]["SparePartObjs"]["controls"][i]["controls"]["SparePartAmt"].enable();
+              this.InputLookupSparePartObjs[i].isDisable = false;
+            }
+            for (let i = 0; i < this.InsuranceDataForm.controls["ServiceObjs"]["controls"].length; i++) {
+              this.InsuranceDataForm["controls"]["ServiceObjs"]["controls"][i]["controls"]["ServiceAmt"].enable();
+              this.InputLookupServiceObjs[i].isDisable = false;
+            }
+          }
         }
         if (response["AppAssetOthExpenseOplObjs"].length > 0) {
+          this.isExpenseCanAdd = response["AppAssetOthExpenseOplObjs"][0].IsAddable;
           this.InsuranceDataForm.controls["OtherExpenseObjs"] = this.fb.array([]);
           for (let i = 0; i < response["AppAssetOthExpenseOplObjs"].length; i++) {
+            var expenseLock = false;
+            if (response["AppAssetOthExpenseOplObjs"][i].OthExpBehaviourCode=="LOCK") {
+              expenseLock = true;
+            }
             var x = {
               OthExpenseCode: response["AppAssetOthExpenseOplObjs"][i].MrOthExpenseTypeOplCode,
               OthExpenseName: response["AppAssetOthExpenseOplObjs"][i].MrOthExpenseTypeOplName,
               OthExpenseAmt: response["AppAssetOthExpenseOplObjs"][i].OthExpenseAmt,
-              IsLock: false
+              IsLock: expenseLock,
+              BehaviourCode: response["AppAssetOthExpenseOplObjs"][i].OthExpBehaviourCode
             };
             this.addOtherExpense(x);
+            if (response["AppAssetOthExpenseOplObjs"][i].OthExpBehaviourCode == "LOCK") {
+              this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseAmt"].disable();
+              this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseCode"].disable();
+            }
+            else {
+              this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseAmt"].enable();
+              this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseCode"].enable();
+            }
           }
           this.isExpenseCanAdd = true;
           this.calculateExpense();
@@ -1353,7 +1400,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
                 FeeTypeName: response["AppAssetFeeOplObjs"][i].MrFeeTypeOplName,
                 FeeTypeAmt: response["AppAssetFeeOplObjs"][i].FeeAmt + response["AppAssetFeeOplObjs"][i].VatAmt,
                 CptlzAmt: response["AppAssetFeeOplObjs"][i].CapitalizedAmt,
-                i: i
+                i: i,
+                FeeBehaviour: response["AppAssetFeeOplObjs"][i].FeeBehaviourCode,
+                CptlzBehaviour: response["AppAssetFeeOplObjs"][i].FeeCapBehaviourCode,
               };
               this.addFeeIfExist(fee);
             }
@@ -1363,9 +1412,17 @@ export class AssetExpenseAddEditComponent implements OnInit {
                 FeeTypeName: response["AppAssetFeeOplObjs"][i].MrFeeTypeOplName,
                 FeeTypeAmt: response["AppAssetFeeOplObjs"][i].FeeAmt,
                 CptlzAmt: response["AppAssetFeeOplObjs"][i].CapitalizedAmt,
-                i: i
+                i: i,
+                FeeBehaviour: response["AppAssetFeeOplObjs"][i].FeeBehaviourCode,
+                CptlzBehaviour: response["AppAssetFeeOplObjs"][i].FeeCapBehaviourCode,
               };
               this.addFeeIfExist(fee);
+            }
+            if (response["AppAssetFeeOplObjs"][i].FeeBehaviourCode == "LOCK") {
+              this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].disable();
+            }
+            if (response["AppAssetFeeOplObjs"][i].FeeCapBehaviourCode == "LOCK") {
+              this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["CptlzAmt"].disable();
             }
             this.calculateFee();
             this.calculateVAT();
@@ -1700,6 +1757,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     //this.dictServiceLookup = { [key: string]: any; } = { };
     //var packageObj = { AppAssetId: this.AppAssetId, MaintenancePackageCode: this.InsuranceDataForm["controls"]["PackageType"].value };
     var x = this.packageTypeRuleObj.find(x => x.MaintenancePackageCode == this.InsuranceDataForm["controls"]["PackageType"].value);
+    this.maintBehaCode = x.Behaviour;
     var isLock = false;
     if (x.Behaviour == "LOCK") {
       isLock = true;
@@ -1962,7 +2020,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
             OthExpenseCode: expenseObj["ExpenseTypes"][i],
             OthExpenseName: expenseObj["ExpenseTypesName"][i],
             OthExpenseAmt: expenseObj["ExpenseAmt"][i],
-            IsLock: isLock
+            IsLock: isLock,
+            BehaviourCode: expenseObj["Behaviour"][i]
           };
           this.addOtherExpense(x);
           if (expenseObj["Behaviour"][i] == "LOCK") {
@@ -1990,10 +2049,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
   addOtherExpense(x) {
     var otherExpenseObj = this.InsuranceDataForm.controls["OtherExpenseObjs"] as FormArray;
-    var length = this.InsuranceDataForm.value["OtherExpenseObjs"].length;
+    var length = this.InsuranceDataForm.controls["OtherExpenseObjs"]["controls"].length;
     var max = 0;
     if (length > 0) {
-      max = this.InsuranceDataForm.value["OtherExpenseObjs"][length - 1].No;
+      max = this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][length - 1]["controls"]["No"].value;
     }
     if (x != undefined) {
       otherExpenseObj.push(this.addGroupOtherExpense(x, max + 1));
@@ -2014,14 +2073,18 @@ export class AssetExpenseAddEditComponent implements OnInit {
         No: [i],
         OthExpenseCode: ['', [Validators.required, Validators.maxLength(50)]],
         OthExpenseName: ['', [Validators.maxLength(100)]],
-        OthExpenseAmt: ['', Validators.required]
+        OthExpenseAmt: ['', Validators.required],
+        IsLock: [false],
+        BehaviourCode: ['DEFAULT']
       })
     } else {
       return this.fb.group({
         No: [i],
-        OthExpenseCode: [appAssetOtherExpenseObj.SparePartCode, [Validators.required, Validators.maxLength(50)]],
-        OthExpenseName: [appAssetOtherExpenseObj.SparePartName, [Validators.maxLength(100)]],
-        OthExpenseAmt: [appAssetOtherExpenseObj.SparePartAmt, Validators.required]
+        OthExpenseCode: [appAssetOtherExpenseObj.OthExpenseCode, [Validators.required, Validators.maxLength(50)]],
+        OthExpenseName: [appAssetOtherExpenseObj.OthExpenseName, [Validators.maxLength(100)]],
+        OthExpenseAmt: [appAssetOtherExpenseObj.OthExpenseAmt, Validators.required],
+        IsLock: [appAssetOtherExpenseObj.IsLock],
+        BehaviourCode: [appAssetOtherExpenseObj.BehaviourCode]
       })
     }
   }
@@ -2102,7 +2165,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       (response) => {
         var res = response;
         for (let i = 0; i < res["FeeTypes"].length; i++) {
-          feeObj.push(this.addfeeinput(res["FeeTypes"][i], res["FeeTypesName"][i], res["FeeAmt"][i], res["FeeCapitalizedAmt"][i], i + 1));
+          feeObj.push(this.addfeeinput(res["FeeTypes"][i], res["FeeTypesName"][i], res["FeeAmt"][i], res["FeeCapitalizedAmt"][i], i + 1, res["BehaviourFee"][i], res["BehaviourFeeCapitalized"][i]));
           if (res["BehaviourFee"][i] == "LOCK") {
             this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].disable();
           }
@@ -2128,7 +2191,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     var feeObj = this.InsuranceDataForm.controls["FeeObjs"] as FormArray;
     var length = this.InsuranceDataForm.value["FeeObjs"].length;
 
-    feeObj.push(this.addfeeinput(x.FeeTypeCode, x.FeeTypeName, x.FeeTypeAmt, x.CptlzAmt, x.i + 1));
+    feeObj.push(this.addfeeinput(x.FeeTypeCode, x.FeeTypeName, x.FeeTypeAmt, x.CptlzAmt, x.i + 1, x.FeeBehaviour, x.CptlzBehaviour));
 
     var fee = this.feeObj;
     var max = 0;
@@ -2138,7 +2201,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     this.dictFee[max + 1] = fee;
   }
 
-  addfeeinput(code, name, feeAmt, feeCptlz, i) {
+  addfeeinput(code, name, feeAmt, feeCptlz, i,FeeBeha,CptlBeha) {
     if (this.InsuranceDataForm["controls"]["FeeInputType"].value == "VAT") {
       return this.fb.group({
         No: [i],
@@ -2146,7 +2209,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
         FeeTypeName: [name, [Validators.maxLength(100)]],
         FeeTypeAmt: [feeAmt, Validators.required],
         VATAmt: [feeAmt - (feeAmt / 1.1), Validators.required],
-        CptlzAmt: [feeCptlz, Validators.required]
+        CptlzAmt: [feeCptlz, Validators.required],
+        FeeBehaviour: [FeeBeha],
+        CptlzBehaviour: [CptlBeha] 
       })
     }
     else {
@@ -2156,7 +2221,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
         FeeTypeName: [name, [Validators.maxLength(100)]],
         FeeTypeAmt: [feeAmt, Validators.required],
         VATAmt: [feeAmt * 0.1, Validators.required],
-        CptlzAmt: [feeCptlz, Validators.required]
+        CptlzAmt: [feeCptlz, Validators.required],
+        FeeBehaviour: [FeeBeha],
+        CptlzBehaviour: [CptlBeha] 
       })
     }
   }

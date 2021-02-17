@@ -30,216 +30,217 @@ import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-comp
 import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-personal-data/similar-mou-personal-data.component';
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
 import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'TestUpload',
+        path: PathConstant.MOU_TEST_UPLOAD,
         component: TestUploadComponent,
         data: {
           title: 'Test Upload'
         }
       },
       {
-        path: 'DocSigner/Paging',
+        path: PathConstant.MOU_DOC_SIGNER_PAGING,
         component: DocSignerComponent,
         data: {
           title: 'Document Signer Paging'
         }
       },
       {
-        path: 'Request/Paging',
+        path: PathConstant.MOU_REQ_PAGING,
         component: MouCustomerRequestComponent,
         data: {
           title: 'MOU Customer Request Paging'
         }
       },
       {
-        path: 'Request/Detail',
+        path: PathConstant.MOU_REQ_DETAIL,
         component: MouCustomerRequestDetailComponent,
         data: {
           title: 'MOU Customer Request Detail'
         }
       },
       {
-        path: 'Detail/:MOUType',
+        path: PathConstant.DETAIL,
         component: MouCustomerDetailComponent,
         data: {
           title: 'MOU Customer Detail'
         }
       },
       {
-        path: 'CustomerDoc/Paging',
+        path: PathConstant.MOU_CUST_DOC_PAGING,
         component: CustomerDocPrintingPagingComponent,
         data: {
           title: 'MOU Customer Doc Paging'
         }
       },
       {
-        path: 'CustomerDoc/Detail',
+        path: PathConstant.MOU_CUST_DOC_DETAIL,
         component: CustomerDocPrintingDetailComponent,
         data: {
           title: 'MOU Customer Doc Detail'
         }
       },
       {
-        path: 'CustomerLegalReview/Paging',
+        path: PathConstant.MOU_CUST_LEGAL_RVW_PAGING,
         component: LegalReviewPagingComponent,
         data: {
           title: 'MOU Customer Legal Review Paging'
         }
       },
       {
-        path: 'CustomerLegalReview/Detail',
+        path: PathConstant.MOU_CUST_LEGAL_RVW_DETAIL,
         component: LegalReviewDetailComponent,
         data: {
           title: 'MOU Customer Legal Review Detail'
         }
       },
       {
-        path: 'Cust/ReviewPaging',
+        path: PathConstant.MOU_CUST_RVW_PAGING,
         component: MouReviewPagingComponent,
         data: {
           title: 'MOU Review Paging'
         }
       },
       {
-        path: 'Cust/ReviewGeneral',
+        path: PathConstant.MOU_CUST_RVW_GENERAL,
         component: MouReviewGeneralComponent,
         data: {
           title: 'MOU Review General'
         }
       },
       {
-        path: 'DocSigner/Detail',
+        path: PathConstant.MOU_DOC_SIGNER_DETAIL,
         component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
         }
       },
       {
-        path: 'Cust/ReviewFactoring',
+        path: PathConstant.MOU_CUST_RVW_FCTR,
         component: MouReviewFactoringComponent,
         data: {
           title: 'MOU Review Factoring'
         }
       },
       {
-        path: 'EditMouCustomer/Paging',
+        path: PathConstant.MOU_EDIT_CUST_PAGING,
         component: EditMouCustomerComponent,
         data: {
           title: 'Edit MOU Customer Paging'
         }
       },
       {
-        path: 'Cust/Approval',
+        path: PathConstant.MOU_CUST_APPRV,
         component: MouCustomerApprovalComponent,
         data: {
           title: 'MOU Customer Approval'
         }
       },
       {
-        path: 'Cust/ApprovalGeneral',
+        path: PathConstant.MOU_CUST_APPRV_GENERAL,
         component: MouApprovalGeneralComponent,
         data: {
           title: 'MOU Approval General'
         }
       },
       {
-        path: 'Cust/ApprovalFactoring',
+        path: PathConstant.MOU_CUST_APPRV_FCTR,
         component: MouApprovalFactoringComponent,
         data: {
           title: 'MOU Approval Factoring'
         }
       },
       {
-        path: 'Cust/RequestAddColl',
+        path: PathConstant.MOU_CUST_REQ_ADD_COLL,
         component: MouRequestAddcollComponent,
         data: {
           title: 'MOU Collateral'
         }
       },
       {
-        path: "Cust/Inquiry",
+        path: PathConstant.MOU_CUST_INQUIRY,
         component: MouCustomerInquiryComponent,
         data: {
           title: "MOU Inquiry"
         }
       },
       {
-        path: "Cust/Cancel",
+        path: PathConstant.MOU_CUST_CANCEL,
         component: MouCancelComponent,
         data: {
           title: "MOU Cancel"
         }
       },
       {
-        path: "Cust/OutstandingTC/Paging",
+        path: PathConstant.MOU_CUST_OUTSTANDING_TC_PAGING,
         component: MouOsTcPagingComponent,
         data: {
           title: "MOU Outstanding TC"
         }
       },
       {
-        path: "Cust/OutstandingTC/Detail",
+        path: PathConstant.MOU_CUST_OUTSTANDING_TC_DETAIL,
         component: MouOsTcDetailComponent,
         data: {
           title: "MOU Outstanding TC"
         }
       },
       {
-        path: "UnauthorizedPage",
+        path: PathConstant.MOU_UNAUTHORIZED_PAGE,
         component: UnauthorizedPageComponent,
         data: {
           title: "Unauthorized Page"
         }
       },
       {
-        path: "Execution/Paging",
+        path: PathConstant.MOU_EXECUTION_PAGING,
         component: MouExecutionPagingComponent,
         data: {
           title: "Mou Execution Paging"
         }
       },
       {
-        path: "Execution/Detail",
+        path: PathConstant.MOU_EXECUTION_DETAIL,
         component: MouExecutionDetailComponent,
         data: {
           title: "Mou Execution Detail"
         }
       },
       {
-        path: "DuplicateCheck/Paging",
+        path: PathConstant.MOU_DUP_CHECK_PAGING,
         component: MouDupCheckPagingComponent,
         data: {
           title: "Mou Duplicate Checking Page"
         }
       },
       {
-        path: "DuplicateCheck/SimilarCompany",
+        path: PathConstant.MOU_DUP_CHECK_SIMILAR_COY,
         component: SimilarMouCompanyDataComponent,
         data: {
           title: "Mou Similar Company Data Page"
         }
       },
       {
-        path: "DuplicateCheck/SimilarPersonal",
+        path: PathConstant.MOU_DUP_CHECK_SIMILAR_PERSONAL,
         component: SimilarMouPersonalDataComponent,
         data: {
           title: "Mou Similar Personal Data Page"
         }
       },
       {
-        path: "DuplicateCheck/ExistingPersonal",
+        path: PathConstant.MOU_DUP_CHECK_EXIST_PERSONAL,
         component: ExistingMouPersonalComponent,
         data: {
           title: "Mou Existing Personal Data Page"
         }
       },
       {
-        path: "DuplicateCheck/ExistingCompany",
+        path: PathConstant.MOU_DUP_CHECK_EXIST_COY,
         component: ExistingMouCompanyComponent,
         data: {
           title: "Mou Existing Company Data Page"

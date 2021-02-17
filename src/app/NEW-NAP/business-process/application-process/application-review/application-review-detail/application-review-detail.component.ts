@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
@@ -30,7 +31,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
   @ViewChild(UcapprovalcreateComponent) createComponent;
   appId: number = 0;
   wfTaskListId: number = 0;
-  arrValue = [];
   isReturnOn: boolean = false;
   UserAccess: any;
   Arr: FormArray;
@@ -57,6 +57,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     // Notes: ['', Validators.required]
   });
 
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -77,7 +78,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   initData(){
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.arrValue.push(this.appId);
     this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
   }
@@ -329,7 +329,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -338,14 +338,14 @@ export class ApplicationReviewDetailComponent implements OnInit {
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
   ReCaptureDataR2(){    
     this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
   

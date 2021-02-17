@@ -12,7 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -20,7 +20,6 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 })
 
 export class DocSignerDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -43,6 +42,7 @@ export class DocSignerDetailComponent implements OnInit {
   BizTemplateCode: string;
   isHidden: boolean;
 
+  readonly CanceLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -60,24 +60,6 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    if (this.BizTemplateCode == CommonConstant.OPL) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
-    }
-    else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
-      this.viewGenericObj.ddlEnvironments = [
-        {
-          name: "AppNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "MouCustNo",
-          environment: environment.losR3Web
-        },
-      ];
-    }
     await this.getAllData();
     this.setLookupObj();
   }
@@ -288,23 +270,14 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/DocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
-    }
-  }
-
-  Callback(ev: any) {
-    if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-    }
-    if (ev.Key == "agrmnt") {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
     }
   }
 }

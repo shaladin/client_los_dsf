@@ -1,5 +1,4 @@
 export class BaseObj {
-    Ip: string;
     Latitude: string;
     Longitude: string;
     UserName: string;

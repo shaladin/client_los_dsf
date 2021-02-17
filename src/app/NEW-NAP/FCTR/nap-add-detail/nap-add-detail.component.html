@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
@@ -145,11 +145,11 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="[CancelLink]" translate>
     <i class="fa fa-check-square-o"></i> Cancel
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
+    [routerLink]="[BackLink]" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">

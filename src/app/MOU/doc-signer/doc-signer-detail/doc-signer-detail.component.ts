@@ -6,16 +6,19 @@ import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -56,16 +59,6 @@ export class DocSignerDetailComponent implements OnInit {
   page: number;
   custId: number;
   custUrl: string;
-  MouCustSignerForm = this.fb.group({
-    MfSigner1: [''],
-    MfSignerPosition1: [''],
-    MfSigner2: [''],
-    MfSignerPosition2: [''],
-    CustSigner1: [''],
-    CustSignerPosition1: [''],
-    CustSigner2: [''],
-    CustSignerPosition2: [''],
-  });
   mouUrl: string;
   MrCustTypeCode: string;
   customerLookUpObj2: InputLookupObj;
@@ -77,10 +70,22 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: any;
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+
+  MouCustSignerForm = this.fb.group({
+    MfSigner1: [''],
+    MfSignerPosition1: [''],
+    MfSigner2: [''],
+    MfSignerPosition2: [''],
+    CustSigner1: [''],
+    CustSignerPosition1: [''],
+    CustSigner2: [''],
+    CustSignerPosition2: [''],
+  });
+
+  readonly CancelLink: string = NavigationConstant.MOU_DOC_SIGNER_PAGING;
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.getMouCustById = URLConstant.GetMouCustById;
     this.addMouCustSigner = URLConstant.AddMouCustSigner;
     this.getMouCustSignerByMouCustId = URLConstant.GetMouCustSignerByMouCustId;
@@ -149,22 +154,13 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
-
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -265,19 +261,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DocSigner/Paging"],{});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});
       });
-  }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.returnMouCust['CustNo'] };
-      if(!this.returnMouCust.IsExistingCust)
-        AdInsHelper.OpenMOUCustViewByMouCustId(this.returnMouCust.MouCustId);
-
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 }

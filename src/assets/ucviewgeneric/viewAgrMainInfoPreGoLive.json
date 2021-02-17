@@ -11,7 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "name": "AppNo",
-          "path": "/View/AppView",
+          "path": "VIEW_APP",
           "target": "_blank",
           "param": [
             {
@@ -26,7 +26,7 @@
           "property": "LeadNo",
           "name": "LeadNo",
           "isHide": true,
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "target": "_blank",
           "param": [
             {
@@ -40,7 +40,7 @@
           "label": "Agreement No",
           "property": "AgrmntNo",
           "name": "AgrmntNo",
-          "path": "/View/AgrmntView",
+          "path": "VIEW_AGRMNT",
           "target": "_blank",
           "param": [
             {
@@ -56,7 +56,7 @@
           "property": "MouCustNo",
           "name": "MouCustNo",
           
-          "path": "/View/Mou/CustView",
+          "path": "VIEW_MOU_CUST",
           "target": "_blank",
           "param": [
             {

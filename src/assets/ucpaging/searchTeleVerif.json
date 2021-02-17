@@ -174,7 +174,7 @@
       "type": "link",
       "position": "center",
       "property": "LeadNo",
-      "path": "/View/Lead",
+      "path": "VIEW_LEAD",
       "target": "_blank",
       "param": [
         {
@@ -226,7 +226,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Lead/TeleVerif/Detail",
+                "path": "LEAD_TELE_VERIF_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -256,7 +256,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Lead/TeleVerif/Detail",
+                "path": "LEAD_TELE_VERIF_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {

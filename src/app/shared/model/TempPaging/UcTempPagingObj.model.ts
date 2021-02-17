@@ -1,3 +1,4 @@
+import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CriteriaObj } from "../CriteriaObj.model";
 
 export class UcTempPagingObj {
@@ -12,6 +13,7 @@ export class UcTempPagingObj {
     whereValue: Array<WhereValueObj>;
     delay: number;
     isHideSearch: boolean;
+    navigationConst: any;
 
     constructor() {
         this.urlJson = "";
@@ -25,6 +27,7 @@ export class UcTempPagingObj {
         this.whereValue = new Array<WhereValueObj>();
         this.delay = 0;
         this.isHideSearch = false;
+        this.navigationConst = NavigationConstant;
     }
 }
 

@@ -8,6 +8,8 @@ import { DatePipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 
@@ -46,6 +48,6 @@ export class RequestNewPasswordComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['login'], { relativeTo: this.route.parent });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_LOGIN], {});
   }
 }

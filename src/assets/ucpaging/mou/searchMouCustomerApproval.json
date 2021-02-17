@@ -148,7 +148,7 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
                 {
@@ -194,7 +194,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ApprovalFactoring",
+                                "path": "MOU_CUST_APPRV_FCTR",
                                 "icon": "ft-edit-2",
                                 "param": [                                    
                                     {
@@ -227,7 +227,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ApprovalGeneral",
+                                "path": "MOU_CUST_APPRV_GENERAL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

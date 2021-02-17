@@ -5,10 +5,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-apv-result-ext-detail',
@@ -22,7 +23,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   CrdApvMainDataObj: any;
   MinDate: Date;
   UserAccess: any;
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -35,7 +36,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MinDate = new Date(this.UserAccess.BusinessDt);
     this.GetMainData();
   }
@@ -48,7 +49,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitNewExpDate, obj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/CreditApprovalResultExt/Paging"], { BizTemplateCode: this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
@@ -75,7 +76,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/CreditApprovalResultExt/Paging"], { BizTemplateCode: this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 
   OpenView(key: string) {

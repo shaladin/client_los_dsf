@@ -7,6 +7,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-dup-check-md-paging',
@@ -60,9 +61,9 @@ export class DupCheckMdPagingComponent implements OnInit {
 
     /*
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      this.router.navigate(["/Nap/AdditionalProcess/AppDupCheckMainData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
+      this.router.navigate(["/Nap/AddProcess/AppDupCheckMainData/Personal"], { queryParams: { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId } });
     }
     */
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheckMainData/SubjList"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
   }
 }
