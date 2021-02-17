@@ -29,6 +29,7 @@ import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.compon
 import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
 import { SharedModule } from "app/shared/shared.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { ViewModule } from "../view.module";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -50,7 +51,8 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
         UcapprovalhistModule,
         UcShowErrorsModule,
         SharedModule,
-        UcapprovalHistoryModule
+        UcapprovalHistoryModule,
+        ViewModule
     ],
     declarations: [
         MouViewComponent,

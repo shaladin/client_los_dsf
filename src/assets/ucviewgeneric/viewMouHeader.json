@@ -19,7 +19,7 @@
               "property": "MouCustId"
             }
           ]
-        }, 
+        },
         {
           "type": "callback",
           "key": "customer",

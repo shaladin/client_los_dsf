@@ -25,7 +25,6 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   ApvReqId: number = 0;
   mrCustTypeCode: string;
   viewObj: string;
-  arrValue = [];
   type: string;
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
@@ -66,7 +65,6 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();

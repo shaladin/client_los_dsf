@@ -24,13 +24,10 @@ export class AppAddDetailComponent implements OnInit {
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
- 
-
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -72,22 +69,6 @@ export class AppAddDetailComponent implements OnInit {
   ngOnInit() {
     //this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
@@ -212,22 +193,5 @@ export class AppAddDetailComponent implements OnInit {
         (response) => {
         })
     }
-  }
-
-  // ClaimTask(){
-  //   var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-  //   var wfClaimObj = new AppObj();
-  //   wfClaimObj.AppId = this.appId;
-  //   wfClaimObj.Username = currentUserContext["UserName"];
-  //   wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-  //   this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-  //     (response) => {
-    
-  //     });
-  // }
-
-  GetCallback(ev){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

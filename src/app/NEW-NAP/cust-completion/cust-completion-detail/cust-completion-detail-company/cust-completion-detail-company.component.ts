@@ -51,6 +51,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     "Legal": "Please add at least one data in tab \"Legal Document\"",
     "Other": "Please complete required data in tab \"Other Attribute\"",
   }
+  ReturnHandlingHId: number = 0;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -69,6 +70,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       }
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
+      }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
       }
     });
   }
@@ -102,7 +106,12 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_DETAIL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode });
+    if (this.ReturnHandlingHId != 0) {
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId, "BizTemplateCode": this.BizTemplateCode } });
+    }
+    else {
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+    }
   }
   
   EnterTab(type: string) { 

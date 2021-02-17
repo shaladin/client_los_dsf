@@ -93,10 +93,12 @@ import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/li
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
   imports: [
+    NgbModule,
     ViewRoutingModule,
     CommonModule,
     FormsModule,
@@ -107,7 +109,6 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
     UclookupgenericModule,
     UcviewgenericModule,
     UcgridviewModule,
-    NgbModule,
     SharingModule,
     ArchwizardModule,
     ReactiveFormsModule,
@@ -196,6 +197,8 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
     //surveyView prototype
     SurveyViewComponent,
+
+    MouMainInfoComponent,
   ],
   entryComponents: [
     UclookupgenericComponent,

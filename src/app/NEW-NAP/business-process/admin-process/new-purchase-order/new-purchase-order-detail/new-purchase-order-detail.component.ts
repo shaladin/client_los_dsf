@@ -15,6 +15,7 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -29,19 +30,19 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   TaskListId: number;
   arrValue: Array<number>;
   POList: Array<Object>;
-  outstandingTcObj : any;
-  listAppTCObj : ListAppTCObj;
-  appTC : AppTCObj;
+  outstandingTcObj: any;
+  listAppTCObj: ListAppTCObj;
+  appTC: AppTCObj;
   TcForm = this.fb.group({});
   constructor(
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
-    private toastr: NGXToastrService, 
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
     private router: Router,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder,
-  ) { 
+    private fb: FormBuilder, private cookieService: CookieService
+  ) {
     this.POList = new Array<Object>();
     this.arrValue = new Array<number>();
     this.route.queryParams.subscribe(params => {
@@ -57,7 +58,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       if (params["LobCode"] != null) {
         this.lobCode = params["LobCode"];
       }
-      else{
+      else {
         this.lobCode = CommonConstant.CFNA;
       }
     });
@@ -66,7 +67,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
-    
+
     this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { AppId: this.AppId }).subscribe(
       (response) => {
         this.POList = response["PurchaseOrderForNewPOObjs"];
@@ -79,7 +80,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
@@ -88,7 +89,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       });
   }
 
-  POEntryHandler(idx){
+  POEntryHandler(idx) {
     const modalPOEntry = this.modalService.open(PoEntryComponent);
     modalPOEntry.componentInstance.SupplCode = this.POList[idx]["SupplCode"];
     modalPOEntry.componentInstance.PurchaseOrderHId = this.POList[idx]["PurchaseOrderHId"];
@@ -116,20 +117,20 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PAGING],{ "BizTemplateCode":  CommonConstant.CFNA});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
   }
 
-  async Save(){
+  async Save() {
     var isPOResolved = true;
     for (const item of this.POList) {
-      if(!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === ""){
+      if (!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === "") {
         isPOResolved = false;
       }
     }
-    if(!isPOResolved){
+    if (!isPOResolved) {
       this.toastr.errorMessage("Please Resolve All Purchase Order");
     }
-    else{
+    else {
       var workflowModel = new WorkflowApiObj();
       workflowModel.TaskListId = this.TaskListId;
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
@@ -152,7 +153,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.appTC.CheckedDt = this.TcForm.value.TCList[i].CheckedDt;
         this.appTC.Notes = this.TcForm.value.TCList[i].Notes;
         this.listAppTCObj.AppTCObj.push(this.appTC);
-      } 
+      }
       this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
       await this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).toPromise().then(
@@ -163,16 +164,16 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           }
         );
 
-        this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
-          (response) => {
-            this.toastr.successMessage("Success");
-            this.Cancel();
-          }
-        ).catch(
-          (error) => {
-            console.log(error);
-          }
-        );
+      this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
+        (response) => {
+          this.toastr.successMessage("Success");
+          this.Cancel();
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
 
     }
   }

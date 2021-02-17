@@ -27,9 +27,37 @@
             "property": "OriOfficeName"
           },
           {
-            "type": "text",
-            "label": "Customer Name",
-            "property": "CustName"
+            "type" : "switch", 
+            "case" : [ 
+              {
+                "conditions" : [ 
+                  {
+                    "property" : "BizTemplateCode", 
+                    "value" : "FL4W",
+                    "restriction": "EQ"
+                  }
+                ],
+                  "result" : {
+                    "type": "text",
+                    "label": "Lessee Name",
+                    "property": "CustName"
+                }
+              },
+              {
+                "conditions" : [ 
+                  {
+                    "property" : "BizTemplateCode", 
+                    "value" : "FL4W",
+                    "restriction": "NEQ"
+                  }
+                ],
+                  "result" : {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                  }
+              }
+            ]
           },
           {
             "type": "callback",

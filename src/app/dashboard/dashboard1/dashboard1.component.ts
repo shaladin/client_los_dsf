@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from "ng-chartist";
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
 declare var require: any;
 
 const data: any = require('../../shared/data/chartist.json');
@@ -26,8 +24,6 @@ export class Dashboard1Component implements OnInit {
     message = "loading...";
     constructor() { }
     ngOnInit() {
-        var getObject = JSON.parse(localStorage.getItem(CommonConstant.CURRENT_USER_CONTEXT));
-        var getAccess = JSON.parse(localStorage.getItem(CommonConstant.PAGE_ACCESS));
     }
     // Line area chart configuration Starts
     lineArea: Chart = {
@@ -270,7 +266,7 @@ export class Dashboard1Component implements OnInit {
         options: {
             donut: true,
             startAngle: 0,
-            labelInterpolationFnc: function (value) {
+            labelInterpolationFnc: function () {
                 var total = data['donutDashboard'].series.reduce(function (prev, series) {
                     return prev + series.value;
                 }, 0);
@@ -378,7 +374,6 @@ export class Dashboard1Component implements OnInit {
 
             },
             draw(data: any): void {
-                var barHorizontalCenter, barVerticalCenter, label, value;
                 if (data.type == 'bar') {
 
                     data.element.attr({

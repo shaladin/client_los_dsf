@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-list-personal',
@@ -40,8 +40,8 @@ export class ListPersonalComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router,
-  ) { 
+    private router: Router, private cookieService: CookieService
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -77,7 +77,7 @@ export class ListPersonalComponent implements OnInit {
           "TaxIdNo": this.AppCustObj.TaxIdNo,
           "BirthDt": this.AppCustPersonalObj.BirthDt,
           "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,          
+          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,
           "RowVersion": this.RowVersion,
           "AppId": this.AppId
         }
@@ -87,7 +87,7 @@ export class ListPersonalComponent implements OnInit {
             this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
           });
-            
+
 
         //List App Cust Duplicate Checking
         this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
@@ -99,38 +99,42 @@ export class ListPersonalComponent implements OnInit {
   }
 
   SelectCust(item) {
-    var AppDupCheckObj = {"AppId": this.AppId, 
-    "CustNo":item.CustNo};
+    var AppDupCheckObj = {
+      "AppId": this.AppId,
+      "CustNo": item.CustNo
+    };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
-  NewCustomer(){
-    var AppDupCheckObj = {"AppId": this.AppId, 
-    "CustNo":this.AppCustObj.CustNo, RowVersion: ""};
+  NewCustomer() {
+    var AppDupCheckObj = {
+      "AppId": this.AppId,
+      "CustNo": this.AppCustObj.CustNo, RowVersion: ""
+    };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
   }
 
   back() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING], { "BizTemplateCode": BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 
 }

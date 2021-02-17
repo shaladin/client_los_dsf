@@ -70,6 +70,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
  
 import { SharedModule } from "app/shared/shared.module";
+import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -167,7 +168,8 @@ export const customCurrencyMaskConfig = {
     SimilarMouCompanyDataComponent,
     MouDupCheckPagingComponent,
     ExistingMouCompanyComponent,
-    ExistingMouPersonalComponent
+    ExistingMouPersonalComponent,
+    MouMainInfoComponent
   ],
   exports: [],
   providers: [NGXToastrService],

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, ValidationErrors } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-add',
@@ -81,12 +82,12 @@ export class NapAddComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(private fb: FormBuilder, private router: Router,
-    private http: HttpClient, private toastr: NGXToastrService) { }
+    private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) { }
 
   isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();

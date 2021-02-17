@@ -4,7 +4,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DoAssetDetailComponent } from '../do-asset-detail/do-asset-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
@@ -12,6 +11,8 @@ import { forkJoin } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -49,12 +50,9 @@ export class CreateDoMultiAssetComponent implements OnInit {
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
     private modalServiceAsset: NgbModal,
-    private spinner: NgxSpinnerService
-  ) { }
+    private spinner: NgxSpinnerService, private cookieService: CookieService) { }
 
   ngOnInit() {
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    // this.businessDt = new Date(currentUserContext["BusinessDt"]);
     var datePipe = new DatePipe("en-US");
 
     this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
@@ -62,7 +60,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
         this.PODt = new Date(response["PurchaseOrderDt"]);
       });
 
-    this.context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     if (this.Mode == "add") {
@@ -140,7 +138,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
         this.spinner.hide();
         this.toastr.successMessage(response["Message"]);
       }
-    ).catch((error) => {
+    ).catch(() => {
     });
   }
 

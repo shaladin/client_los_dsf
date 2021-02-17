@@ -50,7 +50,7 @@
       <div>
         <label class="col-md-4  adInsLabel" translate>Customer Model</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppCust">{{this.SummaryObj.AppCust.MrCustModelCode}}</label>
+          *ngIf="SummaryObj?.AppCust">{{this.SummaryObj.AppCust.MrCustModelDescr}}</label>
         <label class="col-md-4  adInsLabel" translate>Total Monthly Income</label>
         <label class="col-md-2  adinslabel" translate
           *ngIf="SummaryObj?.AppCustPersonalFinData">{{this.SummaryObj.AppCustPersonalFinData.TotalMonthlyIncomeAmt | number:'.2':'en-US'}}</label>

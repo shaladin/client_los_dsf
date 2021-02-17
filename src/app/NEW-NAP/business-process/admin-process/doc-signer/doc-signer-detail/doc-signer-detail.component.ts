@@ -20,11 +20,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 
 export class DocSignerDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
   result2: any;
+  ResponseAppCustObj: any;
   ResponseAgrmntSignerObj: any;
   SupplCode: string;
   OfficeCode: string;
@@ -60,18 +60,6 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     await this.getAllData();
     this.setLookupObj();
   }
@@ -82,25 +70,33 @@ export class DocSignerDetailComponent implements OnInit {
       AgrmntId: this.AgrmntId
     }
 
-    await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
       (response) => {
-        this.ResponseAppCustDataObj = response;
-        this.MrCustTypeCode = this.ResponseAppCustDataObj.MrCustTypeCode;
-        this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
-        this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
+        this.result2 = response;
+        this.OfficeCode = this.result2.OfficeCode;
+        this.CustNo = this.result2.CustNo;
+      });
+
+    await this.http.post(URLConstant.GetAppCustMainDataByAppId, obj).toPromise().then(
+      (response) => {
+        this.ResponseAppCustObj = response;
+        if (this.ResponseAppCustObj.AppCustObj != undefined) {
+          this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
+          if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
+              (response) => {
+                this.ResponseAppCustDataObj = response;
+                this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
+                this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
+              });
+          }
+        }
       });
 
     await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
       (response) => {
         this.ResponseAppAssetObj = response;
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;
-      });
-
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
-      (response) => {
-        this.result2 = response;
-        this.OfficeCode = this.result2.OfficeCode;
-        this.CustNo = this.result2.CustNo;
       });
 
     await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
@@ -253,7 +249,7 @@ export class DocSignerDetailComponent implements OnInit {
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
     let tempJobCode: string = "-";
-    if(event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
       MrJobPositionMgmntShrholder1Code: tempJobCode,
     })
@@ -282,16 +278,6 @@ export class DocSignerDetailComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
-    }
-  }
-  
-  Callback(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
-    }
-    if(ev.Key == "agrmnt")
-    {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
     }
   }
 }

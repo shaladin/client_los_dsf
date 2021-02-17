@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
 import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
@@ -10,6 +9,8 @@ import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -26,7 +27,7 @@ export class FormAddDynamicComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService) { }
+    private toastr: NGXToastrService, private cookieService: CookieService) { }
 
   FormObj = this.fb.group({
     arr: this.fb.array([])
@@ -37,7 +38,7 @@ export class FormAddDynamicComponent implements OnInit {
   DDLBankAccount = new Array();
   UserAccess;
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.arr = this.FormObj.get('arr') as FormArray;
     this.GetDDLContentName();
     this.GenerateAutoAtStart();

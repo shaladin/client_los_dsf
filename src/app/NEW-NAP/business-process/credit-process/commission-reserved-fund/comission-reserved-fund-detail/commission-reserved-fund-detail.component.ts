@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { AppIdObj } from 'app/shared/model/AppIdObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -46,7 +44,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
+    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -75,15 +73,10 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     Other: []
   };
 
-  viewProdMainInfoObj;
-  arrValue = [];
-
   ngOnInit() {
     console.log(this.BizTemplateCode);
     this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
-    this.arrValue.push(this.ReturnHandlingHObj.AppId);
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -107,9 +100,9 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
         let totalListResultRefundIncomeInfoAmount = 0;
-        for (var i = 0; i < this.ListResultRefundIncomeInfo.length; i++){
+        for (var i = 0; i < this.ListResultRefundIncomeInfo.length; i++) {
           this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom] = this.ListResultRefundIncomeInfo[i];
-          if(this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
+          if (this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
           totalListResultRefundIncomeInfoAmount += this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount;
         }
         this.isView = true;
@@ -143,7 +136,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
           if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
             this.NapObj.AppCurrStep = CommonConstant.AppStepComm;
             this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-              (response) => {
+              () => {
                 this.ChangeTab(CommonConstant.AppStepComm);
               }
             )
@@ -196,7 +189,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) => {
+      () => {
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
         this.ChangeTab(Step);
@@ -219,7 +212,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
@@ -236,7 +229,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
 
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
-        (response) => {
+        () => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
         })
@@ -270,7 +263,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   isShow: boolean = false;
   DictRemainingIncomeForm: any = {};
-  GetDictRemaining(ev){
+  GetDictRemaining(ev) {
     console.log(ev);
     this.DictRemainingIncomeForm = ev;
     this.isShow = true;

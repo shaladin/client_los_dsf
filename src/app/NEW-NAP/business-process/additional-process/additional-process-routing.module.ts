@@ -26,6 +26,8 @@ import { DupCheckMdPagingComponent } from './app-dup-check-main-data/dup-check-m
 import { DupCheckMdSubjListComponent } from './app-dup-check-main-data/dup-check-md-subj-list/dup-check-md-subj-list.component';
 import { DupCheckMdSubjMatchComponent } from './app-dup-check-main-data/dup-check-md-subj-match/dup-check-md-subj-match.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { ReturnHandlingEditNap4Component } from './return-handling/return-handling-edit-nap4/return-handling-edit-nap4.component';
+import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
 
 const routes: Routes = [
   {
@@ -93,6 +95,20 @@ const routes: Routes = [
         data: {
           title: 'App Duplicate Check'
         }
+      },
+      {
+        path: 'ReturnHandling/NAP4',
+        component: ReturnHandlingEditNap4Component,
+        data: {
+          title: 'Return Handling Edit NAP 4'
+        },
+      },
+      {
+        path: 'ReturnHandling/NAP2',
+        component: ReturnHandlingNewEditAppPagingComponent,
+        data: {
+          title: 'Return Handling Edit NAP2 Paging'
+        },
       },
       {
         path: PathConstant.APP_DUP_CHECK_PERSONAL,
@@ -189,17 +205,17 @@ const routes: Routes = [
       {
         path: PathConstant.APP_DUP_CHECK_MAIN_DATA_PAGING,
         component: DupCheckMdPagingComponent,
-        data: {title: 'App Duplicate Check'}
+        data: { title: 'App Duplicate Check' }
       },
       {
         path: PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST,
         component: DupCheckMdSubjListComponent,
-        data: {title: 'App Duplicate Check Subject List'}
+        data: { title: 'App Duplicate Check Subject List' }
       },
       {
         path: PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH,
         component: DupCheckMdSubjMatchComponent,
-        data: {title: 'App Duplicate Check Subject Match'}
+        data: { title: 'App Duplicate Check Subject Match' }
       },
     ]
   }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -23,10 +24,10 @@ export class CreditApprovalCrPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-  
-  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) {
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
+  constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -62,7 +63,7 @@ export class CreditApprovalCrPagingComponent implements OnInit {
     critObj.propName = 'ATL.CURRENT_USER_ID';
     critObj.value = this.userContext.UserName;
     arrCrit.push(critObj);
-    
+
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionOr;
@@ -75,10 +76,10 @@ export class CreditApprovalCrPagingComponent implements OnInit {
   GetCallBack(ev: any) {
     console.log(ev);
     var ApvReqObj = new ApprovalObj();
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
-    else if(ev.Key == "Process"){
+    else if (ev.Key == "Process") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { MouCustConfirmCancelObj } from 'app/shared/model/MouCustConfirmCancelObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -23,11 +23,11 @@ export class MouCancelComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router, private cookieService: CookieService
   ) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});

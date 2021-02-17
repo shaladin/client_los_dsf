@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
@@ -26,29 +27,25 @@ export class CreditApprovalCfnaComponent implements OnInit {
   appId: number;
   mrCustTypeCode: string;
   viewObj: string;
-  arrValue = [];
   type: string;
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
-  ApvReqId: number; 
-  InputApvObj : UcInputApprovalObj;
-  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  ApvReqId: number;
+  InputApvObj: UcInputApprovalObj;
+  InputApprovalHistoryObj: UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
-  taskId:number;
+  taskId: number;
   dmsObj: DMSObj;
   isDmsReady: boolean;
   appNo: any;
   custNo: any;
 
 
-  constructor(private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -59,14 +56,14 @@ export class CreditApprovalCfnaComponent implements OnInit {
       if (params["ApvReqId"] != null) {
         this.ApvReqId = params["ApvReqId"];
       }
-      if( params["TaskId"] !=null){ 
+      if (params["TaskId"] != null) {
         this.taskId = params["TaskId"];
-        }
+      }
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
         approvalBaseUrl: environment.ApprovalR3Url
-      } 
+      }
       this.inputObj = obj;
 
       var ApvHoldObj = new ApprovalObj()
@@ -77,17 +74,16 @@ export class CreditApprovalCfnaComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.initInputApprovalObj();
     await this.InitDms();
   }
 
-  async InitDms(){
+  async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -99,10 +95,10 @@ export class CreditApprovalCfnaComponent implements OnInit {
       (response) => {
         this.appNo = response[0]['AppNo'];
         this.custNo = response[1]['CustNo'];
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -129,7 +125,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
@@ -145,39 +141,39 @@ export class CreditApprovalCfnaComponent implements OnInit {
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited(event) { 
-     if (event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+  onApprovalSubmited(event) {
+    if (event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
       var returnHandlingHObj = new ReturnHandlingHObj();
-      var user =  JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+      var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
       returnHandlingHObj.AppId = this.appId;
       returnHandlingHObj.AgrmntId = null;
       returnHandlingHObj.ReturnBy = user.UserName;
       returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes =  event[0].notes;
+      returnHandlingHObj.ReturnNotes = event[0].notes;
       returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
 
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
         });
 
     } else {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
   onCancelClick() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
-  
-  async initInputApprovalObj(){
+
+  async initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
-    
+
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
     this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
@@ -192,7 +188,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.TrxNo =  this.AppObj.AppNo;
+    this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;

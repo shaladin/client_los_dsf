@@ -7,12 +7,14 @@ import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { SharingComponentModule } from "app/shared/sharingcomponent.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
-import { AppMainInfoComponent } from "./app-main-info/app-main-info.component"; 
+import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
+import { DocSignerMainInfoComponent } from './doc-signer-main-info/doc-signer-main-info.component';
 
 @NgModule({
   exports: [
     AgrMainInfoComponent,
     AppMainInfoComponent,
+    DocSignerMainInfoComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
   declarations: [ 
     AgrMainInfoComponent,
     AppMainInfoComponent,
+    DocSignerMainInfoComponent
   ],
 
   providers: [

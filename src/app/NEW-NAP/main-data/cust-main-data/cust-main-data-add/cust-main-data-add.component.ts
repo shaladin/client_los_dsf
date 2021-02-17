@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, ValidationErrors } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -15,6 +15,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -83,8 +84,7 @@ export class CustMainDataAddComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
-    private http: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService) 
-  { 
+    private http: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
@@ -92,7 +92,7 @@ export class CustMainDataAddComponent implements OnInit {
 
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
@@ -222,7 +222,7 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppMaindata, napAppObj).subscribe(
       (response) => {
-        setTimeout(()=>{ this.spinner.show(); }, 10)
+        setTimeout(() => { this.spinner.show(); }, 10)
         this.toastr.successMessage(response["message"]);
 
         switch(this.bizTemplateCode) {
@@ -241,6 +241,9 @@ export class CustMainDataAddComponent implements OnInit {
           case CommonConstant.CFNA :
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"]});
           break;
+          case CommonConstant.OPL:
+            AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response["AppId"] });
+            break;
         }
       }
     );
