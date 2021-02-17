@@ -1,22 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RFAInfoObj } from 'app/shared/model/Approval/RFAInfoObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { first } from 'rxjs/operators';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model'; 
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
@@ -36,20 +36,22 @@ export class MouReviewFactoringComponent implements OnInit {
   MrCustTypeCode: string;
   link: any;
   resultData: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: any;
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
-  private createComponent: UcapprovalcreateComponent;
   dmsObj: DMSObj;
+
+  private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       // initially setter gets called with undefined
       this.createComponent = content;
     }
   }
   ApprovalCreateOutput: any;
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_RVW_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -57,31 +59,23 @@ export class MouReviewFactoringComponent implements OnInit {
     })
   }
 
- async ngOnInit() {
+  async ngOnInit() {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObject.MouCustId = this.MouCustId;
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-        if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
+        if (this.resultData['CustNo'] != null && this.resultData['CustNo'] != "") {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
@@ -126,7 +120,7 @@ export class MouReviewFactoringComponent implements OnInit {
         this.MrCustTypeCode = response['MrCustTypeCode'];
       });
 
-   await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING }).toPromise().then(
       (response) => {
         this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({
@@ -135,7 +129,7 @@ export class MouReviewFactoringComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId }).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -151,33 +145,33 @@ export class MouReviewFactoringComponent implements OnInit {
   })
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();  
-    if(this.ApprovalCreateOutput!=undefined){
+    this.ApprovalCreateOutput = this.createComponent.output();
+    if (this.ApprovalCreateOutput != undefined) {
 
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.PlafondAmt = this.PlafondAmt;
- 
+      this.mouCustObj.MouCustId = this.MouCustId;
+      this.PlafondAmt = this.PlafondAmt;
 
-  
-    var submitMouReviewObj = {
-      WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj, 
-      PlafondAmt: this.PlafondAmt,
-      RequestRFAObj:this.ApprovalCreateOutput
-    } 
-    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
-      })
+
+
+      var submitMouReviewObj = {
+        WfTaskListId: this.WfTaskListId,
+        MouCust: this.mouCustObj,
+        PlafondAmt: this.PlafondAmt,
+        RequestRFAObj: this.ApprovalCreateOutput
+      }
+      this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
+        })
     }
   }
 
@@ -186,39 +180,29 @@ export class MouReviewFactoringComponent implements OnInit {
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
       })
   }
 
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-  }
-
-  initInputApprovalObj(){  
+  initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj();
     var Attributes = []
-    var attribute1= { 
-      "AttributeName" : "Approval Amount",
+    var attribute1 = {
+      "AttributeName": "Approval Amount",
       "AttributeValue": this.PlafondAmt
     };
-     var attribute2= {
-      "AttributeName" : "Scoring",
+    var attribute2 = {
+      "AttributeName": "Scoring",
       "AttributeValue": this.ScoreResult
-    }; 
+    };
     Attributes.push(attribute1);
-    Attributes.push(attribute2); 
-    
+    Attributes.push(attribute2);
+
     var TypeCode = {
       "TypeCode": "MOUC_FCTR_APV_TYPE",
       "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];

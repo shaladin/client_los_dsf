@@ -9,6 +9,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 @Component({
@@ -53,49 +54,28 @@ export class PagingComponent implements OnInit {
     critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
     critLobObj.value = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.inputPagingObj.addCritInput.push(critLobObj);
-
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    // var addCrit = new CriteriaObj();
-    // addCrit.DataType = 'text';
-    // addCrit.propName = 'WTL.USERNAME';
-    // addCrit.restriction = AdInsConstant.RestrictionIn;
-    // var arrayString = new Array<string>();
-    // arrayString.push(currentUserContext["UserName"]);
-    // arrayString.push("");
-    // addCrit.listValue = arrayString;
-
-    // this.inputPagingObj.addCritInput.push(addCrit);
   }
 
   NextScreen(event) {
-    // var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-    // var wfClaimObj = new ClaimWorkflowObj();
-    // wfClaimObj.pWFTaskListID = event.RowObj.WfTaskListId;
-    // wfClaimObj.pUserID = currentUserContext["UserName"];
-
-    // this.http.post(AdInsConstant.ClaimTask, wfClaimObj).subscribe(
-    //   (response) => {
-
-    //   });
     if(event.Key == "ViewProdOffering"){ 
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);  
       return false;
     }
 
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Personal"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PERSONAL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
       
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"],{ "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL],{ "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
 
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Company"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
       
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
   }
 }

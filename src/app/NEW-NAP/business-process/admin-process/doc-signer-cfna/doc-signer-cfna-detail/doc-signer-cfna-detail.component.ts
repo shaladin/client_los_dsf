@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-doc-signer-cfna-detail',
@@ -19,7 +20,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   styles: []
 })
 export class DocSignerCfnaDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -44,6 +44,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   isHidden: boolean;
   isSupplierExists: boolean;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -64,18 +65,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     await this.getAllData();
     this.setLookupObj();
   }
@@ -348,7 +337,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);
@@ -358,7 +347,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);
@@ -366,26 +355,4 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       );
     }
   }
-  
-  Callback(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
-    }
-    if(ev.Key == "agrmnt")
-    {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(ev.ViewObj.AgrmntId);
-    }
-
-    // if(ev.Key == "prodOff"){
-    //   this.http.post(AdInsConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.ViewObj.ProdOfferingCode}).subscribe(
-    //     response => {
-    //       window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    // }
-  }
-
 }

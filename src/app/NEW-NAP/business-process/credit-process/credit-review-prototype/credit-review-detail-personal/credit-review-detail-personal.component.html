@@ -1745,7 +1745,7 @@
                 <div class="col-md-4">
                   <div class="row">
                     <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
-                    <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank"> Home Address </a></label>
+                    <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="[ViewSrvyLink]" target="_blank"> Home Address </a></label>
                   </div>
                 </div>
 
@@ -1755,7 +1755,7 @@
                 <div class="col-md-4">
                   <div class="row">
                     <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle green"></i></label>
-                    <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank"> Office Address</a></label>
+                    <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="[ViewSrvyLink]" target="_blank"> Office Address</a></label>
                   </div>
                 </div>
 
@@ -1765,7 +1765,7 @@
                 <div class="col-md-4">
                   <div class="row">
                     <label class="col-md-1" for="custNickName" translate><i class="fas fa-circle red"></i></label>
-                    <label class="col-md-11" for="custNickName" translate><span><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank"> Home Address
+                    <label class="col-md-11" for="custNickName" translate><span><a class="blue" [routerLink]="[ViewSrvyLink]" target="_blank"> Home Address
                         </a></span></label>
                   </div>
                 </div>
@@ -2602,7 +2602,7 @@
                       <i class="ft-x"></i>Return
                     </button>
                     <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                      [routerLink]="['/Nap/CreditProcess/CreditReviewPrototype/Paging']" translate>
+                      [routerLink]="[CancelLink]" translate>
                       <i class="fa fa-arrow-left"></i> Cancel
                     </button>
                     <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
@@ -2929,7 +2929,7 @@
                   <div class="col-md-4">
                     <div class="row">
                       <label class="col-md-1" for="custNickName" translate></label>
-                      <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank">Legal Address</a></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="[ViewSrvyLink]" target="_blank">Legal Address</a></label>
                     </div>
                   </div>
 
@@ -2948,7 +2948,7 @@
                   <div class="col-md-4">
                     <div class="row">
                       <label class="col-md-1" for="custNickName" translate></label>
-                      <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="['/View/SurveyView']" target="_blank">Home Address</a></label>
+                      <label class="col-md-11" for="custNickName" translate><a class="blue" [routerLink]="[ViewSrvyLink]" target="_blank">Home Address</a></label>
                     </div>
                   </div>
                   <label class="col-md-2" for="custNickName" translate><a class="blue"
@@ -3737,7 +3737,7 @@
                           <i class="ft-x"></i>Return
                         </button>
                         <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                          [routerLink]="['/Nap/CreditProcess/CreditReviewPrototype/Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}"
+                          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}"
                           translate>
                           <i class="fa fa-arrow-left"></i> Cancel
                         </button>

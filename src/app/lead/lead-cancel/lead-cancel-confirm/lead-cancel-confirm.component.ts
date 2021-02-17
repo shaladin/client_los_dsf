@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -33,6 +34,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   tempLeadIds: string;
   tempLeadArr: Array<string>;
   WfTaskListIds: string;
+
+  readonly CancelLink: string = NavigationConstant.LEAD_CANCEL;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -103,7 +106,7 @@ export class LeadCancelConfirmComponent implements OnInit {
       this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Lead/Cancel"],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_CANCEL],{});
         }
       );
     }

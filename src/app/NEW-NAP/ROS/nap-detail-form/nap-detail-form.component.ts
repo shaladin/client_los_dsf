@@ -16,6 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -42,6 +43,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   bizTemplateCode: string;
+  isReady:boolean = false;
 
   AppStep = {
     "NAPD": 1,
@@ -67,7 +69,7 @@ export class NapDetailFormComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService) {
+    private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -124,6 +126,7 @@ export class NapDetailFormComponent implements OnInit {
             this.bizTemplateCode = this.NapObj.BizTemplateCode;
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
+            this.isReady = true;
           }
         });
     }
@@ -358,13 +361,13 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
+    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
       () => {
       });
   }

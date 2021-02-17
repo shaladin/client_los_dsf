@@ -1,14 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ContextMenuComponent } from '@progress/kendo-angular-menu';
-
+import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from "ng-chartist";
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
-declare var require: any;
-
-const data: any = require('../../shared/data/chartist.json');
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
@@ -30,10 +27,10 @@ export class DashBoardComponent implements OnInit {
   officeCode: string;
   roleCode: string;
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   ngOnInit() {
-    let context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.username = context[CommonConstant.USER_NAME];
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];

@@ -12,87 +12,84 @@ import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.com
 import { ViewInsuranceDetailComponent } from '../sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail.component';
 import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
 import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'AdminProcess',
-        loadChildren: './admin-process/admin-process.module#AdminProcessFL4WModule'
-      },
-      {
-        path: 'Add',
+        path: PathConstant.ADD,
         component: NapAddComponent,
         data: {
           title: 'Nap Add'
         }
       },
       {
-        path: 'Paging',
+        path: PathConstant.PAGING,
         component: NapPagingComponent,
         data: {
           title: 'Nap Paging'
         }
       },
       {
-        path: 'Add/Detail',
+        path: PathConstant.ADD_DETAIL,
         component: NapAddDetailComponent,
         data: {
           title: 'AddDetail'
         }
       },
       {
-        path: 'ViewAgrmnt',
+        path: PathConstant.FL4W_VIEW_AGRMNT,
         component: ViewAgrmntComponent,
         data: {
           title: 'AddDetail'
         }
       },
       {
-        path: 'ViewInsurance',
+        path: PathConstant.FL4W_VIEW_INS,
         component: ViewInsuranceDetailComponent,
         data: {
           title: 'InsuranceDetail'
         }
       },
       {
-        path: 'ViewAgrmntFL4W',
+        path: PathConstant.FL4W_VIEW_AGRMNT_FL4W,
         component: ViewAgrmntFl4wComponent,
         data: {
           title: 'AddDetail'
         }
       },
       {
-        path: 'ViewDo',
+        path: PathConstant.FL4W_VIEW_DO,
         component: ViewDeliveryOrderMultiAssetComponent,
         data: {
           title: 'View DO'
         }
       },
       {
-        path: 'ViewDo/Detail',
+        path: PathConstant.FL4W_VIEW_DO_DETAIL,
         component: ViewDeliveryOrderDetailComponent,
         data: {
           title: 'View DO'
         }
       },
       {
-        path: 'ViewDo/DetailAsset',
+        path: PathConstant.FL4W_VIEW_DO_DETAIL_ASSET,
         component: ViewDeliveryOrderAssetDetailComponent,
         data: {
           title: 'View DO'
         }
       },
       {
-        path: 'NAP1',
+        path: PathConstant.NAP1,
         component: NapCustMainDataComponent,
         data: {
             title: 'NAP Cust Main Data'
         }
       },
       {
-        path: 'NAP2',
+        path: PathConstant.NAP2,
         component: NapDetailFormComponent,
         data: {
             title: 'NAP Detail'

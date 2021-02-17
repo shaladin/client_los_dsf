@@ -6,9 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-guarantor-legal-doc',
@@ -53,30 +54,30 @@ export class GuarantorLegalDocComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService,
     private http: HttpClient,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal, private cookieService: CookieService) {
 
   }
   UserAccess: any;
   MaxDate: Date;
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.bindLegalDocTypeObj();
   }
 
-  IsExpDateHandler(){
+  IsExpDateHandler() {
     var isExpDt = this.LegalDocForm.controls["IsExpDtMandatory"].value;
     this.LegalDocForm.patchValue({
       DocExpiredDt: ""
     });
-    if(isExpDt){
+    if (isExpDt) {
       this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
       this.LegalDocForm.controls["DocExpiredDt"].enable();
       this.isExpDateMandatory = true;
     }
-    else{
+    else {
       this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
       this.LegalDocForm.controls["DocExpiredDt"].disable();
@@ -129,13 +130,13 @@ export class GuarantorLegalDocComponent implements OnInit {
       ReleaseLocation: this.listLegalDoc[i].ReleaseLocation,
       IsExpDtMandatory: this.listLegalDoc[i].IsExpDtMandatory
     });
-    if(this.listLegalDoc[i].IsExpDtMandatory){
+    if (this.listLegalDoc[i].IsExpDtMandatory) {
       this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
       this.LegalDocForm.controls["DocExpiredDt"].enable();
       this.isExpDateMandatory = true;
     }
-    else{
+    else {
       this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
       this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
       this.LegalDocForm.controls["DocExpiredDt"].disable();
@@ -186,7 +187,7 @@ export class GuarantorLegalDocComponent implements OnInit {
     let d2 = new Date(this.appGuarantorCompanyLegalDocObj.DocDt);
     let d3 = new Date(this.appGuarantorCompanyLegalDocObj.DocExpiredDt);
     if (d1 > d3 && d1 != d3) {
-      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN+ this.MaxDate);
+      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxDate);
       flag = false;
     }
     d1.setDate(d1.getDate() + 1);

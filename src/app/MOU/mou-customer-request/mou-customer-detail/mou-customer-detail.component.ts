@@ -7,13 +7,13 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { formatDate } from '@angular/common';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -31,7 +31,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mode: string;
   pageType: string;
   pageTitle: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -41,17 +40,13 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
   isDmsReady: boolean = false;
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.get('MOUType') != null) {
-        this.mouType = params.get('MOUType');
-      }
-    });
     this.route.queryParams.subscribe(params => {
       if (params['mouCustId'] != null) {
         this.mouCustId = params['mouCustId'];
@@ -59,20 +54,15 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       if (params['mode'] != null) {
         this.pageType = params['mode'];
       }
+      if (params['MOUType'] != null) {
+        this.mouType = params['MOUType'];
+      }
     });
     this.currentStepIndex = 1;
     // this.currentStepIndex = 5; //buat DMS Test sementara
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObject.MouCustId = this.mouCustId;
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
@@ -89,7 +79,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   async initDms(){
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.dmsObj = new DMSObj();
@@ -193,19 +183,19 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   editMainInfoHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Detail"], { MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_DETAIL], { MouCustId: this.mouCustId, mode: "return", MrMouTypeCode: this.mouType });
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Detail"], { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_DETAIL], { MouCustId: this.mouCustId, mode: "edit", MrMouTypeCode: this.mouType });
     }
   }
 
   cancelHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, ["Mou/EditMouCustomer/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
     }
   }
 
@@ -216,10 +206,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
-            AdInsHelper.RedirectUrl(this.router, ["/Mou/EditMouCustomer/Paging"], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
           }
           else {
-            AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
           }
         });
     }
@@ -242,10 +232,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/EditMouCustomer/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
         }
         else {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
         }
         break;
       default:
@@ -271,10 +261,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/EditMouCustomer/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
         }
         else {
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Request/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
         }
         break;
       default:
@@ -284,17 +274,9 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       await this.initDms();
     }
   }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-  }
+  
   endOfTab() {
     this.toastr.successMessage("Success");
-    this.router.navigate(["/Mou/Request/Paging"]);
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
   }
 }

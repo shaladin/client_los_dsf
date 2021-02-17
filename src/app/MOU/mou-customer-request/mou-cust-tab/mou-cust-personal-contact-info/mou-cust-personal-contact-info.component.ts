@@ -13,6 +13,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustPersonalContactPersonObj } from 'app/shared/model/MouCustPersonalContactPersonObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-cust-personal-contact-info',
@@ -96,12 +98,12 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,
-    private toastr: NGXToastrService,) {
+    private toastr: NGXToastrService, private cookieService: CookieService) {
 
   }
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
@@ -121,7 +123,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     if (this.listContactPersonPersonal == undefined) {
       this.listContactPersonPersonal = new Array<MouCustPersonalContactPersonObj>();
     }
-    var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var businessDtStr = formatDate(userAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var businessDt = new Date(businessDtStr);
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);

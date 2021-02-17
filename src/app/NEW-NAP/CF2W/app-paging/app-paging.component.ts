@@ -3,6 +3,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-app-paging',
@@ -12,6 +13,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AppPagingComponent implements OnInit {
 
   inputPagingObj: any;
+
+  readonly AddFreeLink: string = NavigationConstant.CF2W_ADD_FREE;
+  readonly AddFixedLink: string = NavigationConstant.CF2W_ADD_FIXED;
   constructor() { }
 
   ngOnInit() {

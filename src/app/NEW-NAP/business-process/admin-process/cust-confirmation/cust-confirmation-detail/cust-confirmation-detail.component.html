@@ -33,11 +33,11 @@
               <td>{{item.MrVerfResultHStatName}}</td>
               <td>{{item.Notes}}</td>
               <td>
-                <a [routerLink]="['/Nap/AdminProcess/CustConfirmation/Subj/View']"
+                <a [routerLink]="[ViewLink]"
                   [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">View</a>
               </td>
               <td>
-                <a class="success p-0" [routerLink]="['/Nap/AdminProcess/CustConfirmation/Subj/Detail']"
+                <a class="success p-0" [routerLink]="[DetailLink]"
                   [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, Subject:'CUST', AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">
                   <i class="ft-edit-2 font-medium-3 mr-2"></i>
                 </a>
@@ -66,7 +66,7 @@
       <form (ngSubmit)="SaveForm()">
         <div class="form-actions right">
           <button type="button" class="btn btn-raised btn-warning mr-1"
-            [routerLink]="['/Nap/AdminProcess/CustConfirmation/Paging']"
+            [routerLink]="[CancelLink]"
             [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
             <i class="ft-x"></i> Cancel
           </button>

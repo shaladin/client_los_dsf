@@ -11,7 +11,7 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "target" : "_blank",
             "param": [
               {
@@ -67,7 +67,7 @@
             "name": "LeadNo",
             "isHide": true,
             "position": "left",
-            "path": "/View/Lead",
+            "path": "VIEW_LEAD",
             "target": "_blank",
             "param": [
               { 

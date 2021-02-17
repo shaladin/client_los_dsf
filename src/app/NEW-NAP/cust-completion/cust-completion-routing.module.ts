@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { PathConstant } from "app/shared/constant/PathConstant";
 import { CustCompletionDetailComponent } from "../cust-completion/cust-completion-detail/cust-completion-detail.component";
 import { CustCompletionPagingComponent } from "../cust-completion/cust-completion-paging/cust-completion-paging.component";
 import { CustCompletionDetailCompanyComponent } from "./cust-completion-detail/cust-completion-detail-company/cust-completion-detail-company.component";
@@ -10,28 +11,28 @@ const routes: Routes = [
     path: '',
     children: [
         {
-          path: 'Paging',
+          path: PathConstant.PAGING,
           component: CustCompletionPagingComponent,
           data: {
             title: 'Cust Completion Paging'
           }
         },
         {
-          path: 'Detail',
+          path: PathConstant.DETAIL,
           component: CustCompletionDetailComponent,
           data: {
             title: 'Cust Completion Detail'
           }
         },
         {
-          path: 'Detail/Personal',
+          path: PathConstant.CUST_COMPL_PRSNL,
           component: CustCompletionDetailPersonalComponent,
           data: {
             title: 'Cust Completion Detail Personal'
           }
         },
         {
-          path: 'Detail/Company',
+          path: PathConstant.CUST_COMPL_COY,
           component: CustCompletionDetailCompanyComponent,
           data: {
             title: 'Cust Completion Detail Company'

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,9 +6,11 @@ import { FormBuilder, FormArray } from '@angular/forms';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -28,20 +29,20 @@ export class InvoiceVerifDetailComponent implements OnInit {
   TrxNo: string;
   PlafondAmt: any;
   OsPlafondAmt: any;
-  token = localStorage.getItem(CommonConstant.TOKEN);
+  token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   InvoiceForm = this.fb.group({
     Invoices: this.fb.array([])
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["TaskListId"];
       this.TrxNo = params["TrxNo"];
     });
-    this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.BusinessDate = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Username = currentUserContext[CommonConstant.USER_NAME];
   }
 
@@ -103,7 +104,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/InvoiceVerif/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
   }
   SaveData() {
     var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
@@ -117,13 +118,13 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
     var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId };
     this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/InvoiceVerif/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
     });
 
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
@@ -141,10 +142,10 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.OsPlafondAmt += item.get("InvoiceAmt").value;
     }
   }
-  
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 }

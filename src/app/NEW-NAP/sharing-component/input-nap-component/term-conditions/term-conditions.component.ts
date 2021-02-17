@@ -2,10 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-term-conditions',
@@ -32,10 +33,10 @@ export class TermConditionsComponent implements OnInit {
   MinDate: Date;
   IsPromisedDtLowerThanBusinessDt: boolean = true;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private cookieService: CookieService) { }
 
   ngOnInit() {
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
