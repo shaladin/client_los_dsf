@@ -17,7 +17,7 @@ export class FinancialDataOplComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   isPaging: boolean = true;
-  AppAssetId: number = 61383;
+  AppAssetId: number = 0;
   AppAssetFinDataObj: any;
   isAllAssetFinDone: boolean = true;
   isAnyDataAsset: boolean = false;
@@ -25,8 +25,7 @@ export class FinancialDataOplComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isPaging = false;
-    //this.GetAllAssetFinancialData();
+    this.GetAllAssetFinancialData();
   }
 
   Edit(AppAssetId) {
@@ -36,7 +35,7 @@ export class FinancialDataOplComponent implements OnInit {
 
   BackPaging() {
     this.AppAssetId = 0;
-    //this.GetAllAssetFinancialData();
+    this.GetAllAssetFinancialData();
     this.isPaging = true;  
   }
 
@@ -58,24 +57,24 @@ export class FinancialDataOplComponent implements OnInit {
     }
   }
 
-  //GetAllAssetFinancialData() {
-  //  var appObj = {
-  //    AppId: this.AppId,
-  //  };
-  //  this.http.post(URLConstant.GetAllAppAssetFinDataOplByAppId, appObj).subscribe(
-  //    (response) => {
-  //      this.AppAssetFinDataObj = response;
-  //      if (this.AppAssetFinDataObj.ResponseAppAssetObjs.length > 0) {
-  //        this.isAnyDataAsset = true;
-  //        for (let i = 0; i < this.AppAssetFinDataObj.ResponseAppAssetObjs.length; i++) {
-  //          if (this.AppAssetFinDataObj.ResponseAppAssetObjs[i].AppAssetFinDataOplObj.AppAssetFinDataOplId == 0) {
-  //            this.isAllAssetFinDone = false;
-  //            break;
-  //          }
-  //        }
-  //        console.log(response);
-  //      }
-  //    }
-  //  );
-  //}
+  GetAllAssetFinancialData() {
+    var appObj = {
+      AppId: this.AppId,
+    };
+    this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, appObj).subscribe(
+      (response) => {
+        this.AppAssetFinDataObj = response;
+        if (this.AppAssetFinDataObj.AppAssetFinDataGridObjs.length > 0) {
+          this.isAnyDataAsset = true;
+          for (let i = 0; i < this.AppAssetFinDataObj.AppAssetFinDataGridObjs.length; i++) {
+            if (this.AppAssetFinDataObj.AppAssetFinDataGridObjs[i].IsFinancialDone == false) {
+              this.isAllAssetFinDone = false;
+              break;
+            }
+          }
+          console.log(response);
+        }
+      }
+    );
+  }
 }

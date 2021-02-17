@@ -9,6 +9,16 @@
             <lib-ucSubsection [id]="'rentalcalcId'" [title]="'Rental Calculation'" [panel]="'rentalCalc'">
             </lib-ucSubsection>
             <div id="rentalCalc">
+              <div class="form-actions right">
+                <button type="button" name="add" id="add" (click)="CalculateRental(true)"
+                        class="btn btn-raised btn-primary mr-1">
+                  Calculate Rental
+                </button>
+                <button type="button" name="add" id="add" (click)="CalculateRental(false)"
+                        class="btn btn-raised btn-primary">
+                  Calculate Margin
+                </button>
+              </div>
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>Rental Period</label>
                 <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.RentalPeriod.value }} / {{this.FinancialDataForm.controls.RentalPeriodName.value }}</label>

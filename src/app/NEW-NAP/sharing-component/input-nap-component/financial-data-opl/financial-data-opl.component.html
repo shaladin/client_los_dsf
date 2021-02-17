@@ -20,14 +20,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of AppAssetFinDataObj?.ResponseAppAssetObjs; let i = index;">
+                <tr *ngFor="let item of AppAssetFinDataObj?.AppAssetFinDataGridObjs; let i = index;">
                   <td class="text-left">{{i+1}}</td>
                   <td class="text-left">{{item.FullAssetName}}</td>
-                  <td class="text-right">{{item.AppAssetFinDataOplObj?.SecurityDepositAmt | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AppAssetFinDataOplObj?.TotalOperatingCostAmt | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AppAssetFinDataOplObj?.OperatingMarginAmt | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AppAssetFinDataOplObj?.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AppAssetFinDataOplObj?.RentAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.TotalCostAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.MarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.RentAmt | number:'.2':'en-US'}}</td>
                   <td class="text-center">
                     <a class="success p-0" (click)="Edit(item.AppAssetId)">
                       <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
