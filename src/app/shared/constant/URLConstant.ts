@@ -805,6 +805,7 @@ export class URLConstant {
   public static GetAllAssetDataForPOMultiAsset = environment.losUrl + "/AppAsset/GetAllAssetDataForPOMultiAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppId";
+  public static GetListAllAssetDataByAppId = environment.losUrl + "/AppAsset/GetListAllAssetDataByAppId";
   public static GetAllAssetDataByAppAssetId = environment.losUrl + "/AppAsset/GetAllAssetDataByAppAssetId";
   public static GetListAppAssetByDOHId = environment.losUrl + "/AppAsset/GetListAppAssetByDOHId";
   public static AddEditAllAssetData = environment.losUrl + "/AppAsset/AddEditAllAssetData";
@@ -1314,4 +1315,7 @@ export class URLConstant {
   // Requisition Decision
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
+
+  // Pre Go Live
+  public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
 }

@@ -18,7 +18,6 @@ import { OfferingValidityCheckingApprovalPagingComponent } from './offering-vali
 import { OfferingValidityCheckingApprovalDetailComponent } from './offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail.component';
 import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
-import { InvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
 import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
 import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
@@ -39,6 +38,8 @@ import { DocChecklistDetailComponent } from './doc-checklist/doc-checklist-detai
 import { DocChecklistRequestForApprovalComponent } from './doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component';
 import { DocChecklistApprovalPagingComponent } from './doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component';
 import { DocChecklistApprovalDetailComponent } from './doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component';
+import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-paging/pre-go-live-opl-paging.component';
+import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
 
 const routes: Routes = [
   {
@@ -133,6 +134,20 @@ const routes: Routes = [
         component: PreGoLiveComponent,
         data: {
           title: 'PreGoLive Detail'
+        }
+      },
+      {
+        path: 'pregoliveopl/paging',
+        component: PreGoLiveOplPagingComponent,
+        data: {
+          title: 'Pre Golive'
+        }
+      },
+      {
+        path: 'pregoliveopl/detail',
+        component: PreGoLiveOplDetailComponent,
+        data: {
+          title: 'Pre Golive Detail'
         }
       },
       {
