@@ -70,6 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
             apiKey: 'AIzaSyBr5_picK8YJK7fFR2CPzTVMj6GG1TtRGo'
         }),
         CookieModule.forRoot(),
+        // CookieModule.forRoot({ path: "", secure: true, httpOnly: false, sameSite: "strict" }),
         StorageServiceModule,
         MatDialogModule,
         BrowserAnimationsModule,
