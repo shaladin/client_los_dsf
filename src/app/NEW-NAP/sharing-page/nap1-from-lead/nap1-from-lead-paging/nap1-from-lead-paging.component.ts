@@ -9,6 +9,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -80,7 +81,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/Sharing/Nap1FromLead/Detail"], { "LeadId": ev.RowObj.LeadId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP1_SHARING_FROM_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId });
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }

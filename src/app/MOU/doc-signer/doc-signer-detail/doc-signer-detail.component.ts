@@ -16,6 +16,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 
 @Component({
@@ -70,7 +72,7 @@ export class DocSignerDetailComponent implements OnInit {
   custNo: any;
   link: any;
   resultData: any;
-  
+
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],
@@ -82,6 +84,7 @@ export class DocSignerDetailComponent implements OnInit {
     CustSignerPosition2: [''],
   });
 
+  readonly CancelLink: string = NavigationConstant.MOU_DOC_SIGNER_PAGING;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.getMouCustById = URLConstant.GetMouCustById;
     this.addMouCustSigner = URLConstant.AddMouCustSigner;
@@ -204,7 +207,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.customerLookUpObj1.genericJson = "./assets/uclookup/lookupCustPersonal.json";
 
     this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;    
+    this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(this.getMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
@@ -258,7 +261,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Mou/DocSigner/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});
       });
   }
 }

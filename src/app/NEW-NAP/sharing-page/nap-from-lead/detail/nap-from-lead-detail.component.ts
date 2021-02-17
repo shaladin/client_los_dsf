@@ -12,6 +12,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -25,6 +26,7 @@ export class NapFromLeadDetailComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   leadId: string;
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -191,19 +193,19 @@ export class NapFromLeadDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/ConsumerFinance/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_ADD_DETAIL], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.FL4W) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/FinanceLeasing/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_ADD_DETAIL], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_ADD_DETAIL], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response["AppId"] });
         }
         if (this.bizTemplateCode == CommonConstant.CFNA) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/Add/Detail"], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": response["AppId"] });
         }
       });
 

@@ -8,6 +8,7 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
@@ -103,8 +104,8 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
-
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    
   }
 
   MakeViewReturnInfoObj() {
@@ -178,7 +179,7 @@ export class NapCustMainDataComponent implements OnInit {
     this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }

@@ -8,6 +8,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustPersonalObj } from 'app/shared/model/MouCustPersonalObj.Model';
 import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/MouCustDupCheck/RequestSubmitMouCustDupCheckObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
@@ -279,13 +280,13 @@ export class ExistingMouPersonalComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Mou/DuplicateCheck/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
       });
   }
 
   Back() {
-    // this.router.navigateByUrl("/Nap/AdditionalProcess/AppDupCheck/Personal?MouCustId=" + this.MouCustId + "&WfTaskListId=" + this.WfTaskListId);
-    AdInsHelper.RedirectUrl(this.router, ["/Mou/DuplicateCheck/Paging"], {});
+    // this.router.navigateByUrl("/Nap/AddProcess/AppDupCheck/Personal?MouCustId=" + this.MouCustId + "&WfTaskListId=" + this.WfTaskListId);
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
   }
 
   OpenView(key: string, value: number) {

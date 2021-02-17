@@ -15,6 +15,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-mou-approval-general',
   templateUrl: './mou-approval-general.component.html'
@@ -87,11 +88,11 @@ export class MouApprovalGeneralComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/Approval"], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/Approval"], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
   }
   
   initInputApprovalObj() {

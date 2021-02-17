@@ -12,13 +12,14 @@ import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-purchase-order',
   templateUrl: './purchase-order.component.html'
 })
 export class PurchaseOrderComponent implements OnInit {
-  urlDetail: string;
+  readonly urlDetail: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT_DETAIL;
   lobCode: string;
   AppId: number;
   AgrmntId: number;
@@ -49,15 +50,6 @@ export class PurchaseOrderComponent implements OnInit {
       }
       if (params["LobCode"] != null) {
         this.lobCode = params["LobCode"];
-      }
-      switch (this.lobCode) {
-        case "FL4W":
-          this.urlDetail = "/Nap/FinanceLeasing/AdminProcess/PurchaseOrder/Detail";
-          break;
-
-        default:
-          this.urlDetail = "/Nap/AdminProcess/PurchaseOrder/PO/Detail";
-          break;
       }
     });
   }
@@ -160,7 +152,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response[CommonConstant.ReturnObj];
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/PurchaseOrder/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], {});
           this.toastr.successMessage(response["message"]);
         });
     }
@@ -175,7 +167,7 @@ export class PurchaseOrderComponent implements OnInit {
       });
   }
   Cancel() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/PurchaseOrder/Paging"], { "BizTemplateCode": BizTemplateCode });
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 }

@@ -93,7 +93,7 @@
             "position" : "center",
             "property" : "MouCustNo",
             "target" : "_blank",
-            "path" : "/Mou/Cust/View?",
+            "path" : "VIEW_MOU_CUST",
             "param" : [
                 {
                     "type" : "MouCustId",

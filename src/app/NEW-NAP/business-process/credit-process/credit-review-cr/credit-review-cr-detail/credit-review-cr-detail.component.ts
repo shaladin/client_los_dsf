@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
@@ -45,6 +46,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
   readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
 
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -325,8 +327,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
     };
     // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
-      () => {
-        AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -334,8 +336,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
-      () => {
-        AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 

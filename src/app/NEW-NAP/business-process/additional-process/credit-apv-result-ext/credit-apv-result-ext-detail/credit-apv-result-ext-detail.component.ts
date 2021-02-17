@@ -9,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-apv-result-ext-detail',
@@ -48,7 +49,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitNewExpDate, obj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/CreditApprovalResultExt/Paging"], { BizTemplateCode: this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
@@ -75,7 +76,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/CreditApprovalResultExt/Paging"], { BizTemplateCode: this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 
   OpenView(key: string) {

@@ -23,6 +23,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -180,7 +181,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_FRAUD_VERIF_PAGING],{});
       });
   }
 
@@ -194,7 +195,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_FRAUD_VERIF_PAGING],{});
       });
   }
 
@@ -208,6 +209,6 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
   backHandler() {
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_FRAUD_VERIF_PAGING],{});
   }
 }

@@ -11,6 +11,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',

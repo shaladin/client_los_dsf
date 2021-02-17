@@ -11,6 +11,7 @@ import { AppCrdInvstgHObj } from 'app/shared/model/AppCrdInvstg/AppCrdInvstgHObj
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 
@@ -83,8 +84,8 @@ export class CreditInvestigationDetailComponent implements OnInit {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.AddEditAppCrdInvstg, reqAppCrdInvstg).subscribe(
       (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/CreditInvestigation/Paging"], { BizTemplateCode: lobCode });
+        this.toastr.successMessage(response["message"]);       
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_INVESTIGATION_PAGING], { BizTemplateCode: lobCode });
       });
 
   }
@@ -156,6 +157,6 @@ export class CreditInvestigationDetailComponent implements OnInit {
   }
   Back() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/CreditInvestigation/Paging"], { BizTemplateCode: lobCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_INVESTIGATION_PAGING], { BizTemplateCode: lobCode });
   }
 }

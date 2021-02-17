@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-paging',
@@ -87,7 +88,7 @@ export class NapPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/Add"], {});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_ADD], {});
         } else {
           this.toastr.typeErrorCustom(ExceptionConstant.OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP);
         }
@@ -99,8 +100,8 @@ export class NapPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
-
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+      
     }
   }
 

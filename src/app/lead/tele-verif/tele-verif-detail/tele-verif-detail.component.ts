@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 
@@ -21,6 +22,7 @@ export class TeleVerifDetailComponent implements OnInit {
   isLeadData: boolean;
   WfTaskListId: number;
 
+  readonly CancelLink: string = NavigationConstant.LEAD_TELE_VERIF_PAGING;
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.WfTaskListId = params["WfTaskListId"];

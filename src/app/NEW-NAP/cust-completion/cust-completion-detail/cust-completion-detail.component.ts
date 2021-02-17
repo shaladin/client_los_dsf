@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
@@ -117,7 +118,7 @@ export class CustCompletionDetailComponent implements OnInit {
   }
 
   buttonBackOnClick() {
-    this.router.navigate(['/Nap/CustCompletion/Paging'], { queryParams: { BizTemplateCode: this.BizTemplateCode } });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 
   buttonSubmitOnClick() {

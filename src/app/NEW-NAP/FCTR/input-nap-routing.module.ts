@@ -6,48 +6,49 @@ import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component
 import { FinancialDataFctrComponent } from '../sharing-component/input-nap-component/financial-data-fctr/financial-data-fctr.component';
 import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
 import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'Paging',
+        path: PathConstant.PAGING,
         component: NapPagingComponent,
         data: {
           title: 'New Application Paging'
         }
       },
       {
-        path: 'Add',
+        path: PathConstant.ADD,
         component: NapAddComponent,
         data: {
           title: 'New Application Add'
         }
       },
       {
-        path: 'Add/Detail',
+        path: PathConstant.DETAIL,
         component: NapAddDetailComponent,
         data: {
           title: 'New Application Add Detail'
         }
       },
       {
-        path: 'Nap/TestFinData',
+        path: PathConstant.TEST_FINANCIAL,
         component: FinancialDataFctrComponent,
         data: {
             title: 'Detail'
         }
       },
       {
-        path: 'NAP1',
+        path: PathConstant.NAP1,
         component: NapCustMainDataComponent,
         data: {
             title: 'NAP Cust Main Data'
         }
       },
       {
-        path: 'NAP2',
+        path: PathConstant.NAP2,
         component: NapDetailFormComponent,
         data: {
             title: 'NAP Detail'

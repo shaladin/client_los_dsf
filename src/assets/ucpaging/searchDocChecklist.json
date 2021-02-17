@@ -143,7 +143,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/View/AppView",
+      "path": "VIEW_APP",
       "param": [
         {
           "type": "AppId",
@@ -168,7 +168,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Nap/AdminProcess/DocChecklist/Detail",
+          "path": "NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL",
           "param": [
             {
               "type": "AppId",

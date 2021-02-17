@@ -9,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -20,14 +21,15 @@ export class MouCustomerRequestComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj;
   user: any;
-
+  
+  readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/UnauthorizedPage"], {});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
       return;
     }
     else {

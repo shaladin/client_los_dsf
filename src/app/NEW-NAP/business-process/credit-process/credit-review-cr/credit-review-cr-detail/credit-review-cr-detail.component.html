@@ -160,7 +160,7 @@
             <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
           </button>
           <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                  [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
+                  [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
             <i class="ft-x"></i> Cancel
           </button>
           <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>

@@ -229,7 +229,6 @@ export class MouCustTcComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.ResponseMouCustTc.emit(response);
-          // this.router.navigate(["/Mou/Request/Paging"]);
         });
     }
   }

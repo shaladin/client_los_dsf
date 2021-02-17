@@ -12,6 +12,7 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -35,6 +36,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultDListObj = new Array<VerfResultDObj>();
   IsVerfDetail: boolean = false;
   cust: any;
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {

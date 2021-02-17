@@ -170,7 +170,7 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
                 {
@@ -233,7 +233,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ReviewFactoring",
+                                "path": "MOU_CUST_RVW_FCTR",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -265,7 +265,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ReviewFactoring",
+                                "path": "MOU_CUST_RVW_FCTR",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -297,7 +297,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ReviewGeneral",
+                                "path": "MOU_CUST_RVW_GENERAL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -329,7 +329,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Cust/ReviewGeneral",
+                                "path": "MOU_CUST_RVW_GENERAL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from '../constant/CommonConstant';
@@ -56,8 +57,8 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
           AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
           let currPath = this.router.routerState.snapshot.url;
-          this.router.navigateByUrl("/pages/content", { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [currPath], {});
+          this.router.navigateByUrl(NavigationConstant.PAGES_CONTENT, { skipLocationChange: true }).then(() => {
+            this.router.navigateByUrl(currPath);
             this.dialog.closeAll();
           });
         });
@@ -76,7 +77,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
           AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
           AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
-          this.router.navigate(["/dashboard/dash-board"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
           this.dialog.closeAll();
         }
       );

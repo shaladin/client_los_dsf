@@ -15,6 +15,7 @@ import { ReqTCObj } from 'app/shared/model/ReqTCObj.Model';
 import { formatDate } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NumberValueAccessor } from '@angular/forms/src/directives';
 import { CookieService } from 'ngx-cookie';
 
@@ -26,7 +27,7 @@ import { CookieService } from 'ngx-cookie';
 export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   getAppUrl: string;
-  getRefTcUrl : string;
+  getRefTcUrl: string;
   rtnHandlingDUrl: string;
   editRtnHandlingDUrl: string;
   isReturnHandling: boolean = false;
@@ -34,8 +35,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   closeResult: any;
   mode: string;
   currentEditedIndex: number;
-  defaultDocType : string;
-  CustType : string;
+  defaultDocType: string;
+  CustType: string;
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: number;
@@ -43,9 +44,9 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
-  listAddTc : Array<AppTCObj> = new Array<AppTCObj>();
-  appTcObj : Array<AppTCObj> = new Array<AppTCObj>();
-  listTcCode : Array<AppTCObj> = new Array<AppTCObj>();
+  listAddTc: Array<AppTCObj> = new Array<AppTCObj>();
+  appTcObj: Array<AppTCObj> = new Array<AppTCObj>();
+  listTcCode: Array<AppTCObj> = new Array<AppTCObj>();
   inputGridObj: InputGridObj;
   ReqTCObj = new ReqTCObj();
 
@@ -68,6 +69,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     Notes: ['', [Validators.maxLength(50)]]
   });
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router,
     private modalService: NgbModal, private cookieService: CookieService) {
 
@@ -161,8 +163,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     // this.ReqTCObj.ListAppTcObj = listAppTcObj;
     // this.http.post(URLConstant.DeleteRangeAppTc, this.ReqTCObj).subscribe(
     //   (response) => {
-    //     var lobCode = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BIZ_TEMPLATE_CODE));
-    //     this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
     //   }
     // );
   }
@@ -214,7 +216,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { BizTemplateCode: lobCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING], { BizTemplateCode: lobCode });
         },
         (error) => {
           console.log(error);
@@ -224,8 +226,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       // this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
       //   (response) => {
       //     this.toastr.successMessage(response["message"]);
-      //     var lobCode = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BIZ_TEMPLATE_CODE));
-      //     this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
+      //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+      //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
       //   });
 
     }
@@ -270,8 +272,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     //   this.http.post(URLConstant.EditAppTc, this.ReqTCObj).subscribe(
     //     (response) => {
     //       this.toastr.successMessage(response["message"]);
-    //       var lobCode = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BIZ_TEMPLATE_CODE));
-    //       this.router.navigate(["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
+    //       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    //       this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } });
     //     });
     // } 
   }
@@ -306,7 +308,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["Message"]);
         var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingAddTc/Paging"], { BizTemplateCode: lobCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING], { BizTemplateCode: lobCode });
       }
     );
     // }

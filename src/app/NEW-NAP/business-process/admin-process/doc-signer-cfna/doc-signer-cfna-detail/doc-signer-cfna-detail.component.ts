@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-doc-signer-cfna-detail',
@@ -43,6 +44,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   isHidden: boolean;
   isSupplierExists: boolean;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -335,7 +337,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);
@@ -345,7 +347,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/NewDocumentSigner/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
         },
         error => {
           console.log(error);

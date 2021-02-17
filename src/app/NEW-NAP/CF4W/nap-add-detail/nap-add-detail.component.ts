@@ -13,6 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
@@ -38,7 +39,7 @@ export class NapAddDetailComponent implements OnInit {
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  
+
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -62,6 +63,7 @@ export class NapAddDetailComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -321,13 +323,13 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/ConsumerFinance/Paging"], { BizTemplateCode: CommonConstant.CF4W });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_PAGING], { BizTemplateCode: CommonConstant.CF4W });
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/ConsumerFinance/Paging"], { BizTemplateCode: CommonConstant.CF4W });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_PAGING], { BizTemplateCode: CommonConstant.CF4W });
   }
 
   Submit() {
@@ -344,7 +346,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CF4W });
         }
       )
     }

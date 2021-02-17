@@ -10,6 +10,7 @@ import { NotificationHObj } from '../model/NotificationH/NotificationHObj.model'
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -135,7 +136,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         this.http.post(url, "");
         AdInsHelper.ClearAllLog(this.cookieService);
         this.cookieService.removeAll();
-        this.router.navigate(['pages/login']);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_LOGIN], {});
     }
 
     ShowRole() {

@@ -9,6 +9,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -32,7 +33,6 @@ export class MouExecutionDetailComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
-    private location: Location,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
     private router: Router, private cookieService: CookieService) {
@@ -87,7 +87,7 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   Back() {
-    this.router.navigate(['/Mou/Execution/Paging']);
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
   }
 
   SaveForm() {
@@ -95,7 +95,7 @@ export class MouExecutionDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
       (response: any) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Mou/Execution/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
       });
 
   }

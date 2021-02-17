@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',
@@ -49,6 +50,8 @@ export class MouReviewFactoringComponent implements OnInit {
     }
   }
   ApprovalCreateOutput: any;
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_RVW_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -69,10 +72,10 @@ export class MouReviewFactoringComponent implements OnInit {
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-        if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
+        if (this.resultData['CustNo'] != null && this.resultData['CustNo'] != "") {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
@@ -167,7 +170,7 @@ export class MouReviewFactoringComponent implements OnInit {
       this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
         })
     }
   }
@@ -177,7 +180,7 @@ export class MouReviewFactoringComponent implements OnInit {
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
       })
   }
 

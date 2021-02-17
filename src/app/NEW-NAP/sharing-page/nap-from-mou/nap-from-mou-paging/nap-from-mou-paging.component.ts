@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -76,9 +77,9 @@ export class NapFromMouPagingComponent implements OnInit {
     var obj = { OfficeCode: this.userAccess.OfficeCode };
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
-        if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/Sharing/NapFromMou/Detail"], { "MouCustId": ev.RowObj.MouCustId });
-        } else {
+        if(response["IsAllowAppCreated"] == true){
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_SHARING_FROM_MOU_DETAIL], { "MouCustId": ev.RowObj.MouCustId});
+        }else{
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
       });

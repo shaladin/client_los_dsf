@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -46,6 +47,8 @@ export class AppAddDetailComponent implements OnInit {
   });
   OnFormReturnInfo = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_CF2W_PAGING;
+  readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -88,7 +91,7 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CF2W/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router,[this.CancelLink], {});
   }
 
   MakeViewReturnInfoObj() {
@@ -173,7 +176,7 @@ export class AppAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CF2W/Paging"], { LobCode: "CF2W" });
+        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { LobCode: "CF2W" });
       })
   }
 

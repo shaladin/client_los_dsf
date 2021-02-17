@@ -7,6 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-customer-doc-printing-paging',
@@ -21,7 +22,7 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != "HO") {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/UnauthorizedPage"], {});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
       return;
     }
     else {

@@ -8,6 +8,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
@@ -50,6 +51,9 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     AppCollateralId: 0,
   };
 
+  arrValue = [];
+
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
@@ -95,7 +99,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { BizTemplateCode: lobCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: lobCode });
         });
 
     }
@@ -109,7 +113,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { BizTemplateCode: lobCode });
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: lobCode });
       }
     );
   }
@@ -183,7 +187,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     if (this.isReturnHandling == false) {
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail"], { AppId: this.appId, AppCollateralId: AppCollateralId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { AppId: this.appId, AppCollateralId: AppCollateralId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
 
     }
   }

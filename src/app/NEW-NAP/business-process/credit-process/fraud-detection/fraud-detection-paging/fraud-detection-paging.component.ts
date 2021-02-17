@@ -10,6 +10,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-fraud-detection-paging',
@@ -81,9 +82,9 @@ export class FraudDetectionPagingComponent implements OnInit {
 
             if (dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null) {
               if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-                AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/FraudVerifMultiAsset/Paging"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_VERIF_MULTI_ASSET_PAGING], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
               else
-                AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/FraudDetection/Detail"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
             }
           }
         );
@@ -111,9 +112,9 @@ export class FraudDetectionPagingComponent implements OnInit {
 
             if (dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null) {
               if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-                AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/FraudVerifMultiAsset/Paging"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_VERIF_MULTI_ASSET_PAGING], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
               else
-                AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/FraudDetection/Detail"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
             }
           }
         );

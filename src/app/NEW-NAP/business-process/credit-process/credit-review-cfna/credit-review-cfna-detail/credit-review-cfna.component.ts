@@ -18,6 +18,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-review-cfna',
@@ -115,6 +116,8 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   ResponseExistCreditReview;
   DDLRecommendation;
   DDLReasonReturn;
+
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   async ngOnInit() {
     this.ClaimTask();
     this.InitData();
@@ -337,7 +340,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode, });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 
@@ -460,7 +463,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     this.InputObj.TrxNo = this.AppNo
     this.IsReady = true;
   }
-  cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+  cancel(){ 
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 }

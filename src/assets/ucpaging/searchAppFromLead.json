@@ -135,7 +135,7 @@
             "position" : "center",
             "property" : "LeadNo",
             "target" : "_blank",
-            "path" : "/View/Lead",
+            "path" : "VIEW_LEAD",
             "param" : [
                 {
                     "type" : "LeadId",

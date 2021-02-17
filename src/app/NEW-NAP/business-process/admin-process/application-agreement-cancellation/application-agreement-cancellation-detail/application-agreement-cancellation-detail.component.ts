@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -27,6 +28,8 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   });
   itemReasonCode: any;
   ReasonCode: any;
+
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -80,7 +83,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/AgreementCancellation/Paging"], { BizTemplateCode: this.BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });
   }
 

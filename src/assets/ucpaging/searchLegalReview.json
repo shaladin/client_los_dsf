@@ -189,7 +189,7 @@
       "type": "link",
       "position": "left",
       "property": "MouCustNo",
-      "path": "/View/Mou/CustView",
+      "path": "VIEW_MOU_CUST",
       "target": "_blank",
       "param": [
         {
@@ -252,7 +252,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Mou/CustomerLegalReview/Detail",
+                "path": "MOU_CUST_LEGAL_RVW_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -278,7 +278,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Mou/CustomerLegalReview/Detail",
+                "path": "MOU_CUST_LEGAL_RVW_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {

@@ -15,6 +15,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -331,7 +332,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   Back() {
-    this.router.navigate(['/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging'], { queryParams: { BizTemplateCode: 'FL4W' } });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ BizTemplateCode: 'FL4W' });
   }
 
   SaveForm() {
@@ -341,7 +342,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       this.httpClient.post(URLConstant.EditAppTc, tcFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging"], { BizTemplateCode: 'FL4W' });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ BizTemplateCode: 'FL4W' });
         });
     }
     else {
@@ -373,7 +374,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         forkJoin([editTc, submitDO]).subscribe(
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
-            AdInsHelper.RedirectUrl(this.router, ["/Nap/FinanceLeasing/AdminProcess/DeliveryOrderMultiAsset/Paging"], { "BizTemplateCode": 'FL4W' });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": 'FL4W'});
           }
         );
       }

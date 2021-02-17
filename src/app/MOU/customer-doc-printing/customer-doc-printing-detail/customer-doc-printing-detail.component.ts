@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { environment } from 'environments/environment';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-customer-doc-printing-detail',
@@ -21,6 +18,8 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   EditMouCustDocPrintSequenceNoUrl: string = URLConstant.EditMouCustDocPrintSequenceNo;
   link: any;
   mouCustObj: any;
+  resultData: any;
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_DOC_PAGING;
 
   constructor(
     private http: HttpClient,
@@ -41,7 +40,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
       response => {
         this.responseObj = response[CommonConstant.ReturnObj];
       },
-      error => {
+      () => {
         this.router.navigateByUrl('Error');
       }
     );
@@ -60,18 +59,17 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     var mouObj = { "MouCustDocPrintId": MouCustDocPrintId, "RowVersion": this.searchRowVersion(MouCustDocPrintId) };
     this.http.post(this.EditMouCustDocPrintSequenceNoUrl, mouObj).subscribe(
       response => {
-        var message = response['Message'];
         var mouCustObj = { "MouCustId": this.MouCustId };
         this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouCustObj).subscribe(
           response => {
             this.responseObj = response[CommonConstant.ReturnObj];
           },
-          error => {
+          () => {
             this.router.navigateByUrl('Error');
           }
         );
       },
-      error => {
+      () => {
         this.router.navigateByUrl('Error');
       }
     );

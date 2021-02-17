@@ -13,6 +13,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-from-mou-detail',
@@ -24,6 +25,7 @@ export class NapFromMouDetailComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   MouCustId: number;
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -187,18 +189,7 @@ export class NapFromMouDetailComponent implements OnInit {
     this.http.post(URLConstant.AddAppFromMou, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        // if (this.bizTemplateCode == CommonConstant.CF4W) {
-        //   this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-        // }
-        // if (this.bizTemplateCode == CommonConstant.FL4W) {
-        //   this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-        // }
-        // if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-        //   this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-        // }
-        // if (this.bizTemplateCode == CommonConstant.FCTR) {
-        AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
-        //}
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response["AppId"] });
       });
 
   }

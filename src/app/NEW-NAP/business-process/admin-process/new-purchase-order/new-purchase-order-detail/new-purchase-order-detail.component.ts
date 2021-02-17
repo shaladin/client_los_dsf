@@ -14,6 +14,7 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -116,7 +117,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { "BizTemplateCode": CommonConstant.CFNA });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
   }
 
   async Save() {
@@ -166,7 +167,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
         (response) => {
           this.toastr.successMessage("Success");
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/NewPurchaseOrder/Paging"], { "BizTemplateCode": CommonConstant.CFNA });
+          this.Cancel();
         }
       ).catch(
         (error) => {

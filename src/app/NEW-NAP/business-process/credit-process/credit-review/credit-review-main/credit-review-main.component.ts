@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -333,8 +334,8 @@ export class CreditReviewMainComponent implements OnInit {
       RequestRFAObj: this.ApprovalCreateOutput
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
-      () => {
-        AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -460,6 +461,6 @@ export class CreditReviewMainComponent implements OnInit {
     this.IsReady = true;
   }
   cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 }

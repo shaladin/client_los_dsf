@@ -16,6 +16,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-approval-cfna',
@@ -124,7 +125,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
@@ -154,17 +155,17 @@ export class CreditApprovalCfnaComponent implements OnInit {
 
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
         });
 
     } else {
-      AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
   onCancelClick() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": BizTemplateCode });
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 
   async initInputApprovalObj() {

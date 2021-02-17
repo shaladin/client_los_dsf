@@ -16,6 +16,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 @Component({
@@ -60,6 +61,8 @@ export class MouReviewGeneralComponent implements OnInit {
     Notes: [''],
     ApvRecommendation: this.fb.array([])
   })
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_RVW_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -71,7 +74,7 @@ export class MouReviewGeneralComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.mouCustObject.MouCustId = this.MouCustId;    
+    this.mouCustObject.MouCustId = this.MouCustId;
     await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -81,10 +84,10 @@ export class MouReviewGeneralComponent implements OnInit {
         this.dmsObj.Role = currentUserContext.RoleCode;
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
-        if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
+        if (this.resultData['CustNo'] != null && this.resultData['CustNo'] != "") {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
@@ -171,7 +174,7 @@ export class MouReviewGeneralComponent implements OnInit {
       this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
         })
     }
   }
@@ -181,7 +184,7 @@ export class MouReviewGeneralComponent implements OnInit {
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
       })
   }
 

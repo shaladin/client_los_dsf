@@ -15,6 +15,7 @@ import { RefEmpForLookupObj } from 'app/shared/model/RefEmpForLookupObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -111,14 +112,14 @@ export class LeadInputMainInfoComponent implements OnInit {
     AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
   }
 
-  backHandler() {
-    if (this.pageType == "update") {
-      AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
-    }
-    else {
-      AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
-    }
-
+  backHandler(){
+    if(this.pageType == "update"){
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
+      }
+      else{
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
+      }
+  
   }
 
   getLookUpAgency(event) {
@@ -423,11 +424,11 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.editLead, this.leadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/Page"], { "LeadId": this.LeadId, "mode": this.pageType });
+            if (this.pageType == "edit"){
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType });
             }
-            else {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/Page"], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+            else{
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
             }
           }
         );
@@ -439,7 +440,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/Page"], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
           }
         );
       }
@@ -456,11 +457,11 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.editLead, this.leadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
+            if(this.pageType == "edit"){
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
             }
-            else {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
+            else{
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
             }
           }
         );
@@ -472,7 +473,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.responseLead = response;
             this.LeadId = this.responseLead.LeadId;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
           }
         );
       }

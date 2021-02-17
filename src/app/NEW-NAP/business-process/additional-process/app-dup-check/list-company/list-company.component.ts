@@ -9,6 +9,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -105,7 +106,7 @@ export class ListCompanyComponent implements OnInit {
   // }
   //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
   //     response => {
-  //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+  //       this.router.navigate(["/Nap/AddProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
   //     });
   // }
 
@@ -119,7 +120,7 @@ export class ListCompanyComponent implements OnInit {
   // }
   //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
   //     response => {
-  //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+  //       this.router.navigate(["/Nap/AddProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
   //     });
   // }
 
@@ -130,7 +131,7 @@ export class ListCompanyComponent implements OnInit {
     };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -141,7 +142,7 @@ export class ListCompanyComponent implements OnInit {
     };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -158,7 +159,7 @@ export class ListCompanyComponent implements OnInit {
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/Paging"], { "BizTemplateCode": BizTemplateCode });
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 }

@@ -8,6 +8,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-login-page',
@@ -38,8 +39,8 @@ export class LoginPageComponent implements OnInit {
       }
     });
 
-    if (AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS) != null) {
-      this.router.navigate(['dashboard/dash-board']);
+    if (localStorage.getItem(CommonConstant.USER_ACCESS) != null) {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
     }
   }
 
@@ -53,7 +54,7 @@ export class LoginPageComponent implements OnInit {
       this.http.post(URLConstant.LoginWithToken, { ModuleCode: environment.Module }).subscribe(
         (response) => {
           AdInsHelper.CreateUserAccess(response);
-          this.router.navigate(['dashboard/dash-board']);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
         });
     }
   }
@@ -97,7 +98,7 @@ export class LoginPageComponent implements OnInit {
   }
   // On Forgot password link click
   onForgotPassword() {
-    this.router.navigate(['RequestPassword'], { relativeTo: this.route.parent });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_REQ_PASSWORD], {});
   }
   // On registration link click
   onRegister() {

@@ -14,6 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-approval-cfna-paging',
@@ -82,7 +83,7 @@ export class CreditApprovalCfnaPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/CreditApprovalCfna/Detail"], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CFNA_DETAIL],{ "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId  });
       }
     }
     else if (ev.Key == "HoldTask") {

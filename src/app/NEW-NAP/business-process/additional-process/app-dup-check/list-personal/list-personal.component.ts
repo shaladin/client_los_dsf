@@ -9,6 +9,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -104,7 +105,7 @@ export class ListPersonalComponent implements OnInit {
     };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -115,7 +116,7 @@ export class ListPersonalComponent implements OnInit {
     };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Personal"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -132,8 +133,8 @@ export class ListPersonalComponent implements OnInit {
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/AppDupCheck/Paging"], { "BizTemplateCode": BizTemplateCode });
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 
 }

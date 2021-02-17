@@ -16,6 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
@@ -67,6 +68,7 @@ export class NapAddDetailComponent implements OnInit {
   isDmsReady: boolean = false;
   appNo: string;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -155,7 +157,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/FinanceLeasing/Paging"], { BizTemplateCode: CommonConstant.FL4W });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_PAGING], { BizTemplateCode: CommonConstant.FL4W });
   }
 
   ChangeStepper() {
@@ -261,7 +263,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/FinanceLeasing/Paging"], { BizTemplateCode: CommonConstant.FL4W });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_PAGING], { BizTemplateCode: CommonConstant.FL4W });
         })
     }
   }
@@ -324,7 +326,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.FL4W });
         }
       )
     }

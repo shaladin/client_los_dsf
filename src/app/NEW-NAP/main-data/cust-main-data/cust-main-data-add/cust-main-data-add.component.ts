@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -224,22 +225,22 @@ export class CustMainDataAddComponent implements OnInit {
         setTimeout(() => { this.spinner.show(); }, 10)
         this.toastr.successMessage(response["message"]);
 
-        switch (this.bizTemplateCode) {
-          case CommonConstant.CF4W:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/ConsumerFinance/NAP1"], { "AppId": response["AppId"] });
-            break;
-          case CommonConstant.CFRFN4W:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/NAP1"], { "AppId": response["AppId"] });
-            break;
-          case CommonConstant.FCTR:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/NAP1"], { "AppId": response["AppId"] });
-            break;
-          case CommonConstant.FL4W:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/FinanceLeasing/NAP1"], { "AppId": response["AppId"] });
-            break;
-          case CommonConstant.CFNA:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/NAP1"], { "AppId": response["AppId"] });
-            break;
+        switch(this.bizTemplateCode) {
+          case CommonConstant.CF4W :
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"]});
+          break;
+          case CommonConstant.CFRFN4W :
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"]});
+          break;
+          case CommonConstant.FCTR :
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"]});
+          break;
+          case CommonConstant.FL4W :
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"]});
+          break;
+          case CommonConstant.CFNA :
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"]});
+          break;
           case CommonConstant.OPL:
             AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response["AppId"] });
             break;
@@ -360,8 +361,8 @@ export class CustMainDataAddComponent implements OnInit {
     this.ucLookupOffering.setAddCritInput();
   }
 
-  buttonCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, ["Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+  buttonCancelClick(){
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
 
 }

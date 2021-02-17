@@ -15,6 +15,7 @@ import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -28,6 +29,8 @@ export class AppAddFixedComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   LobCode;
+  
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -422,7 +425,7 @@ export class AppAddFixedComponent implements OnInit {
           (response) => {
             this.returnAllAppDataObj = response;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, ["Nap/CF2W/Add/Detail"], { "AppId": response["AppId"], "LobCode": this.LobCode });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response["AppId"], "LobCode": this.LobCode });
           }
         );
       });

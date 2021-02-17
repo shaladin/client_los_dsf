@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'nap-detail-paging',
@@ -65,19 +66,19 @@ export class NapDetailPagingComponent implements OnInit {
     if (ev.Key == "Edit") {
       switch (this.bizTemplateCode) {
         case CommonConstant.CF4W:
-          AdInsHelper.RedirectUrl(this.router, ["Nap/ConsumerFinance/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.CFRFN4W:
-          AdInsHelper.RedirectUrl(this.router, ["Nap/CFRefinancing/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.FCTR:
-          AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.FL4W:
-          AdInsHelper.RedirectUrl(this.router, ["Nap/FinanceLeasing/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.CFNA:
-          AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.OPL:
           AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });

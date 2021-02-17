@@ -12,6 +12,7 @@ import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCusto
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -107,7 +108,7 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   cancel() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/FraudDetection/Paging"], { BizTemplateCode: lobCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING], { BizTemplateCode: lobCode });
   }
 
   submit() {
@@ -121,9 +122,9 @@ export class FraudDetectionVerifComponent implements OnInit {
       "WfTaskId": this.WfTaskListId
     }
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
-      () => {
-        var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/FraudDetection/Paging"], { "BizTemplateCode": BizTemplateCode });
+      response => {
+        var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING], { "BizTemplateCode": BizTemplateCode });
       });
   }
 

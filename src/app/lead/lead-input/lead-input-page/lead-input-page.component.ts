@@ -11,6 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -124,15 +125,15 @@ export class LeadInputPageComponent implements OnInit {
     else {
       modeName = this.pageType;
     }
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadInput/MainInfo"], { LeadId: this.LeadId, mode: modeName });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_MAIN_INFO], { LeadId: this.LeadId, mode: modeName });
   }
 
   cancelHandler() {
     if (this.pageType == "update") {
-      AdInsHelper.RedirectUrl(this.router, ["/Lead/LeadUpdate/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, ["/Lead/Lead/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
     }
   }
 

@@ -12,6 +12,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-offering-validity-checking-approval-detail',
   templateUrl: './offering-validity-checking-approval-detail.component.html'
@@ -69,8 +70,8 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
       },
-      (error) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+      (error)=>{
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
       }
     )
   }
@@ -80,11 +81,12 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
   onApprovalSubmited() {
     this.toastr.successMessage("Success");
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
   }
 
-  onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/OfferingValidityApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+  onCancelClick()
+  {
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
   }
 
   GetCallBack(ev: any) {

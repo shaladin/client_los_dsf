@@ -17,6 +17,7 @@ import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Injectable()
@@ -42,7 +43,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         if (checkSession == "1") {
             // this.errorDialogService.openDialog(AdInsErrorMessage.SessionTimeout);
             this.spinner.hide();
-            this.router.navigate(["/pages/login"]);
+            this.router.navigate([NavigationConstant.PAGES_LOGIN]);
         }
 
         if (request.url.includes("Add") || request.url.includes("Edit") || request.url.includes("Delete")) {

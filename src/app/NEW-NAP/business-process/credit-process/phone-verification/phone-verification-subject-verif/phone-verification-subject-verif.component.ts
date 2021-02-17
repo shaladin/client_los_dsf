@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 
@@ -182,10 +183,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           if (activeButton == "save") {
             if (this.isReturnHandling == false) {
-              this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
             }
             if (this.isReturnHandling == true) {
-              this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
             }
           }
           else {
@@ -450,10 +451,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
   Cancel() {
     if (this.isReturnHandling == false) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
     }
     if (this.isReturnHandling == true) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
     }
   }
 

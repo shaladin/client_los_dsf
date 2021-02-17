@@ -13,6 +13,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -79,6 +80,7 @@ export class NapAddComponent implements OnInit {
     BizTemplateCode: [CommonConstant.FL4W]
   });
 
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(private fb: FormBuilder, private router: Router,
     private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) { }
 
@@ -215,7 +217,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["Nap/FinanceLeasing/Add/Detail"], { "AppId": response["AppId"] });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response["AppId"] });
       });
   }
 

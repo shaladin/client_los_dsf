@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
 import { AdInsHelper } from '../AdInsHelper';
+import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 
 declare var $: any;
@@ -92,8 +93,8 @@ export class SidebarComponent implements OnInit {
     navigateSkipLocationChange(ev) {
         //sementara Sementara begini dulu, belum ketemu solusi lain
         //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu
-        this.router.navigateByUrl("/dashboard/dash-board", { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [ev.Path], this.genParam(ev.Params));
+        this.router.navigateByUrl(NavigationConstant.DASHBOARD, { skipLocationChange: true }).then(() => {
+            AdInsHelper.RedirectUrl(this.router,[ev.Path],this.genParam(ev.Params));
         });
     }
 }

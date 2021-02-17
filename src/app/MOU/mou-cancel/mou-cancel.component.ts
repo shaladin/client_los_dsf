@@ -9,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -29,7 +30,7 @@ export class MouCancelComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router, ["/Mou/UnauthorizedPage"], {});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
       return;
     }
     else {
@@ -71,11 +72,8 @@ export class MouCancelComponent implements OnInit {
         this.http.post(URLConstant.EditMouForCancelByMouId, mouCancel).subscribe(
           response => {
             this.toastr.successMessage(response["Message"]);
-            // this.router.navigate(["/Mou/Cust/Cancel"]);
-            // this.router.navigate(["/Mou"]);
-            // this.router.navigate(["/Mou/Cust/Cancel"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/Mou/Cust/Cancel']);
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_CANCEL],{});
             });
           }
         );

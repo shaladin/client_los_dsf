@@ -15,6 +15,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
@@ -23,7 +24,7 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
   styles: []
 })
 export class NapAddDetailComponent implements OnInit {
-  
+
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
@@ -65,6 +66,7 @@ export class NapAddDetailComponent implements OnInit {
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -285,8 +287,8 @@ export class NapAddDetailComponent implements OnInit {
     else
       this.IsLastStep = false;
 
-      
-      this.viewAppMainInfo.ReloadUcViewGeneric();
+
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -322,13 +324,13 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/CFNA/Paging"], { BizTemplateCode: CommonConstant.CFNA });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_PAGING], { BizTemplateCode: CommonConstant.CFNA });
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/CFNA/Paging"], { BizTemplateCode: CommonConstant.CFNA });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_PAGING], { BizTemplateCode: CommonConstant.CFNA });
   }
 
   Submit() {
@@ -345,7 +347,7 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CFNA });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CFNA });
         }
       )
     }

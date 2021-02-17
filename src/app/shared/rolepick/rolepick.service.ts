@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AdInsHelper } from '../AdInsHelper';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
+import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 
@@ -71,7 +72,7 @@ export class RolePickService {
 
                         AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response["returnObject"]));
                         AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
-                        this.router.navigate(['dashboard/dash-board']);
+                        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
                     }
                 )
             }

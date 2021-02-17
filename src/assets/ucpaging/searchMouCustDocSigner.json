@@ -189,7 +189,7 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
                 {
@@ -252,7 +252,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/DocSigner/Detail",
+                                "path": "MOU_DOC_SIGNER_DETAIL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -282,7 +282,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/DocSigner/Detail",
+                                "path": "MOU_DOC_SIGNER_DETAIL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

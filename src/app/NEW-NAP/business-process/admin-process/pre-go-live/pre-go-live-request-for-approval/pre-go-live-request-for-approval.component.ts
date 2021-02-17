@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
   templateUrl: './pre-go-live-request-for-approval.component.html'
@@ -35,6 +36,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
   }
   ApprovalCreateOutput: any;
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -96,14 +98,14 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       this.RFAPreGoLive.TaskListId = this.TaskListId;
       this.RFAPreGoLive.RowVersion = "";
       this.RFAPreGoLive.RequestRFAObj = this.ApprovalCreateOutput
-      this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe(() => {
-        this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
+      this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
       });
     }
   }
 
   Cancel() {
-    this.router.navigateByUrl('/Nap/AdminProcess/PreGoLive/Detail?AgrmntId=' + this.AgrmntId + '&AppId=' + this.AppId + '&TaskListId=' + this.TaskListId + '&AgrmntNo=' + this.AgrmntNo);
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_DETAIL], { AgrmntId: this.AgrmntId, AppId: this.AppId, TaskListId: this.TaskListId, AgrmntNo: this.AgrmntNo });
   }
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj();

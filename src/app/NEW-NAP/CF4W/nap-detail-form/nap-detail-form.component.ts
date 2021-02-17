@@ -16,6 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -64,6 +65,7 @@ export class NapDetailFormComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -330,14 +332,14 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
 
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
   }
 
   Submit() {
@@ -354,7 +356,7 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CF4W });
         }
       )
     }

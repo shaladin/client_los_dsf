@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -59,6 +60,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   dmsAppObj: DMSObj;
   mouCustNo: string;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -342,7 +344,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DeliveryOrder/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], {});
       }
     );
   }
