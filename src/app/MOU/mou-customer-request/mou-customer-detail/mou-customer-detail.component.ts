@@ -7,12 +7,11 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { formatDate } from '@angular/common';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
@@ -32,7 +31,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   mode: string;
   pageType: string;
   pageTitle: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   link: any;
   resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -42,11 +40,12 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
   isDmsReady: boolean = false;
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mouCustId'] != null) {
@@ -64,14 +63,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObject.MouCustId = this.mouCustId;
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
@@ -88,18 +79,23 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   async initDms(){
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
       (response: MouCustObj) => {
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+
+        if(response['CustNo'] != null && response['CustNo'] != ""){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+        }
+        else{
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['ApplicantNo']));
+        }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response.MouCustNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         this.isDmsReady = true;
-        console.log('DMS11111', JSON.stringify(this.dmsObj));
       });
   }
   ngAfterViewInit(): void {
@@ -278,15 +274,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       await this.initDms();
     }
   }
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-  }
+  
   endOfTab() {
     this.toastr.successMessage("Success");
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});

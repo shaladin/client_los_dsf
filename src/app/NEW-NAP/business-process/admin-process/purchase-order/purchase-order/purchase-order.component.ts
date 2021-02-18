@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
@@ -9,6 +8,7 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
@@ -37,7 +37,7 @@ export class PurchaseOrderComponent implements OnInit {
   mouCustNo: string;
   isDmsAppReady: boolean;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -71,7 +71,7 @@ export class PurchaseOrderComponent implements OnInit {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
     this.dmsAppObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
@@ -93,11 +93,11 @@ export class PurchaseOrderComponent implements OnInit {
         this.appNo = response[2]['AppNo'];
         let mouId = response[2]['MouCustId'];
 
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
           this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsAppObj.MetadataParent = null;
         }
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -158,7 +158,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];

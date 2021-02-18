@@ -3,17 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateDoMultiAssetComponent } from '../create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
-import { Location } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -57,8 +56,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService,
-    private location: Location
+    private spinner: NgxSpinnerService, private cookieService: CookieService
   ) {
     this.doList = new Array();
     this.doAssetList = new Array();
@@ -76,7 +74,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     });
   }
 
-  async ngOnInit() { 
+  async ngOnInit() {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
@@ -127,7 +125,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
     this.dmsAppObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
@@ -149,11 +147,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.appNo = response[2]['AppNo'];
         let mouId = response[2]['MouCustId'];
 
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
           this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsAppObj.MetadataParent = null;
         }
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -182,7 +180,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

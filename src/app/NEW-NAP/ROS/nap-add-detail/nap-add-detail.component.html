@@ -9,8 +9,7 @@
         </button>
       </div>
     </div>
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
-    </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -44,29 +43,10 @@
         <div id="stepperPersonal" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <!-- your steps here -->
-            <div class="step" data-target="#customer-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
-                      id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
-                <span class="bs-stepper-circle">1</span>
-                <span class="bs-stepper-label">Customer Data</span>
-              </button>
-            </div>
-            <div class="line"></div>
-            <div class="step" data-target="#guarantor-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                      id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('GUAR')">
-                <span class="bs-stepper-circle">2</span>
-                <span class="bs-stepper-label">Guarantor Data</span>
-              </button>
-            </div>
-
-            <!--Tunggu Pemberitahuan Selanjutnya-->
-
-            <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
                       id="application-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('APP')">
-                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
             </div>
@@ -115,19 +95,9 @@
           <br><br>
           <div class="bs-stepper-content">
             <!-- your steps content here -->
-            <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
-                                 [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
-              </app-customer-data>
-            </div>
-            <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                                    [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-guarantor-paging>
-            </div>
             <!--Tunggu Pemberitahuan Selanjutnya-->
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
+              <app-application-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
                                     [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
@@ -159,24 +129,6 @@
         <div id="stepperCompany" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <!-- your steps here -->
-            <div class="step" data-target="#customer-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="customer-tab"
-                      id="customer-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('CUST')">
-                <span class="bs-stepper-circle">1</span>
-                <span class="bs-stepper-label">Customer Data</span>
-              </button>
-            </div>
-            <div class="line"></div>
-            <div class="step" data-target="#guarantor-tab">
-              <button type="button" class="step-trigger" role="tab" aria-controls="guarantor-tab"
-                      id="guarantor-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('GUAR')">
-                <span class="bs-stepper-circle">2</span>
-                <span class="bs-stepper-label">Guarantor Data</span>
-              </button>
-            </div>
-            <!--Tunggu Pemberitahuan Selanjutnya-->
-
-            <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
                       id="application-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('APP')">
@@ -220,18 +172,8 @@
           <br><br>
           <div class="bs-stepper-content">
             <!-- your steps content here -->
-            <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-customer-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
-                                 [showCancel]="showCancel" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()">
-              </app-customer-data>
-            </div>
-            <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-guarantor-paging *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId"
-                                    [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
-              </app-guarantor-paging>
-            </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
+              <app-application-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
                                     [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>

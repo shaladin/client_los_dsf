@@ -26,6 +26,7 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { SharedModule } from "app/shared/shared.module";
+import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -53,7 +54,8 @@ export const customCurrencyMaskConfig = {
     MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     MainDataComponentModule,
-    SharedModule
+    SharedModule,
+    ViewMainInfoComponentModule
   ],
   declarations: [
     NapAddDetailComponent,

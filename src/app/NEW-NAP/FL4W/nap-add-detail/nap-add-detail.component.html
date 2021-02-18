@@ -8,8 +8,7 @@
         </button>
         </div>
         </div>
-    <!-- <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
-    <ng-template #FL4WMainInfoContainer></ng-template>
+        <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -77,7 +76,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
+                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Asset & Collateral Data</span>
               </button>
@@ -143,7 +142,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                                         [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
+                                         [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
@@ -215,9 +214,9 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('COLL')">
+                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('ASSET')">
                 <span class="bs-stepper-circle">5</span>
-                <span class="bs-stepper-label">Collateral Data</span>
+                <span class="bs-stepper-label">Asset & Collateral Data</span>
               </button>
             </div>
             <div class="line"></div>
@@ -273,7 +272,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"
-                                         [showCancel]="showCancel" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
+                                         [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">

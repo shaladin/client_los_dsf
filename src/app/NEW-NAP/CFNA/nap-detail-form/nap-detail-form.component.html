@@ -11,7 +11,7 @@
     </div>
     <!-- <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
     </lib-ucviewgeneric> -->
-    <ng-template #CFNAMainInfoContainer></ng-template>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">

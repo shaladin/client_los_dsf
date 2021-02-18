@@ -4,6 +4,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,11 +21,10 @@ export class NapDetailPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
   userAccess: any;
-  token: string = localStorage.getItem(CommonConstant.TOKEN);
+  token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   constructor(
     private router: Router,
-    private route: ActivatedRoute) 
-  {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
@@ -39,7 +39,7 @@ export class NapDetailPagingComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
@@ -64,23 +64,25 @@ export class NapDetailPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      switch(this.bizTemplateCode)
-      {
-        case CommonConstant.CF4W :
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
-        break;
-        case CommonConstant.CFRFN4W :
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
-        break;
-        case CommonConstant.FCTR :
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
-        break;
-        case CommonConstant.FL4W :
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FL4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
-        break;
-        case CommonConstant.CFNA :
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
-        break;
+      switch (this.bizTemplateCode) {
+        case CommonConstant.CF4W:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
+        case CommonConstant.CFRFN4W:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
+        case CommonConstant.FCTR:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
+        case CommonConstant.FL4W:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
+        case CommonConstant.CFNA:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
+        case CommonConstant.OPL:
+          AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
       }
     }
   }

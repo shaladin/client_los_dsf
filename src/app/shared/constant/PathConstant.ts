@@ -63,7 +63,7 @@ export class PathConstant {
     public static NAP_CFRFN4W = "CFRefinancing";
     public static NAP_CFNA = "CFNA";
     public static NAP_FCTR = "Factoring";
-    public static NAP_ROS = "ROS";
+    public static NAP_OPL = "OPL";
     public static NAP_ADDTNL_PRCS = "AdditionalProcess";
     public static NAP_CRD_PRCS = "CreditProcess";
     public static NAP_ADM_PRCS = "AdminProcess";

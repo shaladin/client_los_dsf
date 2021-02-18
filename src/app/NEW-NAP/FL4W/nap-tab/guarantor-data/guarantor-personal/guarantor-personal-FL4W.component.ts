@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -16,6 +16,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',
@@ -50,9 +52,9 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   tempCustNo: string;
   isIdExpiredDateMandatory: boolean = false;
   businessDt: Date;
-  @Input() ListCustNoPersonal : any[];
+  @Input() ListCustNoPersonal: any[];
   inputAddressObj: InputAddressObj;
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal, private cookieService: CookieService) {
   }
 
   PersonalForm = this.fb.group({
@@ -168,26 +170,26 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         this.clearExpDt();
       }
     );
-  
+
     var AppCust = {
       AppId: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
-      (response) => { 
-        if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
+      (response) => {
+        if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
-        }else{
+        } else {
           var refCustRelObj = {
-            RefMasterTypeCode:  CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-            MappingCode:  CommonConstant.CustTypePersonal,
+            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
-        } 
+        }
         this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
           (response) => {
             this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
@@ -225,7 +227,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality]};
+    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.MrNationalityCode = response[CommonConstant.ReturnObj];
@@ -243,22 +245,22 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     );
   }
 
-  IdTypeHandler(){
+  IdTypeHandler() {
     var value = this.PersonalForm.controls["MrIdTypeCode"].value;
-    if(value != CommonConstant.MrIdTypeCodeEKTP){
+    if (value != CommonConstant.MrIdTypeCodeEKTP) {
       this.PersonalForm.controls["IdExpDt"].setValidators([Validators.required]);
       this.PersonalForm.controls["IdExpDt"].updateValueAndValidity();
-      var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+      var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
       this.isIdExpiredDateMandatory = true;
     }
-    else{
+    else {
       this.PersonalForm.patchValue({
         IdExpDt: ''
       });
       this.PersonalForm.controls["IdExpDt"].clearValidators();
       this.PersonalForm.controls["IdExpDt"].updateValueAndValidity();
-      var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+      var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
       this.isIdExpiredDateMandatory = false;
     }
@@ -268,7 +270,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   MaxDate: Date;
   Max17YO: Date;
   getDate() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
     this.Max17YO.setFullYear(this.MaxDate.getFullYear() - 17);
@@ -295,7 +297,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["CountryName"];
-        this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"]};
+        this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"] };
         if (this.resultData.AppGuarantorPersonalObj.MrNationalityCode == CommonConstant.NationalityLocal) {
           this.isLocal = true;
           this.selectedNationalityCountryName = response["CountryName"];
@@ -318,7 +320,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       var foreign = this.MrNationalityCode.find(x => x["MasterCode"] == ev.target.value);
       var setCountry = foreign.DefaultValue.split(';')
       this.inputLookupObj1.nameSelect = setCountry[1] || setCountry[0];
-      this.inputLookupObj1.jsonSelect =  { CountryName: setCountry[1] || setCountry[0]};
+      this.inputLookupObj1.jsonSelect = { CountryName: setCountry[1] || setCountry[0] };
       this.countryCode = setCountry[0];
       this.isLocal = false;
     }
@@ -341,7 +343,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupCountry.json";
     this.inputLookupObj1.isRequired = false;
 
-    if(this.ListCustNoPersonal.length > 0){
+    if (this.ListCustNoPersonal.length > 0) {
       var arrCopyLookupCrit = new Array();
       var addCrit = new CriteriaObj();
       addCrit.DataType = "text";
@@ -404,8 +406,9 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             }
 
           });
-        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
-         }).subscribe(
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, {
+          CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
+        }).subscribe(
           (response) => {
             this.resultData = response;
             this.AddrObj = new AddrObj();
@@ -469,7 +472,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.PersonalForm.controls.IdExpDt.updateValueAndValidity();
       this.isIdExpiredDateMandatory = false;
     }
-    else{
+    else {
       this.isIdExpiredDateMandatory = true;
     }
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -14,6 +13,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
@@ -79,7 +80,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
 
-  
+
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -104,12 +105,12 @@ export class CustPersonalContactInformationComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,
-    private toastr: NGXToastrService,) {
+    private toastr: NGXToastrService, private cookieService: CookieService) {
 
   }
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
@@ -125,11 +126,11 @@ export class CustPersonalContactInformationComponent implements OnInit {
       this.listContactPersonPersonal = new Array<AppCustPersonalContactPersonObj>();
     }
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
-    if(selectedRelationship==undefined){ 
-      this.toastr.errorMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP) ;
+    if (selectedRelationship == undefined) {
+      this.toastr.errorMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP);
       return;
-    } 
-    var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    }
+    var userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var businessDtStr = formatDate(userAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     var businessDt = new Date(businessDtStr);
     var birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
@@ -140,8 +141,8 @@ export class CustPersonalContactInformationComponent implements OnInit {
     }
 
     this.setAppCustPersonalContactPerson();
-    if(this.appCustPersonalContactPersonObj.IsGuarantor){
-      if(this.appCustPersonalContactPersonObj.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse){
+    if (this.appCustPersonalContactPersonObj.IsGuarantor) {
+      if (this.appCustPersonalContactPersonObj.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse) {
         this.toastr.warningMessage("Guarantor cannot have spouse relationship");
         return false;
       }
@@ -206,10 +207,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   setCustRelationShip(MrCustRelationshipCode: string) {
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == MrCustRelationshipCode);
-    if(selectedRelationship!=undefined){
+    if (selectedRelationship != undefined) {
       this.selectedRelationshipName = selectedRelationship.Value;
     }
-   
+
   }
 
   delete(i) {
@@ -232,7 +233,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
-      Email: ['', [Validators.maxLength(100),Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      Email: ['', [Validators.maxLength(100), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       CopyFromContactPerson: [''],
       IsGuarantor: [false]
     });
@@ -246,10 +247,10 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.CheckSpouse();
   }
 
-  setAppCustPersonalContactPerson() { 
+  setAppCustPersonalContactPerson() {
     this.appCustPersonalContactPersonObj.ContactPersonName = this.ContactInfoPersonalForm.controls.ContactPersonName.value;
     this.appCustPersonalContactPersonObj.MrGenderCode = this.ContactInfoPersonalForm.controls.MrGenderCode.value;
-    this.appCustPersonalContactPersonObj.MrIdTypeCode = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value; 
+    this.appCustPersonalContactPersonObj.MrIdTypeCode = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value;
     this.appCustPersonalContactPersonObj.MrCustRelationshipCode = this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value;
     this.appCustPersonalContactPersonObj.IdNo = this.ContactInfoPersonalForm.controls.IdNo.value;
     this.appCustPersonalContactPersonObj.MrJobProfessionCode = this.selectedProfessionCode;
@@ -325,7 +326,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.contactPersonAddrObj = new AddrObj();
     this.inputFieldContactPersonObj = new InputFieldObj();
     this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
-    
+
     this.inputAddressObjForCP = new InputAddressObj();
     this.inputAddressObjForCP.showSubsection = false;
     this.inputAddressObjForCP.showAllPhn = false;
@@ -450,26 +451,23 @@ export class CustPersonalContactInformationComponent implements OnInit {
       }
     }
     else {
-      if(!this.ContactInfoPersonalForm.controls.IsGuarantor.value)
-      {
+      if (!this.ContactInfoPersonalForm.controls.IsGuarantor.value) {
         this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
         this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
-      }      
+      }
       this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
     }
   }
 
-  CheckGuarantor(){
-    if(this.ContactInfoPersonalForm.controls.IsGuarantor.value)
-    {
+  CheckGuarantor() {
+    if (this.ContactInfoPersonalForm.controls.IsGuarantor.value) {
       this.CustRelationshipObj = this.CustGuarantorRelationshipObj;
       this.ContactInfoPersonalForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
       this.ContactInfoPersonalForm.controls.IdNo.setValidators([Validators.required, Validators.maxLength(100)]);
       this.ContactInfoPersonalForm.controls.BirthPlace.setValidators([Validators.required, Validators.maxLength(100)]);
       this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
     }
-    else 
-    {
+    else {
       this.CustRelationshipObj = this.CustContactRelationshipObj;
       this.ContactInfoPersonalForm.controls.MrIdTypeCode.clearValidators();
       this.ContactInfoPersonalForm.controls.IdNo.clearValidators();
@@ -479,15 +477,14 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.ContactInfoPersonalForm.controls.MrIdTypeCode.updateValueAndValidity();
     this.ContactInfoPersonalForm.controls.IdNo.updateValueAndValidity();
     this.ContactInfoPersonalForm.controls.BirthPlace.updateValueAndValidity();
-    this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();      
+    this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
 
     if (this.CustRelationshipObj.length > 0) {
       this.defaultCustRelationship = this.CustRelationshipObj[0].Key;
       this.defaultRelationshipName = this.CustRelationshipObj[0].Value;
 
       var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
-      if(selectedRelationship == undefined)
-      {
+      if (selectedRelationship == undefined) {
         this.ContactInfoPersonalForm.patchValue({
           MrCustRelationshipCode: this.defaultCustRelationship,
         });

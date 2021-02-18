@@ -185,7 +185,7 @@ export class NavigationConstant {
     //#endregion
 
     //#region ROS
-    public static NAP_ROS_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_ROS; //'Nap/ROS'
+    public static NAP_ROS_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_OPL; //'Nap/ROS'
     public static NAP_ROS_PAGING = "/" + NavigationConstant.NAP_ROS_HEADER + "/" + PathConstant.PAGING; //"/Nap/ROS/Paging"
     public static NAP_ROS_ADD = "/" + NavigationConstant.NAP_ROS_HEADER + "/" + PathConstant.ADD; //"Nap/ROS/Add"
     public static NAP_ROS_ADD_DETAIL = "/" + NavigationConstant.NAP_ROS_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/ROS/Add/Detail"

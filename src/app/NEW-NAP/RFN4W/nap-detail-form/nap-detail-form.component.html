@@ -9,7 +9,7 @@
         </button>
       </div>
     </div>
-    <lib-ucviewgeneric [viewGenericObj]="viewProdMainInfoObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <lib-ucSubsection *ngIf="ReturnHandlingHId > 0" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
