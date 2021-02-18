@@ -62,6 +62,7 @@ import { DocChecklistApprovalDetailComponent } from "./doc-checklist/doc-checkli
 import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-paging/pre-go-live-opl-paging.component';
 import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
 import { PreGoLiveOplService } from "./pre-go-live-opl/pre-go-live-opl.service";
+import { UcgridviewModule } from "@adins/ucgridview";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -85,6 +86,7 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     AdInsModule,
     UcaddtotempModule,
+    UcgridviewModule,
     UcapprovalcreateModule,
     UcapprovalR3Module,
     UcapprovalHistoryModule,
