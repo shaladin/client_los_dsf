@@ -13,7 +13,7 @@ import { NavigationConstant } from './shared/constant/NavigationConstant';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: "/pages/login",
+    redirectTo: 'Pages/Login',
     pathMatch: 'full',
   },
   { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [AuthGuard] },
