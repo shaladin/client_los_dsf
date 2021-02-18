@@ -32,7 +32,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 export class AssetDataComponent implements OnInit {
   @Input() AppId: any;
   @Input() showCancel: boolean = true;
-  @Input() BizTemplateCode: string = "";
+  @Input() BizTemplateCode: string = "OPL";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   BranchManagerName: string = "-";
@@ -131,7 +131,6 @@ export class AssetDataComponent implements OnInit {
     DelivAreaCode4: ['', Validators.maxLength(50)],
     DelivCity: ['', Validators.maxLength(50)],
     DelivZipcode: ['', Validators.maxLength(50)],
-    DelivOwnership: [''],
     LocationAddr: [''],
     LocationAreaCode1: ['', Validators.maxLength(50)],
     LocationAreaCode2: ['', Validators.maxLength(50)],
@@ -139,7 +138,6 @@ export class AssetDataComponent implements OnInit {
     LocationAreaCode4: ['', Validators.maxLength(50)],
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
-    LocationOwnership: [''],
 
     LocationAddrType: [''],
     DelivAddrType: [''],
@@ -311,19 +309,10 @@ export class AssetDataComponent implements OnInit {
     this.inputAddressObjForDeliv = new InputAddressObj();
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    if(this.BizTemplateCode === "OPL") {
-      this.inputAddressObjForLoc.showOwnership = false;
-
-      this.AssetDataForm.controls.DownPaymentAmt.clearValidators();
-      this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
-      this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
-      this.AssetDataForm.controls.selectedDpType.clearValidators();
-    }
 
     this.items = this.AssetDataForm.get('items') as FormArray;
     this.isOnlookup = false;
@@ -354,6 +343,11 @@ export class AssetDataComponent implements OnInit {
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
     if(this.BizTemplateCode === "OPL") {
+      this.AssetDataForm.controls.DownPaymentAmt.clearValidators();
+      this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
+      this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
+      this.AssetDataForm.controls.selectedDpType.clearValidators();
+      this.AssetDataForm.controls.MrIdTypeCode.clearValidators();
       await this.getListAllAssetData();
     }
     else {
@@ -428,7 +422,6 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForDeliv.default = null;
@@ -436,7 +429,6 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForLoc.default = null;
@@ -491,7 +483,6 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode;
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode };
     this.delivAddrObj = new AddrObj();
@@ -501,13 +492,11 @@ export class AssetDataComponent implements OnInit {
     this.delivAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3;
     this.delivAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4;
     this.delivAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity;
-    this.delivAddrObj.MrHouseOwnershipCode = this.allAssetDataObj.AppCollateralRegistrationObj.DelivOwnership;
     this.inputAddressObjForDeliv.default = this.delivAddrObj;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode };
     this.locationAddrObj = new AddrObj();
@@ -517,7 +506,6 @@ export class AssetDataComponent implements OnInit {
     this.locationAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3;
     this.locationAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4;
     this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity;
-    this.locationAddrObj.MrHouseOwnershipCode = this.allAssetDataObj.AppCollateralRegistrationObj.LocationOwnership;
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
 
@@ -865,7 +853,6 @@ export class AssetDataComponent implements OnInit {
         }
       }
       else if(this.BizTemplateCode === "OPL") {
-        console.log("LALALA")
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -1160,8 +1147,6 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.AssetDataForm.controls["delivData"]["controls"].AreaCode4.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.AssetDataForm.controls["delivData"]["controls"].City.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.AssetDataForm.controls["delivDataZipcode"]["controls"].value.value;
-      this.allAssetDataObj.AppCollateralRegistrationObj.DelivOwnership = this.AssetDataForm.controls["delivData"]["controls"].MrHouseOwnershipCode.value;
-      this.allAssetDataObj.AppCollateralRegistrationObj.LocationOwnership = this.AssetDataForm.controls["locationData"]["controls"].MrHouseOwnershipCode.value;
     }
     
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.AssetDataForm.controls["locationData"]["controls"].Addr.value;
@@ -2140,13 +2125,11 @@ export class AssetDataComponent implements OnInit {
     this.delivAddrObj.AreaCode3 = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivAreaCode3;
     this.delivAddrObj.AreaCode4 = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivAreaCode4;
     this.delivAddrObj.City = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivCity;
-    this.delivAddrObj.MrHouseOwnershipCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivOwnership;
 
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivZipcode;
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivZipcode };
     this.inputAddressObjForDeliv.default = this.delivAddrObj;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
-    this.inputAddressObjForDeliv.showOwnership = false;
   }
 
   setAddrLocationObj() {
@@ -2160,11 +2143,6 @@ export class AssetDataComponent implements OnInit {
     this.locationAddrObj.AreaCode3 = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3;
     this.locationAddrObj.AreaCode4 = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4;
     this.locationAddrObj.City = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity;
-
-    if(this.BizTemplateCode === "OPL") {
-    this.locationAddrObj.MrHouseOwnershipCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationOwnership;
-    this.inputAddressObjForLoc.showOwnership = false;
-    }
 
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode };
@@ -2387,7 +2365,6 @@ export class AssetDataComponent implements OnInit {
         DelivAreaCode4: this.AddrObj[0].AreaCode4,
         DelivCity: this.AddrObj[0].City,
         DelivZipcode: this.AddrObj[0].Zipcode,
-        DelivOwnership: this.AddrObj[0].MrHouseOwnershipCode
       });
       this.delivAddrObj = new AddrObj();
       this.delivAddrObj.Addr = this.AddrObj[0].Addr;
@@ -2396,7 +2373,6 @@ export class AssetDataComponent implements OnInit {
       this.delivAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
       this.delivAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.delivAddrObj.City = this.AddrObj[0].City;
-      this.delivAddrObj.MrHouseOwnershipCode = this.AddrObj[0].MrHouseOwnershipCode;
 
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.DelivZipcode.value;
       this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.DelivZipcode.value };
@@ -2427,13 +2403,6 @@ export class AssetDataComponent implements OnInit {
       this.locationAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
       this.locationAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.locationAddrObj.City = this.AddrObj[0].City;
-
-      if(this.BizTemplateCode === "OPL") {
-        this.AssetDataForm.patchValue({
-          LocationOwnership: this.AddrObj[0].MrHouseOwnershipCode
-        });
-        this.locationAddrObj.MrHouseOwnershipCode = this.AddrObj[0].MrHouseOwnershipCode;
-      }
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.LocationZipcode.value;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.LocationZipcode.value };

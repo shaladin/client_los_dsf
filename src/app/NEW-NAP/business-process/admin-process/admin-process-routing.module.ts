@@ -138,14 +138,14 @@ const routes: Routes = [
         }
       },
       {
-        path: 'pregoliveopl/paging',
+        path: PathConstant.PGL_OPL_PAGING,
         component: PreGoLiveOplPagingComponent,
         data: {
           title: 'Pre Golive'
         }
       },
       {
-        path: 'pregoliveopl/detail',
+        path: PathConstant.PGL_OPL_DETAIL,
         component: PreGoLiveOplDetailComponent,
         data: {
           title: 'Pre Golive Detail'
