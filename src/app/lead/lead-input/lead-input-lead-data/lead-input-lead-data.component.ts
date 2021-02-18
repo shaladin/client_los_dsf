@@ -45,8 +45,8 @@ export class LeadInputLeadDataComponent implements OnInit {
   getThirdPartyResultHByTrxTypeCodeAndTrxNo: string;
   leadNo: string;
   reqLatestJson: any;
-  latestCheckChassisNo: string ="";
-  isAssetReady: boolean =false;
+  latestCheckChassisNo: string = "";
+  isAssetReady: boolean = false;
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
   assetTypeId: string;
@@ -80,7 +80,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     ManufacturingYear: ['', Validators.min(0)],
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
     DownPaymentAmount: ['', [Validators.required]],
-    DownPaymentPercent: ['', [Validators.min(1.00), Validators.max(100.00)]],
+    DownPaymentPercent: ['', [Validators.required, Validators.min(1.00), Validators.max(100.00)]],
     Tenor: ['', [Validators.required, Validators.min(0)]],
     MrFirstInstTypeCode: ['', Validators.required],
     NTFAmt: [''],
@@ -117,6 +117,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   getThirdPartyResultHForFraudChecking: string;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   isAlreadySubmittedByIntegrator: boolean = false;
+  isReadOnly: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -180,12 +181,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   }
 
-  // downPaymentChange(event) {
-  //   this.LeadDataForm.patchValue({
-  //     MrDownPaymentTypeCode: event.value,
-  //   });
-  // }
-
   radioChange(event) {
     if (event.target.value == CommonConstant.AssetConditionUsed) {
       this.isUsed = true;
@@ -238,7 +233,7 @@ export class LeadInputLeadDataComponent implements OnInit {
                 this.latestReqDtCheckRapindo = response['ReqDt'];
                 this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
                 this.reqLatestJson = JSON.parse(response['ReqJson']);
-                if(this.reqLatestJson != null && this.reqLatestJson != "" ){
+                if (this.reqLatestJson != null && this.reqLatestJson != "") {
                   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
                 }
               }
@@ -407,118 +402,96 @@ export class LeadInputLeadDataComponent implements OnInit {
         });
     }
     //if (this.typePage == "edit" || this.typePage == "update") {
-      this.reqLeadAssetObj = new LeadAssetObj();
-      this.reqLeadAssetObj.LeadId = this.LeadId;
-      this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
-        (response) => {
-          this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-            this.isUsed = true;
-          } else {
-            this.isUsed = false;
-          }
-          if (this.resLeadAssetObj.LeadAssetId != 0) {
-            this.LeadDataForm.patchValue({
-              MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
-              MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
-              ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
-              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
+    this.reqLeadAssetObj = new LeadAssetObj();
+    this.reqLeadAssetObj.LeadId = this.LeadId;
+    this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
+      (response) => {
+        this.resLeadAssetObj = response;
+        if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
+          this.isUsed = true;
+        } else {
+          this.isUsed = false;
+        }
+        if (this.resLeadAssetObj.LeadAssetId != 0) {
+          this.LeadDataForm.patchValue({
+            MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
+            MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
+            ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
+            AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
+            DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
+            DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
+          });
+
+          this.DownPaymentChange();
+
+          // this.AssetSelected = true;
+
+          this.reqAssetMasterObj = new AssetMasterObj();
+          this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+            (response) => {
+              this.resAssetMasterObj = response;
+
+              this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
+              this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
+              this.LeadDataForm.patchValue({
+                FullAssetCode: this.resAssetMasterObj.FullAssetCode,
+                FullAssetName: this.resAssetMasterObj.FullAssetName,
+              });
+              this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
+              var assetType = new AssetTypeObj();
+              assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
+              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+                (response: any) => {
+
+                  var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    (response: any) => {
+                      while (this.items.length) {
+                        this.items.removeAt(0);
+                      }
+                      this.SerialNoList = response[CommonConstant.ReturnObj];
+                      for (var i = 0; i < this.SerialNoList["length"]; i++) {
+                        var eachDataDetail = this.fb.group({
+                          SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                          SerialNoValue: [''],
+                          IsMandatory: [this.SerialNoList[i].IsMandatory]
+                        }) as FormGroup;
+                        this.items.push(eachDataDetail);
+                        if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                          this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                          this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                        }
+                        if (this.items.controls[0] != null) {
+                          this.items['controls'][0].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo1,
+                          });
+                        }
+                        if (this.items.controls[1] != null) {
+                          this.items['controls'][1].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo2,
+                          });
+                        }
+                        if (this.items.controls[2] != null) {
+                          this.items['controls'][2].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo3,
+                          });
+                        }
+                        if (this.items.controls[3] != null) {
+                          this.items['controls'][3].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                          });
+                        }
+                        if (this.items.controls[4] != null) {
+                          this.items['controls'][4].patchValue({
+                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                          });
+                        }
+                      }
+                    });
+                });
             });
-
-            if (this.resLeadAssetObj.MrDownPaymentTypeCode == CommonConstant.DownPaymentTypeAmt) {
-              this.LeadDataForm.controls.DownPaymentPercent.disable();
-              this.LeadDataForm.controls.DownPaymentAmount.enable();
-            }
-            else {
-              this.LeadDataForm.controls.DownPaymentPercent.enable();
-              this.LeadDataForm.controls.DownPaymentAmount.disable();
-            }
-
-            // this.AssetSelected = true;
-
-            this.reqAssetMasterObj = new AssetMasterObj();
-            this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-            this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
-              (response) => {
-                this.resAssetMasterObj = response;
-
-                this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
-                this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
-                this.LeadDataForm.patchValue({
-                  FullAssetCode: this.resAssetMasterObj.FullAssetCode,
-                  FullAssetName: this.resAssetMasterObj.FullAssetName,
-                });
-                this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
-                var assetType = new AssetTypeObj();
-                assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
-                  (response: any) => {
-
-                    var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
-                      (response: any) => {
-                        while (this.items.length) {
-                          this.items.removeAt(0);
-                        }
-                        this.SerialNoList = response[CommonConstant.ReturnObj];
-                        for (var i = 0; i < this.SerialNoList["length"]; i++) {
-                          var eachDataDetail = this.fb.group({
-                            SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-                            SerialNoValue: [''],
-                            IsMandatory: [this.SerialNoList[i].IsMandatory]
-                          }) as FormGroup;
-                          this.items.push(eachDataDetail);
-                          if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-                            this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-                            this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-                          }
-                          if (this.items.controls[0] != null) {
-                            this.items['controls'][0].patchValue({
-                              SerialNoValue: this.resLeadAssetObj.SerialNo1,
-                            });
-                          }
-                          if (this.items.controls[1] != null) {
-                            this.items['controls'][1].patchValue({
-                              SerialNoValue: this.resLeadAssetObj.SerialNo2,
-                            });
-                          }
-                          if (this.items.controls[2] != null) {
-                            this.items['controls'][2].patchValue({
-                              SerialNoValue: this.resLeadAssetObj.SerialNo3,
-                            });
-                          }
-                          if (this.items.controls[3] != null) {
-                            this.items['controls'][3].patchValue({
-                              SerialNoValue: this.resLeadAssetObj.SerialNo4,
-                            });
-                          }
-                          if (this.items.controls[4] != null) {
-                            this.items['controls'][4].patchValue({
-                              SerialNoValue: this.resLeadAssetObj.SerialNo4,
-                            });
-                          }
-                        }
-                      });
-                  });
-              });
-            this.reqLeadAppObj = new LeadAppObj();
-            this.reqLeadAppObj.LeadId = this.LeadId;
-            this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
-              (response) => {
-                this.resLeadAppObj = response;
-                this.LeadDataForm.patchValue({
-                  Tenor: this.resLeadAppObj.Tenor,
-                  MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-                  NTFAmt: this.resLeadAppObj.NtfAmt,
-                  TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-                  InstallmentAmt: this.resLeadAppObj.InstAmt,
-                });
-              });
-          }
-          else
-            this.reqLeadAppObj = new LeadAppObj();
+          this.reqLeadAppObj = new LeadAppObj();
           this.reqLeadAppObj.LeadId = this.LeadId;
           this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
             (response) => {
@@ -527,23 +500,35 @@ export class LeadInputLeadDataComponent implements OnInit {
                 Tenor: this.resLeadAppObj.Tenor,
                 MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
                 NTFAmt: this.resLeadAppObj.NtfAmt,
+                TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
                 InstallmentAmt: this.resLeadAppObj.InstAmt,
               });
             });
-        });
+        }
+        else
+          this.reqLeadAppObj = new LeadAppObj();
+        this.reqLeadAppObj.LeadId = this.LeadId;
+        this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
+          (response) => {
+            this.resLeadAppObj = response;
+            this.LeadDataForm.patchValue({
+              Tenor: this.resLeadAppObj.Tenor,
+              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
+              NTFAmt: this.resLeadAppObj.NtfAmt,
+              InstallmentAmt: this.resLeadAppObj.InstAmt,
+            });
+          });
+      });
     //}
 
   }
 
   DownPaymentChange() {
     if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      this.LeadDataForm.controls.DownPaymentPercent.disable();
-      this.LeadDataForm.controls.DownPaymentAmount.enable();
-
+      this.isReadOnly = false;
     }
     else {
-      this.LeadDataForm.controls.DownPaymentPercent.enable();
-      this.LeadDataForm.controls.DownPaymentAmount.disable();
+      this.isReadOnly = true;
     }
   }
 
@@ -741,7 +726,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   save() {
-    if(this.resLeadAppObj.LeadAppId !=0 && this.resLeadAssetObj.LeadAssetId != 0){
+    if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {
       this.typePage = "edit";
     }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
@@ -763,7 +748,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
-        if(this.confirmFraudCheck()){
+        if (this.confirmFraudCheck()) {
           this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
@@ -804,7 +789,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
           this.setLeadApp();
-          if(this.confirmFraudCheck()){
+          if (this.confirmFraudCheck()) {
             this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
@@ -841,7 +826,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
         this.setLeadAsset();
         this.setLeadApp();
-        if(this.confirmFraudCheck()){
+        if (this.confirmFraudCheck()) {
           this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
@@ -858,31 +843,31 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
 
-  confirmFraudCheck(){
-    if(this.isNeedCheckBySystem == "0"){
-      if(!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")){
+  confirmFraudCheck() {
+    if (this.isNeedCheckBySystem == "0") {
+      if (!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")) {
         return true;
       }
-      else if(this.latestCheckChassisNo != "" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo && confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")){
+      else if (this.latestCheckChassisNo != "" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo && confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")) {
         return true;
       }
-      else if(this.latestCheckChassisNo != "" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == this.latestCheckChassisNo){
+      else if (this.latestCheckChassisNo != "" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == this.latestCheckChassisNo) {
         return true;
       }
-      else if(this.isAlreadySubmittedByIntegrator){
+      else if (this.isAlreadySubmittedByIntegrator) {
         return true;
       }
-      else{
+      else {
         return false;
       }
     }
-    else{
+    else {
       return true;
     }
   }
 
   SaveForm() {
-    if(this.resLeadAppObj.LeadAppId !=0 && this.resLeadAssetObj.LeadAssetId != 0){
+    if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {
       this.typePage = "edit";
     }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
@@ -905,40 +890,40 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         if (this.originPage == "teleVerif") {
-        if(this.confirmFraudCheck()){
-          // this.leadInputLeadDataObj.IsEdit = true;
-          this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+          if (this.confirmFraudCheck()) {
+            // this.leadInputLeadDataObj.IsEdit = true;
+            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                if (this.originPage == "teleVerif") {
+                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+                }
               }
-            }
-          );
+            );
+          }
         }
-      }
-        else if(this.typePage == "update"){
+        else if (this.typePage == "update") {
 
           this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
-        
+
         }
-        else{
+        else {
           this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
         }
       }
       else {
         if (this.lobKta.includes(this.returnLobCode) == true) {
           //this.setLeadAsset();
-          if(this.originPage == "teleVerif"){
-          this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-              }
+          if (this.originPage == "teleVerif") {
+            this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                if (this.originPage == "teleVerif") {
+                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+                }
 
-            }
-          );
+              }
+            );
           }
           else if (this.typePage == "update") {
             this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/LeadUpdate/Paging" });
@@ -955,18 +940,18 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
           this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
           this.setLeadAsset();
-          if(this.originPage == "teleVerif"){
-          if(this.confirmFraudCheck()){
-            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                if (this.originPage == "teleVerif") {
-                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-                }
+          if (this.originPage == "teleVerif") {
+            if (this.confirmFraudCheck()) {
+              this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  if (this.originPage == "teleVerif") {
+                    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+                  }
 
-              }
-            );
-          }
+                }
+              );
+            }
           }
           else if (this.typePage == "update") {
             this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
@@ -982,20 +967,20 @@ export class LeadInputLeadDataComponent implements OnInit {
       if (this.lobKta.includes(this.returnLobCode) == true) {
         //this.setLeadAsset();
         if (this.originPage == "teleVerif") {
-        this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            if (this.originPage == "teleVerif") {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+          this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              if (this.originPage == "teleVerif") {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+              }
+
             }
-            
-          }
-        );
+          );
         }
         else if (this.typePage == "update") {
           this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/LeadUpdate/Paging" });
         }
-        else {   
+        else {
           this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/Lead/Paging" });
         }
       }
@@ -1003,21 +988,21 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.setLeadAsset();
         if (this.originPage == "teleVerif") {
 
-        if(this.confirmFraudCheck()){
-          this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+          if (this.confirmFraudCheck()) {
+            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                if (this.originPage == "teleVerif") {
+                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+                }
               }
-            }
-          );
-        }
+            );
+          }
         }
         else if (this.typePage == "update") {
           this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
         }
-        else{
+        else {
           this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
         }
       }
@@ -1034,28 +1019,28 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
   checkRapindo() {
-    if (this.isNeedCheckBySystem == "0"){
-        if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
+    if (this.isNeedCheckBySystem == "0") {
+      if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-          this.setLeadAsset();
-          this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
-            (response1) => {
-              this.isAlreadySubmittedByIntegrator = true;
-              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response) => {
-                  this.latestReqDtCheckRapindo = response['ReqDt'];
-                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                  this.reqLatestJson = JSON.parse(response['ReqJson']);
-                  if(this.reqLatestJson != null && this.reqLatestJson != "" ){
-                    this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
-                  }
+        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
+          (response1) => {
+            this.isAlreadySubmittedByIntegrator = true;
+            this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              (response) => {
+                this.latestReqDtCheckRapindo = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                this.reqLatestJson = JSON.parse(response['ReqJson']);
+                if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                  this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
                 }
-              );
-            }
-          );
-        }
-      
+              }
+            );
+          }
+        );
+      }
+
     }
   }
 
