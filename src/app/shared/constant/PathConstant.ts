@@ -40,6 +40,8 @@ export class PathConstant {
     public static NAP_FROM_MOU = "NapFromMou";
     public static NAP1_FROM_LEAD = "Nap1FromLead";
     public static COMM_RSV_FUND = "CommissionReservedFund";
+    public static PAGING_LOWERCASE = "paging";
+    public static DETAIL_LOWERCASE = "detail";
     //#endregion
 
     //#region Form-Module
@@ -179,6 +181,9 @@ export class PathConstant {
     public static PGL = "PreGoLive";
     public static PGL_PAGING = PathConstant.CombinePath([PathConstant.PGL, PathConstant.PAGING]);
     public static PGL_DETAIL = PathConstant.CombinePath([PathConstant.PGL, PathConstant.DETAIL]);
+    public static PGL_OPL = "pregoliveopl";
+    public static PGL_OPL_PAGING = PathConstant.CombinePath([PathConstant.PGL_OPL, PathConstant.PAGING_LOWERCASE]);
+    public static PGL_OPL_DETAIL = PathConstant.CombinePath([PathConstant.PGL_OPL, PathConstant.DETAIL_LOWERCASE]);
     public static PGL_REQ_APPRVL = PathConstant.PGL + "/RequestApproval";
     public static PGL_APPRVL_PAGING = PathConstant.CombinePath([PathConstant.PGL, PathConstant.APPRV, PathConstant.PAGING]);
     public static PGL_APPRVL_DETAIL = PathConstant.CombinePath([PathConstant.PGL, PathConstant.APPRV, PathConstant.DETAIL]);

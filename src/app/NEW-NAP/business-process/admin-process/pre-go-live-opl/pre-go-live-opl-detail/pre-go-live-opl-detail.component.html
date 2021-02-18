@@ -111,7 +111,9 @@
               <lib-ucSubsection [id]="'TermConditionsId'" [title]="'Term & Conditions'" [panel]="'TermConditions'">
               </lib-ucSubsection>
               <div class="form-body" id="TermConditions">
-                <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+                <app-term-conditions [AppId]="AppId" [parentForm]="PreGoLiveForm"
+                  [enjiForm]="PreGoLiveReqForm">
+                </app-term-conditions>
               </div>
   
               <div class="form-actions right">
