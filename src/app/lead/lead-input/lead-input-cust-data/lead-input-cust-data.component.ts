@@ -208,7 +208,6 @@ export class LeadInputCustDataComponent implements OnInit {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    await this.getLeadData();
 
     this.inputLegalAddressObj = new InputFieldObj();
     this.inputLegalAddressObj.inputLookupObj = new InputLookupObj();
@@ -656,6 +655,8 @@ export class LeadInputCustDataComponent implements OnInit {
 
         });
     }
+    
+    await this.getLeadData();
   }
 
   InitDms() {
