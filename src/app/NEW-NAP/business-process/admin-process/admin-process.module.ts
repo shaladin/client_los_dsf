@@ -59,6 +59,8 @@ import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detai
 import { DocChecklistRequestForApprovalComponent } from "./doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component";
 import { DocChecklistApprovalPagingComponent } from "./doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component";
 import { DocChecklistApprovalDetailComponent } from "./doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component";
+import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocation-paging/asset-allocation-paging.component";
+import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",     
@@ -130,7 +132,9 @@ export const customCurrencyMaskConfig = {
     DocChecklistDetailComponent,
     DocChecklistRequestForApprovalComponent,
     DocChecklistApprovalPagingComponent,
-    DocChecklistApprovalDetailComponent
+    DocChecklistApprovalDetailComponent,
+    AssetAllocationPagingComponent,
+    AssetAllocationDetailComponent
   ],
   providers: [
     NGXToastrService

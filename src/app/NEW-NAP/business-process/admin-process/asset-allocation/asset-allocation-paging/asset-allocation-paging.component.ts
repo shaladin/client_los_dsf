@@ -43,7 +43,7 @@ export class AssetAllocationPagingComponent implements OnInit {
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'WF.ACT_CODE';
+    critObj.propName = 'WTL.ACT_CODE';
     critObj.value = "ASSALOC_" + this.bizTemplateCode;
 
     this.inputPagingObj.addCritInput.push(critObj);

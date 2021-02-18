@@ -16,7 +16,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from '../../../../../../environments/environment';
-
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-asset-allocation-detail',
@@ -31,7 +31,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   InputLookupAssetNumberObj: any;
   InputLookupAssetNumberObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   ListUsedAssetNumber: any;
-
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
@@ -42,15 +42,26 @@ export class AssetAllocationDetailComponent implements OnInit {
   }
 
   AssetAllocationForm = this.fb.group({
+    IsCheckedAll: [false],
     ListAsset: this.fb.array([])
   })
 
   async ngOnInit() {
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+
     this.claimTask();
+    this.getAssetAllocationData();
   }
 
   SaveForm() {
 
+  }
+
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 
   async claimTask() {
@@ -63,17 +74,19 @@ export class AssetAllocationDetailComponent implements OnInit {
       });
   }
 
-  async getInsuranceData() {
+  async getAssetAllocationData() {
     var reqObj = { AppId: this.AppId }
-    await this.http.post(URLConstant.GetAssetExpenseDataByAppAssetId, reqObj).toPromise().then(
+    await this.http.post(URLConstant.GetAssetAllocationDataByAppId, reqObj).toPromise().then(
       (response) => {
         this.ListUsedAssetNumber = response["ListAssetNumber"];
         this.appAssetObj = response["AppAssetObjs"];
+        console.log(this.appAssetObj);
         if (response["AppAssetObjs"].length > 0) {
           this.AssetAllocationForm.controls["ListAsset"] = this.fb.array([]);
           for (let i = 0; i < response["AppAssetObjs"].length; i++) {
             var x = {
               AppAssetId: response["AppAssetObjs"][i].AppAssetId,
+              AppAssetNo: response["AppAssetObjs"][i].AppAssetNo,
               AssetName: response["AppAssetObjs"][i].FullAssetName,
               ManuYear: response["AppAssetObjs"][i].ManufacturingYear,
               Color: response["AppAssetObjs"][i].Color,
@@ -82,7 +95,7 @@ export class AssetAllocationDetailComponent implements OnInit {
               DeliveryDt: response["AppAssetObjs"][i].DeliveryDt,
               DecisionCode: response["AppAssetObjs"][i].DecisionCode,
               StockAssetName: response["AppAssetObjs"][i].FullAssetName,
-              ChasissNo: response["AppAssetObjs"][i].SerialNo1,
+              ChassisNo: response["AppAssetObjs"][i].SerialNo1,
               EngineNo: response["AppAssetObjs"][i].SerialNo2,
               LicensePlateNo: response["AppAssetObjs"][i].SerialNo3,
               ColorAssetNumber: response["AppAssetObjs"][i].Color,
@@ -92,7 +105,6 @@ export class AssetAllocationDetailComponent implements OnInit {
             };
             this.addListAsset(x);
           }
-
         }
       });
   }
@@ -132,6 +144,7 @@ export class AssetAllocationDetailComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AppAssetId: [appAssetObj.AppAssetId],
+        AppAssetNo: [appAssetObj.AppAssetNo],
         AssetName: [appAssetObj.AssetName],
         ManuYear: [appAssetObj.ManuYear],
         Color: [appAssetObj.Color],
@@ -140,19 +153,21 @@ export class AssetAllocationDetailComponent implements OnInit {
         DeliveryDt: [appAssetObj.DeliveryDt],
 
         StockAssetName: [appAssetObj.StockAssetName, [Validators.required, Validators.maxLength(100)]],
-        ChasissNo: [appAssetObj.ChasissNo, [Validators.required, Validators.maxLength(50)]],
+        ChassisNo: [appAssetObj.ChassisNo, [Validators.required, Validators.maxLength(50)]],
         EngineNo: [appAssetObj.EngineNo, [Validators.required, Validators.maxLength(50)]],
         LicensePlateNo: [appAssetObj.LicensePlateNo, [Validators.required, Validators.maxLength(50)]],
         ColorAssetNumber: [appAssetObj.ColorAssetNumber, [Validators.required, Validators.maxLength(50)]],
         ManuYearAssetNumber: [appAssetObj.ManuYearAssetNumber, [Validators.required, Validators.maxLength(50)]],
         AssetLocation: [appAssetObj.AssetLocation, [Validators.required, Validators.maxLength(50)]],
         AssetNo: [appAssetObj.AssetNo, [Validators.required, Validators.maxLength(50)]],
+        IsChecked:[false]
       })
     }
     else {
       return this.fb.group({
         No: [i],
         AppAssetId: [appAssetObj.AppAssetId],
+        AppAssetNo: [appAssetObj.AppAssetNo],
         AssetName: [appAssetObj.AssetName],
         ManuYear: [appAssetObj.ManuYear],
         Color: [appAssetObj.Color],
@@ -161,13 +176,14 @@ export class AssetAllocationDetailComponent implements OnInit {
         DeliveryDt: [appAssetObj.DeliveryDt],
 
         StockAssetName: [''],
-        ChasissNo: ['', [Validators.required, Validators.maxLength(50)]],
+        ChassisNo: ['', [Validators.required, Validators.maxLength(50)]],
         EngineNo: ['', [Validators.required, Validators.maxLength(50)]],
         LicensePlateNo: ['', [Validators.required, Validators.maxLength(50)]],
         ColorAssetNumber: ['', [Validators.required, Validators.maxLength(50)]],
         ManuYearAssetNumber: ['', [Validators.required, Validators.maxLength(50)]],
         AssetLocation: ['', [Validators.required, Validators.maxLength(50)]],
         AssetNo: ['', [Validators.required, Validators.maxLength(50)]],
+        IsChecked: [false]
       })
     }
   }
@@ -175,7 +191,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   SetAssetNumber(i, event) {
     this.AssetAllocationForm.controls["ListAsset"]["controls"][i].patchValue({
       StockAssetName: event.AssetName,
-      ChasissNo: event.ChasissNo,
+      ChassisNo: event.ChassisNo,
       EngineNo: event.EngineNo,
       LicensePlateNo: event.LicensePlateNo,
       ColorAssetNumber: event.Color,
@@ -183,5 +199,26 @@ export class AssetAllocationDetailComponent implements OnInit {
       AssetLocation: event.AssetLocation,
       AssetNo: event.AssetNo
     });
+  }
+
+  ChangeAllChecked() {
+    for (let i = 0; i < this.AssetAllocationForm.controls["ListAsset"]["controls"].length; i++) {
+      this.AssetAllocationForm.controls["ListAsset"]["controls"][i].patchValue({
+        IsChecked: this.AssetAllocationForm.controls.IsCheckedAll.value
+      });
+    }
+  }
+
+  ChangeChecked(i) {
+    var x = this.AssetAllocationForm["controls"]["ListAsset"]["controls"].filter(x => x["controls"]["IsChecked"].value == this.AssetAllocationForm["controls"]["ListAsset"]["controls"][i]["controls"]["IsChecked"].value)
+    if (x.length == this.AssetAllocationForm.controls["ListAsset"]["controls"].length) {
+      this.AssetAllocationForm.patchValue({
+        IsCheckedAll: this.AssetAllocationForm["controls"]["ListAsset"]["controls"][i]["controls"]["IsChecked"].value
+      });
+    }
+  }
+
+  test() {
+    console.log(this.AssetAllocationForm);
   }
 }
