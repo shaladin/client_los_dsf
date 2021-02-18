@@ -1318,4 +1318,9 @@ export class URLConstant {
 
   // Pre Go Live
   public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
+  
+  //App Asset Rent Data
+  public static GetAppFinDataOplByAppAssetId = environment.losUrl + "/AppAssetRentDataOpl/GetAppFinDataOplByAppAssetId";
+  public static AddEditFinDataOpl = environment.losUrl + "/AppAssetFinancialDataOpl/SubmitFinancialDataOpl";
+  public static GetListAppAssetFinDataGridByAppId = environment.losUrl + "/AppAssetRentDataOpl/GetListAppAssetFinDataGridByAppId";
 }
