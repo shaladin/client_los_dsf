@@ -25,7 +25,7 @@
                 {
                     "type": "callback",
                     "key": "ProdOffering",
-                    "label": "Product Offering Name",
+                    "label": "Product Offering",
                     "property": "ProdOfferingName"
                 },
                 {
@@ -40,7 +40,7 @@
                 }
             ],
             "querystring": {
-                "name": "viewRequisitionDecisionDetailMainInfo"
+                "name": "viewOplMainInfo"
             }
         }
     ]
