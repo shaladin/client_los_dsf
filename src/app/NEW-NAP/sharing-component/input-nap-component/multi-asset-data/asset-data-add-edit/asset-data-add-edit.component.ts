@@ -621,6 +621,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     }
   }
+  readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
     this.AssetDataForm.updateValueAndValidity();
 
@@ -661,6 +662,7 @@ export class AssetDataAddEditComponent implements OnInit {
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
 
+          this.ChangeAssetCondition();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
 
@@ -825,6 +827,7 @@ export class AssetDataAddEditComponent implements OnInit {
             MrAssetConditionCode: assetCond["CompntValue"],
             MrAssetConditionCodeView: assetCond["CompntValue"]
           });
+          this.ChangeAssetCondition();
         }
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
@@ -909,6 +912,7 @@ export class AssetDataAddEditComponent implements OnInit {
               MrAssetConditionCode: this.returnAssetConditionObj[0].Key
             }
           )
+          this.ChangeAssetCondition();
         }
 
         this.UcAddressHandler();
@@ -1637,4 +1641,12 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
 
+  ChangeAssetCondition(){
+    if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed){
+      this.AssetDataForm.controls.TaxCityIssuer.setValidators([Validators.required]);
+    }else{
+      this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
+    }
+    this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
+  }
 }
