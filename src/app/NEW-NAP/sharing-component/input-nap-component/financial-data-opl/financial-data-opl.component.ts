@@ -58,6 +58,7 @@ export class FinancialDataOplComponent implements OnInit {
   }
 
   GetAllAssetFinancialData() {
+    this.isAllAssetFinDone = true;
     var appObj = {
       AppId: this.AppId,
     };
