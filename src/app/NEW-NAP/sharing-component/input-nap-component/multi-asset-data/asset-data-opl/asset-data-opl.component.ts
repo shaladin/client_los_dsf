@@ -178,7 +178,6 @@ export class AssetDataOplComponent implements OnInit {
     DelivAreaCode4: ['', Validators.maxLength(50)],
     DelivCity: ['', Validators.maxLength(50)],
     DelivZipcode: ['', Validators.maxLength(50)],
-    DelivOwnership: [''],
     LocationAddr: [''],
     LocationAreaCode1: ['', Validators.maxLength(50)],
     LocationAreaCode2: ['', Validators.maxLength(50)],
@@ -186,7 +185,6 @@ export class AssetDataOplComponent implements OnInit {
     LocationAreaCode4: ['', Validators.maxLength(50)],
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
-    LocationOwnership: [''],
 
     LocationAddrType: [''],
     DelivAddrType: [''],
