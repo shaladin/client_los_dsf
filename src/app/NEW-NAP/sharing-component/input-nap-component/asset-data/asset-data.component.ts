@@ -347,6 +347,7 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
       this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
       this.AssetDataForm.controls.selectedDpType.clearValidators();
+      this.AssetDataForm.controls.MrIdTypeCode.clearValidators();
       await this.getListAllAssetData();
     }
     else {
@@ -852,7 +853,6 @@ export class AssetDataComponent implements OnInit {
         }
       }
       else if(this.BizTemplateCode === "OPL") {
-        console.log("LALALA")
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -879,8 +879,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   Back() {
-    this.findInvalidControls();
-    // this.isListAsset = true;
+    this.isListAsset = true;
   }
 
   Save() {
