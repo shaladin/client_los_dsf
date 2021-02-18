@@ -212,12 +212,10 @@ export class AssetDataOplComponent implements OnInit {
     this.inputAddressObjForDeliv = new InputAddressObj();
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = false;
 
     this.isOnlookup = false;
     await this.GetAppData();
@@ -259,7 +257,6 @@ export class AssetDataOplComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForDeliv.default = null;
@@ -267,7 +264,6 @@ export class AssetDataOplComponent implements OnInit {
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForLoc.default = null;
@@ -322,7 +318,6 @@ export class AssetDataOplComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode;
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode };
     this.delivAddrObj = new AddrObj();
@@ -332,13 +327,11 @@ export class AssetDataOplComponent implements OnInit {
     this.delivAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3;
     this.delivAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4;
     this.delivAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity;
-    this.delivAddrObj.MrHouseOwnershipCode = this.allAssetDataObj.AppCollateralRegistrationObj.DelivOwnership;
     this.inputAddressObjForDeliv.default = this.delivAddrObj;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode };
     this.locationAddrObj = new AddrObj();
@@ -348,7 +341,6 @@ export class AssetDataOplComponent implements OnInit {
     this.locationAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3;
     this.locationAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4;
     this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity;
-    this.locationAddrObj.MrHouseOwnershipCode = this.allAssetDataObj.AppCollateralRegistrationObj.LocationOwnership;
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
 
@@ -611,7 +603,6 @@ export class AssetDataOplComponent implements OnInit {
         DelivAreaCode4: this.AddrObj[0].AreaCode4,
         DelivCity: this.AddrObj[0].City,
         DelivZipcode: this.AddrObj[0].Zipcode,
-        DelivOwnership: this.AddrObj[0].MrHouseOwnershipCode
       });
       this.delivAddrObj = new AddrObj();
       this.delivAddrObj.Addr = this.AddrObj[0].Addr;
@@ -620,7 +611,6 @@ export class AssetDataOplComponent implements OnInit {
       this.delivAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
       this.delivAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.delivAddrObj.City = this.AddrObj[0].City;
-      this.delivAddrObj.MrHouseOwnershipCode = this.AddrObj[0].MrHouseOwnershipCode;
 
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.DelivZipcode.value;
       this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.DelivZipcode.value };
@@ -648,7 +638,6 @@ export class AssetDataOplComponent implements OnInit {
         LocationAreaCode4: this.AddrObj[0].AreaCode4,
         LocationCity: this.AddrObj[0].City,
         LocationZipcode: this.AddrObj[0].Zipcode,
-        LocationOwnership: this.AddrObj[0].MrHouseOwnershipCode
       });
       this.locationAddrObj = new AddrObj();
       this.locationAddrObj.Addr = this.AddrObj[0].Addr;
@@ -657,7 +646,6 @@ export class AssetDataOplComponent implements OnInit {
       this.locationAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
       this.locationAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.locationAddrObj.City = this.AddrObj[0].City;
-      this.locationAddrObj.MrHouseOwnershipCode = this.AddrObj[0].MrHouseOwnershipCode;
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.LocationZipcode.value;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.LocationZipcode.value };
@@ -1416,8 +1404,6 @@ export class AssetDataOplComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.AssetDataForm.controls["delivData"]["controls"].AreaCode4.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.AssetDataForm.controls["delivData"]["controls"].City.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.AssetDataForm.controls["delivDataZipcode"]["controls"].value.value;
-    this.allAssetDataObj.AppCollateralRegistrationObj.DelivOwnership = this.AssetDataForm.controls["delivData"]["controls"].MrHouseOwnershipCode.value;
-    this.allAssetDataObj.AppCollateralRegistrationObj.LocationOwnership = this.AssetDataForm.controls["locationData"]["controls"].MrHouseOwnershipCode.value;
     
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.AssetDataForm.controls["locationData"]["controls"].Addr.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.AssetDataForm.controls["locationData"]["controls"].AreaCode1.value;
