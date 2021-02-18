@@ -74,7 +74,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async SetMainInfo() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/requisition-decision/view-requisition-decision-detail-main-info.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
@@ -86,7 +86,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetListOfAsset, requestAppId).toPromise().then(
       (response: any) => {
         this.ListOfAsset = response["ReturnObject"];
-        console.log("Isi ListOfAsset: ", this.ListOfAsset);
 
         if(this.ListOfAsset.length !== 0) {
           for(let i = 0; i < this.ListOfAsset.length; i++) {
@@ -103,7 +102,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   CancelToPaging() {
-    this.router.navigate(['/requisitiondecision/paging'], { queryParams: { BizTemplateCode: "OPL"} });
+    AdInsHelper.RedirectUrl(this.router, ["requisitiondecision/paging"], { BizTemplateCode: "OPL" });
   }
 
   Submit() {
@@ -112,10 +111,11 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     }
     else {
       var requestRequisitionDecisionObj = {
-        AppId: this.AppId
+        AppId: this.AppId,
+        WfTaskListId: this.WfTaskListId
       };
 
-      this.http.post(URLConstant.SubmitRequisitionDecision, requestRequisitionDecisionObj).toPromise().then(
+      this.http.post(URLConstant.SubmitRequisitionDecision, requestRequisitionDecisionObj).subscribe(
         (response) => {
           this.toastr.successMessage("Submit Requisition Decision Success");
           this.router.navigate(['../paging'], { relativeTo: this.route });
@@ -142,7 +142,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       AppAssetId: this.AppAssetId
     };
 
-    this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).toPromise().then(
+    this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).subscribe(
       (response) => {
         this.AccessoriesList = response["AppAssetAccesories"];
         this.AttributeList = response["AppAssetAttrs"];
@@ -203,7 +203,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       AssetNo: this.ReqDecForm.value.AssetNo
     };
 
-    this.http.post(URLConstant.SaveRequisitionDecision, requestRequisitionDecisionObj).toPromise().then(
+    this.http.post(URLConstant.SaveRequisitionDecision, requestRequisitionDecisionObj).subscribe(
       (response: any) => {
         this.ListOfAsset[this.Index].DecisionCode = this.ReqDecForm.value.Decision;
         this.ListOfAsset[this.Index].AssetNo = this.ReqDecForm.value.AssetNo;
