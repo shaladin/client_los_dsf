@@ -111,9 +111,8 @@
                 [showCancel]="showCancel" (outputValue)="NextStep('FIN')" (outputCancel)="Cancel()"></app-asset-expense>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]=appId
-                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data>
+              <app-financial-data-opl *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
+                                      [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()"></app-financial-data-opl>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId"
@@ -196,9 +195,8 @@
                                  [showCancel]="showCancel" (outputValue)="NextStep('FIN')" (outputCancel)="Cancel()"></app-asset-expense>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]=appId
-                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data>
+              <app-financial-data-opl *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
+                                      [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()"></app-financial-data-opl>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
