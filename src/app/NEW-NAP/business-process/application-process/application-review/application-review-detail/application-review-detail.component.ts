@@ -20,6 +20,8 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-application-review-detail',
@@ -27,7 +29,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./application-review-detail.component.scss']
 })
 export class ApplicationReviewDetailComponent implements OnInit {
-
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @ViewChild(UcapprovalcreateComponent) createComponent;
   appId: number = 0;
   wfTaskListId: number = 0;
@@ -63,7 +65,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService
+    public toastr: ToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -78,11 +80,13 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   initData(){
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
   }
 
   async ngOnInit() {
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.initData();
     await this.ClaimTask();
     await this.GetAppNo();
@@ -129,7 +133,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
   
   async ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
@@ -196,7 +200,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   async BindAppvAmt() {
     let Obj = { AppId: this.appId };
-    await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetApprovalAmount, Obj).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
           AppvAmt: response["ApvAmt"]
@@ -252,21 +256,21 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
   
   PlafondAmt: number = 0;
-  initInputApprovalObj(){  
-    var BizTemplateCode = localStorage.getItem(CommonConstant.USER_ACCESS);
+  initInputApprovalObj() {
+    //this.PlafondAmt = 1000000;
     this.InputObj = new UcInputRFAObj();
-    var Attributes = [];
-    var attribute1 = { 
-      "AttributeName" : "Approval Amount",
+    var Attributes = [{}];
+    var attribute1 = {
+      "AttributeName": "Approval Amount",
       "AttributeValue": this.PlafondAmt
     };
     Attributes.push(attribute1);
-    
+
     var TypeCode = {
-      "TypeCode" : "CRD_APV_CF_TYPE",
-      "Attributes" : Attributes,
+      "TypeCode": "APV_LIMIT",
+      "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
@@ -278,8 +282,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
     this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
     this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_RENT_APP;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
     this.IsReady = true;
@@ -324,9 +328,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: RFAPreGoLive
+      RequestRFAObj: RFAPreGoLive.RequestRFAObj
     };
-    // console.log(apiObj);
+    console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });

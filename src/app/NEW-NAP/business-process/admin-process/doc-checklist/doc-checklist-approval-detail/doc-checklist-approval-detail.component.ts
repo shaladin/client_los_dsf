@@ -18,6 +18,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-doc-checklist-approval-detail',
@@ -43,7 +44,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
 
   });
   AppId: any;
-  token = localStorage.getItem(CommonConstant.TOKEN);
+  token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   LeadId: string;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   MouCustId: any;
@@ -54,7 +55,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.TrxNo = params["TrxNo"];
@@ -143,5 +144,11 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
+  }
+
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 }

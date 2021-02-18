@@ -267,6 +267,9 @@ export class PathConstant {
     public static APP_RVW = "ApplicationReview";
     public static APP_RVW_PAGING = PathConstant.CombinePath([PathConstant.APP_RVW, PathConstant.PAGING]);
     public static APP_RVW_DETAIL = PathConstant.CombinePath([PathConstant.APP_RVW, PathConstant.DETAIL]);
+    public static APP_APPRV = "ApplicationApproval";
+    public static APP_APPRV_PAGING = PathConstant.CombinePath([PathConstant.APP_APPRV, PathConstant.PAGING]);
+    public static APP_APPRV_DETAIL = PathConstant.CombinePath([PathConstant.APP_APPRV, PathConstant.DETAIL]);
     //#endregion
 
     //#region MOU-Module

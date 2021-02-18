@@ -271,4 +271,10 @@ export class NavigationConstant {
     public static LEAD_INPUT_PAGE = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.LEAD_INPUT_PAGE]); //"/Lead/LeadInput/Page"
     public static LEAD_VERIF = "/" + PathConstant.CombinePath([PathConstant.LR_LEAD, PathConstant.VERIF]); //'/Lead/Verif'
     //#endregion
+
+  //Application Process
+  public static NAP_APP_PRCS_HEADER = PathConstant.CombinePath([PathConstant.LR_NAP, PathConstant.NAP_APP_PRCS]); //'Nap/ApplicationProcess'
+  public static NAP_APP_PRCS_CRD_APPRV_PAGING = "/" + PathConstant.CombinePath([NavigationConstant.NAP_APP_PRCS_HEADER, PathConstant.APP_APPRV_PAGING]); //"/Nap/ApplicationProcess/ApplicationApproval/Paging"
+  public static NAP_APP_PRCS_CRD_APPRV_DETAIL = "/" + PathConstant.CombinePath([NavigationConstant.NAP_APP_PRCS_HEADER, PathConstant.APP_APPRV_DETAIL]); //"/Nap/ApplicationProcess/ApplicationApproval/Detail"
+  //end
 }

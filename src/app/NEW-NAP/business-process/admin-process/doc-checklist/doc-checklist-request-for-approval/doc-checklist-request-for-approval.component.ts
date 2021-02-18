@@ -13,6 +13,8 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { RFADocChecklist } from '../../../../../shared/model/DocChecklist/RFADocChecklist.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
+
 @Component({
   selector: 'app-doc-checklist-request-for-approval',
   templateUrl: './doc-checklist-request-for-approval.component.html'
@@ -26,7 +28,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
   AppNo: any;
   RFADocChecklist: any;
   TaskListId: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
@@ -37,7 +39,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
     }
   }
   ApprovalCreateOutput: any;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
@@ -123,7 +125,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
       "TypeCode": "DOC_CHCK_LIST_APV_TYPE",
       "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];

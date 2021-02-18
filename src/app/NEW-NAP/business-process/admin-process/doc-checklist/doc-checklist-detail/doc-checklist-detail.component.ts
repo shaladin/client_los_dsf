@@ -19,6 +19,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DocChecklist } from '../../../../../shared/model/DocChecklist/DocChecklist.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-doc-checklist-detail',
@@ -32,7 +33,7 @@ export class DocChecklistDetailComponent implements OnInit {
   appTC: any;
   TaskListId: any;
   DocChecklistObj: DocChecklist = new DocChecklist();
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   IsCheckedAll: boolean = false;
 
@@ -67,7 +68,7 @@ export class DocChecklistDetailComponent implements OnInit {
   mouCustNo: any;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
@@ -99,7 +100,7 @@ export class DocChecklistDetailComponent implements OnInit {
   }
 
   RFA() {
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     this.ListAppTCObj = new ListAppTCObj();
     this.ListAppTCObj["ListAppTcObj"] = new Array();
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
@@ -140,7 +141,7 @@ export class DocChecklistDetailComponent implements OnInit {
   }
 
   SaveForm(flag = true) {
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
@@ -187,7 +188,7 @@ export class DocChecklistDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
